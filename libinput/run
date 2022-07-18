@@ -1,0 +1,20 @@
+#!/bin/sh
+NAME="libinput"
+VERSION="1.20.0"
+DESCRIPTION="Library that handles input devices"
+
+build() {
+    down https://gitlab.freedesktop.org/libinput/libinput/-/archive/$VERSION/libinput-$VERSION.tar.gz 
+    tar -xvf libinput-$VERSION.tar.gz
+    cd libinput-$VERSION || exit 1
+    mkdir build 
+    cd    build 
+    meson --prefix=/usr \
+      --buildtype=release   \
+      -Ddebug-gui=false     \
+      -Dtests=false         \
+      -Dlibwacom=false      \
+      ..                    
+    ninja
+    DESTDIR="$ROOT" ninja install  
+}

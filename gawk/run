@@ -1,0 +1,12 @@
+#!/bin/sh
+NAME="gawk"
+VERSION="5.1.1"
+DESCRIPTION="GNU awk"
+
+build() {
+    wget https://ftp.gnu.org/pub/gnu/gawk/gawk-$VERSION.tar.xz
+    tar -xvf gawk-$VERSION.tar.xz
+    cd gawk-$VERSION
+    ./configure
+    make DESTDIR=$ROOT install
+}

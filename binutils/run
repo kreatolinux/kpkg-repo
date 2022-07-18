@@ -1,0 +1,26 @@
+#!/bin/sh
+NAME="binutils"
+VERSION="2.38"
+DESCRIPTION="GNU Binutils"
+
+build() {
+    [ ! -f "binutils-$VERSION.tar.xz" ] && wget https://ftp.gnu.org/gnu/binutils/binutils-$VERSION.tar.xz
+    [ ! -d "binutils-$VERSION" ] && tar -xvf binutils-$VERSION.tar.xz
+    cd binutils-$VERSION || exit 1
+    mkdir -v build
+    cd       build
+    ../configure                   \
+        --prefix=/usr              \
+        --build=$(../config.guess) \
+        --host=x86_64-pc-linux-gnu \
+        --disable-nls              \
+        --enable-shared            \
+        --disable-werror           \
+        --enable-64-bit-bfd
+
+    make -j$(nproc)
+    make DESTDIR=$ROOT install -j1
+    cd ld || exit 1
+    make -j$(nproc)
+    make DESTDIR=$ROOT install -j1
+}

@@ -1,0 +1,21 @@
+#!/bin/sh
+NAME="libxkbcommon"
+VERSION="1.4.0"
+DESCRIPTION="Keyboard compiler and support library"
+
+build() {
+    down https://xkbcommon.org/download/libxkbcommon-$VERSION.tar.xz 
+    tar -xvf libxkbcommon-$VERSION.tar.xz
+    cd libxkbcommon-$VERSION || exit 1
+    mkdir build 
+    cd    build 
+    meson --prefix=/usr \
+      --buildtype=release   \
+      -Denable-x11=false    \
+      -Dxkb-config-root=/usr/share/X11/xkb \
+      -Dx-locale-root=/usr/share/X11/locale \
+      -Denable-docs=false
+      ..                    
+    ninja
+    DESTDIR="$ROOT" ninja install  
+}

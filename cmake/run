@@ -1,0 +1,20 @@
+#!/bin/sh
+NAME="cmake"
+VERSION="3.23"
+DESCRIPTION="CMake package contains a modern toolset used for generating Makefiles."
+
+build() {
+    [ ! -f "cmake-$VERSION.0.tar.gz" ] && down https://cmake.org/files/v$VERSION/cmake-$VERSION.0.tar.gz
+    tar -xf cmake-$VERSION.0.tar.gz
+    cd cmake-$VERSION.0
+    sed -i '/"lib64"/s/64//' Modules/GNUInstallDirs.cmake
+    ./bootstrap --prefix=/usr        \
+                --system-libs        \
+                --mandir=/share/man  \
+                --no-system-jsoncpp  \
+                --no-system-librhash \
+                --docdir=/share/doc/cmake-$VERSION.0
+    make -j$(nproc)
+    make DESTDIR=$ROOT install
+}
+

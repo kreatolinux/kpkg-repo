@@ -1,0 +1,13 @@
+#!/bin/sh
+NAME="python"
+VERSION="3.10.4"
+DESCRIPTION="General-Purpose Programming language"
+
+build() {
+    wget https://www.python.org/ftp/python/$VERSION/Python-$VERSION.tar.xz
+    tar -xvf Python-$VERSION.tar.xz
+    cd Python-$VERSION || exit 1
+    ./configure
+    make
+    make DESTDIR="$ROOT" install
+}

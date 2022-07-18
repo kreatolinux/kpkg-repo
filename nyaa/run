@@ -1,0 +1,15 @@
+#!/bin/sh
+NAME="nyaa"
+VERSION="1.6"
+DESCRIPTION="The nyaa package manager"
+
+build() {
+        down "https://git.kreatea.space/kreato-linux/nyaa/archive/v$VERSION.tar.gz"
+        tar -xvf "v$VERSION.tar.gz"
+        cd nyaa || exit 1
+        mkdir -p "$ROOT/usr/bin" "$ROOT/usr/local/man/man1"
+        cp nyaa "$ROOT/usr/bin/"
+        pandoc nyaa.1.md -s -t man -o nyaa.1
+        mv nyaa.1 "$ROOT/usr/local/man/man1"
+        gzip "$ROOT/usr/local/man/man1/nyaa.1"
+}

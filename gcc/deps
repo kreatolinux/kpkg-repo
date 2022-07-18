@@ -1,0 +1,7 @@
+mpfr
+gmp
+mpc
+isl
+libzstd
+binutils
+linux-headers

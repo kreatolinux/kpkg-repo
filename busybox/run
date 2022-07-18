@@ -1,0 +1,14 @@
+#!/bin/sh
+NAME="busybox"
+VERSION="1.33.0"
+DESCRIPTION="The Swiss Army Knife of Embedded Linux"
+
+build() {
+    [ ! -f "busybox-$VERSION.tar.bz2" ] && wget https://www.busybox.net/downloads/busybox-$VERSION.tar.bz2
+    tar -xvf busybox-$VERSION.tar.bz2 
+    cd busybox-$VERSION || err "an error occured"
+    make -j$(nproc) defconfig
+    make -j$(nproc) busybox
+    [ ! -d "$ROOT/bin" ] && mkdir -p $ROOT/bin/
+    cp busybox $ROOT/bin/
+}

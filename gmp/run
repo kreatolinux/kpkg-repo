@@ -1,0 +1,14 @@
+#!/bin/sh
+NAME="gmp"
+VERSION="6.2.1"
+DESCRIPTION="GNU gmp"
+
+build() {
+    [ ! -f "gmp-$VERSION.tar.xz" ] && wget https://ftp.gnu.org/gnu/gmp/gmp-$VERSION.tar.xz
+    tar -xf gmp-$VERSION.tar.xz
+    cd gmp-$VERSION
+    ./configure
+    make -j$(nproc)
+    make DESTDIR=$ROOT install
+}
+

@@ -1,0 +1,14 @@
+#!/bin/sh
+NAME="samurai"
+VERSION="1.2"
+DESCRIPTION="ninja-compatible build tool written in C"
+
+build() {
+    wget https://github.com/michaelforney/samurai/releases/download/$VERSION/samurai-$VERSION.tar.gz
+    tar -xvf samurai-$VERSION.tar.gz
+    cd samurai-$VERSION || exit 1
+    make -j$(nproc)
+    make DESTDIR=$ROOT install
+    mkdir -p "$ROOT/usr/bin"
+    ln -s /usr/bin/samu "$ROOT/usr/bin/ninja"
+}

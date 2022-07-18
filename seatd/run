@@ -1,0 +1,17 @@
+#!/bin/sh
+NAME="seatd"
+VERSION="0.6.4"
+DESCRIPTION="Seat daemon."
+
+build() {
+    down https://git.sr.ht/~kennylevinsen/seatd/archive/$VERSION.tar.gz 
+    tar -xvf $VERSION.tar.gz
+    cd seatd-$VERSION || exit 1
+    mkdir build 
+    cd    build 
+    meson --prefix=/usr \
+      --buildtype=release   \
+      ..                    
+    ninja
+    DESTDIR="$ROOT" ninja install  
+}

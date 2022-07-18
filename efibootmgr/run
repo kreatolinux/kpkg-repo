@@ -1,0 +1,14 @@
+#!/bin/sh
+NAME="efibootmgr"
+VERSION="17"
+DESCRIPTION="efibootmgr provides tools and libraries to manipulate EFI variables"
+
+build() {
+    wget https://github.com/rhboot/efibootmgr/archive/$VERSION/efibootmgr-$VERSION.tar.gz
+    tar -xvf efibootmgr-$VERSION.tar.gz
+    cd efibootmgr-$VERSION || exit 1
+    sed -e '/-Werror/d' -i Make.defaults   
+    sed -e '/extern int efi_set_verbose/d' -i src/efibootmgr.c
+    make EFI_LOADER=grubx64.efi EFIDIR=KLX
+    make DESTDIR="$ROOT" EFIDIR=KLX install
+}

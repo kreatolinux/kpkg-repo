@@ -1,0 +1,14 @@
+#!/bin/sh
+NAME="neofetch"
+VERSION="master"
+DESCRIPTION="A command-line system information tool written in bash 3.2+"
+
+build() {
+	wget https://github.com/dylanaraps/neofetch/raw/master/neofetch
+}
+
+installpkg() {
+	mkdir -p $ROOT/usr/bin
+	cp -rf $SRCDIR/neofetch $ROOT/usr/bin
+	chmod +x $ROOT/usr/bin/neofetch
+}

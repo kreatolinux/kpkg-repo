@@ -1,0 +1,13 @@
+#!/bin/sh
+NAME="grub"
+VERSION="2.06"
+DESCRIPTION="The GNU Grub Bootloader"
+
+build() {
+    wget https://ftp.gnu.org/gnu/grub/grub-$VERSION.tar.xz
+    tar -xvf grub-$VERSION.tar.xz
+    cd grub-$VERSION || exit 1
+    ./configure --disable-efiemu --disable-werror --prefix=/usr --sysconfdir=/etc --with-platform=efi
+    make
+    make DESTDIR="$ROOT" install
+}

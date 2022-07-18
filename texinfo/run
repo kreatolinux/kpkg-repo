@@ -1,0 +1,14 @@
+#!/bin/sh
+NAME="texinfo"
+VERSION="6.8"
+DESCRIPTION="GNU texinfo"
+
+build() {
+    wget https://ftp.gnu.org/gnu/texinfo/texinfo-$VERSION.tar.xz
+    tar -xvf texinfo-$VERSION.tar.xz
+    cd texinfo-$VERSION
+    sed -e 's/__attribute_nonnull__/__nonnull/' \
+    -i gnulib/lib/malloc/dynarray-skeleton.c
+    ./configure --prefix=/usr
+    make DESTDIR=$ROOT install
+}

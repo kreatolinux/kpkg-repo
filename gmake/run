@@ -1,0 +1,14 @@
+#!/bin/sh
+NAME="gmake"
+VERSION="4.3"
+DESCRIPTION="GNU make"
+
+build() {
+    wget https://ftp.gnu.org/gnu/make/make-$VERSION.tar.gz
+    tar -xf make-$VERSION.tar.gz
+    cd make-$VERSION
+    ./configure --without-guile --prefix=/usr --host=x86_64-pc-linux-gnu
+    make -j$(nproc)
+    make DESTDIR=$ROOT install
+}
+

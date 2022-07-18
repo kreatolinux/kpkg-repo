@@ -1,0 +1,14 @@
+#!/bin/sh
+NAME="libarchive"
+VERSION="3.6.1"
+DESCRIPTION="Multi-format archive and compression library"
+
+build() {
+    [ ! -f "$NAME-$VERSION.tar.xz" ] && down https://github.com/$NAME/$NAME/releases/download/v$VERSION/$NAME-$VERSION.tar.xz
+    tar -xvf $NAME-$VERSION.tar.xz
+    cd $NAME-$VERSION
+    ./configure --prefix=/usr --disable-static
+    make -j$(nproc)
+    make DESTDIR=$ROOT install
+}
+

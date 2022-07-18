@@ -1,0 +1,14 @@
+#!/bin/sh
+NAME="p11-kit"
+VERSION="0.24.1"
+DESCRIPTION=""
+build() {
+    wget https://github.com/p11-glue/p11-kit/releases/download/$VERSION/p11-kit-$VERSION.tar.xz
+    tar -xvf p11-kit-$VERSION.tar.xz
+    cd p11-kit-$VERSION || exit 1
+    ./configure --prefix=/usr     \
+            --sysconfdir=/etc \
+            --with-trust-paths=/etc/pki/anchors
+    make
+    make DESTDIR=$ROOT install
+}

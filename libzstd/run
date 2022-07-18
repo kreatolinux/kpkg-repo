@@ -1,0 +1,12 @@
+#!/bin/sh
+NAME="libzstd"
+VERSION="1.5.1"
+DESCRIPTION="Facebook's zstd library"
+
+build() {
+    wget https://github.com/facebook/zstd/releases/download/v$VERSION/zstd-$VERSION.tar.gz
+    tar -xvf zstd-$VERSION.tar.gz
+    cd zstd-$VERSION || exit 1
+    make
+    make DESTDIR=$ROOT prefix=/usr install
+}

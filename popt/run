@@ -1,0 +1,13 @@
+#!/bin/sh
+NAME="popt"
+VERSION="1.18"
+DESCRIPTION="contains the popt libraries which are used by some programs to parse command-line options"
+
+build() {
+    wget http://ftp.rpm.org/popt/releases/popt-1.x/popt-$VERSION.tar.gz
+    tar -xvf popt-$VERSION.tar.gz
+    cd popt-$VERSION || exit 1
+    ./configure --prefix=/usr --disable-static
+    make
+    make DESTDIR="$ROOT" install
+}

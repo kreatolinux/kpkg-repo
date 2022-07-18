@@ -1,0 +1,12 @@
+#!/bin/sh
+NAME="libevdev"
+VERSION="1.12.1"
+DESCRIPTION="Common functions for Xorg input drivers"
+
+build() {
+    down https://www.freedesktop.org/software/libevdev/libevdev-$VERSION.tar.xz 
+    tar -xvf libevdev-$VERSION.tar.xz
+    cd libevdev-$VERSION || exit 1
+    ./configure --prefix=/usr
+    make DESTDIR="$ROOT" install
+}

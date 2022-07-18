@@ -1,0 +1,18 @@
+#!/bin/sh
+NAME="json-c"
+VERSION="0.16"
+DESCRIPTION="Construct JSON objects in C"
+
+build() {
+    down https://s3.amazonaws.com/json-c_releases/releases/json-c-$VERSION.tar.gz 
+    tar -xvf json-c-$VERSION.tar.gz
+    cd json-c-$VERSION || exit 1
+    mkdir build 
+    cd    build 
+    cmake -DCMAKE_INSTALL_PREFIX=/usr \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DBUILD_STATIC_LIBS=OFF    \
+          ..
+    make 
+    make DESTDIR="$ROOT" install
+}

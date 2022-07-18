@@ -1,0 +1,15 @@
+#!/bin/sh
+NAME="linux-headers"
+VERSION="5.16"
+DESCRIPTION="Linux development headers"
+
+build() {
+    [ ! -f "linux-$VERSION.tar.xz" ] && wget https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-$VERSION.tar.xz
+    tar -xvf linux-$VERSION.tar.xz
+    cd linux-$VERSION
+    make mrproper
+    make headers
+    find usr/include -name '.*' -delete
+    rm usr/include/Makefile
+    cp -rv usr/include $ROOT/usr
+}

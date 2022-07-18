@@ -1,0 +1,13 @@
+#!/bin/sh
+NAME="libffi"
+VERSION="3.4.2"
+DESCRIPTION=""
+
+build() {
+    wget https://github.com/libffi/libffi/releases/download/v$VERSION/libffi-$VERSION.tar.gz
+    tar -xvf libffi-$VERSION.tar.gz
+    cd libffi-$VERSION || exit 1
+    ./configure
+    make
+    make DESTDIR=$ROOT prefix=/usr install
+}

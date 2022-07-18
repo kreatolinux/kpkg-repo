@@ -1,0 +1,16 @@
+#!/bin/sh
+NAME="libxcrypt"
+VERSION="4.4.28"
+DESCRIPTION="Extended crypt library"
+
+build() {
+    wget https://github.com/besser82/libxcrypt/releases/download/v$VERSION/libxcrypt-$VERSION.tar.xz
+    tar -xvf libxcrypt-$VERSION.tar.xz
+    cd libxcrypt-$VERSION || exit 1
+    ./configure --disable-obsolete-api --prefix=/usr
+    /usr/lib/libcrypt.so.2
+    make
+    make DESTDIR="$ROOT" install
+    mkdir -p "$ROOT/usr/lib"
+    ln -s "libcrypt.so.2.0.0" "$ROOT/usr/lib/libcrypt.so.2"
+}

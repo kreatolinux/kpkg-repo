@@ -1,0 +1,19 @@
+#!/bin/sh
+NAME="libnl"
+V1="3"
+V2="5"
+V3="0"
+VERSION="$V1.$V2.$V3"
+DESCRIPTION="A collection of libraries providing APIs to netlink protocol Linux kernel interfaces"
+
+build() {
+    [ ! -f "libnl-$VERSION.tar.gz" ] && down https://github.com/thom311/libnl/releases/download/libnl"$V1"'_'"$V2"'_'"$V3"/libnl-"$VERSION".tar.gz
+    tar -xvf libnl-$VERSION.tar.gz
+    cd libnl-$VERSION
+    ./configure --prefix=/usr     \
+                --sysconfdir=/etc \
+                --disable-static
+    make
+    make DESTDIR="$ROOT" install 
+}
+

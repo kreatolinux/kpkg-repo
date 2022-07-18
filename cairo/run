@@ -1,0 +1,16 @@
+#!/bin/sh
+NAME="cairo"
+BASEVER="1.7"
+VERSION="$BASEVER.6"
+DESCRIPTION="2D graphics library"
+
+build() {
+    wget https://download.gnome.org/sources/cairo/$BASEVER/cairo-$VERSION.tar.xz
+    tar -xvf cairo-$VERSION.tar.xz
+    cd cairo-$VERSION || exit 1
+    ./configure --prefix=/usr    \
+            --disable-static     \
+            --enable-tee
+    make
+    make DESTDIR="$ROOT" install
+}

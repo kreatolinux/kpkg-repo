@@ -1,0 +1,15 @@
+#!/bin/sh
+NAME="pixman"
+VERSION="0.40.0"
+DESCRIPTION="A library that provides low-level pixel manipulation features such as image compositing and trapezoid rasterization"
+
+build() {
+    wget https://www.cairographics.org/releases/pixman-$VERSION.tar.gz
+    tar -xvf pixman-$VERSION.tar.gz
+    cd pixman-$VERSION || exit 1
+    mkdir build
+    cd build
+    meson --prefix=/usr --buildtype=release
+    ninja
+    DESTDIR="$ROOT" ninja install
+}

@@ -1,0 +1,15 @@
+#!/bin/sh
+NAME="wayland-protocols"
+VERSION="1.25"
+DESCRIPTION="Additional Wayland protocols that add functionality outside of protocols already in the Wayland core"
+
+build() {
+    down https://wayland.freedesktop.org/releases/wayland-protocols-$VERSION.tar.xz
+    tar -xvf wayland-protocols-$VERSION.tar.xz
+    cd wayland-protocols-$VERSION || exit 1
+    mkdir build 
+    cd    build 
+    meson --prefix=/usr --buildtype=release
+    ninja
+    DESTDIR="$ROOT" ninja install
+}

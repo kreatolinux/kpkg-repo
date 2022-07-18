@@ -1,0 +1,17 @@
+#!/bin/sh
+NAME="glibc"
+VERSION="2.35"
+DESCRIPTION="The GNU C library"
+
+build() {
+    [ ! -f "glibc-$VERSION.tar.xz" ] && wget https://ftp.gnu.org/gnu/glibc/glibc-$VERSION.tar.xz
+    tar -xvf glibc-$VERSION.tar.xz
+    cd glibc-$VERSION || exit
+    mkdir -v build
+    cd build || exit
+    ../configure --prefix=/usr --host=x86_64-pc-linux-gnu --enable-kernel=3.2 \
+        libc_sv_slibdir=/usr/lib
+    make || exit
+    make DESTDIR=$ROOT install
+
+}

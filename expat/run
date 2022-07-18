@@ -1,0 +1,14 @@
+#!/bin/sh
+NAME="expat"
+VERSION="2.4.8"
+DESCRIPTION="a stream oriented C library for parsing XML"
+
+build() {
+    [ ! -f "$NAME-$VERSION.tar.xz" ] && down https://github.com/libexpat/libexpat/releases/download/R_2_4_8/$NAME-$VERSION.tar.xz
+    tar -xvf $NAME-$VERSION.tar.xz
+    cd $NAME-$VERSION
+    ./configure --prefix=/usr --disable-static
+    make -j$(nproc)
+    make DESTDIR=$ROOT install
+}
+

@@ -1,0 +1,14 @@
+#!/bin/sh
+NAME="libressl"
+VERSION="3.5.0"
+DESCRIPTION="TLS library"
+
+build() {
+    wget https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-$VERSION.tar.gz
+    tar -xvf libressl-$VERSION.tar.gz
+    cd libressl-$VERSION || exit 1
+    ./configure
+    make -j$(nproc)
+    make DESTDIR="$ROOT" install
+}
+

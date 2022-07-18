@@ -1,0 +1,13 @@
+#!/bin/sh
+NAME="mpfr"
+VERSION="4.1.0"
+DESCRIPTION="GNU mpfr"
+
+build() {
+    [ ! -f "mpfr-$VERSION.tar.xz" ] && wget https://www.mpfr.org/mpfr-$VERSION/mpfr-$VERSION.tar.xz
+    tar -xf mpfr-$VERSION.tar.xz
+    cd mpfr-$VERSION
+    ./configure
+    make -j$(nproc)
+    make DESTDIR=$ROOT install
+}

@@ -1,0 +1,14 @@
+#!/bin/sh
+NAME="flex"
+VERSION="2.6.4"
+DESCRIPTION="The Fast Lexical Analyzer - scanner generator for lexing in C and C++"
+
+build() {
+    wget https://github.com/westes/flex/releases/download/v$VERSION/flex-$VERSION.tar.gz
+    tar -xf flex-$VERSION.tar.gz
+    cd flex-$VERSION
+    ./configure
+    make -j$(nproc)
+    make DESTDIR=$ROOT install
+}
+

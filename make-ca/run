@@ -1,0 +1,11 @@
+#!/bin/sh
+NAME="make-ca"
+VERSION="1.7"
+DESCRIPTION=""
+build() {
+    wget  https://github.com/djlucas/make-ca/releases/download/v$VERSION/make-ca-$VERSION.tar.xz
+    tar -xvf make-ca-$VERSION.tar.xz
+    cd make-ca-$VERSION || exit  1
+    make DESTDIR=$ROOT install
+    install -vdm755 $ROOT/etc/ssl/local
+}

@@ -1,0 +1,13 @@
+#!/bin/sh
+NAME="zlib"
+VERSION="1.2.12"
+DESCRIPTION="zlib"
+
+build() {
+    [ ! -f "zlib-$VERSION.tar.gz" ] && wget https://zlib.net/zlib-$VERSION.tar.gz
+    tar -xvf zlib-$VERSION.tar.gz
+    cd zlib-$VERSION
+    ./configure --prefix=/usr
+    make
+    make DESTDIR=$ROOT install
+}

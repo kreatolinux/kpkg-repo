@@ -1,0 +1,30 @@
+#!/bin/sh
+NAME="curl"
+VERSION="7.83.0"
+DESCRIPTION=""
+build() {
+    [ ! -f "curl-$VERSION.tar.xz" ] && wget https://curl.haxx.se/download/curl-$VERSION.tar.xz || exit 1 
+    [ ! -d "curl-$VERSION" ] && tar -xvf curl-$VERSION.tar.xz || exit 1
+    
+    cd curl-$VERSION || exit  1
+    
+    # Taken from Kiss Linux repo, License here https://github.com/kisslinux/repo/blob/master/LICENSE
+    sed 's/\(curl_LDADD =\)/\1 -all-static/' src/Makefile.in > _
+    mv -f _ src/Makefile.in
+
+    ./configure \
+        --prefix=/usr \
+        --disable-manual \
+        --disable-ldap \
+        --disable-ares \
+        --without-librtmp \
+        --without-libpsl \
+        --without-libidn2 \
+        --without-brotli \
+        --without-zstd   \
+        --with-openssl   \
+        --with-ca-path=/etc/ssl/certs
+
+    make
+    make DESTDIR=$ROOT install
+}

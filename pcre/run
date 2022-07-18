@@ -1,0 +1,12 @@
+#!/bin/sh
+NAME="pcre"
+VERSION="8.45"
+DESCRIPTION="Perl Compatible Regular Expression libraries"
+
+build() {
+    wget https://sourceforge.net/projects/pcre/files/pcre/$VERSION/pcre-$VERSION.tar.bz2
+    tar -xvf pcre-$VERSION.tar.bz2
+    cd pcre-$VERSION
+    ./configure --prefix=/usr
+    make DESTDIR=$ROOT install
+}

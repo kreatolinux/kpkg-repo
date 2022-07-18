@@ -1,0 +1,26 @@
+#!/bin/sh
+NAME="git"
+VERSION="2.36.0"
+DESCRIPTION="Version control tool"
+
+build() {
+wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-$VERSION.tar.xz
+tar -xf git-$VERSION.tar.xz
+cd git-$VERSION
+./configure
+# Taken from kiss linux, license is https://github.com/kisslinux/repo/blob/master/LICENSE
+cat > config.mak <<EOF
+NO_GETTEXT=YesPlease
+NO_SVN_TESTS=YesPlease
+NO_TCLTK=YesPlease
+NO_EXPAT=YesPlease
+NO_NSEC=YesPlease
+NO_PYTHON=YesPlease
+NO_PERL=YesPlease
+NO_SYS_POLL_H=1
+NO_CROSS_DIRECTORY_HARDLINKS=1
+NO_INSTALL_HARDLINKS=1
+EOF
+make -j$(nproc)
+make DESTDIR=$ROOT install
+}

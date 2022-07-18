@@ -1,0 +1,28 @@
+#!/bin/sh
+NAME="dhcpcd"
+VERSION="9.4.1"
+DESCRIPTION="DHCP client"
+
+build() {
+    [ ! -f "dhcpcd-$VERSION.tar.xz" ] && down https://roy.marples.name/downloads/dhcpcd/dhcpcd-$VERSION.tar.xz
+    tar -xf dhcpcd-$VERSION.tar.xz
+    cd dhcpcd-$VERSION
+    ./configure --prefix=/usr                \
+            --sysconfdir=/etc            \
+            --libexecdir=/usr/lib/dhcpcd \
+            --dbdir=/var/lib/dhcpcd      \
+            --runstatedir=/run           \
+            --privsepuser=dhcpcd
+    make
+    make -j$(nproc)
+    make DESTDIR=$ROOT install
+    mkdir "$ROOT/bin/"
+printf '
+    #!/bin/sh
+    echo "dhcpcd:x:981:981:dhcpcd privilege separation:/:/usr/bin/nologin" >> /etc/passwd
+    echo "dhcpcd:x:981:" >> /etc/group
+    ' > "$ROOT/bin/install-dhcpcd-groups"
+    chmod +x "$ROOT/bin/install-dhcpcd-groups"
+    echo "dhcpcd: please run install-dhcpcd-groups to install groups"
+}
+

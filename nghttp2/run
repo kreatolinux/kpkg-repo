@@ -1,0 +1,15 @@
+#!/bin/sh
+NAME="nghttp2"
+VERSION="1.47.0"
+DESCRIPTION=""
+build() {
+    [ ! -f "nghttp2-$VERSION.tar.xz" ] && wget https://github.com/nghttp2/nghttp2/releases/download/v$VERSION/nghttp2-$VERSION.tar.xz
+    [ ! -d "nghttp2-$VERSION" ] && tar -xvf nghttp2-$VERSION.tar.xz
+    
+    cd nghttp2-$VERSION || exit  1
+    
+    ./configure \
+        --prefix=/usr
+    make
+    make DESTDIR=$ROOT install
+}

@@ -1,0 +1,14 @@
+#!/bin/sh
+NAME="pkgconf"
+VERSION="1.1.0"
+DESCRIPTION="pkgconf is a program which helps to configure compiler and linker flags for development frameworks."
+
+build() {
+    down https://distfiles.dereferenced.org/pkgconf/pkgconf-$VERSION.tar.xz 
+    tar -xvf pkgconf-$VERSION.tar.xz
+    cd pkgconf-$VERSION || exit 1
+    ./configure --prefix=/usr
+    make DESTDIR="$ROOT" install
+    [ ! -d "$ROOT/usr/bin" ] && mkdir -p "$ROOT/usr/bin"
+    ln -s pkgconf "$ROOT/usr/bin/pkg-config"
+}

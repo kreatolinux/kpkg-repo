@@ -1,0 +1,17 @@
+#!/bin/sh
+NAME="wayland"
+VERSION="1.20.0"
+DESCRIPTION="Wayland is a project to define a protocol for a compositor to talk to its clients as well as a library implementation of the protocol."
+
+build() {
+    wget https://wayland.freedesktop.org/releases/wayland-$VERSION.tar.xz
+    tar -xvf wayland-$VERSION.tar.xz
+    cd wayland-$VERSION || exit 1
+    mkdir build
+    cd build
+    meson --prefix=/usr       \
+          --buildtype=release \
+          -Ddocumentation=false
+    ninja
+    DESTDIR="$ROOT" ninja install
+}

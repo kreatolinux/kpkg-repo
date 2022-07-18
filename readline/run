@@ -1,0 +1,12 @@
+#!/bin/sh
+NAME="readline"
+VERSION="8.1.2"
+DESCRIPTION="GNU readline"
+
+build() {
+    wget https://ftp.gnu.org/gnu/readline/readline-$VERSION.tar.gz
+    tar -xvf readline-$VERSION.tar.gz
+    cd readline-$VERSION || exit 1
+    ./configure --with-shared 
+    make DESTDIR=$ROOT SHLIB_LIBS="-L/tools/lib -lncursesw" install
+}

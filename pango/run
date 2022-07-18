@@ -1,0 +1,20 @@
+#!/bin/sh
+NAME="pango"
+MAINVERSION="1.50"
+VERSION="$MAINVERSION.7"
+DESCRIPTION="Text (i.e. glyph) layout engine library"
+
+build() {
+    down https://download.gnome.org/sources/pango/$MAINVERSION/pango-$VERSION.tar.xz 
+    tar -xvf pango-$VERSION.tar.xz
+    cd pango-$VERSION || exit 1
+    rm -rf subprojects
+    meson \
+    --prefix=/usr \
+    -Dgtk_doc=false \
+    -Dxft=disabled \
+    -Dintrospection=disabled \
+    . build
+    ninja -C build
+    DESTDIR="$ROOT" ninja -C build install
+}

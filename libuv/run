@@ -1,0 +1,15 @@
+#!/bin/sh
+NAME="libuv"
+VERSION="1.44.1"
+DESCRIPTION="The libuv package is a multi-platform support library with a focus on asynchronous I/O."
+
+build() {
+    [ ! -f "libuv-v$VERSION.tar.gz" ] && down https://dist.libuv.org/dist/v$VERSION/libuv-v$VERSION.tar.gz
+    tar -xvf libuv-v$VERSION.tar.gz
+    cd libuv-v$VERSION
+    sh autogen.sh
+    ./configure --prefix=/usr --disable-static
+    make -j$(nproc)
+    make DESTDIR=$ROOT install
+}
+
