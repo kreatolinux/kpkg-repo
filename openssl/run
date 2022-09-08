@@ -1,6 +1,6 @@
 #!/bin/sh
 NAME="openssl"
-VERSION="1.1.1m"
+VERSION="3.0.5"
 DESCRIPTION="TLS library"
 
 build() {

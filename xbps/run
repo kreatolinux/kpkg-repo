@@ -1,0 +1,9 @@
+#!/bin/sh
+NAME="xbps"
+VERSION="latest"
+DESCRIPTION="The X Binary Package System"
+
+build() {
+        down "http://repo-default.voidlinux.org/static/xbps-static-$VERSION.x86_64-musl.tar.xz"
+        tar -xvf "xbps-static-$VERSION.x86_64-musl.tar.xz" -C $ROOT/
+}
