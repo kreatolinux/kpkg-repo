@@ -1,10 +1,11 @@
 #!/bin/sh
 NAME="openssl"
 VERSION="3.0.5"
+SOURCES="https://openssl.org/source/openssl-$VERSION.tar.gz"
+SHA256SUM="aa7d8d9bef71ad6525c55ba11e5f4397889ce49c2c9349dcea6d3e4f0b024a7a  openssl-3.0.5.tar.gz"
 DESCRIPTION="TLS library"
 
 build() {
-    [ ! -f "openssl-$VERSION.tar.gz" ] && wget https://openssl.org/source/openssl-$VERSION.tar.gz || exit 1
     tar -xvf openssl-$VERSION.tar.gz
     cd openssl-$VERSION || err "Error while unpacking openssl"
     ./config --prefix=/usr --openssldir=/etc/ssl --libdir=lib shared zlib-dynamic
