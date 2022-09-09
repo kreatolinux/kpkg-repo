@@ -1,10 +1,11 @@
 #!/bin/sh
 NAME="efivar"
 VERSION="38"
+SOURCES="https://github.com/rhboot/efivar/releases/download/$VERSION/efivar-$VERSION.tar.bz2"
+SHA256SUM="f018ed6e49c5f1c16d336d9fd7687ce87023276591921db1e49a314ad6515349  efivar-38.tar.bz2"
 DESCRIPTION="efivar provides tools and libraries to manipulate EFI variables"
 
 build() {
-    wget https://github.com/rhboot/efivar/releases/download/$VERSION/efivar-$VERSION.tar.bz2
     tar -xvf efivar-$VERSION.tar.bz2
     cd efivar-$VERSION || exit 1
     make CFLAGS="-O2 -Wno-stringop-truncation"

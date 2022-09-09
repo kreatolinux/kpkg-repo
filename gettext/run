@@ -1,10 +1,11 @@
 #!/bin/sh
 NAME="gettext"
 VERSION="0.21"
+SOURCES="https://ftp.gnu.org/gnu/gettext/gettext-$VERSION.tar.xz"
+SHA256SUM="d20fcbb537e02dcf1383197ba05bd0734ef7bf5db06bdb241eb69b7d16b73192  gettext-0.21.tar.xz"
 DESCRIPTION="Gettext contains utilities for localization."
 
 build() {
-    wget https://ftp.gnu.org/gnu/gettext/gettext-$VERSION.tar.xz
     tar -xvf gettext-$VERSION.tar.xz
     cd gettext-$VERSION
     ./configure

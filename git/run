@@ -2,9 +2,9 @@
 NAME="git"
 VERSION="2.36.0"
 DESCRIPTION="Version control tool"
-
+SOURCES="https://mirrors.edge.kernel.org/pub/software/scm/git/git-$VERSION.tar.xz"
+SHA256SUM="af5ebfc1658464f5d0d45a2bfd884c935fb607a10cc021d95bc80778861cc1d3  git-2.36.0.tar.xz"
 build() {
-wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-$VERSION.tar.xz
 tar -xf git-$VERSION.tar.xz
 cd git-$VERSION
 ./configure

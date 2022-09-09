@@ -1,10 +1,11 @@
 #!/bin/sh
 NAME="glibc"
 VERSION="2.35"
+SOURCES="https://ftp.gnu.org/gnu/glibc/glibc-$VERSION.tar.xz"
+SHA256SUM="5123732f6b67ccd319305efd399971d58592122bcc2a6518a1bd2510dd0cf52e  glibc-2.35.tar.xz"
 DESCRIPTION="The GNU C library"
 
 build() {
-    [ ! -f "glibc-$VERSION.tar.xz" ] && wget https://ftp.gnu.org/gnu/glibc/glibc-$VERSION.tar.xz
     tar -xvf glibc-$VERSION.tar.xz
     cd glibc-$VERSION || exit
     mkdir -v build

@@ -1,13 +1,14 @@
 #!/bin/sh
 NAME="gcc"
-VERSION="11.2.0"
+VERSION="11.3.0"
+SOURCES= https://ftp.gnu.org/gnu/gcc/gcc-$VERSION/gcc-$VERSION.tar.xz""
+SHA256SUM="b47cf2818691f5b1e21df2bb38c795fac2cfbd640ede2d0a5e1c89e338a3ac39  gcc-11.3.0.tar.xz"
 DESCRIPTION="The GNU C Compiler"
 
 build() {
 	mkdir -p $ROOT/source
     cd $ROOT/source || exit 1
-    [ ! -f "gcc.tar.xz" ] && wget https://ftp.gnu.org/gnu/gcc/gcc-$VERSION/gcc-$VERSION.tar.xz -O gcc.tar.xz
-    tar -xvf gcc.tar.xz
+    tar -xvf gcc-$VERSION.tar.xz
     cd gcc-$VERSION || exit 1
     case $(uname -m) in
         x86_64)

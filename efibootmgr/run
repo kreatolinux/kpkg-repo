@@ -1,10 +1,11 @@
 #!/bin/sh
 NAME="efibootmgr"
 VERSION="17"
+SOURCES="https://github.com/rhboot/efibootmgr/archive/$VERSION/efibootmgr-$VERSION.tar.gz"
+SHA256SUM="22a95ebe0d5c9fb2915b3a100450f8f37484d1dbb8b296f55b343cc84f10397d  efibootmgr-17.tar.gz"
 DESCRIPTION="efibootmgr provides tools and libraries to manipulate EFI variables"
 
 build() {
-    wget https://github.com/rhboot/efibootmgr/archive/$VERSION/efibootmgr-$VERSION.tar.gz
     tar -xvf efibootmgr-$VERSION.tar.gz
     cd efibootmgr-$VERSION || exit 1
     sed -e '/-Werror/d' -i Make.defaults   

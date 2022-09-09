@@ -1,10 +1,11 @@
 #!/bin/sh
 NAME="gawk"
 VERSION="5.1.1"
+SOURCES="https://ftp.gnu.org/pub/gnu/gawk/gawk-$VERSION.tar.xz"
+SHA256SUM="d87629386e894bbea11a5e00515fc909dc9b7249529dad9e6a3a2c77085f7ea2  gawk-5.1.1.tar.xz"
 DESCRIPTION="GNU awk"
 
 build() {
-    wget https://ftp.gnu.org/pub/gnu/gawk/gawk-$VERSION.tar.xz
     tar -xvf gawk-$VERSION.tar.xz
     cd gawk-$VERSION
     ./configure
