@@ -1,10 +1,11 @@
 #!/bin/sh
 NAME="grub"
 VERSION="2.06"
+SOURCES="https://ftp.gnu.org/gnu/grub/grub-$VERSION.tar.xz"
+SHA256SUM="b79ea44af91b93d17cd3fe80bdae6ed43770678a9a5ae192ccea803ebb657ee1  grub-2.06.tar.xz"
 DESCRIPTION="The GNU Grub Bootloader"
 
 build() {
-    wget https://ftp.gnu.org/gnu/grub/grub-$VERSION.tar.xz
     tar -xvf grub-$VERSION.tar.xz
     cd grub-$VERSION || exit 1
     ./configure --disable-efiemu --disable-werror --prefix=/usr --sysconfdir=/etc --with-platform=efi

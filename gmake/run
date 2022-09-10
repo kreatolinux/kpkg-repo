@@ -1,10 +1,11 @@
 #!/bin/sh
 NAME="gmake"
 VERSION="4.3"
+SOURCES="https://ftp.gnu.org/gnu/make/make-$VERSION.tar.gz"
+SHA256SUM="e05fdde47c5f7ca45cb697e973894ff4f5d79e13b750ed57d7b66d8defc78e19  make-4.3.tar.gz"
 DESCRIPTION="GNU make"
 
 build() {
-    wget https://ftp.gnu.org/gnu/make/make-$VERSION.tar.gz
     tar -xf make-$VERSION.tar.gz
     cd make-$VERSION
     ./configure --without-guile --prefix=/usr --host=x86_64-pc-linux-gnu
