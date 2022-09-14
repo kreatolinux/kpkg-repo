@@ -10,5 +10,4 @@ build() {
         cd nyaa || exit 1
         mkdir -p "$ROOT/usr/bin" "$ROOT/usr/local/man/man1"
         cp nyaa "$ROOT/usr/bin/"
-        gzip "$ROOT/usr/local/man/man1/nyaa.1"
 }

@@ -1,10 +1,11 @@
 #!/bin/sh
 NAME="libevdev"
 VERSION="1.12.1"
+SOURCES="https://www.freedesktop.org/software/libevdev/libevdev-$VERSION.tar.xz"
+SHA256SUM="1dbba41bc516d3ca7abc0da5b862efe3ea8a7018fa6e9b97ce9d39401b22426c  libevdev-1.12.1.tar.xz"
 DESCRIPTION="Common functions for Xorg input drivers"
 
 build() {
-    down https://www.freedesktop.org/software/libevdev/libevdev-$VERSION.tar.xz 
     tar -xvf libevdev-$VERSION.tar.xz
     cd libevdev-$VERSION || exit 1
     ./configure --prefix=/usr

@@ -1,10 +1,11 @@
 #!/bin/sh
 NAME="json-c"
 VERSION="0.16"
+SOURCES="https://s3.amazonaws.com/json-c_releases/releases/json-c-$VERSION.tar.gz"
+SHA256SUM="8e45ac8f96ec7791eaf3bb7ee50e9c2100bbbc87b8d0f1d030c5ba8a0288d96b  json-c-0.16.tar.gz"
 DESCRIPTION="Construct JSON objects in C"
 
 build() {
-    down https://s3.amazonaws.com/json-c_releases/releases/json-c-$VERSION.tar.gz 
     tar -xvf json-c-$VERSION.tar.gz
     cd json-c-$VERSION || exit 1
     mkdir build 

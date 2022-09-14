@@ -1,11 +1,12 @@
 #!/bin/sh
 NAME="libisl"
 VERSION="0.24"
+SOURCES="https://libisl.sourceforge.io/isl-$VERSION.tar.xz"
+SHA256SUM="043105cc544f416b48736fff8caf077fb0663a717d06b1113f16e391ac99ebad  isl-0.24.tar.xz"
 DESCRIPTION="isl is a library for manipulating sets and relations of integer points bounded by linear constraints."
 
 build() {
-    [ ! -f "isl.tar.xz" ] && wget https://libisl.sourceforge.io/isl-$VERSION.tar.xz -O isl.tar.xz
-    tar -xvf isl.tar.xz
+    tar -xvf isl-$VERSION.tar.xz
     cd isl-$VERSION || exit 1
     ./configure --prefix=/usr
     make -j$(nproc)

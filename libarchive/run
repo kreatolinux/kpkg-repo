@@ -1,10 +1,11 @@
 #!/bin/sh
 NAME="libarchive"
 VERSION="3.6.1"
+SOURCES="https://github.com/$NAME/$NAME/releases/download/v$VERSION/$NAME-$VERSION.tar.xz"
+SHA256SUM="5a411aceb978f43e626f0c2d1812ddd8807b645ed892453acabd532376c148e6  libarchive-3.6.1.tar.xz"
 DESCRIPTION="Multi-format archive and compression library"
 
 build() {
-    [ ! -f "$NAME-$VERSION.tar.xz" ] && down https://github.com/$NAME/$NAME/releases/download/v$VERSION/$NAME-$VERSION.tar.xz
     tar -xvf $NAME-$VERSION.tar.xz
     cd $NAME-$VERSION
     ./configure --prefix=/usr --disable-static

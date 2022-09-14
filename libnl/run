@@ -1,13 +1,11 @@
 #!/bin/sh
 NAME="libnl"
-V1="3"
-V2="5"
-V3="0"
-VERSION="$V1.$V2.$V3"
+VERSION="3.7.0"
+SOURCES="https://github.com/thom311/libnl/releases/download/libnl3_7_0/libnl-3.7.0.tar.gz"
+SHA256SUM="9fe43ccbeeea72c653bdcf8c93332583135cda46a79507bfd0a483bb57f65939  libnl-3.7.0.tar.gz"
 DESCRIPTION="A collection of libraries providing APIs to netlink protocol Linux kernel interfaces"
 
 build() {
-    [ ! -f "libnl-$VERSION.tar.gz" ] && down https://github.com/thom311/libnl/releases/download/libnl"$V1"'_'"$V2"'_'"$V3"/libnl-"$VERSION".tar.gz
     tar -xvf libnl-$VERSION.tar.gz
     cd libnl-$VERSION
     ./configure --prefix=/usr     \
