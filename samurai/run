@@ -1,10 +1,11 @@
 #!/bin/sh
 NAME="samurai"
 VERSION="1.2"
+SOURCES="https://github.com/michaelforney/samurai/releases/download/$VERSION/samurai-$VERSION.tar.gz"
+SHA256SUM="3b8cf51548dfc49b7efe035e191ff5e1963ebc4fe8f6064a5eefc5343eaf78a5  samurai-1.2.tar.gz"
 DESCRIPTION="ninja-compatible build tool written in C"
 
 build() {
-    wget https://github.com/michaelforney/samurai/releases/download/$VERSION/samurai-$VERSION.tar.gz
     tar -xvf samurai-$VERSION.tar.gz
     cd samurai-$VERSION || exit 1
     make -j$(nproc)

@@ -1,10 +1,11 @@
 #!/bin/sh
 NAME="zlib"
 VERSION="1.2.12"
-DESCRIPTION="zlib"
+DESCRIPTION="zlib is a software library used for data compression."
+SOURCES="https://zlib.net/zlib-$VERSION.tar.gz"
+SHA256SUM="91844808532e5ce316b3c010929493c0244f3d37593afd6de04f71821d5136d9  zlib-1.2.12.tar.gz"
 
 build() {
-    [ ! -f "zlib-$VERSION.tar.gz" ] && wget https://zlib.net/zlib-$VERSION.tar.gz
     tar -xvf zlib-$VERSION.tar.gz
     cd zlib-$VERSION
     ./configure --prefix=/usr

@@ -1,10 +1,11 @@
 #!/bin/sh
 NAME="wpa_supplicant"
 VERSION="2.10"
+SOURCES="https://w1.fi/releases/wpa_supplicant-$VERSION.tar.gz"
+SHA256SUM="20df7ae5154b3830355f8ab4269123a87affdea59fe74fe9292a91d0d7e17b2f  wpa_supplicant-2.10.tar.gz"
 DESCRIPTION="WPA client"
 
 build() {
-    [ ! -f "wpa_supplicant-$VERSION.tar.gz" ] && down https://w1.fi/releases/wpa_supplicant-$VERSION.tar.gz
     tar -xf wpa_supplicant-$VERSION.tar.gz
     cd wpa_supplicant-$VERSION
     cat > wpa_supplicant/.config << "EOF"

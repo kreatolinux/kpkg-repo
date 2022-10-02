@@ -1,10 +1,11 @@
 #!/bin/sh
 NAME="libuv"
-VERSION="1.44.1"
+VERSION="1.44.2"
+SOURCES=" https://dist.libuv.org/dist/v$VERSION/libuv-v$VERSION.tar.gz"
+SHA256SUM="ccfcdc968c55673c6526d8270a9c8655a806ea92468afcbcabc2b16040f03cb4  libuv-v1.44.2.tar.gz"
 DESCRIPTION="The libuv package is a multi-platform support library with a focus on asynchronous I/O."
 
 build() {
-    [ ! -f "libuv-v$VERSION.tar.gz" ] && down https://dist.libuv.org/dist/v$VERSION/libuv-v$VERSION.tar.gz
     tar -xvf libuv-v$VERSION.tar.gz
     cd libuv-v$VERSION
     sh autogen.sh

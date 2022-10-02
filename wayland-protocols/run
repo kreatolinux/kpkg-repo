@@ -1,10 +1,11 @@
 #!/bin/sh
 NAME="wayland-protocols"
 VERSION="1.25"
+SOURCES="https://wayland.freedesktop.org/releases/wayland-protocols-$VERSION.tar.xz"
+SHA256SUM="f1ff0f7199d0a0da337217dd8c99979967808dc37731a1e759e822b75b571460  wayland-protocols-1.25.tar.xz"
 DESCRIPTION="Additional Wayland protocols that add functionality outside of protocols already in the Wayland core"
 
 build() {
-    down https://wayland.freedesktop.org/releases/wayland-protocols-$VERSION.tar.xz
     tar -xvf wayland-protocols-$VERSION.tar.xz
     cd wayland-protocols-$VERSION || exit 1
     mkdir build 

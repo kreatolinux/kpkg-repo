@@ -1,10 +1,11 @@
 #!/bin/sh
 NAME="seatd"
 VERSION="0.6.4"
+SOURCES="https://git.sr.ht/~kennylevinsen/seatd/archive/$VERSION.tar.gz"
+SHA256SUM="3d4ac288114219ba7721239cafee7bfbeb7cf8e1e7fd653602a369e4ad050bd8  0.6.4.tar.gz"
 DESCRIPTION="Seat daemon."
 
 build() {
-    down https://git.sr.ht/~kennylevinsen/seatd/archive/$VERSION.tar.gz 
     tar -xvf $VERSION.tar.gz
     cd seatd-$VERSION || exit 1
     mkdir build 

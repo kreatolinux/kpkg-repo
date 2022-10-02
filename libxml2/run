@@ -1,11 +1,12 @@
 #!/bin/sh
 NAME="libxml2"
 VER1="2.9"
-VERSION="$VER1.13"
+VERSION="$VER1.14"
+SOURCES="https://download.gnome.org/sources/libxml2/$VER1/libxml2-$VERSION.tar.xz"
+SHA256SUM="60d74a257d1ccec0475e749cba2f21559e48139efba6ff28224357c7c798dfee  libxml2-2.9.14.tar.xz"
 DESCRIPTION="Libraries and utilities for parsing XML files"
 
 build() {
-    wget https://download.gnome.org/sources/libxml2/$VER1/libxml2-$VERSION.tar.xz
     tar -xvf libxml2-$VERSION.tar.xz
     cd libxml2-$VERSION || exit 1
     ./configure --prefix=/usr    \

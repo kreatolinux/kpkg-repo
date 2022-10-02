@@ -1,10 +1,11 @@
 #!/bin/sh
 NAME="texinfo"
 VERSION="6.8"
+SOURCES="https://ftp.gnu.org/gnu/texinfo/texinfo-$VERSION.tar.xz"
+SHA256SUM="8eb753ed28bca21f8f56c1a180362aed789229bd62fff58bf8368e9beb59fec4  texinfo-6.8.tar.xz"
 DESCRIPTION="GNU texinfo"
 
 build() {
-    wget https://ftp.gnu.org/gnu/texinfo/texinfo-$VERSION.tar.xz
     tar -xvf texinfo-$VERSION.tar.xz
     cd texinfo-$VERSION
     sed -e 's/__attribute_nonnull__/__nonnull/' \
