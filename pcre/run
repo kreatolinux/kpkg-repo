@@ -1,10 +1,11 @@
 #!/bin/sh
 NAME="pcre"
 VERSION="8.45"
+SOURCES="https://sourceforge.net/projects/pcre/files/pcre/$VERSION/pcre-$VERSION.tar.bz2"
+SHA256SUM="4dae6fdcd2bb0bb6c37b5f97c33c2be954da743985369cddac3546e3218bffb8  pcre-8.45.tar.bz2"
 DESCRIPTION="Perl Compatible Regular Expression libraries"
 
 build() {
-    wget https://sourceforge.net/projects/pcre/files/pcre/$VERSION/pcre-$VERSION.tar.bz2
     tar -xvf pcre-$VERSION.tar.bz2
     cd pcre-$VERSION
     ./configure --prefix=/usr

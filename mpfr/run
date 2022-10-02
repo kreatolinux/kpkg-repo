@@ -1,10 +1,11 @@
 #!/bin/sh
 NAME="mpfr"
 VERSION="4.1.0"
+SOURCES="https://www.mpfr.org/mpfr-$VERSION/mpfr-$VERSION.tar.xz"
+SHA256SUM="0c98a3f1732ff6ca4ea690552079da9c597872d30e96ec28414ee23c95558a7f  mpfr-4.1.0.tar.xz"
 DESCRIPTION="GNU mpfr"
 
 build() {
-    [ ! -f "mpfr-$VERSION.tar.xz" ] && wget https://www.mpfr.org/mpfr-$VERSION/mpfr-$VERSION.tar.xz
     tar -xf mpfr-$VERSION.tar.xz
     cd mpfr-$VERSION
     ./configure

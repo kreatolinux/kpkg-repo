@@ -1,9 +1,10 @@
 #!/bin/sh
 NAME="make-ca"
 VERSION="1.7"
+SOURCES="https://github.com/djlucas/make-ca/releases/download/v$VERSION/make-ca-$VERSION.tar.xz"
+SHA256SUM="6db8b96c961790507c5e36e0ed75a079ae95300f520cd88ac061cf44a4733c2f  make-ca-1.7.tar.xz"
 DESCRIPTION=""
 build() {
-    wget  https://github.com/djlucas/make-ca/releases/download/v$VERSION/make-ca-$VERSION.tar.xz
     tar -xvf make-ca-$VERSION.tar.xz
     cd make-ca-$VERSION || exit  1
     make DESTDIR=$ROOT install

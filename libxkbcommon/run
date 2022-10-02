@@ -1,10 +1,11 @@
 #!/bin/sh
 NAME="libxkbcommon"
 VERSION="1.4.0"
+SOURCES="https://xkbcommon.org/download/libxkbcommon-$VERSION.tar.xz"
+SHA256SUM="106cec5263f9100a7e79b5f7220f889bc78e7d7ffc55d2b6fdb1efefb8024031  libxkbcommon-1.4.0.tar.xz"
 DESCRIPTION="Keyboard compiler and support library"
 
 build() {
-    down https://xkbcommon.org/download/libxkbcommon-$VERSION.tar.xz 
     tar -xvf libxkbcommon-$VERSION.tar.xz
     cd libxkbcommon-$VERSION || exit 1
     mkdir build 

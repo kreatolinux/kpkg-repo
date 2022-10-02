@@ -1,10 +1,11 @@
 #!/bin/sh
 NAME="libzstd"
 VERSION="1.5.1"
+SOURCES="https://github.com/facebook/zstd/releases/download/v$VERSION/zstd-$VERSION.tar.gz"
+SHA256SUM="e28b2f2ed5710ea0d3a1ecac3f6a947a016b972b9dd30242369010e5f53d7002  zstd-1.5.1.tar.gz"
 DESCRIPTION="Facebook's zstd library"
 
 build() {
-    wget https://github.com/facebook/zstd/releases/download/v$VERSION/zstd-$VERSION.tar.gz
     tar -xvf zstd-$VERSION.tar.gz
     cd zstd-$VERSION || exit 1
     make

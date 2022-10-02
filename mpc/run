@@ -1,12 +1,13 @@
 #!/bin/sh
 NAME="mpc"
 VERSION="1.2.1"
+SOURCES="https://ftp.gnu.org/gnu/mpc/mpc-$VERSION.tar.gz"
+SHA256SUM="17503d2c395dfcf106b622dc142683c1199431d095367c6aacba6eec30340459  mpc-1.2.1.tar.gz"
 DESCRIPTION="GNU MPC"
 
 build() {
-    [ ! -f "mpc-1.2.1.tar.gz" ] && wget https://ftp.gnu.org/gnu/mpc/mpc-1.2.1.tar.gz
-    tar -xf mpc-1.2.1.tar.gz
-    cd mpc-1.2.1
+    tar -xf mpc-$VERSION.tar.gz
+    cd mpc-$VERSION
     ./configure
     make -j$(nproc)
     make DESTDIR=$ROOT install

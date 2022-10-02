@@ -1,10 +1,11 @@
 #!/bin/sh
 NAME="pkgconf"
 VERSION="1.1.0"
+SOURCES="https://distfiles.dereferenced.org/pkgconf/pkgconf-$VERSION.tar.xz"
+SHA256SUM="5f1ef65d73a880fa5e7012102a17f7b32010e5e46139aed85851a541ba828a63  pkgconf-1.1.0.tar.xz"
 DESCRIPTION="pkgconf is a program which helps to configure compiler and linker flags for development frameworks."
 
 build() {
-    down https://distfiles.dereferenced.org/pkgconf/pkgconf-$VERSION.tar.xz 
     tar -xvf pkgconf-$VERSION.tar.xz
     cd pkgconf-$VERSION || exit 1
     ./configure --prefix=/usr

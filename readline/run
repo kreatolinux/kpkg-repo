@@ -1,10 +1,11 @@
 #!/bin/sh
 NAME="readline"
 VERSION="8.1.2"
+SOURCES="https://ftp.gnu.org/gnu/readline/readline-$VERSION.tar.gz"
+SHA256SUM="7589a2381a8419e68654a47623ce7dfcb756815c8fee726b98f90bf668af7bc6  readline-8.1.2.tar.gz"
 DESCRIPTION="GNU readline"
 
 build() {
-    wget https://ftp.gnu.org/gnu/readline/readline-$VERSION.tar.gz
     tar -xvf readline-$VERSION.tar.gz
     cd readline-$VERSION || exit 1
     ./configure --with-shared 

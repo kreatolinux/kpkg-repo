@@ -1,10 +1,11 @@
 #!/bin/sh
 NAME="pixman"
 VERSION="0.40.0"
+SOURCES="https://www.cairographics.org/releases/pixman-$VERSION.tar.gz"
+SHA256SUM="6d200dec3740d9ec4ec8d1180e25779c00bc749f94278c8b9021f5534db223fc  pixman-0.40.0.tar.gz"
 DESCRIPTION="A library that provides low-level pixel manipulation features such as image compositing and trapezoid rasterization"
 
 build() {
-    wget https://www.cairographics.org/releases/pixman-$VERSION.tar.gz
     tar -xvf pixman-$VERSION.tar.gz
     cd pixman-$VERSION || exit 1
     mkdir build

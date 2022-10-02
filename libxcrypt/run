@@ -1,10 +1,11 @@
 #!/bin/sh
 NAME="libxcrypt"
 VERSION="4.4.28"
+SOURCES="https://github.com/besser82/libxcrypt/releases/download/v$VERSION/libxcrypt-$VERSION.tar.xz"
+SHA256SUM="9e936811f9fad11dbca33ca19bd97c55c52eb3ca15901f27ade046cc79e69e87  libxcrypt-4.4.28.tar.xz"
 DESCRIPTION="Extended crypt library"
 
 build() {
-    wget https://github.com/besser82/libxcrypt/releases/download/v$VERSION/libxcrypt-$VERSION.tar.xz
     tar -xvf libxcrypt-$VERSION.tar.xz
     cd libxcrypt-$VERSION || exit 1
     ./configure --disable-obsolete-api --prefix=/usr
