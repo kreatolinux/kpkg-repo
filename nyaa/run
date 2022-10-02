@@ -2,12 +2,12 @@
 NAME="nyaa"
 VERSION="1.7b"
 SOURCES="https://github.com/kreatolinux/nyaa/archive/refs/tags/v$VERSION.tar.gz"
-SHA256SUM="ad68187647ac6bafd6f0fae899e103b8bfab3227e14f76f4fd65af7bc14da64e  v1.7a.tar.gz"
+SHA256SUM="258397fcaa2754a50709bb44ba3d4037d8fe0af140efb711d359a053c6690bab  v1.7b.tar.gz"
 DESCRIPTION="The nyaa package manager"
 
 build() {
         tar -xvf "v$VERSION.tar.gz"
-        cd nyaa || exit 1
+        cd nyaa-$VERSION || exit 1
         mkdir -p "$ROOT/usr/bin" "$ROOT/usr/local/man/man1"
         cp nyaa "$ROOT/usr/bin/"
 }
