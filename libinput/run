@@ -1,8 +1,8 @@
 #!/bin/sh
 NAME="libinput"
-VERSION="1.20.0"
+VERSION=1.21.0
 SOURCES="https://gitlab.freedesktop.org/libinput/libinput/-/archive/$VERSION/libinput-$VERSION.tar.gz"
-SHA256SUM="04d27bce1eb8387e99740e43224b0de7ea65161826d120199bf96230132e5186  libinput-1.20.0.tar.gz"
+SHA256SUM="1b23c180f5b297303ed36f5a549910f5d320b0eb21052eac67a966d4eaa4e01d  libinput-1.21.0.tar.gz;"
 DESCRIPTION="Library that handles input devices"
 
 build() {

@@ -1,8 +1,8 @@
 #!/bin/sh
 NAME="bison"
-VERSION="3.7.6"
+VERSION="3.8.2"
 SOURCES="https://ftp.gnu.org/gnu/bison/bison-$VERSION.tar.xz"
-SHA256SUM="67d68ce1e22192050525643fc0a7a22297576682bef6a5c51446903f5aeef3cf  bison-3.7.6.tar.xz"
+SHA256SUM="9bba0214ccf7f1079c5d59210045227bcf619519840ebfa80cd3849cff5a5bf2  bison-3.8.2.tar.xz"
 DESCRIPTION="a general-purpose parser generator"
 
 build() {

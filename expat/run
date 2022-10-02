@@ -1,8 +1,8 @@
 #!/bin/sh
 NAME="expat"
-VERSION="2.4.8"
-SOURCES="https://github.com/libexpat/libexpat/releases/download/R_2_4_8/$NAME-$VERSION.tar.xz"
-SHA256SUM="f79b8f904b749e3e0d20afeadecf8249c55b2e32d4ebb089ae378df479dcaf25  expat-2.4.8.tar.xz"
+VERSION="2.4.9"
+SOURCES="https://github.com/libexpat/libexpat/releases/download/R_2_4_9/expat-$VERSION.tar.xz"
+SHA256SUM="6e8c0728fe5c7cd3f93a6acce43046c5e4736c7b4b68e032e9350daa0efc0354  expat-2.4.9.tar.xz"
 DESCRIPTION="a stream oriented C library for parsing XML"
 
 build() {

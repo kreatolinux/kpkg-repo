@@ -1,8 +1,8 @@
 #!/bin/sh
 NAME="pkgconf"
-VERSION="1.1.0"
+VERSION=1.8.0
 SOURCES="https://distfiles.dereferenced.org/pkgconf/pkgconf-$VERSION.tar.xz"
-SHA256SUM="5f1ef65d73a880fa5e7012102a17f7b32010e5e46139aed85851a541ba828a63  pkgconf-1.1.0.tar.xz"
+SHA256SUM="ef9c7e61822b7cb8356e6e9e1dca58d9556f3200d78acab35e4347e9d4c2bbaf  pkgconf-1.8.0.tar.xz;"
 DESCRIPTION="pkgconf is a program which helps to configure compiler and linker flags for development frameworks."
 
 build() {

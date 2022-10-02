@@ -1,8 +1,8 @@
 #!/bin/sh
 NAME="glibc"
-VERSION="2.35"
+VERSION=2.36
 SOURCES="https://ftp.gnu.org/gnu/glibc/glibc-$VERSION.tar.xz"
-SHA256SUM="5123732f6b67ccd319305efd399971d58592122bcc2a6518a1bd2510dd0cf52e  glibc-2.35.tar.xz"
+SHA256SUM="1c959fea240906226062cb4b1e7ebce71a9f0e3c0836c09e7e3423d434fcfe75  glibc-2.36.tar.xz;"
 DESCRIPTION="The GNU C library"
 
 build() {

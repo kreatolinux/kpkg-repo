@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="pango"
-MAINVERSION="1.50"
-VERSION="$MAINVERSION.7"
+MAINVERSION=1.50.10
+VERSION=1.50.10
 SOURCES="https://download.gnome.org/sources/pango/$MAINVERSION/pango-$VERSION.tar.xz" 
-SHA256SUM="0477f369a3d4c695df7299a6989dc004756a7f4de27eecac405c6790b7e3ad33  pango-1.50.7.tar.xz"
+SHA256SUM=";"
 DESCRIPTION="Text (i.e. glyph) layout engine library"
 
 build() {
