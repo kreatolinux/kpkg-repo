@@ -7,15 +7,15 @@ SHA256SUM="0d9020f06f3ddf17fb537dc228e1a56c927ee506b486f55fe2dc19f69bf0c8db  cma
 DESCRIPTION="CMake package contains a modern toolset used for generating Makefiles."
 
 build() {
-    tar -xf cmake-$VERSION.0.tar.gz
-    cd cmake-$VERSION.0
+    tar -xf cmake-$VERSION.tar.gz
+    cd cmake-$VERSION
     sed -i '/"lib64"/s/64//' Modules/GNUInstallDirs.cmake
     ./bootstrap --prefix=/usr        \
                 --system-libs        \
                 --mandir=/share/man  \
                 --no-system-jsoncpp  \
                 --no-system-librhash \
-                --docdir=/share/doc/cmake-$VERSION.0
+                --docdir=/share/doc/cmake-$VERSION
     make -j$(nproc)
     make DESTDIR=$ROOT install
 }
