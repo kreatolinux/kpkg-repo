@@ -1,0 +1,13 @@
+#!/bin/sh
+NAME="fontconfig"
+VERSION="2.14.0"
+SOURCES="https://www.freedesktop.org/software/fontconfig/release/fontconfig-$VERSION.tar.gz"
+SHA256SUM=";"
+DESCRIPTION="fontconfig"
+build() {
+    [ ! -d "$NAME-$VERSION" ] && tar -xvf $NAME-$VERSION.tar.gz
+    cd $NAME-$VERSION || exit  1
+    ./configure --prefix=/usr
+    make
+    make DESTDIR=$ROOT install
+}

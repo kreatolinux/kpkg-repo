@@ -1,0 +1,15 @@
+#!/bin/sh
+NAME="libdrm"
+VERSION="2.4.113"
+SOURCES="https://dri.freedesktop.org/libdrm/libdrm-$VERSION.tar.xz"
+SHA256SUM="5bac17218d3911834520dad13cd1f85ab944e1c09ae1aba55906be1f8192f558  bash-5.1.16.tar.gz"
+DESCRIPTION="libdrm"
+build() {
+    [ ! -d "libdrm-$VERSION" ] && tar -xvf libdrm-$VERSION.tar.xz
+    cd libdrm-$VERSION || exit  1
+    mkdir build
+    cd build
+    meson --prefix=/usr --buildtype=release
+    ninja
+    DESTDIR="$ROOT" ninja install
+}

@@ -1,0 +1,21 @@
+#!/bin/sh
+NAME="mesa"
+VERSION="22.2.0"
+SOURCES="https://archive.mesa3d.org/mesa-$VERSION.tar.xz"
+SHA256SUM="b1f9c8fd08f2cae3adf83355bef4d2398e8025f44947332880f2d0066bdafa8c  mesa-22.2.0.tar.xz"
+DESCRIPTION="The 3D Graphics Library"
+build() {
+    [ ! -d "mesa-$VERSION" ] && tar -xvf mesa-$VERSION.tar.xz
+    cd mesa-$VERSION || exit  1
+    export PYTHONPATH=$(realpath /usr/lib/python*/site-packages):$(python -c "import sys; print(':'.join(sys.path))")
+    meson --buildtype=release     \
+      -Dplatforms=wayland \
+      -Dgallium-drivers=auto  \
+      -Dvulkan-drivers=""     \
+      -Dglx=disabled          \
+      -Dvalgrind=disabled     \
+      -Dlibunwind=disabled    \
+      build/
+    ninja -C build/
+    DESTDIR=$ROOT ninja -C build/ install
+}

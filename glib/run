@@ -1,0 +1,18 @@
+#!/bin/sh
+NAME="glib"
+MAINVERSION="2.74"
+VERSION="$MAINVERSION.0"
+SOURCES="https://download.gnome.org/sources/glib/$MAINVERSION/glib-$VERSION.tar.xz" 
+SHA256SUM=";"
+DESCRIPTION="glib"
+
+build() {
+    tar -xvf glib-$VERSION.tar.xz
+    cd glib-$VERSION || exit 1
+    meson \
+    --prefix=/usr \
+    -Dman=false \
+    build
+    ninja -C build
+    DESTDIR="$ROOT" ninja -C build install
+}

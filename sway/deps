@@ -1,0 +1,10 @@
+pcre
+wlroots
+cairo
+git
+libevdev
+wayland
+libinput
+wayland-protocols
+pango
+json-c

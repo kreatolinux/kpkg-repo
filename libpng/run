@@ -1,0 +1,15 @@
+#!/bin/sh
+NAME="libpng"
+VERSION="1.6.35"
+SOURCES="https://github.com/glennrp/libpng/archive/refs/tags/v$VERSION.tar.gz"
+SHA256SUM="6d59d6a154ccbb772ec11772cb8f8beb0d382b61e7ccc62435bf7311c9f4b210  v1.6.35.tar.gz"
+DESCRIPTION="PNG library"
+
+build() {
+    tar -xvf v$VERSION.tar.gz
+    cd libpng-$VERSION || exit 1
+    ./configure --prefix=/usr    \
+            --disable-static
+    make
+    make DESTDIR="$ROOT" install
+}

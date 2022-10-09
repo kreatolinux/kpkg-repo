@@ -1,0 +1,13 @@
+#!/bin/sh
+NAME="sway"
+VERSION="1.7"
+SOURCES="https://github.com/swaywm/sway/releases/download/$VERSION/sway-$VERSION.tar.gz"
+SHA256SUM="0c64536fb2883ec518e75cfb119f9300115fb49b084e3fde62b794fe2c6c8d84  sway-1.7.tar.gz"
+DESCRIPTION="Wayland tiling window manager"
+build() {
+    [ ! -d "sway-$VERSION" ] && tar -xvf sway-$VERSION.tar.gz
+    cd sway-$VERSION || exit  1
+    meson build/
+    ninja -C build/
+    DESTDIR=$ROOT ninja -C build/ install
+}

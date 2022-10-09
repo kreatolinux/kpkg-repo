@@ -1,0 +1,13 @@
+#!/bin/sh
+NAME="wlroots"
+VERSION="0.15.1"
+SOURCES="https://gitlab.freedesktop.org/wlroots/wlroots/-/releases/$VERSION/downloads/wlroots-$VERSION.tar.gz"
+SHA256SUM="5b92f11a52d978919ed1306e0d54c9d59f1762b28d44f0a2da3ef3b351305373  wlroots-0.15.1.tar.gz"
+DESCRIPTION="Modules for building a Wayland compositor"
+build() {
+    [ ! -d "wlroots-$VERSION" ] && tar -xvf wlroots-$VERSION.tar.gz
+    cd wlroots-$VERSION || exit  1
+    meson build/
+    ninja -C build/
+    DESTDIR=$ROOT ninja -C build/ install
+}

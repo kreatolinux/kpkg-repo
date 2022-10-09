@@ -6,7 +6,6 @@ SHA256SUM="6dc64d7fc16837a693a51cfdb2e568db538bfdc9f457d4656285bb9594ef11ac  way
 DESCRIPTION="Wayland is a project to define a protocol for a compositor to talk to its clients as well as a library implementation of the protocol."
 
 build() {
-    wget https://wayland.freedesktop.org/releases/wayland-$VERSION.tar.xz
     tar -xvf wayland-$VERSION.tar.xz
     cd wayland-$VERSION || exit 1
     mkdir build

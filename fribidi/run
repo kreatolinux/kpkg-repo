@@ -1,0 +1,14 @@
+#!/bin/sh
+NAME="fribidi"
+VERSION="1.0.12"
+SOURCES="https://github.com/fribidi/fribidi/releases/download/v$VERSION/fribidi-$VERSION.tar.xz" 
+SHA256SUM=";"
+DESCRIPTION="FriBidi is an implementation of Unicode Bidirectional Algorithm"
+
+build() {
+    tar -xvf fribidi-$VERSION.tar.xz
+    cd fribidi-$VERSION || exit 1
+    ./configure --prefix=/usr 
+    make
+    make DESTDIR="$ROOT" install
+}

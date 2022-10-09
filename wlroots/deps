@@ -1,0 +1,9 @@
+wayland
+wayland-protocols
+libdrm
+libxkbcommon
+libinput
+seatd
+pixman
+libudev
+mesa

@@ -1,0 +1,63 @@
+#!/bin/sh
+NAME="freetype-harfbuzz"
+FREETYPE_VERSION="2.12.1"
+HARFBUZZ_VERSION="5.3.0"
+VERSION="0.1"
+SOURCES="https://download-mirror.savannah.gnu.org/releases/freetype/freetype-$FREETYPE_VERSION.tar.gz;https://github.com/harfbuzz/harfbuzz/releases/download/5.3.0/harfbuzz-5.3.0.tar.xz" 
+SHA256SUM=";"
+DESCRIPTION="FriBidi is an implementation of Unicode Bidirectional Algorithm"
+
+# Taken from KISS Linux
+build_freetype() (
+    cd freetype-$FREETYPE_VERSION
+
+    meson \
+        --prefix=/usr \
+        -Ddefault_library=both \
+        -Dbzip2=disabled \
+        -Dzlib=disabled \
+        "$@" \
+        . output
+
+    DESTDIR=$ROOT ninja -C output
+    DESTDIR=$ROOT ninja -C output install
+)
+
+build_harfbuzz() (
+    cd harfbuzz-$HARFBUZZ_VERSION
+
+    meson \
+        --prefix=/usr \
+        -Dpkg_config_path="$DESTDIR/usr/lib/pkgconfig" \
+        -Ddefault_library=both \
+        -Dglib=disabled \
+        -Dfreetype=enabled \
+        -Dgobject=disabled \
+        -Dcairo=disabled \
+        -Dicu=disabled \
+        -Dbenchmark=disabled \
+        -Dtests=disabled \
+        . output
+
+    DESTDIR=$ROOT ninja -C output
+    DESTDIR=$ROOT ninja -C output install
+)
+
+
+build() {
+    tar -xvf freetype-$FREETYPE_VERSION.tar.gz
+    tar -xvf harfbuzz-$HARFBUZZ_VERSION.tar.xz 
+    
+    # Point Freetype to the Harfbuzz files.
+    export CFLAGS="$CFLAGS -I$DESTDIR/usr/include/harfbuzz"
+    export CFLAGS="$CFLAGS -L$DESTDIR/usr/lib "
+    export PKG_CONFIG_PATH=$DESTDIR/usr/lib/pkgconfig
+
+    # Point Harfbuzz to the Freetype files.
+    export CXXFLAGS="$CXXFLAGS -I$DESTDIR/usr/include/freetype2"
+    export CXXFLAGS="$CXXFLAGS -L$DESTDIR/usr/lib"
+    
+    build_freetype -Dharfbuzz=disabled
+    build_harfbuzz
+    build_freetype -Dharfbuzz=enabled --reconfigure
+}

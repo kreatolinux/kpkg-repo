@@ -1,13 +1,13 @@
 #!/bin/sh
-NAME="pcre"
-VERSION="8.45"
-SOURCES="https://sourceforge.net/projects/pcre/files/pcre/$VERSION/pcre-$VERSION.tar.bz2"
-SHA256SUM="4dae6fdcd2bb0bb6c37b5f97c33c2be954da743985369cddac3546e3218bffb8  pcre-8.45.tar.bz2"
+NAME="pcre2"
+VERSION="10.40"
+SOURCES="https://github.com/PCRE2Project/pcre2/releases/download/pcre2-$VERSION/pcre2-$VERSION.tar.gz"
+SHA256SUM="ded42661cab30ada2e72ebff9e725e745b4b16ce831993635136f2ef86177724  pcre2-10.40.tar.gz"
 DESCRIPTION="Perl Compatible Regular Expression libraries"
 
 build() {
-    tar -xvf pcre-$VERSION.tar.bz2
-    cd pcre-$VERSION
+    tar -xvf pcre2-$VERSION.tar.gz
+    cd pcre2-$VERSION
     ./configure --prefix=/usr
     make DESTDIR=$ROOT install
 }

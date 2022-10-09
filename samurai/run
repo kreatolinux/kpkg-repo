@@ -11,5 +11,5 @@ build() {
     make -j$(nproc)
     make DESTDIR=$ROOT install
     mkdir -p "$ROOT/usr/bin"
-    ln -s /usr/bin/samu "$ROOT/usr/bin/ninja"
+    ln -s /usr/local/bin/samu "$ROOT/usr/bin/ninja"
 }

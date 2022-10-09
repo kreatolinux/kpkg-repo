@@ -1,0 +1,15 @@
+#!/bin/sh
+NAME="elfutils"
+VERSION="0.187"
+SOURCES="https://sourceware.org/elfutils/ftp/$VERSION/elfutils-$VERSION.tar.bz2"
+SHA256SUM="e70b0dfbe610f90c4d1fe0d71af142a4e25c3c4ef9ebab8d2d72b65159d454c8  elfutils-0.187.tar.bz2"
+DESCRIPTION="elfutils"
+build() {
+    [ ! -d "elfutils-$VERSION" ] && tar -xvf elfutils-$VERSION.tar.bz2
+    cd elfutils-$VERSION || exit  1
+    ./configure --prefix=/usr \
+        --disable-debuginfod \
+        --disable-libdebuginfod
+    make
+    make DESTDIR=$ROOT install
+}

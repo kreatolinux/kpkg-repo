@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="pango"
-MAINVERSION=1.50.10
-VERSION=1.50.10
+MAINVERSION="1.50"
+VERSION="$MAINVERSION.10"
 SOURCES="https://download.gnome.org/sources/pango/$MAINVERSION/pango-$VERSION.tar.xz" 
 SHA256SUM=";"
 DESCRIPTION="Text (i.e. glyph) layout engine library"
@@ -14,8 +14,7 @@ build() {
     --prefix=/usr \
     -Dgtk_doc=false \
     -Dxft=disabled \
-    -Dintrospection=disabled \
-    . build
+    build
     ninja -C build
     DESTDIR="$ROOT" ninja -C build install
 }

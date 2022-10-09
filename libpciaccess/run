@@ -1,0 +1,13 @@
+#!/bin/sh
+NAME="libpciaccess"
+VERSION="0.16"
+SOURCES="https://x.org/releases/individual/lib/libpciaccess-$VERSION.tar.gz"
+SHA256SUM="84413553994aef0070cf420050aa5c0a51b1956b404920e21b81e96db6a61a27  libpciaccess-0.16.tar.gz"
+DESCRIPTION="libpciaccess"
+build() {
+    [ ! -d "libpciaccess-$VERSION" ] && tar -xvf libpciaccess-$VERSION.tar.gz
+    cd libpciaccess-$VERSION || exit  1
+    ./configure --prefix=/usr
+    make
+    make DESTDIR=$ROOT install
+}
