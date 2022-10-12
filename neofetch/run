@@ -7,7 +7,7 @@ DESCRIPTION="A command-line system information tool written in bash 3.2+"
 
 build() {
     tar -xvf $VERSION.tar.gz
-    cd $VERSION
+    cd neofetch-$VERSION
 	mkdir -p $ROOT/usr/bin
 	cp -rf   neofetch $ROOT/usr/bin
 	chmod +x $ROOT/usr/bin/neofetch

@@ -7,6 +7,5 @@ DESCRIPTION="Hyperfast and lightweight templating for the Python platform"
 build() {
     [ ! -d "Mako-$VERSION" ] && tar -xvf Mako-$VERSION.tar.gz
     cd Mako-$VERSION || exit 1
-    python setup.py build
-    python setup.py install --prefix=/usr --root="$ROOT"
+    SETUPTOOLS_USE_DISTUTILS=stdlib pip install . --prefix=/usr --root="$ROOT"
 }

@@ -32,6 +32,6 @@ build() {
     make DESTDIR=$ROOT TIC_PATH=$(pwd)/build/progs/tic install
     echo "INPUT(-lncursesw)" > $ROOT/usr/lib/libncurses.so
     cd $ROOT/usr/lib || exit 1
-    ln -s libncurses.so.6 libtinfo.so.6
-    ln -s libncurses.so.6 libtinfo.so
+    ln -s libncursesw.so.6 libtinfo.so.6
+    ln -s libncursesw.so.6 libtinfo.so
 }
