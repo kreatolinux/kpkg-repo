@@ -1,0 +1,3 @@
+#!/bin/sh
+NAME="builder-essentials"
+VERSION="0.1"

@@ -1,0 +1,15 @@
+autoconf
+automake
+binutils
+bash
+perl
+bison
+meson
+file
+linux-headers
+ninja
+texinfo
+gcc
+gmake
+gawk
+grep
