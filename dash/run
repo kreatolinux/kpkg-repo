@@ -8,6 +8,7 @@ build() {
 
     [ ! -d "dash-$VERSION" ] && tar -xvf dash-$VERSION.tar.gz
     cd dash-$VERSION || exit  1
+    autoreconf -v -f -i
     ./configure --prefix=/usr --bindir=/usr/bin
     make
     make DESTDIR=$ROOT install
