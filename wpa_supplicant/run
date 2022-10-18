@@ -37,9 +37,6 @@ CFLAGS += -I/usr/include/libnl3
 EOF
     cd wpa_supplicant/
     make BINDIR=/usr/sbin LIBDIR=/usr/lib -j$(nproc)
-    install -v -m755 wpa_{cli,passphrase,supplicant} /usr/sbin/ 
-    install -v -m644 doc/docbook/wpa_supplicant.conf.5 /usr/share/man/man5/
-    install -v -m644 doc/docbook/wpa_{cli,passphrase,supplicant}.8 /usr/share/man/man8/
-
+    make DESTDIR=$ROOT install
 }
 
