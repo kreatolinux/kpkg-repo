@@ -1,8 +1,8 @@
 #!/bin/sh
 NAME="m4"
-VERSION="1.4.1"
-SOURCES="https://ftp.gnu.org/gnu/m4/m4-1.4.1.tar.gz"
-SHA256SUM="6a2c6ce147b6f7a81cc0b9489100605775c107d2c1210a23d9906545535d3caf  m4-1.4.1.tar.gz"
+VERSION="1.4.19"
+SOURCES="https://ftp.gnu.org/gnu/m4/m4-$VERSION.tar.gz"
+SHA256SUM="3be4a26d825ffdfda52a56fc43246456989a3630093cced3fbddf4771ee58a70  m4-1.4.19.tar.gz"
 DESCRIPTION="GNU m4"
 
 build() {
