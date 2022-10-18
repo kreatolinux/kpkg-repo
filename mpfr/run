@@ -8,7 +8,7 @@ DESCRIPTION="GNU mpfr"
 build() {
     tar -xf mpfr-$VERSION.tar.xz
     cd mpfr-$VERSION
-    ./configure
+    ./configure --prefix=/usr
     make -j$(nproc)
     make DESTDIR=$ROOT install
 }

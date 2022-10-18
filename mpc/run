@@ -8,7 +8,7 @@ DESCRIPTION="GNU MPC"
 build() {
     tar -xf mpc-$VERSION.tar.gz
     cd mpc-$VERSION
-    ./configure
+    ./configure --prefix=/usr
     make -j$(nproc)
     make DESTDIR=$ROOT install
 }
