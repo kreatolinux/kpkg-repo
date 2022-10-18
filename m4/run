@@ -1,0 +1,15 @@
+#!/bin/sh
+NAME="m4"
+VERSION="1.4.1"
+SOURCES="https://ftp.gnu.org/gnu/m4/m4-1.4.1.tar.gz"
+SHA256SUM="6a2c6ce147b6f7a81cc0b9489100605775c107d2c1210a23d9906545535d3caf  m4-1.4.1.tar.gz"
+DESCRIPTION="GNU m4"
+
+build() {
+    tar -xf m4-$VERSION.tar.gz
+    cd m4-$VERSION
+    ./configure --prefix=/usr
+    make -j$(nproc)
+    make DESTDIR=$ROOT install
+}
+
