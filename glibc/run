@@ -10,9 +10,8 @@ build() {
     cd glibc-$VERSION || exit
     mkdir -v build
     cd build || exit
-    ../configure --prefix=/usr --host=x86_64-pc-linux-gnu --enable-kernel=3.2 \
+    ../configure --prefix=/usr --host=x86_64-pc-linux-gnu --enable-kernel=3.2 --disable-crypt \
         libc_sv_slibdir=/usr/lib
     make || exit
     make DESTDIR=$ROOT install
-    rm -f /lib/libcrypt.so.1 /lib64/libcrypt.so.1 /usr/lib64/libcrypt.so.1 /usr/lib/libcrypt.so.1
 }
