@@ -14,5 +14,5 @@ build() {
         libc_sv_slibdir=/usr/lib
     make || exit
     make DESTDIR=$ROOT install
-
+    rm -f /lib/libcrypt.so.1 /lib64/libcrypt.so.1 /usr/lib64/libcrypt.so.1 /usr/lib/libcrypt.so.1
 }
