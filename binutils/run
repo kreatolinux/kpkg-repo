@@ -17,7 +17,9 @@ build() {
         --enable-shared            \
         --disable-werror           \
         --enable-64-bit-bfd
-
+    cd bfd || exit 1
+    ./configure
+    cd ..
     make -j$(nproc)
     make DESTDIR=$ROOT install -j1
     cd ld || exit 1
