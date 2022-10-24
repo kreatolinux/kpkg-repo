@@ -9,8 +9,6 @@ build() {
     [ ! -f "binutils-$VERSION.tar.xz" ] && wget https://ftp.gnu.org/gnu/binutils/binutils-$VERSION.tar.xz
     [ ! -d "binutils-$VERSION" ] && tar -xvf binutils-$VERSION.tar.xz
     cd binutils-$VERSION || exit 1
-    mkdir -v build
-    cd       build
     ./configure                   \
         --prefix=/usr              \
         --build=$(./config.guess) \
