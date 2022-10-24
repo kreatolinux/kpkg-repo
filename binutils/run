@@ -20,7 +20,4 @@ build() {
         --enable-64-bit-bfd
     make
     make DESTDIR=$ROOT install -j1
-    cd ld || exit 1
-    make -j$(nproc)
-    make DESTDIR=$ROOT install -j1
 }
