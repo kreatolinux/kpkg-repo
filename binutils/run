@@ -8,6 +8,8 @@ DESCRIPTION="GNU Binutils"
 build() {
     [ ! -d "binutils-$VERSION" ] && tar -xvf binutils-$VERSION.tar.xz
     cd binutils-$VERSION || exit 1
+    mkdir -v build
+    cd       build
     ./configure                   \
         --prefix=/usr              \
         --build=$(./config.guess) \
