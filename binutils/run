@@ -10,9 +10,9 @@ build() {
     cd binutils-$VERSION || exit 1
     mkdir -v build
     cd       build
-    ./configure                   \
+    ../configure                   \
         --prefix=/usr              \
-        --build=$(./config.guess) \
+        --build=$(../config.guess) \
         --host=x86_64-pc-linux-gnu \
         --disable-nls              \
         --enable-shared            \
