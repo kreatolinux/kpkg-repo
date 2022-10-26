@@ -7,6 +7,10 @@ DESCRIPTION="Multi-format archive and compression library"
 
 build() {
     tar -xvf $NAME-$VERSION.tar.xz
+    
+    # Taken from BLFS r11.2-232 
+    sed '/linux\/fs\.h/d' -i libarchive/archive_read_disk_posix.c
+    
     cd $NAME-$VERSION
     ./configure --prefix=/usr --disable-static
     make -j$(nproc)
