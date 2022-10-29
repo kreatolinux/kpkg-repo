@@ -1,1 +1,4 @@
 libelf
+meson
+python-mako
+flex

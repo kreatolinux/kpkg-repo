@@ -1,2 +1,4 @@
 expat
 freetype-harfbuzz
+gperf
+pkgconf

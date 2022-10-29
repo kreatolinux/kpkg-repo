@@ -7,3 +7,5 @@ seatd
 pixman
 libudev
 mesa
+meson
+samurai
