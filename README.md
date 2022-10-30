@@ -17,6 +17,16 @@ If for some reason you need to clone it by hand, you can do so aswell.
 git clone https://github.com/kreatolinux/nyaa-repo.git --depth=1 /etc/nyaa
 ```
 
+# Development
+Every package exists in a seperate directory.
+
+* For runfiles, check out nyaa_run(8)
+* Dependencies go onto the `deps` file. Each dependency should go onto a seperate line.
+* Build dependencies go onto the `build_deps` file. Each dependency should go onto a seperate line.
+
+After completing the package, run `sh migrate.sh nyaabinrepofolder packagefolder`. This script will convert your source package to a binary package and complete the process.
+You can also make this binary package yourself if you want to do so.
+
 # Credits
 * Arch Linux packages
 * Linux From Scratch packages
