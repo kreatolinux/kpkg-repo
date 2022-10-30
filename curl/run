@@ -21,6 +21,7 @@ build() {
         --without-brotli \
         --without-zstd   \
         --with-openssl   \
+        --with-nghttp2   \
         --with-ca-path=/etc/ssl/certs
 
     make
