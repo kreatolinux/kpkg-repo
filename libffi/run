@@ -8,7 +8,7 @@ DESCRIPTION=""
 build() {
     tar -xvf libffi-$VERSION.tar.gz
     cd libffi-$VERSION || exit 1
-    ./configure
+    ./configure --prefix=/usr
     make
     make DESTDIR=$ROOT prefix=/usr install
 }

@@ -8,7 +8,7 @@ DESCRIPTION="GNU libtasn"
 build() {
     tar -xf libtasn1-$VERSION.tar.gz
     cd libtasn1-$VERSION
-    ./configure
+    ./configure --prefix=/usr
     make -j$(nproc)
     make DESTDIR=$ROOT install
 }
