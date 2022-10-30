@@ -1,9 +1,10 @@
 #!/bin/sh
 # Migration script
 [ ! -d "$1" ] && exit 1
+[ ! -d "$2" ] && exit 1
 [ ! -f "$1/run" ] && exit 1
 . "$1/run"
-NYAA_REPO_BIN="$HOME/projects/src/nyaa-repo-bin/$1-bin"
+NYAA_REPO_BIN="$2/$1-bin"
 mkdir -p "$NYAA_REPO_BIN"
 echo "#!/bin/sh" > "$NYAA_REPO_BIN/run"
 echo "NAME='$NAME'" >> "$NYAA_REPO_BIN/run"
