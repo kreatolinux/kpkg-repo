@@ -8,11 +8,8 @@ build() {
     [ ! -d "curl-$VERSION" ] && tar -xvf curl-$VERSION.tar.xz || exit 1
     
     cd curl-$VERSION || exit  1
-    
-    # Taken from Kiss Linux repo, License here https://github.com/kisslinux/repo/blob/master/LICENSE
-    sed 's/\(curl_LDADD =\)/\1 -all-static/' src/Makefile.in > _
-    mv -f _ src/Makefile.in
 
+    # Taken from Kiss Linux repo, License here https://github.com/kisslinux/repo/blob/master/LICENSE
     ./configure \
         --prefix=/usr \
         --disable-manual \
