@@ -1,4 +1,7 @@
 libelf
 meson
+libudev
 python-mako
+libdrm
+llvm
 flex
