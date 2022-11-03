@@ -1,0 +1,20 @@
+#!/bin/sh
+NAME="llvm"
+VERSION="15.0.4"
+SOURCES="https://github.com/llvm/llvm-project/releases/download/llvmorg-15.0.4/llvm-15.0.4.src.tar.xz" 
+SHA256SUM="60aca410cae2b92665c0aa769bcd11ed17030b9ecd76115138c97d94a27a992f  llvm-15.0.4.src.tar.xz"
+DESCRIPTION="The LLVM Project is a collection of modular and reusable compiler and toolchain technologies."
+
+build() {
+    tar -xvf llvm-$VERSION.src.tar.xz
+    cd llvm-$VERSION.src || exit 1
+    mkdir build
+    cd build || exit 1
+    cmake -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=1 \
+        -DLLVM_ENABLE_RTTI=ON \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -G Ninja ..
+    ninja
+    DESTDIR="$ROOT" ninja install
+}
