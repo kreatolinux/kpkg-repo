@@ -3,5 +3,6 @@ meson
 libudev
 python-mako
 libdrm
+wayland-protocols
 llvm
 flex
