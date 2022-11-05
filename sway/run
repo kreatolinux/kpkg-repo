@@ -7,7 +7,7 @@ DESCRIPTION="Wayland tiling window manager"
 build() {
     [ ! -d "sway-$VERSION" ] && tar -xvf sway-$VERSION.tar.gz
     cd sway-$VERSION || exit  1
-    meson build/
+    meson --prefix=/usr -D werror=false build/
     ninja -C build/
     DESTDIR=$ROOT ninja -C build/ install
 }
