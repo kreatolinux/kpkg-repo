@@ -23,6 +23,7 @@ build() {
     ../configure                                       \
         --without-headers                              \
         --enable-initfini-array                        \
+        --prefix=/usr                                  \
         --disable-nls                                  \
         --disable-multilib                             \
 
