@@ -7,7 +7,7 @@ DESCRIPTION="Modules for building a Wayland compositor"
 build() {
     [ ! -d "wlroots-$VERSION" ] && tar -xvf wlroots-$VERSION.tar.gz
     cd wlroots-$VERSION || exit  1
-    meson build/
+    meson --prefix=/usr build/
     ninja -C build/
     DESTDIR=$ROOT ninja -C build/ install
 }
