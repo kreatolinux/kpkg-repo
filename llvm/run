@@ -1,19 +1,26 @@
 #!/bin/sh
 NAME="llvm"
 VERSION="15.0.4"
-SOURCES="https://github.com/llvm/llvm-project/releases/download/llvmorg-15.0.4/llvm-15.0.4.src.tar.xz" 
-SHA256SUM="60aca410cae2b92665c0aa769bcd11ed17030b9ecd76115138c97d94a27a992f  llvm-15.0.4.src.tar.xz"
+SOURCES="https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION/llvm-$VERSION.src.tar.xz;https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION/cmake-$VERSION.src.tar.xz;https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION/clang-$VERSION.src.tar.xz" 
+SHA256SUM="60aca410cae2b92665c0aa769bcd11ed17030b9ecd76115138c97d94a27a992f  llvm-15.0.4.src.tar.xz;701f8ff9b9727d12be456256e2811c5452259282c387728e2bcd95da90c5af45  clang-15.0.4.src.tar.xz;9df45bf3a0a46264d5007485592381bbaf50f034b4155290cb0d917539d8facf  cmake-15.0.4.src.tar.xz"
 DESCRIPTION="The LLVM Project is a collection of modular and reusable compiler and toolchain technologies."
 
 build() {
     tar -xvf llvm-$VERSION.src.tar.xz
+    tar -xvf cmake-$VERSION.src.tar.xz
     cd llvm-$VERSION.src || exit 1
+    mv ../cmake-$VERSION.src/* cmake/
+    mv cmake/Modules/* cmake/modules/
+    tar -xvf ../clang-$VERSION.src.tar.xz -C tools
+    mv tools/clang-$VERSION.src tools/clang
     mkdir build
     cd build || exit 1
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=1 \
         -DLLVM_ENABLE_RTTI=ON \
         -DCMAKE_INSTALL_PREFIX=/usr \
+        -DLLVM_INCLUDE_BENCHMARKS=OFF \
+        -DLLVM_BINUTILS_INCDIR=/usr/include \
         -G Ninja ..
     ninja
     DESTDIR="$ROOT" ninja install
