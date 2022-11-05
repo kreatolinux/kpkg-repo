@@ -8,7 +8,7 @@ build() {
     [ ! -d "mesa-$VERSION" ] && tar -xvf mesa-$VERSION.tar.xz
     cd mesa-$VERSION || exit  1
     export PYTHONPATH=$(realpath /usr/lib/python*/site-packages):$(python -c "import sys; print(':'.join(sys.path))")
-    meson --buildtype=release     \
+    meson --buildtype=release  --prefix=/usr   \
       -Dplatforms=wayland \
       -Dgallium-drivers=auto  \
       -Dvulkan-drivers=""     \
