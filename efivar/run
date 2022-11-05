@@ -8,12 +8,13 @@ DESCRIPTION="efivar provides tools and libraries to manipulate EFI variables"
 build() {
     tar -xvf efivar-$VERSION.tar.bz2
     
+    cd efivar-$VERSION || exit 1
+    
     # Credits: https://www.linuxfromscratch.org/blfs/view/svn/postlfs/efivar.html
     sed '/prep :/a\\ttouch prep' -i src/Makefile
     sed '/sys\/mount\.h/d' -i src/util.h
     sed '/unistd\.h/a#include <sys/mount.h>' -i src/gpt.c src/linux.c
     
-    cd efivar-$VERSION || exit 1
     make CFLAGS="-O2 -Wno-stringop-truncation"
     make DESTDIR="$ROOT" LIBDIR=/usr/lib install 
 }
