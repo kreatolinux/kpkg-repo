@@ -7,7 +7,7 @@ SHA256SUM="814641d7f61659cfbc17825d0462499ca1403e39ff53d76a8512050e6483e87a  git
 build() {
 tar -xf git-$VERSION.tar.xz
 cd git-$VERSION
-./configure
+./configure --prefix=/usr
 # Taken from kiss linux, license is https://github.com/kisslinux/repo/blob/master/LICENSE
 cat > config.mak <<EOF
 NO_GETTEXT=YesPlease
