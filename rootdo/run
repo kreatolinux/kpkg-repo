@@ -9,11 +9,11 @@ build() {
     cd rdo || exit  1
     make
     mkdir -p $ROOT/usr/bin /etc/
-    cp rdo /usr/bin/rdo
-    chown root:root /usr/bin/rdo
-    chmod 755 /usr/bin/rdo
-    chmod u+s /usr/bin/rdo
-    cp rdo_sample.conf /etc/rdo.conf
-    chmod 600 /etc/rdo.conf
-    ln -s /usr/bin/rdo /usr/bin/rootdo
+    cp rdo $ROOT/usr/bin/rdo
+    chown root:root $ROOT/usr/bin/rdo
+    chmod 755 $ROOT/usr/bin/rdo
+    chmod u+s $ROOT/usr/bin/rdo
+    cp rdo_sample.conf $ROOT/etc/rdo.conf
+    chmod 600 $ROOT/etc/rdo.conf
+    ln -s $ROOT/usr/bin/rdo $ROOT/usr/bin/rootdo
 }
