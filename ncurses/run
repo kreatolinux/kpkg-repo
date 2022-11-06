@@ -8,30 +8,31 @@ DESCRIPTION="ncurses library allows you to make TUI applications."
 build() {
     [ ! -d "ncurses-$VERSION" ] && tar -xvf ncurses-$VERSION.tar.gz
     cd ncurses-$VERSION || exit 1
-    sed -i s/mawk// configure
-    mkdir build
-    cd build || exit 1
-        ../configure
-        make -C include
-        make -C progs tic
-    cd ..
-    ./configure --prefix=/usr                \
-                --build=$(./config.guess)    \
-                --host=x86_64-pc-linux-gnu   \
-                --mandir=/usr/share/man      \
-                --with-manpage-format=normal \
-                --with-shared                \
-                --without-debug              \
-                --with-termlib               \
-                --without-ada                \
-                --without-normal             \
-                --disable-stripping          \
-                --enable-widec               \
-                --with-versioned-syms 
+    # Taken from KISS Linux, LICENSE here https://github.com/kisslinux/repo/blob/master/LICENSE 
+   ./configure \
+    --prefix=/usr \
+    --mandir=/usr/share/man \
+    --enable-pc-files \
+    --disable-rpath-hack \
+    --with-pkg-config-libdir=/usr/lib/pkgconfig \
+    --with-shared \
+    --enable-widec \
+    --without-ada \
+    --without-tests \
+    --without-debug \
+    --without-cxx-binding
+
     make
-    make DESTDIR=$ROOT TIC_PATH=$(pwd)/build/progs/tic install
-    echo "INPUT(-lncursesw)" > $ROOT/usr/lib/libncurses.so
-    cd $ROOT/usr/lib || exit 1
-    ln -s libncursesw.so.6 libtinfo.so.6
-    ln -s libncursesw.so.6 libtinfo.so
+    make install
+    for lib in ncurses form panel menu; do
+    	rm -f "$ROOT/usr/lib/lib${lib}.so"
+   	printf '%s\n' "INPUT(-l${lib}w)" > "$ROOT/usr/lib/lib${lib}.so"
+    	chmod 755 "$ROOT/usr/lib/lib${lib}.so"
+    	ln -sf "lib${lib}w.a" "$ROOT/usr/lib/lib${lib}.a"
+     done
+
+	# Some packages look for libcurses instead of libncurses when building.
+	printf '%s\n' "INPUT(-lncursesw)" > "$ROOT/usr/lib/libcursesw.so"
+	ln -s libncurses.so "$ROOT/usr/lib/libcurses.so"
+
 }
