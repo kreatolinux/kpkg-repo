@@ -13,6 +13,7 @@ build() {
     chown root:root $ROOT/usr/bin/rdo
     chmod 755 $ROOT/usr/bin/rdo
     chmod u+s $ROOT/usr/bin/rdo
+    mkdir -p $ROOT/etc/
     cp rdo_sample.conf $ROOT/etc/rdo.conf
     chmod 600 $ROOT/etc/rdo.conf
     ln -s $ROOT/usr/bin/rdo $ROOT/usr/bin/rootdo
