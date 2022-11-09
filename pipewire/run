@@ -1,0 +1,20 @@
+#!/bin/sh
+NAME="pipewire"
+VERSION="0.3.59"
+SOURCES="https://github.com/PipeWire/pipewire/archive/$VERSION/pipewire-$VERSION.tar.gz"
+SHA256SUM="fd07b7cb8f509da3b5d2730be6748509454b3ec0b17282b9bc594e571b144920  pipewire-0.3.59.tar.gz"
+DESCRIPTION="Sound server"
+
+build() {
+    tar -xvf pipewire-$VERSION.tar.gz
+    cd pipewire-$VERSION || exit 1
+    mkdir build 
+    cd    build 
+    meson --prefix=/usr \
+      --buildtype=release   \
+      -Dsession-managers=[] \
+      -Ddbus=disabled   \
+    ..                    
+    ninja
+    DESTDIR="$ROOT" ninja install  
+}
