@@ -1,8 +1,8 @@
 #!/bin/sh
 NAME="linux-headers"
-VERSION="5.19.12"
-SOURCES="https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-$VERSION.tar.xz"
-SHA256SUM="c436a548c7312ce6fc5a3472cbead895eef8f52841fbe7c71fd8e48bdfe2b0ba  linux-5.19.12.tar.xz"
+VERSION="6.0"
+SOURCES="https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$VERSION.tar.xz"
+SHA256SUM="5c2443a5538de52688efb55c27ab0539c1f5eb58c0cfd16a2b9fbb08fd81788e  linux-6.0.tar.xz"
 DESCRIPTION="Linux development headers"
 
 build() {
