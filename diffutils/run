@@ -1,0 +1,23 @@
+#!/bin/sh
+NAME="diffutils"
+VERSION="3.8"
+SOURCES="https://ftp.gnu.org/gnu/diffutils/diffutils-$VERSION.tar.xz"
+SHA256SUM="a6bdd7d1b31266d11c4f4de6c1b748d4607ab0231af5188fc2533d0ae2438fec  diffutils-3.8.tar.xz"
+DESCRIPTION="GNU diffutils"
+
+build() {
+    [ ! -d "diffutils-$VERSION" ] && tar -xvf diffutils-$VERSION.tar.xz
+    cd diffutils-$VERSION || exit 1
+    mkdir -v build
+    cd       build
+    ../configure                   \
+        --prefix=/usr              \
+        --build=$(../config.guess) \
+        --host=x86_64-pc-linux-gnu \
+        --disable-nls              \
+        --enable-shared            \
+        --disable-werror           \
+        --enable-64-bit-bfd
+    make
+    make DESTDIR=$ROOT install -j1
+}
