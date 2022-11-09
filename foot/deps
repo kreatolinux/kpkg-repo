@@ -1,0 +1,7 @@
+meson
+samurai
+wayland-protocols
+wayland
+fontconfig
+libxkbcommon
+pixman
