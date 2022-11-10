@@ -1,0 +1,13 @@
+#!/bin/sh
+NAME="xz-utils"
+VERSION="5.2.7"
+SOURCES="https://tukaani.org/xz/xz-$VERSION.tar.xz"
+SHA256SUM="8712e9acb0b6b49a97d443458a3067dc5c08a025e02dc5f773176c51dd7cfc69  xz-5.2.7.tar.xz"
+DESCRIPTION="XZ Utils is free general-purpose data compression software with a high compression ratio."
+build() {
+    [ ! -d "xz-$VERSION" ] && tar -xvf xz-$VERSION.tar.gz
+    cd xz-$VERSION || exit  1
+    ./configure --prefix=/usr
+    make
+    make DESTDIR=$ROOT install
+}
