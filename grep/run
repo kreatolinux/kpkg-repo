@@ -8,6 +8,6 @@ DESCRIPTION="GNU grep"
 build() {
     tar -xvf grep-$VERSION.tar.xz
     cd grep-$VERSION
-    ./configure
+    ./configure --prefix=/usr
     make DESTDIR=$ROOT install
 }
