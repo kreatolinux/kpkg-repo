@@ -8,6 +8,6 @@ DESCRIPTION="a general-purpose parser generator"
 build() {
     tar -xvf bison-$VERSION.tar.xz
     cd bison-$VERSION
-    ./configure
+    ./configure --prefix=/usr
     make DESTDIR=$ROOT install
 }
