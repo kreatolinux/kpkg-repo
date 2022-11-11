@@ -9,7 +9,7 @@ build() {
     tar -xvf samurai-$VERSION.tar.gz
     cd samurai-$VERSION || exit 1
     make -j$(nproc)
-    make DESTDIR=$ROOT install
+    make PREFIX=/usr DESTDIR=$ROOT install
     mkdir -p "$ROOT/usr/bin"
-    ln -s /usr/local/bin/samu "$ROOT/usr/bin/ninja"
+    ln -s /usr/bin/samu "$ROOT/usr/bin/ninja"
 }
