@@ -1,0 +1,14 @@
+#!/bin/sh
+NAME="nasm"
+VERSION="2.15.05"
+SOURCES="https://www.nasm.us/pub/nasm/releasebuilds/$VERSION/nasm-$VERSION.tar.xz"
+SHA256SUM="3caf6729c1073bf96629b57cee31eeb54f4f8129b01902c73428836550b30a3f  nasm-2.15.05.tar.xz"
+DESCRIPTION="Assembler designed for portability and modularity."
+
+build() {
+    tar -xvf nasm-$VERSION.tar.xz
+    cd nasm-$VERSION || exit 1
+    ./configure --prefix=/usr
+    make
+    make DESTDIR="$ROOT" install
+}
