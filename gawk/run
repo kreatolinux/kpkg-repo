@@ -9,6 +9,6 @@ build() {
     tar -xvf gawk-$VERSION.tar.xz
     cd gawk-$VERSION
     patch -p1 < $REPO_DIR/$NAME/patches/v5.2.0-add-missing-upref.diff || exit 1
-    ./configure
+    ./configure --prefix=/usr
     make DESTDIR=$ROOT install
 }
