@@ -8,7 +8,7 @@ DESCRIPTION="Modern, advanced, portable, multiprotocol bootloader."
 build() {
     tar -xvf limine-$VERSION.tar.xz
     cd limine-$VERSION || exit 1
-    ./configure --prefix=/usr
+    ./configure --prefix=/usr --enable-bios --enable-uefi-x86-64
     make
     make DESTDIR="$ROOT" install
 }
