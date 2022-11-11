@@ -8,7 +8,7 @@ DESCRIPTION="The Fast Lexical Analyzer - scanner generator for lexing in C and C
 build() {
     tar -xf flex-$VERSION.tar.gz
     cd flex-$VERSION
-    ./configure
+    ./configure --prefix=/usr 
     make -j$(nproc)
     make DESTDIR=$ROOT install
 }
