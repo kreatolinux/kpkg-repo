@@ -7,7 +7,7 @@ DESCRIPTION="Linux application sandboxing and distribution framework"
 build() {
     [ ! -d "flatpak-$VERSION" ] && tar -xvf flatpak-$VERSION.tar.xz
     cd flatpak-$VERSION || exit  1
-    meson --prefix=/usr build/
+    meson --prefix=/usr -Dsystem_helper=disabled build/
     ninja -C build/
     DESTDIR=$ROOT ninja -C build/ install
 }
