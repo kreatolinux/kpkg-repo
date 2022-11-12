@@ -1,0 +1,16 @@
+#!/bin/sh
+NAME="xkeyboard-config"
+VERSION="2.37"
+SOURCES="https://www.x.org/pub/individual/data/xkeyboard-config/xkeyboard-config-$VERSION.tar.xz"
+
+build() {
+    tar -xvf xkeyboard-config-$VERSION.tar.xz
+    cd xkeyboard-config-$VERSION || exit 1
+    mkdir build 
+    cd    build 
+    meson --prefix=/usr \
+      --buildtype=release \
+      ..                    
+    ninja
+    DESTDIR="$ROOT" ninja install  
+}
