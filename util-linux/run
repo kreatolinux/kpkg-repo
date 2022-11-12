@@ -1,0 +1,14 @@
+#!/bin/sh
+NAME="util-linux"
+VERSION="2.38"
+SOURCES="https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v$VERSION/util-linux-$VERSION.tar.xz"
+SHA256SUM="6d111cbe4d55b336db2f1fbeffbc65b89908704c01136371d32aa9bec373eb64  util-linux-2.38.tar.xz"
+DESCRIPTION="Linux Utilities"
+
+build() {
+    [ ! -d "util-linux-$VERSION" ] && tar -xvf util-linux-$VERSION.tar.xz
+    cd util-linux-$VERSION || exit 1
+    ../configure --prefix=/usr
+    make
+    make DESTDIR=$ROOT install -j1
+}
