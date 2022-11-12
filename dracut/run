@@ -6,7 +6,7 @@ DESCRIPTION="dracut the event driven initramfs infrastructure"
 build() {
     [ ! -d "dracut-$VERSION" ] && tar -xvf $VERSION.tar.gz
     cd dracut-$VERSION || exit  1
-    ./configure --prefix=/usr
+    enable_documentation=no ./configure --prefix=/usr
     make
     make DESTDIR=$ROOT install
 }
