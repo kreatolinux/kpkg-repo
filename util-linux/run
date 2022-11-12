@@ -8,6 +8,7 @@ DESCRIPTION="Linux Utilities"
 build() {
     [ ! -d "util-linux-$VERSION" ] && tar -xvf util-linux-$VERSION.tar.xz
     cd util-linux-$VERSION || exit 1
+    cat /etc/group | grep tty || addgroup tty
     ./configure --prefix=/usr
     make
     make DESTDIR=$ROOT install -j1
