@@ -7,8 +7,7 @@ DESCRIPTION="Provides the filesystem utilities for use with the ext2,ext3 and ex
 build() {
     [ ! -d "e2fsprogs-$VERSION" ] && tar -xvf e2fsprogs-$VERSION.tar.gz
     cd e2fsprogs-$VERSION || exit  1
-    ./configure --prefix=/usr
-    mkdir -p $ROOT/usr/share/man/man8
+    ./configure --prefix=/usr --with-root-prefix=""
     make
-    make DESTDIR=$ROOT install
+    make DESTDIR=$ROOT install install-libs
 }
