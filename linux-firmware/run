@@ -8,5 +8,5 @@ DESCRIPTION="Linux firmware files"
 build() {
     tar -xvf linux-firmware-$VERSION.tar.gz
     cd linux-firmware-$VERSION || exit 1
-    make FIRMWAREDIR=$ROOT/lib/firmware install
+    make install
 }
