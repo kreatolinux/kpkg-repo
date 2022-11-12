@@ -1,2 +1,4 @@
 meson
+libcap
+util-linux
 samurai
