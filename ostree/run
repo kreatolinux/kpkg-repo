@@ -1,0 +1,13 @@
+#!/bin/sh
+NAME="ostree"
+VERSION="2022.6"
+SOURCES="https://github.com/ostreedev/ostree/releases/download/v$VERSION/libostree-$VERSION.tar.xz"
+SHA256SUM="835ef47d9a0b35a10c77ffd7f0fbd2e2b87f7cccb588da27442a05ff71ffad8c  libostree-2022.6.tar.xz"
+DESCRIPTION="Operating system and container binary deployment and upgrades"
+build() {
+    [ ! -d "libostree-$VERSION" ] && tar -xvf libostree-$VERSION.tar.xz
+    cd libostree-$VERSION || exit  1
+    ./configure --prefix=/usr
+    make
+    make DESTDIR=$ROOT install
+}
