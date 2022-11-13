@@ -1,0 +1,13 @@
+#!/bin/sh
+NAME="atk"
+MAJOR="2.9"
+VERSION="$MAJOR.4"
+SOURCES="https://ftp.gnome.org/pub/gnome/sources/atk/$MAJOR/atk-$VERSION.tar.xz"
+DESCRIPTION=""
+build() {
+    [ ! -d "atk-$VERSION" ] && tar -xvf atk-$VERSION.tar.xz
+    cd atk-$VERSION || exit  1
+    meson --prefix=/usr build/
+    ninja -C build/
+    DESTDIR=$ROOT ninja -C build/ install
+}

@@ -1,0 +1,4 @@
+pkgconf
+glib
+meson
+libffi
