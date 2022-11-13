@@ -7,7 +7,7 @@ DESCRIPTION="Operating system and container binary deployment and upgrades"
 build() {
     [ ! -d "libostree-$VERSION" ] && tar -xvf libostree-$VERSION.tar.xz
     cd libostree-$VERSION || exit  1
-    ./configure --prefix=/usr
+    ./configure --with-gpgme=no --prefix=/usr
     make
     make DESTDIR=$ROOT install
 }
