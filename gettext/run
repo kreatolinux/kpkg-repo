@@ -8,7 +8,7 @@ DESCRIPTION="Gettext contains utilities for localization."
 build() {
     tar -xvf gettext-$VERSION.tar.xz
     cd gettext-$VERSION
-    ./configure
+    ./configure --prefix=/usr
     make
     make DESTDIR=$ROOT install
 }
