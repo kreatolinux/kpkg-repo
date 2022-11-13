@@ -8,7 +8,7 @@ DESCRIPTION=""
 build() {
     [ ! -d "atk-$VERSION" ] && tar -xvf atk-$VERSION.tar.xz
     cd atk-$VERSION || exit  1
-    meson --prefix=/usr
-    ninja
-    ninja install
+    meson --prefix=/usr build/
+    ninja -C build/
+    ninja -C build/ install
 }
