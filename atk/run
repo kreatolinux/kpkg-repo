@@ -1,14 +1,14 @@
 #!/bin/sh
 NAME="atk"
-MAJOR="2.9"
-VERSION="$MAJOR.4"
+MAJOR="2.38"
+VERSION="$MAJOR.0"
 SOURCES="https://ftp.gnome.org/pub/gnome/sources/atk/$MAJOR/atk-$VERSION.tar.xz"
 SHA256SUM="755c9582ca7cf01e5eaa0ac972376877eb365902f388262c21ea3425e0c4d631  atk-2.9.4.tar.xz"
 DESCRIPTION=""
 build() {
     [ ! -d "atk-$VERSION" ] && tar -xvf atk-$VERSION.tar.xz
     cd atk-$VERSION || exit  1
-    ./configure --prefix=/usr
-    make
-    make install
+    meson --prefix=/usr
+    ninja
+    ninja install
 }
