@@ -7,7 +7,7 @@ DESCRIPTION="GdkPixbuf is a library that loads image data in various formats and
 build() {
     [ ! -d "gdk-pixbuf-$VERSION" ] && tar -xvf gdk-pixbuf-$VERSION.tar.gz
     cd gdk-pixbuf-$VERSION || exit  1
-    meson --prefix=/usr build/
+    meson --prefix=/usr -Dgio_sniffing=false build/
     ninja -C build/
     DESTDIR=$ROOT ninja -C build/ install
 }
