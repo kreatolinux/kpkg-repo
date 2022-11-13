@@ -1,0 +1,13 @@
+#!/bin/sh
+NAME="appstream-glib"
+VERSION="0_8_2"
+SOURCES="https://github.com/hughsie/appstream-glib/archive/refs/tags/appstream_glib_$VERSION.tar.gz"
+SHA256SUM="83907d3b2c13029c72dfd11191762ef19f4031ac05c758297914cf0eb04bc641  appstream_glib_0_8_2.tar.gz"
+DESCRIPTIONS="This library provides GObjects and helper methods to make it easy to read and write AppStream metadata."
+build() {
+    [ ! -d "appstream-glib-appstream_glib_$VERSION" ] && tar -xvf appstream_glib_$VERSION.tar.gz
+    cd appstream-glib-appstream_glib_$VERSION || exit 1
+    meson --prefix=/usr build/
+    ninja -C build/
+    DESTDIR=$ROOT ninja -C build/ install
+}
