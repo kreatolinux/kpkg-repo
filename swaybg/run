@@ -1,0 +1,13 @@
+#!/bin/sh                                                                                                              
+NAME="swaybg"                                                                                                            
+VERSION="1.1.1"                                                                                                        
+SOURCES="https://github.com/swaywm/swaybg/releases/download/v$VERSION/swaybg-$VERSION.tar.gz"                                                    
+SHA256SUM="71cc8fc2cb7ae5ad3af772ab286b0b42f1c7cb17bea131e78c2d40a2fb8e6c59  swaybg-1.1.1.tar.gz"                            
+DESCRIPTION="Wallpaper utility for Wayland compositors"                                                                   
+build() {                                                                                                              
+    [ ! -d "swaybg-v$VERSION" ] && tar -xvf swaybg-$VERSION.tar.gz                                                             
+    cd swaybg-$VERSION || exit  1                                                                                       
+    meson --prefix=/usr build/                                                                                         
+    ninja -C build/                                                                                                    
+    DESTDIR=$ROOT ninja -C build/ install                                                                              
+}                                                                                                                      
