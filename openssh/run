@@ -1,0 +1,13 @@
+#!/bin/sh                                                                      
+NAME="openssh"                                                                 
+VERSION="9.1p1"                                                                
+SOURCES="https://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-$VERSION.tar.gz"
+SHA256SUM="19f85009c7e3e23787f0236fbb1578392ab4d4bf9f8ec5fe6bc1cd7e8bfdd288  openssh-9.1p1.tar.gz"
+DESCRIPTION="ssh tools"                                                        
+build() {                                                                      
+    tar -xvf openssh-$VERSION.tar.gz                                           
+    cd openssh-$VERSION || exit  1                                             
+    ./configure --prefix=/usr                                                  
+    make                                                                       
+    make DESTDIR="$ROOT" install                                                               
+}
