@@ -1,9 +1,0 @@
-bison
-libcap
-curl
-libarchive
-python
-glib
-libxml2
-libzstd
-fuse
