@@ -1,8 +1,8 @@
 #!/bin/sh
 NAME="nyaa"
-VERSION="2.0"
+VERSION="2.0a"
 SOURCES="https://github.com/kreatolinux/nyaa/archive/refs/tags/v$VERSION.tar.gz"
-SHA256SUM="8546d567250069e42ec0e1a85fb8ab1eb92bbe414dbcd57918535740624b4274  v2.0.tar.gz"
+SHA256SUM="e8db352c7bb3841d2b79afc20b0c1410654d944df46d4b96c8e37640eeaf7a69  v2.0a.tar.gz"
 DESCRIPTION="The nyaa package manager"
 
 build() {
