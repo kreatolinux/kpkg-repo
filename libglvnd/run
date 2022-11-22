@@ -5,7 +5,7 @@ SOURCES="https://gitlab.freedesktop.org/glvnd/libglvnd/-/archive/v$VERSION/libgl
 SHA256SUM="efc756ffd24b24059e1c53677a9d57b4b237b00a01c54a6f1611e1e51661d70c  libglvnd-v1.6.0.tar.gz"
 DESCRIPTION="The GL Vendor-Neutral Dispatch library"
 build() {
-    [ ! -d "libglvnd-$VERSION" ] && tar -xvf libglvnd-$VERSION.tar.gz
+    [ ! -d "libglvnd-$VERSION" ] && tar -xvf libglvnd-v$VERSION.tar.gz
     cd libglvnd-$VERSION || exit  1
     meson --buildtype=release  --prefix=/usr   \
       build/
