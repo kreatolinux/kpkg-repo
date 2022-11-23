@@ -1,0 +1,17 @@
+#!/bin/sh
+NAME="openrc"
+VERSION="0.45.2"
+SOURCES="https://github.com/OpenRC/openrc/archive/refs/tags/$VERSION.tar.gz"
+SHA256SUM=""
+DESCRIPTION="The OpenRC init system"
+
+build() {
+    tar -xvf $VERSION.tar.xz
+    cd openrc-$VERSION || exit 1
+    mkdir build
+    cd build
+    meson --prefix=/usr       \
+          --buildtype=release
+    ninja
+    DESTDIR="$ROOT" ninja install
+}
