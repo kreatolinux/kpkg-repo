@@ -13,5 +13,4 @@ build() {
     make
     make DESTDIR="$ROOT" install
     mkdir -p "$ROOT/usr/lib"
-    ln -s "libcrypt.so.2.0.0" "$ROOT/usr/lib/libcrypt.so.2"
 }
