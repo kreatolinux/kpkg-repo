@@ -1,6 +1,7 @@
 #!/bin/sh
 NAME="cairo"
 BASEVER="1.17"
+RELEASE="1"
 VERSION="$BASEVER.6"
 SOURCES="https://download.gnome.org/sources/cairo/$BASEVER/cairo-$VERSION.tar.xz"
 SHA256SUM="4eebc4c2bad0402bc3f501db184417094657d111fb6c06f076a82ea191fe1faf  cairo-1.17.6.tar.xz"

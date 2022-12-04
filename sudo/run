@@ -1,5 +1,6 @@
 #!/bin/sh
 NAME="sudo"
+RELEASE="1"
 VERSION="1_9_12p1"
 SOURCES="https://github.com/sudo-project/sudo/archive/refs/tags/SUDO_$VERSION.tar.gz"
 SHA256SUM="41ee958d0356dafce091244b1bff30dc75d87efcd78713ebea64ac48b4a50358  SUDO_1_9_12p1.tar.gz"

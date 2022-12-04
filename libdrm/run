@@ -1,5 +1,6 @@
 #!/bin/sh
 NAME="libdrm"
+RELEASE="1"
 VERSION="2.4.114"
 SOURCES="https://dri.freedesktop.org/libdrm/libdrm-$VERSION.tar.xz"
 SHA256SUM=";3049cf843a47d12e5eeefbc3be3496d782fa09f42346bf0b7defe3d1e598d026  libdrm-2.4.114.tar.xz"

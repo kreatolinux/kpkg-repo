@@ -1,5 +1,6 @@
 #!/bin/sh
 NAME="foot"
+RELEASE="1"
 VERSION="1.13.1"
 SOURCES="https://codeberg.org/dnkl/foot/archive/1.13.1.tar.gz"
 SHA256SUM="604f777fdaccfc1ee2d20376cc5688a819dcd6b7113725880cc973194fd6c737  1.13.1.tar.gz"

@@ -1,5 +1,6 @@
 #!/bin/sh
 NAME="shadow"
+RELEASE="1"
 VERSION="4.12.3"
 SOURCES="https://github.com/shadow-maint/shadow/releases/download/4.12.3/shadow-4.12.3.tar.xz"
 SHA256SUM="3d3ec447cfdd11ab5f0486ebc47d15718349d13fea41fc8584568bc118083ccd  shadow-4.12.3.tar.xz"

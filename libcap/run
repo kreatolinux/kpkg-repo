@@ -1,5 +1,6 @@
 #!/bin/sh
 NAME="libcap"
+RELEASE="1"
 VERSION="2.66"
 SOURCES="https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/libcap-$VERSION.tar.xz"
 SHA256SUM="15c40ededb3003d70a283fe587a36b7d19c8b3b554e33f86129c059a4bb466b2  libcap-2.66.tar.xz"

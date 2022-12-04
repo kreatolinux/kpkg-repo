@@ -1,5 +1,6 @@
 #!/bin/sh
 NAME="libtasn"
+RELEASE="1"
 VERSION="4.19.0"
 SOURCES="https://ftp.gnu.org/gnu/libtasn1/libtasn1-$VERSION.tar.gz"
 SHA256SUM="1613f0ac1cf484d6ec0ce3b8c06d56263cc7242f1c23b30d82d23de345a63f7a  libtasn1-4.19.0.tar.gz"

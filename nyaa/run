@@ -1,5 +1,6 @@
 #!/bin/sh
 NAME="nyaa"
+RELEASE="1"
 VERSION="2.0e"
 SOURCES="https://github.com/kreatolinux/nyaa/archive/refs/tags/v$VERSION.tar.gz"
 SHA256SUM="952b0396afe21911b2bb9c8b09559b6644090f8558846ef1e0c4e7d2c5ab17b1  v2.0e.tar.gz"

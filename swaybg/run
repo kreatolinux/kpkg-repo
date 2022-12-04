@@ -1,5 +1,6 @@
 #!/bin/sh                                                                                                              
 NAME="swaybg"                                                                                                            
+RELEASE="1"
 VERSION="1.1.1"                                                                                                        
 SOURCES="https://github.com/swaywm/swaybg/releases/download/v$VERSION/swaybg-$VERSION.tar.gz"                                                    
 SHA256SUM="71cc8fc2cb7ae5ad3af772ab286b0b42f1c7cb17bea131e78c2d40a2fb8e6c59  swaybg-1.1.1.tar.gz"                            

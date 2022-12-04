@@ -1,5 +1,6 @@
 #!/bin/sh
 NAME="rootdo"
+RELEASE="1"
 VERSION="1.4.2"
 SOURCES="https://codeberg.org/sw1tchbl4d3/rdo/archive/$VERSION.tar.gz"
 SHA256SUM="e62f8b502b5e706d9dd4d22d1db96f78d98cfd05b04178b327897660149ab260  1.4.2.tar.gz"

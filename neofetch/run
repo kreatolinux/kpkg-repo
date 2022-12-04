@@ -1,5 +1,6 @@
 #!/bin/sh
 NAME="neofetch"
+RELEASE="1"
 VERSION="7.1.2"
 SOURCES="https://github.com/kreatolinux/neofetch/archive/refs/tags/$VERSION.tar.gz"
 SHA256SUM="0f68e99baed5bc1f4d234dde050cd3fc68a06d3562209c16a58c8ebc9618ab68  7.1.2.tar.gz"

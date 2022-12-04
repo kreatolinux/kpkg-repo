@@ -1,5 +1,6 @@
 #!/bin/sh
 NAME="sway"
+RELEASE="1"
 VERSION="1.7"
 SOURCES="https://github.com/swaywm/sway/releases/download/$VERSION/sway-$VERSION.tar.gz"
 SHA256SUM="0c64536fb2883ec518e75cfb119f9300115fb49b084e3fde62b794fe2c6c8d84  sway-1.7.tar.gz"

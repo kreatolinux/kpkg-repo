@@ -1,5 +1,6 @@
 #!/bin/sh
 NAME="procps-ng"
+RELEASE="1"
 VERSION="4.0.0"
 SOURCES="https://gitlab.com/procps-ng/procps/-/archive/v$VERSION/procps-v$VERSION.tar.gz"
 SHA256SUM="dea39e0e7b1367e28c887d736d1a9783df617497538603cdff432811a1016945  procps-v4.0.0.tar.gz"

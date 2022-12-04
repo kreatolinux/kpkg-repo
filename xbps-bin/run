@@ -1,5 +1,6 @@
 #!/bin/sh
 NAME="xbps-bin"
+RELEASE="1"
 VERSION="0.59_5"
 SOURCES="https://repo-default.voidlinux.org/static/xbps-static-static-$VERSION.x86_64-musl.tar.xz"
 SHA256SUM="fb6dd121053f50147790bf81194f5ea96e08f852c0b38b21d607f7fa8f18f19e  xbps-static-static-0.59_5.x86_64-musl.tar.xz"

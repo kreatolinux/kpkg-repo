@@ -1,5 +1,6 @@
 #!/bin/sh
 NAME="dash"
+RELEASE="1"
 VERSION="0.5.11.5"
 SOURCES="https://git.kernel.org/pub/scm/utils/dash/dash.git/snapshot/dash-$VERSION.tar.gz"
 SHA256SUM="267d5e14f182a3b446ddccd62ffdeb2878403342db9ff82a112556b374d20ff5  dash-0.5.11.5.tar.gz"

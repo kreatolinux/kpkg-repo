@@ -1,5 +1,6 @@
 #!/bin/sh
 NAME="libxkbcommon"
+RELEASE="1"
 VERSION=1.4.1
 SOURCES="https://xkbcommon.org/download/libxkbcommon-$VERSION.tar.xz"
 SHA256SUM="943c07a1e2198026d8102b17270a1f406e4d3d6bbc4ae105b9e1b82d7d136b39  libxkbcommon-1.4.1.tar.xz;"

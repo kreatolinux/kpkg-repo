@@ -1,5 +1,6 @@
 #!/bin/sh                                                                                                              
 NAME="grim"                                                                                                            
+RELEASE="1"
 VERSION="1.4.0"                                                                                                        
 SOURCES="https://git.sr.ht/~emersion/grim/archive/v$VERSION.tar.gz"                                                    
 SHA256SUM="66729ae654546404f50ed163055310dd23ed52cc5a881d39752c0cd076e3d7aa  v1.4.0.tar.gz"                            

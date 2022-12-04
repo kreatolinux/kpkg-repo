@@ -1,6 +1,7 @@
 #!/bin/sh
 NAME="glib"
 MAINVERSION="2.74"
+RELEASE="1"
 VERSION="$MAINVERSION.0"
 SOURCES="https://download.gnome.org/sources/glib/$MAINVERSION/glib-$VERSION.tar.xz" 
 SHA256SUM=";"

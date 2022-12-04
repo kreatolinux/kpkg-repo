@@ -1,5 +1,6 @@
 #!/bin/sh
 NAME="efibootmgr"
+RELEASE="1"
 VERSION="18"
 SOURCES="https://github.com/rhboot/efibootmgr/archive/$VERSION/efibootmgr-$VERSION.tar.gz"
 SHA256SUM="442867d12f8525034a404fc8af3036dba8e1fc970998af2486c3b940dfad0874  efibootmgr-18.tar.gz"

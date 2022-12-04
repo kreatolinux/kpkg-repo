@@ -1,5 +1,7 @@
 #!/bin/sh
 NAME="samurai"
+RELEASE="1"
+RELEASE="1"
 VERSION="1.2"
 SOURCES="https://github.com/michaelforney/samurai/releases/download/$VERSION/samurai-$VERSION.tar.gz"
 SHA256SUM="3b8cf51548dfc49b7efe035e191ff5e1963ebc4fe8f6064a5eefc5343eaf78a5  samurai-1.2.tar.gz"

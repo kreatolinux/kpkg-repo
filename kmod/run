@@ -1,5 +1,6 @@
 #!/bin/sh
 NAME="kmod"
+RELEASE="1"
 VERSION="30"
 SOURCES="https://www.kernel.org/pub/linux/utils/kernel/kmod/kmod-$VERSION.tar.xz"
 DESCRIPTION="Contains utilities for loading kernel modules"

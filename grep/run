@@ -1,5 +1,6 @@
 #!/bin/sh
 NAME="gnu-grep"
+RELEASE="1"
 VERSION=3.8
 SOURCES="https://ftp.gnu.org/gnu/grep/grep-$VERSION.tar.xz"
 SHA256SUM="498d7cc1b4fb081904d87343febb73475cf771e424fb7e6141aff66013abc382  grep-3.8.tar.xz;"

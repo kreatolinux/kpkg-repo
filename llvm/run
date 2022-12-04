@@ -1,5 +1,6 @@
 #!/bin/sh
 NAME="llvm"
+RELEASE="1"
 VERSION="15.0.4"
 SOURCES="https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION/llvm-$VERSION.src.tar.xz;https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION/cmake-$VERSION.src.tar.xz;https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION/clang-$VERSION.src.tar.xz" 
 SHA256SUM="60aca410cae2b92665c0aa769bcd11ed17030b9ecd76115138c97d94a27a992f  llvm-15.0.4.src.tar.xz;701f8ff9b9727d12be456256e2811c5452259282c387728e2bcd95da90c5af45  clang-15.0.4.src.tar.xz;9df45bf3a0a46264d5007485592381bbaf50f034b4155290cb0d917539d8facf  cmake-15.0.4.src.tar.xz"

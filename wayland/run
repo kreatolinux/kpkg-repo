@@ -1,5 +1,6 @@
 #!/bin/sh
 NAME="wayland"
+RELEASE="1"
 VERSION="1.21.0"
 SOURCES="https://gitlab.freedesktop.org/wayland/wayland/-/releases/$VERSION/downloads/wayland-$VERSION.tar.xz"
 SHA256SUM="6dc64d7fc16837a693a51cfdb2e568db538bfdc9f457d4656285bb9594ef11ac  wayland-1.21.0.tar.xz"

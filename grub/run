@@ -1,5 +1,6 @@
 #!/bin/sh
 NAME="grub"
+RELEASE="1"
 VERSION="2.06"
 SOURCES="https://ftp.gnu.org/gnu/grub/grub-$VERSION.tar.xz"
 SHA256SUM="b79ea44af91b93d17cd3fe80bdae6ed43770678a9a5ae192ccea803ebb657ee1  grub-2.06.tar.xz"
