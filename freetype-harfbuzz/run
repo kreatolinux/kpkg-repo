@@ -46,9 +46,6 @@ build_harfbuzz() (
 
 
 build() {
-    tar -xvf freetype-$FREETYPE_VERSION.tar.gz
-    tar -xvf harfbuzz-$HARFBUZZ_VERSION.tar.xz 
-    
     # Point Freetype to the Harfbuzz files.
     export CFLAGS="$CFLAGS -I$DESTDIR/usr/include/harfbuzz"
     export CFLAGS="$CFLAGS -L$DESTDIR/usr/lib "
