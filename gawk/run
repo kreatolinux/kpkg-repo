@@ -7,7 +7,6 @@ SHA256SUM=";673553b91f9e18cc5792ed51075df8d510c9040f550a6f74e09c9add243a7e4f  ga
 DESCRIPTION="GNU awk"
 
 build() {
-    tar -xvf gawk-$VERSION.tar.xz
     cd gawk-$VERSION
     patch -p1 < $REPO_DIR/$NAME/patches/v5.2.1-add-missing-upref.diff || exit 1
     ./configure --prefix=/usr

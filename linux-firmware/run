@@ -7,7 +7,6 @@ SHA256SUM="c23299426d190986ba6eb52a3b22c4e4383b3a055903ff3967fb17afad3edb9b  lin
 DESCRIPTION="Linux firmware files"
 
 build() {
-    tar -xvf linux-firmware-$VERSION.tar.gz
     cd linux-firmware-$VERSION || exit 1
     make install
 }

@@ -6,7 +6,6 @@ SOURCES="https://github.com/libfuse/libfuse/releases/download/fuse-$VERSION/fuse
 SHA256SUM="33b8a92d6f7a88e6a889f0009206933482f48f3eb85d88cf09ef551313ac7373  fuse-3.12.0.tar.xz"
 DESCRIPTION="Filesystem in Userspace"
 build() {
-    [ ! -d "fuse-$VERSION" ] && tar -xvf fuse-$VERSION.tar.xz
     cd fuse-$VERSION || exit 1
     meson --prefix=/usr build/
     ninja -C build/

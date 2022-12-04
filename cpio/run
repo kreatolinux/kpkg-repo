@@ -6,7 +6,6 @@ SOURCES="https://ftp.gnu.org/gnu/cpio/cpio-$VERSION.tar.gz"
 SHA256SUM="e87470d9c984317f658567c03bfefb6b0c829ff17dbf6b0de48d71a4c8f3db88  cpio-2.13.tar.gz"
 DESCRIPTION="GNU cpio"
 build() {
-    [ ! -d "cpio-$VERSION" ] && tar -xvf cpio-$VERSION.tar.gz
     cd cpio-$VERSION || exit  1
     patch -p1 < $REPO_DIR/$NAME/patches/0001-src-global.c-drop-duplicate-definition-of-program_na.patch
     ./configure --prefix=/usr

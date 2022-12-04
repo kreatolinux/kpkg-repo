@@ -7,7 +7,6 @@ SHA256SUM="f018ed6e49c5f1c16d336d9fd7687ce87023276591921db1e49a314ad6515349  efi
 DESCRIPTION="efivar provides tools and libraries to manipulate EFI variables"
 
 build() {
-    tar -xvf efivar-$VERSION.tar.bz2
     
     cd efivar-$VERSION || exit 1
     

@@ -7,7 +7,6 @@ SHA256SUM=";50dbc8f39797950aa2c98e939947c527e5ac9ebd2c1b99dd7b06ba33a6767ae6  ge
 DESCRIPTION="Gettext contains utilities for localization."
 
 build() {
-    tar -xvf gettext-$VERSION.tar.xz
     cd gettext-$VERSION
     ./configure --prefix=/usr
     make

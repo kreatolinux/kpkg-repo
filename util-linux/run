@@ -7,7 +7,6 @@ SHA256SUM="6d111cbe4d55b336db2f1fbeffbc65b89908704c01136371d32aa9bec373eb64  uti
 DESCRIPTION="Linux Utilities"
 
 build() {
-    [ ! -d "util-linux-$VERSION" ] && tar -xvf util-linux-$VERSION.tar.xz
     cd util-linux-$VERSION || exit 1
     cat /etc/group | grep tty || addgroup tty
     ./configure --prefix=/usr

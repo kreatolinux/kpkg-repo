@@ -7,7 +7,6 @@ SHA256SUM=";3a8e030c2334f782085f81627062cc6d4a6771edf31e055ffe374f9e6b089ab9  me
 DESCRIPTION="Next generation build system"
 
 build() {
-    tar -xvf meson-$VERSION.tar.gz
     cd meson-$VERSION
     SETUPTOOLS_USE_DISTUTILS=stdlib pip install . --root=$ROOT
     install -vDm644 data/shell-completions/bash/meson "$ROOT/usr/share/bash-completion/completions/meson"

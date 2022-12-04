@@ -7,7 +7,6 @@ SHA256SUM="952b0396afe21911b2bb9c8b09559b6644090f8558846ef1e0c4e7d2c5ab17b1  v2.
 DESCRIPTION="The nyaa package manager"
 
 build() {
-        tar -xvf "v$VERSION.tar.gz"
         cd nyaa-$VERSION || exit 1
         mkdir -p "$ROOT/usr/bin" "$ROOT/usr/local/man/man1"
         cp nyaa "$ROOT/usr/bin/"

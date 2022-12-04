@@ -6,7 +6,6 @@ SOURCES="https://musl.libc.org/releases/musl-$VERSION.tar.gz"
 SHA256SUM="7d5b0b6062521e4627e099e4c9dc8248d32a30285e959b7eecaa780cf8cfd4a4  musl-1.2.3.tar.gz"
 DESCRIPTION="musl libc"
 build() {
-    [ ! -d "musl-$VERSION" ] && tar -xvf musl-$VERSION.tar.gz
     cd musl-$VERSION || exit  1
     ./configure --prefix=/usr
     make

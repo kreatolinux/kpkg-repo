@@ -7,7 +7,6 @@ SHA256SUM=";ebbe5a966cf2a12f59666adbfb505cafca58635b96239bbcdf04a09dc4cd0d7b  li
 DESCRIPTION="Library that handles input devices"
 
 build() {
-    tar -xvf libinput-$VERSION.tar.gz
     cd libinput-$VERSION || exit 1
     mkdir build 
     cd    build 

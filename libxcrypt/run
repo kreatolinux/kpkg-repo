@@ -7,7 +7,6 @@ SHA256SUM=";e87acf9c652c573a4713d5582159f98f305d56ed5f754ce64f57d4194d6b3a6f  li
 DESCRIPTION="Extended crypt library"
 
 build() {
-    tar -xvf libxcrypt-$VERSION.tar.xz
     cd libxcrypt-$VERSION || exit 1
     ./configure --disable-obsolete-api --prefix=/usr
     /usr/lib/libcrypt.so.2

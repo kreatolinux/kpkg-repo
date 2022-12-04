@@ -8,7 +8,6 @@ SHA256SUM=";caef96d27bbe792a6be92727c73468d832b13da57c8071ef79b9df69ee058fe3  pa
 DESCRIPTION="Text (i.e. glyph) layout engine library"
 
 build() {
-    tar -xvf pango-$VERSION.tar.xz
     cd pango-$VERSION || exit 1
     rm -rf subprojects
     meson \

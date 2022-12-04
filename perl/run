@@ -7,7 +7,6 @@ SHA256SUM="e26085af8ac396f62add8a533c3a0ea8c8497d836f0689347ac5abd7b7a4e00a  per
 DESCRIPTION="Perl"
 
 build() {
-    tar -xvf perl-$VERSION.tar.gz
     cd perl-$VERSION
     # Credit: https://www.linuxfromscratch.org/lfs/view/development/chapter08/perl.html
     sh Configure -des                                         \

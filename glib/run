@@ -8,7 +8,6 @@ SHA256SUM=";"
 DESCRIPTION="glib"
 
 build() {
-    tar -xvf glib-$VERSION.tar.xz
     cd glib-$VERSION || exit 1
     meson \
     --prefix=/usr \

@@ -7,7 +7,6 @@ SHA256SUM="ded42661cab30ada2e72ebff9e725e745b4b16ce831993635136f2ef86177724  pcr
 DESCRIPTION="Perl Compatible Regular Expression libraries"
 
 build() {
-    tar -xvf pcre2-$VERSION.tar.gz
     cd pcre2-$VERSION
     ./configure --prefix=/usr
     make DESTDIR=$ROOT install

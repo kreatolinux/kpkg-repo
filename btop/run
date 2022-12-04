@@ -6,7 +6,6 @@ SOURCES="https://github.com/aristocratos/btop/archive/refs/tags/v$VERSION.tar.gz
 SHA256SUM="668dc4782432564c35ad0d32748f972248cc5c5448c9009faeb3445282920e02  v1.2.13.tar.gz"
 DESCRIPTION="htop alternative"
 build() {
-    tar -xvf v$VERSION.tar.gz
     cd btop-$VERSION || exit  1
     make
     make DESTDIR=$ROOT PREFIX=/usr install 

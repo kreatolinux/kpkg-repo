@@ -6,7 +6,6 @@ SOURCES="https://sourceware.org/elfutils/ftp/$VERSION/elfutils-$VERSION.tar.bz2"
 SHA256SUM=";fb8b0e8d0802005b9a309c60c1d8de32dd2951b56f0c3a3cb56d21ce01595dff  elfutils-0.188.tar.bz2"
 DESCRIPTION="elfutils"
 build() {
-    [ ! -d "elfutils-$VERSION" ] && tar -xvf elfutils-$VERSION.tar.bz2
     cd elfutils-$VERSION || exit  1
     ./configure --prefix=/usr \
         --disable-debuginfod \

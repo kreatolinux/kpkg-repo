@@ -7,7 +7,6 @@ SHA256SUM=";ea1480efada2fd948bc75366f7c349e1c96d3297d09a3fe62626e38e234a625e  pi
 DESCRIPTION="A library that provides low-level pixel manipulation features such as image compositing and trapezoid rasterization"
 
 build() {
-    tar -xvf pixman-$VERSION.tar.gz
     cd pixman-$VERSION || exit 1
     mkdir build
     cd build

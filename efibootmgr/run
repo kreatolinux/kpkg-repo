@@ -7,7 +7,6 @@ SHA256SUM="442867d12f8525034a404fc8af3036dba8e1fc970998af2486c3b940dfad0874  efi
 DESCRIPTION="efibootmgr provides tools and libraries to manipulate EFI variables"
 
 build() {
-    tar -xvf efibootmgr-$VERSION.tar.gz
     cd efibootmgr-$VERSION || exit 1
     sed -e '/-Werror/d' -i Make.defaults   
     sed -e '/extern int efi_set_verbose/d' -i src/efibootmgr.c
