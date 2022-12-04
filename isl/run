@@ -3,7 +3,7 @@ NAME="libisl"
 RELEASE="1"
 VERSION="0.25"
 SOURCES="https://libisl.sourceforge.io/isl-$VERSION.tar.xz"
-SHA256SUM=";be7b210647ccadf90a2f0b000fca11a4d40546374a850db67adb32fad4b230d9  isl-0.25.tar.xz"
+SHA256SUM="be7b210647ccadf90a2f0b000fca11a4d40546374a850db67adb32fad4b230d9  isl-0.25.tar.xz"
 DESCRIPTION="isl is a library for manipulating sets and relations of integer points bounded by linear constraints."
 
 build() {

@@ -4,7 +4,7 @@ MAINVERSION="1.50"
 RELEASE="1"
 VERSION="$MAINVERSION.10"
 SOURCES="https://download.gnome.org/sources/pango/$MAINVERSION/pango-$VERSION.tar.xz" 
-SHA256SUM=";caef96d27bbe792a6be92727c73468d832b13da57c8071ef79b9df69ee058fe3  pango-1.50.12.tar.xz"
+SHA256SUM="caef96d27bbe792a6be92727c73468d832b13da57c8071ef79b9df69ee058fe3  pango-1.50.12.tar.xz"
 DESCRIPTION="Text (i.e. glyph) layout engine library"
 
 build() {

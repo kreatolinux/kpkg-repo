@@ -3,7 +3,7 @@ NAME="pipewire"
 RELEASE="1"
 VERSION="0.3.61"
 SOURCES="https://github.com/PipeWire/pipewire/archive/$VERSION/pipewire-$VERSION.tar.gz"
-SHA256SUM=";9cbc7048808c693cb7952c4b446e9ffbb91d1b34f057c340d83ae4e6d2d08f1d  pipewire-0.3.61.tar.gz"
+SHA256SUM="9cbc7048808c693cb7952c4b446e9ffbb91d1b34f057c340d83ae4e6d2d08f1d  pipewire-0.3.61.tar.gz"
 DESCRIPTION="Sound server"
 
 build() {

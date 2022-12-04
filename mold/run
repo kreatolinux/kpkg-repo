@@ -3,7 +3,7 @@ NAME="mold"
 RELEASE="1"
 VERSION="1.7.1"
 SOURCES="https://github.com/rui314/mold/archive/refs/tags/v$VERSION.tar.gz"
-SHA256SUM=";fa2558664db79a1e20f09162578632fa856b3cde966fbcb23084c352b827dfa9  v1.7.1.tar.gz"
+SHA256SUM="fa2558664db79a1e20f09162578632fa856b3cde966fbcb23084c352b827dfa9  v1.7.1.tar.gz"
 DESCRIPTION="A Modern Linker"
 
 build() {

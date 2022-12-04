@@ -4,7 +4,7 @@ VER="3.25"
 RELEASE="1"
 VERSION="$VER.1"
 SOURCES="https://cmake.org/files/v$VER/cmake-$VERSION.tar.gz"
-SHA256SUM=";1c511d09516af493694ed9baf13c55947a36389674d657a2d5e0ccedc6b291d8  cmake-3.25.1.tar.gz"
+SHA256SUM="1c511d09516af493694ed9baf13c55947a36389674d657a2d5e0ccedc6b291d8  cmake-3.25.1.tar.gz"
 DESCRIPTION="CMake package contains a modern toolset used for generating Makefiles."
 
 build() {

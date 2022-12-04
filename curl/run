@@ -3,7 +3,7 @@ NAME="curl"
 RELEASE="1"
 VERSION="7.86.0"
 SOURCES="https://curl.haxx.se/download/curl-$VERSION.tar.xz"
-SHA256SUM=";2d61116e5f485581f6d59865377df4463f2e788677ac43222b496d4e49fb627b  curl-7.86.0.tar.xz"
+SHA256SUM="2d61116e5f485581f6d59865377df4463f2e788677ac43222b496d4e49fb627b  curl-7.86.0.tar.xz"
 DESCRIPTION=""
 build() {
     
