@@ -1,8 +1,9 @@
 #!/bin/sh
 NAME="kmod"
-RELEASE="1"
+RELEASE="2"
 VERSION="30"
 SOURCES="https://www.kernel.org/pub/linux/utils/kernel/kmod/kmod-$VERSION.tar.xz"
+SHA256SUM="f897dd72698dc6ac1ef03255cd0a5734ad932318e4adbaebc7338ef2f5202f9f  kmod-30.tar.xz"
 DESCRIPTION="Contains utilities for loading kernel modules"
 build() {
     [ ! -d "kmod-$VERSION" ] && tar -xvf kmod-$VERSION.tar.xz
