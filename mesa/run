@@ -1,8 +1,8 @@
 #!/bin/sh
 NAME="mesa"
-VERSION="22.2.0"
+VERSION="22.2.3"
 SOURCES="https://archive.mesa3d.org/mesa-$VERSION.tar.xz"
-SHA256SUM="b1f9c8fd08f2cae3adf83355bef4d2398e8025f44947332880f2d0066bdafa8c  mesa-22.2.0.tar.xz"
+SHA256SUM=";ee7d026f7b1991dbae0861d359b671145c3a86f2a731353b885d2ea2d5c098d6  mesa-22.2.3.tar.xz"
 DESCRIPTION="The 3D Graphics Library"
 build() {
     [ ! -d "mesa-$VERSION" ] && tar -xvf mesa-$VERSION.tar.xz

@@ -1,8 +1,8 @@
 #!/bin/sh
 NAME="mold"
-VERSION="1.6.0"
+VERSION="1.7.1"
 SOURCES="https://github.com/rui314/mold/archive/refs/tags/v$VERSION.tar.gz"
-SHA256SUM="59cd3ea1a2a5fb50d0d97faddd8bff4c7e71054a576c00a87b17f56ecbd88729  mold-1.6.0.tar.gz"
+SHA256SUM=";fa2558664db79a1e20f09162578632fa856b3cde966fbcb23084c352b827dfa9  v1.7.1.tar.gz"
 DESCRIPTION="A Modern Linker"
 
 build() {

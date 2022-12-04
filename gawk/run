@@ -1,14 +1,14 @@
 #!/bin/sh
 NAME="gawk"
-VERSION="5.2.0"
+VERSION="5.2.1"
 SOURCES="https://ftp.gnu.org/pub/gnu/gawk/gawk-$VERSION.tar.xz"
-SHA256SUM="e4ddbad1c2ef10e8e815ca80208d0162d4c983e6cca16f925e8418632d639018  gawk-5.2.0.tar.xz"
+SHA256SUM=";673553b91f9e18cc5792ed51075df8d510c9040f550a6f74e09c9add243a7e4f  gawk-5.2.1.tar.xz"
 DESCRIPTION="GNU awk"
 
 build() {
     tar -xvf gawk-$VERSION.tar.xz
     cd gawk-$VERSION
-    patch -p1 < $REPO_DIR/$NAME/patches/v5.2.0-add-missing-upref.diff || exit 1
+    patch -p1 < $REPO_DIR/$NAME/patches/v5.2.1-add-missing-upref.diff || exit 1
     ./configure --prefix=/usr
     make DESTDIR=$ROOT install
 }

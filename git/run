@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="git"
-VERSION=2.37.3
+VERSION=2.38.1
 DESCRIPTION="Version control tool"
 SOURCES="https://mirrors.edge.kernel.org/pub/software/scm/git/git-$VERSION.tar.xz"
-SHA256SUM="814641d7f61659cfbc17825d0462499ca1403e39ff53d76a8512050e6483e87a  git-2.37.3.tar.xz;"
+SHA256SUM=";97ddf8ea58a2b9e0fbc2508e245028ca75911bd38d1551616b148c1aa5740ad9  git-2.38.1.tar.xz"
 build() {
 tar -xf git-$VERSION.tar.xz
 cd git-$VERSION
