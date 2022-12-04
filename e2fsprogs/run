@@ -1,5 +1,6 @@
 #!/bin/sh
 NAME="e2fsprogs"
+RELEASE="1"
 VERSION="1.46.5"
 SOURCES="https://mirrors.edge.kernel.org/pub/linux/kernel/people/tytso/e2fsprogs/v$VERSION/e2fsprogs-$VERSION.tar.gz"
 SHA256SUM="0786fadd77421e04b21f3a79513c5d8d9232f82eb8bea68f3af46f2d98bdd889  e2fsprogs-1.46.5.tar.gz"

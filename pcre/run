@@ -1,5 +1,6 @@
 #!/bin/sh
 NAME="pcre2"
+RELEASE="1"
 VERSION="10.40"
 SOURCES="https://github.com/PCRE2Project/pcre2/releases/download/pcre2-$VERSION/pcre2-$VERSION.tar.gz"
 SHA256SUM="ded42661cab30ada2e72ebff9e725e745b4b16ce831993635136f2ef86177724  pcre2-10.40.tar.gz"

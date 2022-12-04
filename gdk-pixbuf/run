@@ -1,5 +1,6 @@
 #!/bin/sh
 NAME="gdk-pixbuf"
+RELEASE="1"
 VERSION="2.42.9"
 SOURCES="https://gitlab.gnome.org/GNOME/gdk-pixbuf/-/archive/$VERSION/gdk-pixbuf-$VERSION.tar.gz"
 SHA256SUM="226d950375907857b23c5946ae6d30128f08cd75f65f14b14334c7a9fb686e36  gdk-pixbuf-2.42.9.tar.gz"

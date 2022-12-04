@@ -1,5 +1,6 @@
 #!/bin/sh
 NAME="libarchive"
+RELEASE="1"
 VERSION="3.6.1"
 SOURCES="https://github.com/$NAME/$NAME/releases/download/v$VERSION/$NAME-$VERSION.tar.xz"
 SHA256SUM="5a411aceb978f43e626f0c2d1812ddd8807b645ed892453acabd532376c148e6  libarchive-3.6.1.tar.xz"

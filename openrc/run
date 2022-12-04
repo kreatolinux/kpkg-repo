@@ -1,5 +1,6 @@
 #!/bin/sh
 NAME="openrc"
+RELEASE="1"
 VERSION="0.45.2"
 SOURCES="https://github.com/OpenRC/openrc/archive/refs/tags/$VERSION.tar.gz"
 SHA256SUM=""

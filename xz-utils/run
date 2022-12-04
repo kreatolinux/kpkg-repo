@@ -1,5 +1,6 @@
 #!/bin/sh
 NAME="xz-utils"
+RELEASE="1"
 VERSION="5.2.7"
 SOURCES="https://tukaani.org/xz/xz-$VERSION.tar.xz"
 SHA256SUM="8712e9acb0b6b49a97d443458a3067dc5c08a025e02dc5f773176c51dd7cfc69  xz-5.2.7.tar.xz"

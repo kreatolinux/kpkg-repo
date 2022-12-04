@@ -1,6 +1,7 @@
 #!/bin/sh
 NAME="libxml2"
 VER1="2.10"
+RELEASE="1"
 VERSION=2.10.3
 SOURCES="https://download.gnome.org/sources/libxml2/$VER1/libxml2-$VERSION.tar.xz"
 SHA256SUM=";5d2cc3d78bec3dbe212a9d7fa629ada25a7da928af432c93060ff5c17ee28a9c  libxml2-2.10.3.tar.xz"

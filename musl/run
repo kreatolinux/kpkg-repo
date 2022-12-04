@@ -1,5 +1,6 @@
 #!/bin/sh
 NAME="musl"
+RELEASE="1"
 VERSION="1.2.3"
 SOURCES="https://musl.libc.org/releases/musl-$VERSION.tar.gz"
 SHA256SUM="7d5b0b6062521e4627e099e4c9dc8248d32a30285e959b7eecaa780cf8cfd4a4  musl-1.2.3.tar.gz"

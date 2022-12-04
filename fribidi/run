@@ -1,5 +1,6 @@
 #!/bin/sh
 NAME="fribidi"
+RELEASE="1"
 VERSION="1.0.12"
 SOURCES="https://github.com/fribidi/fribidi/releases/download/v$VERSION/fribidi-$VERSION.tar.xz" 
 SHA256SUM=";"

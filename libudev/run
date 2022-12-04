@@ -1,5 +1,6 @@
 #!/bin/sh
 NAME="libudev"
+RELEASE="1"
 VERSION="1.0.1"
 SOURCES="https://github.com/illiliti/libudev-zero/archive/refs/tags/$VERSION.tar.gz"
 SHA256SUM="c4cf149ea96295c1e6e86038d10c725344c751982ed4a790b06c76776923e0ea  1.0.1.tar.gz"

@@ -1,5 +1,6 @@
 #!/bin/sh
 NAME="libglvnd"
+RELEASE="1"
 VERSION="1.6.0"
 SOURCES="https://gitlab.freedesktop.org/glvnd/libglvnd/-/archive/v$VERSION/libglvnd-v$VERSION.tar.gz"
 SHA256SUM="efc756ffd24b24059e1c53677a9d57b4b237b00a01c54a6f1611e1e51661d70c  libglvnd-v1.6.0.tar.gz"

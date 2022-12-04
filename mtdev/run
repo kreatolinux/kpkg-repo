@@ -1,5 +1,6 @@
 #!/bin/sh
 NAME="mtdev"
+RELEASE="1"
 VERSION="1.1.6"
 SOURCES="https://bitmath.org/code/mtdev/mtdev-$VERSION.tar.bz2"
 SHA256SUM="15d7b28da8ac71d8bc8c9287c2045fd174267bc740bec10cfda332dc1204e0e0  mtdev-1.1.6.tar.bz2"

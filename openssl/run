@@ -1,5 +1,6 @@
 #!/bin/sh
 NAME="openssl"
+RELEASE="1"
 VERSION="3.0.7"
 SOURCES="https://openssl.org/source/openssl-$VERSION.tar.gz"
 SHA256SUM="83049d042a260e696f62406ac5c08bf706fd84383f945cf21bd61e9ed95c396e  openssl-3.0.7.tar.gz"

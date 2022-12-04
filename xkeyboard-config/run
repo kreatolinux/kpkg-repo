@@ -1,5 +1,6 @@
 #!/bin/sh
 NAME="xkeyboard-config"
+RELEASE="1"
 VERSION="2.37"
 SOURCES="https://www.x.org/pub/individual/data/xkeyboard-config/xkeyboard-config-$VERSION.tar.xz"
 

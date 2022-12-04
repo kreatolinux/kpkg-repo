@@ -1,5 +1,6 @@
 #!/bin/sh
 NAME="libnl"
+RELEASE="1"
 VERSION="3.7.0"
 SOURCES="https://github.com/thom311/libnl/releases/download/libnl3_7_0/libnl-3.7.0.tar.gz"
 SHA256SUM="9fe43ccbeeea72c653bdcf8c93332583135cda46a79507bfd0a483bb57f65939  libnl-3.7.0.tar.gz"

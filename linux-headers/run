@@ -1,5 +1,6 @@
 #!/bin/sh
 NAME="linux-headers"
+RELEASE="1"
 VERSION="6.0"
 SOURCES="https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$VERSION.tar.xz"
 SHA256SUM="5c2443a5538de52688efb55c27ab0539c1f5eb58c0cfd16a2b9fbb08fd81788e  linux-6.0.tar.xz"
