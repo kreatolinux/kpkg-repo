@@ -7,5 +7,4 @@ SHA256SUM="fb6dd121053f50147790bf81194f5ea96e08f852c0b38b21d607f7fa8f18f19e  xbp
 DESCRIPTION="The X Binary Package System"
 
 build() {
-        tar -xvf "xbps-static-static-$VERSION.x86_64-musl.tar.xz" -C $ROOT/
 }

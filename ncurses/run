@@ -7,7 +7,6 @@ SHA256SUM="97fc51ac2b085d4cde31ef4d2c3122c21abc217e9090a43a30fc5ec21684e059  ncu
 DESCRIPTION="ncurses library allows you to make TUI applications."
 
 build() {
-    [ ! -d "ncurses-$VERSION" ] && tar -xvf ncurses-$VERSION.tar.gz
     cd ncurses-$VERSION || exit 1
     # Taken from KISS Linux, LICENSE here https://github.com/kisslinux/repo/blob/master/LICENSE 
    ./configure \

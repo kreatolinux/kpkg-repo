@@ -7,7 +7,6 @@ SHA256SUM=""
 DESCRIPTION="The OpenRC init system"
 
 build() {
-    tar -xvf $VERSION.tar.gz
     cd openrc-$VERSION || exit 1
     mkdir build
     cd build

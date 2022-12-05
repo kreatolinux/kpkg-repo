@@ -7,7 +7,6 @@ SHA256SUM="943c07a1e2198026d8102b17270a1f406e4d3d6bbc4ae105b9e1b82d7d136b39  lib
 DESCRIPTION="Keyboard compiler and support library"
 
 build() {
-    tar -xvf libxkbcommon-$VERSION.tar.xz
     cd libxkbcommon-$VERSION || exit 1
     mkdir build 
     cd    build 

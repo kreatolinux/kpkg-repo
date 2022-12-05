@@ -7,7 +7,6 @@ SHA256SUM="9bba0214ccf7f1079c5d59210045227bcf619519840ebfa80cd3849cff5a5bf2  bis
 DESCRIPTION="a general-purpose parser generator"
 
 build() {
-    tar -xvf bison-$VERSION.tar.xz
     cd bison-$VERSION
     ./configure --prefix=/usr
     make DESTDIR=$ROOT install

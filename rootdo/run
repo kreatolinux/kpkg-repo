@@ -6,7 +6,6 @@ SOURCES="https://codeberg.org/sw1tchbl4d3/rdo/archive/$VERSION.tar.gz"
 SHA256SUM="e62f8b502b5e706d9dd4d22d1db96f78d98cfd05b04178b327897660149ab260  1.4.2.tar.gz"
 DESCRIPTION="simple sudo/doas alternative"
 build() {
-    tar -xvf $VERSION.tar.gz
     cd rdo || exit  1
     make
     mkdir -p $ROOT/usr/bin /etc/

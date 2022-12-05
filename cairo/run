@@ -8,7 +8,6 @@ SHA256SUM="4eebc4c2bad0402bc3f501db184417094657d111fb6c06f076a82ea191fe1faf  cai
 DESCRIPTION="2D graphics library"
 
 build() {
-    tar -xvf cairo-$VERSION.tar.xz
     cd cairo-$VERSION || exit 1
     ./configure --prefix=/usr    \
             --disable-static     \

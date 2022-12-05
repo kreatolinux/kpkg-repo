@@ -3,10 +3,9 @@ NAME="mesa"
 RELEASE="1"
 VERSION="22.2.3"
 SOURCES="https://archive.mesa3d.org/mesa-$VERSION.tar.xz"
-SHA256SUM=";ee7d026f7b1991dbae0861d359b671145c3a86f2a731353b885d2ea2d5c098d6  mesa-22.2.3.tar.xz"
+SHA256SUM="ee7d026f7b1991dbae0861d359b671145c3a86f2a731353b885d2ea2d5c098d6  mesa-22.2.3.tar.xz"
 DESCRIPTION="The 3D Graphics Library"
 build() {
-    [ ! -d "mesa-$VERSION" ] && tar -xvf mesa-$VERSION.tar.xz
     cd mesa-$VERSION || exit  1
     export PYTHONPATH=$(realpath /usr/lib/python*/site-packages):$(python -c "import sys; print(':'.join(sys.path))")
     meson --buildtype=release  --prefix=/usr   \

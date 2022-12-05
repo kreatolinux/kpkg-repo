@@ -3,11 +3,10 @@ NAME="libressl"
 RELEASE="1"
 VERSION="3.6.1"
 SOURCES="https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-$VERSION.tar.gz"
-SHA256SUM=";acfac61316e93b919c28d62d53037ca734de85c46b4d703f19fd8395cf006774  libressl-3.6.1.tar.gz"
+SHA256SUM="acfac61316e93b919c28d62d53037ca734de85c46b4d703f19fd8395cf006774  libressl-3.6.1.tar.gz"
 DESCRIPTION="TLS library"
 
 build() {
-    tar -xvf libressl-$VERSION.tar.gz
     cd libressl-$VERSION || exit 1
     ./configure
     make -j$(nproc)

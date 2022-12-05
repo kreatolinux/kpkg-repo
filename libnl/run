@@ -7,7 +7,6 @@ SHA256SUM="9fe43ccbeeea72c653bdcf8c93332583135cda46a79507bfd0a483bb57f65939  lib
 DESCRIPTION="A collection of libraries providing APIs to netlink protocol Linux kernel interfaces"
 
 build() {
-    tar -xvf libnl-$VERSION.tar.gz
     cd libnl-$VERSION
     ./configure --prefix=/usr     \
                 --sysconfdir=/etc \

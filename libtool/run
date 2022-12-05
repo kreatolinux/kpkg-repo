@@ -6,7 +6,6 @@ SOURCES="https://ftp.gnu.org/gnu/libtool/libtool-$VERSION.tar.gz"
 SHA256SUM="04e96c2404ea70c590c546eba4202a4e12722c640016c12b9b2f1ce3d481e9a8  libtool-2.4.7.tar.gz"
 DESCRIPTION="The GNU Portable Library Tool"
 build() {
-    [ ! -d "libtool-$VERSION" ] && tar -xvf libtool-$VERSION.tar.gz
     cd libtool-$VERSION || exit  1
     ./configure --prefix=/usr
     make

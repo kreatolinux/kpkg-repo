@@ -7,7 +7,6 @@ SHA256SUM="9edf2006cc86a5055279647c38ec923d11a821ee4dc2c3033e8d20e8ee237cd9  lib
 DESCRIPTION="Common functions for Xorg input drivers"
 
 build() {
-    tar -xvf libevdev-$VERSION.tar.xz
     cd libevdev-$VERSION || exit 1
     ./configure --prefix=/usr
     make DESTDIR="$ROOT" install

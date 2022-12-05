@@ -7,7 +7,6 @@ SHA256SUM="1c959fea240906226062cb4b1e7ebce71a9f0e3c0836c09e7e3423d434fcfe75  gli
 DESCRIPTION="The GNU C library"
 
 build() {
-    tar -xvf glibc-$VERSION.tar.xz
     cd glibc-$VERSION || exit
     mkdir -v build
     cd build || exit

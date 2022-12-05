@@ -7,7 +7,6 @@ SHA256SUM="83049d042a260e696f62406ac5c08bf706fd84383f945cf21bd61e9ed95c396e  ope
 DESCRIPTION="TLS library"
 
 build() {
-    tar -xvf openssl-$VERSION.tar.gz
     cd openssl-$VERSION || err "Error while unpacking openssl"
     ./config --prefix=/usr --openssldir=/etc/ssl --libdir=lib shared zlib-dynamic
     make -j$(nproc)

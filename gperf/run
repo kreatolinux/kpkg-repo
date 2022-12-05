@@ -3,10 +3,9 @@ NAME="gperf"
 RELEASE="1"
 VERSION="3.1"
 SOURCES="https://ftp.gnu.org/pub/gnu/gperf/gperf-$VERSION.tar.gz"
-SHA256SUM=";"
+SHA256SUM=""
 DESCRIPTION="gperf"
 build() {
-    [ ! -d "$NAME-$VERSION" ] && tar -xvf $NAME-$VERSION.tar.gz
     cd $NAME-$VERSION || exit  1
     ./configure --prefix=/usr
     make

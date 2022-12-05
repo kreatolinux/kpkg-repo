@@ -7,7 +7,6 @@ SHA256SUM="5a411aceb978f43e626f0c2d1812ddd8807b645ed892453acabd532376c148e6  lib
 DESCRIPTION="Multi-format archive and compression library"
 
 build() {
-    tar -xvf $NAME-$VERSION.tar.xz
     
     cd $NAME-$VERSION
     

@@ -6,7 +6,6 @@ SOURCES="https://github.com/anholt/libepoxy/archive/refs/tags/1.5.10.tar.gz"
 SHA256SUM="a7ced37f4102b745ac86d6a70a9da399cc139ff168ba6b8002b4d8d43c900c15  1.5.10.tar.gz"
 DESCRIPTION="Epoxy is a library for handling OpenGL function pointer management for you."
 build() {                                                                                                              
-    [ ! -d "libepoxy-$VERSION" ] && tar -xvf $VERSION.tar.gz                       
     cd libepoxy-$VERSION || exit  1                                                                                       
     meson --prefix=/usr -Dx11=false build/                                                                                         
     ninja -C build/                                                                                                    

@@ -7,7 +7,6 @@ SHA256SUM="e28b2f2ed5710ea0d3a1ecac3f6a947a016b972b9dd30242369010e5f53d7002  zst
 DESCRIPTION="Facebook's zstd library"
 
 build() {
-    tar -xvf zstd-$VERSION.tar.gz
     cd zstd-$VERSION || exit 1
     make
     make DESTDIR=$ROOT prefix=/usr install

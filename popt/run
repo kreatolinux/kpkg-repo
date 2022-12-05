@@ -3,11 +3,10 @@ NAME="popt"
 RELEASE="1"
 VERSION="1.19"
 SOURCES="http://ftp.rpm.org/popt/releases/popt-1.x/popt-$VERSION.tar.gz"
-SHA256SUM=";c25a4838fc8e4c1c8aacb8bd620edb3084a3d63bf8987fdad3ca2758c63240f9  popt-1.19.tar.gz"
+SHA256SUM="c25a4838fc8e4c1c8aacb8bd620edb3084a3d63bf8987fdad3ca2758c63240f9  popt-1.19.tar.gz"
 DESCRIPTION="contains the popt libraries which are used by some programs to parse command-line options"
 
 build() {
-    tar -xvf popt-$VERSION.tar.gz
     cd popt-$VERSION || exit 1
     ./configure --prefix=/usr --disable-static
     make

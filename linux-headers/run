@@ -7,7 +7,6 @@ SHA256SUM="5c2443a5538de52688efb55c27ab0539c1f5eb58c0cfd16a2b9fbb08fd81788e  lin
 DESCRIPTION="Linux development headers"
 
 build() {
-    tar -xvf linux-$VERSION.tar.xz
     cd linux-$VERSION
     make mrproper
     make headers

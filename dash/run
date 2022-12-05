@@ -7,7 +7,6 @@ SHA256SUM="267d5e14f182a3b446ddccd62ffdeb2878403342db9ff82a112556b374d20ff5  das
 DESCRIPTION="Small and fast POSIX-compliant shell"
 build() {
 
-    [ ! -d "dash-$VERSION" ] && tar -xvf dash-$VERSION.tar.gz
     cd dash-$VERSION || exit  1
     autoreconf -v -f -i
     ./configure --prefix=/usr --bindir=/usr/bin

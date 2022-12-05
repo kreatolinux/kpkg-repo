@@ -6,7 +6,6 @@ SOURCES="https://github.com/djlucas/make-ca/releases/download/v$VERSION/make-ca-
 SHA256SUM="6db8b96c961790507c5e36e0ed75a079ae95300f520cd88ac061cf44a4733c2f  make-ca-1.7.tar.xz"
 DESCRIPTION=""
 build() {
-    tar -xvf make-ca-$VERSION.tar.xz
     cd make-ca-$VERSION || exit  1
     make DESTDIR=$ROOT install
     install -vdm755 $ROOT/etc/ssl/local
