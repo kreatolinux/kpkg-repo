@@ -8,7 +8,6 @@ DESCRIPTION="GNU awk"
 
 build() {
     cd gawk-$VERSION
-    patch -p1 < $REPO_DIR/$NAME/patches/v5.2.1-add-missing-upref.diff || exit 1
     ./configure --prefix=/usr
     make DESTDIR=$ROOT install
 }
