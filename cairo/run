@@ -9,6 +9,7 @@ DESCRIPTION="2D graphics library"
 
 build() {
     cd cairo-$VERSION || exit 1
+    patch -p1 ../*.patch
     ./configure --prefix=/usr    \
             --disable-static     \
             --enable-tee
