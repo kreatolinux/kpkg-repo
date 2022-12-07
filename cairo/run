@@ -14,7 +14,6 @@ prepare() {
 }
 
 build() {
-    patch -p1 ../*.patch
     ./configure --prefix=/usr    \
             --disable-static     \
             --enable-tee
