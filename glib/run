@@ -4,7 +4,7 @@ MAINVERSION="2.74"
 RELEASE="1"
 VERSION="$MAINVERSION.0"
 SOURCES="https://download.gnome.org/sources/glib/$MAINVERSION/glib-$VERSION.tar.xz" 
-SHA256SUM=""
+SHA256SUM="3652c7f072d7b031a6b5edd623f77ebc5dcd2ae698598abcc89ff39ca75add30  glib-2.74.0.tar.xz"
 DESCRIPTION="glib"
 
 build() {

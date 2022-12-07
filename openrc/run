@@ -3,7 +3,7 @@ NAME="openrc"
 RELEASE="1"
 VERSION="0.45.2"
 SOURCES="https://github.com/OpenRC/openrc/archive/refs/tags/$VERSION.tar.gz"
-SHA256SUM=""
+SHA256SUM="6813575595b09ebeaad34bc91809dba39d98479a9dd097f3ffff5bab85cbdb78  0.45.2.tar.gz"
 DESCRIPTION="The OpenRC init system"
 
 build() {
