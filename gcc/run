@@ -7,8 +7,6 @@ SHA256SUM="e549cf9cf3594a00e27b6589d4322d70e0720cdd213f39beb4181e06926230ff  gcc
 DESCRIPTION="The GNU C Compiler"
 
 build() {
-	mkdir -p $ROOT/source
-    cd $ROOT/source || exit 1
     cd gcc-$VERSION || exit 1
     case $(uname -m) in
         x86_64)
