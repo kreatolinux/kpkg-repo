@@ -32,7 +32,7 @@ You can also make this binary package yourself if you want to do so.
 * Linux From Scratch packages
 * KISS Linux packages.
 
-Please note that this does not mean that the packages are taken from these projects, it just means that the packages have inspirations from these projects' packages aswell.
+Please note that this does not mean that the packages are taken from these projects, it just means that the packages have inspirations from these projects' packages aswell. Check for the packages' runfile for details.
 
 # License
 This project is a part of Kreato Linux.
