@@ -11,7 +11,7 @@ You should find the required packages for a nice base system here.
 * Do it without having nonfree packages on the repository.
 
 # Usage
-Run `nyaa update`. This should automatically clone the repository. If it does not, [please file a bug report](https://github.com/kreatolinux/nyaa/issues).
+Run `nyaa update`. This should automatically clone the repository. If it does not, [please file a bug report](https://github.com/kreatolinux/nyaa3/issues).
 If for some reason you need to clone it by hand, you can do so aswell.
 ```
 git clone https://github.com/kreatolinux/nyaa-repo.git --depth=1 /etc/nyaa
