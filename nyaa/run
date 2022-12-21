@@ -8,6 +8,7 @@ DESCRIPTION="The nyaa package manager"
 
 build() {
         cd nyaa3-$VERSION || exit 1
+        nimble install --depsOnly
         nimble ssl -Y
         mkdir -p "$ROOT/bin"
         cp out/nyaa "$ROOT/bin/"
