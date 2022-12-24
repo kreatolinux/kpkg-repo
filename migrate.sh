@@ -6,10 +6,6 @@
 . "$1/run"
 NYAA_REPO_BIN="$2/$1-bin"
 mkdir -p "$NYAA_REPO_BIN"
-echo "#!/bin/sh" > "$NYAA_REPO_BIN/run"
-echo "NAME='$NAME'" >> "$NYAA_REPO_BIN/run"
-echo "VERSION='$VERSION'" >> "$NYAA_REPO_BIN/run"
-echo "IS_BINARY='y'" >> "$NYAA_REPO_BIN/run"
 [ -f "$1/deps" ] && cp "$1/deps" "$NYAA_REPO_BIN/deps"
 if [ -f "$1/build_deps" ]
 then
