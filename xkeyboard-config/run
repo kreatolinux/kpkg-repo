@@ -2,7 +2,7 @@
 NAME="xkeyboard-config"
 RELEASE="1"
 VERSION="2.37"
-SOURCES="https://www.x.org/pub/individual/data/xkeyboard-config/xkeyboard-config-$VERSION.tar.xz"
+SOURCES="https://www.x.org/archive//individual/data/xkeyboard-config/xkeyboard-config-$VERSION.tar.xz"
 SHA256SUM="eb1383a5ac4b6210d7c7302b9d6fab052abdf51c5d2c9b55f1f779997ba68c6c  xkeyboard-config-2.37.tar.xz"
 
 build() {
