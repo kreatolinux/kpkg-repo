@@ -1,0 +1,15 @@
+#!/bin/sh
+NAME="mari"
+RELEASE="1"
+VERSION="0.1"
+SOURCES="https://github.com/kreatolinux/mari/archive/refs/tags/v$VERSION.tar.gz"
+SHA256SUM="e676b72ce84ce341fc3a44fa428b9e58bba94c203143a5ee2d8d8d7cff0e0a18  v0.1.tar.gz"
+DESCRIPTION="The minimal HTTP server (but not really) that runs Kreato Linux's binary repository"
+
+build() {
+        cd mari-$VERSION || exit 1
+        nimble install --depsOnly -Y
+        nimble build -Y
+        mkdir -p "$ROOT/usr/bin"
+        cp out/mari "$ROOT/usr/bin/"
+}
