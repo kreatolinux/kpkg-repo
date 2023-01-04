@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="libarchive"
 RELEASE="1"
-VERSION="3.6.1"
+VERSION="3.6.2"
 SOURCES="https://github.com/libarchive/libarchive/releases/download/v$VERSION/libarchive-$VERSION.tar.xz"
-SHA256SUM="5a411aceb978f43e626f0c2d1812ddd8807b645ed892453acabd532376c148e6  libarchive-3.6.1.tar.xz"
+SHA256SUM="9e2c1b80d5fbe59b61308fdfab6c79b5021d7ff4ff2489fb12daf0a96a83551d  libarchive-3.6.2.tar.xz"
 DESCRIPTION="Multi-format archive and compression library"
 
 build() {
