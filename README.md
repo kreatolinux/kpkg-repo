@@ -1,5 +1,5 @@
 <p align="left">
-<img src="https://github.com/Kreato-Linux/logo/blob/master/withtext.png"> 
+<img src="https://github.com/kreatolinux/logo/blob/master/withtext.png"> 
 </p>
 
 # Kreato Linux official package repository
