@@ -27,7 +27,6 @@ build() {
     mkdir -p "$ROOT"/bin
     cd .. || exit 1 
     cp -r ./bin "$ROOT"
-    find "$ROOT"/bin
     mkdir -p "$ROOT"/usr/local/go
     cp -r . "$ROOT"/usr/local/go
     "$ROOT"/bin/go env -w GOROOT=/usr/local/go
