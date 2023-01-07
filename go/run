@@ -31,5 +31,4 @@ build() {
     mkdir -p $ROOT/usr/local/go
     cp -r . $ROOT/usr/local/go
     go env -w GOROOT=/usr/local/go
-    find $ROOT
 }
