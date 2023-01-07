@@ -18,17 +18,18 @@ build() {
     tar -zxf go1.4.src.tar.gz -C ./go1.4
     cd go1.4/go/src || exit 1
     
-    export GOROOT_BOOTSTRAP=$(realpath ..)
+    export GOROOT_BOOTSTRAP
+    GOROOT_BOOTSTRAP=$(realpath ..)
 
     CGO_ENABLED=0 TMPDIR=/tmp CFLAGS="-Wno-error=sizeof-array-div -Wno-error=implicit-fallthrough -Wno-error=use-after-free -Wno-error=shift-negative-value" ./make.bash
     # done bootstrapping go
 
     cd ../../../go/src || exit 1
     ./make.bash
-    mkdir -p $ROOT/bin
+    mkdir -p "$ROOT"/bin
     cd ..
-    cp -r ./bin $ROOT/bin
-    mkdir -p $ROOT/usr/local/go
-    cp -r . $ROOT/usr/local/go
+    cp -r ./bin "$ROOT"/bin
+    mkdir -p "$ROOT"/usr/local/go
+    cp -r . "$ROOT"/usr/local/go
     go env -w GOROOT=/usr/local/go
 }
