@@ -1,8 +1,0 @@
-#!/bin/sh
-
-compiler() {
-    ln -s gcc "$ROOT/bin/cc"
-    ln -s gcc "$ROOT/bin/c99"
-    ln -s gcc "$ROOT/bin/c++"
-    ln -s gcc "$ROOT/bin/g++"
-}

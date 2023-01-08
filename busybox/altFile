@@ -1,5 +1,0 @@
-#!/bin/sh
-
-coreutils() {
-  /bin/busybox --install -s "$ROOT"
-}
