@@ -1,6 +1,7 @@
 #!/bin/sh
 
 compiler() {
+    mkdir -p  "$ROOT/bin/cc"
     ln -s gcc "$ROOT/bin/cc"
     ln -s gcc "$ROOT/bin/c99"
     ln -s gcc "$ROOT/bin/c++"
