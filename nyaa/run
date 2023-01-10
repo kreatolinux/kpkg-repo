@@ -12,4 +12,9 @@ build() {
         nimble ssl -Y
         mkdir -p "$ROOT/bin"
         cp out/nyaa "$ROOT/bin/"
+        mkdir -p "$ROOT/usr/share/man/man8"
+        mkdir "$ROOT/usr/share/man/man5"
+        cp -f man/nyaa3.8 "$ROOT/usr/share/man/man8"
+        cp -f man/nyaa_run.8 "$ROOT/usr/share/man/man8"
+        cp -f man/nyaa.conf.5 "$ROOT/usr/share/man/man5"
 }
