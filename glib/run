@@ -2,7 +2,7 @@
 NAME="glib"
 RELEASE="1"
 VERSION="2.75.2"
-SOURCES="https://download.gnome.org/sources/glib/$MAINVERSION/glib-$VERSION.tar.xz" 
+SOURCES="https://download.gnome.org/sources/glib/2.75/glib-$VERSION.tar.xz" 
 SHA256SUM="360d6fb75202c0eb0d07f0ab812b19b526f1c05ccc0a8ed7e5d2c988616d343a  glib-2.75.2.tar.xz"
 DESCRIPTION="glib"
 
