@@ -22,10 +22,8 @@ Every package exists in a seperate directory.
 
 * For runfiles, check out nyaa_run(8)
 * Dependencies go onto the `deps` file. Each dependency should go onto a seperate line.
-* Build dependencies go onto the `build_deps` file. Each dependency should go onto a seperate line.
 
-After completing the package, run `sh migrate.sh nyaabinrepofolder packagefolder`. This script will convert your source package to a binary package and complete the process.
-You can also make this binary package yourself if you want to do so.
+You might also want to look at [nyaa-repo-bin](https://github.com/kreatolinux/nyaa-repo-bin) for binary packages.
 
 # Credits
 * Arch Linux packages
@@ -35,6 +33,8 @@ You can also make this binary package yourself if you want to do so.
 Please note that this does not mean that the packages are taken from these projects, it just means that the packages have inspirations from these projects' packages aswell. Check for the packages' runfile for details.
 
 # License
+Unless explicitly stated, this repository is licensed under GNU Affero General Public License version 3 or later (if preffered).
+
 This project is a part of Kreato Linux.
 
 nyaa-repo is free software: you can redistribute it and/or modify
