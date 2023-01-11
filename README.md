@@ -33,7 +33,7 @@ You might also want to look at [nyaa-repo-bin](https://github.com/kreatolinux/ny
 Please note that this does not mean that the packages are taken from these projects, it just means that the packages have inspirations from these projects' packages aswell. Check for the packages' runfile for details.
 
 # License
-Unless explicitly stated, this repository is licensed under GNU Affero General Public License version 3 or later (if preffered).
+Unless explicitly stated, this repository is licensed under GNU Affero General Public License version 3 or later (if prefered).
 
 This project is a part of Kreato Linux.
 
