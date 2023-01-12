@@ -1,0 +1,14 @@
+#!/bin/sh
+NAME="btop"
+RELEASE="2"
+VERSION="4.7.4"
+SOURCES="https://github.com/ccache/ccache/archive/refs/tags/v$VERSION.tar.gz"
+SHA256SUM="204877cffd25a814a1825fe5316b9af0504df660f406f45881d67c462953cf3d  v4.7.4.tar.gz"
+DESCRIPTION="ccache - a fast compiler cache"
+build() {
+    cd ccache-$VERSION || exit 1
+    mkdir build && cd build || exit 1
+    cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$ROOT/usr -DCMAKE_INSTALL_SYSCONFDIR=$ROOT/etc ..
+    make
+    make install
+}
