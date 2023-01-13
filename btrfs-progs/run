@@ -1,0 +1,14 @@
+#!/bin/sh
+NAME="btrfs-progs"
+RELEASE="1"
+VERSION="6.1"
+SOURCES="https://mirrors.edge.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v$VERSION.tar.xz"
+SHA256SUM="378bcafabdb64c453ac64fef3d4cf8c8d5e47f310319743f580667f9c1114657  btrfs-progs-v6.1.tar.xz"
+DESCRIPTION="BTRFS filesystem utilities"
+
+build() {
+    cd btrfs-progs-v$VERSION
+    ./configure --prefix=/usr
+    make -j$(nproc)
+    make install
+}
