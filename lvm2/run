@@ -5,9 +5,11 @@ VERSION="2.03.18"
 SOURCES="https://mirrors.kernel.org/sourceware/lvm2/LVM2.$VERSION.tgz"
 SHA256SUM="9f683e2980d95c0dcebbd25c7c177032c5615d7267bfc885eabfce59280f4769  LVM2.2.03.18.tgz"
 DESCRIPTION="Logical Volume Manager"
+REPO_DIR="/etc/nyaa"
 
 build() {
     cd LVM2.$VERSION
+    patch -p1 < $REPO_DIR/$NAME/patches/install-devmapper-to-pkgconfig-dir.patch
     ./configure --prefix=/usr
     make -j$(nproc)
     make DESTDIR="$ROOT" install
