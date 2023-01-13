@@ -9,8 +9,7 @@ REPO_DIR="/etc/nyaa"
 
 build() {
     cd LVM2.$VERSION
-    patch -p1 < $REPO_DIR/$NAME/patches/install-devmapper-to-pkgconfig-dir.patch
-    ./configure --prefix=/usr
+    ./configure --enable-pkgconfig --prefix=/usr
     make -j$(nproc)
     make DESTDIR="$ROOT" install
 }
