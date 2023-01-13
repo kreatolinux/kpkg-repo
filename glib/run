@@ -2,9 +2,9 @@
 NAME="glib"
 RELEASE="1"
 VERSION="2.75.2"
-SOURCES="https://download.gnome.org/sources/glib/2.75/glib-$VERSION.tar.xz" 
-SHA256SUM="360d6fb75202c0eb0d07f0ab812b19b526f1c05ccc0a8ed7e5d2c988616d343a  glib-2.75.2.tar.xz"
-DESCRIPTION="glib"
+SOURCES="https://gitlab.gnome.org/GNOME/glib/-/archive/$VERSION/glib-$VERSION.tar.gz" 
+SHA256SUM="9515fd6a146cf8143b04c756bc9024c3f8302b1611ff22f22fca911aeeead991  glib-2.75.2.tar.gz"
+DESCRIPTION="Low-level core library that forms the basis for projects such as GTK+ and GNOME"
 
 build() {
     cd glib-$VERSION || exit 1
