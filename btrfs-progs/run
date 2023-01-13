@@ -3,7 +3,7 @@ NAME="btrfs-progs"
 RELEASE="1"
 VERSION="6.1.2"
 SOURCES="https://mirrors.edge.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v$VERSION.tar.xz"
-SHA256SUM="6be667d97f3d65c0ba57c331c98b0bd3b13cf60d8d31fa8ad25882aad9d79d7a  btrfs-progs-v6.1.2.tar.gz"
+SHA256SUM="6be667d97f3d65c0ba57c331c98b0bd3b13cf60d8d31fa8ad25882aad9d79d7a  btrfs-progs-v6.1.2.tar.xz"
 DESCRIPTION="BTRFS filesystem utilities"
 
 build() {
