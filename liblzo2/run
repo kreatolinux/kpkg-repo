@@ -1,0 +1,14 @@
+#!/bin/sh
+NAME="liblzo2"
+RELEASE="1"
+VERSION="2.10"
+SOURCES="https://www.oberhumer.com/opensource/lzo/download/lzo-$VERSION.tar.gz"
+SHA256SUM="c0f892943208266f9b6543b3ae308fab6284c5c90e627931446fb49b4221a072  lzo-2.10.tar.gz"
+DESCRIPTION="A portable lossless data compression library"
+
+build() {
+    cd lzo-$VERSION
+    ./configure --prefix=/usr
+    make -j$(nproc)
+    make install
+}
