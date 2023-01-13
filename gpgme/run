@@ -1,0 +1,14 @@
+#!/bin/sh
+NAME="gpgme"
+RELEASE="1"
+VERSION="1.18.0"
+SOURCES="https://gnupg.org/ftp/gcrypt/gpgme/gpgme-1.18.0.tar.bz2"
+SHA256SUM="361d4eae47ce925dba0ea569af40e7b52c645c4ae2e65e5621bf1b6cdd8b0e9e  gpgme-1.18.0.tar.bz2"
+DESCRIPTION="GNU Privacy Guard Made Easy"
+
+build() {
+    cd gpgme-$VERSION
+    ./configure --prefix=/usr
+    make -j$(nproc)
+    make DESTDIR="$ROOT" install
+}
