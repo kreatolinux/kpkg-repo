@@ -1,4 +1,5 @@
 go
 gpgme
 btrfs-progs
+conmon
 lvm2
