@@ -1,0 +1,13 @@
+#!/bin/sh
+NAME="conmon"
+RELEASE="1"
+VERSION="2.1.5"
+SOURCES="https://github.com/containers/conmon/archive/refs/tags/v$VERSION.tar.gz"
+SHA256SUM="ee3179ee2b9a9107acec00eb546062cf7deb847f135a3b81503d22b0d226b3ed  v2.1.5.tar.gz"
+DESCRIPTION="An OCI container runtime monitor"
+
+build() {
+    cd conmon-$VERSION
+    make -j$(nproc)
+    make install
+}
