@@ -8,7 +8,7 @@ DESCRIPTION="BTRFS filesystem utilities"
 
 build() {
     cd btrfs-progs-v$VERSION
-    ./configure --prefix=/usr
+    ./configure --disable-documentation --prefix=/usr
     make -j$(nproc)
     make install
 }
