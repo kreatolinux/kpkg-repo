@@ -8,7 +8,7 @@ DESCRIPTION="A fast and lightweight fully featured OCI runtime and C library for
 
 build() {
     cd crun-$VERSION
-    ./configure --prefix=/usr
+    ./configure --disable-systemd --prefix=/usr
     make -j$(nproc)
     make install
 }
