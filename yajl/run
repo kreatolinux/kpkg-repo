@@ -8,7 +8,8 @@ DESCRIPTION="Yet Another JSON Library"
 
 build() {
     cd yajl-$VERSION
-    ./configure --prefix=/usr
+    mkdir build
+    cd build
+    cmake -DCMAKE_INSTALL_PREFIX="/usr" ..
     make -j$(nproc)
-    make install
 }
