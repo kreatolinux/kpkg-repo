@@ -1,0 +1,14 @@
+#!/bin/sh
+NAME="libksba"
+RELEASE="1"
+VERSION="1.6.3"
+SOURCES="https://gnupg.org/ftp/gcrypt/libksba/libksba-$VERSION.tar.bz2"
+SHA256SUM="3f72c68db30971ebbf14367527719423f0a4d5f8103fc9f4a1c01a9fa440de5c  libksba-1.6.3.tar.bz2"
+DESCRIPTION="An easy API to create and parse X.509 and CMS related objects"
+
+build() {
+    cd libksba-$VERSION
+    ./configure --prefix=/usr
+    make -j$(nproc)
+    make install
+}

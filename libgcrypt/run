@@ -1,0 +1,14 @@
+#!/bin/sh
+NAME="libgcrypt"
+RELEASE="1"
+VERSION="1.10.1"
+SOURCES="https://gnupg.org/ftp/gcrypt/libgcrypt/libgcrypt-$VERSION.tar.bz2"
+SHA256SUM="ef14ae546b0084cd84259f61a55e07a38c3b53afc0f546bffcef2f01baffe9de  libgcrypt-1.10.1.tar.bz2"
+DESCRIPTION="A general purpose cryptographic library"
+
+build() {
+    cd libgcrypt-$VERSION
+    ./configure --prefix=/usr
+    make -j$(nproc)
+    make install
+}

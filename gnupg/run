@@ -1,0 +1,14 @@
+#!/bin/sh
+NAME="gnupg"
+RELEASE="1"
+VERSION="2.4.0"
+SOURCES="https://gnupg.org/ftp/gcrypt/gnupg/gnupg-$VERSION.tar.bz2"
+SHA256SUM="1d79158dd01d992431dd2e3facb89fdac97127f89784ea2cb610c600fb0c1483  gnupg-2.4.0.tar.bz2"
+DESCRIPTION="GNU Privacy Guard"
+
+build() {
+    cd gnupg-$VERSION
+    ./configure --prefix=/usr
+    make -j$(nproc)
+    make DESTDIR="$ROOT" install
+}

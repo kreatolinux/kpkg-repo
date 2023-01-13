@@ -1,0 +1,14 @@
+#!/bin/sh
+NAME="libassuan"
+RELEASE="1"
+VERSION="2.5.5"
+SOURCES="https://gnupg.org/ftp/gcrypt/libassuan/libassuan-$VERSION.tar.bz2"
+SHA256SUM="8e8c2fcc982f9ca67dcbb1d95e2dc746b1739a4668bc20b3a3c5be632edb34e4  libassuan-2.5.5.tar.bz2"
+DESCRIPTION="Small library implementing Assuan protocol"
+
+build() {
+    cd libassuan-$VERSION
+    ./configure --prefix=/usr
+    make -j$(nproc)
+    make DESTDIR="$ROOT" install
+}
