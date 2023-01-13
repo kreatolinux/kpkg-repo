@@ -8,6 +8,6 @@ DESCRIPTION="A tool for managing OCI containers and pods"
 
 build() {
     cd podman-$VERSION
-    make -j$(nproc)
+    make BUILDTAGS="" -j$(nproc)
     make install
 }
