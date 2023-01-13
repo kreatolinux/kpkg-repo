@@ -1,0 +1,14 @@
+#!/bin/sh
+NAME="crun"
+RELEASE="1"
+VERSION="1.7.2"
+SOURCES="https://github.com/containers/crun/releases/download/$VERSION/crun-$VERSION.tar.xz"
+SHA256SUM="dfce0fdf042c7de84e8672369f54f723c2f788d2bde076a4c6edf530e6306b5a  crun-1.7.2.tar.xz"
+DESCRIPTION="A fast and lightweight fully featured OCI runtime and C library for running containers"
+
+build() {
+    cd crun-$VERSION
+    ./configure --prefix=/usr
+    make -j$(nproc)
+    make install
+}
