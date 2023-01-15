@@ -9,7 +9,7 @@ DESCRIPTION="The nyaa package manager"
 build() {
         cd nyaa3-$VERSION || exit 1
         nimble install --nimbleDir=/tmp/nyaa_srcdir/deps --depsOnly -Y
-        nimble ssl --nimbleDir=/tmp/nyaa_srcdir/deps -Y
+        nimble build -d:release --threads:on -d:ssl --nimcache=/tmp/nyaa_srcdir/cache --nimbleDir=/tmp/nyaa_srcdir/deps -Y
         mkdir -p "$ROOT/bin"
         cp out/nyaa "$ROOT/bin/"
         mkdir -p "$ROOT/usr/share/man/man8"
