@@ -7,7 +7,7 @@ SHA256SUM="6055df9268603e8239a5c9c1d64cb25b9a992530df66e33b8d78a660edb37b35  cor
 DESCRIPTION="Basic core utilities (cat, ls, etc.)"
 build() {
     cd coreutils-$VERSION || exit  1
-    FORCE_UNSAFE_CONFIGURE=1 ./configure --prefix=/usr #TODO: don't use FORCE_UNSAFE_CONFIGURE after sandboxing becomes a thing
+    ./configure --prefix=/usr
     make
     make install 
 }
