@@ -3,7 +3,7 @@ NAME="gettext"
 RELEASE="1"
 VERSION="0.21.1"
 SOURCES="https://ftp.gnu.org/gnu/gettext/gettext-$VERSION.tar.xz"
-SHA256SUM="50dbc8f39797950aa2c98e939947c527e5ac9ebd2c1b99dd7b06ba33a6767ae6  gettext-0.21.1.1.tar.xz"
+SHA256SUM="50dbc8f39797950aa2c98e939947c527e5ac9ebd2c1b99dd7b06ba33a6767ae6  gettext-0.21.1.tar.xz"
 DESCRIPTION="Gettext contains utilities for localization."
 
 build() {
