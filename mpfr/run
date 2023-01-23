@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="mpfr"
 RELEASE="1"
-VERSION="4.1.0"
+VERSION="4.2.0"
 SOURCES="https://www.mpfr.org/mpfr-$VERSION/mpfr-$VERSION.tar.xz"
-SHA256SUM="0c98a3f1732ff6ca4ea690552079da9c597872d30e96ec28414ee23c95558a7f  mpfr-4.1.0.tar.xz"
+SHA256SUM="06a378df13501248c1b2db5aa977a2c8126ae849a9d9b7be2546fb4a9c26d993  mpfr-4.2.0.tar.xz"
 DESCRIPTION="GNU mpfr"
 
 build() {

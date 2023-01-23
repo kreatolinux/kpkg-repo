@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="nano"
 RELEASE="1"
-VERSION="7.1"
-SOURCES="https://nano-editor.org/dist/v7/nano-7.1.tar.gz"
-SHA256SUM="d03f2fcf536e709edcfc7db882f4b60f198726585df5f1c48f7f7097f3622322  nano-7.1.tar.gz"
+VERSION="7.2"
+SOURCES="https://nano-editor.org/dist/v7/nano-7.2.tar.gz"
+SHA256SUM="b4edaab0a037b5760484907c674e980053896f33759e43f834a212145fd085f1  nano-7.2.tar.gz"
 DESCRIPTION="Text editor with a TUI and intuitive keybinds"
 build() {
     cd nano-$VERSION || exit  1

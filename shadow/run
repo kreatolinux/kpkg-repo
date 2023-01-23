@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="shadow"
 RELEASE="1"
-VERSION="4.12.3"
-SOURCES="https://github.com/shadow-maint/shadow/releases/download/4.12.3/shadow-4.12.3.tar.xz"
-SHA256SUM="3d3ec447cfdd11ab5f0486ebc47d15718349d13fea41fc8584568bc118083ccd  shadow-4.12.3.tar.xz"
+VERSION="4.13"
+SOURCES="https://github.com/shadow-maint/shadow/releases/download/4.13/shadow-4.12.3.tar.xz"
+SHA256SUM="9afe245d79a2e7caac5f1ed62519b17416b057ec89df316df1c3935502f9dd2c  shadow-4.13.tar.xz"
 DESCRIPTION="Shadow utils"
 build() {
     cd shadow-$VERSION || exit  1

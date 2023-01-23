@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="llvm"
 RELEASE="1"
-VERSION="15.0.4"
+VERSION="15.0.7"
 SOURCES="https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION/llvm-$VERSION.src.tar.xz;https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION/cmake-$VERSION.src.tar.xz;https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION/clang-$VERSION.src.tar.xz" 
-SHA256SUM="60aca410cae2b92665c0aa769bcd11ed17030b9ecd76115138c97d94a27a992f  llvm-15.0.4.src.tar.xz;701f8ff9b9727d12be456256e2811c5452259282c387728e2bcd95da90c5af45  clang-15.0.4.src.tar.xz;9df45bf3a0a46264d5007485592381bbaf50f034b4155290cb0d917539d8facf  cmake-15.0.4.src.tar.xz"
+SHA256SUM="4ad8b2cc8003c86d0078d15d987d84e3a739f24aae9033865c027abae93ee7a4  llvm-15.0.7.src.tar.xz;8986f29b634fdaa9862eedda78513969fe9788301c9f2d938f4c10a3e7a3e7ea  cmake-15.0.7.src.tar.xz;a6b673ef15377fb46062d164e8ddc4d05c348ff8968f015f7f4af03f51000067  clang-15.0.7.src.tar.xz"
 DESCRIPTION="The LLVM Project is a collection of modular and reusable compiler and toolchain technologies."
 
 prepare() {
