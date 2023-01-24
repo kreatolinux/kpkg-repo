@@ -7,6 +7,7 @@ SHA256SUM="7b5079fbe139b55903e6efdb4f67700e49aeaca2c0cb10d65345f5f8b70d89e7  lib
 DESCRIPTION="standardized API used to convert between different character encodings"
 build() {
     cd libiconv-$VERSION || exit  1
+    ./configure
     make
     make DESTDIR=$ROOT install 
 }
