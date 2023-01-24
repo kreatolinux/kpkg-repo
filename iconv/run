@@ -1,0 +1,13 @@
+#!/bin/sh
+NAME="iconv"
+RELEASE="1"
+VERSION="1.17"
+SOURCES="https://ftp.gnu.org/pub/gnu/libiconv/libiconv-$VERSION.tar.gz"
+SHA256SUM="7b5079fbe139b55903e6efdb4f67700e49aeaca2c0cb10d65345f5f8b70d89e7  libiconv-$VERSION.tar.gz"
+DESCRIPTION="standardized API used to convert between different character encodings"
+build() {
+    cd libiconv-$VERSION || exit  1
+    ./configure
+    make
+    make DESTDIR=$ROOT install 
+}
