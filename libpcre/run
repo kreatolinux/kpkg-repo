@@ -3,7 +3,7 @@ NAME="pcre"
 RELEASE="1"
 VERSION="8.45"
 SOURCES="https://netcologne.dl.sourceforge.net/project/pcre/pcre/$VERSION/pcre-$VERSION.zip"
-SHA256SUM="4dae6fdcd2bb0bb6c37b5f97c33c2be954da743985369cddac3546e3218bffb8  pcre-8.45.tar.bz2"
+SHA256SUM="5b709aa45ea3b8bb73052947200ad187f651a2049158fb5bbfed329e4322a977  pcre-8.45.zip"
 DESCRIPTION="Perl Compatible Regular Expression libraries"
 
 build() {
