@@ -1,18 +1,14 @@
 #!/bin/sh
 NAME="cairo"
-RELEASE="3"
+RELEASE="4"
 VERSION="1.17.6"
 SOURCES="https://download.gnome.org/sources/cairo/1.17/cairo-$VERSION.tar.xz;https://gitlab.freedesktop.org/cairo/cairo/-/commit/24996e6ee241ebcd303dd34a2b06b37a6dd0c217.patch"
 SHA256SUM="4eebc4c2bad0402bc3f501db184417094657d111fb6c06f076a82ea191fe1faf  cairo-1.17.6.tar.xz;0024c697dc3cc42dc509fff6efeec14858acafb0e51679f1816b76c62705bc4a  24996e6ee241ebcd303dd34a2b06b37a6dd0c217.patch"
 DESCRIPTION="2D graphics library"
 
-prepare() {
-    tar -xvf cairo-$VERSION.tar.xz
-    cd cairo-$VERSION || exit 1
-    patch -p1 < ../24996e6ee241ebcd303dd34a2b06b37a6dd0c217.patch
-}
-
 build() {
+    cd cairo-$VERSION || exit 1
+    patch -p1 < /tmp/nyaa_srcdir/24996e6ee241ebcd303dd34a2b06b37a6dd0c217.patch
     ./configure --prefix=/usr    \
             --disable-static     \
             --enable-tee
