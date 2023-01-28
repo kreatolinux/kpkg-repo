@@ -4,6 +4,7 @@ RELEASE="1"
 VERSION="2.38"
 SOURCES="https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v$VERSION/util-linux-$VERSION.tar.xz"
 SHA256SUM="6d111cbe4d55b336db2f1fbeffbc65b89908704c01136371d32aa9bec373eb64  util-linux-2.38.tar.xz"
+BUILD_AS_ROOT="true"
 DESCRIPTION="Linux Utilities"
 
 build() {
