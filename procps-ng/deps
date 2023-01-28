@@ -1,3 +1,4 @@
 autoconf
 automake
+libtool
 gettext
