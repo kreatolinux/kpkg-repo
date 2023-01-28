@@ -1,4 +1,5 @@
 meson
 wayland
+wayland-protocols
 pixman
 libpng
