@@ -1,10 +1,10 @@
-#!/bin/sh                                                                                                              
-NAME="grim"                                                                                                            
+#!/bin/sh
+NAME="grim"
 RELEASE="1"
 VERSION="1.4.0"
 SOURCES="https://git.sr.ht/~emersion/grim/refs/download/v1.4.0/grim-1.4.0.tar.gz"
-SHA256SUM="b6786e889ed93568634189a59f6b6429c041bf74883c10e8b6e2ed6772ae7ffb  grim-1.4.0.tar.gz"                         
-DESCRIPTION="Grabs images from a Wayland compositor"                                                                   
+SHA256SUM="b6786e889ed93568634189a59f6b6429c041bf74883c10e8b6e2ed6772ae7ffb  grim-1.4.0.tar.gz"
+DESCRIPTION="Grabs images from a Wayland compositor"
 build() {                                                                                                              
     cd grim-$VERSION || exit  1                                                                                       
     meson --prefix=/usr build/                                                                                         
