@@ -11,5 +11,5 @@ build() {
         nimble install --nimbleDir=/tmp/nyaa_srcdir/deps --depsOnly -Y
         nimble build --nimcache=/tmp/nyaa_srcdir/cache --nimbleDir=/tmp/nyaa_srcdir/deps -d:release -Y
         mkdir -p "$ROOT/usr/bin"
-        cp out/mari "$ROOT/usr/bin/"
+        cp mari "$ROOT/usr/bin/"
 }
