@@ -8,7 +8,7 @@ DESCRIPTION="FriBidi is an implementation of Unicode Bidirectional Algorithm"
 
 # Taken from KISS Linux
 build_freetype() (
-    cd freetype-$FREETYPE_VERSION
+    cd freetype-2.12.1
 
     meson \
         --prefix=/usr \
@@ -23,7 +23,7 @@ build_freetype() (
 )
 
 build_harfbuzz() (
-    cd harfbuzz-$HARFBUZZ_VERSION
+    cd harfbuzz-5.3.1
 
     meson \
         --prefix=/usr \
