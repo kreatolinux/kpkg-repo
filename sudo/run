@@ -5,6 +5,7 @@ VERSION="1_9_12p1"
 SOURCES="https://github.com/sudo-project/sudo/archive/refs/tags/SUDO_$VERSION.tar.gz"
 SHA256SUM="41ee958d0356dafce091244b1bff30dc75d87efcd78713ebea64ac48b4a50358  SUDO_1_9_12p1.tar.gz"
 DESCRIPTION="Utility to execute a command as another user"
+BUILD_AS_ROOT="true"
 build() {
     cd sudo-SUDO_$VERSION || exit 1
     ./configure --prefix=/usr
