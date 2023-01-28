@@ -1,10 +1,9 @@
 #!/bin/sh
 NAME="atk"
-MAJOR="2.38"
 RELEASE="1"
-VERSION="$MAJOR.0"
-SOURCES="https://ftp.gnome.org/pub/gnome/sources/atk/$MAJOR/atk-$VERSION.tar.xz"
-SHA256SUM="755c9582ca7cf01e5eaa0ac972376877eb365902f388262c21ea3425e0c4d631  atk-2.9.4.tar.xz"
+VERSION="2.38.0"
+SOURCES="https://ftp.gnome.org/pub/gnome/sources/atk/2.38/atk-$VERSION.tar.xz"
+SHA256SUM="ac4de2a4ef4bd5665052952fe169657e65e895c5057dffb3c2a810f6191a0c36  atk-2.38.0.tar.xz"
 DESCRIPTION=""
 build() {
     cd atk-$VERSION || exit  1
