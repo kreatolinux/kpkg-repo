@@ -1,8 +1,8 @@
 #!/bin/sh                                                                                                              
-NAME="slurp"                                                                                                            
+NAME="slurp"
 RELEASE="1"
-VERSION="1.4.0"                                                                                                        
-SOURCES="https://github.com/emersion/slurp/releases/download/v$VERSION/slurp-$VERSION.tar.gz"                                                    
+VERSION="1.4.0"
+SOURCES="https://github.com/emersion/slurp/releases/download/v$VERSION/slurp-$VERSION.tar.gz"
 SHA256SUM="98f6bb692be6bd015aa6251830837ea4fd9a0c5d51ce832ad147aa62ae7f095d  slurp-1.4.0.tar.gz"
 DESCRIPTION="Selects a region in a Wayland compositor and prints it to the standard output"
 build() {                                                                                                              
