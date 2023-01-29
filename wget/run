@@ -1,0 +1,13 @@
+#!/bin/sh
+NAME="wget"
+RELEASE="1"
+VERSION="1.21"
+SOURCES="https://ftp.gnu.org/gnu/$NAME/$NAME-$VERSION.tar.gz"
+SHA256SUM="b3bc1a9bd0c19836c9709c318d41c19c11215a07514f49f89b40b9d50ab49325  wget-1.21.tar.gz"
+DESCRIPTION="Network utility to retrieve files from the Web"
+build() {
+    cd $NAME-$VERSION || exit 1
+    ./configure --prefix=/usr
+    make
+    make install
+}
