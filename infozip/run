@@ -1,0 +1,12 @@
+#!/bin/sh
+NAME="Info-Zip"
+RELEASE="1"
+VERSION="3.0"
+SOURCES="https://newcontinuum.dl.sourceforge.net/project/infozip/Zip%203.x%20%28latest%29/3.0/zip30.tar.gz"
+SHA256SUM="f0e8bb1f9b7eb0b01285495a2699df3a4b766784c1765a8f1aeedf63c0806369  zip30.tar.gz"
+DESCRIPTION="zip utility"
+build() {
+    cd zip30 || exit  1
+    make -f unix/Makefile generic
+    make -f unix/Makefile install 
+}
