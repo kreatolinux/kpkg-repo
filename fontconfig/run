@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="fontconfig"
 RELEASE="1"
-VERSION="2.14.1"
+VERSION="2.14.2"
 SOURCES="https://www.freedesktop.org/software/fontconfig/release/fontconfig-$VERSION.tar.gz"
-SHA256SUM="ae480e9ca34382790312ff062c625ec70df94d6d9a9366e2b2b3d525f7f90387  fontconfig-2.14.1.tar.gz"
+SHA256SUM="3ba2dd92158718acec5caaf1a716043b5aa055c27b081d914af3ccb40dce8a55  fontconfig-2.14.2.tar.gz"
 DESCRIPTION="fontconfig"
 build() {
     cd $NAME-$VERSION || exit  1
