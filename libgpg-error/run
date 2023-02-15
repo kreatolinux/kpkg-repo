@@ -10,5 +10,8 @@ build() {
     cd libgpg-error-$VERSION
     ./configure --prefix=/usr
     make -j$(nproc)
+}
+
+install() {
     make install
 }

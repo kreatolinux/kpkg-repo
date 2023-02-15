@@ -8,5 +8,8 @@ DESCRIPTION="Linux firmware files"
 
 build() {
     cd linux-firmware-$VERSION || exit 1
+}
+
+install() {
     make install
 }

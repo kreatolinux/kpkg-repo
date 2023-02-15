@@ -38,6 +38,9 @@ CFLAGS += -I/usr/include/libnl3
 EOF
     cd wpa_supplicant/
     make BINDIR=/usr/sbin LIBDIR=/usr/lib -j$(nproc)
+}
+
+install() {
     make DESTDIR=$ROOT install
 }
 

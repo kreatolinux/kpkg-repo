@@ -10,5 +10,8 @@ build() {
     cd npth-$VERSION
     ./configure --prefix=/usr
     make -j$(nproc)
+}
+
+install() {
     make install
 }

@@ -10,5 +10,8 @@ build() {
     cd grub-$VERSION || exit 1
     ./configure --disable-efiemu --disable-werror --prefix=/usr --sysconfdir=/etc --with-platform=efi
     make
+}
+
+install() {
     make DESTDIR="$ROOT" install
 }

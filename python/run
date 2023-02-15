@@ -12,5 +12,8 @@ build() {
     make
     make DESTDIR="$ROOT" install
     ln -s "pip3" "$ROOT/usr/bin/pip"
+}
+
+install() {
     ln -s "python3" "$ROOT/usr/bin/python"
 }

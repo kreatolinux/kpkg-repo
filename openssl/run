@@ -13,3 +13,6 @@ build() {
     make DESTDIR="$ROOT" install
 }
 
+install() {
+}
+

@@ -9,5 +9,8 @@ build() {
     cd atk-$VERSION || exit  1
     meson --prefix=/usr -Dintrospection=false build/
     ninja -C build/
+}
+
+install() {
     ninja -C build/ install
 }

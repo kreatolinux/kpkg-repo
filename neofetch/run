@@ -10,5 +10,8 @@ build() {
     cd neofetch-$VERSION
 	mkdir -p $ROOT/usr/bin
 	cp -rf   neofetch $ROOT/usr/bin
+}
+
+install() {
 	chmod +x $ROOT/usr/bin/neofetch
 }

@@ -7,5 +7,8 @@ SHA256SUM="d60a3903dc3bb01a18ad6a89cdbe2e4eadc69c0bc8ef1e3773ba53d44c3f7a34  Mak
 DESCRIPTION="Hyperfast and lightweight templating for the Python platform"
 build() {
     cd Mako-$VERSION || exit 1
+}
+
+install() {
     SETUPTOOLS_USE_DISTUTILS=stdlib pip install . --prefix=/usr --root="$ROOT"
 }

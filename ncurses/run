@@ -34,5 +34,8 @@ build() {
 	# Some packages look for libcurses instead of libncurses when building.
 	printf '%s\n' "INPUT(-lncursesw)" > "$ROOT/usr/lib/libcursesw.so"
 	ln -s libncurses.so "$ROOT/usr/lib/libcurses.so"
+}
+
+install() {
 
 }

@@ -13,5 +13,8 @@ build() {
     for i in `cat package/commands`; do
        rm -f $ROOT/usr/bin/$i
        cp /tmp/nyaa_srcdir/admin/runit-$VERSION/src/$i $ROOT/usr/bin/$i
+}
+
+install() {
     done
 }

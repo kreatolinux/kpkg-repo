@@ -23,5 +23,8 @@ NO_CROSS_DIRECTORY_HARDLINKS=1
 NO_INSTALL_HARDLINKS=1
 EOF
 make -j$(nproc)
+}
+
+install() {
 make DESTDIR=$ROOT install
 }

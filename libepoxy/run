@@ -9,5 +9,8 @@ build() {
     cd libepoxy-$VERSION || exit  1                                                                                       
     meson --prefix=/usr -Dx11=false build/                                                                                         
     ninja -C build/                                                                                                    
+}
+
+install() {
     DESTDIR=$ROOT ninja -C build/ install                                                                              
 }                                                                                                                      

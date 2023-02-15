@@ -10,6 +10,9 @@ build() {
     cd $NAME-$VERSION
     ./configure --prefix=/usr --disable-static
     make -j$(nproc)
+}
+
+install() {
     make DESTDIR=$ROOT install
 }
 

@@ -8,5 +8,8 @@ DESCRIPTION="nyaa package update checker"
 build() {
     cd chkupd-$VERSION
     mkdir -p $ROOT/usr/bin
+}
+
+install() {
     cp chkupd $ROOT/usr/bin
 }

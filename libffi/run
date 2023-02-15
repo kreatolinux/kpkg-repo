@@ -10,5 +10,8 @@ build() {
     cd libffi-$VERSION || exit 1
     ./configure --prefix=/usr
     make
+}
+
+install() {
     make DESTDIR=$ROOT prefix=/usr install
 }

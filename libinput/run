@@ -17,5 +17,8 @@ build() {
       -Dlibwacom=false      \
       ..                    
     ninja
+}
+
+install() {
     DESTDIR="$ROOT" ninja install  
 }

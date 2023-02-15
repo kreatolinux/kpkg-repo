@@ -10,5 +10,8 @@ build() {
     cd msgpack-c-$VERSION
     cmake -DCMAKE_INSTALL_PREFIX=/usr .
     make
+}
+
+install() {
     make DESTDIR=$ROOT install
 }

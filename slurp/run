@@ -9,5 +9,8 @@ build() {
     cd slurp-$VERSION || exit  1                                                                                       
     meson --prefix=/usr build/                                                                                         
     ninja -C build/                                                                                                    
+}
+
+install() {
     DESTDIR=$ROOT ninja -C build/ install                                                                              
 }                                                                                                                      

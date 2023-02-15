@@ -9,5 +9,8 @@ build() {
     cd coreutils-$VERSION || exit  1
     ./configure --prefix=/usr
     make
+}
+
+install() {
     make install 
 }

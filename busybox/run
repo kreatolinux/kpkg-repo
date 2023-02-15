@@ -11,5 +11,8 @@ build() {
     make -j$(nproc) defconfig
     make -j$(nproc) busybox
     [ ! -d "$ROOT/bin" ] && mkdir -p $ROOT/bin/
+}
+
+install() {
     cp busybox $ROOT/bin/
 }

@@ -10,5 +10,8 @@ build() {
     cd libassuan-$VERSION
     ./configure --prefix=/usr
     make -j$(nproc)
+}
+
+install() {
     make DESTDIR="$ROOT" install
 }

@@ -14,5 +14,8 @@ build() {
           --buildtype=release \
           -Ddocumentation=false
     ninja
+}
+
+install() {
     DESTDIR="$ROOT" ninja install
 }

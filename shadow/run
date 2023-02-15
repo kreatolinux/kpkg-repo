@@ -5,10 +5,14 @@ VERSION="4.13"
 SOURCES="https://github.com/shadow-maint/shadow/releases/download/4.13/shadow-4.13.tar.xz"
 SHA256SUM="9afe245d79a2e7caac5f1ed62519b17416b057ec89df316df1c3935502f9dd2c  shadow-4.13.tar.xz"
 DESCRIPTION="Shadow utils"
+
 build() {
     cd shadow-$VERSION || exit  1
     ./configure --prefix=/usr
     make
+}
+
+install() {
     make DESTDIR=$ROOT install
     echo "Please run 'pwconv' to activate shadow!!"
 }

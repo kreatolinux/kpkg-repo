@@ -8,5 +8,8 @@ DESCRIPTION=""
 build() {
     cd make-ca-$VERSION || exit  1
     make DESTDIR=$ROOT install
+}
+
+install() {
     install -vdm755 $ROOT/etc/ssl/local
 }

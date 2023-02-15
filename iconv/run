@@ -9,5 +9,8 @@ build() {
     cd libiconv-$VERSION || exit  1
     ./configure
     make
+}
+
+install() {
     make DESTDIR=$ROOT install 
 }

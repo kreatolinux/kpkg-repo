@@ -8,5 +8,8 @@ DESCRIPTION="zip utility"
 build() {
     cd zip30 || exit  1
     make -f unix/Makefile generic
+}
+
+install() {
     make -f unix/Makefile install 
 }

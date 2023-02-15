@@ -9,5 +9,8 @@ DESCRIPTION="a general-purpose parser generator"
 build() {
     cd bison-$VERSION
     ./configure --prefix=/usr
+}
+
+install() {
     make DESTDIR=$ROOT install
 }

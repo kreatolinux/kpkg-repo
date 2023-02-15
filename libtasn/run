@@ -11,5 +11,8 @@ build() {
     cd libtasn1-$VERSION
     ./configure --prefix=/usr
     make -j$(nproc)
+}
+
+install() {
     make DESTDIR=$ROOT install
 }

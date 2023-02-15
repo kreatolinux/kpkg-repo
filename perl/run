@@ -24,5 +24,8 @@ build() {
              -Duseshrplib                                 \
              -Dusethreads
     make -j$(nproc --all)
+}
+
+install() {
     make DESTDIR=$ROOT install
 }

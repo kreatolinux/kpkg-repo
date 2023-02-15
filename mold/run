@@ -12,5 +12,8 @@ build() {
     cd build
     cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=c++ -DCMAKE_INSTALL_PREFIX=/usr ..
     cmake --build . -j $(nproc)
+}
+
+install() {
     cmake --install .
 }

@@ -11,5 +11,8 @@ build() {
     autoreconf -v -f -i
     ./configure --prefix=/usr --bindir=/usr/bin
     make
+}
+
+install() {
     make DESTDIR=$ROOT install
 }

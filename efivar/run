@@ -16,5 +16,8 @@ build() {
     sed '/unistd\.h/a#include <sys/mount.h>' -i src/gpt.c src/linux.c
     
     make CFLAGS="-O2 -Wno-stringop-truncation"
+}
+
+install() {
     make DESTDIR="$ROOT" LIBDIR=/usr/lib install 
 }

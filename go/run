@@ -24,6 +24,9 @@ build() {
 
     cd ../../../go/src || exit 1
     GOROOT_FINAL=/usr/local/go ./make.bash
+}
+
+install() {
     mkdir -p "$ROOT"/bin
     cd .. || exit 1
     cp -r ./bin "$ROOT"
@@ -32,4 +35,3 @@ build() {
     mkdir -p /tmp/nyaa_srcdir/go
     GOENV=/tmp/nyaa_srcdir/go/env "$ROOT"/bin/go env -w GOROOT=/usr/local/go
 }
-

@@ -16,5 +16,8 @@ build() {
         mkdir "$ROOT/usr/share/man/man5"
         cp -f man/kpkg.8 "$ROOT/usr/share/man/man8"
         cp -f man/kpkg_run.8 "$ROOT/usr/share/man/man8"
+}
+
+install() {
         cp -f man/kpkg.conf.5 "$ROOT/usr/share/man/man5"
 }

@@ -9,5 +9,8 @@ DESCRIPTION="ninja-compatible build tool written in C"
 build() {
     cd libcap-$VERSION || exit 1
     make -j$(nproc)
+}
+
+install() {
     make DESTDIR=$ROOT install
 }

@@ -10,5 +10,8 @@ build() {
     cd libseccomp-$VERSION
     ./configure --prefix=/usr
     make -j$(nproc)
+}
+
+install() {
     make install
 }

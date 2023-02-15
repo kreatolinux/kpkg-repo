@@ -10,5 +10,8 @@ build() {
     cd btrfs-progs-v$VERSION
     ./configure --disable-documentation --prefix=/usr
     make -j$(nproc)
+}
+
+install() {
     make install
 }

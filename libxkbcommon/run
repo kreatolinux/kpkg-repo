@@ -18,5 +18,8 @@ build() {
       -Denable-docs=false
       ..                    
     ninja
+}
+
+install() {
     DESTDIR="$ROOT" ninja install  
 }

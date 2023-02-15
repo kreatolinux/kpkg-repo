@@ -10,5 +10,8 @@ build() {
     cd popt-$VERSION || exit 1
     ./configure --prefix=/usr --disable-static
     make
+}
+
+install() {
     make DESTDIR="$ROOT" install
 }

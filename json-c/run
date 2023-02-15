@@ -15,5 +15,8 @@ build() {
           -DBUILD_STATIC_LIBS=OFF    \
           ..
     make 
+}
+
+install() {
     make DESTDIR="$ROOT" install
 }

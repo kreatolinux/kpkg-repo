@@ -9,5 +9,8 @@ DESCRIPTION="GNU readline"
 build() {
     cd readline-$VERSION || exit 1
     ./configure --prefix=/usr --with-shared 
+}
+
+install() {
     make DESTDIR=$ROOT SHLIB_LIBS="-L/tools/lib -lncursesw" install
 }

@@ -11,5 +11,8 @@ build() {
     sed -e '/-Werror/d' -i Make.defaults   
     sed -e '/extern int efi_set_verbose/d' -i src/efibootmgr.c
     make EFI_LOADER=grubx64.efi EFIDIR=KLX
+}
+
+install() {
     make DESTDIR="$ROOT" EFIDIR=KLX install
 }

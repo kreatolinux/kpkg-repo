@@ -12,5 +12,8 @@ build() {
     cd build
     meson --prefix=/usr --buildtype=release
     ninja
+}
+
+install() {
     DESTDIR="$ROOT" ninja install
 }

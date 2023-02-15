@@ -9,5 +9,8 @@ build() {
     cd automake-$VERSION || exit  1
     ./configure --prefix=/usr 
     make
+}
+
+install() {
     make DESTDIR=$ROOT install
 }

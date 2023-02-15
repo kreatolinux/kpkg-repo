@@ -11,5 +11,8 @@ build() {
     cd LVM2.$VERSION
     ./configure --enable-pkgconfig --prefix=/usr
     make -j$(nproc)
+}
+
+install() {
     make DESTDIR="$ROOT" install
 }

@@ -9,5 +9,8 @@ DESCRIPTION="An OCI container runtime monitor"
 build() {
     cd conmon-$VERSION
     make -j$(nproc)
+}
+
+install() {
     make install
 }

@@ -9,5 +9,8 @@ build() {
     cd libostree-$VERSION || exit  1
     ./configure --with-gpgme=no --prefix=/usr
     make
+}
+
+install() {
     make DESTDIR=$ROOT install
 }

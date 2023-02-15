@@ -25,5 +25,8 @@ build() {
         --with-ca-path=/etc/ssl/certs
 
     make
+}
+
+install() {
     make DESTDIR=$ROOT install
 }

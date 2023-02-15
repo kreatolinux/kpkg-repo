@@ -9,5 +9,8 @@ DESCRIPTION="Asynchronous I/O library"
 build() {
     cd libaio-$VERSION
     make -j$(nproc)
+}
+
+install() {
     make install
 }

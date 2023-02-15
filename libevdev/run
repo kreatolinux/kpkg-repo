@@ -9,5 +9,8 @@ DESCRIPTION="Common functions for Xorg input drivers"
 build() {
     cd libevdev-$VERSION || exit 1
     ./configure --prefix=/usr
+}
+
+install() {
     make DESTDIR="$ROOT" install
 }

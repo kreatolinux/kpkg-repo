@@ -16,5 +16,8 @@ build() {
       -Ddbus=disabled   \
     ..                    
     ninja
+}
+
+install() {
     DESTDIR="$ROOT" ninja install  
 }

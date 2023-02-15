@@ -11,5 +11,8 @@ build() {
                 --build=$(support/config.guess) \
                 --without-bash-malloc
     make
+}
+
+install() {
     make DESTDIR=$ROOT install
 }

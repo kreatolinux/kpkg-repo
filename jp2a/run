@@ -10,5 +10,8 @@ build() {
     autoreconf -vi
     ./configure --prefix=/usr
     make
+}
+
+install() {
     make DESTDIR=$ROOT install
 }

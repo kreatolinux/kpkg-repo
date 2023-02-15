@@ -12,3 +12,6 @@ build() {
     make DESTDIR=$ROOT PREFIX=/usr install 
 }
 
+install() {
+}
+

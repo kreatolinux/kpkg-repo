@@ -11,5 +11,8 @@ build() {
     ./configure --prefix=/usr
     cd libtextstyle
     make -j$(nproc)
+}
+
+install() {
     make DESTDIR=$ROOT install
 }

@@ -10,5 +10,8 @@ build() {
     cd zlib-$VERSION
     ./configure --prefix=/usr
     make
+}
+
+install() {
     make DESTDIR=$ROOT install
 }

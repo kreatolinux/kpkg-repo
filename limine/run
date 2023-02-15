@@ -10,5 +10,8 @@ build() {
     cd limine-$VERSION || exit 1
     ./configure --prefix=/usr --enable-bios --enable-uefi-x86-64
     make
+}
+
+install() {
     make DESTDIR="$ROOT" install
 }

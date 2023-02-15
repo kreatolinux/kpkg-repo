@@ -10,6 +10,9 @@ build() {
     cd libressl-$VERSION || exit 1
     ./configure
     make -j$(nproc)
+}
+
+install() {
     make DESTDIR="$ROOT" install
 }
 

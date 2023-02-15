@@ -11,5 +11,8 @@ build() {
         --disable-debuginfod \
         --disable-libdebuginfod
     make
+}
+
+install() {
     make DESTDIR=$ROOT install
 }

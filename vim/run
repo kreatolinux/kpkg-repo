@@ -9,5 +9,8 @@ DESCRIPTION="Vi Improved"
 build() {
     cd vim-$VERSION
     make -j$(nproc)
+}
+
+install() {
     make install
 }

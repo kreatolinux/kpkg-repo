@@ -9,5 +9,8 @@ build() {
     cd gdk-pixbuf-$VERSION || exit  1
     meson --prefix=/usr -Dman=false -Dgio_sniffing=false build/
     ninja -C build/
+}
+
+install() {
     DESTDIR=$ROOT ninja -C build/ install
 }

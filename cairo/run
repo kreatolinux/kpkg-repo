@@ -13,5 +13,8 @@ build() {
             --disable-static     \
             --enable-tee
     make
+}
+
+install() {
     make DESTDIR="$ROOT" install
 }

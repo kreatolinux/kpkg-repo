@@ -8,5 +8,8 @@ DESCRIPTION="libudev, without dependencies"
 build() {
     cd libudev-zero-$VERSION || exit  1
     make
+}
+
+install() {
     make DESTDIR=$ROOT PREFIX=/usr install
 }

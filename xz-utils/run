@@ -9,5 +9,8 @@ build() {
     cd xz-$VERSION || exit  1
     ./configure --prefix=/usr
     make
+}
+
+install() {
     make DESTDIR=$ROOT install
 }

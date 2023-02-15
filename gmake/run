@@ -11,6 +11,9 @@ build() {
     cd make-$VERSION
     ./configure --without-guile --prefix=/usr --host=x86_64-pc-linux-gnu
     make -j$(nproc)
+}
+
+install() {
     make DESTDIR=$ROOT install
 }
 

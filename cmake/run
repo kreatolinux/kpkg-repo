@@ -17,6 +17,9 @@ build() {
                 --no-system-librhash \
                 --docdir=/share/doc/cmake-$VERSION
     make -j$(nproc)
+}
+
+install() {
     make DESTDIR=$ROOT install
 }
 

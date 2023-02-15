@@ -12,5 +12,8 @@ build() {
     make -j$(nproc)
     make DESTDIR=$ROOT install
     mkdir -pv $ROOT/usr/share/gdb/auto-load/usr/lib
+}
+
+install() {
     mv -v $ROOT/usr/lib/libisl*gdb.py /usr/share/gdb/auto-load/usr/lib
 }

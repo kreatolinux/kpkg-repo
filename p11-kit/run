@@ -11,5 +11,8 @@ build() {
             --sysconfdir=/etc \
             --with-trust-paths=/etc/pki/anchors
     make
+}
+
+install() {
     make DESTDIR=$ROOT install
 }

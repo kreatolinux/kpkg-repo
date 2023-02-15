@@ -9,5 +9,8 @@ DESCRIPTION="Facebook's zstd library"
 build() {
     cd zstd-$VERSION || exit 1
     make
+}
+
+install() {
     make DESTDIR=$ROOT prefix=/usr install
 }

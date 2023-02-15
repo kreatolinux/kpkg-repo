@@ -17,6 +17,9 @@ build() {
             --privsepuser=dhcpcd
     make
     make -j$(nproc)
+}
+
+install() {
     make DESTDIR=$ROOT install
     mkdir "$ROOT/bin/"
 printf '
@@ -27,4 +30,3 @@ printf '
     chmod +x "$ROOT/bin/install-dhcpcd-groups"
     echo "dhcpcd: please run install-dhcpcd-groups to install groups"
 }
-

@@ -26,6 +26,9 @@ build() {
         --disable-multilib                             \
 
     make -j1
+}
+
+install() {
     make DESTDIR=$ROOT install-strip
     rm -rf $ROOT/source
 }

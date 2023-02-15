@@ -57,3 +57,7 @@ build() {
     build_harfbuzz
     build_freetype -Dharfbuzz=enabled --reconfigure
 }
+
+install() {
+        # TODO
+}

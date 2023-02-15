@@ -9,5 +9,8 @@ build() {
     cd libsixel-$VERSION || exit  1
     meson --prefix=/usr build/
     ninja -C build/
+}
+
+install() {
     ninja -C build/ install
 }

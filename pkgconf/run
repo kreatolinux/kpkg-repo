@@ -11,5 +11,8 @@ build() {
     ./configure --prefix=/usr
     make DESTDIR="$ROOT" install
     [ ! -d "$ROOT/usr/bin" ] && mkdir -p "$ROOT/usr/bin"
+}
+
+install() {
     ln -s pkgconf "$ROOT/usr/bin/pkg-config"
 }

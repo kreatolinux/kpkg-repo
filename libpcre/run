@@ -9,5 +9,8 @@ DESCRIPTION="Perl Compatible Regular Expression libraries"
 build() {
     cd pcre-$VERSION
     ./configure --prefix=/usr
+}
+
+install() {
     make DESTDIR=$ROOT install
 }

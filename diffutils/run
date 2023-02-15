@@ -19,5 +19,8 @@ build() {
         --disable-werror           \
         --enable-64-bit-bfd
     make
+}
+
+install() {
     make DESTDIR=$ROOT install -j1
 }

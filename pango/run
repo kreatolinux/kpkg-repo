@@ -16,5 +16,8 @@ build() {
     -Dxft=disabled \
     build
     ninja -C build
+}
+
+install() {
     DESTDIR="$ROOT" ninja -C build install
 }

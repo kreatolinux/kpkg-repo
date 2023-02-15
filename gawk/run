@@ -9,5 +9,8 @@ DESCRIPTION="GNU awk"
 build() {
     cd gawk-$VERSION
     ./configure --prefix=/usr
+}
+
+install() {
     make DESTDIR=$ROOT install
 }

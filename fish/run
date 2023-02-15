@@ -15,5 +15,8 @@ build() {
 		-DBUILD_DOCS=False \
 		-Wno-dev
 	cmake --build build
+}
+
+install() {
 	cmake --install build
 }

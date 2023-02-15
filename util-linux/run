@@ -12,5 +12,8 @@ build() {
     cat /etc/group | grep tty || addgroup tty
     ./configure --prefix=/usr
     make
+}
+
+install() {
     make DESTDIR=$ROOT install -j1
 }

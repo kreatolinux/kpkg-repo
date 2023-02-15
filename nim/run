@@ -6,6 +6,15 @@ SOURCES="https://nim-lang.org/download/nim-$VERSION.tar.xz"
 SHA256SUM="13d7702f8b57087babe8cd051c13bc56a3171418ba867b49c6bbd09b29d24fea  nim-1.6.10.tar.xz"
 DESCRIPTION="The Nim programming language"
 
+build() {
+        cd nim-$VERSION || exit 1
+        sh build.sh
+        bin/nim c koch
+        ./koch boot -d:release
+        ./koch tools
+        ./koch nimble
+}
+
 install() {
   mkdir -p "$ROOT/usr/include" "$ROOT/usr/bin" "$ROOT/etc/nim" "$ROOT/usr/lib"
   cp -r lib/ "$ROOT/usr/lib/nim"
@@ -14,14 +23,4 @@ install() {
   cp -rf bin/* -t "$ROOT/usr/bin"
   cp -rf "$ROOT/usr/lib/nim/"*.h "$ROOT/usr/include"
   rm -rf "$ROOT/nim"
-}
-
-build() {
-        cd nim-$VERSION || exit 1
-        sh build.sh
-        bin/nim c koch
-        ./koch boot -d:release
-        ./koch tools
-        ./koch nimble
-	install
 }
