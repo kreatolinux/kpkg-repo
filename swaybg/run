@@ -6,7 +6,6 @@ SOURCES="https://github.com/swaywm/swaybg/releases/download/v$VERSION/swaybg-$VE
 SHA256SUM="c0205b34f1fad94553b6cb2c2b983cc33186018026058cad0b841a00bc3087e3  swaybg-1.2.0.tar.gz"                            
 DESCRIPTION="Wallpaper utility for Wayland compositors"                                                                   
 build() {                                                                                                              
-    cd swaybg-$VERSION || exit  1                                                                                       
     meson --prefix=/usr build/                                                                                         
     ninja -C build/                                                                                                    
 }

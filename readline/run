@@ -7,7 +7,6 @@ SHA256SUM="7589a2381a8419e68654a47623ce7dfcb756815c8fee726b98f90bf668af7bc6  rea
 DESCRIPTION="GNU readline"
 
 build() {
-    cd readline-$VERSION || exit 1
     ./configure --prefix=/usr --with-shared 
 }
 

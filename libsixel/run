@@ -6,7 +6,6 @@ SOURCES="https://github.com/libsixel/libsixel/archive/refs/tags/v$VERSION.tar.gz
 SHA256SUM="028552eb8f2a37c6effda88ee5e8f6d87b5d9601182ddec784a9728865f821e0  v1.10.3.tar.gz"
 DESCRIPTION="encoder/decoder implementation for DEC SIXEL graphics"
 build() {
-    cd libsixel-$VERSION || exit  1
     meson --prefix=/usr build/
     ninja -C build/
 }

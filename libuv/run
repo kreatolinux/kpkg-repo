@@ -7,7 +7,6 @@ SHA256SUM="ccfcdc968c55673c6526d8270a9c8655a806ea92468afcbcabc2b16040f03cb4  lib
 DESCRIPTION="The libuv package is a multi-platform support library with a focus on asynchronous I/O."
 
 build() {
-    cd libuv-v$VERSION
     sh autogen.sh
     ./configure --prefix=/usr --disable-static
     make -j$(nproc)

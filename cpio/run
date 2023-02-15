@@ -7,7 +7,6 @@ SHA256SUM="e87470d9c984317f658567c03bfefb6b0c829ff17dbf6b0de48d71a4c8f3db88  cpi
 DESCRIPTION="GNU cpio"
 REPO_DIR="/etc/nyaa"
 build() {
-    cd cpio-$VERSION || exit  1
     patch -p1 < $REPO_DIR/$NAME/patches/0001-src-global.c-drop-duplicate-definition-of-program_na.patch
     ./configure --prefix=/usr
     make

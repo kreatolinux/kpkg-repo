@@ -7,7 +7,6 @@ SHA256SUM="fd4829912cddd12f84181c3451cc752be224643e87fac497b69edddadc49b4f2  gmp
 DESCRIPTION="GNU gmp"
 
 build() {
-    tar -xf gmp-$VERSION.tar.xz
     cd gmp-$VERSION
     ./configure --prefix=/usr
     make -j$(nproc)

@@ -7,11 +7,10 @@ SHA256SUM="0f68e99baed5bc1f4d234dde050cd3fc68a06d3562209c16a58c8ebc9618ab68  7.1
 DESCRIPTION="A command-line system information tool written in bash 3.2+"
 
 build() {
-    cd neofetch-$VERSION
-	mkdir -p $ROOT/usr/bin
-	cp -rf   neofetch $ROOT/usr/bin
 }
 
 install() {
+	mkdir -p $ROOT/usr/bin
+	cp -rf   neofetch $ROOT/usr/bin
 	chmod +x $ROOT/usr/bin/neofetch
 }

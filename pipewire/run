@@ -7,7 +7,6 @@ SHA256SUM="a1ab25d4ff85aefa3da3452cb41e972487b1a2da613ccd207a5d312e5c241d7c  pip
 DESCRIPTION="Sound server"
 
 build() {
-    cd pipewire-$VERSION || exit 1
     mkdir build 
     cd    build 
     meson --prefix=/usr \

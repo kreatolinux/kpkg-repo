@@ -6,7 +6,6 @@ SOURCES="https://ftp.gnu.org/gnu/bash/bash-$VERSION.tar.gz"
 SHA256SUM="5bac17218d3911834520dad13cd1f85ab944e1c09ae1aba55906be1f8192f558  bash-5.1.16.tar.gz"
 DESCRIPTION="The GNU bash shell"
 build() {
-    cd bash-$VERSION || exit  1
     ./configure --prefix=/usr                   \
                 --build=$(support/config.guess) \
                 --without-bash-malloc

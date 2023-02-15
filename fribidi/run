@@ -7,7 +7,6 @@ SHA256SUM="0cd233f97fc8c67bb3ac27ce8440def5d3ffacf516765b91c2cc654498293495  fri
 DESCRIPTION="FriBidi is an implementation of Unicode Bidirectional Algorithm"
 
 build() {
-    cd fribidi-$VERSION || exit 1
     ./configure --prefix=/usr 
     make
 }

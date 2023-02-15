@@ -8,7 +8,6 @@ BUILD_AS_ROOT="true"
 DESCRIPTION="Linux Utilities"
 
 build() {
-    cd util-linux-$VERSION || exit 1
     cat /etc/group | grep tty || addgroup tty
     ./configure --prefix=/usr
     make

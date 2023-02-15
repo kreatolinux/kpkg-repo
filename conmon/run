@@ -7,7 +7,6 @@ SHA256SUM="340453f7aac43e6a1f9a5efe31f24471f8a7a997a849ad6d1ff3fb530a9e2874  v2.
 DESCRIPTION="An OCI container runtime monitor"
 
 build() {
-    cd conmon-$VERSION
     make -j$(nproc)
 }
 

@@ -7,7 +7,6 @@ SHA256SUM="acfac61316e93b919c28d62d53037ca734de85c46b4d703f19fd8395cf006774  lib
 DESCRIPTION="TLS library"
 
 build() {
-    cd libressl-$VERSION || exit 1
     ./configure
     make -j$(nproc)
 }

@@ -7,7 +7,6 @@ SHA256SUM="53b7fa67142e653820030ec049971bcb5e84ac99e05cba5bcb9cb55f43fae4b3  way
 DESCRIPTION="Wayland is a project to define a protocol for a compositor to talk to its clients as well as a library implementation of the protocol."
 
 build() {
-    cd wayland-$VERSION || exit 1
     mkdir build
     cd build
     meson --prefix=/usr       \

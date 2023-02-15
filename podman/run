@@ -7,7 +7,6 @@ SHA256SUM="455c29c4ee78cd6365e5d46e20dd31a5ce4e6e1752db6774253d76bd3ca78813  v4.
 DESCRIPTION="A tool for managing OCI containers and pods"
 
 build() {
-    cd podman-$VERSION
     make BUILDTAGS="" -j$(nproc)
 }
 

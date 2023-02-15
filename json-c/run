@@ -7,7 +7,6 @@ SHA256SUM="8e45ac8f96ec7791eaf3bb7ee50e9c2100bbbc87b8d0f1d030c5ba8a0288d96b  jso
 DESCRIPTION="Construct JSON objects in C"
 
 build() {
-    cd json-c-$VERSION || exit 1
     mkdir build 
     cd    build 
     cmake -DCMAKE_INSTALL_PREFIX=/usr \

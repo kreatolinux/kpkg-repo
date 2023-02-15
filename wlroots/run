@@ -6,7 +6,6 @@ SOURCES="https://gitlab.freedesktop.org/wlroots/wlroots/-/releases/$VERSION/down
 SHA256SUM="130a1a86f6f8c4fa162ba4db82aaa70850273c5d01313b242baa0144e3d6d253  wlroots-0.16.1.tar.gz"
 DESCRIPTION="Modules for building a Wayland compositor"
 build() {
-    cd wlroots-$VERSION || exit  1
     meson --prefix=/usr build/
     ninja -C build/
 }

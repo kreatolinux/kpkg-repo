@@ -7,7 +7,6 @@ SHA256SUM="a57dc82d77358617ba65b9841cee1e3b441f386c3789ddc0676eca077f2951c3  Pyt
 DESCRIPTION="General-Purpose Programming language"
 
 build() {
-    cd Python-$VERSION || exit 1
     ./configure --with-ensurepip=install --prefix=/usr --enable-optimizations
     make
     make DESTDIR="$ROOT" install

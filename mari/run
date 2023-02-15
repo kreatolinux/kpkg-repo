@@ -7,7 +7,6 @@ SHA256SUM="e676b72ce84ce341fc3a44fa428b9e58bba94c203143a5ee2d8d8d7cff0e0a18  v0.
 DESCRIPTION="The minimal HTTP server (but not really) that runs Kreato Linux's binary repository"
 
 build() {
-        cd mari-$VERSION || exit 1
         nimble install --nimbleDir=/tmp/nyaa_srcdir/deps --depsOnly -Y
         nimble build --nimcache=/tmp/nyaa_srcdir/cache --nimbleDir=/tmp/nyaa_srcdir/deps -d:release -Y
         mkdir -p "$ROOT/usr/bin"

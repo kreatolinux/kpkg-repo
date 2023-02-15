@@ -7,7 +7,6 @@ SHA256SUM="1393abd9adcf0762d34798dc34fdcf4d0d22a8410721e76f1e3afcd1daa4e2d1  npt
 DESCRIPTION="A library to provide the GNU Pth API"
 
 build() {
-    cd npth-$VERSION
     ./configure --prefix=/usr
     make -j$(nproc)
 }

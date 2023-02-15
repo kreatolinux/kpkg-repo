@@ -6,7 +6,6 @@ SOURCES="https://gitlab.com/procps-ng/procps/-/archive/v$VERSION/procps-v$VERSIO
 SHA256SUM="dea39e0e7b1367e28c887d736d1a9783df617497538603cdff432811a1016945  procps-v4.0.0.tar.gz"
 DESCRIPTION="procps"
 build() {
-    cd procps-v$VERSION || exit  1
     ./autogen.sh
     ./configure --prefix=/usr
     make

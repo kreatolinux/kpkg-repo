@@ -6,9 +6,6 @@ SOURCES="https://github.com/nghttp2/nghttp2/releases/download/v$VERSION/nghttp2-
 SHA256SUM="68271951324554c34501b85190f22f2221056db69f493afc3bbac8e7be21e7cc  nghttp2-1.47.0.tar.xz"
 DESCRIPTION=""
 build() {
-    
-    cd nghttp2-$VERSION || exit  1
-    
     ./configure \
         --prefix=/usr
     make

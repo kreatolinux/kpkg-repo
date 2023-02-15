@@ -7,7 +7,6 @@ SHA256SUM="b79ea44af91b93d17cd3fe80bdae6ed43770678a9a5ae192ccea803ebb657ee1  gru
 DESCRIPTION="The GNU Grub Bootloader"
 
 build() {
-    cd grub-$VERSION || exit 1
     ./configure --disable-efiemu --disable-werror --prefix=/usr --sysconfdir=/etc --with-platform=efi
     make
 }

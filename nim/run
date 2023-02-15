@@ -7,7 +7,6 @@ SHA256SUM="13d7702f8b57087babe8cd051c13bc56a3171418ba867b49c6bbd09b29d24fea  nim
 DESCRIPTION="The Nim programming language"
 
 build() {
-        cd nim-$VERSION || exit 1
         sh build.sh
         bin/nim c koch
         ./koch boot -d:release

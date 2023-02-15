@@ -7,7 +7,6 @@ SHA256SUM="6813575595b09ebeaad34bc91809dba39d98479a9dd097f3ffff5bab85cbdb78  0.4
 DESCRIPTION="The OpenRC init system"
 
 build() {
-    cd openrc-$VERSION || exit 1
     mkdir build
     cd build
     meson --prefix=/usr       \

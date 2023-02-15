@@ -6,9 +6,6 @@ SOURCES="https://curl.haxx.se/download/curl-$VERSION.tar.xz"
 SHA256SUM="ee5f1a1955b0ed413435ef79db28b834ea5f0fb7c8cfb1ce47175cc3bee08fff  curl-7.87.0.tar.xz"
 DESCRIPTION=""
 build() {
-    
-    cd curl-$VERSION || exit  1
-
     # Taken from Kiss Linux repo, License here https://github.com/kisslinux/repo/blob/master/LICENSE
     ./configure \
         --prefix=/usr \

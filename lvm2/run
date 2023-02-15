@@ -8,7 +8,6 @@ DESCRIPTION="Logical Volume Manager"
 REPO_DIR="/etc/nyaa"
 
 build() {
-    cd LVM2.$VERSION
     ./configure --enable-pkgconfig --prefix=/usr
     make -j$(nproc)
 }

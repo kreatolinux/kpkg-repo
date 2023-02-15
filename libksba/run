@@ -7,7 +7,6 @@ SHA256SUM="3f72c68db30971ebbf14367527719423f0a4d5f8103fc9f4a1c01a9fa440de5c  lib
 DESCRIPTION="An easy API to create and parse X.509 and CMS related objects"
 
 build() {
-    cd libksba-$VERSION
     ./configure --prefix=/usr
     make -j$(nproc)
 }

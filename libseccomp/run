@@ -7,7 +7,6 @@ SHA256SUM="d82902400405cf0068574ef3dc1fe5f5926207543ba1ae6f8e7a1576351dcbdb  lib
 DESCRIPTION="An easy to use, platform independent, interface to the Linux Kernel's syscall filtering mechanism"
 
 build() {
-    cd libseccomp-$VERSION
     ./configure --prefix=/usr
     make -j$(nproc)
 }

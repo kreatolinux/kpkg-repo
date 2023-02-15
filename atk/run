@@ -6,7 +6,6 @@ SOURCES="https://ftp.gnome.org/pub/gnome/sources/atk/2.38/atk-$VERSION.tar.xz"
 SHA256SUM="ac4de2a4ef4bd5665052952fe169657e65e895c5057dffb3c2a810f6191a0c36  atk-2.38.0.tar.xz"
 DESCRIPTION=""
 build() {
-    cd atk-$VERSION || exit  1
     meson --prefix=/usr -Dintrospection=false build/
     ninja -C build/
 }

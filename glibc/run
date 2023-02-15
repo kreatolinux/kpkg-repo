@@ -7,7 +7,6 @@ SHA256SUM="2257eff111a1815d74f46856daaf40b019c1e553156c69d48ba0cbfc1bb91a43  gli
 DESCRIPTION="The GNU C library"
 
 build() {
-    cd glibc-$VERSION || exit
     mkdir -v build
     cd build || exit
     ../configure --prefix=/usr --host=x86_64-pc-linux-gnu --enable-kernel=3.2 --disable-crypt \

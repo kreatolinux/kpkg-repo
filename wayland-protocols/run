@@ -7,7 +7,6 @@ SHA256SUM="c553384c1c68afd762fa537a2569cc9074fe7600da12d3472761e77a2ba56f13  way
 DESCRIPTION="Additional Wayland protocols that add functionality outside of protocols already in the Wayland core"
 
 build() {
-    cd wayland-protocols-$VERSION || exit 1
     mkdir build 
     cd    build 
     meson --prefix=/usr --buildtype=release

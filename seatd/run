@@ -7,7 +7,6 @@ SHA256SUM="210ddf8efa1149cde4dd35908bef8e9e63c2edaa0cdb5435f2e6db277fafff3c  0.7
 DESCRIPTION="Seat daemon."
 
 build() {
-    cd seatd-$VERSION || exit 1
     mkdir build 
     cd    build 
     meson --prefix=/usr \

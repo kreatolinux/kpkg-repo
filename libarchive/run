@@ -7,9 +7,6 @@ SHA256SUM="9e2c1b80d5fbe59b61308fdfab6c79b5021d7ff4ff2489fb12daf0a96a83551d  lib
 DESCRIPTION="Multi-format archive and compression library"
 
 build() {
-    
-    cd $NAME-$VERSION
-    
     # Taken from BLFS r11.2-232 
     sed '/linux\/fs\.h/d' -i libarchive/archive_read_disk_posix.c
     

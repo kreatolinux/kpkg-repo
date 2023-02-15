@@ -7,7 +7,6 @@ SHA256SUM="5b709aa45ea3b8bb73052947200ad187f651a2049158fb5bbfed329e4322a977  pcr
 DESCRIPTION="Perl Compatible Regular Expression libraries"
 
 build() {
-    cd pcre-$VERSION
     ./configure --prefix=/usr
 }
 

@@ -6,7 +6,6 @@ SOURCES="https://www.x.org/archive//individual/data/xkeyboard-config/xkeyboard-c
 SHA256SUM="eb1383a5ac4b6210d7c7302b9d6fab052abdf51c5d2c9b55f1f779997ba68c6c  xkeyboard-config-2.37.tar.xz"
 
 build() {
-    cd xkeyboard-config-$VERSION || exit 1
     mkdir build 
     cd    build 
     meson --prefix=/usr \

@@ -7,7 +7,7 @@ SHA256SUM="22575ee6749d9fb460dc003391dfa2f75275c700de73b431dad196a1005623b9  lin
 DESCRIPTION="Linux firmware files"
 
 build() {
-    cd linux-firmware-$VERSION || exit 1
+        :
 }
 
 install() {

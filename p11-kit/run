@@ -6,7 +6,6 @@ SOURCES="https://github.com/p11-glue/p11-kit/releases/download/$VERSION/p11-kit-
 SHA256SUM="d8be783efd5cd4ae534cee4132338e3f40f182c3205d23b200094ec85faaaef8  p11-kit-0.24.1.tar.xz"
 DESCRIPTION=""
 build() {
-    cd p11-kit-$VERSION || exit 1
     ./configure --prefix=/usr     \
             --sysconfdir=/etc \
             --with-trust-paths=/etc/pki/anchors

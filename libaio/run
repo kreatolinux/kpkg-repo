@@ -7,7 +7,6 @@ SHA256SUM="1c561c20670c5c09cc8437a622008c0693c6a7816c1f30332da3796953b2f454  lib
 DESCRIPTION="Asynchronous I/O library"
 
 build() {
-    cd libaio-$VERSION
     make -j$(nproc)
 }
 

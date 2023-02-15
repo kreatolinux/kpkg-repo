@@ -8,7 +8,6 @@ SHA256SUM="3b8cf51548dfc49b7efe035e191ff5e1963ebc4fe8f6064a5eefc5343eaf78a5  sam
 DESCRIPTION="ninja-compatible build tool written in C"
 
 build() {
-    cd samurai-$VERSION || exit 1
     make -j$(nproc)
     make PREFIX=/usr DESTDIR=$ROOT install
     mkdir -p "$ROOT/usr/bin"

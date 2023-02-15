@@ -7,7 +7,6 @@ SHA256SUM="d80d3be90a201868de83d78dad3413ad88160cc53bcc36eb9eaf7c20dbf023f1  dif
 DESCRIPTION="GNU diffutils"
 
 build() {
-    cd diffutils-$VERSION || exit 1
     mkdir -v build
     cd       build
     ../configure                   \

@@ -6,7 +6,6 @@ SOURCES="https://github.com/kreatolinux/chkupd/archive/refs/tags/v$VERSION.tar.g
 SHA256SUM="76051d18e8d90fe84912d2d0e3d59f68002158de690e5cb301d9887777571f92  v1.2.tar.gz"
 DESCRIPTION="nyaa package update checker"
 build() {
-    cd chkupd-$VERSION
     mkdir -p $ROOT/usr/bin
 }
 

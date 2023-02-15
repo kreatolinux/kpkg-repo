@@ -6,7 +6,6 @@ SOURCES="https://archive.mesa3d.org/mesa-$VERSION.tar.xz"
 SHA256SUM="bed799788bf2bd9ef079d97cd8e09348bf53cb086818578e40773b2b17812922  mesa-22.3.3.tar.xz"
 DESCRIPTION="The 3D Graphics Library"
 build() {
-    cd mesa-$VERSION || exit  1
     export PYTHONPATH=$(realpath /usr/lib/python*/site-packages):$(python -c "import sys; print(':'.join(sys.path))")
     meson --buildtype=release  --prefix=/usr   \
       -Dplatforms=wayland \

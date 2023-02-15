@@ -7,7 +7,6 @@ SHA256SUM="d66c56ad259a82cf2a9dfc408b32bf5da52371500b84745f7fb8b645712df676  lib
 DESCRIPTION=""
 
 build() {
-    cd libffi-$VERSION || exit 1
     ./configure --prefix=/usr
     make
 }

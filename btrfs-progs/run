@@ -7,7 +7,6 @@ SHA256SUM="d37fc9ec4fa5778b20aa7548fe706eb3a300338c1473318271ae54024dac7167  btr
 DESCRIPTION="BTRFS filesystem utilities"
 
 build() {
-    cd btrfs-progs-v$VERSION
     ./configure --disable-documentation --prefix=/usr
     make -j$(nproc)
 }

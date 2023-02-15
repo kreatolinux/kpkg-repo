@@ -7,7 +7,6 @@ SHA256SUM="be7b210647ccadf90a2f0b000fca11a4d40546374a850db67adb32fad4b230d9  isl
 DESCRIPTION="isl is a library for manipulating sets and relations of integer points bounded by linear constraints."
 
 build() {
-    cd isl-$VERSION || exit 1
     ./configure --prefix=/usr
     make -j$(nproc)
     make DESTDIR=$ROOT install

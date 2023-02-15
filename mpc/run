@@ -7,8 +7,6 @@ SHA256SUM="17503d2c395dfcf106b622dc142683c1199431d095367c6aacba6eec30340459  mpc
 DESCRIPTION="GNU MPC"
 
 build() {
-    tar -xf mpc-$VERSION.tar.gz
-    cd mpc-$VERSION
     ./configure --prefix=/usr
     make -j$(nproc)
 }

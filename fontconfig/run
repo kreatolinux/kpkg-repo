@@ -6,7 +6,6 @@ SOURCES="https://www.freedesktop.org/software/fontconfig/release/fontconfig-$VER
 SHA256SUM="3ba2dd92158718acec5caaf1a716043b5aa055c27b081d914af3ccb40dce8a55  fontconfig-2.14.2.tar.gz"
 DESCRIPTION="fontconfig"
 build() {
-    cd $NAME-$VERSION || exit  1
     ./configure --prefix=/usr
     make
 }

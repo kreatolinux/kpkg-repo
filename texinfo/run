@@ -7,7 +7,6 @@ SHA256SUM="bcd221fdb2d807a8a09938a0f8d5e010ebd2b58fca16075483d6fcb78db2c6b2  tex
 DESCRIPTION="GNU texinfo"
 
 build() {
-    cd texinfo-$VERSION
     sed -e 's/__attribute_nonnull__/__nonnull/' \
     -i gnulib/lib/malloc/dynarray-skeleton.c
     ./configure --prefix=/usr

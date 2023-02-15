@@ -7,8 +7,6 @@ SHA256SUM="e05fdde47c5f7ca45cb697e973894ff4f5d79e13b750ed57d7b66d8defc78e19  mak
 DESCRIPTION="GNU make"
 
 build() {
-    tar -xf make-$VERSION.tar.gz
-    cd make-$VERSION
     ./configure --without-guile --prefix=/usr --host=x86_64-pc-linux-gnu
     make -j$(nproc)
 }

@@ -7,7 +7,6 @@ SHA256SUM="361d4eae47ce925dba0ea569af40e7b52c645c4ae2e65e5621bf1b6cdd8b0e9e  gpg
 DESCRIPTION="GNU Privacy Guard Made Easy"
 
 build() {
-    cd gpgme-$VERSION
     ./configure --prefix=/usr
     make -j$(nproc)
 }

@@ -7,8 +7,6 @@ SHA256SUM="1613f0ac1cf484d6ec0ce3b8c06d56263cc7242f1c23b30d82d23de345a63f7a  lib
 DESCRIPTION="GNU libtasn"
 
 build() {
-    tar -xf libtasn1-$VERSION.tar.gz
-    cd libtasn1-$VERSION
     ./configure --prefix=/usr
     make -j$(nproc)
 }

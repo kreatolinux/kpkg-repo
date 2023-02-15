@@ -7,7 +7,6 @@ SHA256SUM="360d6fb75202c0eb0d07f0ab812b19b526f1c05ccc0a8ed7e5d2c988616d343a  gli
 DESCRIPTION="glib"
 
 build() {
-    cd glib-$VERSION || exit 1
     meson \
     --prefix=/usr \
     -Dman=false \

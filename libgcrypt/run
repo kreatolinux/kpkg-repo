@@ -7,7 +7,6 @@ SHA256SUM="ef14ae546b0084cd84259f61a55e07a38c3b53afc0f546bffcef2f01baffe9de  lib
 DESCRIPTION="A general purpose cryptographic library"
 
 build() {
-    cd libgcrypt-$VERSION
     ./configure --prefix=/usr
     make -j$(nproc)
 }

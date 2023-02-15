@@ -7,7 +7,6 @@ SHA256SUM="5d2cc3d78bec3dbe212a9d7fa629ada25a7da928af432c93060ff5c17ee28a9c  lib
 DESCRIPTION="Libraries and utilities for parsing XML files"
 
 build() {
-    cd libxml2-$VERSION || exit 1
     ./configure --prefix=/usr    \
             --disable-static \
             --with-history   \

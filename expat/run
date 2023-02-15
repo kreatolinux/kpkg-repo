@@ -7,7 +7,6 @@ SHA256SUM="ef2420f0232c087801abf705e89ae65f6257df6b7931d37846a193ef2e8cdcbe  exp
 DESCRIPTION="a stream oriented C library for parsing XML"
 
 build() {
-    cd $NAME-$VERSION
     ./configure --prefix=/usr --disable-static
     make -j$(nproc)
 }

@@ -7,7 +7,6 @@ SHA256SUM="560f11c4bbbca10f495f3ef7d3a6aa4ca62b4f8fb0b52e7d459d18a26e46e017  lib
 DESCRIPTION="Keyboard compiler and support library"
 
 build() {
-    cd libxkbcommon-$VERSION || exit 1
     mkdir build 
     cd    build 
     meson --prefix=/usr \

@@ -7,7 +7,6 @@ SHA256SUM="ff7f5a5dd5b657edc48e544b39736ff50cb1994bbec2dfe8e13cca94d8ad752e  v9.
 DESCRIPTION="Vi Improved"
 
 build() {
-    cd vim-$VERSION
     make -j$(nproc)
 }
 

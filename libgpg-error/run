@@ -7,7 +7,6 @@ SHA256SUM="b7e11a64246bbe5ef37748de43b245abd72cfcd53c9ae5e7fc5ca59f1c81268d  lib
 DESCRIPTION="A small library that originally defined common error values for all GnuPG components"
 
 build() {
-    cd libgpg-error-$VERSION
     ./configure --prefix=/usr
     make -j$(nproc)
 }

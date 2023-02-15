@@ -7,7 +7,6 @@ SHA256SUM="45d9e03c16c3c343b7537aa7f744ae9339b1a0dae446ecbe6f5ed9d49be11e87  lib
 DESCRIPTION="Library that handles input devices"
 
 build() {
-    cd libinput-$VERSION || exit 1
     mkdir build 
     cd    build 
     meson --prefix=/usr \
