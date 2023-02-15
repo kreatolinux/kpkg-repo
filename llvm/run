@@ -26,6 +26,6 @@ build() {
         -DLLVM_INCLUDE_BENCHMARKS=OFF \
         -DLLVM_BINUTILS_INCDIR=/usr/include \
         -G Ninja ..
-    ninja
+    ninja -j1
     DESTDIR="$ROOT" ninja install
 }

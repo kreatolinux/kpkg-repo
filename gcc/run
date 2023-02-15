@@ -25,7 +25,7 @@ build() {
         --disable-nls                                  \
         --disable-multilib                             \
 
-    make -j$(nproc)
+    make -j1
     make DESTDIR=$ROOT install-strip
     rm -rf $ROOT/source
 }
