@@ -11,9 +11,9 @@ build() {
     make headers
     find usr/include -name '.*' -delete
     rm usr/include/Makefile
-    mkdir -p $ROOT/usr
 }
 
 install() {
-    cp -rv usr/include $ROOT/usr/include
+    mkdir -p $ROOT/usr
+    cp -rv usr/include $ROOT/usr/
 }
