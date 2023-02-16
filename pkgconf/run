@@ -8,10 +8,10 @@ DESCRIPTION="pkgconf is a program which helps to configure compiler and linker f
 
 build() {
     ./configure --prefix=/usr
-    make DESTDIR="$ROOT" install
-    [ ! -d "$ROOT/usr/bin" ] && mkdir -p "$ROOT/usr/bin"
 }
 
 install() {
+    make DESTDIR="$ROOT" install
+    [ ! -d "$ROOT/usr/bin" ] && mkdir -p "$ROOT/usr/bin"
     ln -s pkgconf "$ROOT/usr/bin/pkg-config"
 }
