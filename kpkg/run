@@ -8,7 +8,7 @@ DESCRIPTION="Kreato Linux's Package Manager"
 
 build() {
         ./build.sh deps --nimbleDir=/tmp/kpkg/srcdir/deps
-        ./build.sh kpkg --NimblePath=/tmp/kpkg/srcdir/deps --nimcache=/tmp/kpkg/srcdir/cache 
+        ./build.sh kpkg --NimblePath=/tmp/kpkg/srcdir/deps/pkgs --nimcache=/tmp/kpkg/srcdir/cache 
 }
 
 install() {
