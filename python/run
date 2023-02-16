@@ -9,10 +9,10 @@ DESCRIPTION="General-Purpose Programming language"
 build() {
     ./configure --with-ensurepip=install --prefix=/usr --enable-optimizations
     make
-    make DESTDIR="$ROOT" install
-    ln -s "pip3" "$ROOT/usr/bin/pip"
 }
 
 install() {
+    make DESTDIR="$ROOT" install
+    ln -s "pip3" "$ROOT/usr/bin/pip"
     ln -s "python3" "$ROOT/usr/bin/python"
 }
