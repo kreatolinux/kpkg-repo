@@ -7,8 +7,8 @@ SHA256SUM="bea3dba8340f19fa3e12442e1fc6926bd0c859c516ed7048969783b8cf90ca64  v4-
 DESCRIPTION="Kreato Linux's Package Manager"
 
 build() {
-        ./build.sh deps --nimbleDir=/tmp/nyaa_srcdir/deps
-        ./build.sh kpkg --nimcache=/tmp/kpkg/srcdir/cache 
+        ./build.sh deps --nimbleDir=/tmp/kpkg/srcdir/deps
+        ./build.sh kpkg --NimblePath=/tmp/kpkg/srcdir/deps --nimcache=/tmp/kpkg/srcdir/cache 
 }
 
 install() {
