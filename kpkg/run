@@ -8,7 +8,7 @@ DESCRIPTION="Kreato Linux's Package Manager"
 
 build() {
         ./build.sh deps --nimbleDir=/tmp/nyaa_srcdir/deps
-        ./build.sh kpkg --nimcache=/tmp/nyaa_srcdir/cache --nimbleDir=/tmp/nyaa_srcdir/deps 
+        ./build.sh kpkg --nimcache=/tmp/kpkg/srcdir/cache --nimbleDir=/tmp/kpkg/srcdir/deps 
         mkdir -p "$ROOT/bin"
         cp out/kpkg "$ROOT/bin/"
         mkdir -p "$ROOT/usr/share/man/man8"
