@@ -11,5 +11,5 @@ build() {
 
 install() {
     make DESTDIR=$ROOT install
-    install -vdm755 $ROOT/etc/ssl/local
+    /bin/install -vdm755 $ROOT/etc/ssl/local
 }
