@@ -9,9 +9,9 @@ DESCRIPTION="TLS library"
 build() {
     ./config --prefix=/usr --openssldir=/etc/ssl --libdir=lib shared zlib-dynamic
     make -j$(nproc)
-    make DESTDIR="$ROOT" install
 }
 
 install() {
+    make DESTDIR="$ROOT" install
 }
 
