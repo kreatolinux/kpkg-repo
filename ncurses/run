@@ -25,7 +25,8 @@ build() {
 }
 
 install() {
-    make install
+    make DESTDIR="$ROOT" install
+    mkdir -p "$ROOT/usr/lib"
     for lib in ncurses form panel menu; do
     	rm -f "$ROOT/usr/lib/lib${lib}.so"
    	printf '%s\n' "INPUT(-l${lib}w)" > "$ROOT/usr/lib/lib${lib}.so"
