@@ -1,0 +1,16 @@
+#!/bin/sh
+NAME="ca-certificates"
+RELEASE="1"
+VERSION="2022.2.54-5.fc37"
+SOURCES="https://download-ib01.fedoraproject.org/pub/fedora/linux/releases/37/Everything/aarch64/os/Packages/c/ca-certificates-$VERSION.noarch.rpm"
+SHA256SUM="97e2a8bdc663e7441d79696b35e1f28410f5fc993e5a0707049f328df83007ed  ca-certificates-2022.2.54-5.fc37.noarch.rpm"
+DESCRIPTION="CA Certificates. Replaces make-ca."
+
+build() {
+    rpm2cpio  | cpio -idmv
+    rm -f ca-certificates-$VERSION.noarch.rpm
+}
+
+install() {
+    cp -rf * "$ROOT"
+}
