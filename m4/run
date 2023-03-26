@@ -10,9 +10,9 @@ build() {
     cd m4-$VERSION
     ./configure --prefix=/usr
     make -j$(nproc)
-    make DESTDIR=$ROOT install
 }
 
 install() {
+    make DESTDIR=$ROOT install
 }
 
