@@ -22,6 +22,9 @@ build() {
     --without-cxx-binding
 
     make
+}
+
+install() {
     make install
     for lib in ncurses form panel menu; do
     	rm -f "$ROOT/usr/lib/lib${lib}.so"
@@ -33,8 +36,4 @@ build() {
 	# Some packages look for libcurses instead of libncurses when building.
 	printf '%s\n' "INPUT(-lncursesw)" > "$ROOT/usr/lib/libcursesw.so"
 	ln -s libncurses.so "$ROOT/usr/lib/libcurses.so"
-}
-
-install() {
-
 }
