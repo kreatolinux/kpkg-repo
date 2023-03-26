@@ -9,10 +9,10 @@ DESCRIPTION="isl is a library for manipulating sets and relations of integer poi
 build() {
     ./configure --prefix=/usr
     make -j$(nproc)
-    make DESTDIR=$ROOT install
-    mkdir -pv $ROOT/usr/share/gdb/auto-load/usr/lib
 }
 
 install() {
+    make DESTDIR=$ROOT install
+    mkdir -pv $ROOT/usr/share/gdb/auto-load/usr/lib
     mv -v $ROOT/usr/lib/libisl*gdb.py /usr/share/gdb/auto-load/usr/lib
 }
