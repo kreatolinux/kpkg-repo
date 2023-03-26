@@ -10,9 +10,9 @@ build() {
     sh autogen.sh
     ./configure --prefix=/usr --disable-static
     make -j$(nproc)
-    make DESTDIR=$ROOT install
 }
 
 install() {
+    make DESTDIR=$ROOT install
 }
 
