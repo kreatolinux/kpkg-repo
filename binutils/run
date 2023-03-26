@@ -18,9 +18,9 @@ build() {
         --disable-werror           \
         --enable-64-bit-bfd
     make
-    make DESTDIR=$ROOT install -j1
 }
 
 install() {
+    make DESTDIR=$ROOT install -j1
     rm -f $ROOT/usr/lib/libbfd.la
 }
