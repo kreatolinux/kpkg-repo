@@ -24,7 +24,7 @@ build() {
         --disable-nls                                  \
         --disable-multilib                             \
 
-    make -j1
+	make -j$(nproc)
 }
 
 install() {
