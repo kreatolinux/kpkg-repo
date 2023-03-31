@@ -7,7 +7,7 @@ SHA256SUM="97e2a8bdc663e7441d79696b35e1f28410f5fc993e5a0707049f328df83007ed  ca-
 DESCRIPTION="CA Certificates. Replaces make-ca."
 
 build() {
-    rpm2cpio  | cpio -idmv
+    rpm2cpio ca-certificates-$VERSION.noarch.rpm | cpio -idmv
     rm -f ca-certificates-$VERSION.noarch.rpm
 }
 
