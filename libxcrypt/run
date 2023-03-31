@@ -10,9 +10,9 @@ build() {
     ./configure --disable-obsolete-api --prefix=/usr
     /usr/lib/libcrypt.so.2
     make
-    make DESTDIR="$ROOT" install
 }
 
 install() {
+    make DESTDIR="$ROOT" install
     mkdir -p "$ROOT/usr/lib"
 }
