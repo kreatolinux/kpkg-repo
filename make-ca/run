@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="make-ca"
 RELEASE="1"
-VERSION="1.7"
-SOURCES="https://github.com/djlucas/make-ca/releases/download/v$VERSION/make-ca-$VERSION.tar.xz"
-SHA256SUM="6db8b96c961790507c5e36e0ed75a079ae95300f520cd88ac061cf44a4733c2f  make-ca-1.7.tar.xz"
+VERSION="1.12"
+SOURCES="https://github.com/lfs-book/make-ca/releases/download/v$VERSION/make-ca-$VERSION.tar.xz"
+SHA256SUM="e8d9863e60efe2b8e6504bfe40ebf48b1250d13a078abff71b4a60639b67bc81  make-ca-1.12.tar.xz"
 DESCRIPTION=""
 build() {
     :
@@ -11,5 +11,5 @@ build() {
 
 install() {
     make DESTDIR=$ROOT install
-    /bin/install -vdm755 $ROOT/etc/ssl/local
+    install -vdm755 $ROOT/etc/ssl/local
 }
