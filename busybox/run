@@ -9,9 +9,9 @@ DESCRIPTION="The Swiss Army Knife of Embedded Linux"
 build() {
     make -j$(nproc) defconfig
     make -j$(nproc) busybox
-    [ ! -d "$ROOT/bin" ] && mkdir -p $ROOT/bin/
 }
 
 install() {
+    [ ! -d "$ROOT/bin" ] && mkdir -p $ROOT/bin/
     cp busybox $ROOT/bin/
 }
