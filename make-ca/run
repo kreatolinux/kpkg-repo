@@ -11,5 +11,4 @@ build() {
 
 install() {
     make DESTDIR=$ROOT make_ca install_bin install_systemd install_conf install_cs install_mozilla_ca_root
-    install -vdm755 $ROOT/etc/ssl/local
 }
