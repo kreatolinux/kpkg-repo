@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="python"
 RELEASE="1"
-VERSION="3.11.0"
+VERSION="3.11.2"
 SOURCES="https://www.python.org/ftp/python/$VERSION/Python-$VERSION.tar.xz"
-SHA256SUM="a57dc82d77358617ba65b9841cee1e3b441f386c3789ddc0676eca077f2951c3  Python-3.11.0.tar.xz"
+SHA256SUM="29e4b8f5f1658542a8c13e2dd277358c9c48f2b2f7318652ef1675e402b9d2af  Python-3.11.2.tar.xz"
 DESCRIPTION="General-Purpose Programming language"
 
 build() {
