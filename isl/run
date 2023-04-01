@@ -13,6 +13,4 @@ build() {
 
 install() {
     make DESTDIR=$ROOT install
-    mkdir -pv $ROOT/usr/share/gdb/auto-load/usr/lib
-    mv -v $ROOT/usr/lib/libisl*gdb.py /usr/share/gdb/auto-load/usr/lib
 }
