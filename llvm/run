@@ -28,7 +28,7 @@ build() {
         -DCMAKE_INSTALL_PREFIX=/usr \
         -DLLVM_INCLUDE_BENCHMARKS=OFF \
         -DLLVM_BINUTILS_INCDIR=/usr/include \
-        -DLLVM_ENABLE_PROJECTS="lld;clang"
+        -DLLVM_ENABLE_PROJECTS="lld;clang" \
         -G Ninja ..
     ninja -j$(nproc)
 }
