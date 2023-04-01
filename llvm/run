@@ -17,10 +17,11 @@ prepare() {
     mv tools/clang-$VERSION.src tools/clang
     mv tools/lld-$VERSION.src tools/lld
     mkdir build
-    cd build || exit 1
 }
 
 build() {
+    cd llvm-$VERSIN.src
+    cd build
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=1 \
         -DLLVM_ENABLE_RTTI=ON \
