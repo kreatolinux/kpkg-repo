@@ -2,8 +2,8 @@
 NAME="llvm"
 RELEASE="1"
 VERSION="15.0.7"
-SOURCES="https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION/llvm-$VERSION.src.tar.xz;https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION/cmake-$VERSION.src.tar.xz;https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION/clang-$VERSION.src.tar.xz" 
-SHA256SUM="4ad8b2cc8003c86d0078d15d987d84e3a739f24aae9033865c027abae93ee7a4  llvm-15.0.7.src.tar.xz;8986f29b634fdaa9862eedda78513969fe9788301c9f2d938f4c10a3e7a3e7ea  cmake-15.0.7.src.tar.xz;a6b673ef15377fb46062d164e8ddc4d05c348ff8968f015f7f4af03f51000067  clang-15.0.7.src.tar.xz"
+SOURCES="https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION/llvm-$VERSION.src.tar.xz;https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION/cmake-$VERSION.src.tar.xz;https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION/clang-$VERSION.src.tar.xz;https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION/lld-$VERSION.src.tar.xz" 
+SHA256SUM="4ad8b2cc8003c86d0078d15d987d84e3a739f24aae9033865c027abae93ee7a4  llvm-15.0.7.src.tar.xz;8986f29b634fdaa9862eedda78513969fe9788301c9f2d938f4c10a3e7a3e7ea  cmake-15.0.7.src.tar.xz;a6b673ef15377fb46062d164e8ddc4d05c348ff8968f015f7f4af03f51000067  clang-15.0.7.src.tar.xz;dba5c70c3fe88b3a38b9180df82fbc9d1dfd55d68f41fddd6a90f9e17f8e5df9  lld-15.0.7.src.tar.xz"
 DESCRIPTION="The LLVM Project is a collection of modular and reusable compiler and toolchain technologies."
 
 prepare() {
@@ -13,7 +13,9 @@ prepare() {
     mv ../cmake-$VERSION.src/* cmake/
     mv cmake/Modules/* cmake/modules/
     tar -xvf ../clang-$VERSION.src.tar.xz -C tools
+    tar -xvf ../lld-$VERSION.src.tar.xz -C tools
     mv tools/clang-$VERSION.src tools/clang
+    mv tools/lld-$VERSION.src tools/lld
     mkdir build
     cd build || exit 1
 }
@@ -25,8 +27,9 @@ build() {
         -DCMAKE_INSTALL_PREFIX=/usr \
         -DLLVM_INCLUDE_BENCHMARKS=OFF \
         -DLLVM_BINUTILS_INCDIR=/usr/include \
+        -DLLVM_ENABLE_PROJECTS="lld;clang"
         -G Ninja ..
-    ninja -j1
+    ninja -j$(nproc)
 }
 
 install() {
