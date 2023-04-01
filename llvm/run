@@ -20,7 +20,7 @@ prepare() {
 }
 
 build() {
-    cd llvm-$VERSIN.src
+    cd llvm-$VERSION.src
     cd build
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=1 \
