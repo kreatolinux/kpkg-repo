@@ -9,13 +9,10 @@ DESCRIPTION="ninja-compatible build tool written in C"
 
 build() {
     make -j$(nproc)
+}
+
+install() {
     make PREFIX=/usr DESTDIR=$ROOT install
     mkdir -p "$ROOT/usr/bin"
-}
-
-install() {
-}
-
-install() {
     ln -s /usr/bin/samu "$ROOT/usr/bin/ninja"
 }
