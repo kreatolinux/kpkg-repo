@@ -12,15 +12,16 @@ prepare() {
     cd llvm-$VERSION.src || exit 1
     mv ../cmake-$VERSION.src/* cmake/
     mv cmake/Modules/* cmake/modules/
-    tar -xvf ../clang-$VERSION.src.tar.xz -C tools
-    tar -xvf ../lld-$VERSION.src.tar.xz -C tools
-    mv tools/clang-$VERSION.src tools/clang
-    mv tools/lld-$VERSION.src tools/lld
-    mkdir build
+    cd ..
+    tar -xvf clang-$VERSION.src.tar.xz
+    tar -xvf lld-$VERSION.src.tar.xz 
+    mv clang-$VERSION.src clang
+    mv lld-$VERSION.src lld
 }
 
 build() {
     cd llvm-$VERSION.src
+    mkdir build
     cd build
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=1 \
