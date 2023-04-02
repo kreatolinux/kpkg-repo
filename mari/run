@@ -10,9 +10,9 @@ build() {
         nimble install httpbeast --nimbleDir=/tmp/nyaa_srcdir/deps -Y
 	nim c --NimblePath:/tmp/nyaa_srcdir/deps/pkgs/httpbeast-0.4.1/ -d:release src/mari/mari.nim 
         nimble build --nimcache=/tmp/nyaa_srcdir/cache --nimbleDir=/tmp/nyaa_srcdir/deps -d:release -Y
-        mkdir -p "$ROOT/usr/bin"
 }
 
 install() {
+        mkdir -p "$ROOT/usr/bin"
         cp mari "$ROOT/usr/bin/"
 }
