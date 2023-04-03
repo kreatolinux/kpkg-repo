@@ -37,5 +37,6 @@ build() {
 }
 
 install() {
+    cd build
     DESTDIR="$ROOT" ninja install
 }
