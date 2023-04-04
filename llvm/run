@@ -16,9 +16,13 @@ prepare() {
     tar -xvf clang-$VERSION.src.tar.xz
     tar -xvf lld-$VERSION.src.tar.xz
     tar -xvf libunwind-$VERSION.src.tar.xz
+    tar -xvf libcxx-$VERSION.src.tar.xz
+    tar -xvf libcxxabi-$VERSION.src.tar.xz
     mv libunwind-$VERSION.src libunwind
     mv clang-$VERSION.src clang
     mv lld-$VERSION.src lld
+    mv libcxx-$VERSION.src libcxx
+    mv libcxxabi-$VERSION.src libcxxabi
 }
 
 build() {
