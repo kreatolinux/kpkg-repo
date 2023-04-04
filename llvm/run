@@ -21,8 +21,9 @@ prepare() {
     mv libunwind-$VERSION.src libunwind
     mv clang-$VERSION.src clang
     mv lld-$VERSION.src lld
-    mv libcxx-$VERSION.src libcxx
-    mv libcxxabi-$VERSION.src libcxxabi
+    mkdir runtimes
+    mv libcxx-$VERSION.src runtimes/libcxx
+    mv libcxxabi-$VERSION.src runtimes/libcxxabi
 }
 
 build() {
