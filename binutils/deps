@@ -1,5 +1,6 @@
 flex
 perl
 zlib
+bison
 texinfo
 file

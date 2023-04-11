@@ -12,15 +12,15 @@ build() {
     ../configure                   \
         --prefix=/usr              \
         --build=$(../config.guess) \
-        --host=x86_64-pc-linux-gnu \
         --disable-nls              \
         --enable-shared            \
         --disable-werror           \
         --enable-64-bit-bfd
-    make
+    make -j$(nproc)
 }
 
 install() {
+    cd build
     make DESTDIR=$ROOT install -j1
     rm -f $ROOT/usr/lib/libbfd.la
 }
