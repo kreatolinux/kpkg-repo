@@ -2,17 +2,17 @@
 NAME="mari"
 RELEASE="1"
 VERSION="0.1"
-SOURCES="git::https://github.com/kreatolinux/mari::master"
+SOURCES="git::https://github.com/kreatolinux/src::master"
 SHA256SUM=""
 DESCRIPTION="The minimal HTTP server (but not really) that runs Kreato Linux's binary repository"
 
 build() {
         nimble install httpbeast --nimbleDir=/tmp/nyaa_srcdir/deps -Y
 	nim c --NimblePath:/tmp/nyaa_srcdir/deps/pkgs/httpbeast-0.4.1/ -d:release src/mari/mari.nim 
-        nimble build --nimcache=/tmp/nyaa_srcdir/cache --nimbleDir=/tmp/nyaa_srcdir/deps -d:release -Y
+        make mari
 }
 
 install() {
         mkdir -p "$ROOT/usr/bin"
-        cp mari "$ROOT/usr/bin/"
+        cp out/mari "$ROOT/usr/bin/"
 }
