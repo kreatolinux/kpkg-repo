@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="wayland"
 RELEASE="1"
-VERSION="1.21.0"
+VERSION="1.22.0"
 SOURCES="https://gitlab.freedesktop.org/wayland/wayland/-/archive/$VERSION/wayland-$VERSION.tar.gz"
-SHA256SUM="53b7fa67142e653820030ec049971bcb5e84ac99e05cba5bcb9cb55f43fae4b3  wayland-1.21.0.tar.gz"
+SHA256SUM="bbca9c906a8fb8992409ebf51812f19e2a784b2c169d4b784cdd753b4bb448ef  wayland-1.22.0.tar.gz"
 DESCRIPTION="Wayland is a project to define a protocol for a compositor to talk to its clients as well as a library implementation of the protocol."
 
 build() {

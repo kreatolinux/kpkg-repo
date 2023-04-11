@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="crun"
 RELEASE="1"
-VERSION="1.8"
+VERSION="1.8.3"
 SOURCES="https://github.com/containers/crun/releases/download/$VERSION/crun-$VERSION.tar.xz"
-SHA256SUM="6dc621b6825eaf0d6a8f70d2a7fa9adde24cee3ad9221a5efbadb0b8b25e0843  crun-1.8.tar.xz"
+SHA256SUM="6dc9b2bc1cdcddbc45617866d673acb0a61ee25734fb92b31d6e7ec228bae09c  crun-1.8.3.3.3.tar.xz"
 DESCRIPTION="A fast and lightweight fully featured OCI runtime and C library for running containers"
 
 build() {

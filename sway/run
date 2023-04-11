@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="sway"
 RELEASE="1"
-VERSION="1.8"
+VERSION="1.8.1"
 SOURCES="https://github.com/swaywm/sway/releases/download/$VERSION/sway-$VERSION.tar.gz"
-SHA256SUM="033be1d9f0784cf09fb3931850894fc70a1af54ee04ae52a968e4beba7bc1d0c  sway-1.8.tar.gz"
+SHA256SUM="73f08fd2cf7948e8af900709efe44eae412ae11c5773960e25c9aa09f73bad41  sway-1.8.1.1.1.tar.gz"
 DESCRIPTION="Wayland tiling window manager"
 build() {
     meson --prefix=/usr -D werror=false build/

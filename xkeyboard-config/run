@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="xkeyboard-config"
 RELEASE="1"
-VERSION="2.37"
+VERSION="2.38"
 SOURCES="https://www.x.org/archive//individual/data/xkeyboard-config/xkeyboard-config-$VERSION.tar.xz"
-SHA256SUM="eb1383a5ac4b6210d7c7302b9d6fab052abdf51c5d2c9b55f1f779997ba68c6c  xkeyboard-config-2.37.tar.xz"
+SHA256SUM="0690a91bab86b18868f3eee6d41e9ec4ce6894f655443d490a2184bfac56c872  xkeyboard-config-2.38.tar.xz"
 
 build() {
     mkdir build 

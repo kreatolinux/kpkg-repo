@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="libisl"
 RELEASE="1"
-VERSION="0.25"
+VERSION="0.26"
 SOURCES="https://libisl.sourceforge.io/isl-$VERSION.tar.xz"
-SHA256SUM="be7b210647ccadf90a2f0b000fca11a4d40546374a850db67adb32fad4b230d9  isl-0.25.tar.xz"
+SHA256SUM="a0b5cb06d24f9fa9e77b55fabbe9a3c94a336190345c2555f9915bb38e976504  isl-0.26.tar.xz"
 DESCRIPTION="isl is a library for manipulating sets and relations of integer points bounded by linear constraints."
 
 build() {

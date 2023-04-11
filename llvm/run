@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="llvm"
 RELEASE="1"
-VERSION="15.0.7"
+VERSION="16.0.1"
 SOURCES="https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION/llvm-$VERSION.src.tar.xz;https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION/cmake-$VERSION.src.tar.xz;https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION/clang-$VERSION.src.tar.xz;https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION/lld-$VERSION.src.tar.xz;https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION/libunwind-$VERSION.src.tar.xz;https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION/libcxx-$VERSION.src.tar.xz;https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION/libcxxabi-$VERSION.src.tar.xz" 
-SHA256SUM="4ad8b2cc8003c86d0078d15d987d84e3a739f24aae9033865c027abae93ee7a4  llvm-15.0.7.src.tar.xz;8986f29b634fdaa9862eedda78513969fe9788301c9f2d938f4c10a3e7a3e7ea  cmake-15.0.7.src.tar.xz;a6b673ef15377fb46062d164e8ddc4d05c348ff8968f015f7f4af03f51000067  clang-15.0.7.src.tar.xz;dba5c70c3fe88b3a38b9180df82fbc9d1dfd55d68f41fddd6a90f9e17f8e5df9  lld-15.0.7.src.tar.xz;406d199ae3a16add84017f40458a5e7c31f9412937fcb518715af0a0eeafbc0c  libunwind-15.0.7.src.tar.xz;8d4eaff1cb6e41439fbf3ededb46998a0a3564d66dd289f661bdd459c9277c11  libcxx-15.0.7.src.tar.xz;9b42f3951d845232e4cd58a0a9841838292dac138af19d4f8d0c08bd41004f43  libcxxabi-15.0.7.src.tar.xz"
+SHA256SUM="17d2142be9ff75c31ad76c53af7409974842545b94aaeac17f38b3b8567b0582  llvm-16.0.1.src.tar.xz;f7b070b0ea71251c81b1a3dcdc6ccd28f59615e3e386c461456c5c246406acdc  cmake-16.0.1.src.tar.xz;20cb1413846d75a5f57c7209f441801b63df38360142d98bf2b3dd3865301a91  clang-16.0.1.src.tar.xz;b31800095dbd83dcdd71d84702af9b9d0fd50f408105d5e54853615ee54b3fb6  lld-16.0.1.src.tar.xz;655272f54895cc99ff426bf738a74dd4dfcd0491432bff25b4d14e46a97d4629  libunwind-16.0.1.src.tar.xz;de75b96aeb30af355b55326ce97f1a38874a1476d198402be3fbb0ff0d49d1f0  libcxx-16.0.1.src.tar.xz;8d9aa2e409e6acd93ae91fa92b16e5d7ce91ca10160a263ec71c72d56a64221e  libcxxabi-16.0.1.src.tar.xz"
 DESCRIPTION="The LLVM Project is a collection of modular and reusable compiler and toolchain technologies."
 
 prepare() {

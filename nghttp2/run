@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="nghttp2"
 RELEASE="1"
-VERSION="1.47.0"
+VERSION="1.52.0"
 SOURCES="https://github.com/nghttp2/nghttp2/releases/download/v$VERSION/nghttp2-$VERSION.tar.xz"
-SHA256SUM="68271951324554c34501b85190f22f2221056db69f493afc3bbac8e7be21e7cc  nghttp2-1.47.0.tar.xz"
+SHA256SUM="3ea9f0439e60469ad4d39cb349938684ffb929dd7e8e06a7bffe9f9d21f8ba7d  nghttp2-1.52.0.tar.xz"
 DESCRIPTION=""
 build() {
     ./configure \

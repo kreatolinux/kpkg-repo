@@ -3,7 +3,7 @@ NAME="openssh"
 RELEASE="1"
 VERSION="9.1p1"                                                                
 SOURCES="https://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-$VERSION.tar.gz"
-SHA256SUM="19f85009c7e3e23787f0236fbb1578392ab4d4bf9f8ec5fe6bc1cd7e8bfdd288  openssh-9.1p1.tar.gz"
+SHA256SUM="e9baba7701a76a51f3d85a62c383a3c9dcd97fa900b859bc7db114c1868af8a8  openssh-9.3p1.tar.gz"
 DESCRIPTION="ssh tools"                                                        
 build() {                                                                      
     ./configure --prefix=/usr                                                  

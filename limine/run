@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="limine"
 RELEASE="1"
-VERSION="4.20221102.0"
+VERSION="4.20230408.0"
 SOURCES="https://github.com/limine-bootloader/limine/releases/download/v$VERSION/limine-$VERSION.tar.xz"
-SHA256SUM="ec0319ff280c0153771207130cd55d3dcad4bfe5257430612ac5b6a73cd6d9f5  limine-4.20221102.0.tar.xz"
+SHA256SUM="e0f41a5242436a98638d3931ec65ae4aa07c838060ddb833b11783c25cc7e10e  limine-4.20230408.0.tar.xz"
 DESCRIPTION="Modern, advanced, portable, multiprotocol bootloader."
 
 build() {

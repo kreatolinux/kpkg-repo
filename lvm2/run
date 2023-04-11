@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="lvm2"
 RELEASE="1"
-VERSION="2.03.18"
+VERSION="2.03.20"
 SOURCES="https://mirrors.kernel.org/sourceware/lvm2/LVM2.$VERSION.tgz"
-SHA256SUM="9f683e2980d95c0dcebbd25c7c177032c5615d7267bfc885eabfce59280f4769  LVM2.2.03.18.tgz"
+SHA256SUM="90a1879b3675aea9784543581ccd2128c265ec67ac046b1856e706fc0af5c3c7  LVM2.2.03.20.tgz"
 DESCRIPTION="Logical Volume Manager"
 REPO_DIR="/etc/nyaa"
 
