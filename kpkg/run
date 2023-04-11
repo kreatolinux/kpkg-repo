@@ -8,7 +8,7 @@ DESCRIPTION="Kreato Linux's Package Manager"
 
 build() {
         nimble install cligen libsha -y --nimbleDir=/tmp/kpkg/srcdir/deps
-        nim c -d:release --threads:on -d:ssl "$@" -o="out/kpkg" "src/kpkg/kpkg.nim" --NimblePath=/tmp/kpkg/srcdir/deps/pkgs --nimcache=/tmp/kpkg/srcdir/cache 
+        nim c -d:release --threads:on -d:ssl -o="out/kpkg" --NimblePath=/tmp/kpkg/srcdir/deps/pkgs --nimcache=/tmp/kpkg/srcdir/cache "src/kpkg/kpkg.nim"
 }
 
 install() {

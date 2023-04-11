@@ -8,7 +8,7 @@ DESCRIPTION="The minimal HTTP server (but not really) that runs Kreato Linux's b
 
 build() {
         nimble install httpbeast --nimbleDir=/tmp/kpkg/srcdir/deps -Y
-	nim c -d:release -o="out/mari" "src/mari/mari.nim" --NimblePath=/tmp/kpkg/srcdir/deps/pkgs --nimcache=/tmp/kpkg/srcdir/cache
+	nim c -d:release -o="out/mari" --NimblePath=/tmp/kpkg/srcdir/deps/pkgs --nimcache=/tmp/kpkg/srcdir/cache  "src/mari/mari.nim"
 }
 
 install() {
