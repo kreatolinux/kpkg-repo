@@ -28,6 +28,7 @@ build() {
 }
 
 install() {
-    make DESTDIR=$ROOT install-strip
+    cd build
+    make DESTDIR=$ROOT install
     rm -rf $ROOT/source
 }
