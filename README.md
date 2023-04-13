@@ -6,24 +6,20 @@
 This is the Kreato Linux package repository. 
 You should find the required packages for a nice base system here.
 
-# Goals
-* Have enough packages to get a GUI and browse the internet.
-* Do it without having nonfree packages on the repository.
-
 # Usage
-Run `nyaa update`. This should automatically clone the repository. If it does not, [please file a bug report](https://github.com/kreatolinux/nyaa3/issues).
+Run `kpkg update`. This should automatically clone the repository. If it does not, [please file a bug report](https://github.com/kreatolinux/src/issues).
 If for some reason you need to clone it by hand, you can do so aswell.
 ```
-git clone https://github.com/kreatolinux/nyaa-repo.git --depth=1 /etc/nyaa
+mkdir -p /etc/kpkg/repos
+git clone https://github.com/kreatolinux/kpkg-repo.git --depth=1 /etc/kpkg/repos/main
 ```
 
 # Development
 Every package exists in a seperate directory.
 
-* For runfiles, check out nyaa_run(8)
+* For runfiles, check out kpkg_run(8)
 * Dependencies go onto the `deps` file. Each dependency should go onto a seperate line.
-
-You might also want to look at [nyaa-repo-bin](https://github.com/kreatolinux/nyaa-repo-bin) for binary packages.
+* Build dependencies go onto the `build_deps` file. Each dependency should go onto a seperate line.
 
 # Credits
 * Arch Linux packages
