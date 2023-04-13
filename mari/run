@@ -1,17 +1,17 @@
 #!/bin/sh
 NAME="mari"
-RELEASE="1"
-VERSION="0.1"
-SOURCES="git::https://github.com/kreatolinux/src::master"
-SHA256SUM=""
-DESCRIPTION="The minimal HTTP server (but not really) that runs Kreato Linux's binary repository"
+RELEASE="2"
+VERSION="4"
+SOURCES="https://github.com/kreatolinux/src/archive/refs/tags/v$VERSION.tar.gz"
+SHA256SUM="ea7b8388fd391746bb3fe6708c66d9b4602896bae3c53c06eb920763d3a2f526  v4.tar.gz"
+DESCRIPTION="Kreato Linux's binary repository server"
 
 build() {
-        nimble install httpbeast --nimbleDir=/tmp/kpkg/srcdir/deps -Y
+        nimble install httpbeast -y --nimbleDir=/tmp/kpkg/srcdir/deps
+        nim c -d:release -o="out/mari" --NimblePath=/tmp/kpkg/srcdir/deps/pkgs --nimcache=/tmp/kpkg/srcdir/cache "src/kpkg/kpkg.nim"
 }
 
 install() {
-	nim c -d:release -o="out/mari" --NimblePath=/tmp/kpkg/srcdir/deps/pkgs --nimcache=/tmp/kpkg/srcdir/cache  "src/mari/mari.nim"
-        mkdir -p "$ROOT/usr/bin"
-        cp mari "$ROOT/usr/bin/"
+        mkdir -p "$ROOT/bin"
+        cp out/mari "$ROOT/bin/"
 }
