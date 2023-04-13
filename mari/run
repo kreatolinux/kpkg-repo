@@ -8,7 +8,7 @@ DESCRIPTION="Kreato Linux's binary repository server"
 
 build() {
         nimble install httpbeast -y --nimbleDir=/tmp/kpkg/srcdir/deps
-        nim c -d:release -o="out/mari" --NimblePath=/tmp/kpkg/srcdir/deps/pkgs --nimcache=/tmp/kpkg/srcdir/cache "src/kpkg/kpkg.nim"
+        nim c -d:release -o="out/mari" --NimblePath=/tmp/kpkg/srcdir/deps/pkgs --nimcache=/tmp/kpkg/srcdir/cache "src/mari/mari.nim"
 }
 
 install() {
