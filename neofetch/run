@@ -3,7 +3,7 @@ NAME="neofetch"
 RELEASE="1"
 VERSION="7.1.3"
 SOURCES="https://github.com/kreatolinux/neofetch/archive/refs/tags/$VERSION.tar.gz"
-SHA256SUM="3b0190a2fa4443e8f9bb2660e748f69fb6043f7f3eb5bf38be5208d0440bfec3  neofetch-7.1.3.tar.gz"
+SHA256SUM="3b0190a2fa4443e8f9bb2660e748f69fb6043f7f3eb5bf38be5208d0440bfec3  7.1.3.tar.gz"
 DESCRIPTION="A command-line system information tool written in bash 3.2+"
 
 build() {
