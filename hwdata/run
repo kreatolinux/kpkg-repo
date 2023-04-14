@@ -1,0 +1,16 @@
+#!/bin/sh
+NAME="hwdata"
+RELEASE="1"
+VERSION="0.369"
+SOURCES="https://github.com/vcrhonek/hwdata/archive/refs/tags/v$VERSION.tar.gz"
+SHA256SUM="b17f3b81b887b9027fe5efa1ab1099afb472c843f89a9f5cc9ca4030b75bbdb2  v0.369.tar.gz"
+DESCRIPTION="hwdata contains various hardware identification and configuration data, such as the pci.ids and usb.ids databases."
+
+build() {
+    ./configure --prefix=/usr
+    make
+}
+
+install() {
+    make DESTDIR=$ROOT install
+}
