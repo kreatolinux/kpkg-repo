@@ -12,6 +12,6 @@ build() {
 
 install() {
     SETUPTOOLS_USE_DISTUTILS=stdlib pip install . --root=$ROOT
-    install -vDm644 data/shell-completions/bash/meson "$ROOT/usr/share/bash-completion/completions/meson"
-    install -vDm644 data/shell-completions/zsh/_meson "$ROOT/usr/share/zsh/site-functions/_meson"
+    #install -vDm644 data/shell-completions/bash/meson "$ROOT/usr/share/bash-completion/completions/meson"
+    #install -vDm644 data/shell-completions/zsh/_meson "$ROOT/usr/share/zsh/site-functions/_meson"
 }
