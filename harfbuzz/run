@@ -1,0 +1,19 @@
+#!/bin/sh
+NAME="harfbuzz"
+RELEASE="2"
+VERSION="5.3.1"
+SOURCES="https://github.com/harfbuzz/harfbuzz/releases/download/$VERSION/harfbuzz-$VERSION.tar.xz" 
+SHA256SUM="4a6ce097b75a8121facc4ba83b5b083bfec657f45b003cd5a3424f2ae6b4434d  harfbuzz-5.3.1.tar.xz"
+DESCRIPTION="FriBidi is an implementation of Unicode Bidirectional Algorithm"
+
+
+build() {
+    meson \
+        --prefix=/usr \
+        . output
+    ninja -C output
+}
+
+install() {
+        DESTDIR=$ROOT ninja -C output install
+}
