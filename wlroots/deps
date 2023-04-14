@@ -3,9 +3,8 @@ wayland-protocols
 libdrm
 libxkbcommon
 libinput
+hwdata
 seatd
 pixman
 libudev
 mesa
-meson
-samurai
