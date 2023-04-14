@@ -8,7 +8,7 @@ DESCRIPTION="hwdata contains various hardware identification and configuration d
 
 build() {
     ./configure --prefix=/usr
-    make
+    sed -i 's/-T//g' -i Makefile
 }
 
 install() {
