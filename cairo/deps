@@ -1,4 +1,5 @@
 libpng
 pixman
-freetype-harfbuzz
+freetype
+harfbuzz
 pkgconf
