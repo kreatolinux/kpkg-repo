@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="glib"
 RELEASE="1"
-VERSION="2.75.2"
-SOURCES="https://download.gnome.org/sources/glib/2.75/glib-$VERSION.tar.xz" 
-SHA256SUM="360d6fb75202c0eb0d07f0ab812b19b526f1c05ccc0a8ed7e5d2c988616d343a  glib-2.75.2.tar.xz"
+VERSION="2.76.1"
+SOURCES="https://download.gnome.org/sources/glib/2.76/glib-$VERSION.tar.xz" 
+SHA256SUM="525bb703b807142e1aee5ccf222c344e8064b21c0c45677ef594e587874c6797  glib-2.76.0.tar.xz"
 DESCRIPTION="glib"
 
 build() {
