@@ -8,6 +8,7 @@ DESCRIPTION="pkgconf is a program which helps to configure compiler and linker f
 
 build() {
     ./configure --prefix=/usr
+    make
 }
 
 install() {

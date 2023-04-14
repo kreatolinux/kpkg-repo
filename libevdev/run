@@ -8,6 +8,7 @@ DESCRIPTION="Common functions for Xorg input drivers"
 
 build() {
     ./configure --prefix=/usr
+    make
 }
 
 install() {

@@ -17,5 +17,6 @@ build() {
 }
 
 install() {
+    cd build
     make DESTDIR="$ROOT" install
 }

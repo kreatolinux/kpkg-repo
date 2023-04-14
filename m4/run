@@ -7,7 +7,6 @@ SHA256SUM="3be4a26d825ffdfda52a56fc43246456989a3630093cced3fbddf4771ee58a70  m4-
 DESCRIPTION="GNU m4"
 
 build() {
-    cd m4-$VERSION
     ./configure --prefix=/usr
     make -j$(nproc)
 }

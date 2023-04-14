@@ -1,2 +1,4 @@
 cmake
+binutils
+gcc
 ninja
