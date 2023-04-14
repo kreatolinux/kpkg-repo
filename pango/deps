@@ -2,4 +2,4 @@ cairo
 glib
 fribidi
 fontconfig
-freetype-harfbuzz
+harfbuzz
