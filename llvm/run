@@ -2,32 +2,11 @@
 NAME="llvm"
 RELEASE="1"
 VERSION="16.0.1"
-SOURCES="https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION/llvm-$VERSION.src.tar.xz;https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION/cmake-$VERSION.src.tar.xz;https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION/clang-$VERSION.src.tar.xz;https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION/lld-$VERSION.src.tar.xz;https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION/libunwind-$VERSION.src.tar.xz;https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION/libcxx-$VERSION.src.tar.xz;https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION/libcxxabi-$VERSION.src.tar.xz" 
-SHA256SUM="17d2142be9ff75c31ad76c53af7409974842545b94aaeac17f38b3b8567b0582  llvm-16.0.1.src.tar.xz;f7b070b0ea71251c81b1a3dcdc6ccd28f59615e3e386c461456c5c246406acdc  cmake-16.0.1.src.tar.xz;20cb1413846d75a5f57c7209f441801b63df38360142d98bf2b3dd3865301a91  clang-16.0.1.src.tar.xz;b31800095dbd83dcdd71d84702af9b9d0fd50f408105d5e54853615ee54b3fb6  lld-16.0.1.src.tar.xz;655272f54895cc99ff426bf738a74dd4dfcd0491432bff25b4d14e46a97d4629  libunwind-16.0.1.src.tar.xz;de75b96aeb30af355b55326ce97f1a38874a1476d198402be3fbb0ff0d49d1f0  libcxx-16.0.1.src.tar.xz;8d9aa2e409e6acd93ae91fa92b16e5d7ce91ca10160a263ec71c72d56a64221e  libcxxabi-16.0.1.src.tar.xz"
+SOURCES="https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION/llvm-project-$VERSION.src.tar.xz"
+SHA256SUM="ab7e3b95adb88fd5b669ca8c1d3c1e8d2a601c4478290d3ae31d8d70e96f2064  llvm-project-16.0.1.src.tar.xz"
 DESCRIPTION="The LLVM Project is a collection of modular and reusable compiler and toolchain technologies."
 
-prepare() {
-    tar -xvf llvm-$VERSION.src.tar.xz
-    tar -xvf cmake-$VERSION.src.tar.xz
-    cd llvm-$VERSION.src || exit 1
-    mv ../cmake-$VERSION.src/* cmake/
-    mv cmake/Modules/* cmake/modules/
-    cd ..
-    tar -xvf clang-$VERSION.src.tar.xz
-    tar -xvf lld-$VERSION.src.tar.xz
-    tar -xvf libunwind-$VERSION.src.tar.xz
-    tar -xvf libcxx-$VERSION.src.tar.xz
-    tar -xvf libcxxabi-$VERSION.src.tar.xz
-    mv libunwind-$VERSION.src libunwind
-    mv clang-$VERSION.src clang
-    mv lld-$VERSION.src lld
-    mkdir runtimes
-    mv libcxx-$VERSION.src runtimes/libcxx
-    mv libcxxabi-$VERSION.src runtimes/libcxxabi
-}
-
 build() {
-    cd llvm-$VERSION.src
     mkdir build
     cd build
     cmake -DCMAKE_BUILD_TYPE=Release \
@@ -38,12 +17,11 @@ build() {
         -DLLVM_INCLUDE_BENCHMARKS=OFF \
         -DLLVM_BINUTILS_INCDIR=/usr/include \
         -DLLVM_ENABLE_PROJECTS="lld;clang" \
-        -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi" \
+        -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi;compiler-rt" \
         -G Ninja ..
     ninja -j$(nproc)
 }
 
 install() {    
-    cd llvm-$VERSION.src/build
-    DESTDIR="$ROOT" ninja install
+    DESTDIR="$ROOT" ninja -C build install
 }
