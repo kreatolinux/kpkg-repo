@@ -1,6 +1,6 @@
 #!/bin/sh
 NAME="gcc"
-RELEASE="2"
+RELEASE="1"
 VERSION="12.2.0"
 SOURCES="https://ftp.gnu.org/gnu/gcc/gcc-$VERSION/gcc-$VERSION.tar.xz"
 SHA256SUM="e549cf9cf3594a00e27b6589d4322d70e0720cdd213f39beb4181e06926230ff  gcc-12.2.0.tar.xz"
