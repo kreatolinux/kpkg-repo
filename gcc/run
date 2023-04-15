@@ -23,7 +23,7 @@ build() {
         --prefix=/usr                                  \
         --disable-nls                                  \
         --disable-multilib                             \
-        --enable-languages=c,c++,go
+
 	make -j$(nproc)
 }
 
