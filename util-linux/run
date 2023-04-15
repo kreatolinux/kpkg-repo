@@ -8,11 +8,11 @@ BUILD_AS_ROOT="true"
 DESCRIPTION="Linux Utilities"
 
 build() {
-    cat /etc/group | grep tty || addgroup tty
     ./configure --prefix=/usr
     make
 }
 
 install() {
+    cat /etc/group | grep tty || addgroup tty
     make DESTDIR=$ROOT install -j1
 }
