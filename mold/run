@@ -14,5 +14,5 @@ build() {
 }
 
 install() {
-    cmake --install .
+	cmake --install build
 }
