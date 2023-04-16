@@ -11,9 +11,9 @@ build() {
                 --sysconfdir=/etc \
                 --disable-static
     make
-    make DESTDIR="$ROOT" install 
 }
 
 install() {
+    make DESTDIR="$ROOT" install 
 }
 

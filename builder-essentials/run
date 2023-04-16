@@ -2,6 +2,11 @@
 NAME="builder-essentials"
 RELEASE="1"
 VERSION="0.1"
+
+prepare() {
+  :
+}
+
 build() {
   :
 }

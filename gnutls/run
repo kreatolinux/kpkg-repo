@@ -1,0 +1,16 @@
+#!/bin/sh
+NAME="gnutls"
+RELEASE="1"
+VERSION="3.7.9"
+SOURCES="https://www.gnupg.org/ftp/gcrypt/gnutls/v3.7/gnutls-$VERSION.tar.xz"
+SHA256SUM="aaa03416cdbd54eb155187b359e3ec3ed52ec73df4df35a0edd49429ff64d844  gnutls-3.7.9.tar.xz"
+DESCRIPTION="GNU TLS"
+
+build() {
+    ./configure --prefix=/usr --with-included-unistring
+    make -j$(nproc)
+}
+
+install() {
+    make DESTDIR="$ROOT" install
+}

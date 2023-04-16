@@ -12,17 +12,18 @@ build() {
 	    echo "go: you can get a binary release at https://go.dev/dl/ or install through kpkg using 'kpkg install go'"
 	    exit 1
     fi
-
     cd src || exit 1
+    export GOENV="/tmp/kpkg/srcdir/go/env" 
+    export GOCACHE="/tmp/kpkg/srcdir/go-build"
+    go env -w  GOCACHE="/tmp/kpkg/srcdir/go-build"
     GOROOT_FINAL=/usr/local/go ./make.bash
 }
 
 install() {
     mkdir -p "$ROOT"/bin
-    cd .. || exit 1
     cp -r ./bin "$ROOT"
     mkdir -p "$ROOT"/usr/local/go
     cp -r . "$ROOT"/usr/local/go
     mkdir -p /tmp/nyaa_srcdir/go
-    GOENV=/tmp/nyaa_srcdir/go/env "$ROOT"/bin/go env -w GOROOT=/usr/local/go
+    "$ROOT"/bin/go env -w GOROOT=/usr/local/go
 }
