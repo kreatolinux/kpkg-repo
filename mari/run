@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="mari"
 RELEASE="2"
-VERSION="4.0.2"
+VERSION="4.0.3"
 SOURCES="https://github.com/kreatolinux/src/archive/refs/tags/v$VERSION.tar.gz"
-SHA256SUM="a9a2edafc9b88b1281246600150ed6869fd82801c65ce1bfcf9c14db24f7e32f  v4.0.2.tar.gz"
+SHA256SUM="90337e928d1b88e8e14549a438f5ffa09b85ce23dedf9e604fd5893c42c84163  v4.0.3.tar.gz"
 DESCRIPTION="Kreato Linux's binary repository server"
 
 build() {
