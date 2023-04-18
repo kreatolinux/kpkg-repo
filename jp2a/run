@@ -6,7 +6,6 @@ SOURCES="https://github.com/Talinx/jp2a/releases/download/v$VERSION/jp2a-$VERSIO
 SHA256SUM="144dd671373ee67821fb1c579f444758645af1ca9d6d419ffa7947a002847c82  jp2a-1.1.1.tar.gz"
 DESCRIPTION="Converts jpg images to ASCII"
 build() {
-    autoreconf -vi
     ./configure --prefix=/usr
     make
 }
