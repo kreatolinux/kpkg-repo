@@ -39,6 +39,7 @@ EOF
 }
 
 install() {
+    cd wpa_supplicant
     make DESTDIR=$ROOT install
 }
 
