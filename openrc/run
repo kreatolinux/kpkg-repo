@@ -11,7 +11,7 @@ build() {
     cd build
     meson --prefix=/usr       \
           --buildtype=release \
-	  -DHAVE_PAM=false
+	  -Dpam=false
     ninja
 }
 
