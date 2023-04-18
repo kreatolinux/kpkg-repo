@@ -6,7 +6,7 @@ SOURCES="https://github.com/libfuse/libfuse/releases/download/fuse-$VERSION/fuse
 SHA256SUM="126919d72b46b3e0eb58a9c6933a2a50c36f2ea69f61fe9e78bdba9f463ffa20  fuse-3.14.1.tar.xz"
 DESCRIPTION="Filesystem in Userspace"
 build() {
-    meson --prefix=/usr build/
+    meson -Dudevrulesdir=/usr/lib/udev/rules.d/ --prefix=/usr build/
     ninja -C build/
 }
 
