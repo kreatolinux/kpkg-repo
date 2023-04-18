@@ -7,15 +7,9 @@ SHA256SUM="f018ed6e49c5f1c16d336d9fd7687ce87023276591921db1e49a314ad6515349  efi
 DESCRIPTION="efivar provides tools and libraries to manipulate EFI variables"
 
 build() {
-    
-    # Credits: https://www.linuxfromscratch.org/blfs/view/svn/postlfs/efivar.html
-    sed '/prep :/a\\ttouch prep' -i src/Makefile
-    sed '/sys\/mount\.h/d' -i src/util.h
-    sed '/unistd\.h/a#include <sys/mount.h>' -i src/gpt.c src/linux.c
-    
-    make CFLAGS="-O2 -Wno-stringop-truncation"
+    make MANDOC=""
 }
 
 install() {
-    make DESTDIR="$ROOT" LIBDIR=/usr/lib install 
+    make DESTDIR="$ROOT" LIBDIR=/usr/lib install || exit 1
 }
