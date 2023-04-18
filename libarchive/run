@@ -1,12 +1,19 @@
 #!/bin/sh
 NAME="libarchive"
-RELEASE="1"
+RELEASE="3"
 VERSION="3.6.2"
-SOURCES="https://github.com/libarchive/libarchive/releases/download/v$VERSION/libarchive-$VERSION.tar.xz"
-SHA256SUM="9e2c1b80d5fbe59b61308fdfab6c79b5021d7ff4ff2489fb12daf0a96a83551d  libarchive-3.6.2.tar.xz"
+SOURCES="https://github.com/libarchive/libarchive/releases/download/v$VERSION/libarchive-$VERSION.tar.xz;https://github.com/libarchive/libarchive/pull/1825/commits/4f7605646de3d0cfec4974e0260577e39c0c9d13.patch"
+SHA256SUM="9e2c1b80d5fbe59b61308fdfab6c79b5021d7ff4ff2489fb12daf0a96a83551d  libarchive-3.6.2.tar.xz;84056be233f37059b330dc4336044d6ddf151f80eceafefc78d6d1acb41b449d  4f7605646de3d0cfec4974e0260577e39c0c9d13.patch"
 DESCRIPTION="Multi-format archive and compression library"
 
+prepare() {
+    tar -xvf libarchive-$VERSION.tar.xz
+    cd libarchive-$VERSION
+    patch -p1 < 4f7605646de3d0cfec4974e0260577e39c0c9d13.patch
+}
+
 build() {
+    cd libarchive-$VERSION
     # Taken from BLFS r11.2-232 
     sed '/linux\/fs\.h/d' -i libarchive/archive_read_disk_posix.c
     ./configure --prefix=/usr --disable-static
@@ -14,6 +21,7 @@ build() {
 }
 
 install() {
+    cd libarchive-$VERSION
     make DESTDIR=$ROOT install
 }
 
