@@ -14,5 +14,6 @@ build() {
 }
 
 install() {
+    sed -i 's/-sfr/-sf/g' Makefile
     make install
 }
