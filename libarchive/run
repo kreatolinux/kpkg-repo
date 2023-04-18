@@ -9,7 +9,7 @@ DESCRIPTION="Multi-format archive and compression library"
 prepare() {
     tar -xvf libarchive-$VERSION.tar.xz
     cd libarchive-$VERSION
-    patch -p1 < 4f7605646de3d0cfec4974e0260577e39c0c9d13.patch
+    patch -p1 < ../4f7605646de3d0cfec4974e0260577e39c0c9d13.patch
 }
 
 build() {
