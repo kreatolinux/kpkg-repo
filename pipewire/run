@@ -18,5 +18,5 @@ build() {
 }
 
 install() {
-    DESTDIR="$ROOT" ninja install  
+    DESTDIR="$ROOT" ninja -C build install  
 }
