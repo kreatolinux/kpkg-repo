@@ -7,6 +7,9 @@ SHA256SUM="2dacfe7041b83e2cb05fda58bd1fbdae61348a427f5b9073b96b36154de894a1  v4.
 DESCRIPTION="A tool for managing OCI containers and pods"
 
 build() {
+    export GOENV="/tmp/kpkg/srcdir/go/env" 
+    export GOCACHE="/tmp/kpkg/srcdir/go-build"
+    go env -w  GOCACHE="/tmp/kpkg/srcdir/go-build"
     make BUILDTAGS="" -j$(nproc)
 }
 
