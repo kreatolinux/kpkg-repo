@@ -14,5 +14,6 @@ build() {
 }
 
 install() {
-    make install
+    cd build
+    DESTDIR="$ROOT" make install
 }
