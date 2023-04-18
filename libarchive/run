@@ -17,7 +17,7 @@ build() {
 install() {
     cd libarchive-$VERSION
     make DESTDIR=$ROOT install
-    sed -i '/Libs.private: /s|$| -liconv|' "$ROOT/lib/pkgconfig/libarchive.pc"
-    sed -i '/Requires.private:/d'          "$ROOT/lib/pkgconfig/libarchive.pc"
+    sed -i '/Libs.private: /s|$| -liconv|' "$ROOT/usr/lib/pkgconfig/libarchive.pc"
+    sed -i '/Requires.private:/d'          "$ROOT/usr/lib/pkgconfig/libarchive.pc"
 }
 
