@@ -2,17 +2,18 @@
 NAME="libjpeg-turbo"
 RELEASE="1"
 VERSION="2.1.5.1"
-SOURCES="https://downloads.sourceforge.net/libjpeg-turbo/libjpeg-turbo-2.1.5.1.tar.gz"
+SOURCES="https://downloads.sourceforge.net/project/libjpeg-turbo/2.1.5.1/libjpeg-turbo-2.1.5.1.tar.gz"
 SHA256SUM="2fdc3feb6e9deb17adec9bafa3321419aa19f8f4e5dea7bf8486844ca22207bf  libjpeg-turbo-2.1.5.1.tar.gz"
 DESCRIPTION="library for jpeg"
 
 build() {
+	mkdir build
 	cmake \
 	-DCMAKE_INSTALL_PREFIX=/usr  \
 	-DCMAKE_INSTALL_LIBDIR=/usr/lib \
 	-DENABLE_STATIC=OFF \
-	-G Ninja
-	build
+	-G Ninja \
+	-B build
 	ninja -C build
 }
 
