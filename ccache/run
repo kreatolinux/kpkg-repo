@@ -12,5 +12,6 @@ build() {
 }
 
 install() {
+    cd build
     make install
 }
