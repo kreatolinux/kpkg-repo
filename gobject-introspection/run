@@ -7,7 +7,7 @@ SHA256SUM="b1ee7ed257fdbc008702bdff0ff3e78a660e7e602efa8f211dc89b9d1e7d90a2  gob
 DESCRIPTION="gobject-introspection"
 
 build() {
-	meson --prefix=/usr -B build
+	meson setup --prefix=/usr build
 	ninja -C build
 }
 
