@@ -1,0 +1,16 @@
+#!/bin/sh
+NAME="gobject-introspection"
+RELEASE="1"
+VERSION="1.62.0"
+SOURCES="https://ftp.gnome.org/pub/gnome/sources/gobject-introspection/1.62/gobject-introspection-1.62.0.tar.xz"
+SHA256SUM="b1ee7ed257fdbc008702bdff0ff3e78a660e7e602efa8f211dc89b9d1e7d90a2  gobject-introspection-1.62.0.tar.xz"
+DESCRIPTION="gobject-introspection"
+
+build() {
+	meson --prefix=/usr -B build
+	ninja -C build
+}
+
+install() {
+    DESTDIR="$ROOT" ninja -C build install
+}
