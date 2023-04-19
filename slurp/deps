@@ -2,3 +2,4 @@ meson
 wayland
 pixman
 libpng
+cairo
