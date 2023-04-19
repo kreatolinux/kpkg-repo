@@ -6,6 +6,10 @@ SOURCES="https://files.pythonhosted.org/packages/6c/10/a7d0fa5baea8fe7b50f448ab7
 SHA256SUM="5026bae9a10eeaefb61dab2f09052b9f4307d44aee4eda64b309723d8d206bbc  pyparsing-3.0.9-py3-none-any.whl"
 DESCRIPTION="python-pyparsing binary package"
 
+prepare() {
+	:
+}
+
 build() {
         :
 }
