@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="freetype"
 RELEASE="2"
-VERSION="2.12.1"
+VERSION="2.13.0"
 SOURCES="https://download-mirror.savannah.gnu.org/releases/freetype/freetype-$VERSION.tar.gz"
-SHA256SUM="efe71fd4b8246f1b0b1b9bfca13cfff1c9ad85930340c27df469733bbb620938  freetype-2.12.1.tar.gz"
+SHA256SUM="a7aca0e532a276ea8d85bd31149f0a74c33d19c8d287116ef8f5f8357b4f1f80  freetype-2.13.0.tar.gz"
 DESCRIPTION="FriBidi is an implementation of Unicode Bidirectional Algorithm"
 
 

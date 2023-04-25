@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="git"
 RELEASE="1"
-VERSION=2.40.0
+VERSION=2.40.1
 DESCRIPTION="Version control tool"
 SOURCES="https://mirrors.edge.kernel.org/pub/software/scm/git/git-$VERSION.tar.xz"
-SHA256SUM="b17a598fbf58729ef13b577465eb93b2d484df1201518b708b5044ff623bf46d  git-2.40.0.tar.xz"
+SHA256SUM="4893b8b98eefc9fdc4b0e7ca249e340004faa7804a433d17429e311e1fef21d2  git-2.40.1.tar.xz"
 build() {
 ./configure --prefix=/usr
 # Taken from kiss linux, license is https://github.com/kisslinux/repo/blob/master/LICENSE
