@@ -3,3 +3,4 @@ pixman
 libpng
 cairo
 wayland-protocols
+libxkbcommon
