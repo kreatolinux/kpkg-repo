@@ -7,7 +7,7 @@ SHA256SUM="c0205b34f1fad94553b6cb2c2b983cc33186018026058cad0b841a00bc3087e3  swa
 DESCRIPTION="Wallpaper utility for Wayland compositors"
 
 build() {
-    meson --prefix=/usr build/
+    meson setup --prefix=/usr build/
     ninja -C build/
 }
 
