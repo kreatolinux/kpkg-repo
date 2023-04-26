@@ -1,5 +1,6 @@
 libpng
 pixman
+fontconfig
 freetype
 harfbuzz
 pkgconf
