@@ -11,6 +11,7 @@ build() {
 }
 
 install() {
-    make DESTDIR=$ROOT install || exit 1
-    exit 0
+    export GOENV="/tmp/kpkg/srcdir/go/env"
+    export GOCACHE="/tmp/kpkg/srcdir/go-build"
+    make DESTDIR=$ROOT install
 }
