@@ -1,0 +1,19 @@
+#!/bin/sh
+NAME="jumpstart"
+RELEASE="1"
+VERSION="4.1.0"
+SOURCES="https://github.com/kreatolinux/src/archive/refs/tags/v$VERSION.tar.gz"
+SHA256SUM="c8300d7565a118e4016e7e3cfe01ae5ee378157275e832b874e33a5264d3fe23  v4.1.0.tar.gz"
+DESCRIPTION="Kreato Linux's Init system/Service manager"
+
+build() {
+        nimble install cligen fusion -y --nimbleDir=/tmp/kpkg/srcdir/deps
+        nim c -d:release --threads:on -o="out/jumpstart" --NimblePath=/tmp/kpkg/srcdir/deps/pkgs --nimcache=/tmp/kpkg/srcdir/cache "src/jumpstart/jumpstart.nim"
+        nim c -d:release --threads:on -o="out/jumpctl" --NimblePath=/tmp/kpkg/srcdir/deps/pkgs --nimcache=/tmp/kpkg/srcdir/cache "src/jumpstart/jumpctl.nim"
+}
+
+install() {
+        mkdir -p "$ROOT/bin"
+        cp out/jumpctl "$ROOT/bin/"
+        cp out/jumpstart "$ROOT/bin"
+}
