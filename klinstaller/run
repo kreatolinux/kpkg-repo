@@ -1,0 +1,15 @@
+#!/bin/sh
+NAME="klinstaller"
+RELEASE="1"
+VERSION="0.0.1"
+SOURCES="git::https://github.com/kreatolinux/src::master"
+SHA256SUM=""
+DESCRIPTION="Kreato Linux's Installer"
+
+build() {
+	:
+}
+
+install() {
+	make install_klinstaller
+}
