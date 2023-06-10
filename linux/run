@@ -19,6 +19,7 @@ build() {
 }
 
 install() {
+    cd linux-$VERSION
     make install
     make modules_install
 }
