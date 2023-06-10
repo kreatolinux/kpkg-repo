@@ -8,7 +8,9 @@ DESCRIPTION="The Linux kernel"
 
 prepare() {
 	tar -xvf linux-$VERSION.tar.xz
-	mv kernel-x86_64-fedora.config linux-$VERSION
+	mv kernel-x86_64-fedora.config linux-$VERSION/.config
+	cd linux-$VERSION
+	make olddefconfig
 }
 
 build() {
