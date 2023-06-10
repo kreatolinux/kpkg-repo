@@ -1,0 +1,22 @@
+#!/bin/sh
+NAME="linux"
+RELEASE="1"
+VERSION="6.3.7"
+SOURCES="https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$VERSION.tar.xz;https://github.com/projg2/fedora-kernel-config-for-gentoo/raw/6.3.1-gentoo/kernel-x86_64-fedora.config"
+SHA256SUM="b3bc1a9bd0c19836c9709c318d41c19c11215a07514f49f89b40b9d50ab49325  wget-1.21.tar.gz"
+DESCRIPTION="Network utility to retrieve files from the Web"
+
+prepare() {
+	tar -xvf linux-$VERSION.tar.xz
+	mv kernel-x86_64-fedora.config linux-$VERSION
+}
+
+build() {
+     cd linux-$VERSION
+     make -j$(nproc)     
+}
+
+install() {
+    make install
+    make modules_install
+}
