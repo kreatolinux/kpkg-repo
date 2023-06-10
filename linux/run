@@ -3,8 +3,8 @@ NAME="linux"
 RELEASE="1"
 VERSION="6.3.7"
 SOURCES="https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$VERSION.tar.xz;https://github.com/projg2/fedora-kernel-config-for-gentoo/raw/6.3.1-gentoo/kernel-x86_64-fedora.config"
-SHA256SUM="b3bc1a9bd0c19836c9709c318d41c19c11215a07514f49f89b40b9d50ab49325  wget-1.21.tar.gz"
-DESCRIPTION="Network utility to retrieve files from the Web"
+SHA256SUM="fe369743996c522a7b473e99dcf8f88847bd5cc88546fd3b7a41d9fe5a5b97a9  linux-6.3.7.tar.xz;eb895fb6e72c78c5df522e44e14bf48fe1a462ee7a8100518dfc1d36566c26e3  kernel-x86_64-fedora.config"
+DESCRIPTION="The Linux kernel"
 
 prepare() {
 	tar -xvf linux-$VERSION.tar.xz
