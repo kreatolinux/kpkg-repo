@@ -11,15 +11,19 @@ prepare() {
 	mv kernel-x86_64-fedora.config linux-$VERSION/.config
 	cd linux-$VERSION
 	make olddefconfig
+	sed -i "s/CONFIG_DEBUG_INFO_BTF=y/CONFIG_DEBUG_INFO_BTF=n/g" .config
 }
 
 build() {
      cd linux-$VERSION
-     make -j$(nproc)     
+     make -j$(nproc) || exit 1
 }
 
 install() {
     cd linux-$VERSION
+    export INSTALL_MOD_PATH=$DESTDIR
+    export INSTALL_PATH=$DESTDIR/boot
+    mkdir -p "$INSTALL_PATH"
     make install
     make modules_install
 }
