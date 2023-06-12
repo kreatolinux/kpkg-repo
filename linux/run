@@ -7,9 +7,10 @@ SHA256SUM="fe369743996c522a7b473e99dcf8f88847bd5cc88546fd3b7a41d9fe5a5b97a9  lin
 DESCRIPTION="The Linux kernel"
 
 prepare() {
+	mv kernel-x86_64-fedora.config kernel-x86_64-klinux.config
 	patch -p1 < additional-settings.patch || exit 1
 	tar -xvf linux-$VERSION.tar.xz
-	mv kernel-x86_64-fedora.config linux-$VERSION/.config
+	mv kernel-x86_64-klinux.config linux-$VERSION/.config
 	cd linux-$VERSION
 	make olddefconfig
 }
