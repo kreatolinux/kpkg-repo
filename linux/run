@@ -2,16 +2,16 @@
 NAME="linux"
 RELEASE="1"
 VERSION="6.3.7"
-SOURCES="https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$VERSION.tar.xz;https://github.com/projg2/fedora-kernel-config-for-gentoo/raw/6.3.1-gentoo/kernel-x86_64-fedora.config"
-SHA256SUM="fe369743996c522a7b473e99dcf8f88847bd5cc88546fd3b7a41d9fe5a5b97a9  linux-6.3.7.tar.xz;eb895fb6e72c78c5df522e44e14bf48fe1a462ee7a8100518dfc1d36566c26e3  kernel-x86_64-fedora.config"
+SOURCES="https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$VERSION.tar.xz;https://github.com/projg2/fedora-kernel-config-for-gentoo/raw/6.3.1-gentoo/kernel-x86_64-fedora.config;https://github.com/kreatolinux/kpkg-repo/raw/master/linux/additional-settings.patch"
+SHA256SUM="fe369743996c522a7b473e99dcf8f88847bd5cc88546fd3b7a41d9fe5a5b97a9  linux-6.3.7.tar.xz;eb895fb6e72c78c5df522e44e14bf48fe1a462ee7a8100518dfc1d36566c26e3  kernel-x86_64-fedora.config;229c719a5d63d1e6c14df08b3635d07b367d3fd0d2b3a055cf3576958c2bba29  additional-settings.patch"
 DESCRIPTION="The Linux kernel"
 
 prepare() {
+	patch -p1 < additional-settings.patch
 	tar -xvf linux-$VERSION.tar.xz
 	mv kernel-x86_64-fedora.config linux-$VERSION/.config
 	cd linux-$VERSION
 	make olddefconfig
-	sed -i "s/CONFIG_DEBUG_INFO_BTF=y/CONFIG_DEBUG_INFO_BTF=n/g" .config
 }
 
 build() {
