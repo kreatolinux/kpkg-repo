@@ -3,7 +3,7 @@ NAME="linux"
 RELEASE="3"
 VERSION="6.3.7"
 SOURCES="https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$VERSION.tar.xz;https://github.com/projg2/fedora-kernel-config-for-gentoo/raw/6.3.1-gentoo/kernel-x86_64-fedora.config;https://github.com/kreatolinux/kpkg-repo/raw/master/linux/additional-settings.patch;https://github.com/projg2/gentoo-kernel-config/raw/master/no-debug.config"
-SHA256SUM="fe369743996c522a7b473e99dcf8f88847bd5cc88546fd3b7a41d9fe5a5b97a9  linux-6.3.7.tar.xz;eb895fb6e72c78c5df522e44e14bf48fe1a462ee7a8100518dfc1d36566c26e3  kernel-x86_64-fedora.config;229c719a5d63d1e6c14df08b3635d07b367d3fd0d2b3a055cf3576958c2bba29  additional-settings.patch;e924709df4b19c7f21adf4dd3a68efaa77d5643ccc24f99901fe4ea5b4b24e2f  no-debug.config"
+SHA256SUM="fe369743996c522a7b473e99dcf8f88847bd5cc88546fd3b7a41d9fe5a5b97a9  linux-6.3.7.tar.xz;eb895fb6e72c78c5df522e44e14bf48fe1a462ee7a8100518dfc1d36566c26e3  kernel-x86_64-fedora.config;bf062012223816e566e2e796043905babf3df3b412922e7685544a3dc02a9056  additional-settings.patch;e924709df4b19c7f21adf4dd3a68efaa77d5643ccc24f99901fe4ea5b4b24e2f  no-debug.config"
 DESCRIPTION="The Linux kernel"
 
 prepare() {
