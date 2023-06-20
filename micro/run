@@ -3,7 +3,7 @@ NAME="micro"
 RELEASE="1"
 VERSION="2.0.11"
 SOURCES="https://github.com/zyedidia/micro/archive/refs/tags/v2.0.11.tar.gz"
-SHA256SUM="1bb499edeaaadf1fe1791a49f96ab672c4e1add31ee125882ccd85a0fc8a4abe micro-2.0.11.tar.gz"
+SHA256SUM="1bb499edeaaadf1fe1791a49f96ab672c4e1add31ee125882ccd85a0fc8a4abe v2.0.11.tar.gz"
 DESCRIPTION="micro is a terminal-based text editor that aims to be easy to use and intuitive"
 build() {
 	make build
