@@ -24,13 +24,22 @@ jobs:
           cd src
           make deps
           make chkupd
+          mv src/chkupd/jsontomd.sh /tmp/
           mv out/chkupd /tmp/
           cd ..
           rm -rf src
-          /tmp/chkupd checkAll --jsonPath=/tmp/chkupd.json --repo="$GITHUB_WORKSPACE"
-      
+          cd /tmp/
+          ./chkupd checkAll --jsonPath=/tmp/chkupd.json --repo="$GITHUB_WORKSPACE"
+          sh jsontomd.sh /tmp/chkupd.json > /tmp/chkupd.md
+          rm -rf chkupd jsontomd.sh
+          
+          
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5.0.2
+        with:
+          commit-message: "[CI] Automated update by chkupd"
+          body-path: /tmp/chkupd.md
+          
       
       - uses: actions/upload-artifact@v3
         with:
