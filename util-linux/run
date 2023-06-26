@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="util-linux"
 RELEASE="1"
-VERSION="2.38"
+VERSION="2.39"
 SOURCES="https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v$VERSION/util-linux-$VERSION.tar.xz"
-SHA256SUM="6d111cbe4d55b336db2f1fbeffbc65b89908704c01136371d32aa9bec373eb64  util-linux-2.38.tar.xz"
+SHA256SUM="32b30a336cda903182ed61feb3e9b908b762a5e66fe14e43efb88d37162075cb  util-linux-2.39.tar.xz"
 BUILD_AS_ROOT="true"
 DESCRIPTION="Linux Utilities"
 

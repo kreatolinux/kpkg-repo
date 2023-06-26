@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="llvm"
 RELEASE="1"
-VERSION="16.0.2"
+VERSION="16.0.6"
 SOURCES="https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION/llvm-project-$VERSION.src.tar.xz"
-SHA256SUM="6d8acae041ccd34abe144cda6eaa76210e1491f286574815b7261b3f2e58734c  llvm-project-16.0.2.src.tar.xz"
+SHA256SUM="ce5e71081d17ce9e86d7cbcfa28c4b04b9300f8fb7e78422b1feb6bc52c3028e  llvm-project-16.0.6.src.tar.xz"
 DESCRIPTION="The LLVM Project is a collection of modular and reusable compiler and toolchain technologies."
 
 build() {

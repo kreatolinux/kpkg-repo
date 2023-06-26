@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="ostree"
 RELEASE="1"
-VERSION="2023.2"
+VERSION="2023.4"
 SOURCES="https://github.com/ostreedev/ostree/releases/download/v$VERSION/libostree-$VERSION.tar.xz"
-SHA256SUM="ceb0788755a0bff5738d44543552fbf883cf71df481baa3ca7288da7a402bb85  libostree-2023.2.tar.xz"
+SHA256SUM="7cee8ace6aae3c778527927a85abefbfbd491c021f52ae229c51ca3077f9c5d1  libostree-2023.4.tar.xz"
 DESCRIPTION="Operating system and container binary deployment and upgrades"
 build() {
     ./configure --with-gpgme=no --prefix=/usr
