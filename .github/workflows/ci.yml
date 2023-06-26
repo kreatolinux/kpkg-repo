@@ -25,6 +25,7 @@ jobs:
           make deps
           make chkupd
           mv out/chkupd /tmp/
+          cd ..
           rm -rf src
           /tmp/chkupd checkAll --jsonPath=/tmp/chkupd.json --repo="$GITHUB_WORKSPACE"
       
