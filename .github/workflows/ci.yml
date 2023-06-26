@@ -2,6 +2,8 @@ name: CI
 
 # Controls when the workflow will run
 on:
+  schedule:
+    - cron: '0 0 * * WED'
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -30,7 +32,7 @@ jobs:
           rm -rf src
           cd /tmp/
           ./chkupd checkAll --jsonPath=/tmp/chkupd.json --repo="$GITHUB_WORKSPACE"
-          sh jsontomd.sh /tmp/chkupd.json > /tmp/chkupd.md
+          bash jsontomd.sh /tmp/chkupd.json > /tmp/chkupd.md
           rm -rf chkupd jsontomd.sh
           
           
