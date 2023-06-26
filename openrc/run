@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="openrc"
 RELEASE="1"
-VERSION="0.46"
+VERSION="0.47.1"
 SOURCES="https://github.com/OpenRC/openrc/archive/refs/tags/$VERSION.tar.gz"
-SHA256SUM="4fa0916841bbcae39d358240ed34edeb87765ba906e6bfc5933f4353197b1076  0.46.tar.gz"
+SHA256SUM="ea692bcf8c380fd0ed168e7bb24018bcae14208011eb31f10665a0d46593b202  0.47.1.tar.gz"
 DESCRIPTION="The OpenRC init system"
 
 build() {
