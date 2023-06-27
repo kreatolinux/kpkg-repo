@@ -8,9 +8,22 @@ DESCRIPTION="Go is a statically typed, compiled programming language designed at
 
 build() {
     if ! command -v go > /dev/null; then
-	    echo "go: go must be installed to build go"
-	    echo "go: you can get a binary release at https://go.dev/dl/ or install through kpkg using 'kpkg install go'"
-	    exit 1
+        echo "go: go not found to bootstrap, downloading binary to bootstrap..."
+        # We get the architecture by hand since
+        # kpkg doesn't currently offer any variable to do this.
+        ARCH=""
+        case $(uname -m)
+        in
+            "x86_64")
+                ARCH="amd64"
+            ;;
+            *)
+                ARCH="$(uname -m)"
+            ;;
+        esac
+        wget https://go.dev/dl/go$VERSION.linux-$ARCH.tar.gz
+        tar -xvf go$VERSION.linux-$ARCH.tar.gz
+        export PATH=$PATH:$PWD/go/bin
     fi
     cd src || exit 1
     export GOENV="/tmp/kpkg/srcdir/go/env" 
