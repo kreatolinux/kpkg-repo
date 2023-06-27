@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="kpkg"
 RELEASE="4"
-VERSION="4.1.3"
+VERSION="4.1.4"
 SOURCES="https://github.com/kreatolinux/src/archive/refs/tags/v$VERSION.tar.gz"
-SHA256SUM="155793dc39784c8bb4a84e6112adaf5d4d43a52add350abfc0e571c2bd602933  v4.1.3.tar.gz"
+SHA256SUM="df15c9b16d0a3e7155423cbbab8cb950e442972bc3db0737fc290847e305fc67  v4.1.4.tar.gz"
 DESCRIPTION="Kreato Linux's Package Manager"
 
 build() {
