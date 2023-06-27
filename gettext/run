@@ -7,12 +7,10 @@ SHA256SUM="0e60393a47061567b46875b249b7d2788b092d6457d656145bb0e7e6a3e26d93  get
 DESCRIPTION="Gettext contains utilities for localization."
 
 build() {
-    cd gettext-tools
-    ./configure --prefix=/usr --with-installed-libtextstyle --with-installed-csharp-dll
+    ./configure --prefix=/usr
     make
 }
 
 install() {
-    cd gettext-tools
     make DESTDIR=$ROOT install
 }
