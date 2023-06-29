@@ -38,5 +38,4 @@ install() {
     mkdir -p "$ROOT"/usr/local/go
     cp -r . "$ROOT"/usr/local/go
     mkdir -p /tmp/kpkg/srcdir/go
-    "$ROOT"/bin/go env -w GOROOT=/usr/local/go
 }
