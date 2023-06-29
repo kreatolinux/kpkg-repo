@@ -6,6 +6,9 @@ SOURCES="https://github.com/zyedidia/micro/archive/refs/tags/v$VERSION.tar.gz"
 SHA256SUM="1bb499edeaaadf1fe1791a49f96ab672c4e1add31ee125882ccd85a0fc8a4abe  v2.0.11.tar.gz"
 DESCRIPTION="micro is a terminal-based text editor that aims to be easy to use and intuitive"
 build() {
+    	export GOENV="/tmp/kpkg/srcdir/go/env" 
+    	export GOCACHE="/tmp/kpkg/srcdir/go-build"
+    	go env -w  GOCACHE="/tmp/kpkg/srcdir/go-build"
 	make build
 }
 
