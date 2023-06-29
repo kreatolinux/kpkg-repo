@@ -14,5 +14,5 @@ build() {
 }
 
 install() {
-    install -vD micro "$ROOT/usr/bin/micro"
+    env install -vD micro "$ROOT/usr/bin/micro"
 }
