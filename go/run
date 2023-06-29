@@ -37,6 +37,6 @@ install() {
     cp -r ./bin "$ROOT"
     mkdir -p "$ROOT"/usr/local/go
     cp -r . "$ROOT"/usr/local/go
-    mkdir -p /tmp/nyaa_srcdir/go
+    mkdir -p /tmp/kpkg/srcdir/go
     "$ROOT"/bin/go env -w GOROOT=/usr/local/go
 }
