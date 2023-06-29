@@ -8,6 +8,7 @@ DESCRIPTION="micro is a terminal-based text editor that aims to be easy to use a
 build() {
     	export GOENV="/tmp/kpkg/srcdir/go/env" 
     	export GOCACHE="/tmp/kpkg/srcdir/go-build"
+	export GOMODCACHE="/tmp/kpkg/srcdir/go-build-mod"
     	go env -w  GOCACHE="/tmp/kpkg/srcdir/go-build"
 	make build
 }
