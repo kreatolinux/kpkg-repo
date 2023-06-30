@@ -8,7 +8,8 @@ DESCRIPTION="PNG library"
 
 build() {
     ./configure --prefix=/usr    \
-            --disable-static
+            --disable-static     \
+            --have-ld-version-script
     make
 }
 
