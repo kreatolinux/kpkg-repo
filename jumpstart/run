@@ -3,7 +3,7 @@ NAME="jumpstart"
 RELEASE="1"
 VERSION="4.1.5"
 SOURCES="https://github.com/kreatolinux/src/archive/refs/tags/v$VERSION.tar.gz"
-SHA256SUM="70990948c90234686acaf5719e594ae41aa0159bcac0288632e144104136ab7f  v4.1.5.tar.gz"
+SHA256SUM="7dfc0a1f0aa3cac814aad8f3f9cb591c8a40894a2e264a4b7fb52309a542f3e7  v4.1.6.tar.gz"
 DESCRIPTION="Kreato Linux's Init system/Service manager"
 
 build() {
