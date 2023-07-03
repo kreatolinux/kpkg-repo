@@ -1,0 +1,17 @@
+#!/bin/sh
+NAME="pigz"
+RELEASE="1"
+VERSION="2.7"
+SOURCES="https://zlib.net/pigz/pigz-$VERSION.tar.gz"
+SHA256SUM="b4c9e60344a08d5db37ca7ad00a5b2c76ccb9556354b722d56d55ca7e8b1c707  pigz-2.7.tar.gz"
+DESCRIPTION="Parallel gzip"
+build() {
+    make
+}
+
+install() {
+    install -vDm 0755 pigz "$ROOT/usr/bin/pigz"
+    install -vDm 0755 unpigz "$ROOT/usr/bin/unpigz"
+    ln -s "pigz" "$ROOT/usr/bin/gzip"
+    ln -s "unpigz" "$ROOT/usr/bin/gunzip"
+}
