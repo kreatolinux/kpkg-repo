@@ -10,8 +10,8 @@ build() {
 }
 
 install() {
-    install -vDm 0755 pigz "$ROOT/usr/bin/pigz"
-    install -vDm 0755 unpigz "$ROOT/usr/bin/unpigz"
+    env install -vDm 0755 pigz "$ROOT/usr/bin/pigz"
+    env install -vDm 0755 unpigz "$ROOT/usr/bin/unpigz"
     ln -s "pigz" "$ROOT/usr/bin/gzip"
     ln -s "unpigz" "$ROOT/usr/bin/gunzip"
 }
