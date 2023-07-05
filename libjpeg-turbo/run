@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="libjpeg-turbo"
 RELEASE="1"
-VERSION="2.1.5.1"
-SOURCES="https://downloads.sourceforge.net/project/libjpeg-turbo/2.1.5.1/libjpeg-turbo-2.1.5.1.tar.gz"
-SHA256SUM="2fdc3feb6e9deb17adec9bafa3321419aa19f8f4e5dea7bf8486844ca22207bf  libjpeg-turbo-2.1.5.1.tar.gz"
+VERSION="3.0.0"
+SOURCES="https://downloads.sourceforge.net/project/libjpeg-turbo/3.0.0/libjpeg-turbo-3.0.0.tar.gz"
+SHA256SUM="c77c65fcce3d33417b2e90432e7a0eb05f59a7fff884022a9d931775d583bfaa  libjpeg-turbo-3.0.0.tar.gz"
 DESCRIPTION="library for jpeg"
 
 build() {
