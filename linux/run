@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="linux"
 RELEASE="4"
-VERSION="6.4.1.1.1"
+VERSION="6.4.1"
 SOURCES="https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$VERSION.tar.xz;https://github.com/projg2/fedora-kernel-config-for-gentoo/raw/6.3.7-gentoo/kernel-x86_64-fedora.config;https://github.com/kreatolinux/kpkg-repo/raw/master/linux/settings.config"
-SHA256SUM="0d9daa9f1c176fb13b9447f6e3d80e82b49043f0d344c247bbf09b4e625beef3  linux-6.4.1.1.1.1.1.tar.xz;b9726d36fb1243b96c1519f6b29b344621e43bf969ceccc8ced38f2532ac5217  kernel-x86_64-fedora.config;39856275c2fb6930fd5f48a607a9e18f297833a37dd1a2db757dc95f01975266  settings.config"
+SHA256SUM="0d9daa9f1c176fb13b9447f6e3d80e82b49043f0d344c247bbf09b4e625beef3  linux-6.4.1.tar.xz;b9726d36fb1243b96c1519f6b29b344621e43bf969ceccc8ced38f2532ac5217  kernel-x86_64-fedora.config;39856275c2fb6930fd5f48a607a9e18f297833a37dd1a2db757dc95f01975266  settings.config"
 DESCRIPTION="The Linux kernel"
 
 prepare() {
