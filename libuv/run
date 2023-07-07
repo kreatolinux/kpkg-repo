@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="libuv"
 RELEASE="1"
-VERSION="1.45.0"
+VERSION="1.46.0"
 SOURCES="https://dist.libuv.org/dist/v$VERSION/libuv-v$VERSION.tar.gz"
-SHA256SUM="f5b07f65a1e8166e47983a7ed1f42fae0bee08f7458142170c37332fc676a748  libuv-v1.45.0.tar.gz"
+SHA256SUM="111f83958b9fdc65f1489195d25f342b9f7a3e683140c60e62c00fbaccddddce  libuv-v1.46.0.tar.gz"
 DESCRIPTION="The libuv package is a multi-platform support library with a focus on asynchronous I/O."
 
 build() {

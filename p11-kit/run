@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="p11-kit"
 RELEASE="1"
-VERSION="0.24.1"
+VERSION="0.25.0"
 SOURCES="https://github.com/p11-glue/p11-kit/releases/download/$VERSION/p11-kit-$VERSION.tar.xz"
-SHA256SUM="d8be783efd5cd4ae534cee4132338e3f40f182c3205d23b200094ec85faaaef8  p11-kit-0.24.1.tar.xz"
+SHA256SUM="d55583bcdde83d86579cabe3a8f7f2638675fef01d23cace733ff748fc354706  p11-kit-0.25.0.tar.xz"
 DESCRIPTION=""
 build() {
     ./configure --prefix=/usr     \
