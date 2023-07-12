@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="go"
 RELEASE="1"
-VERSION="1.20.5"
+VERSION="1.20.6"
 SOURCES="https://go.dev/dl/go$VERSION.src.tar.gz"
-SHA256SUM="9a15c133ba2cfafe79652f4815b62e7cfc267f68df1b9454c6ab2a3ca8b96a88  go1.20.5.src.tar.gz"
+SHA256SUM="62ee5bc6fb55b8bae8f705e0cb8df86d6453626b4ecf93279e2867092e0b7f70  go1.20.6.src.tar.gz"
 DESCRIPTION="Go is a statically typed, compiled programming language designed at Google"
 
 build() {
