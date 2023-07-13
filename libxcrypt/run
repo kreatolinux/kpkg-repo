@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="libxcrypt"
 RELEASE="1"
-VERSION="4.4.35"
+VERSION="4.4.36"
 SOURCES="https://github.com/besser82/libxcrypt/releases/download/v$VERSION/libxcrypt-$VERSION.tar.xz"
-SHA256SUM="a8c935505b55f1df0d17f8bfd59468c7c6709a1d31831b0f8e3e045ab8fd455d  libxcrypt-4.4.35.tar.xz"
+SHA256SUM="e5e1f4caee0a01de2aee26e3138807d6d3ca2b8e67287966d1fefd65e1fd8943  libxcrypt-4.4.36.tar.xz"
 DESCRIPTION="Extended crypt library"
 
 build() {

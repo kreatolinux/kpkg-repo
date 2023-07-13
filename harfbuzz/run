@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="harfbuzz"
 RELEASE="2"
-VERSION="7.3.0"
+VERSION="8.0.0"
 SOURCES="https://github.com/harfbuzz/harfbuzz/releases/download/$VERSION/harfbuzz-$VERSION.tar.xz" 
-SHA256SUM="20770789749ac9ba846df33983dbda22db836c70d9f5d050cb9aa5347094a8fb  harfbuzz-7.3.0.tar.xz"
+SHA256SUM="1f98b5e3d06a344fe667d7e8210094ced458791499839bddde98c167ce6a7c79  harfbuzz-8.0.0.tar.xz"
 DESCRIPTION="FriBidi is an implementation of Unicode Bidirectional Algorithm"
 
 
