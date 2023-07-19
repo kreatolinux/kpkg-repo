@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="pipewire"
 RELEASE="1"
-VERSION="0.3.73"
+VERSION="0.3.74"
 SOURCES="https://github.com/PipeWire/pipewire/archive/$VERSION/pipewire-$VERSION.tar.gz"
-SHA256SUM="a4f8ee0577ef1ef72e0b4f1612fd99db3163541d4c36361cb938d5a62fa6d82b  pipewire-0.3.73.tar.gz"
+SHA256SUM="901857530bfdb65a0282562ceeead28682e9aba2aefb4bbee10c74dcc333c72a  pipewire-0.3.74.tar.gz"
 DESCRIPTION="Sound server"
 
 build() {
