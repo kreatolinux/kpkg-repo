@@ -7,6 +7,7 @@ SHA256SUM="61d684f0aa5e76ac6585ad8898a2427aade8979ed5e7f85492286c4dfc13ee86  gcc
 DESCRIPTION="The GNU C Compiler"
 
 build() {
+    # Source: https://www.linuxfromscratch.org/lfs/view/development/chapter08/gcc.html
     case $(uname -m) in
         x86_64)
     sed -e '/m64=/s/lib64/lib/' \
@@ -18,11 +19,14 @@ build() {
     cd       build
     make distclean
     ../configure                                       \
-        --without-headers                              \
-        --enable-initfini-array                        \
+        --enable-languages=c,c++                       \
+        --enable-default-pie                           \
+        --enable-default-ssp                           \
         --prefix=/usr                                  \
-        --disable-nls                                  \
+        --disable-fixincludes                          \
         --disable-multilib                             \
+        --disable-bootstrap                            \
+        --with-system-zlib        
 
 	make -j$(nproc)
 }

@@ -5,3 +5,4 @@ gmp
 mpc
 mpfr
 linux-headers
+zlib
