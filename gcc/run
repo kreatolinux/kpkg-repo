@@ -25,6 +25,9 @@ build() {
         --prefix=/usr                                  \
         --disable-fixincludes                          \
         --disable-multilib                             \
+        --without-headers                              \
+        --disable-nls                                  \
+        --enable-initfini-array                        \
         --with-system-zlib        
 
 	make -j$(nproc)
