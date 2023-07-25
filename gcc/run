@@ -28,6 +28,7 @@ build() {
         --without-headers                              \
         --disable-nls                                  \
         --enable-initfini-array                        \
+        --disable-bootstrap                            \
         --with-system-zlib        
 
 	make MAKEINFO=true -j$(nproc)
