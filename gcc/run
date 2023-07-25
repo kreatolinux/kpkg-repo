@@ -30,11 +30,11 @@ build() {
         --enable-initfini-array                        \
         --with-system-zlib        
 
-	make -j$(nproc)
+	make MAKEINFO=true -j$(nproc)
 }
 
 install() {
     cd build
-    make DESTDIR=$ROOT install
+    make MAKEINFO=true DESTDIR=$ROOT install
     rm -rf $ROOT/source
 }
