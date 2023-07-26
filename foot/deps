@@ -5,3 +5,4 @@ wayland
 fontconfig
 libxkbcommon
 pixman
+freetype
