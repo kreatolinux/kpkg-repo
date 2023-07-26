@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="podman"
 RELEASE="1"
-VERSION="4.5.1"
+VERSION="4.6.0"
 SOURCES="https://github.com/containers/podman/archive/refs/tags/v$VERSION.tar.gz"
-SHA256SUM="ee2c8b02b7fe301057f0382637b995a9c6c74e8d530692d6918e4c509ade6e39  v4.5.1.tar.gz"
+SHA256SUM="a1b4fd7c3a9b850ab4b405f8d03115248a780c89b11e7d8ffbba2d1f668f678e  v4.6.0.tar.gz"
 DESCRIPTION="A tool for managing OCI containers and pods"
 
 build() {

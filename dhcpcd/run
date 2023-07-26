@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="dhcpcd"
 RELEASE="1"
-VERSION="10.0.1"
+VERSION="10.0.2"
 SOURCES="https://github.com/NetworkConfiguration/dhcpcd/releases/download/v$VERSION/dhcpcd-$VERSION.tar.xz"
-SHA256SUM="6e9f6a5c47fcd8a763cfa26f1ca6eedf1e534992224a01d6c1ab8abb154af972  dhcpcd-10.0.1.tar.xz"
+SHA256SUM="3aa15c50be86d9595467f21dd9dc66f7115e3de1f5ab0b704b753684062b8541  dhcpcd-10.0.2.tar.xz"
 DESCRIPTION="DHCP client"
 
 build() {

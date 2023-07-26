@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="seatd"
 RELEASE="1"
-VERSION=0.7.0
+VERSION=0.8.0
 SOURCES="https://git.sr.ht/~kennylevinsen/seatd/archive/$VERSION.tar.gz"
-SHA256SUM="210ddf8efa1149cde4dd35908bef8e9e63c2edaa0cdb5435f2e6db277fafff3c  0.7.0.tar.gz"
+SHA256SUM="a562a44ee33ccb20954a1c1ec9a90ecb2db7a07ad6b18d0ac904328efbcf65a0  0.8.0.tar.gz"
 DESCRIPTION="Seat daemon."
 
 build() {
