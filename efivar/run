@@ -7,9 +7,9 @@ SHA256SUM="f018ed6e49c5f1c16d336d9fd7687ce87023276591921db1e49a314ad6515349  efi
 DESCRIPTION="efivar provides tools and libraries to manipulate EFI variables"
 
 build() {
-    make MANDOC=""
+    make MANDOC="" CFLAGS=-Wno-error=enum-int-mismatch
 }
 
 install() {
-    make DESTDIR="$ROOT" LIBDIR=/usr/lib install || exit 1
+    make DESTDIR="$ROOT" CFLAGS=-Wno-error=enum-int-mismatch LIBDIR=/usr/lib install || exit 1
 }
