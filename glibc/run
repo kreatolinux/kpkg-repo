@@ -11,10 +11,10 @@ build() {
     cd build || exit
     ../configure --prefix=/usr --disable-sanity-checks --host=x86_64-pc-linux-gnu --enable-kernel=3.2 --disable-crypt \
         libc_sv_slibdir=/usr/lib
-    make MAKEINFO=true || exit
+    make || exit
 }
 
 install() {
     cd build
-    make MAKEINFO=true DESTDIR=$ROOT install
+    make DESTDIR=$ROOT install
 }
