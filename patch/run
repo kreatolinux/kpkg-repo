@@ -1,0 +1,26 @@
+#!/bin/sh
+NAME="patch"
+RELEASE="1"
+VERSION="2.7"
+SOURCES="https://ftp.gnu.org/gnu/patch/patch-$VERSION.tar.gz"
+SHA256SUM="59c29f56faa0a924827e6a60c6accd6e2900eae5c6aaa922268c717f06a62048  patch-2.7.tar.gz"
+DESCRIPTION="GNU patch"
+
+build() {
+    mkdir -v build
+    cd       build
+    ../configure                   \
+        --prefix=/usr              \
+        --build=$(../config.guess) \
+        --host=x86_64-pc-linux-gnu \
+        --disable-nls              \
+        --enable-shared            \
+        --disable-werror           \
+        --enable-64-bit-bfd
+    make
+}
+
+install() {
+    cd build
+    make DESTDIR=$ROOT install -j1
+}
