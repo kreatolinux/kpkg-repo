@@ -1,0 +1,26 @@
+#!/bin/sh
+NAME="findutils"
+RELEASE="1"
+VERSION="4.9.0"
+SOURCES="https://ftp.gnu.org/gnu/findutils/findutils-$VERSION.tar.xz"
+SHA256SUM="a2bfb8c09d436770edc59f50fa483e785b161a3b7b9d547573cb08065fd462fe  findutils-4.9.0.tar.xz"
+DESCRIPTION="GNU findutils"
+
+build() {
+    mkdir -v build
+    cd       build
+    ../configure                   \
+        --prefix=/usr              \
+        --build=$(../config.guess) \
+        --host=x86_64-pc-linux-gnu \
+        --disable-nls              \
+        --enable-shared            \
+        --disable-werror           \
+        --enable-64-bit-bfd
+    make
+}
+
+install() {
+    cd build
+    make DESTDIR=$ROOT install -j1
+}
