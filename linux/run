@@ -24,5 +24,9 @@ install() {
     export INSTALL_PATH=$DESTDIR/boot
     mkdir -p "$INSTALL_PATH"
     make install
-    make modules_install
+    make INSTALL_MOD_STRIP=1 DEPMOD=/nodepmod/here modules_install
+}
+
+postinstall() {
+    depmod -a
 }
