@@ -1,2 +1,4 @@
 libelf
 xz-utils
+gmake
+perl
