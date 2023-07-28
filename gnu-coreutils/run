@@ -1,6 +1,6 @@
 #!/bin/sh
 NAME="gnu-coreutils"
-RELEASE="1"
+RELEASE="2"
 VERSION="9.1"
 SOURCES="https://ftp.gnu.org/gnu/coreutils/coreutils-$VERSION.tar.gz"
 SHA256SUM="6055df9268603e8239a5c9c1d64cb25b9a992530df66e33b8d78a660edb37b35  coreutils-9.1.tar.gz"
