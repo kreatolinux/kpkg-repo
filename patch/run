@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="patch"
 RELEASE="1"
-VERSION="2.7"
+VERSION="2.7.6"
 SOURCES="https://ftp.gnu.org/gnu/patch/patch-$VERSION.tar.gz"
-SHA256SUM="59c29f56faa0a924827e6a60c6accd6e2900eae5c6aaa922268c717f06a62048  patch-2.7.tar.gz"
+SHA256SUM="8cf86e00ad3aaa6d26aca30640e86b0e3e1f395ed99f189b06d4c9f74bc58a4e  patch-2.7.6.6.6.tar.gz"
 DESCRIPTION="GNU patch"
 
 build() {
