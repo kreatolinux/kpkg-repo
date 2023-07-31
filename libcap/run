@@ -7,13 +7,9 @@ SHA256SUM="f311f8f3dad84699d0566d1d6f7ec943a9298b28f714cae3c931dfd57492d7eb  lib
 DESCRIPTION="ninja-compatible build tool written in C"
 
 build() {
-    export GOENV="/tmp/kpkg/srcdir/go/env"
-    export GOCACHE="/tmp/kpkg/srcdir/go-build"
     make -j$(nproc)
 }
 
 install() {
-    export GOENV="/tmp/kpkg/srcdir/go/env"
-    export GOCACHE="/tmp/kpkg/srcdir/go-build"
     make DESTDIR=$ROOT install
 }
