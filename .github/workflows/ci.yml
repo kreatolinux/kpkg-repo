@@ -22,6 +22,7 @@ jobs:
       # Runs a single command using the runners shell
       - name: main
         run: |
+          export DOCKER_DEFAULT_PLATFORM=linux/amd64
           rm -rf src
           git clone https://github.com/kreatolinux/src
           cd src
