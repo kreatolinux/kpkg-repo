@@ -15,6 +15,6 @@ build() {
 
 install() {
     # Taken from https://github.com/anatol/booster/blob/master/packaging/arch/PKGBUILD
-    install -Dp -m755 generator/generator "$DESTDIR/usr/bin/booster"
-    install -Dp -m755 init/init "$DESTDIR/usr/lib/booster/init"
+    env install -Dp -m755 generator/generator "$DESTDIR/usr/bin/booster"
+    env install -Dp -m755 init/init "$DESTDIR/usr/lib/booster/init"
 }
