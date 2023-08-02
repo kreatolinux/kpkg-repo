@@ -28,5 +28,5 @@ install() {
 }
 
 postinstall() {
-    depmod -a
+    depmod $VERSION
 }
