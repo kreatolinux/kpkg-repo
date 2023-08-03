@@ -3,7 +3,7 @@ NAME="wget"
 RELEASE="2"
 VERSION="1.21.4"
 SOURCES="https://ftp.gnu.org/gnu/$NAME/$NAME-$VERSION.tar.gz"
-SHA256SUM="81542f5cefb8faacc39bbbc6c82ded80e3e4a88505ae72ea51df27525bcde04c  wget-1.21.4.4.4.tar.gz"
+SHA256SUM="81542f5cefb8faacc39bbbc6c82ded80e3e4a88505ae72ea51df27525bcde04c  wget-1.21.4.tar.gz"
 DESCRIPTION="Network utility to retrieve files from the Web"
 build() {
     ./configure --prefix=/usr --with-ssl=openssl
