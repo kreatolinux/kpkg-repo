@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="msgpack-c"
 RELEASE="1"
-VERSION="4.0.0"
+VERSION="5.0.0"
 DESCRIPTION="MessagePack for C"
-SOURCES="https://github.com/msgpack/msgpack-c/releases/download/c-4.0.0/msgpack-c-4.0.0.tar.gz"
-SHA256SUM="420fe35e7572f2a168d17e660ef981a589c9cbe77faa25eb34a520e1fcc032c8  msgpack-c-4.0.0.tar.gz"
+SOURCES="https://github.com/msgpack/msgpack-c/releases/download/c-5.0.0/msgpack-c-5.0.0.tar.gz"
+SHA256SUM="eb6d77f32dbaaae9174d96cacfe02af30bf1ea329c45018074cd95ac6e6fa6e5  msgpack-c-5.0.0.tar.gz"
 
 build() {
     cmake -DCMAKE_INSTALL_PREFIX=/usr .
