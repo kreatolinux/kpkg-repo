@@ -1,6 +1,6 @@
 #!/bin/sh
 NAME="nim"
-RELEASE="1"
+RELEASE="2"
 VERSION="2.0.0"
 SOURCES="https://nim-lang.org/download/nim-$VERSION.tar.xz"
 SHA256SUM="bd6101d840036fb78e93a69df6cf3f9fd0c21cd754b695ff84a3b4add8ed0af7  nim-2.0.0.tar.xz"
@@ -15,7 +15,7 @@ build() {
 }
 
 install() {
-  mkdir -p "$ROOT/usr/include" "$ROOT/usr/bin" "$ROOT/etc/nim" "$ROOT/usr/lib"
+  mkdir -p "$ROOT/usr/include" "$ROOT/usr/bin" "$ROOT/etc/nim" "$ROOT/usr/lib/nim"
   cp -r lib/ "$ROOT/usr/lib/nim"
   cp -r compiler/ "$ROOT/usr/lib/nim"
   cp -rf config/* -t "$ROOT/etc/nim"
