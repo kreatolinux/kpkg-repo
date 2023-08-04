@@ -7,9 +7,9 @@ SHA256SUM="c26ae5419d0d07405d28f1caf43d11d40f9d884739b1e4741d73c77658536aca  v4.
 DESCRIPTION="Kreato Linux's Init system/Service manager"
 
 build() {
-        nimble install cligen fusion -y --nimbleDir=/tmp/kpkg/srcdir/deps
-        nim c -d:release --threads:on -o="out/jumpstart" --NimblePath=/tmp/kpkg/srcdir/deps/pkgs --nimcache=/tmp/kpkg/srcdir/cache "src/jumpstart/jumpstart.nim"
-        nim c -d:release --threads:on -o="out/jumpctl" --NimblePath=/tmp/kpkg/srcdir/deps/pkgs --nimcache=/tmp/kpkg/srcdir/cache "src/jumpstart/jumpctl.nim"
+        nimble install cligen fusion -y
+        nim c -d:release --threads:on -o="out/jumpstart" "src/jumpstart/jumpstart.nim"
+        nim c -d:release --threads:on -o="out/jumpctl" "src/jumpstart/jumpctl.nim"
 }
 
 install() {

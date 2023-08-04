@@ -7,8 +7,8 @@ SHA256SUM="c26ae5419d0d07405d28f1caf43d11d40f9d884739b1e4741d73c77658536aca  v4.
 DESCRIPTION="Kreato Linux's binary repository server"
 
 build() {
-        nimble install httpbeast -y --nimbleDir=/tmp/kpkg/srcdir/deps
-        nim c -d:release -o="out/mari" --NimblePath=/tmp/kpkg/srcdir/deps/pkgs --nimcache=/tmp/kpkg/srcdir/cache "src/mari/mari.nim"
+        nimble install httpbeast -y
+        nim c -d:release -o="out/mari" "src/mari/mari.nim"
 }
 
 install() {
