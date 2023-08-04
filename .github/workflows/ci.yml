@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@v3
       
       # Runs a single command using the runners shell
-      - name: main
+      - name: Check all packages against Repology
         run: |
           export DOCKER_DEFAULT_PLATFORM=linux/amd64
           rm -rf src
@@ -35,7 +35,16 @@ jobs:
           cd /tmp/
           ./chkupd checkAll --jsonPath=/tmp/chkupd.json --repo="$GITHUB_WORKSPACE"
           bash jsontomd.sh /tmp/chkupd.json > /tmp/chkupd.md
+    
+      - name: Check all packages against Arch Repositories
+        run: |
+          export DOCKER_DEFAULT_PLATFORM=linux/amd64
+          cd /tmp/
+          ./chkupd checkAll --jsonPath=/tmp/chkupd.json --backend="arch" --repo="$GITHUB_WORKSPACE"
+          echo "# Arch check results" >> /tmp/chkupd.md
+          bash jsontomd.sh /tmp/chkupd.json >> /tmp/chkupd.md
           rm -rf chkupd jsontomd.sh
+    
           
           
       - name: Create Pull Request

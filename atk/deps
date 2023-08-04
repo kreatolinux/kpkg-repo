@@ -1,4 +1,2 @@
-pkgconf
 glib
-meson
 libffi
