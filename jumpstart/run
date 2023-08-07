@@ -10,8 +10,8 @@ DESCRIPTION="Kreato Linux's Init system/Service manager"
 
 build() {
         nimble install cligen fusion -y
-        nim c -d:release --threads:on -o="out/jumpstart" "src/jumpstart/jumpstart.nim"
-        nim c -d:release --threads:on -o="out/jumpctl" "src/jumpstart/jumpctl.nim"
+        nim c -d:release --threads:on -o="out/jumpstart" "jumpstart/jumpstart.nim"
+        nim c -d:release --threads:on -o="out/jumpctl" "jumpstart/jumpctl.nim"
 }
 
 package() {
