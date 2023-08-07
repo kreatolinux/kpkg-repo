@@ -3,6 +3,7 @@ NAME="glibc"
 RELEASE="1"
 VERSION=2.38
 SOURCES="https://ftp.gnu.org/gnu/glibc/glibc-$VERSION.tar.xz"
+DEPENDS="grep gawk bison m4"
 SHA256SUM="fb82998998b2b29965467bc1b69d152e9c307d2cf301c9eafb4555b770ef3fd2  glibc-2.38.tar.xz"
 DESCRIPTION="The GNU C library"
 
@@ -14,7 +15,7 @@ build() {
     make || exit
 }
 
-install() {
+package() {
     cd build
     make DESTDIR=$ROOT install
 }

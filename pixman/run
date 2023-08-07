@@ -3,6 +3,7 @@ NAME="pixman"
 RELEASE="1"
 VERSION="0.42.2"
 SOURCES="https://www.cairographics.org/releases/pixman-$VERSION.tar.gz"
+DEPENDS="meson ninja"
 SHA256SUM="ea1480efada2fd948bc75366f7c349e1c96d3297d09a3fe62626e38e234a625e  pixman-0.42.2.tar.gz"
 DESCRIPTION="A library that provides low-level pixel manipulation features such as image compositing and trapezoid rasterization"
 
@@ -13,6 +14,6 @@ build() {
     ninja
 }
 
-install() {
+package() {
     DESTDIR="$ROOT" ninja -C build install
 }

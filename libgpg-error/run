@@ -3,6 +3,7 @@ NAME="libgpg-error"
 RELEASE="1"
 VERSION="1.47"
 SOURCES="https://gnupg.org/ftp/gcrypt/libgpg-error/libgpg-error-$VERSION.tar.bz2"
+DEPENDS=""
 SHA256SUM="9e3c670966b96ecc746c28c2c419541e3bcb787d1a73930f5e5f5e1bcbbb9bdb  libgpg-error-1.47.tar.bz2"
 DESCRIPTION="A small library that originally defined common error values for all GnuPG components"
 
@@ -11,6 +12,6 @@ build() {
     make -j$(nproc)
 }
 
-install() {
+package() {
     make install
 }

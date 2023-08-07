@@ -3,6 +3,7 @@ NAME="gettext"
 RELEASE="1"
 VERSION="0.22"
 SOURCES="https://ftp.gnu.org/gnu/gettext/gettext-$VERSION.tar.xz"
+DEPENDS=""
 SHA256SUM="0e60393a47061567b46875b249b7d2788b092d6457d656145bb0e7e6a3e26d93  gettext-0.22.tar.xz"
 DESCRIPTION="Gettext contains utilities for localization."
 
@@ -11,6 +12,6 @@ build() {
     make
 }
 
-install() {
+package() {
     make DESTDIR=$ROOT install
 }

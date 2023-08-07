@@ -11,6 +11,6 @@ build() {
     make
 }
 
-install() {
+package() {
     make DESTDIR=$ROOT prefix=/usr install
 }

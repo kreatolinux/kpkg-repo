@@ -13,7 +13,7 @@ build() {
     rm usr/include/Makefile
 }
 
-install() {
+package() {
     mkdir -p $ROOT/usr
     cp -rv usr/include $ROOT/usr/
 }

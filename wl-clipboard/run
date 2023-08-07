@@ -3,6 +3,7 @@ NAME="wl-clipboard"
 RELEASE="1"
 VERSION="2.2.0"
 SOURCES="https://github.com/bugaevc/wl-clipboard/archive/refs/tags/v$VERSION.tar.gz"
+DEPENDS="wayland wayland-protocols meson"
 SHA256SUM="414005cfa229d0e54f89a0d9a8473938e4c29adc21a9e556847a4d44ad508874  v2.2.0.tar.gz"
 DESCRIPTION="Command-line copy/paste utilities for Wayland"
 build() {
@@ -10,6 +11,6 @@ build() {
     ninja -C build/                      
 }
 
-install() {
+package() {
     DESTDIR=$ROOT ninja -C build/ install
 }

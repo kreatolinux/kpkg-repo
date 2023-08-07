@@ -3,6 +3,7 @@ NAME="pkgconf"
 RELEASE="1"
 VERSION=1.9.5
 SOURCES="https://distfiles.dereferenced.org/pkgconf/pkgconf-$VERSION.tar.xz"
+DEPENDS=""
 SHA256SUM="1ac1656debb27497563036f7bffc281490f83f9b8457c0d60bcfb638fb6b6171  pkgconf-1.9.5.tar.xz"
 DESCRIPTION="pkgconf is a program which helps to configure compiler and linker flags for development frameworks."
 
@@ -11,7 +12,7 @@ build() {
     make
 }
 
-install() {
+package() {
     make DESTDIR="$ROOT" install
     [ ! -d "$ROOT/usr/bin" ] && mkdir -p "$ROOT/usr/bin"
     ln -s pkgconf "$ROOT/usr/bin/pkg-config"

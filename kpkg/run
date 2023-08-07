@@ -3,6 +3,8 @@ NAME="kpkg"
 RELEASE="4"
 VERSION="4.2.0"
 SOURCES="https://github.com/kreatolinux/src/archive/refs/tags/v$VERSION.tar.gz"
+BUILD_DEPENDS="nim"
+DEPENDS="libarchive shadow openssl git"
 SHA256SUM="c26ae5419d0d07405d28f1caf43d11d40f9d884739b1e4741d73c77658536aca  v4.2.0.tar.gz"
 DESCRIPTION="Kreato Linux's Package Manager"
 
@@ -11,7 +13,7 @@ build() {
         nim c -d:release --threads:on -d:ssl -o="out/kpkg" "src/kpkg/kpkg.nim"
 }
 
-install() {
+package() {
         mkdir -p "$ROOT/bin"
         cp out/kpkg "$ROOT/bin/"
         mkdir -p "$ROOT/usr/share/man/man8"

@@ -3,6 +3,7 @@ NAME="vim"
 RELEASE="1"
 VERSION="9.0.1677"
 SOURCES="https://github.com/vim/vim/archive/refs/tags/v$VERSION.tar.gz"
+DEPENDS=""
 SHA256SUM="c5750a1d47b514d60d59d9956e2953fb1673d1dd797bfec09c1bff721743e55c  v9.0.1677.tar.gz"
 DESCRIPTION="Vi Improved"
 
@@ -10,6 +11,6 @@ build() {
     make -j$(nproc)
 }
 
-install() {
+package() {
     make install
 }

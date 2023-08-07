@@ -3,6 +3,7 @@ NAME="libuv"
 RELEASE="1"
 VERSION="1.46.0"
 SOURCES="https://dist.libuv.org/dist/v$VERSION/libuv-v$VERSION.tar.gz"
+DEPENDS="automake libtool"
 SHA256SUM="111f83958b9fdc65f1489195d25f342b9f7a3e683140c60e62c00fbaccddddce  libuv-v1.46.0.tar.gz"
 DESCRIPTION="The libuv package is a multi-platform support library with a focus on asynchronous I/O."
 
@@ -12,7 +13,7 @@ build() {
     make -j$(nproc)
 }
 
-install() {
+package() {
     make DESTDIR=$ROOT install
 }
 

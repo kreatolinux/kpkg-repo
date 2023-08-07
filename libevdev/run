@@ -3,6 +3,7 @@ NAME="libevdev"
 RELEASE="1"
 VERSION=1.13.1
 SOURCES="https://www.freedesktop.org/software/libevdev/libevdev-$VERSION.tar.xz"
+DEPENDS=""
 SHA256SUM="06a77bf2ac5c993305882bc1641017f5bec1592d6d1b64787bad492ab34f2f36  libevdev-1.13.1.tar.xz"
 DESCRIPTION="Common functions for Xorg input drivers"
 
@@ -11,6 +12,6 @@ build() {
     make
 }
 
-install() {
+package() {
     make DESTDIR="$ROOT" install
 }

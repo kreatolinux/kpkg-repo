@@ -3,6 +3,7 @@ NAME="libpciaccess"
 RELEASE="1"
 VERSION="0.17"
 SOURCES="https://x.org/releases/individual/lib/libpciaccess-$VERSION.tar.gz"
+DEPENDS=""
 SHA256SUM="bf6985a77d2ecb00e2c79da3edfb26b909178ffca3f2e9d14ed0620259ab733b  libpciaccess-0.17.tar.gz"
 DESCRIPTION="libpciaccess"
 build() {
@@ -10,6 +11,6 @@ build() {
     make
 }
 
-install() {
+package() {
     make DESTDIR=$ROOT install
 }

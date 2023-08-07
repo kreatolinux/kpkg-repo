@@ -3,6 +3,7 @@ NAME="podman"
 RELEASE="1"
 VERSION="4.6.0"
 SOURCES="https://github.com/containers/podman/archive/refs/tags/v$VERSION.tar.gz"
+DEPENDS="go gpgme btrfs-progs conmon crun lvm2"
 SHA256SUM="a1b4fd7c3a9b850ab4b405f8d03115248a780c89b11e7d8ffbba2d1f668f678e  v4.6.0.tar.gz"
 DESCRIPTION="A tool for managing OCI containers and pods"
 
@@ -10,7 +11,7 @@ build() {
     make BUILDTAGS="" -j$(nproc)
 }
 
-install() {
+package() {
     sed -i 's/-sfr/-sf/g' Makefile
     make install
 }

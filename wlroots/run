@@ -3,6 +3,8 @@ NAME="wlroots"
 RELEASE="1"
 VERSION="0.16.1"
 SOURCES="https://gitlab.freedesktop.org/wlroots/wlroots/uploads/dfe3ac73496c58c3f9f8f7144086f087/wlroots-$VERSION.tar.gz"
+BUILD_DEPENDS="meson samurai"
+DEPENDS="wayland wayland-protocols libdrm libxkbcommon libinput hwdata seatd pixman libudev mesa"
 SHA256SUM="130a1a86f6f8c4fa162ba4db82aaa70850273c5d01313b242baa0144e3d6d253  wlroots-0.16.1.tar.gz"
 DESCRIPTION="Modules for building a Wayland compositor"
 build() {
@@ -10,6 +12,6 @@ build() {
     ninja -C build/
 }
 
-install() {
+package() {
     DESTDIR=$ROOT ninja -C build/ install
 }

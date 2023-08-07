@@ -3,6 +3,7 @@ NAME="glib"
 RELEASE="1"
 VERSION="2.76.4"
 SOURCES="https://download.gnome.org/sources/glib/2.76/glib-$VERSION.tar.xz" 
+BUILD_DEPENDS="meson ninja"
 SHA256SUM="5a5a191c96836e166a7771f7ea6ca2b0069c603c7da3cba1cd38d1694a395dda  glib-2.76.4.tar.xz"
 DESCRIPTION="glib"
 
@@ -14,6 +15,6 @@ build() {
     ninja -C build
 }
 
-install() {
+package() {
     DESTDIR="$ROOT" ninja -C build install
 }

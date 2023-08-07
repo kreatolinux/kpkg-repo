@@ -3,6 +3,7 @@ NAME="gmp"
 RELEASE="1"
 VERSION="6.3.0"
 SOURCES="https://ftp.gnu.org/gnu/gmp/gmp-$VERSION.tar.xz"
+DEPENDS="m4"
 SHA256SUM="a3c2b80201b89e68616f4ad30bc66aee4927c3ce50e33929ca819d5c43538898  gmp-6.3.0.tar.xz"
 DESCRIPTION="GNU gmp"
 
@@ -12,7 +13,7 @@ build() {
     make -j$(nproc)
 }
 
-install() {
+package() {
     make DESTDIR=$ROOT install
 }
 

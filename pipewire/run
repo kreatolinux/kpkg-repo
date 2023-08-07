@@ -3,6 +3,7 @@ NAME="pipewire"
 RELEASE="1"
 VERSION="0.3.76"
 SOURCES="https://github.com/PipeWire/pipewire/archive/$VERSION/pipewire-$VERSION.tar.gz"
+DEPENDS="glib meson ninja"
 SHA256SUM="bf0290cf7d765c7b9df0eaa57a49f2f6f073822e4b0d34b0bd515875889ab83a  pipewire-0.3.76.tar.gz"
 DESCRIPTION="Sound server"
 
@@ -17,6 +18,6 @@ build() {
     ninja
 }
 
-install() {
+package() {
     DESTDIR="$ROOT" ninja -C build install  
 }

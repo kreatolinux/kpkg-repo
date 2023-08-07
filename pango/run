@@ -3,6 +3,7 @@ NAME="pango"
 RELEASE="1"
 VERSION="1.50.14"
 SOURCES="https://download.gnome.org/sources/pango/1.50/pango-$VERSION.tar.xz" 
+DEPENDS="glib cairo fribidi fontconfig harfbuzz"
 SHA256SUM="1d67f205bfc318c27a29cfdfb6828568df566795df0cb51d2189cde7f2d581e8  pango-1.50.14.tar.xz"
 DESCRIPTION="Text (i.e. glyph) layout engine library"
 
@@ -15,6 +16,6 @@ build() {
     ninja -C build
 }
 
-install() {
+package() {
     DESTDIR="$ROOT" ninja -C build install
 }

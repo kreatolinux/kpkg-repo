@@ -3,6 +3,7 @@ NAME="limine"
 RELEASE="1"
 VERSION="5.20230804.0"
 SOURCES="https://github.com/limine-bootloader/limine/releases/download/v$VERSION/limine-$VERSION.tar.xz"
+DEPENDS="efibootmgr nasm"
 SHA256SUM="5eb40b11717cc85cba292506280c06498a07bd42e09fbdc200ec9368fa511683  limine-5.20230804.0.tar.xz"
 DESCRIPTION="Modern, advanced, portable, multiprotocol bootloader."
 
@@ -11,6 +12,6 @@ build() {
     make
 }
 
-install() {
+package() {
     make DESTDIR="$ROOT" install
 }

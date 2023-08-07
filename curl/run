@@ -3,6 +3,7 @@ NAME="curl"
 RELEASE="1"
 VERSION="8.2.1"
 SOURCES="https://curl.haxx.se/download/curl-$VERSION.tar.xz"
+DEPENDS="nghttp2 zlib nghttp2"
 SHA256SUM="dd322f6bd0a20e6cebdfd388f69e98c3d183bed792cf4713c8a7ef498cba4894  curl-8.2.1.tar.xz"
 DESCRIPTION=""
 build() {
@@ -24,6 +25,6 @@ build() {
     make
 }
 
-install() {
+package() {
     make DESTDIR=$ROOT install
 }

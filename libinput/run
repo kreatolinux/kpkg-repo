@@ -3,6 +3,7 @@ NAME="libinput"
 RELEASE="1"
 VERSION=1.23.0
 SOURCES="https://gitlab.freedesktop.org/libinput/libinput/-/archive/$VERSION/libinput-$VERSION.tar.gz"
+DEPENDS="meson libevdev mtdev libudev"
 SHA256SUM="7a7c90fbc59f1f65c781a51fa634e4f79e460bf6e16ad68afbe7965d25d09738  libinput-1.23.0.tar.gz"
 DESCRIPTION="Library that handles input devices"
 
@@ -18,6 +19,6 @@ build() {
     ninja
 }
 
-install() {
+package() {
     DESTDIR="$ROOT" ninja -C build install  
 }

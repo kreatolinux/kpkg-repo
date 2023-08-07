@@ -3,6 +3,7 @@ NAME="fakeroot"
 RELEASE="1"
 VERSION="1.32.1"
 SOURCES="https://deb.debian.org/debian/pool/main/f/fakeroot/fakeroot_$VERSION.orig.tar.gz"
+DEPENDS=""
 SHA256SUM="c072b0f65bafc4cc5b6112f7c61185f5170ce4cb0c410d1681c1af4a183e94e6  fakeroot_1.32.1.orig.tar.gz"
 DESCRIPTION="Tool for simulating superuser privileges"
 
@@ -11,7 +12,7 @@ build() {
     make
 }
 
-install() {
+package() {
     make DESTDIR=$ROOT install
 }
 

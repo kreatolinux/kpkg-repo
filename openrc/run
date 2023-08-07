@@ -3,6 +3,7 @@ NAME="openrc"
 RELEASE="1"
 VERSION="0.48"
 SOURCES="https://github.com/OpenRC/openrc/archive/refs/tags/$VERSION.tar.gz"
+DEPENDS="ninja meson"
 SHA256SUM="5027561f3cf2009f2d3635a3ba51003da436247f4a457661c612b66da7fd5fdd  0.48.tar.gz"
 DESCRIPTION="The OpenRC init system"
 
@@ -15,6 +16,6 @@ build() {
     ninja
 }
 
-install() {
+package() {
     DESTDIR="$ROOT" ninja -C build install
 }

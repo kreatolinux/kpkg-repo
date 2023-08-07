@@ -10,6 +10,6 @@ build() {
         :
 }
 
-install() {
+package() {
     make install
 }

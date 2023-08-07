@@ -3,6 +3,7 @@ NAME="mold"
 RELEASE="1"
 VERSION="2.0.0"
 SOURCES="https://github.com/rui314/mold/archive/refs/tags/v$VERSION.tar.gz"
+DEPENDS="cmake"
 SHA256SUM="2ae8a22db09cbff626df74c945079fa29c1e5f60bbe02502dcf69191cf43527b  v2.0.0.tar.gz"
 DESCRIPTION="A Modern Linker"
 
@@ -13,6 +14,6 @@ build() {
     cmake --build . -j $(nproc)
 }
 
-install() {
+package() {
 	cmake --install build
 }

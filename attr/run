@@ -3,6 +3,7 @@ NAME="attr"
 RELEASE="1"
 VERSION="2.5.1"
 SOURCES="https://download.savannah.gnu.org/releases/attr/attr-$VERSION.tar.gz"
+DEPENDS=""
 SHA256SUM="bae1c6949b258a0d68001367ce0c741cebdacdd3b62965d17e5eb23cd78adaf8  attr-2.5.1.tar.gz"
 DESCRIPTION="attr library"
 build() {
@@ -10,6 +11,6 @@ build() {
     make
 }
 
-install() {
+package() {
     make install 
 }

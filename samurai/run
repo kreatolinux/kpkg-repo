@@ -11,7 +11,7 @@ build() {
     make -j$(nproc)
 }
 
-install() {
+package() {
     make PREFIX=/usr DESTDIR=$ROOT install
     mkdir -p "$ROOT/usr/bin"
     ln -s /usr/bin/samu "$ROOT/usr/bin/ninja"

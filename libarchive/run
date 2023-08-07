@@ -3,6 +3,7 @@ NAME="libarchive"
 RELEASE="4"
 VERSION="3.7.1"
 SOURCES="https://github.com/libarchive/libarchive/releases/download/v$VERSION/libarchive-$VERSION.tar.xz"
+DEPENDS="libzstd linux-headers"
 SHA256SUM="b17403ce670ff18d8e06fea05a9ea9accf70678c88f1b9392a2e29b51127895f  libarchive-3.7.1.tar.xz"
 DESCRIPTION="Multi-format archive and compression library"
 
@@ -14,7 +15,7 @@ build() {
     make -j$(nproc)
 }
 
-install() {
+package() {
     cd libarchive-$VERSION
     make DESTDIR=$ROOT install
     sed -i '/Libs.private: /s|$| -liconv|' "$ROOT/usr/lib/pkgconfig/libarchive.pc"

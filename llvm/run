@@ -3,6 +3,7 @@ NAME="llvm"
 RELEASE="1"
 VERSION="16.0.6"
 SOURCES="https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION/llvm-project-$VERSION.src.tar.xz"
+DEPENDS="cmake binutils gcc ninja"
 SHA256SUM="ce5e71081d17ce9e86d7cbcfa28c4b04b9300f8fb7e78422b1feb6bc52c3028e  llvm-project-16.0.6.src.tar.xz"
 DESCRIPTION="The LLVM Project is a collection of modular and reusable compiler and toolchain technologies."
 
@@ -20,6 +21,6 @@ build() {
     ninja -C build -j$(nproc)
 }
 
-install() {    
+package() {    
     DESTDIR="$ROOT" ninja -C build install
 }

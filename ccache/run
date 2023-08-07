@@ -3,6 +3,7 @@ NAME="ccache"
 RELEASE="1"
 VERSION="4.8.2"
 SOURCES="https://github.com/ccache/ccache/archive/refs/tags/v$VERSION.tar.gz"
+DEPENDS="cmake gcc libzstd"
 SHA256SUM="3ba679c9e91101bfc3f3c0aab6622d8132f83e2e3c92633dcc61eef810e92ce0  v4.8.2.tar.gz"
 DESCRIPTION="ccache - a fast compiler cache"
 build() {
@@ -11,7 +12,7 @@ build() {
     make
 }
 
-install() {
+package() {
     cd build
     make install
 }

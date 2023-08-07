@@ -3,6 +3,7 @@ NAME="openssh"
 RELEASE="1"
 VERSION="9.3p2"
 SOURCES="https://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-$VERSION.tar.gz"
+DEPENDS="shadow"
 SHA256SUM="200ebe147f6cb3f101fd0cdf9e02442af7ddca298dffd9f456878e7ccac676e8  openssh-9.3p2.tar.gz"
 DESCRIPTION="ssh tools"                                                        
 build() {                                                                      
@@ -10,6 +11,6 @@ build() {
     make                                                                       
 }
 
-install() {
+package() {
     make DESTDIR="$ROOT" install                                                               
 }

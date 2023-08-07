@@ -3,6 +3,7 @@ NAME="xkeyboard-config"
 RELEASE="1"
 VERSION="2.39"
 SOURCES="https://www.x.org/archive//individual/data/xkeyboard-config/xkeyboard-config-$VERSION.tar.xz"
+DEPENDS=""
 SHA256SUM="5ac5f533eff7b0c116805fe254fd79b2c9882700a4f9f2c070f8c4eae5aaa682  xkeyboard-config-2.39.tar.xz"
 
 build() {
@@ -14,6 +15,6 @@ build() {
     ninja
 }
 
-install() {
+package() {
     DESTDIR="$ROOT" ninja -C build install  
 }

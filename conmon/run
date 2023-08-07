@@ -3,6 +3,8 @@ NAME="conmon"
 RELEASE="1"
 VERSION="2.1.7"
 SOURCES="https://github.com/containers/conmon/archive/refs/tags/v$VERSION.tar.gz"
+BUILD_DEPENDS="go"
+DEPENDS="glib"
 SHA256SUM="7d0f9a2f7cb8a76c51990128ac837aaf0cc89950b6ef9972e94417aa9cf901fe  v2.1.7.tar.gz"
 DESCRIPTION="An OCI container runtime monitor"
 
@@ -10,6 +12,6 @@ build() {
     make -j$(nproc)
 }
 
-install() {
+package() {
     make install
 }

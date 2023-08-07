@@ -3,6 +3,7 @@ NAME="bison"
 RELEASE="1"
 VERSION="3.8.2"
 SOURCES="https://ftp.gnu.org/gnu/bison/bison-$VERSION.tar.xz"
+DEPENDS="m4"
 SHA256SUM="9bba0214ccf7f1079c5d59210045227bcf619519840ebfa80cd3849cff5a5bf2  bison-3.8.2.tar.xz"
 DESCRIPTION="a general-purpose parser generator"
 
@@ -10,6 +11,6 @@ build() {
     ./configure --prefix=/usr
 }
 
-install() {
+package() {
     make DESTDIR=$ROOT install
 }

@@ -10,6 +10,6 @@ build() {
     make
 }
 
-install() {
+package() {
     make MKDIR_P="mkdir -p" install install-libs
 }

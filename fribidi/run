@@ -3,6 +3,7 @@ NAME="fribidi"
 RELEASE="1"
 VERSION="1.0.13"
 SOURCES="https://github.com/fribidi/fribidi/releases/download/v$VERSION/fribidi-$VERSION.tar.xz" 
+DEPENDS=""
 SHA256SUM="7fa16c80c81bd622f7b198d31356da139cc318a63fc7761217af4130903f54a2  fribidi-1.0.13.tar.xz"
 DESCRIPTION="FriBidi is an implementation of Unicode Bidirectional Algorithm"
 
@@ -11,6 +12,6 @@ build() {
     make
 }
 
-install() {
+package() {
     make DESTDIR="$ROOT" install
 }

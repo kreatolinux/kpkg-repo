@@ -3,6 +3,8 @@ NAME="patch"
 RELEASE="1"
 VERSION="2.7.6"
 SOURCES="https://ftp.gnu.org/gnu/patch/patch-$VERSION.tar.gz"
+BUILD_DEPENDS=""
+DEPENDS=""
 SHA256SUM="8cf86e00ad3aaa6d26aca30640e86b0e3e1f395ed99f189b06d4c9f74bc58a4e  patch-2.7.6.tar.gz"
 DESCRIPTION="GNU patch"
 
@@ -20,7 +22,7 @@ build() {
     make
 }
 
-install() {
+package() {
     cd build
     make DESTDIR=$ROOT install -j1
 }

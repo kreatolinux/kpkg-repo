@@ -9,6 +9,6 @@ build() {
     make -f unix/Makefile generic
 }
 
-install() {
+package() {
     make -f unix/Makefile install 
 }

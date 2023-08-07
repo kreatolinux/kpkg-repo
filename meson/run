@@ -3,6 +3,7 @@ NAME="meson"
 RELEASE="1"
 VERSION=1.2.0
 SOURCES="https://github.com/mesonbuild/meson/releases/download/$VERSION/meson-$VERSION.tar.gz"
+DEPENDS="python samurai"
 SHA256SUM="1c0b634fe6b6a7072e398647f1bf392048577068a5c92ae44d04085dab0ded6f  meson-1.2.0.tar.gz"
 DESCRIPTION="Next generation build system"
 
@@ -10,7 +11,7 @@ build() {
 	:
 }
 
-install() {
+package() {
     SETUPTOOLS_USE_DISTUTILS=stdlib pip install . --root=$ROOT
     #install -vDm644 data/shell-completions/bash/meson "$ROOT/usr/share/bash-completion/completions/meson"
     #install -vDm644 data/shell-completions/zsh/_meson "$ROOT/usr/share/zsh/site-functions/_meson"

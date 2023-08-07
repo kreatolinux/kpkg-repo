@@ -4,6 +4,7 @@ RELEASE="1"
 VERSION=2.41.0
 DESCRIPTION="Version control tool"
 SOURCES="https://mirrors.edge.kernel.org/pub/software/scm/git/git-$VERSION.tar.xz"
+DEPENDS="curl openssl zlib"
 SHA256SUM="e748bafd424cfe80b212cbc6f1bbccc3a47d4862fb1eb7988877750478568040  git-2.41.0.tar.xz"
 build() {
 ./configure --prefix=/usr
@@ -23,6 +24,6 @@ EOF
 make -j$(nproc)
 }
 
-install() {
+package() {
 make DESTDIR=$ROOT install
 }

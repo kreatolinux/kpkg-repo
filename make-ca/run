@@ -3,12 +3,13 @@ NAME="make-ca"
 RELEASE="1"
 VERSION="1.12"
 SOURCES="https://github.com/lfs-book/make-ca/releases/download/v$VERSION/make-ca-$VERSION.tar.xz"
+DEPENDS="bash p11-kit"
 SHA256SUM="e8d9863e60efe2b8e6504bfe40ebf48b1250d13a078abff71b4a60639b67bc81  make-ca-1.12.tar.xz"
 DESCRIPTION=""
 build() {
     :
 }
 
-install() {
+package() {
     make DESTDIR=$ROOT make_ca install_bin install_systemd install_conf install_cs install_mozilla_ca_root
 }

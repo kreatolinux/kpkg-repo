@@ -25,6 +25,6 @@ build() {
     make -j$(nproc --all)
 }
 
-install() {
+package() {
     make DESTDIR=$ROOT install
 }

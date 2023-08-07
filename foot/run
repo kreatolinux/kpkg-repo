@@ -3,6 +3,8 @@ NAME="foot"
 RELEASE="1"
 VERSION="1.15.2"
 SOURCES="https://codeberg.org/dnkl/foot/archive/1.15.2.tar.gz"
+BUILD_DEPENDS="meson"
+DEPENDS="wayland-protocols wayland fontconfig libxkbcommon pixman freetype"
 SHA256SUM="914b883589cc8790030f85cbbc3b3e12685988189305017d4e32babde459b7bd  1.15.2.tar.gz"
 DESCRIPTION="A fast, lightweight and minimalistic Wayland terminal emulator"
 build() {
@@ -10,7 +12,7 @@ build() {
     ninja -C build/
 }
 
-install() {
+package() {
     git config --global --add safe.directory /tmp/kpkg/srcdir/foot/subprojects/fcft
     DESTDIR=$ROOT ninja -C build/ install
 }

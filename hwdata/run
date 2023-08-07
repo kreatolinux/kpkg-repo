@@ -3,6 +3,8 @@ NAME="hwdata"
 RELEASE="1"
 VERSION="0.373"
 SOURCES="https://github.com/vcrhonek/hwdata/archive/refs/tags/v$VERSION.tar.gz"
+BUILD_DEPENDS="gmake"
+DEPENDS=""
 SHA256SUM="0db28dc635d5059ad23d068d2e56ef5dc540f95bc813ea5a3c0f5d63b03d20d6  v0.373.tar.gz"
 DESCRIPTION="hwdata contains various hardware identification and configuration data, such as the pci.ids and usb.ids databases."
 
@@ -11,6 +13,6 @@ build() {
     sed -i 's/-T//g' -i Makefile
 }
 
-install() {
+package() {
     make DESTDIR=$ROOT install
 }

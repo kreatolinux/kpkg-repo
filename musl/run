@@ -3,6 +3,7 @@ NAME="musl"
 RELEASE="1"
 VERSION="1.2.4"
 SOURCES="https://musl.libc.org/releases/musl-$VERSION.tar.gz"
+DEPENDS=""
 SHA256SUM="7a35eae33d5372a7c0da1188de798726f68825513b7ae3ebe97aaaa52114f039  musl-1.2.4.tar.gz"
 DESCRIPTION="musl libc"
 build() {
@@ -10,6 +11,6 @@ build() {
     make
 }
 
-install() {
+package() {
     make DESTDIR=$ROOT install
 }

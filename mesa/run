@@ -3,6 +3,7 @@ NAME="mesa"
 RELEASE="1"
 VERSION="23.1.5"
 SOURCES="https://archive.mesa3d.org/mesa-$VERSION.tar.xz"
+DEPENDS="libelf meson libudev python-mako libdrm wayland-protocols llvm flex"
 SHA256SUM="3cf88576fdebf24fc4047067936131c90cb6541c27365996b79b661dec1fb153  mesa-23.1.5.tar.xz"
 DESCRIPTION="The 3D Graphics Library"
 build() {
@@ -18,6 +19,6 @@ build() {
     ninja -C build/
 }
 
-install() {
+package() {
     DESTDIR=$ROOT ninja -C build/ install
 }
