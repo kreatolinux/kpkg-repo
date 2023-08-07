@@ -9,7 +9,7 @@ DESCRIPTION="Kreato Linux's binary repository server"
 
 build() {
         nimble install httpbeast -y
-        nim c -d:release -o="out/mari" "src/mari/mari.nim"
+        nim c -d:release -o="out/mari" "mari/mari.nim"
 }
 
 package() {
