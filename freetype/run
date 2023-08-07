@@ -4,7 +4,7 @@ RELEASE="2"
 VERSION="2.13.1"
 SOURCES="https://download-mirror.savannah.gnu.org/releases/freetype/freetype-$VERSION.tar.gz"
 BUILD_DEPENDS="ninja meson"
-DEPENDS="libpng"
+DEPENDS="libpng"
 SHA256SUM="0b109c59914f25b4411a8de2a506fdd18fa8457eb86eca6c7b15c19110a92fa5  freetype-2.13.1.tar.gz"
 DESCRIPTION="FriBidi is an implementation of Unicode Bidirectional Algorithm"
 
