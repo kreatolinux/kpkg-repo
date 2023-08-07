@@ -14,3 +14,7 @@ build() {
 package() {
     make DESTDIR=$ROOT install
 }
+
+install() {
+    make DESTDIR=$ROOT install
+}
