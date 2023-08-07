@@ -4,7 +4,7 @@ RELEASE="2"
 VERSION="5.0.0"
 SOURCES="https://github.com/kreatolinux/src/archive/refs/tags/v$VERSION.tar.gz"
 BUILD_DEPENDS="nim"
-SHA256SUM="1eaed49b860200170e69091c320c003b426e1091d3642327dc0cd92813b80fbf  v5.0.0.tar.gz"
+SHA256SUM="ce96dcdf03970c45005e10c8a7e2036277438a511cbd8f29916449a2b6bbd1c5  v5.0.0.tar.gz"
 DESCRIPTION="Kreato Linux's binary repository server"
 
 build() {
