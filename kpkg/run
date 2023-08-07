@@ -10,7 +10,7 @@ DESCRIPTION="Kreato Linux's Package Manager"
 
 build() {
         nimble install cligen libsha -y
-        nim c -d:release --threads:on -d:ssl -o="out/kpkg" "src/kpkg/kpkg.nim"
+        nim c -d:release --threads:on -d:ssl -o="out/kpkg" "kpkg/kpkg.nim"
 }
 
 package() {
