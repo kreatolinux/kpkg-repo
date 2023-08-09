@@ -28,7 +28,7 @@ jobs:
           cd src
           make deps
           make chkupd
-          mv chkupd/jsontomd.sh /tmp/
+          mv scripts/jsontomd.sh /tmp/
           mv out/chkupd /tmp/
           cd ..
           rm -rf src
