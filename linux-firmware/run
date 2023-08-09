@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="linux-firmware"
 RELEASE="1"
-VERSION="20230625"
+VERSION="20230804"
 SOURCES="https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/snapshot/linux-firmware-$VERSION.tar.gz"
-SHA256SUM="2f609c503bde5ee6c32336a465c48e939138b8263504d3f7d03ec65ace80b130  linux-firmware-20230625.tar.gz"
+SHA256SUM="c09913f675bea9623798eebf8b238cda49b62dfa1729cc7c2c17193b0ab22ff7  linux-firmware-20230804.tar.gz"
 DESCRIPTION="Linux firmware files"
 
 build() {

@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="linux"
 RELEASE="6"
-VERSION="6.4.8"
+VERSION="6.4.9"
 SOURCES="https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$VERSION.tar.xz;https://github.com/projg2/fedora-kernel-config-for-gentoo/raw/6.4.3-gentoo/kernel-x86_64-fedora.config;https://github.com/kreatolinux/kpkg-repo/raw/master/linux/settings.config"
 BUILD_DEPENDS="libelf xz-utils gmake"
 DEPENDS=""
-SHA256SUM="c59f34e19e84db30206b9373041abf893f9d8a08765d163586570a5238c458b6  linux-6.4.8.tar.xz;e12131f5002d769c3e5058dd23c7876aefda914442520f81cb384da499b93e05  kernel-x86_64-fedora.config;04f33434bb1b16b2a38e3a36d6ce59e0bf032db6954d4a71d07d8f3f5ab37e4c  settings.config"
+SHA256SUM="b8b8a29852b999f337c4e93eff6c91fb7fd2d49a6614cbcbeb6fa171ba55cc9f  linux-6.4.9.tar.xz;e12131f5002d769c3e5058dd23c7876aefda914442520f81cb384da499b93e05  kernel-x86_64-fedora.config;04f33434bb1b16b2a38e3a36d6ce59e0bf032db6954d4a71d07d8f3f5ab37e4c  settings.config"
 DESCRIPTION="The Linux kernel"
 
 prepare() {
