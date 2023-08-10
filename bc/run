@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="bc"
 RELEASE="1"
-VERSION="1.07"
+VERSION="1.07.1"
 SOURCES="https://ftp.gnu.org/gnu/bc/bc-$VERSION.tar.gz"
 DEPENDS="readline"
 BUILD_DEPENDS="ed"
-SHA256SUM="55cf1fc33a728d7c3d386cc7b0cb556eb5bacf8e0cb5a3fcca7f109fc61205ad  bc-1.07.tar.gz"
+SHA256SUM="62adfca89b0a1c0164c2cdca59ca210c1d44c3ffc46daf9931cf4942664cb02a  bc-1.07.1.1.1.tar.gz"
 DESCRIPTION="An arbitrary precision calculator language"
 
 build() {
