@@ -1,0 +1,16 @@
+#!/bin/sh
+NAME="ed"
+RELEASE="1"
+VERSION="1.19"
+SOURCES="https://ftp.gnu.org/gnu/ed/ed-$VERSION.tar.lz"
+SHA256SUM="ce2f2e5c424790aa96d09dacb93d9bbfdc0b7eb6249c9cb7538452e8ec77cd48  ed-1.19.tar.lz"
+DESCRIPTION="A line-oriented text editor"
+
+build() {
+    ./configure --prefix=/usr
+    make
+}
+
+package() {
+    make install 
+}
