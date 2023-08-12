@@ -1,16 +1,16 @@
 #!/bin/sh
 NAME="linux"
-RELEASE="6"
+RELEASE="7"
 VERSION="6.4.9"
 SOURCES="https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$VERSION.tar.xz;https://github.com/projg2/fedora-kernel-config-for-gentoo/raw/6.4.3-gentoo/kernel-x86_64-fedora.config;settings.config"
 BUILD_DEPENDS="libelf xz-utils gmake"
-DEPENDS=""
 SHA256SUM="b8b8a29852b999f337c4e93eff6c91fb7fd2d49a6614cbcbeb6fa171ba55cc9f  linux-6.4.9.tar.xz;e12131f5002d769c3e5058dd23c7876aefda914442520f81cb384da499b93e05  kernel-x86_64-fedora.config;04f33434bb1b16b2a38e3a36d6ce59e0bf032db6954d4a71d07d8f3f5ab37e4c  settings.config"
 DESCRIPTION="The Linux kernel"
 
 prepare() {
 	tar -xvf linux-$VERSION.tar.xz
 	cd linux-$VERSION
+	make mrproper
 	./scripts/kconfig/merge_config.sh -m ../kernel-x86_64-fedora.config ../settings.config || exit 1 
 	make olddefconfig
 }
@@ -22,11 +22,13 @@ build() {
 
 package() {
     cd linux-$VERSION
-    export INSTALL_MOD_PATH=$DESTDIR
+    export INSTALL_MOD_PATH=$DESTDIR/usr
     export INSTALL_PATH=$DESTDIR/boot
-    mkdir -p "$INSTALL_PATH"
+    mkdir -p "$INSTALL_PATH" "$INSTALL_MOD_PATH"
     make install
     make INSTALL_MOD_STRIP=1 DEPMOD=/nodepmod/here modules_install
+    mv "$DESTDIR/boot/vmlinuz" "$DESTDIR/boot/vmlinuz-$VERSION"
+    mv "$DESTDIR/boot/System.map" "$DESTDIR/boot/System.map-$VERSION"
 }
 
 postpackage() {
