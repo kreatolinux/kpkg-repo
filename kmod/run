@@ -1,18 +1,22 @@
 #!/bin/sh
 NAME="kmod"
-RELEASE="2"
+RELEASE="3"
 VERSION="30"
 SOURCES="https://www.kernel.org/pub/linux/utils/kernel/kmod/kmod-$VERSION.tar.xz"
-DEPENDS=""
+DEPENDS="zlib"
 SHA256SUM="f897dd72698dc6ac1ef03255cd0a5734ad932318e4adbaebc7338ef2f5202f9f  kmod-30.tar.xz"
 DESCRIPTION="Contains utilities for loading kernel modules"
 
 build() {
-    ./configure --prefix=/usr
+    ./configure --with-zlib --prefix=/usr
     make
 }
 
 package() {
     make DESTDIR=$ROOT install
     ln -s /usr/bin/kmod $ROOT/usr/bin/depmod
+    ln -s /usr/bin/kmod $ROOT/usr/bin/rmmod
+    ln -s /usr/bin/kmod $ROOT/usr/bin/insmod
+    ln -s /usr/bin/kmod $ROOT/usr/bin/modinfo
+    ln -s /usr/bin/kmod $ROOT/usr/bin/modprobe
 }
