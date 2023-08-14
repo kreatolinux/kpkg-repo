@@ -9,7 +9,7 @@ SHA256SUM="9a2ebe660704878ab795470a72cd53049408ddd9da6e9cb45232cf0ed6505660  v0.
 DESCRIPTION="appstream"
 
 build() {
-    meson \
+    meson setup \
     --prefix=/usr \
     build
     ninja -C build

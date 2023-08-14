@@ -9,7 +9,7 @@ SHA256SUM="b1e61f64dadc67e458430bb35a9f1b25170aafcf5674a52012ae38a2212227b3  lib
 DESCRIPTION="A library to help create and query binary XML blobs"
 
 build() {
-    meson \
+    meson setup \
     --prefix=/usr \
     -Dgtkdoc=false \
     build

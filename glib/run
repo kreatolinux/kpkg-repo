@@ -8,7 +8,7 @@ SHA256SUM="5a5a191c96836e166a7771f7ea6ca2b0069c603c7da3cba1cd38d1694a395dda  gli
 DESCRIPTION="glib"
 
 build() {
-    meson \
+    meson setup \
     --prefix=/usr \
     -Dman=false \
     build
