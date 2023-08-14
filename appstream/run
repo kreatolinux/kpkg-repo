@@ -2,10 +2,10 @@
 NAME="appstream"
 RELEASE="1"
 VERSION="0.16.2"
-SOURCES="https://www.freedesktop.org/software/appstream/releases/AppStream-$VERSION.tar.xz" 
+SOURCES="https://github.com/ximion/appstream/archive/refs/tags/v$VERSION.tar.gz" 
 BUILD_DEPENDS="meson ninja"
 DEPENDS="glib libxml2 libxmlb curl gobject-introspection libyaml"
-SHA256SUM="f9cb80bd388fbf06be268afa7f2d65863c85d605ad874b905094f3982d03f232  AppStream-0.16.2.tar.xz"
+SHA256SUM="9a2ebe660704878ab795470a72cd53049408ddd9da6e9cb45232cf0ed6505660  v0.16.2.tar.gz"
 DESCRIPTION="appstream"
 
 build() {
