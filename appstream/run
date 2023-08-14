@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="0.16.2"
 SOURCES="https://github.com/ximion/appstream/archive/refs/tags/v$VERSION.tar.gz" 
 BUILD_DEPENDS="meson ninja"
-DEPENDS="glib itstool libxml2 libxmlb curl gobject-introspection libyaml"
+DEPENDS="glib itstool libxslt libxml2 libxmlb curl gobject-introspection libyaml"
 SHA256SUM="9a2ebe660704878ab795470a72cd53049408ddd9da6e9cb45232cf0ed6505660  v0.16.2.tar.gz"
 DESCRIPTION="appstream"
 
