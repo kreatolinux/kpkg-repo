@@ -13,7 +13,6 @@ build() {
     --prefix=/usr \
     -Dsystemd=false \
     -Dstemming=false \
-    -Dgtkdoc=false \
     build
     ninja -C build
 }
