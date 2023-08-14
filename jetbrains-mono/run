@@ -13,7 +13,7 @@ build() {
 
 package() {
     mkdir -p $DESTDIR/usr/share/fonts/jetbrains-mono
-    mv fonts/ttf/* $DESTDIR/usr/share/fonts/jetbrains-mono/
+    mv ttf/* $DESTDIR/usr/share/fonts/jetbrains-mono/
 }
 
 postinstall() {
