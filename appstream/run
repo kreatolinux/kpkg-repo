@@ -11,6 +11,7 @@ DESCRIPTION="appstream"
 build() {
     meson setup \
     --prefix=/usr \
+    -Dsystemd=false \
     build
     ninja -C build
 }
