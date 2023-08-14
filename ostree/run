@@ -7,7 +7,7 @@ DEPENDS="xz-utils fuse e2fsprogs libarchive glib"
 SHA256SUM="bc593afb31fe1ac3d50419f917fafe321a0a3561d7bb2ba498a83740fe3adb14  libostree-2023.5.tar.xz"
 DESCRIPTION="Operating system and container binary deployment and upgrades"
 build() {
-    ./configure --with-gpgme=no --prefix=/usr
+    ./configure --disable-man --with-gpgme=no --prefix=/usr
     make
 }
 
