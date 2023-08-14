@@ -17,7 +17,7 @@ prepare() {
 build() {
     cd appstream-$VERSION
     meson setup \
-    --prefix=/tmp/kpkg/build/usr \
+    --prefix=/usr \
     -Dsystemd=false \
     -Dstemming=false \
     -Ddocs=false \
