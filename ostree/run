@@ -3,11 +3,11 @@ NAME="ostree"
 RELEASE="2"
 VERSION="2023.5"
 SOURCES="https://github.com/ostreedev/ostree/releases/download/v$VERSION/libostree-$VERSION.tar.xz"
-DEPENDS="xz-utils fuse e2fsprogs gpgme libarchive glib"
+DEPENDS="xz-utils fuse e2fsprogs gpgme libarchive curl glib"
 SHA256SUM="bc593afb31fe1ac3d50419f917fafe321a0a3561d7bb2ba498a83740fe3adb14  libostree-2023.5.tar.xz"
 DESCRIPTION="Operating system and container binary deployment and upgrades"
 build() {
-    ./configure --disable-man --with-gpgme=yes --prefix=/usr
+    ./configure --disable-man --with-curl --with-gpgme --prefix=/usr
     make
 }
 
