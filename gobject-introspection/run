@@ -1,0 +1,21 @@
+#!/bin/sh
+NAME="gobject-introspection"
+RELEASE="1"
+VERSION="1.75.2"
+SOURCES="https://gitlab.gnome.org/GNOME/gobject-introspection/-/archive/$VERSION/gobject-introspection-$VERSION.tar.gz" 
+BUILD_DEPENDS="meson ninja"
+DEPENDS="python cairo glib"
+SHA256SUM="f9cb80bd388fbf06be268afa7f2d65863c85d605ad874b905094f3982d03f232  AppStream-0.16.2.tar.xz"
+DESCRIPTION="gobject-introspection"
+
+build() {
+    meson \
+    --prefix=/usr \
+    -Dman=false \
+    build
+    ninja -C build
+}
+
+package() {
+    DESTDIR="$ROOT" ninja -C build install
+}
