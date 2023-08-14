@@ -11,7 +11,6 @@ DESCRIPTION="gobject-introspection"
 build() {
     meson \
     --prefix=/usr \
-    -Dman=false \
     build
     ninja -C build
 }
