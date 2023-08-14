@@ -12,6 +12,7 @@ build() {
     meson setup \
     --prefix=/usr \
     -Dsystemd=false \
+    -Dstemming=false \
     build
     ninja -C build
 }
