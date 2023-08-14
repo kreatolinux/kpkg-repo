@@ -10,12 +10,12 @@ DESCRIPTION="appstream"
 
 prepare() {
     tar -xvf v$VERSION.tar.gz
-    cd v$VERSION
+    cd appstream-$VERSION
     patch -p1 < ../disable-docs.patch
 }
 
 build() {
-    cd v$VERSION
+    cd appstream-$VERSION
     meson setup \
     --prefix=/usr \
     -Dsystemd=false \
@@ -28,6 +28,6 @@ build() {
 }
 
 package() {
-    cd v$VERSION
+    cd appstream-$VERSION
     DESTDIR="$ROOT" ninja -C build install
 }
