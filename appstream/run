@@ -13,6 +13,9 @@ build() {
     --prefix=/usr \
     -Dsystemd=false \
     -Dstemming=false \
+    -Ddocs=false \
+    -Dapidocs=false \
+    -Dinstall-docs=false \
     build
     ninja -C build
 }
