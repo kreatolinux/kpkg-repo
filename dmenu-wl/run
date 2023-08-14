@@ -1,0 +1,18 @@
+#!/bin/sh
+NAME="dmenu-wl"
+RELEASE="1"
+VERSION="0.1"
+SOURCES="https://github.com/nyyManni/dmenu-wayland/archive/refs/tags/v$VERSION.tar.gz"
+DEPENDS="wayland cairo pango libxkbcommon glib"
+BUILD_DEPENDS="meson pkgconf"
+SHA256SUM="dcbc70156e138b2bb8788aeebf75af14f75e188ed78865840e341b5375ed6614  v0.1.tar.gz"
+DESCRIPTION="An efficient dynamic menu for wayland (wlroots)"
+
+build() {
+	meson setup --prefix=/usr build
+	ninja -C build
+}
+
+package() {
+	DESTDIR="$ROOT" ninja -C build install
+}
