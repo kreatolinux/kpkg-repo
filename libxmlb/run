@@ -11,6 +11,7 @@ DESCRIPTION="A library to help create and query binary XML blobs"
 build() {
     meson \
     --prefix=/usr \
+    --gtkdoc=false \
     build
     ninja -C build
 }
