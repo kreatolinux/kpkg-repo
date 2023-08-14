@@ -17,7 +17,7 @@ prepare() {
 build() {
     cd appstream-$VERSION
     meson setup \
-    --prefix=/usr \
+    --prefix=$ROOT/usr \
     -Dsystemd=false \
     -Dstemming=false \
     -Ddocs=false \
