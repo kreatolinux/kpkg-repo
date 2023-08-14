@@ -14,7 +14,7 @@ build() {
         --prefix=/usr \
         -Dharfbuzz=disabled \
         . output
-    CFLAGS="-no-pie" ninja -C output
+    ninja -C output
 }
 
 package() {
