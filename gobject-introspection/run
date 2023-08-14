@@ -5,7 +5,7 @@ VERSION="1.75.2"
 SOURCES="https://gitlab.gnome.org/GNOME/gobject-introspection/-/archive/$VERSION/gobject-introspection-$VERSION.tar.gz" 
 BUILD_DEPENDS="meson ninja"
 DEPENDS="python cairo glib"
-SHA256SUM="f9cb80bd388fbf06be268afa7f2d65863c85d605ad874b905094f3982d03f232  AppStream-0.16.2.tar.xz"
+SHA256SUM="8d71eb79564f2758ae09b935e277a911cf902c0bea25ef3766b93b755e17aac3  gobject-introspection-1.75.2.tar.gz"
 DESCRIPTION="gobject-introspection"
 
 build() {
