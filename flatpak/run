@@ -3,7 +3,7 @@ NAME="flatpak"
 RELEASE="1"
 VERSION="1.14.4"
 SOURCES="https://github.com/flatpak/flatpak/releases/download/$VERSION/flatpak-$VERSION.tar.xz"
-DEPENDS="appstream ostree gdk-pixbuf python-pyparsing fuse libxml2 glib gpgme"
+DEPENDS="appstream json-glib ostree gdk-pixbuf python-pyparsing fuse libxml2 glib gpgme"
 SHA256SUM="8a34dbd0b67c434e7598b98ec690953d046f0db26e480aeafb46d72aec716799  flatpak-1.14.4.tar.xz"
 DESCRIPTION="Linux application sandboxing and distribution framework"
 
