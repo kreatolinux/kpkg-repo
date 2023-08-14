@@ -32,6 +32,6 @@ package() {
     mv "$DESTDIR/boot/System.map" "$DESTDIR/boot/System.map-$VERSION"
 }
 
-postpackage() {
+postinstall() {
     depmod $VERSION
 }
