@@ -18,8 +18,6 @@ git clone https://github.com/kreatolinux/kpkg-repo.git --depth=1 /etc/kpkg/repos
 Every package exists in a seperate directory.
 
 * For runfiles, check out kpkg_run(8)
-* Dependencies go onto the `deps` file. Each dependency should go onto a seperate line.
-* Build dependencies go onto the `build_deps` file. Each dependency should go onto a seperate line.
 
 # Credits
 * Arch Linux packages
