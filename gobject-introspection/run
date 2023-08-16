@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="gobject-introspection"
 RELEASE="1"
-VERSION="1.75.2"
+VERSION="1.76.1"
 SOURCES="https://gitlab.gnome.org/GNOME/gobject-introspection/-/archive/$VERSION/gobject-introspection-$VERSION.tar.gz" 
 BUILD_DEPENDS="meson ninja"
 DEPENDS="python cairo glib"
-SHA256SUM="8d71eb79564f2758ae09b935e277a911cf902c0bea25ef3766b93b755e17aac3  gobject-introspection-1.75.2.tar.gz"
+SHA256SUM="e744cb85c63ecb0f2c88f84f87db66f393fdb201233198ae9d5e6d68afe5de5c  gobject-introspection-1.76.1.tar.gz"
 DESCRIPTION="gobject-introspection"
 
 build() {
