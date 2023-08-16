@@ -1,0 +1,17 @@
+#!/bin/sh
+NAME="libmd"
+RELEASE="1"
+VERSION="1.1.0"
+SOURCES="https://libbsd.freedesktop.org/releases/libmd-$VERSION.tar.xz"
+DEPENDS=""
+SHA256SUM="1bd6aa42275313af3141c7cf2e5b964e8b1fd488025caf2f971f43b00776b332  libmd-1.1.0.tar.xz"
+DESCRIPTION="Provides message digest functions from BSD systems"
+
+build() {
+    ./configure --prefix=/usr
+    make
+}
+
+package() {
+    make DESTDIR=$ROOT install
+}
