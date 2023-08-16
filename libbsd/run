@@ -3,7 +3,7 @@ NAME="libbsd"
 RELEASE="1"
 VERSION="0.11.7"
 SOURCES="https://libbsd.freedesktop.org/releases/libbsd-$VERSION.tar.xz"
-DEPENDS=""
+DEPENDS="libmd"
 SHA256SUM="9baa186059ebbf25c06308e9f991fda31f7183c0f24931826d83aa6abd8a0261  libbsd-0.11.7.tar.xz"
 DESCRIPTION="Useful functions commonly found on BSD systems, and lacking on others like GNU systems"
 
