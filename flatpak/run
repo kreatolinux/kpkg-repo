@@ -1,21 +1,24 @@
 #!/bin/sh
 NAME="flatpak"
-RELEASE="1"
+RELEASE="2"
 VERSION="1.15.4"
 SOURCES="https://github.com/flatpak/flatpak/releases/download/$VERSION/flatpak-$VERSION.tar.xz"
+BUILD_DEPENDS="meson"
 DEPENDS="appstream json-glib ostree gdk-pixbuf python-pyparsing fuse libxml2 glib gpgme"
 SHA256SUM="bef695d893d1e0239a68441d6b328edeb6d1e58a902c92f9278e94da914ab91f  flatpak-1.15.4.tar.xz"
 DESCRIPTION="Linux application sandboxing and distribution framework"
 
 build() {
-    ./configure --prefix=/usr \
-	--disable-system-helper \
-	--disable-xauth \
-	--disable-seccomp \
-	--disable-documentation
-    make
+    meson setup --prefix=/usr \
+	-Dsystem_helper=disabled \
+	-Dxauth=disabled \
+	-Dseccomp=disabled \
+	-Ddocbook_docs=disabled \
+	build
+
+    ninja -C build
 }
 
 package() {
-    make DESTDIR=$ROOT install
+    DESTDIR="$ROOT" ninja -C build install
 }
