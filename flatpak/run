@@ -14,6 +14,7 @@ build() {
 	-Dxauth=disabled \
 	-Dseccomp=disabled \
 	-Ddocbook_docs=disabled \
+	-Dtests=false	\
 	build
 
     ninja -C build
