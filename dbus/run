@@ -1,5 +1,5 @@
 #!/bin/sh
-NAME="cairo"
+NAME="dbus"
 RELEASE="5"
 VERSION="1.15.6"
 SOURCES="https://dbus.freedesktop.org/releases/dbus/dbus-$VERSION.tar.xz"
