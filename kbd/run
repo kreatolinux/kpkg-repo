@@ -9,7 +9,7 @@ DESCRIPTION="Linux keyboard tools"
 
 build() {
     autoreconf -v -f -i
-    ./configure --prefix=/usr --bindir=/usr/bin
+    ./configure --prefix=/usr --disable-vlock --bindir=/usr/bin
     make
 }
 
