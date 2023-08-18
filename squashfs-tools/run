@@ -14,5 +14,5 @@ build() {
 
 package() {
     cd squashfs-tools
-    make PREFIX=/usr DESTDIR=$ROOT install
+    make USE_PREBUILT_MANPAGES=y PREFIX=/usr DESTDIR=$ROOT install
 }
