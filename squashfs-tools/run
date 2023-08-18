@@ -14,5 +14,5 @@ build() {
 
 package() {
     cd squashfs-tools
-    make DESTDIR=$ROOT install
+    make PREFIX=/usr DESTDIR=$ROOT install
 }
