@@ -8,7 +8,9 @@ SHA256SUM="f97f5845f9c4a5a1fb3df67dfa9e16b5a3fd545d348d6dc850cb7ccc9942bd8c  dbu
 DESCRIPTION="Message bus system"
 
 build() {
-    ./configure --disable-static --prefix=/usr
+    ./configure --disable-static \
+                --prefix=/usr    \
+                --runstatedir=/run
     make
 }
 
