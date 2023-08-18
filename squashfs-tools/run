@@ -9,11 +9,13 @@ DESCRIPTION="Tools for managing SquashFS"
 
 build() {
     cd squashfs-tools
-    make
-}
+    make INSTALL_MANPAGES_DIR=""
+ }
 
 package() {
     cd squashfs-tools
-    
+    rm -f ../generate-manpages/install-manpages.sh
+    touch ../generate-manpages/install-manpages.sh
+    chmod +x ../generate-manpages/install-manpages.sh
     make INSTALL_MANPAGES_DIR="" INSTALL_PREFIX=/usr DESTDIR=$ROOT install
 }
