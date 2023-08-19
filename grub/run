@@ -18,6 +18,11 @@ build_grub-efi() {
     make
 }
 
-package() {
+package_grub() {
+    make DESTDIR="$ROOT" install
+}
+
+
+package_grub-efi() {
     make DESTDIR="$ROOT" install
 }
