@@ -1,0 +1,18 @@
+#!/bin/sh
+NAME="mtools"
+RELEASE="3"
+VERSION="4.0.43"
+SOURCES="http://ftp.gnu.org/gnu/mtools/mtools-$VERSION.tar.gz"
+BUILD_DEPENDS="gmake"
+DEPENDS=""
+SHA256SUM="8866666fa06906ee02c709f670ae6361c5ac2008251ed825c43d321c06775718  mtools-4.0.43.tar.gz"
+DESCRIPTION="A collection of utilities to access MS-DOS disks without mounting them"
+
+build() {
+    ./configure --prefix=/usr
+    make
+}
+
+package() {
+    make DESTDIR=$ROOT install
+}
