@@ -10,7 +10,7 @@ DESCRIPTION="The GNU Grub Bootloader"
 prepare() {
      tar -xvf grub-$VERSION.tar.xz
      cd grub-$VERSION
-     gzip -cd unifont-15.0.06.bdf.gz > unifont.bdf
+     gzip -cd ../unifont-15.0.06.bdf.gz > unifont.bdf
 }
 
 build() {
