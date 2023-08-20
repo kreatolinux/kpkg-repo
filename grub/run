@@ -2,16 +2,24 @@
 NAME="grub"
 RELEASE="1"
 VERSION="2.06"
-SOURCES="https://ftp.gnu.org/gnu/grub/grub-$VERSION.tar.xz"
-DEPENDS="flex"
-SHA256SUM="b79ea44af91b93d17cd3fe80bdae6ed43770678a9a5ae192ccea803ebb657ee1  grub-2.06.tar.xz"
+SOURCES="https://ftp.gnu.org/gnu/grub/grub-$VERSION.tar.xz;https://ftp.gnu.org/gnu/unifont/unifont-15.0.06/unifont-15.0.06.bdf.gz"
+DEPENDS="flex pigz"
+SHA256SUM="b79ea44af91b93d17cd3fe80bdae6ed43770678a9a5ae192ccea803ebb657ee1  grub-2.06.tar.xz;93cb54fa103a00e25cd3e16550b4b4eb13cbd098e515679ade3ae82cd0739f29  unifont-15.0.06.bdf.gz"
 DESCRIPTION="The GNU Grub Bootloader"
 
+prepare() {
+     tar -xvf grub-$VERSION.tar.xz
+     cd grub-$VERSION
+     gzip -cd unifont-15.0.06.bdf.gz > unifont.bdf
+}
+
 build() {
+    cd grub-$VERSION
     ./configure --disable-efiemu --disable-werror --prefix=/usr --sysconfdir=/etc
     make
 }
 
 package() {
+    cd grub-$VERSION
     make DESTDIR="$ROOT" install
 }
