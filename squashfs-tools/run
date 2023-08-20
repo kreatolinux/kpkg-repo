@@ -17,5 +17,5 @@ package() {
     rm -f ../generate-manpages/install-manpages.sh
     touch ../generate-manpages/install-manpages.sh
     chmod +x ../generate-manpages/install-manpages.sh
-    make INSTALL_MANPAGES_DIR="" INSTALL_PREFIX=/usr DESTDIR=$ROOT install
+    make INSTALL_MANPAGES_DIR="" INSTALL_PREFIX=$ROOT/usr DESTDIR=$ROOT install
 }
