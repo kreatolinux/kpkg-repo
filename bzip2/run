@@ -1,6 +1,6 @@
 #!/bin/sh
 NAME="bzip2"
-RELEASE="2"
+RELEASE="3"
 VERSION="1.0.8"
 SOURCES="https://sourceware.org/pub/bzip2/bzip2-$VERSION.tar.gz"
 BUILD_DEPENDS="gmake"
@@ -16,4 +16,7 @@ build() {
 
 package() {
     make PREFIX=$ROOT/usr install
+    cp bzip2-shared $ROOT/usr/bin/bzip2
+    cp -a libbz2.so* $ROOT/usr/lib
+    ln -s libbz2.so.1.0 $ROOT/usr/lib/libbz2.so
 }
