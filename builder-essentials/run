@@ -3,7 +3,7 @@ NAME="builder-essentials"
 RELEASE="1"
 VERSION="0.1"
 NO_CHKUPD="y"
-
+DEPENDS="autoconf automake binutils bash perl bison meson file linux-headers ninja texinfo gcc gmake gawk grep"
 prepare() {
   :
 }
