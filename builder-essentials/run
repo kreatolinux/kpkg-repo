@@ -2,6 +2,7 @@
 NAME="builder-essentials"
 RELEASE="1"
 VERSION="0.1"
+NO_CHKUPD="y"
 
 prepare() {
   :
