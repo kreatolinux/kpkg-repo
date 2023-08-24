@@ -1,0 +1,20 @@
+#!/bin/sh
+NAME="zig"
+RELEASE="2"
+VERSION="0.11.0"
+SOURCES="https://ziglang.org/download/$VERSION/zig-$VERSION.tar.xz"
+DEPENDS="llvm"
+BUILD_DEPENDS="cmake"
+SHA256SUM="72014e700e50c0d3528cef3adf80b76b26ab27730133e8202716a187a799e951  zig-0.11.0.tar.xz"
+DESCRIPTION="A general-purpose programming language and toolchain for maintaining robust, optimal and reusable software."
+
+build() {
+    cmake -B build -DCMAKE_BUILD_TYPE=None \
+	    -DZIG_SHARED_LLVM=ON	   \
+    	    -DCMAKE_INSTALL_PREFIX=/usr
+    cmake --build build
+}
+
+package() {
+    DESTDIR="$ROOT" cmake --install build
+}
