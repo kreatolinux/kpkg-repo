@@ -1,0 +1,18 @@
+#!/bin/sh
+NAME="kbd"
+RELEASE="1"
+VERSION="2.6.2"
+SOURCES="https://git.kernel.org/pub/scm/linux/kernel/git/legion/kbd.git/snapshot/kbd-$VERSION.tar.gz"
+BUILD_DEPENDS="autoconf automake gettext libtool"
+SHA256SUM="4aae5e83c4395c38e1fc35f4f70604db17cdf6e01da9b28ece89a9289e56d590  kbd-2.6.2.tar.gz"
+DESCRIPTION="Linux keyboard tools"
+
+build() {
+    autoreconf -v -f -i
+    ./configure --prefix=/usr --disable-vlock --bindir=/usr/bin
+    make
+}
+
+package() {
+    make DESTDIR=$ROOT install
+}

@@ -26,6 +26,7 @@ jobs:
           rm -rf src
           git clone https://github.com/kreatolinux/src
           cd src
+          sed -i s/stable/master/g Makefile
           make deps
           make chkupd
           mv scripts/jsontomd.sh /tmp/

@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="python"
-RELEASE="1"
+RELEASE="2"
 VERSION="3.11.4"
 SOURCES="https://www.python.org/ftp/python/$VERSION/Python-$VERSION.tar.xz"
-DEPENDS="openssl zlib libxcrypt"
+DEPENDS="openssl zlib libxcrypt bzip2"
 SHA256SUM="2f0e409df2ab57aa9fc4cbddfb976af44e4e55bf6f619eee6bc5c2297264a7f6  Python-3.11.4.tar.xz"
 DESCRIPTION="General-Purpose Programming language"
 
