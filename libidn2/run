@@ -1,0 +1,17 @@
+#!/bin/sh
+NAME="libidn2"
+RELEASE="1"
+VERSION="2.3.4"
+SOURCES="https://ftp.gnu.org/gnu/libidn/libidn2-$VERSION.tar.gz"
+DEPENDS="libunistring"
+SHA256SUM="93caba72b4e051d1f8d4f5a076ab63c99b77faee019b72b9783b267986dbb45f  libidn2-2.3.4.tar.gz"
+DESCRIPTION="libidn2"
+build() {
+    ./configure --prefix=/usr \
+	    	--disable-static
+    make
+}
+
+package() {
+    make DESTDIR=$ROOT install
+}
