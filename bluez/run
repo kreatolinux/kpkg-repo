@@ -1,0 +1,24 @@
+#!/bin/sh
+NAME="bluez"
+RELEASE="1"
+VERSION="5.69"
+SOURCES="https://mirrors.edge.kernel.org/pub/linux/bluetooth/bluez-$VERSION.tar.gz"
+DEPENDS="libudev dbus glib libical"
+SHA256SUM="7f65e805905947ffa5699ef8fa986b89838665aefe45fc64baf4480f15ca0acc  bluez-5.69.tar.gz"
+DESCRIPTION="Bluetooth protocol stack for Linux"
+
+build() {
+    ./configure \
+	    --prefix=/usr \
+	    --with-udevdir=/usr/lib/udev/rules.d \
+	    --with-systemdsystemunitdir=/usr/lib/systemd/system \
+	    --with-systemduserunitdir=/usr/lib/systemd/user \
+	    --disable-manpages \
+	    --sysconfdir=/etc \
+	    --enable-library
+    make
+}
+
+package() {
+    make DESTDIR="$ROOT" install
+}
