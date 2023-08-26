@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="2.38.0"
 SOURCES="https://ftp.gnome.org/pub/gnome/sources/atk/2.38/atk-$VERSION.tar.xz"
 BUILD_DEPENDS="pkgconf meson"
-DEPENDS="glib libffi"
+DEPENDS="glib cairo libffi"
 SHA256SUM="ac4de2a4ef4bd5665052952fe169657e65e895c5057dffb3c2a810f6191a0c36  atk-2.38.0.tar.xz"
 DESCRIPTION=""
 build() {
