@@ -8,7 +8,7 @@ DEPENDS="glib gobject-introspection libffi"
 SHA256SUM="37316df43ca9989ce539d54cf429a768c28bb38a0b34950beadd0421827edf55  at-spi2-core-2.48.3.tar.xz"
 DESCRIPTION=""
 build() {
-    meson --prefix=/usr -Dintrospection=true build/
+    meson --prefix=/usr -Dintrospection=enabled build/
     ninja -C build/
 }
 
