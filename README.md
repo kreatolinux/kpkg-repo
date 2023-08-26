@@ -20,11 +20,11 @@ Every package exists in a seperate directory.
 * For runfiles, check out kpkg_run(8)
 
 # Credits
+Kreato Linux packages are mostly inspired from;
+
 * Arch Linux packages
 * Linux From Scratch packages
 * KISS Linux packages.
-
-Please note that this does not mean that the packages are taken from these projects, it just means that the packages have inspirations from these projects' packages aswell. Check for the packages' runfile for details.
 
 # License
 Unless explicitly stated, this repository is licensed under GNU Affero General Public License version 3 or later (if prefered).
