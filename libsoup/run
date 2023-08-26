@@ -1,0 +1,25 @@
+#!/bin/sh
+NAME="libsoup"
+RELEASE="1"
+VERSION="3.4.2"
+SOURCES="https://download.gnome.org/sources/libsoup/3.4/libsoup-$VERSION.tar.xz"
+BUILD_DEPENDS="meson"
+DEPENDS="glib libxml2 nghttp2 sqlite gobject-introspection vala libpsl"
+SHA256SUM="78c8fa37cb152d40ec8c4a148d6155e2f6947f3f1602a7cda3a31ad40f5ee2f3  libsoup-3.4.2.tar.xz"
+DESCRIPTION="libsoup"
+
+build() {
+    # Got options from https://www.linuxfromscratch.org/blfs/view/svn/basicnet/libsoup3.html
+    meson setup --prefix=/usr          \
+            --buildtype=release    \
+            -Dvapi=enabled         \
+            -Dgssapi=disabled      \
+            -Dsysprof=disabled     \
+            --wrap-mode=nofallback \
+    build
+    ninja -C build
+}
+
+package() {
+    DESTDIR="$ROOT" ninja -C build install
+}
