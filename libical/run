@@ -1,0 +1,21 @@
+#!/bin/sh
+NAME="libical"
+RELEASE="1"
+VERSION="3.0.16"
+SOURCES="https://github.com/libical/libical/releases/download/v$VERSION/libical-$VERSION.tar.gz"
+DEPENDS="glib"
+BUILD_DEPENDS="cmake"
+SHA256SUM="b44705dd71ca4538c86fb16248483ab4b48978524fb1da5097bd76aa2e0f0c33  libical-3.0.16.tar.gz"
+DESCRIPTION="An implementation of iCalendar protocols and data formats"
+
+build() {
+    cmake -DCMAKE_INSTALL_PREFIX=/usr \
+	  -DCMAKE_BUILD_TYPE=Release  \
+	  -DENABLE_GTK_DOC=OFF \
+	  -B build
+    cmake --build build
+ }
+
+package() {
+    DESTDIR="$ROOT" cmake --install build
+}
