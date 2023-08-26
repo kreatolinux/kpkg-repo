@@ -1,0 +1,22 @@
+#!/bin/sh
+NAME="glib-networking"
+RELEASE="1"
+VERSION="2.76.1"
+SOURCES="https://download.gnome.org/sources/glib-networking/2.76/glib-networking-$VERSION.tar.xz"
+BUILD_DEPENDS="meson"
+DEPENDS="glib gnutls gsettings-desktop-schemas make-ca"
+SHA256SUM="5c698a9994dde51efdfb1026a56698a221d6250e89dc50ebcddda7b81480a42b  glib-networking-2.76.1.tar.xz"
+DESCRIPTION="glib-networking"
+
+build() {
+    meson setup \
+    --prefix=/usr \
+    -Dlibproxy=disabled \
+    --buildtype=release \
+    build
+    ninja -C build
+}
+
+package() {
+    DESTDIR="$ROOT" ninja -C build install
+}
