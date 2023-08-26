@@ -20,7 +20,7 @@ Every package exists in a seperate directory.
 * For runfiles, check out kpkg_run(8)
 
 # Credits
-Kreato Linux packages are mostly inspired from;
+Kreato Linux packages are mostly inspired by;
 
 * Arch Linux packages
 * Linux From Scratch packages
