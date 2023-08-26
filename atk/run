@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="atk"
 RELEASE="2"
-VERSION="2.38.0"
-SOURCES="https://ftp.gnome.org/pub/gnome/sources/atk/2.38/atk-$VERSION.tar.xz"
+VERSION="2.48.3"
+SOURCES="https://download.gnome.org/sources/at-spi2-core/2.48/at-spi2-core-$VERSION.tar.xz"
 BUILD_DEPENDS="pkgconf meson"
 DEPENDS="glib gobject-introspection libffi"
-SHA256SUM="ac4de2a4ef4bd5665052952fe169657e65e895c5057dffb3c2a810f6191a0c36  atk-2.38.0.tar.xz"
+SHA256SUM="37316df43ca9989ce539d54cf429a768c28bb38a0b34950beadd0421827edf55  at-spi2-core-2.48.3.tar.xz"
 DESCRIPTION=""
 build() {
     meson --prefix=/usr -Dintrospection=true build/
