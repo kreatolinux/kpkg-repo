@@ -1,0 +1,22 @@
+#!/bin/sh
+NAME="gcr-4"
+RELEASE="1"
+VERSION="4.1.0"
+SOURCES="https://download.gnome.org/sources/gcr/4.1/gcr-$VERSION.tar.xz"
+DEPENDS="glib libgcrypt p11-kit gnupg gtk4 gobject-introspection libxslt"
+BUILD_DEPENDS="meson"
+SHA256SUM="9ceaad29284ba919b9216e2888c18ec67240c2c93b3a4856bc5488bbc1f3a383  gcr-4.1.0.tar.xz"
+DESCRIPTION="A library for displaying certificates and crypto UI"
+
+build() {
+    meson setup \
+    --prefix=/usr \
+    --buildtype=release \
+    -Dgtk_doc=false \
+    build
+    ninja -C build
+}
+
+package() {
+    DESTDIR="$ROOT" ninja -C build install
+}
