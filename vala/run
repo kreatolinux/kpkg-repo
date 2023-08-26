@@ -1,0 +1,17 @@
+#!/bin/sh
+NAME="vala"
+RELEASE="1"
+VERSION="0.56.11"
+SOURCES="https://download.gnome.org/sources/vala/0.56/vala-$VERSION.tar.xz"
+DEPENDS="glib"
+SHA256SUM="0cf3baf19f278fbeaf78bab2ee1dd18ce53e0d65bf9c57d5aa000c1832b1de64  vala-0.56.11.tar.xz"
+DESCRIPTION="Programming language commonly used in GNOME applications"
+
+build() {
+    ./configure --prefix=/usr
+    make
+}
+
+package() {
+    make install
+}
