@@ -26,6 +26,14 @@ jobs:
           rm -rf src
           git clone https://github.com/kreatolinux/src
           cd src
+          if [ "$(uname -m)" = "aarch64" ]; then
+            wget https://github.com/nim-lang/nightlies/releases/download/latest-devel/linux_arm64.tar.xz
+            tar -xvf linux_arm64.tar.xz
+            cd nim-*
+            sudo ./install.sh /usr/bin
+            cd ..
+            rm -rf nim* linux_arm64.tar.xz
+          fi
           sed -i s/stable/master/g Makefile
           make deps
           make chkupd
