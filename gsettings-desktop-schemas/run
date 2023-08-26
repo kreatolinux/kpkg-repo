@@ -1,0 +1,22 @@
+#!/bin/sh
+NAME="gsettings-desktop-schemas"
+RELEASE="1"
+VERSION="44.0"
+SOURCES="https://download.gnome.org/sources/gsettings-desktop-schemas/44/gsettings-desktop-schemas-$VERSION.tar.xz"
+BUILD_DEPENDS="meson ninja"
+DEPENDS="gobject-introspection"
+SHA256SUM="eb2de45cad905994849e642a623adeb75d41b21b0626d40d2a07b8ea281fec0e  gsettings-desktop-schemas-44.0.tar.xz"
+DESCRIPTION="Contains a collection of GSettings schemas for
+settings shared by various components of a desktop"
+
+build() {
+    meson setup \
+    --prefix=/usr \
+    --buildtype=release \
+    build
+    ninja -C build
+}
+
+package() {
+    DESTDIR="$ROOT" ninja -C build install
+}
