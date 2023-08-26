@@ -1,0 +1,21 @@
+#!/bin/sh
+NAME="totem-pl-parser"
+RELEASE="1"
+VERSION="3.26.6"
+SOURCES="https://download.gnome.org/sources/totem-pl-parser/3.26/totem-pl-parser-$VERSION.tar.xz"
+BUILD_DEPENDS="meson"
+DEPENDS="gobject-introspection libarchive libgcrypt"
+SHA256SUM="c0df0f68d5cf9d7da43c81c7f13f11158358368f98c22d47722f3bd04bd3ac1c  totem-pl-parser-3.26.6.tar.xz"
+DESCRIPTION="totem-pl-parser"
+
+build() {
+    meson setup \
+    --prefix=/usr \
+    --buildtype=release \
+    build
+    ninja -C build
+}
+
+package() {
+    DESTDIR="$ROOT" ninja -C build install
+}
