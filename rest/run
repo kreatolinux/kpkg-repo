@@ -13,6 +13,7 @@ build() {
     --prefix=/usr \
     --buildtype=release \
     -Dgtk_doc=false	\
+    -Dexamples=false	\
     build
     ninja -C build
 }
