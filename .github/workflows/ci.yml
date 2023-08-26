@@ -30,8 +30,13 @@ jobs:
             wget https://github.com/nim-lang/nightlies/releases/download/latest-devel/linux_arm64.tar.xz
             tar -xvf linux_arm64.tar.xz
             cd nim-*
-            sudo ./install.sh /usr/bin
-            sudo cp -rf bin/* /usr/bin
+            sudo mkdir -p "/usr/include" "/usr/bin" "/etc/nim" "/usr/lib/nim"
+            sudo cp -r lib/ "/usr/lib/nim"
+            sudo cp -r compiler/ "/usr/lib/nim"
+            sudo cp -rf config/* -t "/etc/nim"
+            sudo cp -rf bin/* -t "/usr/bin"
+            sudo cp -rf "/usr/lib/nim/"*.h "/usr/include"
+            sudo rm -rf "/nim"
             cd ..
             rm -rf nim* linux_arm64.tar.xz
           fi
