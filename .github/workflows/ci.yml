@@ -31,6 +31,7 @@ jobs:
             tar -xvf linux_arm64.tar.xz
             cd nim-*
             sudo ./install.sh /usr/bin
+            sudo cp -rf bin/* /usr/bin
             cd ..
             rm -rf nim* linux_arm64.tar.xz
           fi
