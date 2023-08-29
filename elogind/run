@@ -1,0 +1,27 @@
+#!/bin/sh
+NAME="elogind"
+RELEASE="1"
+VERSION="252.9"
+SOURCES="https://github.com/elogind/elogind/archive/refs/tags/v$VERSION.tar.gz"
+BUILD_DEPENDS="meson"
+DEPENDS="dbus linux-pam"
+REPLACES="systemd"
+SHA256SUM="7af8caa8225a406e77fb99c9f33dba5e1f0a94f0e1277c9d91dcfc016f116d85  v252.9.tar.gz"
+DESCRIPTION="systemd-logind, extracted to be a standalone daemon"
+
+build() {
+    meson setup \
+    --prefix=/usr \
+    --buildtype=release \
+    -Dman=false \
+    -Ddbuspolicydir=/etc/dbus-1/system.d \
+    build
+    ninja -C build
+}
+
+package() {
+    DESTDIR="$ROOT" ninja -C build install
+    mkdir -p $ROOT/usr/lib/pkgconfig $ROOT/usr/include/systemd
+    ln -s  libelogind.pc $ROOT/usr/lib/pkgconfig/libsystemd.pc
+    ln -sn elogind $ROOT/usr/include/systemd 
+}
