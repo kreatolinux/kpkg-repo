@@ -2,11 +2,11 @@
 NAME="elogind"
 RELEASE="1"
 VERSION="252.9"
-SOURCES="https://github.com/elogind/elogind/archive/refs/tags/v$VERSION.tar.gz"
+SOURCES="https://github.com/elogind/elogind/archive/refs/tags/v$VERSION.tar.gz;realpath.patch"
 BUILD_DEPENDS="meson"
-DEPENDS="dbus linux-pam"
+DEPENDS="dbus linux-pam python-jinja2"
 REPLACES="systemd"
-SHA256SUM="7af8caa8225a406e77fb99c9f33dba5e1f0a94f0e1277c9d91dcfc016f116d85  v252.9.tar.gz"
+SHA256SUM="7af8caa8225a406e77fb99c9f33dba5e1f0a94f0e1277c9d91dcfc016f116d85  v252.9.tar.gz;460b449c1ee637648a0998ce82ac24a82445d65a69de89dd45c0e3c08b88f244  realpath.patch"
 DESCRIPTION="systemd-logind, extracted to be a standalone daemon"
 
 build() {
