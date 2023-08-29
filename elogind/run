@@ -14,12 +14,13 @@ build() {
     --prefix=/usr \
     --buildtype=release \
     -Dman=false \
-    -Ddbuspolicydir=/etc/dbus-1/system.d
-    ninja
+    -Ddbuspolicydir=/etc/dbus-1/system.d \
+    build
+    ninja -C build
 }
 
 package() {
-    DESTDIR="$ROOT" ninja install
+    DESTDIR="$ROOT" ninja -C build install
     mkdir -p $ROOT/usr/lib/pkgconfig $ROOT/usr/include/systemd
     ln -s  libelogind.pc $ROOT/usr/lib/pkgconfig/libsystemd.pc
     ln -sn elogind $ROOT/usr/include/systemd 
