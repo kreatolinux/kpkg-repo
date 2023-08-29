@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="git"
 RELEASE="1"
-VERSION=2.41.0
+VERSION="2.41.0"
 DESCRIPTION="Version control tool"
 SOURCES="https://mirrors.edge.kernel.org/pub/software/scm/git/git-$VERSION.tar.xz"
 DEPENDS="curl openssl zlib"
