@@ -76,3 +76,8 @@ jobs:
         with:
           name: json
           path: /tmp/chkupd.json
+          
+      - uses: actions/upload-artifact@v3
+        with:
+          name: logs
+          path: /tmp/failed-log-*.log
