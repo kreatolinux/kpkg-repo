@@ -16,7 +16,8 @@ build() {
 
 package() {
     make exec_prefix=/usr DESTDIR=$ROOT install
-}
+    sed -i 's/account.*/account         include         system-account/g' "$ROOT/etc/pam.d/su"
+  }
 
 postinstall() {
    pwconv
