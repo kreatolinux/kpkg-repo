@@ -1,6 +1,6 @@
 #!/bin/sh
 NAME="shadow"
-RELEASE="1"
+RELEASE="2"
 VERSION="4.14.0"
 SOURCES="https://github.com/shadow-maint/shadow/releases/download/4.14.0/shadow-4.14.0.tar.xz"
 DEPENDS="libxcrypt linux-pam libbsd"
