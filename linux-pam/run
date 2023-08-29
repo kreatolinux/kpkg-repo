@@ -28,5 +28,5 @@ package() {
     cd Linux-PAM-$VERSION
     make DESTDIR=$ROOT install
     mkdir -p "$ROOT/etc/pam.d"
-    cp -rf pam.d/* "$ROOT/etc/pam.d/" 
+    cp -rf ../pam.d/* "$ROOT/etc/pam.d/" 
 }
