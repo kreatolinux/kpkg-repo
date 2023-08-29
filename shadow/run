@@ -8,12 +8,14 @@ SHA256SUM="87e1c5cc10109536132f1b4e29b6df6edc99b70f36f71ff042c2783f2fa01d4f  sha
 DESCRIPTION="Shadow utils"
 
 build() {
-    ./configure --prefix=/usr
+    ./configure  --disable-static \
+                 --sysconfdir=/etc \
+                 --with-libpam
     make
 }
 
 package() {
-    make DESTDIR=$ROOT install
+    make exec_prefix=/usr DESTDIR=$ROOT install
 }
 
 postinstall() {
