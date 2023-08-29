@@ -3,7 +3,7 @@ NAME="shadow"
 RELEASE="1"
 VERSION="4.14.0"
 SOURCES="https://github.com/shadow-maint/shadow/releases/download/4.14.0/shadow-4.14.0.tar.xz"
-DEPENDS="libxcrypt libbsd"
+DEPENDS="libxcrypt linux-pam libbsd"
 SHA256SUM="87e1c5cc10109536132f1b4e29b6df6edc99b70f36f71ff042c2783f2fa01d4f  shadow-4.14.0.tar.xz"
 DESCRIPTION="Shadow utils"
 
