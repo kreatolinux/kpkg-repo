@@ -14,7 +14,7 @@ prepare() {
     cp -f "$i" "pam.d/$i"
   done
 
-  tar -xvf Linux-PAM-$VERSION.tar.gz
+  tar -xvf Linux-PAM-$VERSION.tar.xz
   cd Linux-PAM-$VERSION
 }
 
