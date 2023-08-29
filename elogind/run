@@ -14,7 +14,8 @@ build() {
     --prefix=/usr \
     --buildtype=release \
     -Dman=false \
-    -Ddbuspolicydir=/etc/dbus-1/system.d
+    -Ddbuspolicydir=/etc/dbus-1/system.d \
+    .
     ninja
 }
 
