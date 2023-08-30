@@ -8,7 +8,7 @@
 -                                   '--relative-to=@0@'.format(project_build_root),
 -                                   project_source_root,
 -                                   check : true).stdout().strip()
-+relative_source_path = meson.source_root() 
++relative_source_path = '..' 
  conf.set_quoted('RELATIVE_SOURCE_PATH', relative_source_path)
  
  conf.set10('BUILD_MODE_DEVELOPER', get_option('mode') == 'developer',
