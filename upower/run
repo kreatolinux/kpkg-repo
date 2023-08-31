@@ -1,0 +1,26 @@
+#!/bin/sh
+NAME="upower"
+RELEASE="1"
+VERSION="1.90.2"
+SOURCES="https://gitlab.freedesktop.org/upower/upower/-/archive/v$VERSION/upower-v$VERSION.tar.gz"
+BUILD_DEPENDS="meson"
+DEPENDS="libgudev libudev libusb gobject-introspection"
+SHA256SUM="5c4e736648f0c89d2368fbbe1e6fc0598a1565c4b435bade1d65e890259fb759  upower-v1.90.2.tar.gz"
+DESCRIPTION="Power management support for DeviceKit"
+
+build() {
+    meson setup \
+    --prefix=/usr \
+    --buildtype=release \
+    -Dgtk-doc=false \
+    -Dman=false \
+    -Dintrospection=enabled \
+    -Dsystemdsystemunitdir=/usr/lib/systemd/system \
+    -Dudevrulesdir=/usr/lib/udev/rules.d \
+    build
+    ninja -C build
+}
+
+package() {
+    DESTDIR="$ROOT" ninja -C build install
+}
