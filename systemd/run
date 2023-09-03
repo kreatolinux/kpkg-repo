@@ -13,7 +13,7 @@ build() {
 
     # Force set relative_source_path as realpath on busybox doesn't support
     # arguments used there.
-    sed -ie '/relative_source_path/{n;N;N;d;}' meson.build
+    sed -ie '/relative_source_path = /{n;N;N;d;}' meson.build
     sed -i "/^relative_source_path = run_command/c\relative_source_path = '..'" meson.build
 
     meson --prefix=/usr build/
