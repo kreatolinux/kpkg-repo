@@ -1,0 +1,21 @@
+#!/bin/sh
+NAME="libgusb"
+RELEASE="1"
+VERSION="238"
+SOURCES="https://download.gnome.org/sources/libgudev/$VERSION/libgudev-$VERSION.tar.xz"
+BUILD_DEPENDS="meson gobject-introspection vala"
+DEPENDS="json-glib libusb"
+SHA256SUM="61266ab1afc9d73dbc60a8b2af73e99d2fdff47d99544d085760e4fa667b5dd1  libgudev-238.tar.xz"
+DESCRIPTION="GObject bindings for libusb"
+
+build() {
+    meson setup \
+    --prefix=/usr \
+    --buildtype=release \
+    build
+    ninja -C build
+}
+
+package() {
+    DESTDIR="$ROOT" ninja -C build install
+}
