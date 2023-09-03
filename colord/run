@@ -10,6 +10,7 @@ DESCRIPTION="A system service that makes it easy to manage, install and generate
 
 build() {
     meson setup \
+    --buildtype=release \
     --prefix=/usr \
     -Dman=false \
     build

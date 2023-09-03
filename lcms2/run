@@ -11,6 +11,7 @@ DESCRIPTION="A free, open source, CMM engine"
 build() {
     meson setup \
     --prefix=/usr \
+    --buildtype=release \
     -Djpeg=enabled \
     build
     ninja -C build

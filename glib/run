@@ -10,6 +10,7 @@ DESCRIPTION="glib"
 build() {
     meson setup \
     --prefix=/usr \
+    --buildtype=release \
     -Dman=false \
     build
     ninja -C build
