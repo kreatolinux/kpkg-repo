@@ -20,11 +20,13 @@ prepare() {
 }
 
 build() {
+    cd systemd-$VERSION
     meson --prefix=/usr build/
     ninja -C build/
 }
 
 package() {
+    cd systemd-$VERSION
     export PATH="$PATH:$(realpath ../)"
     DESTDIR=$ROOT ninja -C build/ install
 }
