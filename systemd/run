@@ -21,7 +21,7 @@ prepare() {
     sed -i "s/--relative/-r/g" meson.build
 
     echo "#!/bin/sh" > ../ln
-    echo 'ARGS="$(echo $@ | sed \'s/\--relative/-r/g\')"' >> ../ln
+    echo 'ARGS="$(echo $@ | sed '\s/\--relative/-r/g')"' >> ../ln
     echo '/bin/ln $ARGS' >> ../ln
     chmod +x ../ln
 }
