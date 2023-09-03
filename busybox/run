@@ -1,18 +1,28 @@
 #!/bin/sh
 NAME="busybox"
-RELEASE="1"
+RELEASE="2"
 VERSION="1.36.1"
-SOURCES="https://www.busybox.net/downloads/busybox-$VERSION.tar.bz2"
+SOURCES="https://www.busybox.net/downloads/busybox-$VERSION.tar.bz2;ln-relative-symlinks.patch"
 DEPENDS=""
-SHA256SUM="b8cc24c9574d809e7279c3be349795c5d5ceb6fdf19ca709f80cde50e47de314  busybox-1.36.1.tar.bz2"
+SHA256SUM="b8cc24c9574d809e7279c3be349795c5d5ceb6fdf19ca709f80cde50e47de314  busybox-1.36.1.tar.bz2;9dd4c0567e98a745d48414197f7ad711f8ede97452486159d86926ae12a95d04  ln-relative-symlinks.patch"
 DESCRIPTION="The Swiss Army Knife of Embedded Linux"
 
+prepare() {
+    tar -xvf busybox-$VERSION.tar.bz2
+    cd busybox-$VERSION/coreutils
+    
+    # Got the patch from http://lists.busybox.net/pipermail/busybox/2016-June/084276.html
+    patch -p1 < ../../ln-relative-symlinks.patch
+}
+
 build() {
+    cd busybox-$VERSION
     make -j$(nproc) defconfig
     make -j$(nproc) busybox
 }
 
 package() {
+    cd busybox-$VERSION
     [ ! -d "$ROOT/bin" ] && mkdir -p $ROOT/bin/
     cp busybox $ROOT/bin/
 }
