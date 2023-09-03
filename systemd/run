@@ -2,11 +2,11 @@
 NAME="systemd"
 RELEASE="2"
 VERSION="254"
-SOURCES="https://github.com/systemd/systemd/archive/refs/tags/v$VERSION.tar.gz;ln"
+SOURCES="https://github.com/systemd/systemd/archive/refs/tags/v$VERSION.tar.gz"
 BUILD_DEPENDS="meson samurai"
 DEPENDS="gperf libcap util-linux python-jinja2 kmod"
 REPLACES="elogind eudev libudev"
-SHA256SUM="244da7605800a358915e4b45d079b0b89364be35da4bc8d849821e67bac0ce62  v254.tar.gz;4af7466b6d1b3a10b560e9a29ef88eb972ebab0c2da8889823922d22552c330b  ln"
+SHA256SUM="244da7605800a358915e4b45d079b0b89364be35da4bc8d849821e67bac0ce62  v254.tar.gz"
 DESCRIPTION="The systemd System and Service Manager"
 
 prepare() {
@@ -19,7 +19,10 @@ prepare() {
     sed -i "/^relative_source_path = run_command/c\relative_source_path = '..'" meson.build
 
     sed -i "s/--relative/-r/g" meson.build
-    
+
+    echo "#!/bin/sh" > ../ln
+    echo \'ARGS="$(echo $@ | sed 's/\--relative/-r/g')"\' >> ../ln
+    echo '/bin/ln $ARGS' >> ../ln
     chmod +x ../ln
 }
 
