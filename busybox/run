@@ -1,6 +1,6 @@
 #!/bin/sh
 NAME="busybox"
-RELEASE="2"
+RELEASE="3"
 VERSION="1.36.1"
 SOURCES="https://www.busybox.net/downloads/busybox-$VERSION.tar.bz2;ln-relative-symlinks.patch"
 DEPENDS=""
@@ -18,11 +18,9 @@ prepare() {
 build() {
     cd busybox-$VERSION
     make -j$(nproc) defconfig
-    make -j$(nproc) busybox
+    make -j$(nproc)
 }
 
 package() {
-    cd busybox-$VERSION
-    [ ! -d "$ROOT/bin" ] && mkdir -p $ROOT/bin/
-    cp busybox $ROOT/bin/
+    make install
 }
