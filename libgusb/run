@@ -5,7 +5,7 @@ VERSION="0.4.6"
 SOURCES="https://github.com/hughsie/libgusb/releases/download/$VERSION/libgusb-$VERSION.tar.xz"
 BUILD_DEPENDS="meson gobject-introspection vala"
 DEPENDS="json-glib libusb"
-SHA256SUM="1b0422bdcd72183272ac42eec9398c5a0bc48a02f618fa3242c468cbbd003049 libgusb-0.4.6.tar.xz"
+SHA256SUM="1b0422bdcd72183272ac42eec9398c5a0bc48a02f618fa3242c468cbbd003049  libgusb-0.4.6.tar.xz"
 DESCRIPTION="GObject bindings for libusb"
 
 build() {
