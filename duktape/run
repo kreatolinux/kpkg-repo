@@ -1,0 +1,18 @@
+#!/bin/sh
+NAME="duktape"
+RELEASE="3"
+VERSION="2.7.0"
+SOURCES="https://duktape.org/duktape-$VERSION.tar.xz"
+BUILD_DEPENDS="gmake"
+DEPENDS=""
+SHA256SUM="90f8d2fa8b5567c6899830ddef2c03f3c27960b11aca222fa17aa7ac613c2890  duktape-2.7.0.tar.xz"
+DESCRIPTION="An embeddable Javascript engine"
+
+build() {
+    sed -i 's/-Os/-O2/g' Makefile.sharedlibrary
+    make -f Makefile.sharedlibrary INSTALL_PREFIX=/usr
+}
+
+package() {
+    make -f Makefile.sharedlibrary DESTDIR="$ROOT" INSTALL_PREFIX=/usr install
+}

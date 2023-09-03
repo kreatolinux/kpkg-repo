@@ -1,0 +1,21 @@
+#!/bin/sh
+NAME="dbus"
+RELEASE="5"
+VERSION="1.15.6"
+SOURCES="https://dbus.freedesktop.org/releases/dbus/dbus-$VERSION.tar.xz"
+DEPENDS="expat systemd"
+REPLACES="dbus"
+SHA256SUM="f97f5845f9c4a5a1fb3df67dfa9e16b5a3fd545d348d6dc850cb7ccc9942bd8c  dbus-1.15.6.tar.xz"
+DESCRIPTION="Message bus system - has support for systemd"
+
+build() {
+    ./configure --disable-static \
+                --prefix=/usr    \
+                --runstatedir=/run \
+		--enable-systemd
+    make
+}
+
+package() {
+    make DESTDIR="$ROOT" install
+}
