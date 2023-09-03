@@ -1,0 +1,25 @@
+#!/bin/sh
+NAME="systemd"
+RELEASE="2"
+VERSION="254"
+SOURCES="https://github.com/systemd/systemd/archive/refs/tags/v$VERSION.tar.gz"
+BUILD_DEPENDS="meson samurai"
+DEPENDS="gperf libcap util-linux python-jinja2 kmod"
+REPLACES="elogind eudev"
+SHA256SUM="244da7605800a358915e4b45d079b0b89364be35da4bc8d849821e67bac0ce62  v254.tar.gz"
+DESCRIPTION="The systemd System and Service Manager"
+
+build() {
+
+    # Force set relative_source_path as realpath on busybox doesn't support
+    # arguments used there.
+    sed -ie '/relative_source_path/{n;N;N;d;}' meson.build
+    sed -i "/^relative_source_path = run_command/c\relative_path = '..'" meson.build
+
+    meson --prefix=/usr build/
+    ninja -C build/
+}
+
+package() {
+    DESTDIR=$ROOT ninja -C build/ install
+}
