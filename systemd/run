@@ -23,6 +23,7 @@ prepare() {
     echo "#!/bin/sh" > ../ln
     echo 'ARGS=$(echo $@ | sed "s/--relative/-r/g;s/--help//g")' >> ../ln
     echo '/bin/ln $ARGS' >> ../ln
+    echo 'exit 0' >> ../ln
     chmod +x ../ln
 }
 
