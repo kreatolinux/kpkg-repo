@@ -1,6 +1,6 @@
 #!/bin/sh
 NAME="libgusb"
-RELEASE="1"
+RELEASE="2"
 VERSION="0.4.6"
 SOURCES="https://github.com/hughsie/libgusb/releases/download/$VERSION/libgusb-$VERSION.tar.xz"
 BUILD_DEPENDS="meson gobject-introspection vala"
@@ -12,6 +12,7 @@ build() {
     meson setup \
     --prefix=/usr \
     --buildtype=release \
+    -Ddocs=false \
     build
     ninja -C build
 }
