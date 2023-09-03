@@ -1,0 +1,5 @@
+#!/bin/sh
+# Simple wrapper that redirects ln --redirect
+# to ln -r
+ARGS="$(echo $@ | sed 's/\--relative/-r/g')"
+ln $ARGS
