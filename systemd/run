@@ -19,6 +19,8 @@ prepare() {
     sed -i "/^relative_source_path = run_command/c\relative_source_path = '..'" meson.build
 
     sed -i "s/--relative/-r/g" meson.build
+    
+    chmod +x ../ln
 }
 
 build() {
