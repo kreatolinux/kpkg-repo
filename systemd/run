@@ -6,7 +6,7 @@ SOURCES="https://github.com/systemd/systemd/archive/refs/tags/v$VERSION.tar.gz;l
 BUILD_DEPENDS="meson samurai"
 DEPENDS="gperf libcap util-linux python-jinja2 kmod"
 REPLACES="elogind eudev libudev"
-SHA256SUM="244da7605800a358915e4b45d079b0b89364be35da4bc8d849821e67bac0ce62  v254.tar.gz;986329dbcc913bd3edc2982137c5028ecf94d4a255bbb13b6859bee285df1211  ln"
+SHA256SUM="244da7605800a358915e4b45d079b0b89364be35da4bc8d849821e67bac0ce62  v254.tar.gz;4af7466b6d1b3a10b560e9a29ef88eb972ebab0c2da8889823922d22552c330b  ln"
 DESCRIPTION="The systemd System and Service Manager"
 
 prepare() {
@@ -17,16 +17,19 @@ prepare() {
     # arguments used there.
     sed -ie '/relative_source_path = /{n;N;N;d}' meson.build
     sed -i "/^relative_source_path = run_command/c\relative_source_path = '..'" meson.build
+
+    sed -i "s/--relative/-r/g" meson.build
 }
 
 build() {
     cd systemd-$VERSION
+    export PATH="$(realpath ../):$PATH"
     meson --prefix=/usr build/
     ninja -C build/
 }
 
 package() {
     cd systemd-$VERSION
-    export PATH="$PATH:$(realpath ../)"
+    export PATH="$(realpath ../):$PATH"
     DESTDIR=$ROOT ninja -C build/ install
 }
