@@ -1,0 +1,21 @@
+#!/bin/sh
+NAME="polkit"
+RELEASE="1"
+VERSION="123"
+SOURCES="https://gitlab.freedesktop.org/polkit/polkit/-/archive/$VERSION/polkit-$VERSION.tar.gz"
+DEPENDS="elogind linux-pam glib gobject-introspection expat dbus"
+BUILD_DEPENDS="meson"
+SHA256SUM="b69278f6ea0eac406350c45f5720e2fe5e4beaf9f53c16d9902e025965418864  polkit-123.tar.gz"
+DESCRIPTION="A toolkit for defining and handling authorizations"
+
+build() {
+    meson setup \
+    --prefix=/usr \
+    -Dman=false \
+    build
+    ninja -C build
+}
+
+package() {
+    DESTDIR="$ROOT" ninja -C build install
+}
