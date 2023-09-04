@@ -22,6 +22,7 @@ build() {
     --buildtype=release \
     -Dman=false \
     -Ddoxygen=false \
+    -Dtests=false \
     -Ddatabase=gdbm     \
     -Dbluez5=$bluez5 \
     build
