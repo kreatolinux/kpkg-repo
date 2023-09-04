@@ -9,10 +9,15 @@ SHA256SUM="7407631a27bfe5d1b672e7ae42777001c105d860b7b7392283c8c6300de88e6f  col
 DESCRIPTION="A system service that makes it easy to manage, install and generate color profiles"
 
 build() {
+    systemd="false"
+    if command -v systemctl > /dev/null
+      systemd="true"
+    fi
     meson setup \
     --buildtype=release \
     --prefix=/usr \
     -Dman=false \
+    -Dsystemd=$systemd \
     build
     ninja -C build
 }
