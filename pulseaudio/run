@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="16.99.1"
 SOURCES="https://www.freedesktop.org/software/pulseaudio/releases/pulseaudio-$VERSION.tar.xz"
 BUILD_DEPENDS="meson"
-DEPENDS="libsndfile alsa-lib dbus elogind glib"
+DEPENDS="libsndfile libtool alsa-lib dbus elogind glib"
 OPTDEPENDS="bluez: for Bluetooth support"
 SHA256SUM="dbb89a4c4a5f30f03b2c8c95de864ad53f7a40d4fdee29063f966cf66cfa800a  pulseaudio-16.99.1.tar.xz"
 DESCRIPTION="Sound system"
@@ -22,6 +22,7 @@ build() {
     --buildtype=release \
     -Dman=false \
     -Ddoxygen=false \
+    -Ddatabase=gdbm     \
     -Dbluez5=$bluez5 \
     build
     ninja -C build
