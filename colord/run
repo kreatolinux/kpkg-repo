@@ -23,6 +23,7 @@ build() {
     -Dman=false \
     -Dsystemd=$systemd \
     -Dbash_completion=false \
+    -Ddocs=false \
     build
     ninja -C build
 }
