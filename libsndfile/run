@@ -1,0 +1,17 @@
+#!/bin/sh
+NAME="libsndfile"
+RELEASE="1"
+VERSION="1.2.2"
+SOURCES="https://github.com/libsndfile/libsndfile/releases/download/$VERSION/libsndfile-$VERSION.tar.xz"
+DEPENDS="flac opus libvorbis alsa-lib sqlite lame"
+SHA256SUM="3799ca9924d3125038880367bf1468e53a1b7e3686a934f098b7e1d286cdb80e  libsndfile-1.2.2.tar.xz"
+DESCRIPTION="A C library for reading and writing sound files containing sampled audio data"
+
+build() {
+    ./configure --prefix=/usr
+    make
+}
+
+package() {
+    make DESTDIR=$ROOT install
+}
