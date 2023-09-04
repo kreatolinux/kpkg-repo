@@ -2,7 +2,7 @@
 NAME="lame"
 RELEASE="1"
 VERSION="3.100"
-SOURCES="https://downloads.sourceforge.net/lame/lame-$VERSION.tar.gz"
+SOURCES="https://netix.dl.sourceforge.net/project/lame/lame/$VERSION/lame-$VERSION.tar.gz"
 DEPENDS="ncurses"
 BUILD_DEPENDS="nasm"
 SHA256SUM="ddfe36cab873794038ae2c1210557ad34857a4b6bdc515785d1da9e175b1da1e  lame-3.100.tar.gz"
