@@ -1,0 +1,17 @@
+#!/bin/sh
+NAME="libcanberra"
+RELEASE="1"
+VERSION="0.30"
+SOURCES="https://0pointer.de/lennart/projects/libcanberra/libcanberra-$VERSION.tar.xz"
+DEPENDS="libtool libvorbis"
+SHA256SUM="c2b671e67e0c288a69fc33dc1b6f1b534d07882c2aceed37004bf48c601afa72  libcanberra-0.30.tar.xz"
+DESCRIPTION="libcanberra"
+
+build() {
+    ./configure
+    make
+}
+
+package() {
+    make install
+}
