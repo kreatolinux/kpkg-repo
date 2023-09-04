@@ -22,6 +22,7 @@ build() {
     --prefix=/usr \
     -Dman=false \
     -Dsystemd=$systemd \
+    -Dbash_completion=false \
     build
     ninja -C build
 }
