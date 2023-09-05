@@ -13,6 +13,7 @@ build() {
     --prefix=/usr \
     --buildtype=release \
     -Dx11-backend=false \
+    -Dmedia-gstreamer=disabled \
     -Dintrospection=enabled \
     build
     ninja -C build
