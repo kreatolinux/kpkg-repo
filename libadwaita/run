@@ -1,0 +1,22 @@
+#!/bin/sh
+NAME="libadwaita"
+RELEASE="1"
+VERSION="1.3.5"
+SOURCES="https://gitlab.gnome.org/GNOME/libadwaita/-/archive/$VERSION/libadwaita-$VERSION.tar.gz"
+DEPENDS="gtk4"
+BUILD_DEPENDS="meson vala"
+SHA256SUM="22ace3690663346f5f7f960ca1941f7279f808c17403e0475e533fde59063181  libadwaita-1.3.5.tar.gz"
+DESCRIPTION="GNOME ui stuff"
+
+build() {
+    meson setup \
+    --prefix=/usr \
+    --buildtype=release \
+    -Dgtk_doc=false \
+    build
+    ninja -C build
+}
+
+package() {
+    DESTDIR="$ROOT" ninja -C build install
+}
