@@ -1,0 +1,27 @@
+#!/bin/sh
+NAME="gnome-session"
+RELEASE="1"
+VERSION="44.0"
+SOURCES="https://download.gnome.org/sources/gnome-session/44/gnome-session-$VERSION.tar.xz"
+BUILD_DEPENDS="meson"
+DEPENDS="elogind gnome-desktop json-glib mesa upower"
+SHA256SUM="5a5a191c96836e166a7771f7ea6ca2b0069c603c7da3cba1cd38d1694a395dda  glib-2.76.4.tar.xz"
+DESCRIPTION="The GNOME session manager"
+
+build() {
+    
+    if ! command -v systemctl > /dev/null; then
+      # Credits to https://www.linuxfromscratch.org/blfs/view/svn/gnome/gnome-session.html
+      extraArgs="-Dsystemd_journal=false -Dsystemduserunitdir=/tmp"
+    fi
+
+    meson setup \
+    --prefix=/usr \
+    --buildtype=release \
+    $extraArgs build
+    ninja -C build
+}
+
+package() {
+    DESTDIR="$ROOT" ninja -C build install
+}
