@@ -11,9 +11,8 @@ DESCRIPTION="gtk4"
 build() {
     meson setup \
     --prefix=/usr \
-    -Dman=false \
     --buildtype=release \
-    -Dx11_backend=false \
+    -Dx11-backend=false \
     -Dintrospection=enabled \
     build
     ninja -C build
