@@ -1,0 +1,18 @@
+#!/bin/sh
+NAME="libsm"
+RELEASE="1"
+VERSION="1.2.4"
+SOURCES="https://www.x.org/releases/individual/lib/libSM-$VERSION.tar.xz"
+SHA256SUM="fdcbe51e4d1276b1183da77a8a4e74a137ca203e0bcfb20972dd5f3347e97b84  libSM-1.2.4.tar.xz"
+DEPENDS="libice util-linux"
+BUILD_DEPENDS="xorgproto xtrans"
+DESCRIPTION="X11 Session Management Library"
+
+build() {
+    ./configure --prefix=/usr
+    make
+}
+
+package() {
+    make DESTDIR=$ROOT install
+}
