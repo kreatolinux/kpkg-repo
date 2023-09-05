@@ -1,0 +1,22 @@
+#!/bin/sh
+NAME="desktop-file-utils"
+RELEASE="1"
+VERSION="0.26"
+SOURCES="https://www.freedesktop.org/software/desktop-file-utils/releases/desktop-file-utils-$VERSION.tar.xz"
+BUILD_DEPENDS="meson"
+DEPENDS="glib"
+SHA256SUM="b26dbde79ea72c8c84fb7f9d870ffd857381d049a86d25e0038c4cef4c747309  desktop-file-utils-0.26.tar.xz"
+DESCRIPTION="A few command line utilities for working
+with desktop entries"
+
+build() {
+    meson setup \
+    --prefix=/usr \
+    --buildtype=release \
+    build
+    ninja -C build
+}
+
+package() {
+    DESTDIR="$ROOT" ninja -C build install
+}
