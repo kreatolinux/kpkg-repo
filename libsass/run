@@ -9,7 +9,9 @@ DESCRIPTION="sass library"
 
 build() {
     autoreconf -v -f -i
-    ./configure --prefix=/usr --disable-static
+    ./configure --prefix=/usr \
+          --disable-tests \
+          --enable-shared
     make
 }
 
