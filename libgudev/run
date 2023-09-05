@@ -5,7 +5,7 @@ VERSION="237"
 SOURCES="https://download.gnome.org/sources/libgudev/$VERSION/libgudev-$VERSION.tar.xz"
 BUILD_DEPENDS="meson"
 DEPENDS="libudev>=1.0.3 glib gobject-introspection"
-SHA256SUM="0d06b21170d20c93e4f0534dbb9b0a8b4f1119ffb00b4031aaeb5b9148b686aa  libgudev-237.tar.xz"
+SHA256SUM=""
 DESCRIPTION="GObject bindings for libudev"
 
 build() {
