@@ -2,10 +2,10 @@
 NAME="libgweather"
 RELEASE="1"
 VERSION="4.3.2"
-SOURCES="https://github.com/GNOME/libgweather/archive/refs/tags/$VERSION.tar.gz"
+SOURCES="https://gitlab.gnome.org/GNOME/libgweather/-/archive/$VERSION/libgweather-$VERSION.tar.gz"
 DEPENDS="geocode-glib glib libsoup json-glib"
 BUILD_DEPENDS="meson vala pygobject gobject-introspection"
-SHA256SUM="16bdaa00720b9464e1a27bcbf151771b6c7d2438680a027c960d7f10f3974225  4.3.2.tar.gz"
+SHA256SUM="16bdaa00720b9464e1a27bcbf151771b6c7d2438680a027c960d7f10f3974225  libgweather-4.3.2.tar.gz"
 DESCRIPTION="libgweather"
 
 build() {
