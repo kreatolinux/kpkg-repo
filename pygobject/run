@@ -1,0 +1,21 @@
+#!/bin/sh
+NAME="pygobject"
+RELEASE="1"
+VERSION="3.44.1"
+SOURCES="https://gitlab.gnome.org/GNOME/pygobject/-/archive/$VERSION/pygobject-$VERSION.tar.gz"
+DEPENDS="python pycairo"
+SHA256SUM="f2c3f85161c32791a60c2f2b54fdb89e38f1acde0f6a8f0be4e0e36f73f144ad  pygobject-3.44.1.tar.gz"
+DESCRIPTION="Python bindings for gobject-introspection"
+
+build() {
+    meson setup \
+        --prefix=/usr \
+        --buildtypee=release \
+        build
+
+    meson compile -C build
+}
+
+package() {
+    meson install --destdir="$ROOT" -C build
+}
