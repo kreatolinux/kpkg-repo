@@ -1,0 +1,32 @@
+#!/bin/sh
+NAME="gnome-settings-daemon"
+RELEASE="1"
+VERSION="44.1"
+SOURCES="https://gitlab.gnome.org/GNOME/gnome-settings-daemon/-/archive/$VERSION/gnome-settings-daemon-$VERSION.tar.gz"
+BUILD_DEPENDS="meson"
+DEPENDS="alsa-lib colord fontconfig gcr geoclue geocode-glib gnome-desktop lcms2 libcanberra libgweather libnotify libwacom pulseaudio upower wayland gnome-session"
+SHA256SUM="a35f8e505cb0659fb69571a54325b4be21dab32275ea15b56ba36c87b3baf693  gnome-settings-daemon-44.1.tar.gz"
+DESCRIPTION="gnome-settings-daemon"
+
+build() {
+    
+    if ! command -v systemctl > /dev/null; then
+      # Credits to https://www.linuxfromscratch.org/blfs/view/svn/gnome/gnome-settings-daemon.html for these
+      sed -e 's/libsystemd/libelogind/' \
+        -i plugins/power/test.py
+      systemd="false"
+    else
+      systemd="true" 
+    fi
+
+    meson setup \
+    --prefix=/usr \
+    --buildtype=release \
+    -Dsystemd=$systemd \
+    build
+    ninja -C build
+}
+
+package() {
+    DESTDIR="$ROOT" ninja -C build install
+}
