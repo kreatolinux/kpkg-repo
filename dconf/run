@@ -13,6 +13,7 @@ build() {
     --prefix=/usr \
     -Dbash_completion=false \
     --buildtype=release \
+    -Dman=false \
     build
     ninja -C build
 }
