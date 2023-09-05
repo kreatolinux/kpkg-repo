@@ -13,6 +13,8 @@ build() {
     --prefix=/usr \
     --buildtype=release \
     -Dx11-backend=false \
+    -Dbuild-demos=false \
+    -Dbuild-examples=false \
     -Dmedia-gstreamer=disabled \
     -Dintrospection=enabled \
     build
