@@ -1,14 +1,18 @@
 #!/bin/sh
 NAME="libcanberra"
-RELEASE="1"
+RELEASE="2"
 VERSION="0.30"
 SOURCES="https://0pointer.de/lennart/projects/libcanberra/libcanberra-$VERSION.tar.xz"
-DEPENDS="libtool libvorbis"
+DEPENDS="libvorbis gstreamer gtk3 alsa-lib"
+BUILD_DEPENDS="libtool"
 SHA256SUM="c2b671e67e0c288a69fc33dc1b6f1b534d07882c2aceed37004bf48c601afa72  libcanberra-0.30.tar.xz"
 DESCRIPTION="libcanberra"
 
 build() {
-    ./configure
+    ./configure \
+        --prefix=/usr \
+        --disable-oss \
+        --disable-gtk
     make
 }
 
