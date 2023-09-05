@@ -3,7 +3,7 @@ NAME="libsass"
 RELEASE="1"
 VERSION="3.6.5"
 SOURCES="https://github.com/sass/libsass/archive/$VERSION/libsass-$VERSION.tar.gz"
-BUILD_DEPENDS="autoconf automake"
+BUILD_DEPENDS="autoconf automake libtool"
 SHA256SUM="89d8f2c46ae2b1b826b58ce7dde966a176bac41975b82e84ad46b01a55080582  libsass-3.6.5.tar.gz"
 DESCRIPTION="sass library"
 
