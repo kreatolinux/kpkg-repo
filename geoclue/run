@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="2.7.0"
 SOURCES="https://gitlab.freedesktop.org/geoclue/geoclue/-/archive/$VERSION/geoclue-$VERSION.tar.gz" 
 BUILD_DEPENDS="meson"
-DEPENDS="libsoup json-glib glib"
+DEPENDS="libnotify libsoup json-glib glib"
 SHA256SUM="761931226a7b8ecf3098c9ee1ff1240adec2870a6d9129ad89e934d3aa761be5  geoclue-2.7.0.tar.gz"
 DESCRIPTION="A D-Bus geoinformation service"
 
