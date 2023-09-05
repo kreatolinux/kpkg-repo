@@ -10,7 +10,7 @@ DESCRIPTION="sass command-line tool"
 
 build() {
     autoreconf -v -f -i
-    ./configure --prefix=/usr
+    ./configure --prefix=/usr --disable-static
     make
 }
 
