@@ -7,7 +7,8 @@ BUILD_DEPENDS="autoconf automake"
 SHA256SUM="89d8f2c46ae2b1b826b58ce7dde966a176bac41975b82e84ad46b01a55080582  libsass-3.6.5.tar.gz"
 DESCRIPTION="sass library"
 
-build() {
+build() {  
+    export LIBSASS_VERSION="$VERSION"
     autoreconf -v -f -i
     ./configure --prefix=/usr \
           --disable-tests \
