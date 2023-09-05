@@ -10,7 +10,7 @@ DESCRIPTION="Python bindings for gobject-introspection"
 build() {
     meson setup \
         --prefix=/usr \
-        --buildtypee=release \
+        --buildtype=release \
         build
 
     meson compile -C build
