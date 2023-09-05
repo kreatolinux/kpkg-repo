@@ -9,11 +9,10 @@ SHA256SUM="cd4464f74add58584f04e6a7f16347f07caf271509e0b7ef067a4170b74518c9  3.2
 DESCRIPTION="geocode-glib"
 
 build() {
-    mkdir build
-    cd build
-    meson setup --prefix /usr --buildtype=release -Denable-gtk-doc=false -Dsoup2=false
+    meson setup --prefix /usr --buildtype=release -Denable-gtk-doc=false -Dsoup2=false build/
+    meson compile -C build 
 }
 
 package() {
-    ninja install
+    meson install --destdir "$ROOT" -C build/
 }
