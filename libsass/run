@@ -14,5 +14,6 @@ build() {
 }
 
 package() {
+    mkdir -p "$ROOT/usr/local"
     make DESTDIR=$ROOT install
 }
