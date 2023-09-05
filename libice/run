@@ -1,0 +1,16 @@
+#!/bin/sh
+NAME="libice"
+RELEASE="1"
+VERSION="1.1.1"
+SOURCES="https://www.x.org/releases/individual/lib/libICE-$VERSION.tar.xz"
+SHA256SUM="03e77afaf72942c7ac02ccebb19034e6e20f456dcf8dddadfeb572aa5ad3e451  libICE-1.1.1.tar.xz"
+DESCRIPTION="X11 Inter-Client exchange library"
+
+build() {
+    ./configure --prefix=/usr
+    make
+}
+
+package() {
+    make DESTDIR=$ROOT install
+}
