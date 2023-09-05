@@ -16,6 +16,7 @@ build() {
     -D3g-source=false \
     -Dcdma-source=false \
     -Dgtk-doc=false \
+    -Dnmea-source=false \
     build
     ninja -C build
 }
