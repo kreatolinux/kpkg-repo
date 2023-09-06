@@ -4,9 +4,11 @@ RELEASE="1"
 VERSION="1.8"
 SOURCES="https://github.com/jpirko/libndp/archive/refs/tags/v$VERSION.tar.gz"
 SHA256SUM="c3ea76e253def89869651686a827da75b56896fe94fabd87d8c14b1d4588fd05  v1.8.tar.gz"
+BUILD_DEPENDS="autoconf automake"
 DESCRIPTION="Neighbor Discovery library"
 
 build() {
+    autoreconf -v -f -i
     ./configure --prefix=/usr                   \
                 --sysconfdir=/etc --localstatedir=/var \
                 --disable-static \
