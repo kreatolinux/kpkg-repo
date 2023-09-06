@@ -9,6 +9,9 @@ DESCRIPTION="slang"
 build() {
     ./configure --prefix=/usr                   \
                 --sysconfdir=/etc               \
+                --build=$(uname -m) \
+                --host=$(uname -m) \
+                --target=$(uname -m)
     make
 }
 
