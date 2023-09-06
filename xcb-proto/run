@@ -1,0 +1,17 @@
+#!/bin/sh
+NAME="xcb-proto"
+RELEASE="1"
+VERSION="1.15"
+SOURCES="https://xcb.freedesktop.org/dist/xcb-proto-$VERSION.tar.gz"
+SHA256SUM="0e434af76af722ef9b2dc21066da1cd11e5dd85fc1996d66228d090f9ae9b217  xcb-proto-1.15.tar.gz"
+BUILD_DEPENDS="python libxml2"
+DESCRIPTION="XML-XCB protocol descriptions"
+
+build() {
+    ./configure --prefix=/usr
+    make
+}
+
+package() {
+    make DESTDIR=$ROOT install
+}
