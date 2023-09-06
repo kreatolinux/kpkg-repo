@@ -8,7 +8,9 @@ SHA256SUM="15f54bb72048eb105f8c0e936a04b899e74c3db9a19bbc1e00acee2af9476a8a  nss
 DESCRIPTION="network stuff"
 
 build() {
-  
+
+  cd nss
+
   if [ "$(uname -m)" = "x86_64" ]; then
     extraArgs="USE_64=1"
   fi
@@ -23,5 +25,6 @@ build() {
 }
 
 package() {
+    cd nss
     make DESTDIR=$ROOT install
 }
