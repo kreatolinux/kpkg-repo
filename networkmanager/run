@@ -21,6 +21,7 @@ build() {
     -Dnmtui=true \
     -Ddocs=false \
     -Dcrypto=gnutls \
+    -Dqt=false \
     -Dppp=false \
     -Dlibaudit=no \
     -Dselinux=false \
