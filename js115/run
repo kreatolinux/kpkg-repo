@@ -1,22 +1,17 @@
 #!/bin/sh
 NAME="js102"
 RELEASE="1"
-VERSION="102.15.0"
-SOURCES="https://archive.mozilla.org/pub/firefox/releases/$VERSIONesr/source/firefox-$VERSIONesr.source.tar.xz" 
+VERSION="115.2.0"
+SOURCES="https://archive.mozilla.org/pub/firefox/releases/$VERSIONesr/source/firefox-$VERSIONesr.source.tar.xz"
 DEPENDS="readline zlib icu"
 BUILD_DEPENDS="rust python llvm which"
-SHA256SUM="81fa590408f5a3af8f004d839ac47fb4121e05fe717334445cec9ca55d8746af  firefox-102.15.0esr.source.tar.xz"
+SHA256SUM="51534dd2a158d955a2cb67cc1308f100f6c9def0788713ed8b4d743f3ad72457  firefox-115.2.0esr.source.tar.xz"
 DESCRIPTION="Spidermonkey JavaScript and WebAssembly Engine"
-
-prepare() {
-  tar -xvf firefox-$VERSION\esr.source.tar.xz
-  cd firefox-$VERSION
-}
 
 build() {
   # Thanks to BLFS for configure arguments: https://www.linuxfromscratch.org/blfs/view/svn/general/js102.html
-  mkdir firefox-$VERSION/obj
-  cd firefox-$VERSION/obj
+  mkdir obj
+  cd obj
   # Add CC=clang so it overrides the cc set by the user in the configuration file as it may cause problems.
   CC=clang sh ../js/src/configure.in --prefix=/usr \
                           --with-intl-api          \
@@ -29,6 +24,6 @@ build() {
 }
 
 package() {
-  cd firefox-$VERSION/obj
+  cd obj
   make install
 }
