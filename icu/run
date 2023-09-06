@@ -7,10 +7,12 @@ SHA256SUM="818a80712ed3caacd9b652305e01afc7fa167e6f2e94996da44b90c2ab604ce1  icu
 DESCRIPTION="Unicode stuff"
 
 build() {
+    cd source
     ./configure --prefix=/usr
     make
 }
 
 package() {
+    cd source
     make DESTDIR=$ROOT install
 }
