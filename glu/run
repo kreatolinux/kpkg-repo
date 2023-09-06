@@ -1,0 +1,20 @@
+#!/bin/sh
+NAME="glu"
+RELEASE="1"
+VERSION="9.0.3"
+SOURCES="https://gitlab.freedesktop.org/mesa/glu/-/archive/glu-$VERSION/glu-glu-$VERSION.tar.gz"
+DEPENDS="mesa"
+SHA256SUM="7e919cbc1b2677b01d65fc28fd36a19d1f3e23d76663020e0f3b82b991475e8b  glu-glu-9.0.3.tar.gz"
+DESCRIPTION="glu"
+
+build() {
+    meson setup \
+    --prefix=/usr \
+    --buildtype=release \
+    build
+    ninja -C build
+}
+
+package() {
+    DESTDIR="$ROOT" ninja -C build install
+}
