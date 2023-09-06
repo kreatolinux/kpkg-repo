@@ -1,0 +1,27 @@
+#!/bin/sh
+NAME="nss"
+RELEASE="1"
+VERSION="3.93"
+SOURCES="https://archive.mozilla.org/pub/security/nss/releases/NSS_3_93_RTM/src/nss-$VERSION.tar.gz"
+DEPENDS="nspr sqlite p11-kit zlib"
+SHA256SUM="15f54bb72048eb105f8c0e936a04b899e74c3db9a19bbc1e00acee2af9476a8a  nss-3.93.tar.gz"
+DESCRIPTION="network stuff"
+
+build() {
+  
+  if [ "$(uname -m)" = "x86_64" ]; then
+    extraArgs="USE_64=1"
+  fi
+
+  # Taken from BLFS
+  make BUILD_OPT=1                  \
+    NSPR_INCLUDE_DIR=/usr/include/nspr  \
+    USE_SYSTEM_ZLIB=1                   \
+    ZLIB_LIBS=-lz                       \
+    NSS_ENABLE_WERROR=0                 \
+    NSS_USE_SYSTEM_SQLITE=1 $extraArgs
+}
+
+package() {
+    make DESTDIR=$ROOT install
+}
