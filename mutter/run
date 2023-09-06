@@ -20,6 +20,7 @@ build() {
     --buildtype=release \
     -Dtests=false \
     -Dprofiler=false \
+    -Dnative_backend=false \
     $extraArgs build
     ninja -C build
 }
