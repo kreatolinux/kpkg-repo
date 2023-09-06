@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="xcb-proto"
 RELEASE="1"
-VERSION="1.15"
-SOURCES="https://xcb.freedesktop.org/dist/xcb-proto-$VERSION.tar.gz"
-SHA256SUM="0e434af76af722ef9b2dc21066da1cd11e5dd85fc1996d66228d090f9ae9b217  xcb-proto-1.15.tar.gz"
+VERSION="1.16.0"
+SOURCES="https://www.x.org/releases/individual/proto/xcb-proto-$VERSION.tar.xz"
+SHA256SUM="a75a1848ad2a89a82d841a51be56ce988ff3c63a8d6bf4383ae3219d8d915119  xcb-proto-1.16.0.tar.xz"
 BUILD_DEPENDS="python libxml2"
 DESCRIPTION="XML-XCB protocol descriptions"
 
