@@ -1,0 +1,29 @@
+#!/bin/sh
+NAME="ibus"
+RELEASE="1"
+VERSION="1.5.28"
+SOURCES="https://github.com/ibus/ibus/releases/download/$VERSION/ibus-$VERSION.tar.gz"
+DEPENDS="dconf gobject-introspection libnotify iso-codes vala"
+SHA256SUM="c9ff3a7576c3d61264f386030f47ee467eb7298c8104367002986e008765667  ibus-1.5.28.tar.gz"
+DESCRIPTION="ibus"
+
+build() {
+    
+    if ! command -v systemd > /dev/null; then
+      extraArgs="--disable-systemd-services"
+    fi
+    
+    # From BLFS
+    ./configure $extraArgs --prefix=/usr \
+                --sysconfdir=/etc \
+                --disable-python2 \
+                --disable-emoji-dict \
+                --disable-unicode-dict
+                
+    rm -f tools/main.c
+    make
+}
+
+package() {
+    make DESTDIR=$ROOT install
+}
