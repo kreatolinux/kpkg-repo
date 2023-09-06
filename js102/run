@@ -8,10 +8,17 @@ BUILD_DEPENDS="rust python llvm which"
 SHA256SUM="81fa590408f5a3af8f004d839ac47fb4121e05fe717334445cec9ca55d8746af  firefox-102.15.0esr.source.tar.xz"
 DESCRIPTION="Spidermonkey JavaScript and WebAssembly Engine"
 
+prepare() {
+  tar -xvf firefox-$VERSION\esr.source.tar.xz
+  cd firefox-$VERSION
+}
+
 build() {
   # Thanks to BLFS for configure arguments: https://www.linuxfromscratch.org/blfs/view/svn/general/js102.html
+  mkdir firefox-$VERSION/obj
+  cd firefox-$VERSION/obj
   # Add CC=clang so it overrides the cc set by the user in the configuration file as it may cause problems.
-  CC=clang sh js/src/configure.in --prefix=/usr \
+  CC=clang sh ../js/src/configure.in --prefix=/usr \
                           --with-intl-api          \
                           --with-system-zlib       \
                           --with-system-icu        \
@@ -22,5 +29,6 @@ build() {
 }
 
 package() {
+  cd firefox-$VERSION/obj
   make install
 }
