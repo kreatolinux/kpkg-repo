@@ -30,6 +30,7 @@ build() {
     --buildtype=release \
     -Dsystemd=$systemd \
     -Dsmartcard=false \
+    -Dcups=false \
     build
     ninja -C build
 }
