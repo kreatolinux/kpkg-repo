@@ -10,7 +10,7 @@ DESCRIPTION="X11 client-side library"
 
 build() {
     ./configure \
-        --prefix=/usr
+        --prefix=/usr \
         --disable-static
     make
 }
