@@ -1,0 +1,26 @@
+#!/bin/sh
+NAME="colord-gtk"
+RELEASE="1"
+VERSION="0.3.0"
+SOURCES="https://www.freedesktop.org/software/colord/releases/colord-gtk-$VERSION.tar.xz"
+BUILD_DEPENDS="meson lcms2 gtk3 gobject-introspection"
+DEPENDS="gtk4 colord"
+SHA256SUM="b9466656d66d9a6ffbc2dd04fa91c8f6af516bf9efaacb69744eec0f56f3c1d0  colord-gtk-0.3.0.tar.xz"
+DESCRIPTION="GTK stuff for colord"
+
+build() {
+    
+    meson setup \
+    --buildtype=release \
+    --prefix=/usr \
+    -Dgtk4=true \
+    -Dvapi=true \
+    -Ddocs=false \
+    -Dman=false \
+    build
+    ninja -C build
+}
+
+package() {
+    DESTDIR="$ROOT" ninja -C build install
+}
