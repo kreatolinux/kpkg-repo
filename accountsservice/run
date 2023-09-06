@@ -1,0 +1,36 @@
+#!/bin/sh
+NAME="accountsservice"
+RELEASE="1"
+VERSION="23.13.9"
+SOURCES="https://www.freedesktop.org/software/accountsservice/accountsservice-$VERSION.tar.xz"
+DEPENDS="gobject-introspection polkit elogind"
+BUILD_DEPENDS="meson vala"
+SHA256SUM="adda4cdeae24fa0992e7df3ffff9effa7090be3ac233a3edfdf69d5a9c9b924f  accountsservice-23.13.9.tar.xz"
+DESCRIPTION="accountsservice"
+
+build() {
+
+    if ! command -v systemctl > /dev/null; then
+      extraArgs="-Delogind=true -Dsystemdsystemunitdir=no"
+    fi
+    
+    # Thanks to BLFS (again)
+    mv tests/dbusmock{,-tests}
+    meson setup \
+    --prefix=/usr \
+    --buildtype=release \
+    -Dadmin_group=wheel \
+    $extraArgs build
+
+    ninja -C build
+}
+
+package() {
+    DESTDIR="$ROOT" ninja -C build install
+    mkdir -p $ROOT/etc/polkit-1/rules.d
+    cat > $ROOT/etc/polkit-1/rules.d/40-wheel.rules << "EOF"
+polkit.addAdminRule(function(action, subject) {
+   return ["unix-group:wheel"];
+   });
+EOF
+}
