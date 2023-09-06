@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="libblockdev"
-RELEASE="1"
+RELEASE="2"
 VERSION="3.0.3"
 SOURCES="https://github.com/storaged-project/libblockdev/releases/download/$VERSION-1/libblockdev-$VERSION.tar.gz"
-DEPENDS="glib lvm2 e2fsprogs libbytesize gobject-introspection libnvme"
+DEPENDS="glib cryptsetup lvm2 e2fsprogs libbytesize gobject-introspection libnvme"
 SHA256SUM="0f2872830293f3e222832903d80de4c38e06a9c3ea18915b3263272a72095ea8  libblockdev-3.0.3.tar.gz"
 DESCRIPTION="libblockdev"
 
@@ -16,8 +16,7 @@ build() {
             --without-gtk-doc  \
             --without-lvm_dbus \
             --without-nvdimm   \
-            --without-tools    \
-            --without-crypto
+            --without-tools
     make
 }
 
