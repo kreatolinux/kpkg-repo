@@ -1,0 +1,17 @@
+#!/bin/sh
+NAME="libatasmart"
+RELEASE="1"
+VERSION="0.19"
+SOURCES="https://0pointer.de/public/libatasmart-$VERSION.tar.xz"
+SHA256SUM="61f0ea345f63d28ab2ff0dc352c22271661b66bf09642db3a4049ac9dbdb0f8d  libatasmart-0.19.tar.xz"
+DESCRIPTION="disk library"
+
+build() {
+    ./configure --prefix=/usr   \
+                --sysbindir=/usr/bin
+    make
+}
+
+package() {
+    make DESTDIR=$ROOT install
+}
