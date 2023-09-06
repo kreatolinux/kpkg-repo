@@ -9,7 +9,9 @@ BUILD_DEPENDS="xorgproto xtrans"
 DESCRIPTION="X11 Session Management Library"
 
 build() {
-    ./configure --prefix=/usr
+    ./configure \
+        --prefix=/usr \
+        --disable-static
     make
 }
 
