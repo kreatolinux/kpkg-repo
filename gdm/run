@@ -1,0 +1,33 @@
+#!/bin/sh
+NAME="gdm"
+RELEASE="1"
+VERSION="44.1"
+SOURCES="https://gitlab.gnome.org/GNOME/gdm/-/archive/$VERSION/gdm-$VERSION.tar.gz"
+DEPENDS="accountsservice dconf libcanberra linux-pam gnome-session elogind"
+BUILD_DEPENDS="meson"
+SHA256SUM="fd50fb023ee2aa5118bbeba8f6b9ffe93c54d68be8da189e5f835a7d8f900357  gdm-44.1.tar.gz"
+DESCRIPTION="GNOME Display Manager"
+
+build() {
+    
+    # Thanks to BLFS
+    if ! command -v systemctl > /dev/null; then
+      extraArgs="-Dsystemd-journal=false -Dsystemdsystemunitdir=/tmp -Dsystemduserunitdir=/tmp"
+      sed -i -r '/(^| )systemd_dep/d' meson.build
+      sed -e 's@systemd@elogind@'                                \
+          -e '/elogind/isession  required       pam_loginuid.so' \
+          -i data/pam-lfs/gdm-launch-environment.pam &&
+    fi
+
+    meson setup $extraArgs \
+    --prefix=/usr \
+    --buildtype=release \
+    -Dgdm-xsession=true         \
+    -Drun-dir=/run/gdm          \
+    build
+    ninja -C build
+}
+
+package() {
+    DESTDIR="$ROOT" ninja -C build install
+}
