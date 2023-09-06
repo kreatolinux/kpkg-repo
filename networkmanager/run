@@ -23,7 +23,7 @@ build() {
     -Dcrypto=gnutls \
     -Dppp=false \
     -Dlibpsl=false \
-    -Dobs=false \
+    -Dovs=false \
     -Dmodem_manager=false \
     $extraArgs build
     ninja -C build
