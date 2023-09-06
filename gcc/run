@@ -1,6 +1,6 @@
 #!/bin/sh
 NAME="gcc"
-RELEASE="2"
+RELEASE="3"
 VERSION="13.2.0"
 SOURCES="https://ftp.gnu.org/gnu/gcc/gcc-$VERSION/gcc-$VERSION.tar.xz"
 DEPENDS="isl libzstd binutils gmp mpc mpfr linux-headers"
@@ -25,7 +25,6 @@ build() {
         --enable-default-ssp                           \
         --prefix=/usr                                  \
         --disable-fixincludes                          \
-        --disable-multilib                             \
         --without-headers                              \
         --disable-nls                                  \
         --enable-initfini-array                        \
