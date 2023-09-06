@@ -1,6 +1,6 @@
 #!/bin/sh
 NAME="colord"
-RELEASE="1"
+RELEASE="2"
 VERSION="1.4.6"
 SOURCES="https://www.freedesktop.org/software/colord/releases/colord-$VERSION.tar.xz"
 BUILD_DEPENDS="meson vala gobject-introspection"
@@ -21,6 +21,7 @@ build() {
     --buildtype=release \
     --prefix=/usr \
     -Dman=false \
+    -Dvapi=true \
     -Dsystemd=$systemd \
     -Dbash_completion=false \
     -Ddocs=false \
