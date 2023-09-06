@@ -1,0 +1,34 @@
+#!/bin/sh
+NAME="evolution-data-server"
+RELEASE="1"
+VERSION="3.49.3"
+SOURCES="https://download.gnome.org/sources/evolution-data-server/3.49/evolution-data-server-$VERSION.tar.xz"
+BUILD_DEPENDS="cmake ninja gobject-introspection vala"
+DEPENDS="libical libsecret nss sqlite libgweather gtk3 libcanberra"
+SHA256SUM="fd854e28839c5f19e87bcc79654a0619972167fc23e61f2fb101a92b9cd22159  evolution-data-server-3.49.3.tar.xz"
+DESCRIPTION="evolution-data-server"
+
+build() {
+    
+    if command -v systemctl > /dev/null; then
+      extraArgs="-DWITH_SYSTEMDUSERUNITDIR=no"
+    fi 
+
+    # Flags taken from BLFS
+    cmake -B build $extraArgs -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DWITH_KRB5=OFF                \
+        -DENABLE_VALA_BINDINGS=ON \
+        -DWITH_OPENLDAP=OFF \
+        -DENABLE_INTROSPECTION=ON \
+        -DENABLE_GTK_DOC=OFF \
+        -DWITH_LIBDB=OFF \
+        -DENABLE_INSTALLED_TESTS=OFF \
+        -DSYSCONF_INSTALL_DIR=/etc \
+        -G Ninja
+    ninja -C build -j$(nproc)
+}
+
+package() {    
+    DESTDIR="$ROOT" ninja -C build install
+}
