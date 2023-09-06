@@ -29,6 +29,7 @@ build() {
     --prefix=/usr \
     --buildtype=release \
     -Dsystemd=$systemd \
+    -Dsmartcard=false \
     build
     ninja -C build
 }
