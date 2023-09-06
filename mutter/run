@@ -7,14 +7,20 @@ BUILD_DEPENDS="meson gobject-introspection"
 DEPENDS="libx11 startup-notification libxtst libxkbfile libxfixes libxext libxcomposite libxcursor libxrandr libxau libxinerama libxcb libxrender libxdamage libxi gnome-settings-daemon graphene libxkbcommon pipewire desktop-file-utils libinput wayland wayland-protocols"
 SHA256SUM="d5f2859e7e0648903d02aef35f87aebf02b5575e46705fbec17b28024b81b762  mutter-44.4.tar.gz"
 DESCRIPTION="Wayland compositor for GNOME"
+OPTDEPENDS="xwayland: to run X11 applications on Wayland"
 
 build() {
+    
+    if ! kpkg info xwayland > /dev/null; then
+      extraArgs="-Dxwayland=false"
+    fi
+    
     meson setup \
     --prefix=/usr \
     --buildtype=release \
     -Dtests=false \
     -Dprofiler=false \
-    build
+    $extraArgs build
     ninja -C build
 }
 
