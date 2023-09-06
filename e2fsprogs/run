@@ -1,12 +1,12 @@
 #!/bin/sh
 NAME="e2fsprogs"
-RELEASE="1"
+RELEASE="2"
 VERSION="1.47.0"
 SOURCES="https://mirrors.edge.kernel.org/pub/linux/kernel/people/tytso/e2fsprogs/v$VERSION/e2fsprogs-$VERSION.tar.gz"
 SHA256SUM="0b4fe723d779b0927fb83c9ae709bc7b40f66d7df36433bef143e41c54257084  e2fsprogs-1.47.0.tar.gz"
 DESCRIPTION="Provides the filesystem utilities for use with the ext2,ext3 and ext4 filesystem"
 build() {
-    ./configure --prefix=/usr --disable-static --enable-shared --with-root-prefix="" 
+    ./configure --prefix=/usr --enable-elf-shlibs --with-root-prefix="" 
     make
 }
 
