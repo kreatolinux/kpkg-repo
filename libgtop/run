@@ -4,11 +4,12 @@ RELEASE="1"
 VERSION="2.41.1"
 SOURCES="https://gitlab.gnome.org/GNOME/libgtop/-/archive/$VERSION/libgtop-$VERSION.tar.gz"
 DEPENDS="glib libxau"
-BUILD_DEPENDS="gobject-introspection"
+BUILD_DEPENDS="gobject-introspection autoconf automake"
 SHA256SUM="26b7d25ce3bb2276b9d61744c59bb5a74e0731c933d5388efde5f56e053bdaea  libgtop-2.41.1.tar.gz"
 DESCRIPTION="libgtop"
 
 build() {
+    autoreconf -v -f -i
     ./configure --prefix=/usr   \
                 --disable-static
     make
