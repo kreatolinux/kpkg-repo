@@ -1,0 +1,19 @@
+#!/bin/sh
+NAME="libxkbfile"
+RELEASE="1"
+VERSION="1.1.2"
+SOURCES="https://www.x.org/releases/individual/lib/libxkbfile-$VERSION.tar.gz"
+SHA256SUM="d1a7e659bc7ae1aa1fc1ecced261c734df5ad5d86af1ef7a946be0e2d841e51d  libxkbfile-1.1.2.tar.gz"
+DEPENDS="libx11"
+DESCRIPTION="libxkbfile"
+
+build() {
+    ./configure \
+        --prefix=/usr \
+        --disable-static
+    make
+}
+
+package() {
+    make DESTDIR=$ROOT install
+}
