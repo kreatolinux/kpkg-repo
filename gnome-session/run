@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="44.0"
 SOURCES="https://download.gnome.org/sources/gnome-session/44/gnome-session-$VERSION.tar.xz"
 BUILD_DEPENDS="meson"
-DEPENDS="elogind xtrans libx11 libice gnome-desktop json-glib mesa upower"
+DEPENDS="elogind xtrans libx11 libice libglvnd gnome-desktop json-glib mesa upower"
 SHA256SUM="ccf829a96526135e9e9f917526515d36a5092bdfa316f3737dd8c5a524dbf2c6  gnome-session-44.0.tar.xz"
 DESCRIPTION="The GNOME session manager"
 
