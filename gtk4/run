@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="gtk4"
-RELEASE="1"
+RELEASE="2"
 VERSION="4.13.0"
 SOURCES="https://download.gnome.org/sources/gtk/4.13/gtk-$VERSION.tar.xz"
 BUILD_DEPENDS="meson gobject-introspection"
-DEPENDS="gdk-pixbuf libtiff libepoxy pango graphene adwaita-icon-theme iso-codes libxkbcommon wayland wayland-protocols"
+DEPENDS="libx11 libxcursor libxdamage libxext libxfixes libxi libxinerama libxkbcommon libxrandr libxrender gdk-pixbuf libtiff libepoxy pango graphene adwaita-icon-theme iso-codes libxkbcommon wayland wayland-protocols"
 SHA256SUM="0e2e928a271ac5ef9c95d891a2b9a8c46df9598d12efd9ccfa31695e88cab6aa  gtk-4.13.0.tar.xz"
 DESCRIPTION="gtk4"
 
@@ -19,7 +19,7 @@ build() {
   meson setup \
     --prefix=/usr \
     --buildtype=release \
-    -Dx11-backend=false \
+    -Dx11-backend=true \
     -Dmedia-gstreamer=disabled \
     -Dintrospection=enabled \
     build
