@@ -17,7 +17,8 @@ build() {
             --without-lvm      \
             --without-lvm_dbus \
             --without-nvdimm   \
-            --without-tools                
+            --without-tools    \
+            --without-crypto
     make
 }
 
