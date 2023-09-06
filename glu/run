@@ -10,6 +10,7 @@ DESCRIPTION="glu"
 build() {
     meson setup \
     --prefix=/usr \
+    -Dgl_provider=gl \
     --buildtype=release \
     build
     ninja -C build
