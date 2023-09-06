@@ -10,8 +10,8 @@ DESCRIPTION="Spidermonkey JavaScript and WebAssembly Engine"
 
 build() {
   # Thanks to BLFS for configure arguments: https://www.linuxfromscratch.org/blfs/view/svn/general/js102.html
-  mkdir obj
-  cd obj
+  mkdir firefox-$VERSION/obj
+  cd firefox-$VERSION/obj
   # Add CC=clang so it overrides the cc set by the user in the configuration file as it may cause problems.
   CC=clang sh ../js/src/configure.in --prefix=/usr \
                           --with-intl-api          \
@@ -24,6 +24,6 @@ build() {
 }
 
 package() {
-  cd obj
+  cd firefox-$VERSION/obj
   make install
 }
