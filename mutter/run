@@ -14,7 +14,6 @@ build() {
     --buildtype=release \
     -Dtests=false \
     -Dprofiler=false \
-    -Dxwayland=false \
     build
     ninja -C build
 }
