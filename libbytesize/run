@@ -1,0 +1,17 @@
+#!/bin/sh
+NAME="libbytesize"
+RELEASE="1"
+VERSION="2.9"
+SOURCES="https://github.com/storaged-project/libbytesize/releases/download/$VERSION/libbytesize-$VERSION.tar.gz"
+DEPENDS="python"
+SHA256SUM="bd0ea11ece2c2423382a7c4534679050e72a8ee91b4fdea3a7cc85199846d0c3  libbytesize-2.9.tar.gz"
+DESCRIPTION="libbytesize"
+
+build() {
+    ./configure --prefix=/usr
+    make
+}
+
+package() {
+    make DESTDIR=$ROOT install
+}
