@@ -1,0 +1,22 @@
+#!/bin/sh
+NAME="networkmanager"
+RELEASE="1"
+VERSION="1.45.1"
+SOURCES="https://download.gnome.org/sources/NetworkManager/1.45/NetworkManager-$VERSION.tar.xz"
+DEPENDS="jansson libndp curl dhcpcd newt gnutls polkit pygobject elogind vala wpa_supplicant"
+BUILD_DEPENDS="meson gobject-introspection"
+SHA256SUM="6757f95317853dc2782c44ed8939249574677518b3a1f7d112aad961f20adc43  NetworkManager-1.45.1.tar.xz"
+DESCRIPTION="networkmanager"
+
+build() {
+    meson setup \
+    --prefix=/usr \
+    --buildtype=release \
+    -Dman=false \
+    build
+    ninja -C build
+}
+
+package() {
+    DESTDIR="$ROOT" ninja -C build install
+}
