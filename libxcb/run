@@ -1,0 +1,18 @@
+#!/bin/sh
+NAME="libxcb"
+RELEASE="1"
+VERSION="1.16"
+SOURCES="https://www.x.org/releases/individual/lib/libxcb-$VERSION.tar.xz"
+SHA256SUM="4348566aa0fbf196db5e0a576321c65966189210cb51328ea2bb2be39c711d71  libxcb-1.16.tar.xz"
+DEPENDS="xcb-proto libxdmcp libxau"
+BUILD_DEPENDS="python xorgproto libxslt"
+DESCRIPTION="X11 client-side library"
+
+build() {
+    ./configure --prefix=/usr
+    make
+}
+
+package() {
+    make DESTDIR=$ROOT install
+}
