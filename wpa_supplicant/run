@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="wpa_supplicant"
-RELEASE="1"
+RELEASE="2"
 VERSION="2.10"
 SOURCES="https://w1.fi/releases/wpa_supplicant-$VERSION.tar.gz"
-DEPENDS="openssl libnl readline pkgconf"
+DEPENDS="openssl dbus libnl readline pkgconf"
 SHA256SUM="20df7ae5154b3830355f8ab4269123a87affdea59fe74fe9292a91d0d7e17b2f  wpa_supplicant-2.10.tar.gz"
 DESCRIPTION="WPA client"
 
