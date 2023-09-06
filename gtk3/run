@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="3.24.38"
 SOURCES="https://download.gnome.org/sources/gtk+/3.24/gtk+-$VERSION.tar.xz"
 BUILD_DEPENDS="meson"
-DEPENDS="atk gdk-pixbuf libepoxy pango adwaita-icon-theme iso-codes libxkbcommon gobject-introspection wayland wayland-protocols"
+DEPENDS="atk libx11 libxcomposite libxrandr libxrender gdk-pixbuf libepoxy pango adwaita-icon-theme iso-codes libxkbcommon gobject-introspection wayland wayland-protocols"
 SHA256SUM="ce11decf018b25bdd8505544a4f87242854ec88be054d9ade5f3a20444dd8ee7  gtk+-3.24.38.tar.xz"
 DESCRIPTION="gtk3"
 
@@ -13,7 +13,7 @@ build() {
     --prefix=/usr \
     -Dman=false \
     --buildtype=release \
-    -Dx11_backend=false \
+    -Dx11_backend=true \
     build
     ninja -C build
 }
