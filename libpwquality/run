@@ -1,0 +1,19 @@
+#!/bin/sh
+NAME="libpwquality"
+RELEASE="1"
+VERSION="1.4.5"
+SOURCES="https://github.com/libpwquality/libpwquality/releases/download/libpwquality-$VERSION/libpwquality-$VERSION.tar.bz2"
+DEPENDS="linux-pam"
+BUILD_DEPENDS="python"
+SHA256SUM="6fcf18b75d305d99d04d2e42982ed5b787a081af2842220ed63287a2d6a10988  libpwquality-1.4.5.tar.bz2"
+DESCRIPTION="Library for password quality checking"
+
+build() {
+    ./configure --prefix=/usr  \
+            --sysconfdir=/etc
+    make
+}
+
+package() {
+    make DESTDIR=$ROOT install
+}
