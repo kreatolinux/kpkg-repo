@@ -8,7 +8,9 @@ BUILD_DEPENDS="python libxml2"
 DESCRIPTION="XML-XCB protocol descriptions"
 
 build() {
-    ./configure --prefix=/usr
+    ./configure \
+      --prefix=/usr \
+      --disable-static
     make
 }
 

@@ -9,7 +9,9 @@ BUILD_DEPENDS="python xorgproto libxslt"
 DESCRIPTION="X11 client-side library"
 
 build() {
-    ./configure --prefix=/usr
+    ./configure \
+        --prefix=/usr \
+        --disable-static
     make
 }
 

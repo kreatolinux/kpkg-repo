@@ -9,7 +9,9 @@ BUILD_DEPENDS="xtrans"
 DESCRIPTION="X11 Inter-Client exchange library"
 
 build() {
-    ./configure --prefix=/usr
+    ./configure \ 
+      --prefix=/usr \
+      --disable-static 
     make
 }
 
