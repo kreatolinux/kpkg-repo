@@ -9,7 +9,7 @@ SHA256SUM="ea9d61bbb51d76b6ea681156f69f0e0596b59722f04414b01c6e100b4b5be3a1  rus
 DESCRIPTION="Memory-safe programming language that doesn't use garbage collection"
 
 build() {
-  ./configure --set install.prefix="/usr" --set llvm.link-shared=llvm.thin-lto --llvm-config=/usr/bin/llvm-config 
+  ./configure --set install.prefix="/usr" --set llvm.link-shared=true --llvm-config=/usr/bin/llvm-config 
   ./x.py build
 }
 
