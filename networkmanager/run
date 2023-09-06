@@ -22,6 +22,8 @@ build() {
     -Ddocs=false \
     -Dcrypto=gnutls \
     -Dppp=false \
+    -Dlibaudit=no \
+    -Dselinux=false \
     -Dlibpsl=false \
     -Dovs=false \
     -Dmodem_manager=false \
