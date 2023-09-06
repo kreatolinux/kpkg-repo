@@ -1,0 +1,17 @@
+#!/bin/sh
+NAME="newt"
+RELEASE="1"
+VERSION="0.52.23"
+SOURCES="https://releases.pagure.org/newt/newt-$VERSION.tar.gz"
+DEPENDS="python"
+SHA256SUM="caa372907b14ececfe298f0d512a62f41d33b290610244a58aed07bbc5ada12a  newt-0.52.23.tar.gz"
+DESCRIPTION="newt"
+
+build() {
+    ./configure --prefix=/usr
+    make
+}
+
+package() {
+    make DESTDIR=$ROOT install
+}
