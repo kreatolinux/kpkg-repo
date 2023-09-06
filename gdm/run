@@ -16,7 +16,7 @@ build() {
       sed -i -r '/(^| )systemd_dep/d' meson.build
       sed -e 's@systemd@elogind@'                                \
           -e '/elogind/isession  required       pam_loginuid.so' \
-          -i data/pam-lfs/gdm-launch-environment.pam &&
+          -i data/pam-lfs/gdm-launch-environment.pam
     fi
 
     meson setup $extraArgs \
