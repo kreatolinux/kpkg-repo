@@ -10,6 +10,12 @@ DESCRIPTION="gnome-settings-daemon"
 
 build() {
     
+    rm -r subprojects/gvc
+    git clone https://gitlab.gnome.org/GNOME/libgnome-volume-control subprojects/gvc
+    cd subprojects/gvc
+    git checkout 7a621180b46421e356b33972e3446775a504139c
+    cd ../.. 
+
     if ! command -v systemctl > /dev/null; then
       # Credits to https://www.linuxfromscratch.org/blfs/view/svn/gnome/gnome-settings-daemon.html for these
       sed -e 's/libsystemd/libelogind/' \
