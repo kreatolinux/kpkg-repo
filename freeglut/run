@@ -1,0 +1,23 @@
+#!/bin/sh
+NAME="freeglut"
+RELEASE="1"
+VERSION="3.4.0"
+SOURCES="https://netix.dl.sourceforge.net/project/freeglut/freeglut/$VERSION/freeglut-$VERSION.tar.gz"
+BUILD_DEPENDS="cmake"
+DEPENDS="mesa"
+SHA256SUM="3c0bcb915d9b180a97edaebd011b7a1de54583a838644dcd42bb0ea0c6f3eaec  freeglut-3.4.0.tar.gz"
+DESCRIPTION="freeglut"
+
+build() {
+    cmake \
+      -DCMAKE_INSTALL_PREFIX=/usr \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DFREEGLUT_BUILD_DEMOS=OFF  \
+      -DFREEGLUT_BUILD_STATIC_LIBS=OFF  \
+      build
+    make -C build
+}
+
+package() {
+    make DESTDIR=$ROOT -C build install
+}
