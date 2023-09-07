@@ -1,0 +1,22 @@
+#!/bin/sh
+NAME="gcr-3"
+RELEASE="1"
+VERSION="3.41.1"
+SOURCES="https://gitlab.gnome.org/GNOME/gcr/-/archive/$VERSION/gcr-$VERSION.tar.gz"
+DEPENDS="p11-kit openssh libsecret libgcrypt gtk3"
+BUILD_DEPENDS="meson vala libxslt gobject-introspection"
+SHA256SUM="f25de5063ffe6359c79f86d70a53c2d398db4e256e2de58c2a3bd2e8111b8f11  gcr-3.41.1.tar.gz"
+DESCRIPTION="gcr-3"
+
+build() {
+    meson setup \
+    --prefix=/usr \
+    --buildtype=release \
+    -Dgtk_doc=false \
+    build
+    ninja -C build
+}
+
+package() {
+    DESTDIR="$ROOT" ninja -C build install
+}
