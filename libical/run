@@ -11,7 +11,10 @@ DESCRIPTION="An implementation of iCalendar protocols and data formats"
 build() {
     cmake -DCMAKE_INSTALL_PREFIX=/usr \
 	  -DCMAKE_BUILD_TYPE=Release  \
-	  -DENABLE_GTK_DOC=OFF \
+	  -DSHARED_ONLY=yes            \
+    -DGOBJECT_INTROSPECTION=true \
+    -DICAL_GLIB_VAPI=true        \
+    -DENABLE_GTK_DOC=OFF \
 	  -B build
     cmake --build build
  }
