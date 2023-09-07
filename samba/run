@@ -22,6 +22,7 @@ build() {
       --without-acl-support \
       --without-ad-dc \
       --without-ldap \
+      --without-ads \
       --prefix=/usr
     make
 }
