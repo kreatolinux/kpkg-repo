@@ -1,6 +1,6 @@
 #!/bin/sh
 NAME="sqlite"
-RELEASE="1"
+RELEASE="2"
 VERSION="3.43.0"
 SOURCES="https://sqlite.org/2023/sqlite-autoconf-3430000.tar.gz"
 DEPENDS="ncurses"
@@ -9,7 +9,8 @@ DESCRIPTION="A small, fast, self-contained, high-reliability, full-featured, SQL
 
 build() {
     ./configure --prefix=/usr \
-	    	--disable-static
+	    	--disable-static \
+        --enable-shared
     make
 }
 
