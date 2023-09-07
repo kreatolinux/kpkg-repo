@@ -7,9 +7,14 @@ DEPENDS="nspr sqlite p11-kit zlib"
 SHA256SUM="15f54bb72048eb105f8c0e936a04b899e74c3db9a19bbc1e00acee2af9476a8a  nss-3.93.tar.gz;87bb1af0b11fd41311b9899187f6e4b3fca9940651123c7bc836ec7497d2da84  nss-3.93-standalone-1.patch"
 DESCRIPTION="network stuff"
 
-build() {
+prepare() {
+  tar -xvf nss-$VERSION.tar.gz
+  cd nss-$VERSION
+  patch -p1 < ../nss-3.93-standalone-1.patch
+}
 
-  cd nss
+build() {
+  cd nss-$VERSION/nss
   if [ "$(uname -m)" = "x86_64" ]; then
     export USE_64=1
   else
@@ -26,7 +31,7 @@ build() {
 }
 
 package() {
-    cd dist
+    cd nss-$VERSION/dist
     # Taken from BLFS
     mkdir -p "$ROOT/usr/lib" "$ROOT/usr/include/" "$ROOT/usr/bin"
     install -v -m755 Linux*/lib/*.so              $ROOT/usr/lib              
