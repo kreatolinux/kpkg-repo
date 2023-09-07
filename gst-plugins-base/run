@@ -1,0 +1,22 @@
+#!/bin/sh
+NAME="gst-plugins-base"
+RELEASE="1"
+VERSION="1.22.5"
+SOURCES="https://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-$VERSION.tar.xz"
+BUILD_DEPENDS="meson gobject-introspection"
+DEPENDS="alsa-lib iso-codes libgudev libjpeg-turbo libpng libogg libvorbis mesa pango wayland-protocols libx11 libxcu"
+SHA256SUM="edd4338b45c26a9af28c0d35aab964a024c3884ba6f520d8428df04212c8c93a  gst-plugins-base-1.22.5.tar.xz"
+DESCRIPTION="gst-plugins-base"
+
+build() {
+    meson setup \
+    --prefix=/usr \
+    --buildtype=release \
+    --wrapmode=nodownload \
+    build
+    ninja -C build
+}
+
+package() {
+    DESTDIR="$ROOT" ninja -C build install
+}
