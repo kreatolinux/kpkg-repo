@@ -9,6 +9,13 @@ SHA256SUM="668139f7bb1ab02c85ae9073cc3db09c7a458944e3d6cbb0c9285bac187e7292  gno
 DESCRIPTION="GNOME Control Center"
 
 build() {
+
+    rm -r subprojects/gvc
+    git clone https://gitlab.gnome.org/GNOME/libgnome-volume-control subprojects/gvc
+    cd subprojects/gvc
+    git checkout dbfbacc9571fade87855907b78c6ed5e27c910dd
+    cd ../.. 
+
     meson setup \
     --prefix=/usr \
     --buildtype=release \
