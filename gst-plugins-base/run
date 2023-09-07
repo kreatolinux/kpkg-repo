@@ -12,7 +12,7 @@ build() {
     meson setup \
     --prefix=/usr \
     --buildtype=release \
-    --wrapmode=nodownload \
+    --wrap-mode=nodownload \
     build
     ninja -C build
 }
