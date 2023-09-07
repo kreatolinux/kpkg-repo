@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="44.4"
 SOURCES="https://gitlab.gnome.org/GNOME/gnome-shell/-/archive/$VERSION/gnome-shell-$VERSION.tar.gz"
 BUILD_DEPENDS="meson"
-DEPENDS="dconf elogind adwaita-icon-theme dconf gdm gnome-backgrounds gnome-control-center libgweather telepathy-mission-control evolution-data-server gnome-bluetooth networkmanager desktop-file-utils gcr-4 gjs gnome-desktop ibus mutter polkit sassc startup-notification pipewire"
+DEPENDS="dconf gnome-autoar elogind adwaita-icon-theme dconf gdm gnome-backgrounds gnome-control-center libgweather telepathy-mission-control evolution-data-server gnome-bluetooth networkmanager desktop-file-utils gcr-4 gjs gnome-desktop ibus mutter polkit sassc startup-notification pipewire"
 SHA256SUM="d29e5017e37f1aa0ca8f2d364cc8e927c19569fef9ce67775f992938ca6dd9df  gnome-shell-44.4.tar.gz"
 DESCRIPTION="The GNOME shell"
 
