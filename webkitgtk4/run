@@ -18,6 +18,7 @@ build() {
       -DUSE_LIBHYPHEN=OFF         \
       -DENABLE_GAMEPAD=OFF        \
       -DENABLE_MINIBROWSER=ON     \
+      -DENABLE_SPELLCHECK=OFF \
       -DENABLE_DOCUMENTATION=OFF  \
       -DUSE_WOFF2=OFF             \
       -DUSE_GTK4=ON               \
