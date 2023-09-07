@@ -19,7 +19,6 @@ build() {
     meson setup \
     --prefix=/usr \
     --buildtype=release \
-    -Dcups=false \
     build
     ninja -C build
 }
