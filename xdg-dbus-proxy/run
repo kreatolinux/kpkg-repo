@@ -1,0 +1,21 @@
+#!/bin/sh
+NAME="xdg-dbus-proxy"
+RELEASE="1"
+VERSION="0.1.5"
+SOURCES="https://github.com/flatpak/xdg-dbus-proxy/releases/download/$VERSION/xdg-dbus-proxy-$VERSION.tar.xz"
+BUILD_DEPENDS="meson"
+DEPENDS="glib"
+SHA256SUM="061dcfaf8a0650e5fd9d5432dfe88bda749ea0d079dc136304bfecfbce0661fb  xdg-dbus-proxy-0.1.5.tar.xz"
+DESCRIPTION="xdg-dbus-proxy"
+
+build() {
+    meson setup \
+    --prefix=/usr \
+    --buildtype=release \
+    build
+    ninja -C build
+}
+
+package() {
+    DESTDIR="$ROOT" ninja -C build install
+}
