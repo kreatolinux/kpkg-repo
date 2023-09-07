@@ -1,0 +1,16 @@
+#!/bin/sh
+NAME="rpcsvc-proto"
+RELEASE="1"
+VERSION="1.4.4"
+SOURCES="https://github.com/thkukuk/rpcsvc-proto/releases/download/v$VERSION/rpcsvc-proto-$VERSION.tar.xz"
+SHA256SUM="81c3aa27edb5d8a18ef027081ebb984234d5b5860c65bd99d4ac8f03145a558b  rpcsvc-proto-1.4.4.tar.xz"
+DESCRIPTION="rpcsvc-proto"
+
+build() {
+    ./configure --sysconfdir=/etc 
+    make
+}
+
+package() {
+    make DESTDIR=$ROOT install
+}
