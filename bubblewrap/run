@@ -1,0 +1,20 @@
+#!/bin/sh
+NAME="bubblewrap"
+RELEASE="1"
+VERSION="0.8.0"
+SOURCES="https://github.com/containers/bubblewrap/releases/download/v0.8.0/bubblewrap-0.8.0.tar.xz"
+BUILD_DEPENDS="meson"
+SHA256SUM="957ad1149db9033db88e988b12bcebe349a445e1efc8a9b59ad2939a113d333a  bubblewrap-0.8.0.tar.xz"
+DESCRIPTION="Low-level unprivileged sandboxing tool used by Flatpak and similar projects"
+
+build() {
+    meson setup \
+    --prefix=/usr \
+    --buildtype=release \
+    build
+    ninja -C build
+}
+
+package() {
+    DESTDIR="$ROOT" ninja -C build install
+}
