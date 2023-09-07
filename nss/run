@@ -10,18 +10,19 @@ DESCRIPTION="network stuff"
 build() {
 
   cd nss
-
   if [ "$(uname -m)" = "x86_64" ]; then
     export USE_64=1
+  else
+    export USE_64=0
   fi
 
   # Taken from BLFS
-  make BUILD_OPT=1                  \
+  make -j$(nproc) BUILD_OPT=1                  \
     NSPR_INCLUDE_DIR=/usr/include/nspr  \
     USE_SYSTEM_ZLIB=1                   \
     ZLIB_LIBS=-lz                       \
     NSS_ENABLE_WERROR=0                 \
-    NSS_USE_SYSTEM_SQLITE=1 $extraArgs
+    USE_64=$USE_64
 }
 
 package() {
