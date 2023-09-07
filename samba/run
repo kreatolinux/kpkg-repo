@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="4.19.0"
 SOURCES="https://download.samba.org/pub/samba/stable/samba-$VERSION.tar.gz"
 DEPENDS="gnutls jansson dbus fuse gpgme icu libtasn linux-pam"
-BUILD_DEPENDS="rpcsvc-proto libtirpc perl-json"
+BUILD_DEPENDS="perl-parse-yapp rpcsvc-proto libtirpc perl-json"
 SHA256SUM="28f98ceab75a6a59432912fa110fc8c716abcab1ed6d8bdd4393d178acff3d20  samba-4.19.0.tar.gz"
 DESCRIPTION="samba"
 
