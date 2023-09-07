@@ -17,7 +17,6 @@ build() {
     # Args gotten from blfs
     ./configure $extraArgs \
     --prefix=/usr \
-    --buildtype=release \
     --sysconfdir=/etc \
     --localstatedir=/var \
     --disable-static \
