@@ -27,6 +27,7 @@ build() {
     USE_SYSTEM_ZLIB=1                   \
     ZLIB_LIBS=-lz                       \
     NSS_ENABLE_WERROR=0                 \
+    NSS_USE_SYSTEM_SQLITE=1             \
     USE_64=$USE_64
 }
 
