@@ -21,6 +21,7 @@ build() {
       --enable-fhs \
       --without-acl-support \
       --without-ad-dc \
+      --without-ldap \
       --prefix=/usr
     make
 }
