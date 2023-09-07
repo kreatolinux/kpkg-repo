@@ -17,6 +17,7 @@ build() {
     ./configure $extraArgs --sysconfdir=/etc \
       --localstatedir=/var \
       --with-pammodulesdir=/usr/lib/security \
+      --enable-fhs \
       --prefix=/usr
     make
 }
