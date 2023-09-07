@@ -1,0 +1,34 @@
+#!/bin/sh
+NAME="webkitgtk4"
+RELEASE="1"
+VERSION="2.41.91"
+SOURCES="https://webkitgtk.org/releases/webkitgtk-$VERSION.tar.xz"
+DEPENDS="cairo gst-plugins-base gtk4 icu lcms2 libgudev libsecret libsoup libtasn libwebp mesa openjpeg sqlite wpebackend-fdo wayland libx11 libxcomposie libxml2 libxslt"
+BUILD_DEPENDS="cmake unifdef ninja ruby gst-plugins-bad gobject-introspection wayland-protocols"
+SHA256SUM="f28f6b95b939c3fd20bad21b1aa9e2eacda3621625df5b480144517cca028f46  webkitgtk-2.41.91.tar.xz"
+DESCRIPTION="webkit"
+
+build() {
+  # Got flags from BLFS
+  cmake -B build -DCMAKE_BUILD_TYPE=Release  \
+      -DCMAKE_INSTALL_PREFIX=/usr \
+      -DCMAKE_SKIP_RPATH=ON       \
+      -DPORT=GTK                  \
+      -DLIB_INSTALL_DIR=/usr/lib  \
+      -DUSE_LIBHYPHEN=OFF         \
+      -DENABLE_GAMEPAD=OFF        \
+      -DENABLE_MINIBROWSER=ON     \
+      -DENABLE_DOCUMENTATION=OFF  \
+      -DUSE_WOFF2=OFF             \
+      -DUSE_GTK4=ON               \
+      -DUSE_JPEGXL=OFF            \
+      -DUSE_WPE_RENDERER=ON       \
+      -DENABLE_JOURNALD_LOG=OFF   \
+      -DENABLE_BUBBLEWRAP_SANDBOX=ON \
+      -Wno-dev -G Ninja
+    ninja -C build
+}
+
+package() {
+    DESTDIR="$ROOT" ninja -C build install
+}
