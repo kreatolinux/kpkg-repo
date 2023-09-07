@@ -19,6 +19,8 @@ build() {
     --prefix=/usr \
     --buildtype=release \
     -Dtests=false \
+    -Dman=false \
+    -Dgtk_doc=false \
     $extraArgs build
     ninja -C build
 }
