@@ -15,6 +15,12 @@ build() {
       extraArgs="-Dsystemd=false"
     fi
 
+    rm -r subprojects/gvc
+    git clone https://gitlab.gnome.org/GNOME/libgnome-volume-control subprojects/gvc
+    cd subprojects/gvc
+    git checkout 000046e88714de77db320b0711af3baacb2813a2
+    cd ../.. 
+
     meson setup \
     --prefix=/usr \
     --buildtype=release \
