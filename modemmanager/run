@@ -15,17 +15,16 @@ build() {
     fi
     
     # Args gotten from blfs
-    meson setup $extraArgs \
+    ./configure $extraArgs \
     --prefix=/usr \
     --buildtype=release \
     --sysconfdir=/etc \
     --localstatedir=/var \
     --disable-static \
-    --disable-maintainer-mode \
-    build
-    ninja -C build
+    --disable-maintainer-mode
+    make
 }
 
 package() {
-    DESTDIR="$ROOT" ninja -C build install
+    make DESTDIR=$ROOT install
 }
