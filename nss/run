@@ -27,5 +27,10 @@ build() {
 
 package() {
     cd nss
-    make DESTDIR=$ROOT install
+    if [ "$(uname -m)" = "x86_64" ]; then
+      export USE_64=1
+    else
+      export USE_64=0
+    fi
+    make USE_64=$USE_64 DESTDIR=$ROOT install
 }
