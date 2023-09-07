@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="gnome-online-accounts"
-RELEASE="1"
+RELEASE="2"
 VERSION="3.48.0"
 SOURCES="https://gitlab.gnome.org/GNOME/gnome-online-accounts/-/archive/$VERSION/gnome-online-accounts-$VERSION.tar.gz"
-BUILD_DEPENDS="meson vala gobject-introspection"
+BUILD_DEPENDS="meson vala gobject-introspection webkitgtk"
 DEPENDS="json-glib rest"
 SHA256SUM="2a24734ab3f8dc4f846c961a15f133b90d209b34598c396f2014dff53540e8c3  gnome-online-accounts-3.48.0.tar.gz"
 DESCRIPTION="The GNOME online account manager"
@@ -13,7 +13,6 @@ build() {
     --prefix=/usr \
     --buildtype=release \
     -Dkerberos=false \
-    -Dgoabackend=false \
     build
     ninja -C build
 }
