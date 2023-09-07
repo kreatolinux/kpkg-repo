@@ -1,0 +1,21 @@
+#!/bin/sh
+NAME="wpebackend-fdo"
+RELEASE="1"
+VERSION="1.14.2"
+SOURCES="https://wpewebkit.org/releases/wpebackend-fdo-$VERSION.tar.xz"
+BUILD_DEPENDS="meson"
+DEPENDS="libwpe libepoxy wayland-protocols"
+SHA256SUM="93c9766ae9864eeaeaee2b0a74f22cbca08df42c1a1bdb55b086f2528e380d38  wpebackend-fdo-1.14.2.tar.xz"
+DESCRIPTION="wpebackend-fdo"
+
+build() {
+    meson setup \
+    --prefix=/usr \
+    --buildtype=release \
+    build
+    ninja -C build
+}
+
+package() {
+    DESTDIR="$ROOT" ninja -C build install
+}
