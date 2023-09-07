@@ -19,6 +19,7 @@ build() {
     --prefix=/usr \
     --sysconfdir=/etc \
     --localstatedir=/var \
+    --without-mbim \
     --disable-static \
     --disable-maintainer-mode
     make
