@@ -1,0 +1,31 @@
+#!/bin/sh
+NAME="ModemManager"
+RELEASE="1"
+VERSION="1.18.12"
+SOURCES="https://www.freedesktop.org/software/ModemManager/ModemManager-$VERSION.tar.xz"
+BUILD_DEPENDS="meson gobject-introspection vala"
+DEPENDS="libgudev elogind polkit"
+SHA256SUM="b464e4925d955a6ca86dd08616e763b26ae46d7fd37dbe281678e34065b1e430  ModemManager-1.18.12.tar.xz"
+DESCRIPTION="modemmanager"
+
+build() {
+    
+    if ! command -v systemctl > /dev/null; then
+      extraArgs="--with-systemd-journal=no --with-systemd-suspend-resume"
+    fi
+    
+    # Args gotten from blfs
+    meson setup $extraArgs \
+    --prefix=/usr \
+    --buildtype=release \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --disable-static \
+    --disable-maintainer-mode \
+    build
+    ninja -C build
+}
+
+package() {
+    DESTDIR="$ROOT" ninja -C build install
+}
