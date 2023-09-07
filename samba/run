@@ -19,6 +19,7 @@ build() {
       --localstatedir=/var \
       --with-pammodulesdir=/usr/lib/security \
       --enable-fhs \
+      --without-acl-support \
       --without-ad-dc \
       --prefix=/usr
     make
