@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="libwpe"
 RELEASE="1"
-VERSION="1.14.1"
+VERSION="1.15.1"
 SOURCES="https://wpewebkit.org/releases/libwpe-$VERSION.tar.xz"
 BUILD_DEPENDS="meson"
 DEPENDS="libxkbcommon mesa"
-SHA256SUM="b1d0cdcf0f8dbb494e65b0f7913e357106da9a0d57f4fbb7b9d1238a6dbe9ade  libwpe-1.14.1.tar.xz"
+SHA256SUM="b1d0cdcf0f8dbb494e65b0f7913e357106da9a0d57f4fbb7b9d1238a6dbe9ade  libwpe-1.15.1.tar.xz"
 DESCRIPTION="libwpe"
 
 build() {
