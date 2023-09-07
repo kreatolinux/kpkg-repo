@@ -20,6 +20,7 @@ build() {
     --sysconfdir=/etc \
     --localstatedir=/var \
     --without-mbim \
+    --without-qmi \
     --disable-static \
     --disable-maintainer-mode
     make
