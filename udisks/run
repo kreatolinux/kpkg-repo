@@ -12,7 +12,8 @@ build() {
     # from BLFS
     ./configure --prefix=/usr  \
             --sysconfdir=/etc  \
-            --disable-static
+            --disable-static \
+            --disable-man
     make
 }
 
