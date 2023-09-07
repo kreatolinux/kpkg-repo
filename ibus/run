@@ -17,6 +17,7 @@ build() {
     ./configure $extraArgs --prefix=/usr \
                 --sysconfdir=/etc \
                 --disable-python2 \
+                --disable-gtk2 \
                 --disable-emoji-dict \
                 --disable-unicode-dict
                 
