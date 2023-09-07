@@ -12,7 +12,7 @@ build() {
     meson setup \
     --prefix=/usr \
     --buildtype=release \
-    -Dman=false \
+    -Dman=disabled \
     build
     ninja -C build
 }
