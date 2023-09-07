@@ -33,7 +33,7 @@ build() {
 package() {
     cd nss-$VERSION/dist
     # Taken from BLFS
-    mkdir -p "$ROOT/usr/lib" "$ROOT/usr/include/" "$ROOT/usr/bin"
+    mkdir -p "$ROOT/usr/lib/pkgconfig" "$ROOT/usr/include/" "$ROOT/usr/bin"
     install -v -m755 Linux*/lib/*.so              $ROOT/usr/lib              
     install -v -m644 Linux*/lib/{*.chk,libcrmf.a} $ROOT/usr/lib              
     install -v -m755 -d                           $ROOT/usr/include/nss      
