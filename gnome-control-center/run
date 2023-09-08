@@ -1,28 +1,34 @@
 #!/bin/sh
 NAME="gnome-control-center"
-RELEASE="1"
+RELEASE="2"
 VERSION="44.3"
-SOURCES="https://gitlab.gnome.org/GNOME/gnome-control-center/-/archive/$VERSION/gnome-control-center-$VERSION.tar.gz"
+SOURCES="https://gitlab.gnome.org/GNOME/gnome-control-center/-/archive/$VERSION/gnome-control-center-$VERSION.tar.gz;https://raw.githubusercontent.com/kreatolinux/assets/master/logo.png"
 DEPENDS="libnma modemmanager cups samba gcr-3 gnome-online-accounts accountsservice colord-gtk libgtop udisks libpwquality gnome-settings-daemon gsound gnome-bluetooth ibus libadwaita"
-BUILD_DEPENDS="meson"
-SHA256SUM="668139f7bb1ab02c85ae9073cc3db09c7a458944e3d6cbb0c9285bac187e7292  gnome-control-center-44.3.tar.gz"
+BUILD_DEPENDS="meson git"
+SHA256SUM="668139f7bb1ab02c85ae9073cc3db09c7a458944e3d6cbb0c9285bac187e7292  gnome-control-center-44.3.tar.gz;1cf1ddab90ede21de983b1536d9e686e3eb97383a0e4b6bfbd7521721fb7e6a5  logo.png"
 DESCRIPTION="GNOME Control Center"
 
-build() {
-
+prepare() {
+    tar -xvf gnome-control-center-$VERSION.tar.gz
+    cd gnome-control-center-$VERSION 
     rm -r subprojects/gvc
     git clone https://gitlab.gnome.org/GNOME/libgnome-volume-control subprojects/gvc
     cd subprojects/gvc
     git checkout dbfbacc9571fade87855907b78c6ed5e27c910dd
-    cd ../.. 
 
+}
+
+build() {
+    cd gnome-control-center-$VERSION 
     meson setup \
     --prefix=/usr \
     --buildtype=release \
+    -Ddistributor_logo=../logo.png \
     build
     ninja -C build
 }
 
 package() {
+    cd gnome-control-center-$VERSION 
     DESTDIR="$ROOT" ninja -C build install
 }
