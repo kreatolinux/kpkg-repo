@@ -25,3 +25,10 @@ build() {
 package() {
     DESTDIR="$ROOT" ninja -C build install
 }
+
+postinstall() {
+  # From BLFS
+  groupadd -fg 27 polkitd &&
+  useradd -c "PolicyKit Daemon Owner" -d /etc/polkit-1 -u 27 \
+        -g polkitd -s /bin/false polkitd
+}
