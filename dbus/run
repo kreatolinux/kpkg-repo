@@ -1,6 +1,6 @@
 #!/bin/sh
 NAME="dbus"
-RELEASE="5"
+RELEASE="6"
 VERSION="1.15.6"
 SOURCES="https://dbus.freedesktop.org/releases/dbus/dbus-$VERSION.tar.xz"
 DEPENDS="expat"
@@ -10,7 +10,8 @@ DESCRIPTION="Message bus system"
 build() {
     ./configure --disable-static \
                 --prefix=/usr    \
-                --runstatedir=/run
+                --runstatedir=/run \
+                --enable-user-session \
     make
 }
 
