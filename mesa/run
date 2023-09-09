@@ -11,7 +11,7 @@ build() {
     meson --buildtype=release  --prefix=/usr   \
       -Dplatforms=wayland,x11 \
       -Dgallium-drivers=auto,qxl  \
-      -Dvulkan-drivers=auto   \
+      -Dvulkan-drivers=""   \
       -Dglx=disabled          \
       -Dvalgrind=disabled     \
       -Dlibunwind=disabled    \
