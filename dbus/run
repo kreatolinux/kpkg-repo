@@ -10,8 +10,7 @@ DESCRIPTION="Message bus system"
 build() {
     ./configure --disable-static \
                 --prefix=/usr    \
-                --runstatedir=/run \
-                --enable-user-session \
+                --runstatedir=/run
     make
 }
 
