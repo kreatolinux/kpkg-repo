@@ -1,6 +1,6 @@
 #!/bin/sh
 NAME="glibc"
-RELEASE="1"
+RELEASE="2"
 VERSION="2.38"
 SOURCES="https://ftp.gnu.org/gnu/glibc/glibc-$VERSION.tar.xz"
 DEPENDS="grep gawk bison m4"
@@ -10,7 +10,13 @@ DESCRIPTION="The GNU C library"
 build() {
     mkdir -v build
     cd build || exit
-    ../configure --prefix=/usr --disable-sanity-checks --host=x86_64-pc-linux-gnu --enable-kernel=3.2 --disable-crypt \
+    ../configure \
+      --prefix=/usr \
+      --host=x86_64-pc-linux-gnu \
+      --enable-kernel=4.14 \
+      --enable-stack-protector=strong \
+      --with-headers=/usr/include
+      --disable-crypt \
         libc_sv_slibdir=/usr/lib
     make || exit
 }
