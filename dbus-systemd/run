@@ -12,7 +12,8 @@ build() {
     ./configure --disable-static \
                 --prefix=/usr    \
                 --runstatedir=/run \
-		--enable-systemd
+		            --enable-systemd    \
+                --enable-user-session \
     make
 }
 
