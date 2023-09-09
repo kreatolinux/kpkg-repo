@@ -14,6 +14,7 @@ build() {
       -Dplatforms=wayland,x11 \
       -Dgallium-drivers=auto  \
       -Dvulkan-drivers=""     \
+      -Degl=enabled           \
       -Dglx=dri               \
       -Dvalgrind=disabled     \
       -Dlibunwind=disabled    \
