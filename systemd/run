@@ -4,7 +4,7 @@ RELEASE="2"
 VERSION="254"
 SOURCES="https://github.com/systemd/systemd/archive/refs/tags/v$VERSION.tar.gz"
 BUILD_DEPENDS="meson samurai"
-DEPENDS="gperf kbd libcap util-linux python-jinja2 kmod"
+DEPENDS="linux-pam gperf kbd libcap util-linux python-jinja2 kmod"
 REPLACES="elogind eudev libudev"
 SHA256SUM="244da7605800a358915e4b45d079b0b89364be35da4bc8d849821e67bac0ce62  v254.tar.gz"
 DESCRIPTION="The systemd System and Service Manager"
@@ -30,7 +30,11 @@ prepare() {
 build() {
     cd systemd-$VERSION
     export PATH="$(realpath ../):$PATH"
-    meson --prefix=/usr build/
+    meson setup \
+      --prefix=/usr \
+      -Dpamconfdir=/etc/pam.d \
+      -Dpam=true \
+      build/
     ninja -C build/
 }
 
