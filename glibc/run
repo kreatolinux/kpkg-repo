@@ -15,7 +15,7 @@ build() {
       --host=x86_64-pc-linux-gnu \
       --enable-kernel=4.14 \
       --enable-stack-protector=strong \
-      --with-headers=/usr/include
+      --with-headers=/usr/include \
       --disable-crypt \
         libc_sv_slibdir=/usr/lib
     make || exit
