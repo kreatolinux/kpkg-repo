@@ -9,7 +9,7 @@ DESCRIPTION="Pluggable Authentication Modules for Linux"
 prepare() { 
   mkdir pam.d
   
-  for i in other system-account system-auth system-password system-session
+  for i in other system-account system-auth system-password system-session login
   do
     cp -f "$i" "pam.d/$i"
   done
