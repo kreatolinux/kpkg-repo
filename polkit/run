@@ -9,7 +9,12 @@ SHA256SUM="b69278f6ea0eac406350c45f5720e2fe5e4beaf9f53c16d9902e025965418864  pol
 DESCRIPTION="A toolkit for defining and handling authorizations"
 
 build() {
-    meson setup \
+    
+    if command -v systemctl > /dev/null; then
+      extraArgs="-Dsession_tracking=libsystemd-login"
+    fi
+
+    meson setup $extraArgs \
     --prefix=/usr \
     --buildtype=release \
     -Dman=false \
