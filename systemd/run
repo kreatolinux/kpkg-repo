@@ -1,6 +1,6 @@
 #!/bin/sh
 NAME="systemd"
-RELEASE="2"
+RELEASE="3"
 VERSION="254"
 SOURCES="https://github.com/systemd/systemd/archive/refs/tags/v$VERSION.tar.gz"
 BUILD_DEPENDS="meson samurai"
