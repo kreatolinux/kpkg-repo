@@ -15,7 +15,7 @@ build() {
       extraArgs="-DWITH_SYSTEMDUSERUNITDIR=no"
     fi 
 
-    if ! command -v kpkg info webkitgtk4 > /dev/null; then
+    if ! kpkg info webkitgtk4 > /dev/null; then
       extraArgs="$extraArgs -DENABLE_OAUTH2_WEBKITGTK4=OFF"
     fi
 
