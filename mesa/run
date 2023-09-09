@@ -10,8 +10,9 @@ DESCRIPTION="The 3D Graphics Library"
 build() {
     meson --buildtype=release  --prefix=/usr   \
       -Dplatforms=wayland,x11 \
-      -Dgallium-drivers=auto  \
-      -Dvulkan-drivers=""     \
+      -Dgallium-drivers=auto,qxl  \
+      -Dvulkan-drivers=auto   \
+      -Dglx=disabled          \
       -Dvalgrind=disabled     \
       -Dlibunwind=disabled    \
       build/
