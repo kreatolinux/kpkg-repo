@@ -1,0 +1,21 @@
+#!/bin/sh
+NAME="librsvg"
+RELEASE="1"
+VERSION="2.56.93"
+SOURCES="https://gitlab.gnome.org/GNOME/librsvg/-/archive/$VERSION/librsvg-$VERSION.tar.gz"
+DEPENDS="cairo freetype gdk-pixbuf glib harfbuzz libxml2 pango"
+BUILD_DEPENDS="rust vala gobject-introspection"
+SHA256SUM="34b1daff0bad01f7edb572602bf3c49bd48b93567f898a6d385805e819ee2fbd  librsvg-2.56.93.tar.gz"
+DESCRIPTION="SVG rendering library"
+
+build() {
+    ./configure \
+      --prefix=/usr \
+      --disable-static \
+      --enable-vala
+    make
+}
+
+package() {
+    make DESTDIR=$ROOT install
+}
