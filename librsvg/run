@@ -9,7 +9,7 @@ SHA256SUM="34b1daff0bad01f7edb572602bf3c49bd48b93567f898a6d385805e819ee2fbd  lib
 DESCRIPTION="SVG rendering library"
 
 build() {
-    ./configure \
+    ./autogen.sh \
       --prefix=/usr \
       --disable-static \
       --enable-vala
