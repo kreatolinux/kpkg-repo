@@ -4,7 +4,7 @@ RELEASE="2"
 VERSION="4.13.0"
 SOURCES="https://download.gnome.org/sources/gtk/4.13/gtk-$VERSION.tar.xz"
 BUILD_DEPENDS="meson gobject-introspection"
-DEPENDS="libx11 libxcursor libxdamage libxext libxfixes libxi libxinerama libxkbcommon libxrandr libxrender gdk-pixbuf libtiff libepoxy pango graphene adwaita-icon-theme iso-codes libxkbcommon wayland wayland-protocols"
+DEPENDS="libx11 cantarell-fonts libxcursor libxdamage libxext libxfixes libxi libxinerama libxkbcommon libxrandr libxrender gdk-pixbuf libtiff libepoxy pango graphene adwaita-icon-theme iso-codes libxkbcommon wayland wayland-protocols"
 SHA256SUM="0e2e928a271ac5ef9c95d891a2b9a8c46df9598d12efd9ccfa31695e88cab6aa  gtk-4.13.0.tar.xz"
 DESCRIPTION="gtk4"
 
