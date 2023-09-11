@@ -13,11 +13,14 @@ build() {
         -Dman=false \
         -Dgtk_doc=false \
         -Dtests=false \
-        -Dbuiltin_loaders=all \
         build/
     ninja -C build/
 }
 
 package() {
     DESTDIR=$ROOT ninja -C build/ install
+}
+
+postinstall() {
+  gdk-pixbuf-query-loaders --update-cache
 }
