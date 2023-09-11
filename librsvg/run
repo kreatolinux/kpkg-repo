@@ -19,3 +19,7 @@ build() {
 package() {
     make DESTDIR=$ROOT install
 }
+
+postinstall() {
+  gdk-pixbuf-query-loaders --update-cache
+}
