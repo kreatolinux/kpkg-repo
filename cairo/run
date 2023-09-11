@@ -10,7 +10,7 @@ DESCRIPTION="2D graphics library"
 prepare() {
         tar -xvf cairo-$VERSION.tar.xz
         cd cairo-$VERSION
-        patch -p1 < /tmp/kpkg/srcdir/24996e6ee241ebcd303dd34a2b06b37a6dd0c217.patch
+        patch -p1 < ../24996e6ee241ebcd303dd34a2b06b37a6dd0c217.patch
 }
 
 build() {
