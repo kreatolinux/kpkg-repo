@@ -13,6 +13,7 @@ build() {
         -Dman=false \
         -Dgtk_doc=false \
         --wrap-mode=nofallback \
+        -Dbuiltin_loaders=all \
         build/
     ninja -C build/
 }
