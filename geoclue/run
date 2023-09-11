@@ -1,6 +1,6 @@
 #!/bin/sh
 NAME="geoclue"
-RELEASE="1"
+RELEASE="2"
 VERSION="2.7.0"
 SOURCES="https://gitlab.freedesktop.org/geoclue/geoclue/-/archive/$VERSION/geoclue-$VERSION.tar.gz" 
 BUILD_DEPENDS="meson"
@@ -11,6 +11,7 @@ DESCRIPTION="A D-Bus geoinformation service"
 build() {
     meson setup \
     --prefix=/usr \
+    --sysconfdir=/etc \
     --buildtype=release \
     -Dmodem-gps-source=false \
     -D3g-source=false \
