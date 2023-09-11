@@ -14,6 +14,9 @@ build() {
                 --runstatedir=/run \
 		            --enable-systemd    \
                 --enable-user-session \
+                --build=x86_64-unknown-linux-gnu \
+                --target=x86_64-unknown-linux-gnu \
+                --host=x86_64-unknown-linux-gnu
     make
 }
 
