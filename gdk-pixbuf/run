@@ -12,7 +12,6 @@ build() {
         --prefix=/usr \
         -Dman=false \
         -Dgtk_doc=false \
-        -Dtests=false \
         build/
     ninja -C build/
 }
