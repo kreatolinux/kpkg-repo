@@ -8,7 +8,10 @@ SHA256SUM="ce5e71081d17ce9e86d7cbcfa28c4b04b9300f8fb7e78422b1feb6bc52c3028e  llv
 DESCRIPTION="The LLVM Project is a collection of modular and reusable compiler and toolchain technologies."
 
 build() {
-    cmake -S llvm -B build -DCMAKE_BUILD_TYPE=Release \
+    cmake -S llvm -B build  \
+        -DCMAKE_C_COMPILER=clang \
+        -DCMAKE_CXX_COMPILER=clang++ \
+        -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=1 \
         -DLLVM_ENABLE_RTTI=ON \
         -DLLVM_INSTALL_BINUTILS_SYMLINKS=ON \
@@ -18,7 +21,6 @@ build() {
         -DLLVM_ENABLE_PROJECTS="lld;clang" \
         -DLLVM_INSTALL_UTILS=ON \
         -DLIBCXX_CXX_ABI=libcxxabi \
-        -DLIBCXX_USE_COMPILER_RT=ON \
         -DLLVM_ENABLE_LIBCXX=ON \
         -DLIBCXXABI_USE_COMPILER_RT=ON \
         -DLIBCXXABI_USE_LLVM_UNWINDER=ON \
