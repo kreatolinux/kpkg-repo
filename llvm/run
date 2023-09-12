@@ -21,6 +21,7 @@ build() {
         -DLLVM_ENABLE_PROJECTS="lld;clang" \
         -DLLVM_INSTALL_UTILS=ON \
         -DLIBCXX_CXX_ABI=libcxxabi \
+        -DCOMPILER_RT_HAS_GCC_S_LIB=OFF \
         -DLLVM_ENABLE_LIBCXX=ON \
         -DLIBCXXABI_USE_COMPILER_RT=ON \
         -DLIBCXXABI_USE_LLVM_UNWINDER=ON \
