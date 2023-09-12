@@ -17,16 +17,21 @@ build() {
         -DLLVM_BINUTILS_INCDIR=/usr/include \
         -DLLVM_ENABLE_PROJECTS="lld;clang" \
         -DLLVM_INSTALL_UTILS=ON \
-        -DCOMPILER_RT_USE_BUILTINS_LIBRARY=ON \
+        -DLIBCXX_CXX_ABI=libcxxabi \
+        -DLIBCXX_USE_COMPILER_RT=ON \
+        -DLLVM_ENABLE_LIBCXX=ON \
         -DLIBCXXABI_USE_COMPILER_RT=ON \
         -DLIBCXXABI_USE_LLVM_UNWINDER=ON \
         -DLIBCXX_USE_COMPILER_RT=ON \
         -DLIBUNWIND_USE_COMPILER_RT=ON \
+        -DLIBUNWIND_USE_LLVM_UNWINDER=ON \
+        -DCOMPILER_RT_USE_BUILTINS_LIBRARY=ON \
+        -DCOMPILER_RT_EXCLUDE_ATOMIC_BUILTIN=OFF \
+        -DLIBCXX_HAS_ATOMIC_LIB=OFF \
+        -DCLANG_DEFAULT_CXX_STDLIB=libc++ \
         -DCLANG_DEFAULT_RTLIB=compiler-rt \
         -DLIBCXX_HAS_GCC_LIB=OFF \
-        -DCOMPILER_RT_BUILD_BUILTINS=ON \
-        -DCOMPILER_RT_BUILD_STANDALONE_LIBATOMIC=ON \
-        -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi;compiler-rt" \
+        -DLLVM_ENABLE_RUNTIMES="libunwind;libcxx;libcxxabi;compiler-rt" \
         -G Ninja
     ninja -C build -j$(nproc)
 }
