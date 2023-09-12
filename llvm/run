@@ -3,11 +3,13 @@ NAME="llvm"
 RELEASE="3"
 VERSION="16.0.6"
 SOURCES="https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION/llvm-project-$VERSION.src.tar.xz"
-BUILD_DEPENDS="cmake ninja"
+BUILD_DEPENDS="cmake ninja wget"
 SHA256SUM="ce5e71081d17ce9e86d7cbcfa28c4b04b9300f8fb7e78422b1feb6bc52c3028e  llvm-project-16.0.6.src.tar.xz"
 DESCRIPTION="The LLVM Project is a collection of modular and reusable compiler and toolchain technologies."
 
 build() {
+    # export CC just in case cmake tries to read from there for some reason
+    export CC=clang
     cmake -S llvm -B build  \
         -DCMAKE_C_COMPILER=clang \
         -DCMAKE_CXX_COMPILER=clang++ \
