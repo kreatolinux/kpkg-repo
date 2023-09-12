@@ -22,10 +22,6 @@ package_kpkg() {
         cp -f man/kpkg_run.8 "$ROOT/usr/share/man/man8"
 }
 
-build_kpkg-dbg() {
-  echo ""
-}
-
 build_jumpstart() {
         nimble install cligen fusion -y
         nim c -d:release --threads:on -o="out/jumpstart" "jumpstart/jumpstart.nim"
