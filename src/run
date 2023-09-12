@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="src"
 RELEASE="4"
-VERSION="5.4.5"
+VERSION="5.5.0"
 SOURCES="https://github.com/kreatolinux/src/archive/refs/tags/v$VERSION.tar.gz"
 BUILD_DEPENDS="nim"
 DEPENDS="libarchive shadow openssl git fakeroot"
-SHA256SUM="2021fa0584046a5bbdc93a446a8f1564de3ceb0561ff9ae2bc1cc0321bd21381  v5.4.5.tar.gz"
+SHA256SUM="e82516d8a4d6db9f38b163746221a4422b2c57401583830316b5d8fbdddb7eac  v5.5.0.tar.gz"
 DESCRIPTION="Kreato Linux source tree metapackage"
 
 build_kpkg() {
@@ -20,6 +20,10 @@ package_kpkg() {
         mkdir "$ROOT/usr/share/man/man5"
         cp -f man/kpkg.8 "$ROOT/usr/share/man/man8"
         cp -f man/kpkg_run.8 "$ROOT/usr/share/man/man8"
+}
+
+build_kpkg-dbg() {
+  echo ""
 }
 
 build_jumpstart() {
