@@ -1,13 +1,27 @@
 #!/bin/sh
 NAME="llvm"
-RELEASE="3"
+RELEASE="1"
 VERSION="16.0.6"
 SOURCES="https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION/llvm-project-$VERSION.src.tar.xz"
-BUILD_DEPENDS="cmake ninja wget"
+DEPENDS="cmake binutils gcc ninja"
 SHA256SUM="ce5e71081d17ce9e86d7cbcfa28c4b04b9300f8fb7e78422b1feb6bc52c3028e  llvm-project-16.0.6.src.tar.xz"
 DESCRIPTION="The LLVM Project is a collection of modular and reusable compiler and toolchain technologies."
 
 build() {
+    cmake -S llvm -B build -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=1 \
+        -DLLVM_ENABLE_RTTI=ON \
+        -DLLVM_INSTALL_BINUTILS_SYMLINKS=ON \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DLLVM_INCLUDE_BENCHMARKS=OFF \
+        -DLLVM_BINUTILS_INCDIR=/usr/include \
+        -DLLVM_ENABLE_PROJECTS="lld;clang" \
+        -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi;compiler-rt" \
+        -G Ninja
+    ninja -C build -j$(nproc)
+}
+
+build_llvmstandalone() {
     # export CC just in case cmake tries to read from there for some reason
     export CC=clang
     cmake -S llvm -B build  \
@@ -44,3 +58,5 @@ build() {
 package() {    
     DESTDIR="$ROOT" ninja -C build install
 }
+
+
