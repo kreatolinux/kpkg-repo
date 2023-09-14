@@ -25,7 +25,6 @@ build() {
     --buildtype=release \
     -Ddistributor_logo=$(realpath../logo.png) \
     -Ddark_mode_distributor_logo=$(realpath../logo.png) \
-    -Ddark_mode_
     build
     ninja -C build
 }
