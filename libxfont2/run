@@ -1,0 +1,21 @@
+#!/bin/sh
+NAME="libxfont2"
+RELEASE="1"
+VERSION="2.0.6"
+SOURCES="https://www.x.org/releases/individual/lib/libXfont2-$VERSION.tar.xz"
+SHA256SUM="5ff0d26c94d82ebb94a944b9f1f55cd01b9713fd461fe93f62f3527ce14ad94e  libX11-1.8.6.tar.gz"
+DEPENDS="freetype xorgproto"
+BUILD_DEPENDS="xtrans"
+DESCRIPTION="X11 font rasterisation library"
+
+build() {
+    ./configure \
+        --prefix=/usr \
+        --sysconfdir=/etc \
+        --disable-static
+    make
+}
+
+package() {
+    make DESTDIR=$ROOT install
+}
