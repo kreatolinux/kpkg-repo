@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="21.1.8"
 SOURCES="https://www.x.org/releases/individual/xserver/xorg-server-$VERSION.tar.gz"
 SHA256SUM="5ff0d26c94d82ebb94a944b9f1f55cd01b9713fd461fe93f62f3527ce14ad94e  libX11-1.8.6.tar.gz"
-DEPENDS="libdrm libx11 libxrender libxshmfence libepoxy dbus libglvnd libpciaccess libxcvt libxfon2 libxshmfence libnettle pixman"
+DEPENDS="libdrm libx11 libxrender libxshmfence libepoxy dbus libglvnd libpciaccess libxcvt libxfont2 libxshmfence libnettle pixman"
 DESCRIPTION="X11 client-side library"
 
 build() {
