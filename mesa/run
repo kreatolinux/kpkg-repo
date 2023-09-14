@@ -8,10 +8,7 @@ BUILD_DEPENDS="libdrm libx11 libxrandr meson libelf python-mako wayland-protocol
 SHA256SUM="3cf88576fdebf24fc4047067936131c90cb6541c27365996b79b661dec1fb153  mesa-23.1.5.tar.xz"
 DESCRIPTION="The 3D Graphics Library"
 build() {
-    if kpkg info libglvnd > /dev/null; then
-      extraArgs="-Dglvnd=true"
-    fi
-    meson $extraArgs \
+    meson \
       --buildtype=release     \
       --prefix=/usr           \
       -Dplatforms=wayland,x11 \
@@ -19,6 +16,7 @@ build() {
       -Dvulkan-drivers=""     \
       -Degl=enabled           \
       -Dgles1=disabled        \
+      -Dglvnd=true            \
       -Dgles2=enabled         \
       -Dglx=dri               \
       -Dvalgrind=disabled     \
