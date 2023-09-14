@@ -34,6 +34,7 @@ build() {
       --prefix=/usr \
       -Dpamconfdir=/etc/pam.d \
       -Dpam=true \
+      -Dldconfig=false \
       build/
     ninja -C build/
 }
