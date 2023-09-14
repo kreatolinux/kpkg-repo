@@ -13,6 +13,7 @@ build() {
         -DLLVM_ENABLE_RTTI=ON \
         -DLLVM_INSTALL_BINUTILS_SYMLINKS=ON \
         -DCMAKE_INSTALL_PREFIX=/usr \
+        -DLLVM_INSTALL_UTILS=ON \
         -DLLVM_INCLUDE_BENCHMARKS=OFF \
         -DLLVM_BINUTILS_INCDIR=/usr/include \
         -DLLVM_ENABLE_PROJECTS="lld;clang" \
