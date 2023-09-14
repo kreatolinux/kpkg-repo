@@ -8,7 +8,10 @@ DEPENDS="libdrm xorg-font-util libx11 libxrender libxshmfence libepoxy dbus libg
 DESCRIPTION="X11 client-side library"
 
 build() {
-    meson setup build
+    meson setup \
+      --prefix=/usr \
+      --buildtype=release \
+      build
     ninja -C build
 }
 
