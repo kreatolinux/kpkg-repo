@@ -3,7 +3,7 @@ NAME="adwaita-icon-theme"
 RELEASE="1"
 VERSION="44.0"
 SOURCES="https://download.gnome.org/sources/adwaita-icon-theme/44/adwaita-icon-theme-$VERSION.tar.xz"
-DEPENDS="librsvg"
+DEPENDS="librsvg hicolor-icon-theme"
 SHA256SUM="4889c5601bbfecd25d80ba342209d0a936dcf691ee56bd6eca4cde361f1a664c  adwaita-icon-theme-44.0.tar.xz"
 DESCRIPTION="adwaita-icon-theme"
 
