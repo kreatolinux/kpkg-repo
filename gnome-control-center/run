@@ -23,8 +23,8 @@ build() {
     meson setup \
     --prefix=/usr \
     --buildtype=release \
-    -Ddistributor_logo=$(realpath../logo.png) \
-    -Ddark_mode_distributor_logo=$(realpath../logo.png) \
+    -Ddistributor_logo=/usr/share/pixmaps/klinux_logo.png \
+    -Ddark_mode_distributor_logo=/usr/share/pixmaps/klinux_logo.png \
     build
     ninja -C build
 }
@@ -32,4 +32,6 @@ build() {
 package() {
     cd gnome-control-center-$VERSION 
     DESTDIR="$ROOT" ninja -C build install
+    mkdir -p "$ROOT/usr/share/pixmaps"
+    cp ../logo.png "$ROOT/usr/share/pixmaps/klinux_logo.png"
 }
