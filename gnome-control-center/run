@@ -2,10 +2,10 @@
 NAME="gnome-control-center"
 RELEASE="2"
 VERSION="44.3"
-SOURCES="https://gitlab.gnome.org/GNOME/gnome-control-center/-/archive/$VERSION/gnome-control-center-$VERSION.tar.gz;https://raw.githubusercontent.com/kreatolinux/assets/master/logo.png"
+SOURCES="https://gitlab.gnome.org/GNOME/gnome-control-center/-/archive/$VERSION/gnome-control-center-$VERSION.tar.gz;https://raw.githubusercontent.com/kreatolinux/assets/master/klinux_pixmap.png"
 DEPENDS="libnma modemmanager cups samba gcr-3 gnome-online-accounts accountsservice colord-gtk libgtop udisks libpwquality gnome-settings-daemon gsound gnome-bluetooth ibus libadwaita"
 BUILD_DEPENDS="meson git"
-SHA256SUM="668139f7bb1ab02c85ae9073cc3db09c7a458944e3d6cbb0c9285bac187e7292  gnome-control-center-44.3.tar.gz;1cf1ddab90ede21de983b1536d9e686e3eb97383a0e4b6bfbd7521721fb7e6a5  logo.png"
+SHA256SUM="668139f7bb1ab02c85ae9073cc3db09c7a458944e3d6cbb0c9285bac187e7292  gnome-control-center-44.3.tar.gz;6e1fc322ed757a024a39a80a8de43d184323e2e781aa21cf618fc67655e6cb28  klinux_pixmap.png"
 DESCRIPTION="GNOME Control Center"
 
 prepare() {
@@ -33,5 +33,5 @@ package() {
     cd gnome-control-center-$VERSION 
     DESTDIR="$ROOT" ninja -C build install
     mkdir -p "$ROOT/usr/share/pixmaps"
-    cp ../logo.png "$ROOT/usr/share/pixmaps/klinux_logo.png"
+    cp ../klinux_pixmap.png "$ROOT/usr/share/pixmaps/klinux_logo.png"
 }
