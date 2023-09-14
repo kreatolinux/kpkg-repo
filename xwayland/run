@@ -8,7 +8,10 @@ DEPENDS="libnettle libepoxy libxfont2 pixman xorg-server libxcvt mesa libglvnd l
 DESCRIPTION="Run X11 applications in Wayland"
 
 build() {
-    meson setup build
+    meson setup \
+      --prefix=/usr \
+      --buildtype=release \
+      build
     ninja -C build
 }
 
