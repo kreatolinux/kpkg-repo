@@ -1,0 +1,21 @@
+#!/bin/sh
+NAME="gnome-terminal"
+RELEASE="1"
+VERSION="3.49.99"
+SOURCES="https://gitlab.gnome.org/GNOME/gnome-terminal/-/archive/$VERSION/gnome-terminal-$VERSION.tar.gz"
+BUILD_DEPENDS="meson"
+DEPENDS="vte gtk3 glib"
+SHA256SUM="3a07ff5fe1e8bde59c2a1b019af00999dbf3148c96634bf806780fd4f5218a9a  gnome-terminal-3.49.99.tar.gz"
+DESCRIPTION="GNOME Terminal"
+
+build() {
+    meson setup \
+    --prefix=/usr \
+    --buildtype=release \
+    build
+    ninja -C build
+}
+
+package() {
+    DESTDIR="$ROOT" ninja -C build install
+}
