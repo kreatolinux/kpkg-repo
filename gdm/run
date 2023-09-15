@@ -24,6 +24,7 @@ build() {
     --buildtype=release \
     -Dgdm-xsession=true         \
     -Drun-dir=/run/gdm          \
+    -Ddefault-pam-config=lfs    \
     build
     ninja -C build
 }
