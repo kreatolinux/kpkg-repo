@@ -1,0 +1,23 @@
+#!/bin/sh
+NAME="tracker3"
+RELEASE="1"
+VERSION="3.5.3"
+SOURCES="https://gitlab.gnome.org/GNOME/tracker/-/archive/$VERSION/tracker-$VERSION.tar.gz"
+DEPENDS="glib libxml2 libsoup sqlite dbus json-glib libseccomp"
+BUILD_DEPENDS="meson vala gobject-introspection"
+SHA256SUM="32491e852a5debb4003993922516166dc8ab1f676fbd5a6612aa228593ec0070  tracker-3.5.3.tar.gz"
+DESCRIPTION="An efficient search engine and triplestore for desktop, embedded and mobile"
+
+build() {
+    meson setup \
+    --prefix=/usr \
+    --buildtype=release \
+    -Dman=false \
+    -Ddocs=false \
+    build
+    ninja -C build
+}
+
+package() {
+    DESTDIR="$ROOT" ninja -C build install
+}
