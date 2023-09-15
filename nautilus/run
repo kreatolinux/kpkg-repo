@@ -12,6 +12,7 @@ build() {
     meson setup \
     --prefix=/usr \
     --buildtype=release \
+    -Dcloudproviders=false \
     build
     ninja -C build
 }
