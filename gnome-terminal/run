@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="3.49.99"
 SOURCES="https://gitlab.gnome.org/GNOME/gnome-terminal/-/archive/$VERSION/gnome-terminal-$VERSION.tar.gz"
 BUILD_DEPENDS="meson"
-DEPENDS="vte gtk3 glib"
+DEPENDS="vte gtk3 glib libhandy"
 SHA256SUM="3a07ff5fe1e8bde59c2a1b019af00999dbf3148c96634bf806780fd4f5218a9a  gnome-terminal-3.49.99.tar.gz"
 DESCRIPTION="GNOME Terminal"
 
