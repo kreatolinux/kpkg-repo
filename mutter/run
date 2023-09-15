@@ -4,10 +4,9 @@ RELEASE="1"
 VERSION="44.4"
 SOURCES="https://gitlab.gnome.org/GNOME/mutter/-/archive/$VERSION/mutter-$VERSION.tar.gz"
 BUILD_DEPENDS="meson gobject-introspection gtk3"
-DEPENDS="libx11 libxcvt startup-notification libxtst libxkbfile libxfixes libxext libxcomposite libxcursor libxrandr libxau libxinerama libxcb libxrender libxdamage libxi gnome-settings-daemon graphene libxkbcommon pipewire desktop-file-utils libinput wayland wayland-protocols"
+DEPENDS="libx11 libxcvt startup-notification libxtst libxkbfile libxfixes libxext libxcomposite libxcursor libxrandr libxau libxinerama libxcb libxrender libxdamage libxi xwayland gnome-settings-daemon graphene libxkbcommon pipewire desktop-file-utils libinput wayland wayland-protocols"
 SHA256SUM="d5f2859e7e0648903d02aef35f87aebf02b5575e46705fbec17b28024b81b762  mutter-44.4.tar.gz"
 DESCRIPTION="Wayland compositor for GNOME"
-OPTDEPENDS="xwayland: to run X11 applications on Wayland"
 
 build() {
     
