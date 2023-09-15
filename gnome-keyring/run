@@ -12,7 +12,8 @@ build() {
     sed -i 's:"/desktop:"/org:' schema/*.xml
 
     ./configure --prefix=/usr     \
-                --sysconfdir=/etc
+                --sysconfdir=/etc \
+                --disable-doc
     make
 }
 
