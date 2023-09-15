@@ -1,0 +1,23 @@
+#!/bin/sh
+NAME="vte"
+RELEASE="1"
+VERSION="0.73.99"
+SOURCES="https://gitlab.gnome.org/GNOME/vte/-/archive/$VERSION/vte-$VERSION.tar.gz"
+DEPENDS="gtk3 pcre fribidi gtk4 gnutls"
+BUILD_DEPENDS="meson gobject-introspection vala"
+SHA256SUM="a4dedc1c8f3f62a3bff5c5da1dc2458f3f8cc30e884426f512f932aa37361e94  vte-0.73.99.tar.gz"
+DESCRIPTION="Visual Terminal Emulator widget"
+
+build() {
+    meson setup \
+    --prefix=/usr \
+    --buildtype=release \
+    -Ddocs=false \
+    -Dgtk4=true \
+    build
+    ninja -C build
+}
+
+package() {
+    DESTDIR="$ROOT" ninja -C build install
+}
