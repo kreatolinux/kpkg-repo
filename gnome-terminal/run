@@ -5,13 +5,23 @@ VERSION="3.49.99"
 SOURCES="https://gitlab.gnome.org/GNOME/gnome-terminal/-/archive/$VERSION/gnome-terminal-$VERSION.tar.gz"
 BUILD_DEPENDS="meson"
 DEPENDS="vte gtk3 glib libhandy"
+OPTDEPENDS="nautilus: For nautilus integration"
 SHA256SUM="3a07ff5fe1e8bde59c2a1b019af00999dbf3148c96634bf806780fd4f5218a9a  gnome-terminal-3.49.99.tar.gz"
 DESCRIPTION="GNOME Terminal"
 
 build() {
+    
+    if kpkg info nautilus; then
+      nautilusEnabled="true"
+    else
+      nautilusEnabled="false"
+    fi
+   
     meson setup \
     --prefix=/usr \
     --buildtype=release \
+    -Ddocs=false \
+    -Dnautilus_extension=$nautilusEnabled \
     build
     ninja -C build
 }
