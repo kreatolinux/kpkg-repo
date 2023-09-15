@@ -1,0 +1,21 @@
+#!/bin/sh
+NAME="exiv2"
+RELEASE="1"
+VERSION="0.28.0"
+SOURCES="https://github.com/Exiv2/exiv2/archive/refs/tags/v$VERSION.tar.gz"
+DEPENDS="gettext curl expat zlib"
+BUILD_DEPENDS="meson"
+SHA256SUM="04c0675caf4338bb96cd09982f1246d588bcbfe8648c0f5a30b56c7c496f1a0b  v0.28.0.tar.gz"
+DESCRIPTION="Image metadata library and tools"
+
+build() {
+    meson setup \
+    --prefix=/usr \
+    --buildtype=release \
+    build
+    ninja -C build
+}
+
+package() {
+    DESTDIR="$ROOT" ninja -C build install
+}
