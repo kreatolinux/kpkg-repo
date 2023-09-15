@@ -9,6 +9,10 @@ SHA256SUM="32491e852a5debb4003993922516166dc8ab1f676fbd5a6612aa228593ec0070  tra
 DESCRIPTION="An efficient search engine and triplestore for desktop, embedded and mobile"
 
 build() {
+    
+    rm -rf subprojects/gvdb
+    git clone https://gitlab.gnome.org/GNOME/gvdb.git subprojects/gvdb
+
     meson setup \
     --prefix=/usr \
     --buildtype=release \
