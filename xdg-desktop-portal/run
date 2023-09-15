@@ -1,0 +1,23 @@
+#!/bin/sh
+NAME="xdg-desktop-portal"
+RELEASE="1"
+VERSION="1.16.0"
+SOURCES="https://github.com/flatpak/xdg-desktop-portal/releases/download/$VERSION/xdg-desktop-portal-$VERSION.tar.xz"
+DEPENDS="glib flatpak bubblewrap geoclue libportal gdk-pixbuf fuse pipewire json-glib"
+BUILD_DEPENDS="meson"
+SHA256SUM="5b41a5915c11851493d8c33b9783f147a0a6f419db80ad760e84cd3420fd8c19  xdg-desktop-portal-1.16.0.tar.xz"
+DESCRIPTION="A portal frontend service for Flatpak and possibly other desktop containment frameworks"
+
+build() {
+    meson setup \
+    --prefix=/usr \
+    --buildtype=release \
+    -Ddocbook-docs=disabled \
+    -Dman-pages=disabled \
+    build
+    ninja -C build
+}
+
+package() {
+    DESTDIR="$ROOT" ninja -C build install
+}
