@@ -15,7 +15,9 @@ build() {
       -DEXIV2_ENABLE_NLS=ON       \
       -DEXIV2_ENABLE_BMFF=ON      \
       -DEXIV2_ENABLE_VIDEO=ON      \
-      -DEXIV2_ENABLE_PNG=ON
+      -DEXIV2_ENABLE_PNG=ON       \
+      -DEXIV2_ENABLE_INIH=OFF     \
+      -DEXIV2_ENABLE_BROTLI=OFF
     ninja -C build
 }
 
