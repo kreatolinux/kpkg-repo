@@ -1,0 +1,21 @@
+#!/bin/sh
+NAME="xdg-desktop-portal-gnome"
+RELEASE="1"
+VERSION="44.2"
+SOURCES="https://gitlab.gnome.org/GNOME/xdg-desktop-portal-gnome/-/archive/$VERSION/xdg-desktop-portal-gnome-$VERSION.tar.gz"
+DEPENDS="xdg-desktop-portal-gtk xdg-desktop-portal"
+BUILD_DEPENDS="meson"
+SHA256SUM="f13fa7dfe5cffecc4f3b1d4595278a7b7eaa2053689d49c4e2d211103057a5f6  xdg-desktop-portal-gnome-44.2.tar.gz"
+DESCRIPTION="GNOME backend for xdg-desktop-portal"
+
+build() {
+    meson setup \
+    --prefix=/usr \
+    --buildtype=release \
+    build
+    ninja -C build
+}
+
+package() {
+    DESTDIR="$ROOT" ninja -C build install
+}
