@@ -1,0 +1,21 @@
+#!/bin/sh
+NAME="gnome-keyring"
+RELEASE="1"
+VERSION="42.1"
+SOURCES="https://gitlab.gnome.org/GNOME/gnome-keyring/-/archive/$VERSION/gnome-keyring-$VERSION.tar.gz"
+DEPENDS="gcr-3 dbus linux-pam libxslt openssh"
+SHA256SUM="0fbadc355f7af19103c03b062ba32777bc6137cf24764c4486fbe2d10181becb  gnome-keyring-42.1.tar.gz"
+DESCRIPTION="A daemon that keeps passwords and other secrets for users"
+
+build() {
+    # From BLFS
+    sed -i 's:"/desktop:"/org:' schema/*.xml
+
+    ./configure --prefix=/usr     \
+                --sysconfdir=/etc
+    make
+}
+
+package() {
+    make DESTDIR=$ROOT install
+}
