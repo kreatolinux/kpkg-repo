@@ -28,9 +28,9 @@ build() {
         export PATH=$PATH:$PWD/go/bin
     fi
     cd src || exit 1
-    export GOENV="/tmp/kpkg/srcdir/go/env" 
-    export GOCACHE="/tmp/kpkg/srcdir/go-build"
-    go env -w  GOCACHE="/tmp/kpkg/srcdir/go-build"
+    export GOENV="/opt/kpkg/srcdir/go/env" 
+    export GOCACHE="/opt/kpkg/srcdir/go-build"
+    go env -w  GOCACHE="/opt/kpkg/srcdir/go-build"
     GOROOT_FINAL=/usr/local/go ./make.bash
 }
 
@@ -39,5 +39,5 @@ package() {
     cp -r ./bin "$ROOT"
     mkdir -p "$ROOT"/usr/local/go
     cp -r . "$ROOT"/usr/local/go
-    mkdir -p /tmp/kpkg/srcdir/go
+    mkdir -p /opt/kpkg/srcdir/go
 }
