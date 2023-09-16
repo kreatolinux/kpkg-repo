@@ -5,18 +5,7 @@ VERSION="0.1"
 NO_CHKUPD="y"
 DEPENDS="gnome-shell gnome-terminal nautilus gnome-keyring"
 DESCRIPTION="GNOME group"
-
-prepare() {
-  :
-}
-
-build() {
-  :
-}
-
-package() {
-  :
-}
+IS_GROUP="y"
 
 postinstall() {
   glib-compile-schemas /usr/share/glib-2.0/schemas
