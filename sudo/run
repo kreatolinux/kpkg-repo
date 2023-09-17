@@ -15,6 +15,7 @@ build() {
 package() {
     make install
     # From BLFS
+    mkdir -p $ROOT/etc/pam.d
     cat > $ROOT/etc/pam.d/sudo << "EOF"
 # Begin /etc/pam.d/sudo
 
