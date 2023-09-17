@@ -34,3 +34,11 @@ build() {
 package() {
     DESTDIR="$ROOT" ninja -C build install
 }
+
+postinstall() {
+  # from blfs
+  groupadd -g 21 gdm
+  useradd -c "GDM Daemon Owner" -d /var/lib/gdm -u 21 \
+          -g gdm -s /bin/false gdm
+  passwd -ql gdm
+}
