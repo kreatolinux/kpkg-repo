@@ -17,6 +17,7 @@ prepare() {
 }
 
 build_linux_headers() {
+    cd linux-$VERSION
     make mrproper
     make headers
     find usr/include -name '.*' -delete
@@ -24,6 +25,7 @@ build_linux_headers() {
 }
 
 package_linux_headers() {
+    cd linux-$VERSION
     mkdir -p $ROOT/usr
     cp -rv usr/include $ROOT/usr/
 }
