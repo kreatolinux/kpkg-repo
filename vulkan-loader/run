@@ -15,7 +15,7 @@ build() {
         -DCMAKE_INSTALL_SYSCONFDIR=/etc \
         -DCMAKE_INSTALL_DATADIR=/share \
         -DCMAKE_SKIP_RPATH=True \
-        -DBUILD_TESTS=OFF
+        -DBUILD_TESTS=OFF \
         -DBUILD_WSI_XCB_SUPPORT=ON \
         -DBUILD_WSI_XLIB_SUPPORT=ON \
         -DBUILD_WSI_WAYLAND_SUPPORT=ON \
