@@ -16,6 +16,7 @@ build() {
     ./configure $extraArgs --disable-static \
                 --prefix=/usr    \
                 --runstatedir=/run \
+                --sysconfdir=/etc \
                 --enable-user-session
     make
 }
