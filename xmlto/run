@@ -1,0 +1,17 @@
+#!/bin/sh
+NAME="xmlto"
+RELEASE="1"
+VERSION="0.0.28"
+SOURCES="https://releases.pagure.org/xmlto/xmlto-$VERSION.tar.bz2"
+DEPENDS="libxslt"
+SHA256SUM="1130df3a7957eb9f6f0d29e4aa1c75732a7dfb6d639be013859b5c7ec5421276  xmlto-0.0.28.tar.bz2"
+DESCRIPTION="xmlto"
+
+build() {
+    LINKS=/usr/bin/links ./configure --prefix=/usr
+    make
+}
+
+package() {
+    make DESTDIR=$ROOT install
+}
