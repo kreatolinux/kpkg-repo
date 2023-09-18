@@ -7,6 +7,10 @@ SOURCES="https://archlinux.uk.mirror.allworldit.com/archlinux/extra/os/x86_64/xd
 SHA256SUM="14541d34e8f26a8ab03feceb2a041d2028d22c262ffd680776355e231daf1536  xdg-utils-1.1.3+45+g301a1a4-1-any.pkg.tar.zst"
 DESCRIPTION="A set of tools that allows applications to easily integrate with the desktop environment of the user"
 
+prepare() {
+    :
+}
+
 build() {
     :
 }
