@@ -1,0 +1,35 @@
+#!/bin/sh
+NAME="docbook-xsl"
+RELEASE="1"
+VERSION="1.79.2"
+SOURCES="https://github.com/docbook/xslt10-stylesheets/releases/download/release/$VERSION/docbook-xsl-nons-$VERSION.tar.bz2;https://www.linuxfromscratch.org/patches/blfs/svn/docbook-xsl-nons-1.79.2-stack_fix-1.patch"
+SHA256SUM="ee8b9eca0b7a8f89075832a2da7534bce8c5478fc8fc2676f512d5d87d832102  docbook-xsl-nons-1.79.2.tar.bz2;a92c39715c54949ba9369add1809527b8f155b7e2a2b2e30cb4b39ee715f2e30  docbook-xsl-nons-1.79.2-stack_fix-1.patch"
+DESCRIPTION="XSL stylesheets for DocBook"
+
+prepare() {
+    tar -xf docbook-xsl-nons-$VERSION.tar.bz2
+    cd docbook-xsl-nons-$VERSION
+    patch -p1 < ../docbook-xsl-nons-1.79.2-stack_fix-1.patch
+}
+
+build() {
+    : 
+}
+
+package() {
+    cd docbook-xsl-nons-$VERSION
+    # from blfs
+    install -v -m755 -d $ROOT/usr/share/xml/docbook/xsl-stylesheets-nons-$VERSION
+    cp -v -R VERSION assembly common eclipse epub epub3 extensions fo    \
+         highlighting html htmlhelp images javahelp lib manpages params  \
+         profiling roundtrip slides template tests tools webhelp website \
+         xhtml xhtml-1_1 xhtml5                                          \
+         $ROOT/usr/share/xml/docbook/xsl-stylesheets-nons-$VERSION
+
+   ln -s VERSION $ROOT/usr/share/xml/docbook/xsl-stylesheets-nons-$VERSION/VERSION.xsl
+
+   install -v -m644 -D README \
+                    $ROOT/usr/share/doc/docbook-xsl-nons-$VERSION/README.txt
+   install -v -m644    RELEASE-NOTES* NEWS* \
+                    $ROOT/usr/share/doc/docbook-xsl-nons-$VERSION
+}
