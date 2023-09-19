@@ -8,8 +8,7 @@ SHA256SUM="2ecc9e5fe9cf94eb4c096bf566ee3a399ef2326f5f7aac8647bdec680c0cd525  viv
 DESCRIPTION="An advanced browser made with the power user in mind"
 
 prepare() {
-    tar -xf vivaldi_stable_*_amd64.deb
-    tar -xf "data.tar.xz"
+    bsdtar -xf *.deb
 } 
 
 build() {
@@ -17,6 +16,7 @@ build() {
 }
 
 package() {
+    tar -xf "data.tar.xz"
     mv etc $ROOT
     mv usr $ROOT
     mv opt $ROOT
