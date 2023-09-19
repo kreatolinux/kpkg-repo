@@ -20,4 +20,18 @@ package() {
     mv etc $ROOT
     mv usr $ROOT
     mv opt $ROOT
+   
+    # From the vivaldi PKGBUILD 
+    # https://gitlab.archlinux.org/archlinux/packaging/packages/vivaldi/-/blob/main/PKGBUILD?ref_type=heads
+
+    # install icons
+    for res in 16 22 24 32 48 64 128 256; do
+        install -Dm644 "$ROOT/opt/vivaldi/product_logo_${res}.png" \
+            "$ROOT/usr/share/icons/hicolor/${res}x${res}/apps/vivaldi.png"
+    done
+
+    # install global icon in case hicolor theme gets bypassed
+    install -Dm644 "$ROOT/opt/vivaldi/product_logo_256.png" \
+        "$ROOT/usr/share/pixmaps/vivaldi.png"
+
 }
