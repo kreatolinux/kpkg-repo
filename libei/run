@@ -1,0 +1,25 @@
+#!/bin/sh
+NAME="libei"
+RELEASE="2"
+VERSION="1.1.0"
+SOURCES="https://gitlab.freedesktop.org/libinput/libei/-/archive/$VERSION/libei-$VERSION.tar.gz"
+DEPENDS="elogind libxkbcommon libevdev"
+BUILD_DEPENDS="meson"
+SHA256SUM="23a6890ba1139249f5c9f6d33ce6be2ad04bd0236f339eeb62c7460cbd4932de  libei-1.1.0.tar.gz"
+DESCRIPTION="Library for Emulated Input"
+
+build() {
+    meson setup \
+        --prefix=/usr \
+        --buildtype=release \
+        build/
+    ninja -C build/
+}
+
+package() {
+    DESTDIR=$ROOT ninja -C build/ install
+}
+
+postinstall() {
+  gdk-pixbuf-query-loaders --update-cache
+}
