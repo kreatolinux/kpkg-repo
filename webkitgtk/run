@@ -23,6 +23,7 @@ build_webkitgtk4() {
       -DUSE_AVIF=OFF              \
       -DUSE_WOFF2=OFF             \
       -DUSE_GTK4=ON               \
+      -DUSE_GSTREAMER_TRANSCODER=NO \
       -DUSE_JPEGXL=OFF            \
       -DUSE_WPE_RENDERER=ON       \
       -DENABLE_JOURNALD_LOG=OFF   \
@@ -43,6 +44,7 @@ build_webkitgtk3() {
       -DENABLE_MINIBROWSER=ON     \
       -DENABLE_SPELLCHECK=OFF     \
       -DENABLE_DOCUMENTATION=OFF  \
+      -DUSE_GSTREAMER_TRANSCODER=NO \
       -DUSE_AVIF=OFF              \
       -DUSE_WOFF2=OFF             \
       -DUSE_GTK4=OFF              \
