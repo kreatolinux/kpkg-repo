@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="glib"
 RELEASE="1"
-VERSION="2.76.4"
-SOURCES="https://download.gnome.org/sources/glib/2.76/glib-$VERSION.tar.xz" 
+VERSION="2.78.0"
+SOURCES="https://download.gnome.org/sources/glib/2.78/glib-$VERSION.tar.xz" 
 BUILD_DEPENDS="meson ninja"
-SHA256SUM="5a5a191c96836e166a7771f7ea6ca2b0069c603c7da3cba1cd38d1694a395dda  glib-2.76.4.tar.xz"
+SHA256SUM="44eaab8b720877ce303c5540b657b126f12dc94972d9880b52959f43fb537b30  glib-2.78.0.tar.xz"
 DESCRIPTION="glib"
 
 build() {

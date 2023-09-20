@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="systemd"
-RELEASE="2"
+RELEASE="3"
 VERSION="254"
 SOURCES="https://github.com/systemd/systemd/archive/refs/tags/v$VERSION.tar.gz"
 BUILD_DEPENDS="meson samurai"
-DEPENDS="gperf libcap util-linux python-jinja2 kmod"
+DEPENDS="linux-pam gperf kbd libcap util-linux python-jinja2 kmod"
 REPLACES="elogind eudev libudev"
 SHA256SUM="244da7605800a358915e4b45d079b0b89364be35da4bc8d849821e67bac0ce62  v254.tar.gz"
 DESCRIPTION="The systemd System and Service Manager"
@@ -30,7 +30,12 @@ prepare() {
 build() {
     cd systemd-$VERSION
     export PATH="$(realpath ../):$PATH"
-    meson --prefix=/usr build/
+    meson setup \
+      --prefix=/usr \
+      -Dpamconfdir=/etc/pam.d \
+      -Dpam=true \
+      -Dldconfig=false \
+      build/
     ninja -C build/
 }
 
@@ -38,4 +43,25 @@ package() {
     cd systemd-$VERSION
     export PATH="$(realpath ../):$PATH"
     DESTDIR=$ROOT ninja -C build/ install
+
+# From BLFS https://www.linuxfromscratch.org/blfs/view/stable-systemd/general/systemd.html
+cat > $ROOT/etc/pam.d/systemd-user << "EOF"
+# Begin /etc/pam.d/systemd-user
+
+account  required    pam_access.so
+account  include     system-account
+
+session  required    pam_env.so
+session  required    pam_limits.so
+session  required    pam_unix.so
+session  required    pam_loginuid.so
+session  optional    pam_keyinit.so force revoke
+session  optional    pam_systemd.so
+
+auth     required    pam_deny.so
+password required    pam_deny.so
+
+# End /etc/pam.d/systemd-user
+EOF
+
 }

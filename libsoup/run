@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="libsoup"
 RELEASE="1"
-VERSION="3.4.2"
+VERSION="3.4.3"
 SOURCES="https://download.gnome.org/sources/libsoup/3.4/libsoup-$VERSION.tar.xz"
 BUILD_DEPENDS="meson"
 DEPENDS="glib glib-networking libxml2 nghttp2 sqlite gobject-introspection vala libpsl"
-SHA256SUM="78c8fa37cb152d40ec8c4a148d6155e2f6947f3f1602a7cda3a31ad40f5ee2f3  libsoup-3.4.2.tar.xz"
+SHA256SUM="b7f1bbaeeb43f5812daba3ee258a72e1b4b14c2fd91f4a1a75d4eea10dcf288f  libsoup-3.4.3.tar.xz"
 DESCRIPTION="libsoup"
 
 build() {

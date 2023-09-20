@@ -1,0 +1,20 @@
+#!/bin/sh
+NAME="xorg-xkbcomp"
+RELEASE="1"
+VERSION="1.4.6"
+SOURCES="https://www.x.org/archive/individual/app/xkbcomp-$VERSION.tar.xz"
+SHA256SUM="fa50d611ef41e034487af7bd8d8c718df53dd18002f591cca16b0384afc58e98  xkbcomp-1.4.6.tar.xz"
+DEPENDS="libxkbfile"
+BUILD_DEPENDS="xorg-util-macros"
+DESCRIPTION="X11 client-side library"
+
+build() {
+    ./configure \
+        --prefix=/usr \
+        --disable-static
+    make
+}
+
+package() {
+    make DESTDIR=$ROOT install
+}

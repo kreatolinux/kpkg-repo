@@ -1,0 +1,21 @@
+#!/bin/sh
+NAME="libxcomposite"
+RELEASE="1"
+VERSION="0.4.6"
+SOURCES="https://www.x.org/releases/individual/lib/libXcomposite-$VERSION.tar.gz"
+SHA256SUM="3599dfcd96cd48d45e6aeb08578aa27636fa903f480f880c863622c2b352d076  libXcomposite-0.4.6.tar.gz"
+DEPENDS="libxfixes"
+BUILD_DEPENDS="xorgproto"
+DESCRIPTION="libxcomposite"
+
+build() {
+    ./configure \
+        --sysconfdir=/etc \
+        --prefix=/usr \
+        --disable-static
+    make
+}
+
+package() {
+    make DESTDIR=$ROOT install
+}

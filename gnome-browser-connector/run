@@ -1,0 +1,21 @@
+#!/bin/sh
+NAME="gnome-browser-connector"
+RELEASE="1"
+VERSION="42.1"
+SOURCES="https://gitlab.gnome.org/GNOME/gnome-browser-connector/-/archive/v$VERSION/gnome-browser-connector-v$VERSION.tar.gz"
+DEPENDS="gnome-shell gobject-introspection hicolor-icon-theme python"
+BUILD_DEPENDS="meson"
+SHA256SUM="b624f53ce329a667746a0f3771b44a704d26b58e6ee93d76896ca7a8df512b2c  gnome-browser-connector-v42.1.tar.gz"
+DESCRIPTION="Browser connector for extensions.gnome.org integration"
+
+build() {
+    meson setup \
+    --prefix=/usr \
+    --buildtype=release \
+    build
+    ninja -C build
+}
+
+package() {
+    DESTDIR="$ROOT" ninja -C build install
+}

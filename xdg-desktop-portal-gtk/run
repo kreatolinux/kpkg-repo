@@ -1,0 +1,17 @@
+#!/bin/sh
+NAME="xdg-desktop-portal-gtk"
+RELEASE="1"
+VERSION="1.14.1"
+SOURCES="https://github.com/flatpak/xdg-desktop-portal-gtk/releases/download/$VERSION/xdg-desktop-portal-gtk-$VERSION.tar.xz"
+DEPENDS="xdg-desktop-portal gtk3"
+SHA256SUM="3ee2a992187eabb237a76170a7dead2a3bcea2edbf59344647cc0d1c640a5700  xdg-desktop-portal-gtk-1.14.1.tar.xz"
+DESCRIPTION="GTK backend for xdg-desktop-portal"
+
+build() {
+    ./configure --prefix=/usr
+    make
+}
+
+package() {
+    make DESTDIR=$ROOT install
+}

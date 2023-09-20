@@ -19,6 +19,7 @@ build() {
     --enable-widec \
     --without-ada \
     --without-tests \
+    --with-termlib \
     --without-debug \
     --without-cxx-binding
 

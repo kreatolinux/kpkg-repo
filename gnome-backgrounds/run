@@ -1,0 +1,19 @@
+#!/bin/sh
+NAME="gnome-backgrounds"
+RELEASE="1"
+VERSION="45.0"
+SOURCES="https://gitlab.gnome.org/GNOME/gnome-backgrounds/-/archive/$VERSION/gnome-backgrounds-$VERSION.tar.gz"
+BUILD_DEPENDS="meson"
+SHA256SUM="68430197ded850128cb92d3222d9246098bd66ebef477bd8ada9052845f3a7a3  gnome-backgrounds-45.0.tar.gz"
+DESCRIPTION="Backgrounds for GNOME"
+
+build() {
+    meson setup \
+    --prefix=/usr \
+    build
+    ninja -C build
+}
+
+package() {
+    DESTDIR="$ROOT" ninja -C build install
+}

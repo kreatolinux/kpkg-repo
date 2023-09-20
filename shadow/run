@@ -1,6 +1,6 @@
 #!/bin/sh
 NAME="shadow"
-RELEASE="2"
+RELEASE="3"
 VERSION="4.14.0"
 SOURCES="https://github.com/shadow-maint/shadow/releases/download/4.14.0/shadow-4.14.0.tar.xz"
 DEPENDS="libxcrypt linux-pam libbsd"
@@ -17,6 +17,7 @@ build() {
 package() {
     make exec_prefix=/usr DESTDIR=$ROOT install
     sed -i 's/account.*/account         include         system-account/g' "$ROOT/etc/pam.d/su"
+    rm -f $ROOT/etc/pam.d/login
   }
 
 postinstall() {

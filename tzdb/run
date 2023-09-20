@@ -1,0 +1,16 @@
+#!/bin/sh
+NAME="tzdb"
+RELEASE="1"
+VERSION="2023c"
+SOURCES="https://data.iana.org/time-zones/releases/tzdb-$VERSION.tar.lz"
+BUILD_DEPENDS="lzip"
+SHA256SUM="08fd090f1a16d522ae4e9247445056f4155002239e5be760b31ba0376d2e632c  tzdb-2023c.tar.lz"
+DESCRIPTION="Time-zone database" 
+
+build() {
+    make
+}
+
+package() {
+    make DESTDIR=$ROOT install
+}

@@ -1,0 +1,21 @@
+#!/bin/sh
+NAME="libxinerama"
+RELEASE="1"
+VERSION="1.1.5"
+SOURCES="https://www.x.org/releases/individual/lib/libXinerama-$VERSION.tar.gz"
+SHA256SUM="2efa855cb42dc620eff3b77700d8655695e09aaa318f791f201fa60afa72b95c  libXinerama-1.1.5.tar.gz"
+DEPENDS="libxext"
+BUILD_DEPENDS="xorgproto"
+DESCRIPTION="libxinerama"
+
+build() {
+    ./configure \
+        --sysconfdir=/etc \
+        --prefix=/usr \
+        --disable-static
+    make
+}
+
+package() {
+    make DESTDIR=$ROOT install
+}

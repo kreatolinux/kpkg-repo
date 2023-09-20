@@ -1,0 +1,25 @@
+#!/bin/sh
+NAME="libnma"
+RELEASE="1"
+VERSION="1.10.6"
+SOURCES="https://download.gnome.org/sources/libnma/1.10/libnma-$VERSION.tar.xz"
+DEPENDS="gcr-3 gtk4 gtk3 iso-codes networkmanager"
+BUILD_DEPENDS="meson vala"
+SHA256SUM="53a6fb2b190ad37c5986caed3e98bede7c3c602399ee4f93c8fc054303d76dab  libnma-1.10.6.tar.xz"
+DESCRIPTION="libnma"
+
+build() {
+    # got from blfs
+    meson setup \
+    --prefix=/usr \
+    --buildtype=release \
+    -Dgtk_doc=false \
+    -Dlibnma_gtk4=true \
+    -Dmobile_broadband_provider_info=false \
+    build
+    ninja -C build
+}
+
+package() {
+    DESTDIR="$ROOT" ninja -C build install
+}

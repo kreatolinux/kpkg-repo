@@ -1,6 +1,6 @@
 #!/bin/sh
 NAME="colord"
-RELEASE="1"
+RELEASE="2"
 VERSION="1.4.6"
 SOURCES="https://www.freedesktop.org/software/colord/releases/colord-$VERSION.tar.xz"
 BUILD_DEPENDS="meson vala gobject-introspection"
@@ -9,10 +9,22 @@ SHA256SUM="7407631a27bfe5d1b672e7ae42777001c105d860b7b7392283c8c6300de88e6f  col
 DESCRIPTION="A system service that makes it easy to manage, install and generate color profiles"
 
 build() {
+    
+    # Check if systemd exists so we can enable/disable systemd support accordingly.
+    if command -v systemctl > /dev/null; then
+      systemd="true"
+    else
+      systemd="false"
+    fi
+    
     meson setup \
     --buildtype=release \
     --prefix=/usr \
     -Dman=false \
+    -Dvapi=true \
+    -Dsystemd=$systemd \
+    -Dbash_completion=false \
+    -Ddocs=false \
     build
     ninja -C build
 }

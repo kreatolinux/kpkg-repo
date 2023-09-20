@@ -1,0 +1,20 @@
+#!/bin/sh
+NAME="libxrandr"
+RELEASE="1"
+VERSION="1.5.3"
+SOURCES="https://www.x.org/releases/individual/lib/libXrandr-$VERSION.tar.gz"
+SHA256SUM="3ad316c1781fe2fe22574b819e81f0eff087a8560377f521ba932238b41b251f  libXrandr-1.5.3.tar.gz"
+DEPENDS="libxext libxrender"
+BUILD_DEPENDS="xorgproto"
+DESCRIPTION="libxrandr"
+
+build() {
+    ./configure \
+        --prefix=/usr \
+        --disable-static
+    make
+}
+
+package() {
+    make DESTDIR=$ROOT install
+}

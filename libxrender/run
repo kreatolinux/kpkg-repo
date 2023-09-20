@@ -1,0 +1,20 @@
+#!/bin/sh
+NAME="libxrender"
+RELEASE="1"
+VERSION="0.9.11"
+SOURCES="https://www.x.org/releases/individual/lib/libXrender-$VERSION.tar.xz"
+SHA256SUM="bc53759a3a83d1ff702fb59641b3d2f7c56e05051fa0cfa93501166fa782dc24  libXrender-0.9.11.tar.xz"
+DEPENDS="libx11"
+BUILD_DEPENDS="xorgproto"
+DESCRIPTION="libxrender"
+
+build() {
+    ./configure \
+        --prefix=/usr \
+        --disable-static
+    make
+}
+
+package() {
+    make DESTDIR=$ROOT install
+}

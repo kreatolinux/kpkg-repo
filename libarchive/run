@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="libarchive"
 RELEASE="4"
-VERSION="3.7.1"
+VERSION="3.7.2"
 SOURCES="https://github.com/libarchive/libarchive/releases/download/v$VERSION/libarchive-$VERSION.tar.xz"
 DEPENDS="libzstd linux-headers"
-SHA256SUM="b17403ce670ff18d8e06fea05a9ea9accf70678c88f1b9392a2e29b51127895f  libarchive-3.7.1.tar.xz"
+SHA256SUM="04357661e6717b6941682cde02ad741ae4819c67a260593dfb2431861b251acb  libarchive-3.7.2.tar.xz"
 DESCRIPTION="Multi-format archive and compression library"
 
 build() {

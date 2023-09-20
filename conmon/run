@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="conmon"
 RELEASE="1"
-VERSION="2.1.7"
+VERSION="2.1.8"
 SOURCES="https://github.com/containers/conmon/archive/refs/tags/v$VERSION.tar.gz"
 BUILD_DEPENDS="go"
 DEPENDS="glib"
-SHA256SUM="7d0f9a2f7cb8a76c51990128ac837aaf0cc89950b6ef9972e94417aa9cf901fe  v2.1.7.tar.gz"
+SHA256SUM="e72c090210a03ca3b43a0fad53f15bca90bbee65105c412468009cf3a5988325  v2.1.8.tar.gz"
 DESCRIPTION="An OCI container runtime monitor"
 
 build() {

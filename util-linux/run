@@ -1,11 +1,9 @@
 #!/bin/sh
 NAME="util-linux"
 RELEASE="1"
-VERSION="2.39"
-SOURCES="https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v$VERSION/util-linux-$VERSION.tar.xz"
-DEPENDS=""
-SHA256SUM="32b30a336cda903182ed61feb3e9b908b762a5e66fe14e43efb88d37162075cb  util-linux-2.39.tar.xz"
-BUILD_AS_ROOT="true"
+VERSION="2.39.2"
+SOURCES="https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.39/util-linux-$VERSION.tar.xz"
+SHA256SUM="87abdfaa8e490f8be6dde976f7c80b9b5ff9f301e1b67e3899e1f05a59a1531f  util-linux-2.39.2.tar.xz"
 DESCRIPTION="Linux Utilities"
 
 build() {
@@ -14,6 +12,9 @@ build() {
 }
 
 package() {
-    cat /etc/group | grep tty || addgroup tty
     make DESTDIR=$ROOT install -j1
+}
+
+postinstall() {
+    cat /etc/group | grep tty || addgroup tty
 }

@@ -1,0 +1,39 @@
+#!/bin/sh
+NAME="evolution-data-server"
+RELEASE="1"
+VERSION="3.50.0"
+SOURCES="https://download.gnome.org/sources/evolution-data-server/3.50/evolution-data-server-$VERSION.tar.xz"
+BUILD_DEPENDS="cmake ninja gobject-introspection vala"
+DEPENDS="libical libsecret nss sqlite libgweather gtk3 libcanberra"
+OPTDEPENDS="webkitgtk4: for built-in OAuth2 authentications"
+SHA256SUM="c9f793d99ba188ef8cf2891b8062d7e570e3cba22b8cfc46eb561c6cecc81d3a  evolution-data-server-3.50.0.tar.xz"
+DESCRIPTION="evolution-data-server"
+
+build() {
+    
+    if ! command -v systemctl > /dev/null; then
+      extraArgs="-DWITH_SYSTEMDUSERUNITDIR=no"
+    fi 
+
+    if ! kpkg info webkitgtk4 > /dev/null; then
+      extraArgs="$extraArgs -DENABLE_OAUTH2_WEBKITGTK4=OFF"
+    fi
+
+    # Flags taken from BLFS
+    cmake -B build $extraArgs -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DWITH_KRB5=OFF                \
+        -DENABLE_VALA_BINDINGS=ON \
+        -DWITH_OPENLDAP=OFF \
+        -DENABLE_INTROSPECTION=ON \
+        -DENABLE_GTK_DOC=OFF \
+        -DWITH_LIBDB=OFF \
+        -DENABLE_INSTALLED_TESTS=OFF \
+        -DSYSCONF_INSTALL_DIR=/etc \
+        -G Ninja
+    ninja -C build -j$(nproc)
+}
+
+package() {    
+    DESTDIR="$ROOT" ninja -C build install
+}

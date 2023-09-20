@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="json-glib"
 RELEASE="1"
-VERSION="1.6.6"
-SOURCES="https://download.gnome.org/sources/json-glib/1.6/json-glib-$VERSION.tar.xz" 
+VERSION="1.8.0"
+SOURCES="https://download.gnome.org/sources/json-glib/1.8/json-glib-$VERSION.tar.xz" 
 BUILD_DEPENDS="meson ninja"
 DEPENDS="glib"
-SHA256SUM="96ec98be7a91f6dde33636720e3da2ff6ecbb90e76ccaa49497f31a6855a490e  json-glib-1.6.6.tar.xz"
+SHA256SUM="97ef5eb92ca811039ad50a65f06633f1aae64792789307be7170795d8b319454  json-glib-1.8.0.tar.xz"
 DESCRIPTION="json-glib"
 
 build() {

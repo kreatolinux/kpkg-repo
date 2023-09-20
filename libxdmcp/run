@@ -1,0 +1,17 @@
+#!/bin/sh
+NAME="libxdmcp"
+RELEASE="1"
+VERSION="1.1.4"
+SOURCES="https://www.x.org/releases/individual/lib/libXdmcp-$VERSION.tar.xz"
+SHA256SUM="2dce5cc317f8f0b484ec347d87d81d552cdbebb178bd13c5d8193b6b7cd6ad00  libXdmcp-1.1.4.tar.xz"
+DEPENDS="xorgproto"
+DESCRIPTION="X Display Manager Control Protocol library"
+
+build() {
+    ./configure --prefix=/usr
+    make
+}
+
+package() {
+    make DESTDIR=$ROOT install
+}
