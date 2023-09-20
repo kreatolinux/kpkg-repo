@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="glib-networking"
 RELEASE="1"
-VERSION="2.76.1"
-SOURCES="https://download.gnome.org/sources/glib-networking/2.76/glib-networking-$VERSION.tar.xz"
+VERSION="2.78.0"
+SOURCES="https://download.gnome.org/sources/glib-networking/2.78/glib-networking-$VERSION.tar.xz"
 BUILD_DEPENDS="meson"
 DEPENDS="glib gnutls gsettings-desktop-schemas make-ca"
-SHA256SUM="5c698a9994dde51efdfb1026a56698a221d6250e89dc50ebcddda7b81480a42b  glib-networking-2.76.1.tar.xz"
+SHA256SUM="52fe4ce93f7dc51334b102894599858d23c8a65ac4a1110b30920565d68d3aba  glib-networking-2.78.0.tar.xz"
 DESCRIPTION="glib-networking"
 
 build() {
