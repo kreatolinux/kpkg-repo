@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="readline"
 RELEASE="1"
-VERSION="8.1.2"
+VERSION="8.2"
 SOURCES="https://ftp.gnu.org/gnu/readline/readline-$VERSION.tar.gz"
 DEPENDS="ncurses"
-SHA256SUM="7589a2381a8419e68654a47623ce7dfcb756815c8fee726b98f90bf668af7bc6  readline-8.1.2.tar.gz"
+SHA256SUM="3feb7171f16a84ee82ca18a36d7b9be109a52c04f492a053331d7d1095007c35  readline-8.2.tar.gz"
 DESCRIPTION="GNU readline"
 
 build() {
