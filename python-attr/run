@@ -1,0 +1,16 @@
+#!/bin/sh
+NAME="python-attr"
+RELEASE="1"
+VERSION="22.2.0"
+SOURCES="https://files.pythonhosted.org/packages/source/a/attrs/attrs-$VERSION.tar.gz"
+DEPENDS="python"
+SHA256SUM="c9227bfc2f01993c03f68db37d1d15c9690188323c067c641f1a35ca58185f99  attrs-22.2.0.tar.gz"
+DESCRIPTION="attr"
+
+build() {
+        :
+}
+
+package() {
+    SETUPTOOLS_USE_DISTUTILS=stdlib pip install . --prefix=/usr --root="$ROOT"
+}
