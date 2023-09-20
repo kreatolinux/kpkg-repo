@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="1.21.1"
 SOURCES="https://go.dev/dl/go$VERSION.src.tar.gz"
 BUILD_DEPENDS="wget"
-DEPENDS="git gcc"
+DEPENDS="git"
 SHA256SUM="bfa36bf75e9a1e9cbbdb9abcf9d1707e479bd3a07880a8ae3564caee5711cb99  go1.21.1.src.tar.gz"
 DESCRIPTION="Go is a statically typed, compiled programming language designed at Google"
 
@@ -31,7 +31,7 @@ build() {
     export GOENV="/opt/kpkg/srcdir/go/env" 
     export GOCACHE="/opt/kpkg/srcdir/go-build"
     go env -w  GOCACHE="/opt/kpkg/srcdir/go-build"
-    GOROOT_FINAL=/usr/local/go ./make.bash
+    ./make.bash
 }
 
 package() {
@@ -40,4 +40,8 @@ package() {
     mkdir -p "$ROOT"/usr/local/go
     cp -r . "$ROOT"/usr/local/go
     mkdir -p /opt/kpkg/srcdir/go
+}
+
+postinstall() {
+    go env -w GOROOT="/usr/local/go"
 }
