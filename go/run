@@ -43,5 +43,6 @@ package() {
 }
 
 postinstall() {
-    go env -w GOROOT="/usr/local/go"
+    go env -w GOROOT="/usr/local/go" > /dev/null
+    exit 0
 }
