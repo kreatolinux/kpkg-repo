@@ -1,18 +1,16 @@
 #!/bin/sh
 NAME="wayland-protocols"
 RELEASE="1"
-VERSION="1.31"
-SOURCES="https://gitlab.freedesktop.org/wayland/wayland-protocols/uploads/a3511866c8541452acdb5ff1c4c7b0f0/wayland-protocols-$VERSION.tar.xz"
+VERSION="1.32"
+SOURCES="https://gitlab.freedesktop.org/wayland/wayland-protocols/-/releases/$VERSION/downloads/wayland-protocols-$VERSION.tar.xz"
 BUILD_DEPENDS="meson"
 DEPENDS="wayland"
-SHA256SUM="a07fa722ed87676ec020d867714bc9a2f24c464da73912f39706eeef5219e238  wayland-protocols-1.31.tar.xz"
+SHA256SUM="7459799d340c8296b695ef857c07ddef24c5a09b09ab6a74f7b92640d2b1ba11  wayland-protocols-1.32.tar.xz"
 DESCRIPTION="Additional Wayland protocols that add functionality outside of protocols already in the Wayland core"
 
 build() {
-    mkdir build 
-    cd    build 
-    meson --prefix=/usr --buildtype=release
-    ninja
+    meson setup --prefix=/usr --buildtype=release build
+    ninja -C build
 }
 
 package() {

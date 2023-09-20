@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="webkitgtk"
 RELEASE="1"
-VERSION="2.41.91"
+VERSION="2.42.0"
 SOURCES="https://webkitgtk.org/releases/webkitgtk-$VERSION.tar.xz"
 DEPENDS="libxt xdg-dbus-proxy bubblewrap cairo harfbuzz gst-plugins-base gtk3 gtk4 icu lcms2 libgudev libsecret libsoup libtasn libwebp mesa openjpeg sqlite wpebackend-fdo wayland libx11 libxcomposite libxml2 libxslt"
 BUILD_DEPENDS="cmake unifdef ninja ruby gst-plugins-bad gobject-introspection wayland-protocols"
-SHA256SUM="f28f6b95b939c3fd20bad21b1aa9e2eacda3621625df5b480144517cca028f46  webkitgtk-2.41.91.tar.xz"
+SHA256SUM="828f95935861fae583fb8f2ae58cf64c63c178ae2b7c2d6f73070813ad64ed1b  webkitgtk-2.42.0.tar.xz"
 DESCRIPTION="webkit"
 
 build_webkitgtk4() {

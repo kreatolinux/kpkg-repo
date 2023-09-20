@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="librsvg"
 RELEASE="1"
-VERSION="2.56.93"
+VERSION="2.57.0"
 SOURCES="https://gitlab.gnome.org/GNOME/librsvg/-/archive/$VERSION/librsvg-$VERSION.tar.gz"
 DEPENDS="cairo freetype gdk-pixbuf glib harfbuzz libxml2 pango"
 BUILD_DEPENDS="rust vala gobject-introspection"
-SHA256SUM="34b1daff0bad01f7edb572602bf3c49bd48b93567f898a6d385805e819ee2fbd  librsvg-2.56.93.tar.gz"
+SHA256SUM="58ca16e73072de88c939c9510cfb1f59f63a7ed702706ebd06b858589fed1aac  librsvg-2.57.0.tar.gz"
 DESCRIPTION="SVG rendering library"
 
 build() {

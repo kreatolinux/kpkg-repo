@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="crun"
 RELEASE="1"
-VERSION="1.8.6"
+VERSION="1.9"
 SOURCES="https://github.com/containers/crun/releases/download/$VERSION/crun-$VERSION.tar.xz"
 DEPENDS="libseccomp libcap yajl"
-SHA256SUM="1808235641932a89efc42756db7774e1337c130ed8307b8b588542ca372d9467  crun-1.8.6.tar.xz"
+SHA256SUM="7e35280cfa1a646b4ebdc94cc434035ab51f36a763c6268acc6aa7bbfd6ed21b  crun-1.9.tar.xz"
 DESCRIPTION="A fast and lightweight fully featured OCI runtime and C library for running containers"
 
 build() {

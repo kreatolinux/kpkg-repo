@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="nautilus"
 RELEASE="1"
-VERSION="44.2.1"
+VERSION="45.0"
 SOURCES="https://gitlab.gnome.org/GNOME/nautilus/-/archive/$VERSION/nautilus-$VERSION.tar.gz;https://gitlab.gnome.org/GNOME/nautilus/-/commit/ed6c79ecfa0d5303694015cb7509091038b98c76.patch"
 DEPENDS="bubblewrap dconf libgexiv2 gdk-pixbuf gnome-autoar gnome-desktop gst-plugins-base libnotify libadwaita libportal libseccomp tracker3 desktop-file-utils adwaita-icon-theme"
 BUILD_DEPENDS="meson vala gobject-introspection"
-SHA256SUM="7aa1a68bc6d38f8d426cd8b75627d3289609d738c99dc176c29fda946932d419  nautilus-44.2.1.tar.gz;77377f35b99e32c6519e3d79afce90f5100de3093fc5f114e4be874cdaf81368  ed6c79ecfa0d5303694015cb7509091038b98c76.patch"
+SHA256SUM="fb888cbde88864a895a30226783d2f3658a1737c3eb3167d2ad91e52a937cc72  nautilus-45.0.tar.gz;77377f35b99e32c6519e3d79afce90f5100de3093fc5f114e4be874cdaf81368  ed6c79ecfa0d5303694015cb7509091038b98c76.patch"
 DESCRIPTION="File manager of GNOME"
 
 prepare() {

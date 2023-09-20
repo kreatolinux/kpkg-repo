@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="procps-ng"
 RELEASE="1"
-VERSION="4.0.3"
+VERSION="4.0.4"
 SOURCES="https://gitlab.com/procps-ng/procps/-/archive/v$VERSION/procps-v$VERSION.tar.gz;https://gitlab.com/procps-ng/procps/-/commit/9d5f88e2690472ccd0514082608064bd705bf9a8.diff"
 DEPENDS="autoconf automake libtool gettext"
-SHA256SUM="14cc21219c45d196772274ea3f194f6d668b6cc667fbde9ee6d8039121b73fa6  procps-v4.0.3.tar.gz;632b297e89d30ce0a1ce315a735865a5562d7f82f168dc0854c82d9410395134  9d5f88e2690472ccd0514082608064bd705bf9a8.diff"
+SHA256SUM="3214fab0f817d169f2c117842ba635bafb1cd6090273e311a8b5c6fc393ddb9d  procps-v4.0.4.tar.gz;632b297e89d30ce0a1ce315a735865a5562d7f82f168dc0854c82d9410395134  9d5f88e2690472ccd0514082608064bd705bf9a8.diff"
 DESCRIPTION="procps"
 
 prepare() {

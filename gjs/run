@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="gjs"
 RELEASE="1"
-VERSION="1.77.90"
+VERSION="1.78.0"
 SOURCES="https://gitlab.gnome.org/GNOME/gjs/-/archive/$VERSION/gjs-$VERSION.tar.gz"
 DEPENDS="glib js115 libffi cairo dbus gobject-introspection readline dconf"
 BUILD_DEPENDS="meson"
-SHA256SUM="2c159cffa2d2deac47b502de7b60865340d12d4db9dc85c3582945c004169b4e  gjs-1.77.90.tar.gz"
+SHA256SUM="91be2ebcab6707e2d8301d4e261530a9b1d55082f5d7746ba0f978e2efb712f5  gjs-1.78.0.tar.gz"
 DESCRIPTION="Javascript bindings for GNOME"
 
 build() {

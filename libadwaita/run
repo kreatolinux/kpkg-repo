@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="libadwaita"
 RELEASE="1"
-VERSION="1.3.5"
+VERSION="1.4.0"
 SOURCES="https://gitlab.gnome.org/GNOME/libadwaita/-/archive/$VERSION/libadwaita-$VERSION.tar.gz"
 DEPENDS="gtk4"
 BUILD_DEPENDS="meson vala"
-SHA256SUM="22ace3690663346f5f7f960ca1941f7279f808c17403e0475e533fde59063181  libadwaita-1.3.5.tar.gz"
+SHA256SUM="20ba6e0dc96bbf164d590e62382975c354a8253aa39d65e0957ec7ee24780c60  libadwaita-1.4.0.tar.gz"
 DESCRIPTION="GNOME ui stuff"
 
 build() {

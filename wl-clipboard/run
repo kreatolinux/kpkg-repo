@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="wl-clipboard"
 RELEASE="1"
-VERSION="2.2.0"
+VERSION="2.2.1"
 SOURCES="https://github.com/bugaevc/wl-clipboard/archive/refs/tags/v$VERSION.tar.gz"
 DEPENDS="wayland wayland-protocols" 
 BUILD_DEPENDS="meson"
-SHA256SUM="414005cfa229d0e54f89a0d9a8473938e4c29adc21a9e556847a4d44ad508874  v2.2.0.tar.gz"
+SHA256SUM="6eb8081207fb5581d1d82c4bcd9587205a31a3d47bea3ebeb7f41aa1143783eb  v2.2.1.tar.gz"
 DESCRIPTION="Command-line copy/paste utilities for Wayland"
 build() {
     meson --prefix=/usr build/

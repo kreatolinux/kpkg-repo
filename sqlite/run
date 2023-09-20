@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="sqlite"
 RELEASE="2"
-VERSION="3.43.0"
-SOURCES="https://sqlite.org/2023/sqlite-autoconf-3430000.tar.gz"
+VERSION="3.43.1"
+SOURCES="https://sqlite.org/2023/sqlite-autoconf-3430100.tar.gz"
 DEPENDS="ncurses"
-SHA256SUM="49008dbf3afc04d4edc8ecfc34e4ead196973034293c997adad2f63f01762ae1  sqlite-autoconf-3430000.tar.gz"
+SHA256SUM="39116c94e76630f22d54cd82c3cea308565f1715f716d1b2527f1c9c969ba4d9  sqlite-autoconf-3430100.tar.gz"
 DESCRIPTION="A small, fast, self-contained, high-reliability, full-featured, SQL database engine"
 
 build() {

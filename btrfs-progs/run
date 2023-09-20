@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="btrfs-progs"
 RELEASE="1"
-VERSION="6.3.3"
+VERSION="6.5.1"
 SOURCES="https://mirrors.edge.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v$VERSION.tar.xz"
 DEPENDS="e2fsprogs libudev util-linux liblzo2"
-SHA256SUM="4be30015760270d081642cc0023a8bfee7cb657a2aa055644e6a56d68695b96e  btrfs-progs-v6.3.3.tar.xz"
+SHA256SUM="dacbb28136e82586af802205263a428c3d1941778bc3fdc9b1b386ea12eb904e  btrfs-progs-v6.5.1.tar.xz"
 DESCRIPTION="BTRFS filesystem utilities"
 
 build() {

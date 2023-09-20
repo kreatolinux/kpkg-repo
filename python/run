@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="python"
 RELEASE="3"
-VERSION="3.11.4"
+VERSION="3.11.5"
 SOURCES="https://www.python.org/ftp/python/$VERSION/Python-$VERSION.tar.xz"
 DEPENDS="openssl zlib libxcrypt bzip2"
-SHA256SUM="2f0e409df2ab57aa9fc4cbddfb976af44e4e55bf6f619eee6bc5c2297264a7f6  Python-3.11.4.tar.xz"
+SHA256SUM="85cd12e9cf1d6d5a45f17f7afe1cebe7ee628d3282281c492e86adf636defa3f  Python-3.11.5.tar.xz"
 DESCRIPTION="General-Purpose Programming language"
 
 build() {
