@@ -17,3 +17,10 @@ build() {
 package() {
     make DESTDIR=$ROOT install
 }
+
+postinstall() {
+    grep -q "/bin/bash" /etc/shells || echo "/bin/bash" >> /etc/shells
+    grep -q "/usr/bin/bash" /etc/shells || echo "/usr/bin/bash" >> /etc/shells
+    grep -q "/bin/sh" /etc/shells || echo "/bin/sh" >> /etc/shells
+    grep -q "/usr/bin/sh" /etc/shells || echo "/usr/bin/sh" >> /etc/shells
+}
