@@ -13,4 +13,7 @@ build() {
 
 package() {
     make DESTDIR=$ROOT install
+    
+    # install libs
+    make -C librhash DESTDIR="$ROOT" install-lib-headers install-lib-shared install-so-link
 }
