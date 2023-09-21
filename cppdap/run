@@ -1,0 +1,30 @@
+#!/bin/sh
+NAME="cppdap"
+RELEASE="1"
+VERSION="1.58.0"
+SOURCES="https://github.com/google/cppdap/archive/refs/tags/dap-$VERSION-a.tar.gz https://github.com/google/cppdap/commit/6a3cc9a8.patch"
+BUILD_DEPENDS="cmake"
+SHA256SUM="7c1bed285d8bb2400ae46def282a4736b9afcb74bb3e96663fac97b73dea3cb4  6a3cc9a8.patch 5d35ca5db78570b6bef698e3365f79bd82a4f78e8393546387f78d7bdb2a2a08  dap-1.58.0-a.tar.gz"
+DESCRIPTION="C++ library for the Debug Adapter Protocol"
+
+prepare() {
+    tar -xvf dap-$VERSION-a.tar.gz
+    cd cppdap-dap-$VERSION-a
+    patch -p1 < ../6a3cc9a8.patch 
+}
+
+
+build() {
+    cmake -S cppdap-dap-$VERSION-a -B build \
+	-DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=1 \
+        -DCMAKE_INSTALL_PREFIX=/usr
+    
+    cmake --build build
+}
+
+package() {    
+    DESTDIR="$ROOT" cmake --install build
+}
+
+
