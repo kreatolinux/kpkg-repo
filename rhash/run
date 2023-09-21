@@ -1,0 +1,16 @@
+#!/bin/sh
+NAME="rhash"
+RELEASE="1"
+VERSION="1.4.4"
+SOURCES="https://github.com/rhash/RHash/archive/refs/tags/v$VERSION.tar.gz"
+SHA256SUM="8e7d1a8ccac0143c8fe9b68ebac67d485df119ea17a613f4038cda52f84ef52a"
+DESCRIPTION="Great utility for computing hash sums"
+
+build() {
+    ./configure --prefix=/usr
+    make
+}
+
+package() {
+    make DESTDIR=$ROOT install
+}
