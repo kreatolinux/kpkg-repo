@@ -5,7 +5,7 @@ VERSION=0.8.0
 SOURCES="https://git.sr.ht/~kennylevinsen/seatd/archive/$VERSION.tar.gz"
 BUILD_DEPENDS="meson"
 DEPENDS=""
-SHA256SUM="a562a44ee33ccb20954a1c1ec9a90ecb2db7a07ad6b18d0ac904328efbcf65a0  0.8.0.tar.gz"
+SHA256SUM="a562a44ee33ccb20954a1c1ec9a90ecb2db7a07ad6b18d0ac904328efbcf65a0"
 DESCRIPTION="Seat daemon."
 
 build() {

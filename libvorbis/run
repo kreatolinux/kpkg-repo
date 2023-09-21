@@ -3,7 +3,7 @@ NAME="libvorbis"
 RELEASE="1"
 VERSION="1.3.7"
 SOURCES="https://ftp.osuosl.org/pub/xiph/releases/vorbis/libvorbis-$VERSION.tar.xz"
-SHA256SUM="b33cc4934322bcbf6efcbacf49e3ca01aadbea4114ec9589d1b1e9d20f72954b  libvorbis-1.3.7.tar.xz"
+SHA256SUM="b33cc4934322bcbf6efcbacf49e3ca01aadbea4114ec9589d1b1e9d20f72954b"
 DEPENDS="libogg"
 DESCRIPTION="Reference implementation for Ogg Vorbis"
 

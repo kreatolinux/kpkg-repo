@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="2.2"
 SOURCES="https://gitlab.freedesktop.org/xdg/shared-mime-info/-/archive/$VERSION/shared-mime-info-$VERSION.tar.gz"
 BUILD_DEPENDS="meson"
-SHA256SUM="bcf5d552318136cf7b3ae259975f414fbcdc9ebce000c87cf1f0901ff14e619f  shared-mime-info-2.2.tar.gz"
+SHA256SUM="bcf5d552318136cf7b3ae259975f414fbcdc9ebce000c87cf1f0901ff14e619f"
 DESCRIPTION="shared-mime-info"
 
 build() {

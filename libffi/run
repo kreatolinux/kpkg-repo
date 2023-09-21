@@ -3,7 +3,7 @@ NAME="libffi"
 RELEASE="1"
 VERSION=3.4.4
 SOURCES="https://github.com/libffi/libffi/releases/download/v$VERSION/libffi-$VERSION.tar.gz"
-SHA256SUM="d66c56ad259a82cf2a9dfc408b32bf5da52371500b84745f7fb8b645712df676  libffi-3.4.4.tar.gz"
+SHA256SUM="d66c56ad259a82cf2a9dfc408b32bf5da52371500b84745f7fb8b645712df676"
 DESCRIPTION=""
 
 build() {

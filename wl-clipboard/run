@@ -5,7 +5,7 @@ VERSION="2.2.1"
 SOURCES="https://github.com/bugaevc/wl-clipboard/archive/refs/tags/v$VERSION.tar.gz"
 DEPENDS="wayland wayland-protocols" 
 BUILD_DEPENDS="meson"
-SHA256SUM="6eb8081207fb5581d1d82c4bcd9587205a31a3d47bea3ebeb7f41aa1143783eb  v2.2.1.tar.gz"
+SHA256SUM="6eb8081207fb5581d1d82c4bcd9587205a31a3d47bea3ebeb7f41aa1143783eb"
 DESCRIPTION="Command-line copy/paste utilities for Wayland"
 build() {
     meson --prefix=/usr build/

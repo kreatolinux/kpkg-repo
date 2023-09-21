@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="1.6.4"
 SOURCES="https://gnupg.org/ftp/gcrypt/libksba/libksba-$VERSION.tar.bz2"
 DEPENDS="libgpg-error"
-SHA256SUM="bbb43f032b9164d86c781ffe42213a83bf4f2fee91455edfa4654521b8b03b6b  libksba-1.6.4.tar.bz2"
+SHA256SUM="bbb43f032b9164d86c781ffe42213a83bf4f2fee91455edfa4654521b8b03b6b"
 DESCRIPTION="An easy API to create and parse X.509 and CMS related objects"
 
 build() {

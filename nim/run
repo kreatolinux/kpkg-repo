@@ -4,7 +4,7 @@ RELEASE="2"
 VERSION="2.0.0"
 SOURCES="https://nim-lang.org/download/nim-$VERSION.tar.xz"
 DEPENDS=""
-SHA256SUM="bd6101d840036fb78e93a69df6cf3f9fd0c21cd754b695ff84a3b4add8ed0af7  nim-2.0.0.tar.xz"
+SHA256SUM="bd6101d840036fb78e93a69df6cf3f9fd0c21cd754b695ff84a3b4add8ed0af7"
 DESCRIPTION="The Nim programming language"
 
 build() {

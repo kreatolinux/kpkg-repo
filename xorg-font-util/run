@@ -3,7 +3,7 @@ NAME="xorg-font-util"
 RELEASE="1"
 VERSION="1.4.1"
 SOURCES="https://www.x.org/releases/individual/font/font-util-$VERSION.tar.gz"
-SHA256SUM="f029ae80cdd75d89bee7f7af61c21e07982adfb9f72344a158b99f91f77ef5ed  font-util-1.4.1.tar.gz"
+SHA256SUM="f029ae80cdd75d89bee7f7af61c21e07982adfb9f72344a158b99f91f77ef5ed"
 DESCRIPTION="xorg"
 
 build() {

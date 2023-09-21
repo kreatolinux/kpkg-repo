@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="2.69"
 SOURCES="https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/libcap-$VERSION.tar.xz"
 BUILD_DEPENDS="go gmake"
-SHA256SUM="f311f8f3dad84699d0566d1d6f7ec943a9298b28f714cae3c931dfd57492d7eb  libcap-2.69.tar.xz"
+SHA256SUM="f311f8f3dad84699d0566d1d6f7ec943a9298b28f714cae3c931dfd57492d7eb"
 DESCRIPTION="ninja-compatible build tool written in C"
 
 build() {

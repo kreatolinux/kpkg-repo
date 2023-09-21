@@ -5,7 +5,7 @@ VERSION="1.8.2"
 SOURCES="https://gitlab.gnome.org/GNOME/libhandy/-/archive/$VERSION/libhandy-$VERSION.tar.gz"
 DEPENDS="glib gtk3"
 BUILD_DEPENDS="meson vala gobject-introspection"
-SHA256SUM="2c551aae128dff918b84943a93a58bc9be84f42a709b9e43c8d074538e68c10e  libhandy-1.8.2.tar.gz"
+SHA256SUM="2c551aae128dff918b84943a93a58bc9be84f42a709b9e43c8d074538e68c10e"
 DESCRIPTION="Building blocks for modern adaptive GNOME apps"
 
 build() {

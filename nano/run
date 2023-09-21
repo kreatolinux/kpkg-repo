@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="7.2"
 SOURCES="https://nano-editor.org/dist/v7/nano-7.2.tar.gz"
 DEPENDS=""
-SHA256SUM="b4edaab0a037b5760484907c674e980053896f33759e43f834a212145fd085f1  nano-7.2.tar.gz"
+SHA256SUM="b4edaab0a037b5760484907c674e980053896f33759e43f834a212145fd085f1"
 DESCRIPTION="Text editor with a TUI and intuitive keybinds"
 
 build() {

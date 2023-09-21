@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION=1.2.1
 SOURCES="https://github.com/mesonbuild/meson/releases/download/$VERSION/meson-$VERSION.tar.gz"
 DEPENDS="python samurai"
-SHA256SUM="b1db3a153087549497ee52b1c938d2134e0338214fe14f7efd16fecd57b639f5  meson-1.2.1.tar.gz"
+SHA256SUM="b1db3a153087549497ee52b1c938d2134e0338214fe14f7efd16fecd57b639f5"
 DESCRIPTION="Next generation build system"
 
 build() {

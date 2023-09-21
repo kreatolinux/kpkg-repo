@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="0.22.1"
 SOURCES="https://ftp.gnu.org/gnu/gettext/gettext-$VERSION.tar.xz"
 DEPENDS=""
-SHA256SUM="cee20630bd4a06b86a97078b64d598e2de606395c69b58b47faa230e326b9609  gettext-0.22.1.tar.xz"
+SHA256SUM="cee20630bd4a06b86a97078b64d598e2de606395c69b58b47faa230e326b9609"
 DESCRIPTION="Gettext contains utilities for localization."
 
 build() {

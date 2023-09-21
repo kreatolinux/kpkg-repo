@@ -5,7 +5,7 @@ VERSION="2.4.116"
 SOURCES="https://dri.freedesktop.org/libdrm/libdrm-$VERSION.tar.xz"
 BUILD_DEPENDS="samurai"
 DEPENDS="libpciaccess"
-SHA256SUM="46c53f40735ea3d26d614297f155f6131a510624a24274f654f6469ca905339a  libdrm-2.4.116.tar.xz"
+SHA256SUM="46c53f40735ea3d26d614297f155f6131a510624a24274f654f6469ca905339a"
 DESCRIPTION="libdrm"
 build() {
     mkdir build

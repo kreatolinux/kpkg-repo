@@ -3,7 +3,7 @@ NAME="xorg-setxkbmap"
 RELEASE="1"
 VERSION="1.3.4"
 SOURCES="https://www.x.org/releases/individual/app/setxkbmap-$VERSION.tar.xz"
-SHA256SUM="be8d8554d40e981d1b93b5ff82497c9ad2259f59f675b38f1b5e84624c07fade  setxkbmap-1.3.4.tar.xz"
+SHA256SUM="be8d8554d40e981d1b93b5ff82497c9ad2259f59f675b38f1b5e84624c07fade"
 DEPENDS="libxrandr libxkbfile"
 DESCRIPTION="Utility to set the keyboard layout using XKB"
 

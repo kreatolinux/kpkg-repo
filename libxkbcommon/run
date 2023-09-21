@@ -4,7 +4,7 @@ RELEASE="2"
 VERSION="1.5.0"
 SOURCES="https://xkbcommon.org/download/libxkbcommon-$VERSION.tar.xz"
 DEPENDS="wayland wayland-protocols libxcb libxml2 xkeyboard-config"
-SHA256SUM="560f11c4bbbca10f495f3ef7d3a6aa4ca62b4f8fb0b52e7d459d18a26e46e017  libxkbcommon-1.5.0.tar.xz"
+SHA256SUM="560f11c4bbbca10f495f3ef7d3a6aa4ca62b4f8fb0b52e7d459d18a26e46e017"
 DESCRIPTION="Keyboard compiler and support library"
 
 build() {

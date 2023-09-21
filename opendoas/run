@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="6.8.2"
 SOURCES="https://github.com/Duncaen/OpenDoas/releases/download/v$VERSION/opendoas-$VERSION.tar.gz"
 DEPENDS="linux-pam shadow"
-SHA256SUM="28dca29adec5f4336465812d9e2243f599e62a78903de71c24f0cd6fe667edac  opendoas-6.8.2.tar.gz"
+SHA256SUM="28dca29adec5f4336465812d9e2243f599e62a78903de71c24f0cd6fe667edac"
 DESCRIPTION="Utility to execute a command as another user, sudo alternative"
 
 build() {

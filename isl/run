@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="0.26"
 SOURCES="https://libisl.sourceforge.io/isl-$VERSION.tar.xz"
 DEPENDS="gmp"
-SHA256SUM="a0b5cb06d24f9fa9e77b55fabbe9a3c94a336190345c2555f9915bb38e976504  isl-0.26.tar.xz"
+SHA256SUM="a0b5cb06d24f9fa9e77b55fabbe9a3c94a336190345c2555f9915bb38e976504"
 DESCRIPTION="isl is a library for manipulating sets and relations of integer points bounded by linear constraints."
 
 build() {

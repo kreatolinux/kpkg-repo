@@ -6,7 +6,7 @@ SOURCES="https://download.gnome.org/sources/evolution-data-server/3.50/evolution
 BUILD_DEPENDS="cmake ninja gobject-introspection vala"
 DEPENDS="libical libsecret nss sqlite libgweather gtk3 libcanberra"
 OPTDEPENDS="webkitgtk4: for built-in OAuth2 authentications"
-SHA256SUM="c9f793d99ba188ef8cf2891b8062d7e570e3cba22b8cfc46eb561c6cecc81d3a  evolution-data-server-3.50.0.tar.xz"
+SHA256SUM="c9f793d99ba188ef8cf2891b8062d7e570e3cba22b8cfc46eb561c6cecc81d3a"
 DESCRIPTION="evolution-data-server"
 
 build() {

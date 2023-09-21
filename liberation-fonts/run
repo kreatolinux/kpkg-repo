@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="2.1.5"
 SOURCES="https://github.com/liberationfonts/liberation-fonts/files/7261482/liberation-fonts-ttf-$VERSION.tar.gz"
 DEPENDS="fontconfig"
-SHA256SUM="7191c669bf38899f73a2094ed00f7b800553364f90e2637010a69c0e268f25d0  liberation-fonts-ttf-2.1.5.tar.gz"
+SHA256SUM="7191c669bf38899f73a2094ed00f7b800553364f90e2637010a69c0e268f25d0"
 DESCRIPTION="Font family which aims at metric compatibility with Arial, Times New Roman, and Courier New"
 
 build() {

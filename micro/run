@@ -5,7 +5,7 @@ VERSION="2.0.12"
 SOURCES="https://github.com/zyedidia/micro/archive/refs/tags/v$VERSION.tar.gz"
 BUILD_DEPENDS="go"
 DEPENDS=""
-SHA256SUM="936d109670035235da1f3fb07c76c57c729b59bc1460aab41feb3516136e450f  v2.0.12.tar.gz"
+SHA256SUM="936d109670035235da1f3fb07c76c57c729b59bc1460aab41feb3516136e450f"
 DESCRIPTION="micro is a terminal-based text editor that aims to be easy to use and intuitive"
 build() {
 	make build

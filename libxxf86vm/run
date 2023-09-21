@@ -3,7 +3,7 @@ NAME="libxxf86vm"
 RELEASE="1"
 VERSION="1.1.5"
 SOURCES="https://www.x.org/releases/individual/lib/libXxf86vm-$VERSION.tar.xz"
-SHA256SUM="247fef48b3e0e7e67129e41f1e789e8d006ba47dba1c0cdce684b9b703f888e7  libXxf86vm-1.1.5.tar.xz"
+SHA256SUM="247fef48b3e0e7e67129e41f1e789e8d006ba47dba1c0cdce684b9b703f888e7"
 DEPENDS="libxext xorgproto"
 DESCRIPTION="X11 library"
 

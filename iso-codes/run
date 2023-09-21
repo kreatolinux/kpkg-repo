@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="4.15.0"
 SOURCES="https://ftp.debian.org/debian/pool/main/i/iso-codes/iso-codes_$VERSION.orig.tar.xz"
 BUILD_DEPENDS="python"
-SHA256SUM="3d50750bf1d62d83b6085f5815ceb8392df34266a15f16bcf8d4cf7eb15d245c  iso-codes_4.15.0.orig.tar.xz"
+SHA256SUM="3d50750bf1d62d83b6085f5815ceb8392df34266a15f16bcf8d4cf7eb15d245c"
 DESCRIPTION="Provides lists of various ISO standards (countries, languages, language scripts, and currency names) in one place"
 
 build() {

@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="2.14.2"
 SOURCES="https://www.freedesktop.org/software/fontconfig/release/fontconfig-$VERSION.tar.gz"
 DEPENDS="expat freetype gperf pkgconf"
-SHA256SUM="3ba2dd92158718acec5caaf1a716043b5aa055c27b081d914af3ccb40dce8a55  fontconfig-2.14.2.tar.gz"
+SHA256SUM="3ba2dd92158718acec5caaf1a716043b5aa055c27b081d914af3ccb40dce8a55"
 DESCRIPTION="fontconfig"
 build() {
     ./configure --prefix=/usr

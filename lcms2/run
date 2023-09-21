@@ -5,7 +5,7 @@ VERSION="2.15"
 SOURCES="https://github.com/mm2/Little-CMS/releases/download/lcms$VERSION/lcms2-$VERSION.tar.gz"
 BUILD_DEPENDS="meson"
 DEPENDS="libjpeg-turbo"
-SHA256SUM="b20cbcbd0f503433be2a4e81462106fa61050a35074dc24a4e356792d971ab39  lcms2-2.15.tar.gz"
+SHA256SUM="b20cbcbd0f503433be2a4e81462106fa61050a35074dc24a4e356792d971ab39"
 DESCRIPTION="A free, open source, CMM engine"
 
 build() {

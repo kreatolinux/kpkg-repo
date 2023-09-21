@@ -5,7 +5,7 @@ VERSION="0.4.4"
 SOURCES="https://download.gnome.org/sources/gnome-autoar/0.4/gnome-autoar-$VERSION.tar.xz"
 BUILD_DEPENDS="meson vala"
 DEPENDS="libarchive gtk3"
-SHA256SUM="c0afbe333bcf3cb1441a1f574cc8ec7b1b8197779145d4edeee2896fdacfc3c2  gnome-autoar-0.4.4.tar.xz"
+SHA256SUM="c0afbe333bcf3cb1441a1f574cc8ec7b1b8197779145d4edeee2896fdacfc3c2"
 DESCRIPTION="gnome-autoar"
 
 build() {

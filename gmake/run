@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="4.3"
 SOURCES="https://ftp.gnu.org/gnu/make/make-$VERSION.tar.gz"
 DEPENDS=""
-SHA256SUM="e05fdde47c5f7ca45cb697e973894ff4f5d79e13b750ed57d7b66d8defc78e19  make-4.3.tar.gz"
+SHA256SUM="e05fdde47c5f7ca45cb697e973894ff4f5d79e13b750ed57d7b66d8defc78e19"
 DESCRIPTION="GNU make"
 
 build() {

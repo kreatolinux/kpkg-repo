@@ -3,7 +3,7 @@ NAME="nspr"
 RELEASE="1"
 VERSION="4.35"
 SOURCES="https://archive.mozilla.org/pub/nspr/releases/v$VERSION/src/nspr-$VERSION.tar.gz"
-SHA256SUM="7ea3297ea5969b5d25a5dd8d47f2443cda88e9ee746301f6e1e1426f8a6abc8f  nspr-4.35.tar.gz"
+SHA256SUM="7ea3297ea5969b5d25a5dd8d47f2443cda88e9ee746301f6e1e1426f8a6abc8f"
 DESCRIPTION="nspr"
 
 build() {

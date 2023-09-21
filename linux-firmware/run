@@ -3,7 +3,7 @@ NAME="linux-firmware"
 RELEASE="1"
 VERSION="20230919"
 SOURCES="https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/snapshot/linux-firmware-$VERSION.tar.gz"
-SHA256SUM="1dac602218f83f2c81dd72e599ae6c926901b3d36babccce46cd84293a37e473  linux-firmware-20230919.tar.gz"
+SHA256SUM="1dac602218f83f2c81dd72e599ae6c926901b3d36babccce46cd84293a37e473"
 DESCRIPTION="Linux firmware files"
 
 build() {

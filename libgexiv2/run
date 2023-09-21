@@ -5,7 +5,7 @@ VERSION="0.14.2"
 SOURCES="https://gitlab.gnome.org/GNOME/gexiv2/-/archive/gexiv2-$VERSION/gexiv2-gexiv2-$VERSION.tar.gz"
 DEPENDS="exiv2"
 BUILD_DEPENDS="meson glib gobject-introspection vala"
-SHA256SUM="7489d00e2bfafd7e09b0c4e7f01d075831d5f6b3280210b4c690c20853aad82d  gexiv2-gexiv2-0.14.2.tar.gz"
+SHA256SUM="7489d00e2bfafd7e09b0c4e7f01d075831d5f6b3280210b4c690c20853aad82d"
 DESCRIPTION="GObject wrapper around the Exiv2 photo metadata library"
 
 build() {

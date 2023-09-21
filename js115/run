@@ -5,7 +5,7 @@ VERSION="115.2.0"
 SOURCES="https://archive.mozilla.org/pub/firefox/releases/$VERSIONesr/source/firefox-$VERSIONesr.source.tar.xz"
 DEPENDS="readline zlib icu"
 BUILD_DEPENDS="rust python llvm which"
-SHA256SUM="51534dd2a158d955a2cb67cc1308f100f6c9def0788713ed8b4d743f3ad72457  firefox-115.2.0esr.source.tar.xz"
+SHA256SUM="51534dd2a158d955a2cb67cc1308f100f6c9def0788713ed8b4d743f3ad72457"
 DESCRIPTION="Spidermonkey JavaScript and WebAssembly Engine"
 
 build() {

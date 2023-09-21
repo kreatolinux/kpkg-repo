@@ -5,7 +5,7 @@ VERSION="3.24.38"
 SOURCES="https://download.gnome.org/sources/gtk+/3.24/gtk+-$VERSION.tar.xz"
 BUILD_DEPENDS="meson"
 DEPENDS="atk libx11 cantarell-fonts libxcomposite libxrandr libxrender gdk-pixbuf libepoxy pango adwaita-icon-theme iso-codes libxkbcommon gobject-introspection wayland wayland-protocols"
-SHA256SUM="ce11decf018b25bdd8505544a4f87242854ec88be054d9ade5f3a20444dd8ee7  gtk+-3.24.38.tar.xz"
+SHA256SUM="ce11decf018b25bdd8505544a4f87242854ec88be054d9ade5f3a20444dd8ee7"
 DESCRIPTION="gtk3"
 
 build() {

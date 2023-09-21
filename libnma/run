@@ -5,7 +5,7 @@ VERSION="1.10.6"
 SOURCES="https://download.gnome.org/sources/libnma/1.10/libnma-$VERSION.tar.xz"
 DEPENDS="gcr-3 gtk4 gtk3 iso-codes networkmanager"
 BUILD_DEPENDS="meson vala"
-SHA256SUM="53a6fb2b190ad37c5986caed3e98bede7c3c602399ee4f93c8fc054303d76dab  libnma-1.10.6.tar.xz"
+SHA256SUM="53a6fb2b190ad37c5986caed3e98bede7c3c602399ee4f93c8fc054303d76dab"
 DESCRIPTION="libnma"
 
 build() {

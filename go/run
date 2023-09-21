@@ -5,7 +5,7 @@ VERSION="1.21.1"
 SOURCES="https://go.dev/dl/go$VERSION.src.tar.gz"
 BUILD_DEPENDS="wget"
 DEPENDS="git"
-SHA256SUM="bfa36bf75e9a1e9cbbdb9abcf9d1707e479bd3a07880a8ae3564caee5711cb99  go1.21.1.src.tar.gz"
+SHA256SUM="bfa36bf75e9a1e9cbbdb9abcf9d1707e479bd3a07880a8ae3564caee5711cb99"
 DESCRIPTION="Go is a statically typed, compiled programming language designed at Google"
 
 build() {

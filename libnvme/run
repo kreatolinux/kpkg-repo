@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="1.5"
 SOURCES="https://github.com/linux-nvme/libnvme/archive/refs/tags/v$VERSION.tar.gz"
 BUILD_DEPENDS="meson"
-SHA256SUM="f73ba1edde059b2d5e7c1048ad4f895e6047bff241c94b34a7aff5894779d086  v1.5.tar.gz"
+SHA256SUM="f73ba1edde059b2d5e7c1048ad4f895e6047bff241c94b34a7aff5894779d086"
 DESCRIPTION="libnvme"
 
 build() {

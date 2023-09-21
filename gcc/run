@@ -4,7 +4,7 @@ RELEASE="2"
 VERSION="13.2.0"
 SOURCES="https://ftp.gnu.org/gnu/gcc/gcc-$VERSION/gcc-$VERSION.tar.xz"
 DEPENDS="isl libzstd binutils gmp mpc mpfr linux-headers"
-SHA256SUM="e275e76442a6067341a27f04c5c6b83d8613144004c0413528863dc6b5c743da  gcc-13.2.0.tar.xz"
+SHA256SUM="e275e76442a6067341a27f04c5c6b83d8613144004c0413528863dc6b5c743da"
 DESCRIPTION="The GNU C Compiler"
 
 build() {

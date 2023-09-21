@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="1.3.264"
 SOURCES="https://github.com/KhronosGroup/Vulkan-Headers/archive/refs/tags/v$VERSION.tar.gz"
 DEPENDS="cmake ninja"
-SHA256SUM="bdce6a99f0e5869a341946ee0a92eef270ef9b4b106e82f238aa68aeb2cd4995  v1.3.264.tar.gz"
+SHA256SUM="bdce6a99f0e5869a341946ee0a92eef270ef9b4b106e82f238aa68aeb2cd4995"
 DESCRIPTION="Vulkan headers"
 
 build() {

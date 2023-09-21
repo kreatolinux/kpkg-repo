@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="23.9.1"
 SOURCES="https://github.com/notofonts/notofonts.github.io/archive/refs/tags/noto-monthly-release-$VERSION.tar.gz"
 DEPENDS="fontconfig"
-SHA256SUM="90335582faf06c61511f0a2a9f7f1ffaafd160c79fe8115b4c4fb5ef7992d526  noto-monthly-release-23.9.1.tar.gz"
+SHA256SUM="90335582faf06c61511f0a2a9f7f1ffaafd160c79fe8115b4c4fb5ef7992d526"
 DESCRIPTION="Google Noto fonts"
 
 build() {

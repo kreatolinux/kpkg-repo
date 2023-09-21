@@ -4,7 +4,7 @@ VERSION="3.27.5"
 RELEASE="1"
 SOURCES="https://cmake.org/files/v3.27/cmake-$VERSION.tar.gz"
 DEPENDS="expat libuv libarchive libuv libxml2 curl"
-SHA256SUM="5175e8fe1ca9b1dd09090130db7201968bcce1595971ff9e9998c2f0765004c9  cmake-3.27.5.tar.gz"
+SHA256SUM="5175e8fe1ca9b1dd09090130db7201968bcce1595971ff9e9998c2f0765004c9"
 DESCRIPTION="CMake package contains a modern toolset used for generating Makefiles."
 
 build() {

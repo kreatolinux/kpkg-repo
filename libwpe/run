@@ -5,7 +5,7 @@ VERSION="1.15.1"
 SOURCES="https://wpewebkit.org/releases/libwpe-$VERSION.tar.xz"
 BUILD_DEPENDS="meson"
 DEPENDS="libxkbcommon mesa"
-SHA256SUM="14d36a93a05ab7ada9bec581720b8057336fe681bbbe59bda7d50cb8f3eba3a6  libwpe-1.15.1.tar.xz"
+SHA256SUM="14d36a93a05ab7ada9bec581720b8057336fe681bbbe59bda7d50cb8f3eba3a6"
 DESCRIPTION="libwpe"
 
 build() {

@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="0.189"
 SOURCES="https://sourceware.org/elfutils/ftp/$VERSION/elfutils-$VERSION.tar.bz2"
 DEPENDS="zlib"
-SHA256SUM="39bd8f1a338e2b7cd4abc3ff11a0eddc6e690f69578a57478d8179b4148708c8  elfutils-0.189.tar.bz2"
+SHA256SUM="39bd8f1a338e2b7cd4abc3ff11a0eddc6e690f69578a57478d8179b4148708c8"
 DESCRIPTION="elfutils"
 build() {
     ./configure --prefix=/usr \

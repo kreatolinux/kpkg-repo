@@ -5,7 +5,7 @@ VERSION="45.0"
 SOURCES="https://gitlab.gnome.org/GNOME/nautilus/-/archive/$VERSION/nautilus-$VERSION.tar.gz"
 DEPENDS="bubblewrap dconf libgexiv2 gdk-pixbuf gnome-autoar gnome-desktop gst-plugins-base libnotify libadwaita libportal libseccomp tracker3 desktop-file-utils adwaita-icon-theme"
 BUILD_DEPENDS="meson vala gobject-introspection"
-SHA256SUM="fb888cbde88864a895a30226783d2f3658a1737c3eb3167d2ad91e52a937cc72  nautilus-45.0.tar.gz"
+SHA256SUM="fb888cbde88864a895a30226783d2f3658a1737c3eb3167d2ad91e52a937cc72"
 DESCRIPTION="File manager of GNOME"
 
 build() {

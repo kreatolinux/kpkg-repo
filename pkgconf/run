@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION=2.0.3
 SOURCES="https://distfiles.dereferenced.org/pkgconf/pkgconf-$VERSION.tar.xz"
 DEPENDS=""
-SHA256SUM="cabdf3c474529854f7ccce8573c5ac68ad34a7e621037535cbc3981f6b23836c  pkgconf-2.0.3.tar.xz"
+SHA256SUM="cabdf3c474529854f7ccce8573c5ac68ad34a7e621037535cbc3981f6b23836c"
 DESCRIPTION="pkgconf is a program which helps to configure compiler and linker flags for development frameworks."
 
 build() {

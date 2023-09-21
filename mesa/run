@@ -5,7 +5,7 @@ VERSION="23.1.7"
 SOURCES="https://archive.mesa3d.org/mesa-$VERSION.tar.xz"
 DEPENDS="libelf libxxf86vm libglvnd libudev llvm flex libxshmfence libxdamage"
 BUILD_DEPENDS="libdrm libx11 libxrandr meson libelf python-mako wayland-protocols wayland"
-SHA256SUM="409641eadf0ed1c7794797a6f5a0b0195b5580b282166e5ec5629c6bcda6acd3  mesa-23.1.7.tar.xz"
+SHA256SUM="409641eadf0ed1c7794797a6f5a0b0195b5580b282166e5ec5629c6bcda6acd3"
 DESCRIPTION="The 3D Graphics Library"
 build() {
     meson \

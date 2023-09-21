@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="8.3.0"
 SOURCES="https://curl.haxx.se/download/curl-$VERSION.tar.xz"
 DEPENDS="nghttp2 zlib nghttp2"
-SHA256SUM="376d627767d6c4f05105ab6d497b0d9aba7111770dd9d995225478209c37ea63  curl-8.3.0.tar.xz"
+SHA256SUM="376d627767d6c4f05105ab6d497b0d9aba7111770dd9d995225478209c37ea63"
 DESCRIPTION=""
 build() {
     # Taken from Kiss Linux repo, License here https://github.com/kisslinux/repo/blob/master/LICENSE
