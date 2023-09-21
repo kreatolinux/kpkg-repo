@@ -2,9 +2,9 @@
 NAME="grub"
 RELEASE="1"
 VERSION="2.06"
-SOURCES="https://ftp.gnu.org/gnu/grub/grub-$VERSION.tar.xz;https://ftp.gnu.org/gnu/unifont/unifont-15.0.06/unifont-15.0.06.bdf.gz"
+SOURCES="https://ftp.gnu.org/gnu/grub/grub-$VERSION.tar.xz https://ftp.gnu.org/gnu/unifont/unifont-15.0.06/unifont-15.0.06.bdf.gz"
 DEPENDS="flex freetype pigz"
-SHA256SUM="b79ea44af91b93d17cd3fe80bdae6ed43770678a9a5ae192ccea803ebb657ee1;93cb54fa103a00e25cd3e16550b4b4eb13cbd098e515679ade3ae82cd0739f29"
+SHA256SUM="b79ea44af91b93d17cd3fe80bdae6ed43770678a9a5ae192ccea803ebb657ee1 93cb54fa103a00e25cd3e16550b4b4eb13cbd098e515679ade3ae82cd0739f29"
 DESCRIPTION="The GNU Grub Bootloader"
 
 prepare() {

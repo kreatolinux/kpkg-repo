@@ -2,11 +2,11 @@
 NAME="appstream"
 RELEASE="1"
 VERSION="0.16.3"
-SOURCES="https://github.com/ximion/appstream/archive/refs/tags/v$VERSION.tar.gz;disable-docs.patch"
+SOURCES="https://github.com/ximion/appstream/archive/refs/tags/v$VERSION.tar.gz disable-docs.patch"
 BUILD_DEPENDS="meson ninja"
 DEPENDS="glib itstool libxslt libxml2 libxmlb curl gobject-introspection libyaml"
 OPTDEPENDS="systemd: For systemd support"
-SHA256SUM="4470a27474dc3cc4938552fbf0394b6a65d8a2055d4f4418df086d65d8f2ba29;30a67dd92c943f97576dc0c1c314dbcc2392c88eeb6ed04895a0b5f2c515d9aa"
+SHA256SUM="4470a27474dc3cc4938552fbf0394b6a65d8a2055d4f4418df086d65d8f2ba29 30a67dd92c943f97576dc0c1c314dbcc2392c88eeb6ed04895a0b5f2c515d9aa"
 DESCRIPTION="appstream"
 
 prepare() {

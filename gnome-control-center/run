@@ -2,10 +2,10 @@
 NAME="gnome-control-center"
 RELEASE="2"
 VERSION="45.0"
-SOURCES="https://gitlab.gnome.org/GNOME/gnome-control-center/-/archive/$VERSION/gnome-control-center-$VERSION.tar.gz;https://raw.githubusercontent.com/kreatolinux/assets/master/klinux_pixmap.png"
+SOURCES="https://gitlab.gnome.org/GNOME/gnome-control-center/-/archive/$VERSION/gnome-control-center-$VERSION.tar.gz https://raw.githubusercontent.com/kreatolinux/assets/master/klinux_pixmap.png"
 DEPENDS="libnma modemmanager cups samba gcr-3 gnome-online-accounts accountsservice colord-gtk libgtop udisks libpwquality gnome-settings-daemon gsound gnome-bluetooth ibus libadwaita"
 BUILD_DEPENDS="meson git"
-SHA256SUM="c412e47ba07af7d0bd3fc7a1161e8ea68228b519f84d972ad1a1269c5afa796a;6e1fc322ed757a024a39a80a8de43d184323e2e781aa21cf618fc67655e6cb28"
+SHA256SUM="c412e47ba07af7d0bd3fc7a1161e8ea68228b519f84d972ad1a1269c5afa796a 6e1fc322ed757a024a39a80a8de43d184323e2e781aa21cf618fc67655e6cb28"
 DESCRIPTION="GNOME Control Center"
 
 prepare() {
