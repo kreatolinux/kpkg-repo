@@ -3,7 +3,7 @@ NAME="cmake"
 VERSION="3.27.5"
 RELEASE="1"
 SOURCES="https://cmake.org/files/v3.27/cmake-$VERSION.tar.gz"
-DEPENDS="expat libuv libarchive libuv libxml2 curl"
+DEPENDS="expat libuv libarchive libuv libxml2 curl jsoncpp"
 SHA256SUM="5175e8fe1ca9b1dd09090130db7201968bcce1595971ff9e9998c2f0765004c9"
 DESCRIPTION="CMake package contains a modern toolset used for generating Makefiles."
 
@@ -12,7 +12,6 @@ build() {
     ./bootstrap --prefix=/usr        \
                 --system-libs        \
                 --mandir=/share/man  \
-                --no-system-jsoncpp  \
                 --no-system-librhash \
                 --docdir=/share/doc/cmake-$VERSION
     make -j$(nproc)
