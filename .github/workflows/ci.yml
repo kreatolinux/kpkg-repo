@@ -51,6 +51,7 @@ jobs:
           cd ..
           rm -rf src
           cd /tmp/
+          ./chkupd cleanUp -v
           ./chkupd checkAll --jsonPath=/tmp/chkupd.json --repo="$GITHUB_WORKSPACE"
           bash jsontomd.sh /tmp/chkupd.json > /tmp/chkupd.md
     
@@ -62,7 +63,6 @@ jobs:
           echo "# Arch check results" >> /tmp/chkupd.md
           bash jsontomd.sh /tmp/chkupd.json >> /tmp/chkupd.md
           rm -rf chkupd jsontomd.sh
-    
           
           
       - name: Create Pull Request
