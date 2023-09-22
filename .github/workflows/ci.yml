@@ -51,7 +51,7 @@ jobs:
           cd ..
           rm -rf src
           cd /tmp/
-          ./chkupd cleanUp -v
+          sudo ./chkupd cleanUp -v
           ./chkupd checkAll --jsonPath=/tmp/chkupd.json --repo="$GITHUB_WORKSPACE"
           bash jsontomd.sh /tmp/chkupd.json > /tmp/chkupd.md
     
