@@ -5,7 +5,8 @@ VERSION="0.25.0"
 SOURCES="https://github.com/p11-glue/p11-kit/releases/download/$VERSION/p11-kit-$VERSION.tar.xz"
 DEPENDS="libtasn libffi pkgconf"
 SHA256SUM="d55583bcdde83d86579cabe3a8f7f2638675fef01d23cace733ff748fc354706"
-DESCRIPTION=""
+DESCRIPTION="A way to load and enumerate PKCS#11 modules"
+
 build() {
     ./configure --prefix=/usr     \
             --sysconfdir=/etc \
