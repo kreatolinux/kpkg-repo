@@ -4,15 +4,18 @@ RELEASE="1"
 VERSION="5.69"
 SOURCES="https://mirrors.edge.kernel.org/pub/linux/bluetooth/bluez-$VERSION.tar.gz"
 DEPENDS="sbc libudev dbus glib libical"
+BACKUP="etc/bluetooth/main.conf"
 SHA256SUM="7f65e805905947ffa5699ef8fa986b89838665aefe45fc64baf4480f15ca0acc"
 DESCRIPTION="Bluetooth protocol stack for Linux"
 
 build() {
-    ./configure \
+    if command -v systemctl > /dev/null;
+	extraArgs="--with-systemdsystemunitdir=/usr/lib/systemd/system --with-systemduserunitdir=/usr/lib/systemd/user"
+    fi
+
+    ./configure $extraArgs \
 	    --prefix=/usr \
 	    --with-udevdir=/usr/lib/udev/rules.d \
-	    --with-systemdsystemunitdir=/usr/lib/systemd/system \
-	    --with-systemduserunitdir=/usr/lib/systemd/user \
 	    --disable-manpages \
 	    --sysconfdir=/etc \
 	    --enable-library
@@ -21,4 +24,6 @@ build() {
 
 package() {
     make DESTDIR="$ROOT" install
+    install -v -dm755 "$ROOT/etc/bluetooth"
+    install -v -m644 src/main.conf "$ROOT/etc/bluetooth/main.conf"
 }
