@@ -1,17 +1,17 @@
 #!/bin/sh
 NAME="systemd"
 RELEASE="3"
-VERSION="254"
-SOURCES="https://github.com/systemd/systemd/archive/refs/tags/v$VERSION.tar.gz"
+VERSION="254.4"
+SOURCES="https://github.com/systemd/systemd-stable/archive/refs/tags/v$VERSION.tar.gz"
 BUILD_DEPENDS="meson samurai"
 DEPENDS="linux-pam gperf kbd libcap util-linux python-jinja2 kmod"
 REPLACES="elogind eudev libudev"
-SHA256SUM="244da7605800a358915e4b45d079b0b89364be35da4bc8d849821e67bac0ce62"
+SHA256SUM="c20ffa6327d40de408710a3583b2f86c9991e70d3328215d1273f457e37d8d3a"
 DESCRIPTION="The systemd System and Service Manager"
 
 prepare() {
     tar -xvf v$VERSION.tar.gz
-    cd systemd-$VERSION
+    cd systemd-stable-$VERSION
 
     # Force set relative_source_path as realpath on busybox doesn't support
     # arguments used there.
