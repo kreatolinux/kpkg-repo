@@ -9,7 +9,7 @@ SHA256SUM="7f65e805905947ffa5699ef8fa986b89838665aefe45fc64baf4480f15ca0acc"
 DESCRIPTION="Bluetooth protocol stack for Linux"
 
 build() {
-    if command -v systemctl > /dev/null;
+    if command -v systemctl > /dev/null; then
 	extraArgs="--with-systemdsystemunitdir=/usr/lib/systemd/system --with-systemduserunitdir=/usr/lib/systemd/user"
     fi
 
