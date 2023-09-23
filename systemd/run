@@ -28,7 +28,7 @@ prepare() {
 }
 
 build() {
-    cd systemd-$VERSION
+    cd systemd-stable-$VERSION
     export PATH="$(realpath ../):$PATH"
     meson setup \
       --prefix=/usr \
@@ -40,7 +40,7 @@ build() {
 }
 
 package() {
-    cd systemd-$VERSION
+    cd systemd-stable-$VERSION
     export PATH="$(realpath ../):$PATH"
     DESTDIR=$ROOT ninja -C build/ install
 
