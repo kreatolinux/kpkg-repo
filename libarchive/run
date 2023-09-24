@@ -3,7 +3,7 @@ NAME="libarchive"
 RELEASE="4"
 VERSION="3.7.2"
 SOURCES="https://github.com/libarchive/libarchive/releases/download/v$VERSION/libarchive-$VERSION.tar.xz"
-DEPENDS="libzstd linux-headers"
+DEPENDS="xz-utils libzstd linux-headers"
 SHA256SUM="04357661e6717b6941682cde02ad741ae4819c67a260593dfb2431861b251acb"
 DESCRIPTION="Multi-format archive and compression library"
 
