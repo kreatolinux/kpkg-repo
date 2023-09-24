@@ -10,7 +10,7 @@ DESCRIPTION="Kreato Linux source tree metapackage"
 
 build_kpkg() {
         nimble install cligen fuzzy futhark libsha -y
-        nim c -d:release --threads:on -d:ver="$VERSION" -d:ssl -o="out/kpkg" "kpkg/kpkg.nim"
+        nim c -d:release --passL:-larchive --threads:on -d:ver="$VERSION" -d:ssl -o="out/kpkg" "kpkg/kpkg.nim"
 }
 
 package_kpkg() {
