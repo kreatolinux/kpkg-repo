@@ -1,15 +1,15 @@
 #!/bin/sh
 NAME="src"
 RELEASE="4"
-VERSION="6.0.1"
+VERSION="6.1"
 SOURCES="https://github.com/kreatolinux/src/archive/refs/tags/v$VERSION.tar.gz"
-BUILD_DEPENDS="nim"
+BUILD_DEPENDS="nim llvm"
 DEPENDS="libarchive shadow openssl git fakeroot"
-SHA256SUM="bbbd830aa53a8e2577763ff7dd144d97bf1dcf4ca2a474a8a32f52af6645260d"
+SHA256SUM="db00766adc39a4230fe5df0e59db9d9ad96c3c5b185b4152dc56a19d2d7293c3"
 DESCRIPTION="Kreato Linux source tree metapackage"
 
 build_kpkg() {
-        nimble install cligen fuzzy libsha -y
+        nimble install cligen fuzzy futhark libsha -y
         nim c -d:release --threads:on -d:ver="$VERSION" -d:ssl -o="out/kpkg" "kpkg/kpkg.nim"
 }
 
