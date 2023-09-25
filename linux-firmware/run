@@ -6,10 +6,6 @@ SOURCES="https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware
 SHA256SUM="1dac602218f83f2c81dd72e599ae6c926901b3d36babccce46cd84293a37e473"
 DESCRIPTION="Linux firmware files"
 
-build() {
-        :
-}
-
 package() {
     make install
 }

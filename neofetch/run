@@ -7,10 +7,6 @@ DEPENDS="bash"
 SHA256SUM="9c1dbbff41901b1cfd44a51dd842f635e716e931b71ee0e25f3aec704f8b4553"
 DESCRIPTION="A command-line system information tool written in bash 3.2+"
 
-build() {
-        :
-}
-
 package() {
 	mkdir -p $ROOT/usr/bin
 	cp -rf   neofetch $ROOT/usr/bin

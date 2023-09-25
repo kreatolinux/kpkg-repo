@@ -11,10 +11,6 @@ prepare() {
     bsdtar -xf *.deb
 } 
 
-build() {
-    :
-}
-
 package() {
     tar -xf "data.tar.xz"
     mv etc $ROOT

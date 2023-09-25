@@ -7,10 +7,6 @@ DEPENDS="fontconfig"
 SHA256SUM="90335582faf06c61511f0a2a9f7f1ffaafd160c79fe8115b4c4fb5ef7992d526"
 DESCRIPTION="Google Noto fonts"
 
-build() {
-    : 
-}
-
 package() {
     install -Dm644 fonts/*/hinted/ttf/*.tt[fc] -t "$DESTDIR/usr/share/fonts/noto"
 }

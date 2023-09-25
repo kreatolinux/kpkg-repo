@@ -7,10 +7,6 @@ DEPENDS="python samurai"
 SHA256SUM="b1db3a153087549497ee52b1c938d2134e0338214fe14f7efd16fecd57b639f5"
 DESCRIPTION="Next generation build system"
 
-build() {
-	:
-}
-
 package() {
     SETUPTOOLS_USE_DISTUTILS=stdlib pip install . --root=$ROOT
     #install -vDm644 data/shell-completions/bash/meson "$ROOT/usr/share/bash-completion/completions/meson"

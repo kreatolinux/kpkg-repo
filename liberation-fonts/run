@@ -7,10 +7,6 @@ DEPENDS="fontconfig"
 SHA256SUM="7191c669bf38899f73a2094ed00f7b800553364f90e2637010a69c0e268f25d0"
 DESCRIPTION="Font family which aims at metric compatibility with Arial, Times New Roman, and Courier New"
 
-build() {
-    : 
-}
-
 package() {
     install -Dm644 *.tt[fc] -t "$DESTDIR/usr/share/fonts/liberation"
 }

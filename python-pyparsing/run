@@ -11,10 +11,6 @@ prepare() {
 	:
 }
 
-build() {
-        :
-}
-
 package() {
     SETUPTOOLS_USE_DISTUTILS=stdlib pip install pyparsing-$VERSION-py3-none-any.whl --prefix=/usr --root="$ROOT"
 }
