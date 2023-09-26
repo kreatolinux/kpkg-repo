@@ -5,7 +5,7 @@ VERSION="2.78.0"
 SOURCES="https://download.gnome.org/sources/glib/2.78/glib-$VERSION.tar.xz" 
 BUILD_DEPENDS="meson ninja"
 SHA256SUM="44eaab8b720877ce303c5540b657b126f12dc94972d9880b52959f43fb537b30"
-DESCRIPTION="glib"
+DESCRIPTION="Low-level core library that forms the basis for projects such as GTK+ and GNOME"
 
 build() {
     meson setup \

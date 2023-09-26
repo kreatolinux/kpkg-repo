@@ -6,7 +6,7 @@ SOURCES="https://download.gnome.org/sources/glib-networking/2.78/glib-networking
 BUILD_DEPENDS="meson"
 DEPENDS="glib gnutls gsettings-desktop-schemas make-ca"
 SHA256SUM="52fe4ce93f7dc51334b102894599858d23c8a65ac4a1110b30920565d68d3aba"
-DESCRIPTION="glib-networking"
+DESCRIPTION="Network extensions for GLib"
 
 build() {
     meson setup \

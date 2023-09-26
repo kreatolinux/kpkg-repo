@@ -6,7 +6,7 @@ SOURCES="https://download.gnome.org/sources/json-glib/1.8/json-glib-$VERSION.tar
 BUILD_DEPENDS="meson ninja"
 DEPENDS="glib"
 SHA256SUM="97ef5eb92ca811039ad50a65f06633f1aae64792789307be7170795d8b319454"
-DESCRIPTION="json-glib"
+DESCRIPTION="A full JSON parser and generator using GLib and GObject, and integrates JSON with GLib data types"
 
 build() {
     meson \
