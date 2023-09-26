@@ -6,7 +6,7 @@ SOURCES="https://gitlab.gnome.org/GNOME/gobject-introspection/-/archive/$VERSION
 BUILD_DEPENDS="meson ninja"
 DEPENDS="python cairo glib"
 SHA256SUM="b6b7480c57c434c484ed169e89e5531362ec42b0e5cac5d562a25de61194850f"
-DESCRIPTION="gobject-introspection"
+DESCRIPTION="Introspection system for GObject-based libraries"
 
 build() {
     meson \
