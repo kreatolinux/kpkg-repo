@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="vivaldi"
 RELEASE="1"
-VERSION="6.2.3105.48-1"
+VERSION="6.2.3105.51-1"
 SOURCES="https://downloads.vivaldi.com/stable/vivaldi-stable_$VERSION_amd64.deb"
 DEPENDS="alsa-lib liberation-fonts desktop-file-utils gtk3 hicolor-icon-theme libnotify cups nss"
 SHA256SUM="2ecc9e5fe9cf94eb4c096bf566ee3a399ef2326f5f7aac8647bdec680c0cd525"
