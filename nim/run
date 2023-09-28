@@ -8,10 +8,10 @@ DESCRIPTION="The Nim programming language"
 
 build() {
         sh build.sh
-        bin/nim c --nimcache=/tmp/kpkg/srcdir/cache koch
-        ./koch boot -d:release --nimcache=/tmp/kpkg/srcdir/cache
-        ./koch tools --nimcache=/tmp/kpkg/srcdir/cache
-        ./koch nimble --nimcache=/tmp/kpkg/srcdir/cache
+        bin/nim c --nimcache=/opt/kpkg/srcdir/cache koch
+        ./koch boot -d:release --nimcache=/opt/kpkg/srcdir/cache
+        ./koch tools --nimcache=/opt/kpkg/srcdir/cache
+        ./koch nimble --nimcache=/opt/kpkg/srcdir/cache
 }
 
 package() {
