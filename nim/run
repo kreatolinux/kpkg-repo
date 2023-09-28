@@ -19,6 +19,7 @@ package() {
   cp -r lib/ "$ROOT/usr/lib/nim"
   cp -r compiler/ "$ROOT/usr/lib/nim"
   cp -r doc/ "$ROOT/usr/lib/nim"
+  cp -r tools/ "$ROOT/usr/lib/nim"
   cp -rf config/* -t "$ROOT/etc/nim"
   cp -rf bin/* -t "$ROOT/usr/bin"
   cp -rf "$ROOT/usr/lib/nim/"*.h "$ROOT/usr/include"
