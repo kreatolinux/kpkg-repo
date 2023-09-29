@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="src"
 RELEASE="4"
-VERSION="6.2.0"
+VERSION="6.2.1"
 SOURCES="https://github.com/kreatolinux/src/releases/download/v$VERSION/src-v$VERSION-dist.tar.gz"
 BUILD_DEPENDS="nim"
 DEPENDS="libarchive shadow openssl git fakeroot"
-SHA256SUM="a2c5cbaa8267614f3a3aa15f8055c92ff71c02bf872d45e51928e6d4d9592a15"
+SHA256SUM="12a621262cc596f0630638187a3fc3182dd3047f12608cc435a948e60a80c590"
 DESCRIPTION="Kreato Linux source tree metapackage"
 
 build_kpkg() {
