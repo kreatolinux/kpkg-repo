@@ -1,6 +1,6 @@
 #!/bin/sh
 NAME="go"
-RELEASE="1"
+RELEASE="2"
 VERSION="1.21.1"
 SOURCES="https://go.dev/dl/go$VERSION.src.tar.gz"
 BUILD_DEPENDS="wget"
@@ -23,26 +23,25 @@ build() {
                 ARCH="$(uname -m)"
             ;;
         esac
+	cd ..
         wget https://go.dev/dl/go$VERSION.linux-$ARCH.tar.gz
         tar -xvf go$VERSION.linux-$ARCH.tar.gz
         export PATH=$PATH:$PWD/go/bin
+    	cd -
     fi
     cd src || exit 1
     export GOENV="/opt/kpkg/srcdir/go/env" 
     export GOCACHE="/opt/kpkg/srcdir/go-build"
+    export GOROOT_FINAL=/usr/lib/go
     go env -w  GOCACHE="/opt/kpkg/srcdir/go-build"
-    ./make.bash
+    ./make.bash -v
 }
 
 package() {
     mkdir -p "$ROOT"/bin
-    cp -r ./bin "$ROOT"
-    mkdir -p "$ROOT"/usr/local/go
-    cp -r . "$ROOT"/usr/local/go
+    mkdir -p "$ROOT"/usr/lib/go
+    cp -r . "$ROOT"/usr/lib/go
+    ln -s /usr/lib/go/bin/go "$ROOT/bin/go"
+    ln -s /usr/lib/go/bin/gofmt "$ROOT/bin/gofmt"
     mkdir -p /opt/kpkg/srcdir/go
-}
-
-postinstall() {
-    go env -w GOROOT="/usr/local/go" > /dev/null
-    exit 0
 }
