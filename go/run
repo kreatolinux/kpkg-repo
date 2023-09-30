@@ -25,8 +25,9 @@ build() {
         esac
 	cd ..
         wget https://go.dev/dl/go$VERSION.linux-$ARCH.tar.gz
-        tar -xvf go$VERSION.linux-$ARCH.tar.gz
-        export PATH=$PATH:$PWD/go/bin
+        mkdir go-bin
+	tar -xvf go$VERSION.linux-$ARCH.tar.gz -C go-bin
+        export PATH=$PATH:$PWD/go-bin/go/bin
     	cd -
     fi
     cd src || exit 1
