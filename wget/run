@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="wget"
 RELEASE="2"
-VERSION="2.1.0"
-SOURCES="https://ftp.gnu.org/gnu/wget/wget2-$VERSION.tar.gz"
+VERSION="1.21.4"
+SOURCES="https://ftp.gnu.org/gnu/wget/wget-$VERSION.tar.gz"
 DEPENDS="openssl"
-SHA256SUM="a05dc5191c6bad9313fd6db2777a78f5527ba4774f665d5d69f5a7461b49e2e7"
+SHA256SUM="3683619a5f50edcbccb1720a79006fa37bf9b9a255a8c5b48048bc3c7a874bd9"
 DESCRIPTION="Network utility to retrieve files from the Web"
 build() {
     ./configure --prefix=/usr --with-ssl=openssl
