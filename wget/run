@@ -4,7 +4,7 @@ RELEASE="2"
 VERSION="1.21.4"
 SOURCES="https://ftp.gnu.org/gnu/wget/wget-$VERSION.tar.gz"
 DEPENDS="openssl"
-SHA256SUM="3683619a5f50edcbccb1720a79006fa37bf9b9a255a8c5b48048bc3c7a874bd9"
+SHA256SUM="81542f5cefb8faacc39bbbc6c82ded80e3e4a88505ae72ea51df27525bcde04c"
 DESCRIPTION="Network utility to retrieve files from the Web"
 build() {
     ./configure --prefix=/usr --with-ssl=openssl
