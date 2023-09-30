@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="vivaldi"
 RELEASE="1"
-VERSION="6.2.3105.51-1"
+VERSION="6.2.3105.54-1"
 SOURCES="https://downloads.vivaldi.com/stable/vivaldi-stable_$VERSION_amd64.deb"
 DEPENDS="alsa-lib liberation-fonts desktop-file-utils gtk3 hicolor-icon-theme libnotify cups nss"
-SHA256SUM="731907a850a9f81ae881a1a31e7f07b7f59c6096d031fb112d2351b322181a5b"
+SHA256SUM="cf9fe5f783058691d12ef6d4752c05492b779f6d663d92736a762e81779c2c59"
 DESCRIPTION="An advanced browser made with the power user in mind"
 
 prepare() {
