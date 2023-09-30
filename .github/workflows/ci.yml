@@ -44,7 +44,7 @@ jobs:
             rm -rf nim* linux_arm64.tar.xz
           fi
           sed -i s/stable/master/g Makefile
-          make deps
+          nimble install cligen fuzzy libsha -y
           make chkupd
           mv scripts/jsontomd.sh /tmp/
           mv out/chkupd /tmp/
