@@ -42,8 +42,48 @@ package() {
     mkdir -p "$INSTALL_PATH" "$INSTALL_MOD_PATH"
     make install
     make INSTALL_MOD_STRIP=1 DEPMOD=/nodepmod/here modules_install
+    
+    # Mostly from linux-headers PKGBUILD 
+    # https://gitlab.archlinux.org/archlinux/packaging/packages/linux/-/blob/de68606a2ee79eb1471daedd209a70192c35df14/PKGBUILD
+    MODPATH="$DESTDIR/usr/lib/modules/$VERSION/build"
+    mkdir -p "$MODPATH" "$DESTDIR/usr/src"
+    install -Dt "$MODPATH" -m644 .config Makefile Module.symvers System.map localversion.* version vmlinux
+    install -Dt "$MODPATH/kernel" -m644 kernel/Makefile
+    install -Dt "$MODPATH/arch/x86" -m644 arch/x86/Makefile
+    cp -t "$MODPATH" -a scripts
+    
+    # required when STACK_VALIDATION is enabled
+    install -Dt "$MODPATH/tools/objtool" tools/objtool/objtool
+
+    # required when DEBUG_INFO_BTF_MODULES is enabled
+    install -Dt "$MODPATH/tools/bpf/resolve_btfids" tools/bpf/resolve_btfids/resolve_btfids
+
+    find . -name 'Kconfig*' -exec install -Dm644 {} "$MODPATH/{}" \;
+    find -L "$MODPATH" -type l -printf 'Removing %P\n' -delete
+    find "$MODPATH" -type f -name '*.o' -printf 'Removing %P\n' -delete
+    
+    cp -t "$MODPATH" -a include
+    cp -t "$MODPATH/arch/x86" -a arch/x86/include
+    install -Dt "$MODPATH/arch/x86/kernel" -m644 arch/x86/kernel/asm-offsets.s
+
+    install -Dt "$MODPATH/drivers/md" -m644 drivers/md/*.h
+    install -Dt "$MODPATH/net/mac80211" -m644 net/mac80211/*.h
+
+    # https://bugs.archlinux.org/task/13146
+    install -Dt "$MODPATH/drivers/media/i2c" -m644 drivers/media/i2c/msp3400-driver.h
+
+    # https://bugs.archlinux.org/task/20402
+    install -Dt "$MODPATH/drivers/media/usb/dvb-usb" -m644 drivers/media/usb/dvb-usb/*.h
+    install -Dt "$MODPATH/drivers/media/dvb-frontends" -m644 drivers/media/dvb-frontends/*.h
+    install -Dt "$MODPATH/drivers/media/tuners" -m644 drivers/media/tuners/*.h
+
+    # https://bugs.archlinux.org/task/71392
+    install -Dt "$MODPATH/drivers/iio/common/hid-sensors" -m644 drivers/iio/common/hid-sensors/*.h
+     
+    ln -s "/usr/lib/modules" "$DESTDIR/usr/src/linux"
+
     mv "$DESTDIR/boot/vmlinuz" "$DESTDIR/boot/vmlinuz-$VERSION"
-    mv "$DESTDIR/boot/System.map" "$DESTDIR/boot/System.map-$VERSION"
+    mv "$DESTDIR/boot/System.map" "$DESTDIR/boot/System.map-$VERSION"  
 }
 
 postinstall_linux() {
