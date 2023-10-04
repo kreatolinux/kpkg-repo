@@ -1,6 +1,6 @@
 #!/bin/sh
 NAME="ccache"
-RELEASE="1"
+RELEASE="2"
 VERSION="4.8.3"
 SOURCES="https://github.com/ccache/ccache/archive/refs/tags/v$VERSION.tar.gz"
 DEPENDS="cmake gcc libzstd"
@@ -15,4 +15,8 @@ build() {
 package() {
     cd build
     make install
+    mkdir -p "$ROOT/usr/lib/ccache"
+    for i in gcc clang cc g++ c++ clang++; do
+	ln -s /usr/bin/ccache "$ROOT/usr/lib/ccache/$i"
+    done
 }
