@@ -3,9 +3,13 @@ NAME="llvm"
 RELEASE="1"
 VERSION="17.0.1"
 SOURCES="https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION/llvm-project-$VERSION.src.tar.xz"
-DEPENDS="cmake binutils gcc ninja"
+DEPENDS_LLVM="gcc"
+BUILD_DEPENDS="cmake ninja"
+BUILD_DEPENDS_LLVM+="binutils"
+BUILD_DEPENDS_LLVM_STANDALONE+="llvm"
 SHA256SUM="b0e42aafc01ece2ca2b42e3526f54bebc4b1f1dc8de6e34f46a0446a13e882b9"
 DESCRIPTION="The LLVM Project is a collection of modular and reusable compiler and toolchain technologies."
+
 
 build() {
     cmake -S llvm -B build -DCMAKE_BUILD_TYPE=Release \
@@ -21,7 +25,7 @@ build() {
     ninja -C build -j$(nproc)
 }
 
-build_llvmstandalone() {
+build_llvm_standalone() {
     # export CC just in case cmake tries to read from there for some reason
     export CC=clang
     cmake -S llvm -B build  \
