@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="make-ca"
 RELEASE="1"
-VERSION="1.12"
+VERSION="1.13"
 SOURCES="https://github.com/lfs-book/make-ca/releases/download/v$VERSION/make-ca-$VERSION.tar.xz"
 DEPENDS="bash p11-kit"
-SHA256SUM="e8d9863e60efe2b8e6504bfe40ebf48b1250d13a078abff71b4a60639b67bc81"
+SHA256SUM="8671a196bc3e46287bbdf745475697d07fa46bb337071f81509d2b4359cdbbe8"
 DESCRIPTION="PKI setup script for LFS (and others)"
 
 package() {

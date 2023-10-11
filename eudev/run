@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="eudev"
 RELEASE="1"
-VERSION="3.2.12"
+VERSION="3.2.14"
 SOURCES="https://github.com/eudev-project/eudev/releases/download/v$VERSION/eudev-$VERSION.tar.gz"
 DEPENDS="gperf kmod"
-SHA256SUM="ccdd64ec3c381d3c3ed0e99d2e70d1f62988c7763de89ca7bdffafa5eacb9ad8"
+SHA256SUM="8da4319102f24abbf7fff5ce9c416af848df163b29590e666d334cc1927f006f"
 REPLACES="systemd libudev"
 DESCRIPTION="Fork of systemd with the aim of making udev init-independent"
 build() {

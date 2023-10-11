@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="samba"
 RELEASE="1"
-VERSION="4.19.0"
+VERSION="4.19.1"
 SOURCES="https://download.samba.org/pub/samba/stable/samba-$VERSION.tar.gz"
 DEPENDS="gnutls jansson dbus fuse gpgme icu libtasn linux-pam"
 BUILD_DEPENDS="perl-parse-yapp rpcsvc-proto libtirpc perl-json"
-SHA256SUM="28f98ceab75a6a59432912fa110fc8c716abcab1ed6d8bdd4393d178acff3d20"
+SHA256SUM="ce3b7f0d18bf91aa5fd646e8bb385a3b35375b703c6e5123b02b85a1abc81879"
 DESCRIPTION="samba"
 
 build() {

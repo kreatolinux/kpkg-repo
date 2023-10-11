@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="limine"
 RELEASE="1"
-VERSION="5.20230917.0"
+VERSION="5.20231006.0"
 SOURCES="https://github.com/limine-bootloader/limine/releases/download/v$VERSION/limine-$VERSION.tar.xz"
 DEPENDS="efibootmgr nasm"
-SHA256SUM="2d9b55e798e951ebd3d4266303e9cefda2ee9f7055a3c877dc7e306f0e94ec91"
+SHA256SUM="e759bc39a59d07260d5def19bff5cd6e3f6147708e691383af7b09c33d00e347"
 DESCRIPTION="Modern, advanced, portable, multiprotocol bootloader."
 
 build() {

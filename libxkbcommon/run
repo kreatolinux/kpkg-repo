@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="libxkbcommon"
 RELEASE="2"
-VERSION="1.5.0"
+VERSION="1.6.0"
 SOURCES="https://xkbcommon.org/download/libxkbcommon-$VERSION.tar.xz"
 DEPENDS="wayland wayland-protocols libxcb libxml2 xkeyboard-config"
-SHA256SUM="560f11c4bbbca10f495f3ef7d3a6aa4ca62b4f8fb0b52e7d459d18a26e46e017"
+SHA256SUM="0edc14eccdd391514458bc5f5a4b99863ed2d651e4dd761a90abf4f46ef99c2b"
 DESCRIPTION="Keyboard compiler and support library"
 
 build() {

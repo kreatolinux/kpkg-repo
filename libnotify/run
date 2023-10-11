@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="libnotify"
 RELEASE="1"
-VERSION="0.8.2"
+VERSION="0.8.3"
 SOURCES="https://gitlab.gnome.org/GNOME/libnotify/-/archive/$VERSION/libnotify-$VERSION.tar.gz"
 BUILD_DEPENDS="meson"
 DEPENDS="gdk-pixbuf gobject-introspection"
-SHA256SUM="84d6bbcd633ff10eed25226730c52220cd41e362bb183513e5b6a5d1b3c0c12f"
+SHA256SUM="5bcfeff21b6669c009c862e25c42556723f7a46c2c3454fce0fd532ebed715a0"
 DESCRIPTION="Notification library"
 
 build() {
