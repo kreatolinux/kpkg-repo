@@ -46,7 +46,9 @@ package() {
     # Mostly from linux-headers PKGBUILD 
     # https://gitlab.archlinux.org/archlinux/packaging/packages/linux/-/blob/de68606a2ee79eb1471daedd209a70192c35df14/PKGBUILD
     MODPATH="$DESTDIR/usr/lib/modules/$VERSION/build"
+    rm -f "$MODPATH" "$DESTDIR/usr/lib/modules/$VERSION/source"
     mkdir -p "$MODPATH" "$DESTDIR/usr/src"
+    ln -s "$MODPATH" "$DESTDIR/usr/lib/modules/$VERSION/source"
     install -Dt "$MODPATH" -m644 .config Makefile Module.symvers System.map localversion.* version vmlinux
     install -Dt "$MODPATH/kernel" -m644 kernel/Makefile
     install -Dt "$MODPATH/arch/x86" -m644 arch/x86/Makefile
@@ -80,7 +82,7 @@ package() {
     # https://bugs.archlinux.org/task/71392
     install -Dt "$MODPATH/drivers/iio/common/hid-sensors" -m644 drivers/iio/common/hid-sensors/*.h
      
-    ln -s "/usr/lib/modules" "$DESTDIR/usr/src/linux"
+    ln -s "/usr/lib/modules/$VERSION" "$DESTDIR/usr/src/linux"
 
     mv "$DESTDIR/boot/vmlinuz" "$DESTDIR/boot/vmlinuz-$VERSION"
     mv "$DESTDIR/boot/System.map" "$DESTDIR/boot/System.map-$VERSION"  
