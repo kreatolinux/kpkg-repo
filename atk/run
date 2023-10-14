@@ -5,7 +5,7 @@ VERSION="2.50.0"
 SOURCES="https://download.gnome.org/sources/at-spi2-core/2.50/at-spi2-core-$VERSION.tar.xz"
 BUILD_DEPENDS="pkgconf meson"
 DEPENDS="libx11 libxtst glib gobject-introspection libffi dbus"
-SHA256SUM="e9f5a8c8235c9dd963b2171de9120301129c677dde933955e1df618b949c4adc  at-spi2-core-2.50.0.tar.xz"
+SHA256SUM="e9f5a8c8235c9dd963b2171de9120301129c677dde933955e1df618b949c4adc"
 DESCRIPTION="Base DBus XML interfaces for accessibility, the accessibility registry daemon, and atspi library"
 
 build() {

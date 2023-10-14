@@ -4,7 +4,7 @@ RELEASE="2"
 VERSION="2.41"
 SOURCES="https://ftp.gnu.org/gnu/binutils/binutils-$VERSION.tar.xz"
 DEPENDS="flex perl zlib bison texinfo file"
-SHA256SUM="ae9a5789e23459e59606e6714723f2d3ffc31c03174191ef0d015bdf06007450  binutils-2.41.tar.xz"
+SHA256SUM="ae9a5789e23459e59606e6714723f2d3ffc31c03174191ef0d015bdf06007450"
 DESCRIPTION="GNU Binutils"
 
 build() {

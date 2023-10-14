@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="2.5.0"
 SOURCES="https://github.com/uclouvain/openjpeg/archive/v$VERSION/openjpeg-$VERSION.tar.gz"
 BUILD_DEPENDS="cmake ninja"
-SHA256SUM="0333806d6adecc6f7a91243b2b839ff4d2053823634d4f6ed7a59bc87409122a  openjpeg-2.5.0.tar.gz"
+SHA256SUM="0333806d6adecc6f7a91243b2b839ff4d2053823634d4f6ed7a59bc87409122a"
 DESCRIPTION="Implementation of JPEG-2000"
 
 build() {

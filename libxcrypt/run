@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="4.4.36"
 SOURCES="https://github.com/besser82/libxcrypt/releases/download/v$VERSION/libxcrypt-$VERSION.tar.xz"
 DEPENDS=""
-SHA256SUM="e5e1f4caee0a01de2aee26e3138807d6d3ca2b8e67287966d1fefd65e1fd8943  libxcrypt-4.4.36.tar.xz"
+SHA256SUM="e5e1f4caee0a01de2aee26e3138807d6d3ca2b8e67287966d1fefd65e1fd8943"
 DESCRIPTION="Extended crypt library"
 
 build() {

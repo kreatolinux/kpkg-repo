@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="1.6"
 SOURCES="https://gnupg.org/ftp/gcrypt/npth/npth-$VERSION.tar.bz2"
 DEPENDS=""
-SHA256SUM="1393abd9adcf0762d34798dc34fdcf4d0d22a8410721e76f1e3afcd1daa4e2d1  npth-1.6.tar.bz2"
+SHA256SUM="1393abd9adcf0762d34798dc34fdcf4d0d22a8410721e76f1e3afcd1daa4e2d1"
 DESCRIPTION="A library to provide the GNU Pth API"
 
 build() {

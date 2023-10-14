@@ -5,7 +5,7 @@ VERSION="3.26.6"
 SOURCES="https://download.gnome.org/sources/totem-pl-parser/3.26/totem-pl-parser-$VERSION.tar.xz"
 BUILD_DEPENDS="meson"
 DEPENDS="gobject-introspection libarchive libgcrypt"
-SHA256SUM="c0df0f68d5cf9d7da43c81c7f13f11158358368f98c22d47722f3bd04bd3ac1c  totem-pl-parser-3.26.6.tar.xz"
+SHA256SUM="c0df0f68d5cf9d7da43c81c7f13f11158358368f98c22d47722f3bd04bd3ac1c"
 DESCRIPTION="totem-pl-parser"
 
 build() {

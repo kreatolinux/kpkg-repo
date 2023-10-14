@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="2.14"
 SOURCES="https://ftp.gnu.org/gnu/cpio/cpio-$VERSION.tar.gz"
 DEPENDS=""
-SHA256SUM="145a340fd9d55f0b84779a44a12d5f79d77c99663967f8cfa168d7905ca52454  cpio-2.14.tar.gz"
+SHA256SUM="145a340fd9d55f0b84779a44a12d5f79d77c99663967f8cfa168d7905ca52454"
 DESCRIPTION="GNU cpio"
 REPO_DIR="/etc/kpkg/repos/main"
 build() {

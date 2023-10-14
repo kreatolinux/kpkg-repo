@@ -5,7 +5,7 @@ VERSION="1.2.0"
 SOURCES="https://github.com/swaywm/swaybg/releases/download/v$VERSION/swaybg-$VERSION.tar.gz"
 BUILD_DEPENDS="meson"
 DEPENDS="wayland-protocols wayland pixman cairo libpng"
-SHA256SUM="c0205b34f1fad94553b6cb2c2b983cc33186018026058cad0b841a00bc3087e3  swaybg-1.2.0.tar.gz"
+SHA256SUM="c0205b34f1fad94553b6cb2c2b983cc33186018026058cad0b841a00bc3087e3"
 DESCRIPTION="Wallpaper utility for Wayland compositors"
 
 build() {

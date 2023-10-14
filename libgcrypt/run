@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="1.10.2"
 SOURCES="https://gnupg.org/ftp/gcrypt/libgcrypt/libgcrypt-$VERSION.tar.bz2"
 DEPENDS="libgpg-error"
-SHA256SUM="3b9c02a004b68c256add99701de00b383accccf37177e0d6c58289664cce0c03  libgcrypt-1.10.2.tar.bz2"
+SHA256SUM="3b9c02a004b68c256add99701de00b383accccf37177e0d6c58289664cce0c03"
 DESCRIPTION="A general purpose cryptographic library"
 
 build() {

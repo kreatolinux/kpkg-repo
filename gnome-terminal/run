@@ -6,7 +6,7 @@ SOURCES="https://gitlab.gnome.org/GNOME/gnome-terminal/-/archive/$VERSION/gnome-
 BUILD_DEPENDS="meson"
 DEPENDS="vte jetbrains-mono gtk3 glib libhandy"
 OPTDEPENDS="nautilus: For nautilus integration"
-SHA256SUM="7c8df4f7987fbd73dc784904bb3dd7e3271cfeb21daddb81ea4800d2d840f1ff  gnome-terminal-3.50.0.tar.gz"
+SHA256SUM="7c8df4f7987fbd73dc784904bb3dd7e3271cfeb21daddb81ea4800d2d840f1ff"
 DESCRIPTION="GNOME Terminal"
 
 build() {

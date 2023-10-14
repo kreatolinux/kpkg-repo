@@ -5,7 +5,7 @@ VERSION="3.4.3"
 SOURCES="https://download.gnome.org/sources/libsoup/3.4/libsoup-$VERSION.tar.xz"
 BUILD_DEPENDS="meson"
 DEPENDS="glib glib-networking libxml2 nghttp2 sqlite gobject-introspection vala libpsl"
-SHA256SUM="b7f1bbaeeb43f5812daba3ee258a72e1b4b14c2fd91f4a1a75d4eea10dcf288f  libsoup-3.4.3.tar.xz"
+SHA256SUM="b7f1bbaeeb43f5812daba3ee258a72e1b4b14c2fd91f4a1a75d4eea10dcf288f"
 DESCRIPTION="libsoup"
 
 build() {

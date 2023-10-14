@@ -5,7 +5,7 @@ VERSION="0.74.0"
 SOURCES="https://gitlab.gnome.org/GNOME/vte/-/archive/$VERSION/vte-$VERSION.tar.gz"
 DEPENDS="gtk3 pcre fribidi gtk4 gnutls"
 BUILD_DEPENDS="meson gobject-introspection vala"
-SHA256SUM="bd550452c20efae178c175b1785817c71509e2c7e34093622cb23c5e01b89785  vte-0.74.0.tar.gz"
+SHA256SUM="bd550452c20efae178c175b1785817c71509e2c7e34093622cb23c5e01b89785"
 DESCRIPTION="Visual Terminal Emulator widget"
 
 build() {

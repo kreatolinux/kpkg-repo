@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="1.22.0"
 SOURCES="https://gnupg.org/ftp/gcrypt/gpgme/gpgme-1.22.0.tar.bz2"
 DEPENDS="gnupg"
-SHA256SUM="9551e37081ad3bde81018a0d24f245c3f8206990549598fb31a97a68380a7b71  gpgme-1.22.0.tar.bz2"
+SHA256SUM="9551e37081ad3bde81018a0d24f245c3f8206990549598fb31a97a68380a7b71"
 DESCRIPTION="GNU Privacy Guard Made Easy"
 
 build() {

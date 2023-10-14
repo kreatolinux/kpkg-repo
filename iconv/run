@@ -3,7 +3,7 @@ NAME="iconv"
 RELEASE="2"
 VERSION="1.17"
 SOURCES="https://ftp.gnu.org/pub/gnu/libiconv/libiconv-$VERSION.tar.gz"
-SHA256SUM="8f74213b56238c85a50a5329f77e06198771e70dd9a739779f4c02f65d971313  libiconv-1.17.tar.gz"
+SHA256SUM="8f74213b56238c85a50a5329f77e06198771e70dd9a739779f4c02f65d971313"
 DESCRIPTION="standardized API used to convert between different character encodings"
 build() {
     ./configure --prefix=/usr

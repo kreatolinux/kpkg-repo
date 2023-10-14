@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="5.2.2"
 SOURCES="https://ftp.gnu.org/pub/gnu/gawk/gawk-$VERSION.tar.xz"
 DEPENDS="gmp mpfr readline"
-SHA256SUM="3c1fce1446b4cbee1cd273bd7ec64bc87d89f61537471cd3e05e33a965a250e9  gawk-5.2.2.tar.xz"
+SHA256SUM="3c1fce1446b4cbee1cd273bd7ec64bc87d89f61537471cd3e05e33a965a250e9"
 DESCRIPTION="GNU awk"
 
 build() {

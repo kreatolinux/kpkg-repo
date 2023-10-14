@@ -5,7 +5,7 @@ VERSION="2.42.0"
 DESCRIPTION="Version control tool"
 SOURCES="https://mirrors.edge.kernel.org/pub/software/scm/git/git-$VERSION.tar.xz"
 DEPENDS="curl openssl zlib"
-SHA256SUM="3278210e9fd2994b8484dd7e3ddd9ea8b940ef52170cdb606daa94d887c93b0d  git-2.42.0.tar.xz"
+SHA256SUM="3278210e9fd2994b8484dd7e3ddd9ea8b940ef52170cdb606daa94d887c93b0d"
 build() {
 ./configure --prefix=/usr
 # Taken from kiss linux, license is https://github.com/kisslinux/repo/blob/master/LICENSE

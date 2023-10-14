@@ -1,0 +1,16 @@
+#!/bin/sh
+NAME="dmidecode"
+RELEASE="1"
+VERSION="3.5"
+SOURCES="https://download.savannah.gnu.org/releases/dmidecode/dmidecode-$VERSION.tar.xz"
+SHA256SUM="79d76735ee8e25196e2a722964cf9683f5a09581503537884b256b01389cc073"
+DESCRIPTION="Desktop Management Interface table related utilities"
+
+build() {
+    make
+    make strip
+}
+
+package() {
+    make prefix=/usr DESTDIR=$ROOT install
+}

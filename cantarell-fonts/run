@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="0.303.1"
 SOURCES="https://download.gnome.org/sources/cantarell-fonts/0.303/cantarell-fonts-$VERSION.tar.xz"
 BUILD_DEPENDS="meson"
-SHA256SUM="f9463a0659c63e57e381fdd753cf1929225395c5b49135989424761830530411  cantarell-fonts-0.303.1.tar.xz"
+SHA256SUM="f9463a0659c63e57e381fdd753cf1929225395c5b49135989424761830530411"
 DESCRIPTION="Fonts used by GNOME"
 
 build() {

@@ -5,7 +5,7 @@ VERSION="0.3.14"
 SOURCES="https://github.com/hughsie/libxmlb/releases/download/$VERSION/libxmlb-$VERSION.tar.xz"
 BUILD_DEPENDS="meson ninja"
 DEPENDS="glib gobject-introspection"
-SHA256SUM="a2f0056eed14ff791aee2b08b1514a0f1b6cf215f0579138a8cae8c45a0d3b0f  libxmlb-0.3.14.tar.xz"
+SHA256SUM="a2f0056eed14ff791aee2b08b1514a0f1b6cf215f0579138a8cae8c45a0d3b0f"
 DESCRIPTION="A library to help create and query binary XML blobs"
 
 build() {

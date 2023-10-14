@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="0.112"
 SOURCES="https://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-$VERSION.tar.gz"
 DEPENDS="dbus glib"
-SHA256SUM="7d550dccdfcd286e33895501829ed971eeb65c614e73aadb4a08aeef719b143a  dbus-glib-0.112.tar.gz"
+SHA256SUM="7d550dccdfcd286e33895501829ed971eeb65c614e73aadb4a08aeef719b143a"
 DESCRIPTION="GLib stuff for D-Bus"
 
 build() {

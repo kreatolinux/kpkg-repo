@@ -5,7 +5,7 @@ VERSION="0.21.2"
 SOURCES="https://github.com/rockdaboot/libpsl/releases/download/$VERSION/libpsl-$VERSION.tar.gz"
 BUILD_DEPENDS="meson"
 DEPENDS="libidn2 libunistring"
-SHA256SUM="e35991b6e17001afa2c0ca3b10c357650602b92596209b7492802f3768a6285f  libpsl-0.21.2.tar.gz"
+SHA256SUM="e35991b6e17001afa2c0ca3b10c357650602b92596209b7492802f3768a6285f"
 DESCRIPTION="libpsl"
 
 build() {

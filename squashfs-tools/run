@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="4.6.1"
 SOURCES="https://github.com/plougher/squashfs-tools/archive/refs/tags/$VERSION.tar.gz"
 DEPENDS=""
-SHA256SUM="94201754b36121a9f022a190c75f718441df15402df32c2b520ca331a107511c  4.6.1.tar.gz"
+SHA256SUM="94201754b36121a9f022a190c75f718441df15402df32c2b520ca331a107511c"
 DESCRIPTION="Tools for managing SquashFS"
 
 build() {

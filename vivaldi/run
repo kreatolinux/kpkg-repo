@@ -1,19 +1,15 @@
 #!/bin/sh
 NAME="vivaldi"
 RELEASE="1"
-VERSION="6.2.3105.48-1"
+VERSION="6.2.3105.54-1"
 SOURCES="https://downloads.vivaldi.com/stable/vivaldi-stable_$VERSION_amd64.deb"
 DEPENDS="alsa-lib liberation-fonts desktop-file-utils gtk3 hicolor-icon-theme libnotify cups nss"
-SHA256SUM="2ecc9e5fe9cf94eb4c096bf566ee3a399ef2326f5f7aac8647bdec680c0cd525  vivaldi-stable_6.2.3105.48-1_amd64.deb"
+SHA256SUM="cf9fe5f783058691d12ef6d4752c05492b779f6d663d92736a762e81779c2c59"
 DESCRIPTION="An advanced browser made with the power user in mind"
 
 prepare() {
     bsdtar -xf *.deb
 } 
-
-build() {
-    :
-}
 
 package() {
     tar -xf "data.tar.xz"

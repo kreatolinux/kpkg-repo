@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="linux"
 RELEASE="7"
-VERSION="6.5.4"
-SOURCES="https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$VERSION.tar.xz;https://github.com/projg2/fedora-kernel-config-for-gentoo/raw/6.5.2-gentoo/kernel-x86_64-fedora.config;settings.config"
+VERSION="6.5.7"
+SOURCES="https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$VERSION.tar.xz https://github.com/projg2/fedora-kernel-config-for-gentoo/raw/6.5.2-gentoo/kernel-x86_64-fedora.config settings.config"
 BUILD_DEPENDS="libelf xz-utils gmake"
 DEPENDS="kmod"
-SHA256SUM="bdf76c15229b241e578046b8486106f09534d754ea4cbf105e0660e551fb1669  linux-6.5.4.tar.xz;db3fdcfc55712c93728bc25d3846b9a9c66bf61bbed85efb0562879567a0c9a1  kernel-x86_64-fedora.config;04f33434bb1b16b2a38e3a36d6ce59e0bf032db6954d4a71d07d8f3f5ab37e4c  settings.config"
+SHA256SUM="0d09ea448005c9cfe5383e4c72a872b39188b928f8c44e146b03b1b7851fbb8c db3fdcfc55712c93728bc25d3846b9a9c66bf61bbed85efb0562879567a0c9a1 04f33434bb1b16b2a38e3a36d6ce59e0bf032db6954d4a71d07d8f3f5ab37e4c"
 DESCRIPTION="The Linux kernel and headers"
 
 prepare() {
@@ -42,8 +42,50 @@ package() {
     mkdir -p "$INSTALL_PATH" "$INSTALL_MOD_PATH"
     make install
     make INSTALL_MOD_STRIP=1 DEPMOD=/nodepmod/here modules_install
+    
+    # Mostly from linux-headers PKGBUILD 
+    # https://gitlab.archlinux.org/archlinux/packaging/packages/linux/-/blob/de68606a2ee79eb1471daedd209a70192c35df14/PKGBUILD
+    MODPATH="$DESTDIR/usr/lib/modules/$VERSION/build"
+    rm -f "$MODPATH" "$DESTDIR/usr/lib/modules/$VERSION/source"
+    mkdir -p "$MODPATH" "$DESTDIR/usr/src"
+    ln -s "$MODPATH" "$DESTDIR/usr/lib/modules/$VERSION/source"
+    install -Dt "$MODPATH" -m644 .config Makefile Module.symvers System.map localversion.* version vmlinux
+    install -Dt "$MODPATH/kernel" -m644 kernel/Makefile
+    install -Dt "$MODPATH/arch/x86" -m644 arch/x86/Makefile
+    cp -t "$MODPATH" -a scripts
+    
+    # required when STACK_VALIDATION is enabled
+    install -Dt "$MODPATH/tools/objtool" tools/objtool/objtool
+
+    # required when DEBUG_INFO_BTF_MODULES is enabled
+    install -Dt "$MODPATH/tools/bpf/resolve_btfids" tools/bpf/resolve_btfids/resolve_btfids
+
+    find . -name 'Kconfig*' -exec install -Dm644 {} "$MODPATH/{}" \;
+    find -L "$MODPATH" -type l -printf 'Removing %P\n' -delete
+    find "$MODPATH" -type f -name '*.o' -printf 'Removing %P\n' -delete
+    
+    cp -t "$MODPATH" -a include
+    cp -t "$MODPATH/arch/x86" -a arch/x86/include
+    install -Dt "$MODPATH/arch/x86/kernel" -m644 arch/x86/kernel/asm-offsets.s
+
+    install -Dt "$MODPATH/drivers/md" -m644 drivers/md/*.h
+    install -Dt "$MODPATH/net/mac80211" -m644 net/mac80211/*.h
+
+    # https://bugs.archlinux.org/task/13146
+    install -Dt "$MODPATH/drivers/media/i2c" -m644 drivers/media/i2c/msp3400-driver.h
+
+    # https://bugs.archlinux.org/task/20402
+    install -Dt "$MODPATH/drivers/media/usb/dvb-usb" -m644 drivers/media/usb/dvb-usb/*.h
+    install -Dt "$MODPATH/drivers/media/dvb-frontends" -m644 drivers/media/dvb-frontends/*.h
+    install -Dt "$MODPATH/drivers/media/tuners" -m644 drivers/media/tuners/*.h
+
+    # https://bugs.archlinux.org/task/71392
+    install -Dt "$MODPATH/drivers/iio/common/hid-sensors" -m644 drivers/iio/common/hid-sensors/*.h
+     
+    ln -s "/usr/lib/modules/$VERSION" "$DESTDIR/usr/src/linux"
+
     mv "$DESTDIR/boot/vmlinuz" "$DESTDIR/boot/vmlinuz-$VERSION"
-    mv "$DESTDIR/boot/System.map" "$DESTDIR/boot/System.map-$VERSION"
+    mv "$DESTDIR/boot/System.map" "$DESTDIR/boot/System.map-$VERSION"  
 }
 
 postinstall_linux() {

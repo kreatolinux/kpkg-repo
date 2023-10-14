@@ -5,7 +5,7 @@ VERSION="42.6"
 SOURCES="https://download.gnome.org/sources/gnome-bluetooth/42/gnome-bluetooth-$VERSION.tar.xz"
 BUILD_DEPENDS="meson gobject-introspection"
 DEPENDS="bluez gtk4 libadwaita libnotify upower gsound"
-SHA256SUM="5864fe6f1e718715db26b62201b75a59020cf4247fec37645b3559cd2dba59d0  gnome-bluetooth-42.6.tar.xz"
+SHA256SUM="5864fe6f1e718715db26b62201b75a59020cf4247fec37645b3559cd2dba59d0"
 DESCRIPTION="Bluetooth tools for GNOME"
 
 build() {

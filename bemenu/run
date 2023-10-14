@@ -5,7 +5,7 @@ VERSION="0.6.16"
 SOURCES="https://github.com/Cloudef/bemenu/releases/download/$VERSION/bemenu-$VERSION.tar.gz"
 DEPENDS="wayland wayland-protocols cairo pango libxkbcommon"
 BUILD_DEPENDS="gmake pkgconf"
-SHA256SUM="04569f1c9717e4dd060287a9f279f8c101b8ed53704d086485d4020b99b61062  bemenu-0.6.16.tar.gz"
+SHA256SUM="04569f1c9717e4dd060287a9f279f8c101b8ed53704d086485d4020b99b61062"
 DESCRIPTION="Dynamic menu library and client program inspired by dmenu"
 
 build() {

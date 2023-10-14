@@ -3,7 +3,7 @@ NAME="libxshmfence"
 RELEASE="1"
 VERSION="1.3.2"
 SOURCES="https://www.x.org/releases/individual/lib/libxshmfence-$VERSION.tar.gz"
-SHA256SUM="e93a85099604beb244ee756dcaf70e18b08701c1ca84c4de0126cd71bd6c8181  libxshmfence-1.3.2.tar.gz"
+SHA256SUM="e93a85099604beb244ee756dcaf70e18b08701c1ca84c4de0126cd71bd6c8181"
 BUILD_DEPENDS="xorgproto"
 DESCRIPTION="libxshmfence"
 

@@ -1,24 +1,25 @@
 #!/bin/sh
 NAME="nim"
-RELEASE="2"
+RELEASE="3"
 VERSION="2.0.0"
 SOURCES="https://nim-lang.org/download/nim-$VERSION.tar.xz"
-DEPENDS=""
-SHA256SUM="bd6101d840036fb78e93a69df6cf3f9fd0c21cd754b695ff84a3b4add8ed0af7  nim-2.0.0.tar.xz"
+SHA256SUM="bd6101d840036fb78e93a69df6cf3f9fd0c21cd754b695ff84a3b4add8ed0af7"
 DESCRIPTION="The Nim programming language"
 
 build() {
         sh build.sh
-        bin/nim c --nimcache=/tmp/kpkg/srcdir/cache koch
-        ./koch boot -d:release --nimcache=/tmp/kpkg/srcdir/cache
-        ./koch tools --nimcache=/tmp/kpkg/srcdir/cache
-        ./koch nimble --nimcache=/tmp/kpkg/srcdir/cache
+        bin/nim c --nimcache=/opt/kpkg/srcdir/cache koch
+        ./koch boot -d:release --nimcache=/opt/kpkg/srcdir/cache
+        ./koch tools --nimcache=/opt/kpkg/srcdir/cache
+        ./koch nimble --nimcache=/opt/kpkg/srcdir/cache
 }
 
 package() {
   mkdir -p "$ROOT/usr/include" "$ROOT/usr/bin" "$ROOT/etc/nim" "$ROOT/usr/lib/nim"
   cp -r lib/ "$ROOT/usr/lib/nim"
   cp -r compiler/ "$ROOT/usr/lib/nim"
+  cp -r doc/ "$ROOT/usr/lib/nim"
+  cp -r tools/ "$ROOT/usr/lib/nim"
   cp -rf config/* -t "$ROOT/etc/nim"
   cp -rf bin/* -t "$ROOT/usr/bin"
   cp -rf "$ROOT/usr/lib/nim/"*.h "$ROOT/usr/include"

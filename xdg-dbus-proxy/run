@@ -5,7 +5,7 @@ VERSION="0.1.5"
 SOURCES="https://github.com/flatpak/xdg-dbus-proxy/releases/download/$VERSION/xdg-dbus-proxy-$VERSION.tar.xz"
 BUILD_DEPENDS="meson"
 DEPENDS="glib"
-SHA256SUM="061dcfaf8a0650e5fd9d5432dfe88bda749ea0d079dc136304bfecfbce0661fb  xdg-dbus-proxy-0.1.5.tar.xz"
+SHA256SUM="061dcfaf8a0650e5fd9d5432dfe88bda749ea0d079dc136304bfecfbce0661fb"
 DESCRIPTION="xdg-dbus-proxy"
 
 build() {

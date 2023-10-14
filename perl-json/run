@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="4.10"
 SOURCES="https://www.cpan.org/authors/id/I/IS/ISHIGAKI/JSON-$VERSION.tar.gz"
 DEPENDS="perl"
-SHA256SUM="df8b5143d9a7de99c47b55f1a170bd1f69f711935c186a6dc0ab56dd05758e35  JSON-4.10.tar.gz"
+SHA256SUM="df8b5143d9a7de99c47b55f1a170bd1f69f711935c186a6dc0ab56dd05758e35"
 DESCRIPTION="perl-json"
 
 build() {

@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="8.2"
 SOURCES="https://ftp.gnu.org/gnu/readline/readline-$VERSION.tar.gz"
 DEPENDS="ncurses"
-SHA256SUM="3feb7171f16a84ee82ca18a36d7b9be109a52c04f492a053331d7d1095007c35  readline-8.2.tar.gz"
+SHA256SUM="3feb7171f16a84ee82ca18a36d7b9be109a52c04f492a053331d7d1095007c35"
 DESCRIPTION="GNU readline"
 
 build() {

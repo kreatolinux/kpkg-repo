@@ -5,7 +5,7 @@ VERSION="1.10.3"
 SOURCES="https://github.com/libsixel/libsixel/archive/refs/tags/v$VERSION.tar.gz"
 DEPENDS="libpng"
 BUILD_DEPENDS="meson"
-SHA256SUM="028552eb8f2a37c6effda88ee5e8f6d87b5d9601182ddec784a9728865f821e0  v1.10.3.tar.gz"
+SHA256SUM="028552eb8f2a37c6effda88ee5e8f6d87b5d9601182ddec784a9728865f821e0"
 DESCRIPTION="encoder/decoder implementation for DEC SIXEL graphics"
 build() {
     meson --prefix=/usr build/
