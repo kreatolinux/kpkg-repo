@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="45.0"
 SOURCES="https://github.com/GNOME/gnome-tweaks/archive/refs/tags/$VERSION.tar.gz"
 BUILD_DEPENDS="meson"
-DEPENDS="pygobject python gnome-settings-daemon sound-theme-freedesktop glib gtk3 gnome-desktop libhandy pango gsettings-desktop-schemas gnome-shell mutter"
+DEPENDS="pygobject python gnome-settings-daemonglib gtk3 gnome-desktop libhandy pango gsettings-desktop-schemas gnome-shell mutter"
 SHA256SUM="8bfa7dc1b4d4a7988269fd9424414cd1a630f4f6c7634c653efc32c6226c47c2"
 DESCRIPTION="GNOME Tweaks app"
 
@@ -22,7 +22,7 @@ package() {
 
 postinstall() {
     echo "Installing new Schemas"
-    glib-compile-schemas || exit 1
+    glib-compile-schemas /usr/share/glib-2.0/schemas || exit 1
     echo "Updating icon cache..."
-    gtk-update-icon-cache -qtf || exit 1
+    gtk-update-icon-cache -qtf /usr/share/icons/hicolor || exit 1
 }
