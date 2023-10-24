@@ -1,9 +1,10 @@
 #!/bin/sh
 NAME="pygobject"
-RELEASE="1"
+RELEASE="2"
 VERSION="3.44.1"
 SOURCES="https://gitlab.gnome.org/GNOME/pygobject/-/archive/$VERSION/pygobject-$VERSION.tar.gz"
 DEPENDS="python pycairo gobject-introspection"
+BUILD_DEPENDS="python-setuptools"
 SHA256SUM="f2c3f85161c32791a60c2f2b54fdb89e38f1acde0f6a8f0be4e0e36f73f144ad"
 DESCRIPTION="Python bindings for gobject-introspection"
 

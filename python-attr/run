@@ -1,9 +1,10 @@
 #!/bin/sh
 NAME="python-attr"
-RELEASE="1"
+RELEASE="2"
 VERSION="22.2.0"
 SOURCES="https://files.pythonhosted.org/packages/source/a/attrs/attrs-$VERSION.tar.gz"
 DEPENDS="python"
+BUILD_DEPENDS="python-setuptools"
 SHA256SUM="c9227bfc2f01993c03f68db37d1d15c9690188323c067c641f1a35ca58185f99"
 DESCRIPTION="attr"
 

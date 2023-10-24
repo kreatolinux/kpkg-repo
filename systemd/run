@@ -1,10 +1,11 @@
 #!/bin/sh
 NAME="systemd"
-RELEASE="3"
+RELEASE="4"
 VERSION="254.5"
 SOURCES="https://github.com/systemd/systemd-stable/archive/refs/tags/v$VERSION.tar.gz"
 BUILD_DEPENDS="meson samurai"
 DEPENDS="linux-pam gperf kbd libcap util-linux python-jinja2 kmod"
+BUILD_DEPENDS="python-setuptools"
 REPLACES="elogind eudev libudev"
 SHA256SUM="41873783aa1c680e10d2f2626797a1c2fef8018d69b68c8c77639e140ee7846d"
 DESCRIPTION="The systemd System and Service Manager"
