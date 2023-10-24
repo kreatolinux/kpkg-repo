@@ -8,5 +8,5 @@ SHA256SUM="c9227bfc2f01993c03f68db37d1d15c9690188323c067c641f1a35ca58185f99"
 DESCRIPTION="attr"
 
 package() {
-    SETUPTOOLS_USE_DISTUTILS=stdlib pip install . --prefix=/usr --root="$ROOT"
+    pip install . --prefix=/usr --root="$ROOT"
 }
