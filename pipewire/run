@@ -21,7 +21,7 @@ build() {
       -Dsession-managers=[] \
       -Ddbus=$dbusEnable   \
       build  
-    ninja
+    ninja -C build
 }
 
 package() {
