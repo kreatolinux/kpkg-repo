@@ -1,0 +1,21 @@
+#!/bin/sh
+NAME="wireplumber"
+RELEASE="1"
+VERSION="0.4.15"
+SOURCES="https://gitlab.freedesktop.org/pipewire/wireplumber/-/archive/$VERSION/wireplumber-$VERSION.tar.gz"
+DEPENDS="pipewire"
+REPLACES="pipewire-session-manager"
+BUILD_DEPENDS="meson"
+SHA256SUM="389f5ebce1193419900f5dbc6647df8e3176731a0514ab33ae2afab1cdd8a415"
+DESCRIPTION="Session / policy manager implementation for PipeWire"
+
+build() {
+    meson setup --prefix=/usr \
+      --buildtype=release \
+    build                    
+    ninja
+}
+
+package() {
+    DESTDIR="$ROOT" ninja -C build install  
+}
