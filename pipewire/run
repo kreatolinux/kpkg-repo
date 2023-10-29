@@ -1,21 +1,26 @@
 #!/bin/sh
 NAME="pipewire"
-RELEASE="1"
+RELEASE="2"
 VERSION="0.3.80"
 SOURCES="https://github.com/PipeWire/pipewire/archive/$VERSION/pipewire-$VERSION.tar.gz"
 DEPENDS="glib"
+OPTDEPENDS="dbus: for D-Bus support"
 BUILD_DEPENDS="meson"
 SHA256SUM="0bbaf3d46649ac2217f0bbf68dda7e62f1f2cf6b7f3025e364cf7205d1499ef9"
 DESCRIPTION="Sound server"
 
 build() {
-    mkdir build 
-    cd    build 
-    meson --prefix=/usr \
+    dbusEnable="disabled"
+    if [ -d "/var/cache/kpkg/installed/dbus" ]; then
+	dbusEnable="enabled"
+    fi
+
+    meson setup \
+      --prefix=/usr \
       --buildtype=release   \
       -Dsession-managers=[] \
-      -Ddbus=disabled   \
-    ..                    
+      -Ddbus=$dbusEnable   \
+      build  
     ninja
 }
 
