@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="libdrm"
 RELEASE="1"
-VERSION="2.4.116"
+VERSION="2.4.117"
 SOURCES="https://dri.freedesktop.org/libdrm/libdrm-$VERSION.tar.xz"
 BUILD_DEPENDS="samurai"
 DEPENDS="libpciaccess"
-SHA256SUM="46c53f40735ea3d26d614297f155f6131a510624a24274f654f6469ca905339a"
+SHA256SUM="a2888d69e3eb1c8a77adc08a75a60fbae01f0d208d26f034d1a12e362361242b"
 DESCRIPTION="libdrm"
 build() {
     mkdir build

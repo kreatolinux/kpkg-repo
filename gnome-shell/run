@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="gnome-shell"
 RELEASE="1"
-VERSION="45.0"
+VERSION="45.1"
 SOURCES="https://gitlab.gnome.org/GNOME/gnome-shell/-/archive/$VERSION/gnome-shell-$VERSION.tar.gz"
 BUILD_DEPENDS="meson"
 DEPENDS="dconf gnome-autoar elogind adwaita-icon-theme dconf gdm gnome-backgrounds gnome-control-center libgweather telepathy-mission-control evolution-data-server gnome-bluetooth networkmanager desktop-file-utils gcr-4 gjs gnome-desktop ibus mutter polkit sassc startup-notification pipewire"
-SHA256SUM="ea204074b11c978d15696efebec1a160cc6753f0fc9b3d551dc6592dc84cafdf"
+SHA256SUM="2cb614cc6f58c1b1c04474d899b12c82dfb5e279c88e5b6abd5b0e4601caad9c"
 DESCRIPTION="The GNOME shell"
 
 build() {

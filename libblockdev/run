@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="libblockdev"
 RELEASE="2"
-VERSION="3.0.3"
+VERSION="3.0.4"
 SOURCES="https://github.com/storaged-project/libblockdev/releases/download/$VERSION-1/libblockdev-$VERSION.tar.gz"
 DEPENDS="glib keyutils cryptsetup lvm2 e2fsprogs libbytesize gobject-introspection libnvme"
-SHA256SUM="0f2872830293f3e222832903d80de4c38e06a9c3ea18915b3263272a72095ea8"
+SHA256SUM="49841ff92db0ab032931e6f2b5eab63e5969b0ddc14b067b60e46a6eb6c60e47"
 DESCRIPTION="libblockdev"
 
 build() {
