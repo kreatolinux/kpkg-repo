@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="sqlite"
 RELEASE="2"
-VERSION="3.43.2"
+VERSION="3.44.0"
 SOURCES="https://sqlite.org/2023/sqlite-autoconf-3430200.tar.gz"
 DEPENDS="ncurses"
 SHA256SUM="6d422b6f62c4de2ca80d61860e3a3fb693554d2f75bb1aaca743ccc4d6f609f0"

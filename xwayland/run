@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="xwayland"
 RELEASE="1"
-VERSION="23.2.1"
+VERSION="23.2.2"
 SOURCES="https://www.x.org/releases/individual/xserver/xwayland-$VERSION.tar.xz"
-SHA256SUM="eebc2692c3aa80617d78428bc6ec7b91b254a98214d2a70e997098503cd6ef90"
+SHA256SUM="9f7c0938d2a41e941ffa04f99c35e5db2bcd3eec034afe8d35d5c810a22eb0a8"
 DEPENDS="xorg-xkbcomp libnettle libepoxy libxfont2 pixman xorg-server libxcvt mesa libglvnd libxau wayland libdrm libtirpc libxshmfence"
 DESCRIPTION="Run X11 applications in Wayland"
 

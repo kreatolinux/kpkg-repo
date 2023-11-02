@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="openssl"
 RELEASE="1"
-VERSION="3.1.3"
+VERSION="3.1.4"
 SOURCES="https://openssl.org/source/openssl-$VERSION.tar.gz"
 DEPENDS=""
-SHA256SUM="f0316a2ebd89e7f2352976445458689f80302093788c466692fb2a188b2eacf6"
+SHA256SUM="840af5366ab9b522bde525826be3ef0fb0af81c6a9ebd84caa600fea1731eee3"
 DESCRIPTION="TLS library"
 
 build() {
