@@ -9,10 +9,11 @@ SHA256SUM="96d62e6d1f2d21df7ac8acb3b9882411f9e7c7036173f7f2ede9e1f1f6b1bb3a"
 DESCRIPTION="Memory-safe programming language that doesn't use garbage collection"
 
 build() {
-  ./configure --set install.prefix="/usr" --set llvm.link-shared=true --llvm-config=/usr/bin/llvm-config 
-  ./x.py build
+  :
 }
 
 package() {
+  ./configure --set install.prefix="/usr" --set llvm.link-shared=true --llvm-config=/usr/bin/llvm-config 
+  ./x.py build
   DESTDIR="$ROOT" ./x.py install
 }
