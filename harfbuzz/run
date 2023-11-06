@@ -10,9 +10,10 @@ DESCRIPTION="FriBidi is an implementation of Unicode Bidirectional Algorithm"
 
 
 build() {
-    meson \
+    mkdir output
+    meson setup \
         --prefix=/usr \
-        . output
+        ..
     ninja -C output
 }
 
