@@ -10,13 +10,15 @@ DESCRIPTION="FriBidi is an implementation of Unicode Bidirectional Algorithm"
 
 
 build() {
+    cd harfbuzz-$VERSION || true
     mkdir output
     meson setup \
         --prefix=/usr \
-        ..
+        output
     ninja -C output
 }
 
 package() {
+	cd harfbuzz-$VERSION || true 
         DESTDIR=$ROOT ninja -C output install
 }
