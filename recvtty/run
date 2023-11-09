@@ -12,6 +12,6 @@ build() {
 }
 
 package() {
-    mkdir -p /usr/bin/recvtty
+    mkdir -p "$ROOT/usr/bin"
     cp ./contrib/cmd/recvtty/recvtty "$ROOT/usr/bin/recvtty"
 }
