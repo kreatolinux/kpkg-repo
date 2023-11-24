@@ -9,7 +9,7 @@ SHA256SUM="3254bcb5de03e39a7b00799282b4e673ba6606aea7f073c7bc64f323a1329f06"
 DESCRIPTION="Kreato Linux source tree metapackage"
 
 build_kpkg() {
-        nimble install cligen fuzzy libsha -y
+        nimble install cligen fuzzy libsha norm -y
         nim c -d:release -d:useDist --passL:-larchive --threads:on -d:ver="$VERSION" -d:ssl -o="out/kpkg" "kpkg/kpkg.nim"
 }
 
