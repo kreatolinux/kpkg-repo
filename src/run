@@ -5,6 +5,7 @@ VERSION="6.4.0"
 SOURCES="https://github.com/kreatolinux/src/releases/download/v$VERSION/src-v$VERSION-dist.tar.gz"
 BUILD_DEPENDS="nim"
 DEPENDS="libarchive shadow openssl git fakeroot"
+DEPENDS_KPKG+="sqlite"
 SHA256SUM="3254bcb5de03e39a7b00799282b4e673ba6606aea7f073c7bc64f323a1329f06"
 DESCRIPTION="Kreato Linux source tree metapackage"
 
