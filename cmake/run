@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="cmake"
-VERSION="3.27.7"
+VERSION="3.27.8"
 RELEASE="1"
 SOURCES="https://cmake.org/files/v3.27/cmake-$VERSION.tar.gz"
 DEPENDS="expat libuv rhash libarchive libuv libxml2 curl jsoncpp"
-SHA256SUM="08f71a106036bf051f692760ef9558c0577c42ac39e96ba097e7662bd4158d8e"
+SHA256SUM="fece24563f697870fbb982ea8bf17482c9d5f855d8c9bf0b82463d76c9e8d0cc"
 DESCRIPTION="CMake package contains a modern toolset used for generating Makefiles."
 
 build() {

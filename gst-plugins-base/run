@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="gst-plugins-base"
 RELEASE="1"
-VERSION="1.22.5"
+VERSION="1.22.7"
 SOURCES="https://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-$VERSION.tar.xz"
 BUILD_DEPENDS="meson gobject-introspection"
 DEPENDS="alsa-lib gdk-pixbuf gtk3 gstreamer iso-codes libgudev libjpeg-turbo libpng libogg libvorbis mesa pango wayland-protocols libx11"
-SHA256SUM="edd4338b45c26a9af28c0d35aab964a024c3884ba6f520d8428df04212c8c93a"
+SHA256SUM="62519e0d8f969ebf62a9a7996f2d23efdda330217a635f4a32c0bf1c71577468"
 DESCRIPTION="gst-plugins-base"
 
 build() {

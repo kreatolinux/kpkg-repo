@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="libressl"
 RELEASE="1"
-VERSION="3.7.3"
+VERSION="3.8.2"
 SOURCES="https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-$VERSION.tar.gz"
-SHA256SUM="7948c856a90c825bd7268b6f85674a8dcd254bae42e221781b24e3f8dc335db3"
+SHA256SUM="6d4b8d5bbb25a1f8336639e56ec5088052d43a95256697a85c4ce91323c25954"
 DESCRIPTION="TLS library"
 
 build() {

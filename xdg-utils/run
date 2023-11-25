@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="xdg-utils"
 RELEASE="1"
-VERSION="1.1.3+45+g301a1a4"
+VERSION="1.2.0r17+g21fb316"
 # We use the Arch "binary" since "compiling" the script requires for us to have xmlto and bunch of other dependencies just for documentation
 SOURCES="https://archlinux.uk.mirror.allworldit.com/archlinux/extra/os/x86_64/xdg-utils-$VERSION-1-any.pkg.tar.zst"
-SHA256SUM="14541d34e8f26a8ab03feceb2a041d2028d22c262ffd680776355e231daf1536"
+SHA256SUM="a922d859a9b1b1f80e10b79ad81aa6b2016d09dcf05b2e56bd3b518b81481ea8"
 DESCRIPTION="A set of tools that allows applications to easily integrate with the desktop environment of the user"
 
 prepare() {

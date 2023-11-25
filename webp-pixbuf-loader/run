@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="webp-pixbuf-loader"
 RELEASE="2"
-VERSION="0.2.4"
+VERSION="0.2.5"
 SOURCES="https://github.com/aruiz/webp-pixbuf-loader/archive/refs/tags/$VERSION.tar.gz"
 DEPENDS="libwebp gdk-pixbuf"
 BUILD_DEPENDS="meson"
-SHA256SUM="54f448383d1c384409bd1690cdde9b44535c346855902e29bd37a18a7237c547"
+SHA256SUM="e1b76c538a1d3b3fc41323d044c7c84365ab9bd5ab3dcc8de7efb0c7dc2f206b"
 DESCRIPTION="Library that allows gdk-pixbuf to load WebP images"
 
 build() {

@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="gst-plugins-bad"
 RELEASE="1"
-VERSION="1.22.5"
+VERSION="1.22.7"
 SOURCES="https://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-$VERSION.tar.xz"
 BUILD_DEPENDS="meson"
 DEPENDS="gst-plugins-base"
-SHA256SUM="e64e75cdafd7ff2fc7fc34e855b06b1e3ed227cc06fa378d17bbcd76780c338c"
+SHA256SUM="c716f8dffa8fac3fb646941af1c6ec72fff05a045131311bf2d049fdc87bce2e"
 DESCRIPTION="gst-plugins-bad"
 
 build() {

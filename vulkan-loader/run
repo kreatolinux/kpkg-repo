@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="vulkan-loader"
 RELEASE="1"
-VERSION="1.3.269"
+VERSION="1.3.270"
 SOURCES="https://github.com/KhronosGroup/Vulkan-Loader/archive/refs/tags/v$VERSION.tar.gz"
 DEPENDS="cmake ninja"
 BUILD_DEPENDS="vulkan-headers wayland libxcb libx11 libxrandr"
-SHA256SUM="7b2f7a478c459107772d3eb0cee8c8bdbd265c026f67f813778499e9641fd365"
+SHA256SUM="464293bd8be1545365518327168c676aadab7a88fa516054cd59fb3f6f83a1d5"
 DESCRIPTION="Vulkan ICD loader"
 
 build() {

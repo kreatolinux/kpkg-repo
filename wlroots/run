@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="wlroots"
 RELEASE="1"
-VERSION="0.16.2"
+VERSION="0.17.0"
 SOURCES="https://gitlab.freedesktop.org/wlroots/wlroots/-/archive/$VERSION/wlroots-$VERSION.tar.gz"
 BUILD_DEPENDS="meson samurai"
 DEPENDS="wayland wayland-protocols libdrm libxkbcommon libinput hwdata seatd pixman libudev mesa"
-SHA256SUM="f502959db8bc029e32f10a837b37257bb8c5ed269bceddf9492f0bb381bebf76"
+SHA256SUM="0db3bd4854c233409f881fa1ccd7936eee2f3633454a1dbdcaf834f49e231149"
 DESCRIPTION="Modules for building a Wayland compositor"
 build() {
     meson --prefix=/usr build/

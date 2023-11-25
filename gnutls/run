@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="gnutls"
 RELEASE="1"
-VERSION="3.8.1"
+VERSION="3.8.2"
 SOURCES="https://www.gnupg.org/ftp/gcrypt/gnutls/v3.8/gnutls-$VERSION.tar.xz"
 DEPENDS="libnettle"
-SHA256SUM="ba8b9e15ae20aba88f44661978f5b5863494316fe7e722ede9d069fe6294829c"
+SHA256SUM="e765e5016ffa9b9dd243e363a0460d577074444ee2491267db2e96c9c2adef77"
 DESCRIPTION="GNU TLS"
 
 build() {

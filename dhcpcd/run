@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="dhcpcd"
 RELEASE="1"
-VERSION="10.0.4"
+VERSION="10.0.5"
 SOURCES="https://github.com/NetworkConfiguration/dhcpcd/releases/download/v$VERSION/dhcpcd-$VERSION.tar.xz"
 DEPENDS="libudev"
-SHA256SUM="ced5bbde8da3726eac77b9e77e4f31a89c9849d811ef8a2c749664fc5f55a718"
+SHA256SUM="eb1f3cfef3069781ff8c896d7cea922639964afe22db28c069dc3f37f57eb428"
 DESCRIPTION="DHCP client"
 
 build() {

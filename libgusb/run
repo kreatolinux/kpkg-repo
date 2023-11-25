@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="libgusb"
 RELEASE="2"
-VERSION="0.4.7"
+VERSION="0.4.8"
 SOURCES="https://github.com/hughsie/libgusb/releases/download/$VERSION/libgusb-$VERSION.tar.xz"
 BUILD_DEPENDS="meson gobject-introspection vala"
 DEPENDS="json-glib libusb"
-SHA256SUM="8acdd015c6f572555f8ec54c045e2d340baeb08468f6be519369c713794234f7"
+SHA256SUM="77aec51de289afe3bf5f8a1a36ae989d1a59748391097242949daccda9569ede"
 DESCRIPTION="GObject bindings for libusb"
 
 build() {
