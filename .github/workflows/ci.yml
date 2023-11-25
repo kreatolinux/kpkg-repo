@@ -46,14 +46,13 @@ jobs:
           sed -i s/stable/master/g Makefile
           nimble install cligen fuzzy libsha -y
           ./build.sh -d -p "chkupd"
-          mv scripts/jsontomd.sh /tmp/
           mv out/chkupd /tmp/
           cd ..
           rm -rf src
           cd /tmp/
           sudo ./chkupd cleanUp -v
           ./chkupd checkAll --jsonPath=/tmp/chkupd.json --repo="$GITHUB_WORKSPACE"
-          bash jsontomd.sh /tmp/chkupd.json > /tmp/chkupd.md
+          ./out/chkupd jsonToMd /tmp/chkupd.json > /tmp/chkupd.md
     
       - name: Check all packages against Arch Repositories
         run: |
@@ -61,8 +60,8 @@ jobs:
           cd /tmp/
           ./chkupd checkAll --jsonPath=/tmp/chkupd.json --backend="arch" --repo="$GITHUB_WORKSPACE"
           echo "# Arch check results" >> /tmp/chkupd.md
-          bash jsontomd.sh /tmp/chkupd.json >> /tmp/chkupd.md
-          rm -rf chkupd jsontomd.sh
+          ./out/chkupd jsonToMd /tmp/chkupd.json >> /tmp/chkupd.md
+          rm -rf chkupd
           
           
       - name: Create Pull Request
