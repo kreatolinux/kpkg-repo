@@ -45,7 +45,7 @@ jobs:
           fi
           sed -i s/stable/master/g Makefile
           nimble install cligen fuzzy libsha -y
-          make chkupd
+          ./build.sh -d -p "chkupd"
           mv scripts/jsontomd.sh /tmp/
           mv out/chkupd /tmp/
           cd ..
