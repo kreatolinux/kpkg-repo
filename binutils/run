@@ -7,17 +7,39 @@ DEPENDS="flex perl zlib bison texinfo file"
 SHA256SUM="ae9a5789e23459e59606e6714723f2d3ffc31c03174191ef0d015bdf06007450"
 DESCRIPTION="GNU Binutils"
 
-build() {
+actual_build() {
     mkdir -v build
     cd       build
+    
+    if [ "$1" != "$(uname -m)-linux-gnu" ]; then
+	    target="--target=$1"
+	    sysroot="--with-sysroot=/usr/$1"
+    fi
+	
+    echo $target
+    echo $sysroot
     ../configure                   \
         --prefix=/usr              \
-        --build=$(../config.guess) \
+	$target			   \
+	$sysroot		   \
+	--enable-gnu-as		   \
+	--enable-gnu-ld		   \
+	--enable-gold		   \
+	--build=$(../config.guess) \
         --disable-nls              \
         --enable-shared            \
         --disable-werror           \
         --enable-64-bit-bfd
+
     make -j$(nproc)
+}
+
+build_aarch64_linux_gnu_binutils() {
+    actual_build "aarch64-linux-gnu"
+}
+
+build() {
+    actual_build "x86_64-linux-gnu"
 }
 
 package() {

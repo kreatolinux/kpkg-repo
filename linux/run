@@ -30,6 +30,21 @@ package_linux_headers() {
     cp -rv usr/include $ROOT/usr/
 }
 
+build_aarch64_linux_gnu_linux_headers() {
+    cd linux-$VERSION
+    make ARCH=arm64 mrproper
+    make ARCH=arm64 headers
+    find usr/include -name '.*' -delete
+    rm usr/include/Makefile
+}
+
+package_aarch64_linux_gnu_linux_headers() {
+    TARGET="aarch64-linux-gnu"
+    cd linux-$VERSION
+    mkdir -p $ROOT/usr/aarch64-linux-gnu
+    cp -rv usr/include/ $ROOT/usr/aarch64-linux-gnu
+}
+
 build() {
      cd linux-$VERSION
      make -j$(nproc) || exit 1
