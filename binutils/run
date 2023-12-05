@@ -1,6 +1,6 @@
 #!/bin/sh
 NAME="binutils"
-RELEASE="2"
+RELEASE="3"
 VERSION="2.41"
 SOURCES="https://ftp.gnu.org/gnu/binutils/binutils-$VERSION.tar.xz"
 DEPENDS="flex perl zlib bison texinfo file"
