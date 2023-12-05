@@ -5,23 +5,47 @@ VERSION="2.38"
 SOURCES="https://ftp.gnu.org/gnu/glibc/glibc-$VERSION.tar.xz"
 BUILD_DEPENDS="gcc"
 DEPENDS="grep gawk bison m4"
+DEPENDS_AARCH64_LINUX_GNU_GLIBC+="aarch64-linux-gnu-linux-headers"
 SHA256SUM="fb82998998b2b29965467bc1b69d152e9c307d2cf301c9eafb4555b770ef3fd2"
 DESCRIPTION="The GNU C library"
 
-build() {
-    export CC=gcc
-    export CXX=g++
+common_build() {
+    export CC=$1-gcc
+    export CXX=$1-g++
+    
     mkdir -v build
     cd build || exit
+
+    if [ "$1" != "$(uname -m)-linux-gnu" ]; then
+	target="--target=$1"
+	host="--host=$1"
+	build="--build=$(uname -m)-linux-gnu"
+   	headers="/usr/$1/include" 
+   else
+	host="--host=$(uname -m)-linux-gnu"
+	build="--build=$(uname -m)-linux-gnu"
+	headers="/usr/include"
+    fi
+
     ../configure \
       --prefix=/usr \
-      --host=x86_64-pc-linux-gnu \
+      $host \
+      $build \
+      $target \
       --enable-kernel=4.14 \
       --enable-stack-protector=strong \
-      --with-headers=/usr/include \
+      --with-headers=$headers \
       --disable-crypt \
         libc_sv_slibdir=/usr/lib
     make || exit
+}
+
+build_aarch64_linux_gnu_glibc() {
+    common_build "aarch64-linux-gnu"
+}
+
+build() {
+    common_build "x86_64-linux-gnu"
 }
 
 package() {
