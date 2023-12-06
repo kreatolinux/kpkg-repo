@@ -1,6 +1,6 @@
 #!/bin/sh
 NAME="gcc"
-RELEASE="2"
+RELEASE="3"
 VERSION="13.2.0"
 SOURCES="https://ftp.gnu.org/gnu/gcc/gcc-$VERSION/gcc-$VERSION.tar.xz"
 DEPENDS="isl libzstd binutils gmp mpc mpfr linux-headers"
