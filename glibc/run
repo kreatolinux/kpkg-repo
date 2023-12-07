@@ -20,14 +20,16 @@ common_build() {
 	target="--target=$1"
 	host="--host=$1"
 	build="--build=$(uname -m)-linux-gnu"
-   	headers="/usr/$1/include" 
+	headers="/usr/$1/include"
+	# taken from arch https://gitlab.archlinux.org/archlinux/packaging/packages/aarch64-linux-gnu-glibc/-/blob/main/PKGBUILD?ref_type=heads
+	extraArgs="--includedir=/include --libdir=/lib --libexecdir=/lib"
    else
 	host="--host=$(uname -m)-linux-gnu"
 	build="--build=$(uname -m)-linux-gnu"
 	headers="/usr/include"
     fi
 
-    ../configure \
+    ../configure $extraArgs \
       --prefix=/usr \
       $host \
       $build \
@@ -35,13 +37,22 @@ common_build() {
       --enable-kernel=4.14 \
       --enable-stack-protector=strong \
       --with-headers=$headers \
-      --disable-crypt \
-        libc_sv_slibdir=/usr/lib
+      --disable-crypt
+    
+    if [ "$1" != "$(uname -m)-linux-gnu" ]; then
+	echo 'build-programs=no' >> configparms
+    fi
+
     make || exit
 }
 
 build_aarch64_linux_gnu_glibc() {
     common_build "aarch64-linux-gnu"
+}
+
+package_aarch64_linux_gnu_glibc() {
+     cd build
+     make install_root="$ROOT/usr/aarch64-linux-gnu" install
 }
 
 build() {
