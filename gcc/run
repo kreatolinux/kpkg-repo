@@ -3,11 +3,13 @@ NAME="gcc"
 RELEASE="4"
 VERSION="13.2.0"
 SOURCES="https://ftp.gnu.org/gnu/gcc/gcc-$VERSION/gcc-$VERSION.tar.xz"
-DEPENDS="isl libzstd binutils gmp mpc mpfr linux-headers"
+DEPENDS="isl libzstd gmp mpc mpfr"
+DEPENDS_GCC+="binutils linux-headers"
+DEPENDS_AARCH64_LINUX_GNU_GCC+="aarch64-linux-gnu-linux-headers aarch64-linux-gnu-glibc aarch64-linux-gnu-binutils"
 SHA256SUM="e275e76442a6067341a27f04c5c6b83d8613144004c0413528863dc6b5c743da"
 DESCRIPTION="The GNU C Compiler"
 
-build() {
+common_build() {
     # Source: https://www.linuxfromscratch.org/lfs/view/development/chapter08/gcc.html
     case $(uname -m) in
         x86_64)
@@ -18,14 +20,24 @@ build() {
     rm -rf build
     mkdir -v build
     cd       build
+    
+    if [ "$1" != "$(uname -m)-linux-gnu" ]; then
+	    target="$(uname -m)-linux-gnu"
+    else
+	    target="$1"
+	    # Taken from arch
+	    # https://gitlab.archlinux.org/archlinux/packaging/packages/aarch64-linux-gnu-gcc/-/blob/main/PKGBUILD?ref_type=heads
+	    extraArgs="--with-local-prefix=/usr/$target --with-sysroot=/usr/$target --with-build-sysroot=/usr/$target --with-native-system-header-dir=/include --program-prefix=$target-"
+    fi
+    
     make distclean
-    ../configure                                       \
+    ../configure  $extraArgs                           \
         --enable-languages=c,c++                       \
         --enable-default-pie                           \
         --enable-default-ssp                           \
         --prefix=/usr                                  \
-        --host=x86_64-linux-gnu			       \
-    	--target=x86_64-linux-gnu		       \
+	--host="$(uname -m)-linux-gnu"		       \
+    	--target="$target"			       \
 	--disable-fixincludes                          \
         --disable-multilib                             \
         --without-headers                              \
@@ -34,6 +46,14 @@ build() {
         --with-system-zlib        
 
 	make MAKEINFO=true -j$(nproc)
+}
+
+build_aarch64_linux_gnu_gcc() {
+	common_build "aarch64-linux-gnu"
+}
+
+build_gcc() {
+	common_build "x86_64-linux-gnu"
 }
 
 package() {
