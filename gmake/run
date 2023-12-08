@@ -7,14 +7,7 @@ SHA256SUM="e05fdde47c5f7ca45cb697e973894ff4f5d79e13b750ed57d7b66d8defc78e19"
 DESCRIPTION="GNU make"
 
 build() {
-    
-    if [ -z "$KPKG_TARGET" ]; then
-	    target="$(uname -m)-linux-gnu"
-    else
-	    target="$KPKG_TARGET"
-    fi
-
-    ./configure --without-guile --prefix=/usr --host=$target
+    ./configure --without-guile --prefix=/usr --host=$KPKG_TARGET
     make -j$(nproc)
 }
 

@@ -56,23 +56,11 @@ build_aarch64_linux_gnu_gcc() {
 }
 
 build_gcc() {
-	if [ -z "$KPKG_TARGET" ]; then
-		common_build "$KPKG_TARGET"
-	else
-		common_build "$(uname -m)-linux-gnu"
-	fi
+    common_build "$KPKG_TARGET"
 }
 
-common_package() {
+package() {
     cd build
     make MAKEINFO=true DESTDIR=$ROOT install-strip
     rm -rf $ROOT/source
-}
-
-package_gcc() {
-    common_package "$(uname-m)-linux-gnu"
-}
-
-package_aarch64_linux_gnu_gcc() {
-    common_package "aarch64-linux-gnu"
 }
