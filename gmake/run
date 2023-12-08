@@ -14,7 +14,7 @@ build() {
 	    target="$KPKG_TARGET"
     fi
 
-    ./configure --without-guile --prefix=/usr --host=$KPKG_TARGET
+    ./configure --without-guile --prefix=/usr --host=$target
     make -j$(nproc)
 }
 
