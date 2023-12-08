@@ -55,7 +55,11 @@ package_aarch64_linux_gnu_glibc() {
 }
 
 build() {
-    common_build "x86_64-linux-gnu"
+    if [ -z "$KPKG_TARGET" ]; then
+	common_build "$KPKG_TARGET"
+    else
+    	common_build "$(uname -m)-linux-gnu"
+    fi
 }
 
 package() {
