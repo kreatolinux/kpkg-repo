@@ -3,17 +3,44 @@ NAME="libxcrypt"
 RELEASE="1"
 VERSION="4.4.36"
 SOURCES="https://github.com/besser82/libxcrypt/releases/download/v$VERSION/libxcrypt-$VERSION.tar.xz"
-DEPENDS=""
 SHA256SUM="e5e1f4caee0a01de2aee26e3138807d6d3ca2b8e67287966d1fefd65e1fd8943"
 DESCRIPTION="Extended crypt library"
 
-build() {
-    ./configure --disable-obsolete-api --prefix=/usr
+common_build() {
+    prefix="/usr"
+    
+    if [ "$1" != "$(uname -m)-linux-gnu" ]; then
+	    prefix="$prefix/$1"
+	    extraArgs="--target=$1 --host=$1"
+    	    export CC="$1-$CC"
+    fi
+
+    ./configure $extraArgs --disable-obsolete-api --prefix=$prefix
     /usr/lib/libcrypt.so.2
     make
 }
 
-package() {
+common_package() {
     make DESTDIR="$ROOT" install
-    mkdir -p "$ROOT/usr/lib"
+    
+    if [ "$1" != "$(uname -m)-linux-gnu" ]; then
+    	mkdir -p "$ROOT/usr/lib"
+    fi
+}
+
+build_libxcrypt() {
+    common_build "$(uname -m)-linux-gnu"
+}
+
+build_aarch64_linux_gnu_libxcrypt() {
+    common_build "aarch64-linux-gnu"
+}
+
+package_libxcrypt() {
+    common_package "$(uname -m)-linux-gnu"
+}
+
+
+package_aarch64_linux_gnu_libxcrypt() {
+    common_package "aarch64-linux-gnu"
 }
