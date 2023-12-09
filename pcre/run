@@ -7,7 +7,7 @@ SHA256SUM="c33b418e3b936ee3153de2c61cc638e7e4fe3156022a5c77d0711bcbb9d64f1f"
 DESCRIPTION="Perl Compatible Regular Expression libraries"
 
 build() {
-    ./configure --prefix=/usr
+    kpkgConfigure --prefix=/usr
 }
 
 package() {

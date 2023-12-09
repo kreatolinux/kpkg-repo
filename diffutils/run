@@ -10,7 +10,7 @@ DESCRIPTION="GNU diffutils"
 build() {
     mkdir -v build
     cd       build
-    ../configure                   \
+    .kpkgConfigure                   \
         --prefix=/usr              \
         --build=$(../config.guess) \
         --host=x86_64-pc-linux-gnu \

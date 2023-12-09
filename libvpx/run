@@ -8,7 +8,7 @@ SHA256SUM="00dae80465567272abd077f59355f95ac91d7809a2d3006f9ace2637dd429d14"
 DESCRIPTION="Reference implementation of the VP8 Codec"
 
 build() {
-    ./configure --prefix=/usr                   \
+    kpkgConfigure --prefix=/usr                   \
                 --disable-static                \
                 --enable-shared                 \
     make

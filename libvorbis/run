@@ -8,7 +8,7 @@ DEPENDS="libogg"
 DESCRIPTION="Reference implementation for Ogg Vorbis"
 
 build() {
-    ./configure --prefix=/usr \
+    kpkgConfigure --prefix=/usr \
                 --disable-static
     make
 }

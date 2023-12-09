@@ -7,7 +7,7 @@ SHA256SUM="6c58e69cd22348f441b861092b825e591d0b822e106de6eb0ee4d05d27205b70"
 DESCRIPTION="Free Lossless Audio Codec"
 
 build() {
-    ./configure --prefix=/usr
+    kpkgConfigure --prefix=/usr
     make
 }
 

@@ -8,7 +8,7 @@ SHA256SUM="c072b0f65bafc4cc5b6112f7c61185f5170ce4cb0c410d1681c1af4a183e94e6"
 DESCRIPTION="Tool for simulating superuser privileges"
 
 build() {
-    ./configure --prefix=/usr --disable-static
+    kpkgConfigure --prefix=/usr --disable-static
     make
 }
 

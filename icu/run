@@ -8,7 +8,7 @@ DESCRIPTION="Unicode stuff"
 
 build() {
     cd source
-    ./configure --prefix=/usr
+    kpkgConfigure --prefix=/usr
     make
 }
 

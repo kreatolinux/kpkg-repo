@@ -10,7 +10,7 @@ DESCRIPTION="sass library"
 build() {  
     export LIBSASS_VERSION="$VERSION"
     autoreconf -v -f -i
-    ./configure --prefix=/usr \
+    kpkgConfigure --prefix=/usr \
           --disable-tests \
           --enable-shared
     make

@@ -9,7 +9,7 @@ DESCRIPTION="ncurses library allows you to make TUI applications."
 
 build() {
     # Taken from KISS Linux, LICENSE here https://github.com/kisslinux/repo/blob/master/LICENSE 
-   ./configure \
+   kpkgConfigure \
     --prefix=/usr \
     --mandir=/usr/share/man \
     --enable-pc-files \

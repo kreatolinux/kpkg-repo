@@ -14,7 +14,7 @@ build() {
       extraArgs="--enable-systemd"
     fi 
 
-    ./configure $extraArgs --disable-static \
+    kpkgConfigure $extraArgs --disable-static \
                 --prefix=/usr    \
                 --runstatedir=/run \
                 --sysconfdir=/etc \

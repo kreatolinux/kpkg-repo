@@ -8,7 +8,7 @@ SHA256SUM="795c34f44df45a0e9b9710c8c71c15c671871524cd412ca14def212e8ccb155d"
 DESCRIPTION="General-Purpose Programming language"
 
 build() {
-    ./configure --disable-static --enable-shared --with-ensurepip=install --prefix=/usr --enable-optimizations
+    kpkgConfigure --disable-static --enable-shared --with-ensurepip=install --prefix=/usr --enable-optimizations
     make
 }
 

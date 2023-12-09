@@ -15,7 +15,7 @@ prepare() {
 
 build() {
     cd cairo-$VERSION
-    ./configure --prefix=/usr    \
+    kpkgConfigure --prefix=/usr    \
             --disable-static     \
             --enable-tee
     make

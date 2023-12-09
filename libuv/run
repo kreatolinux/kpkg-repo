@@ -9,7 +9,7 @@ DESCRIPTION="The libuv package is a multi-platform support library with a focus 
 
 build() {
     sh autogen.sh
-    ./configure --prefix=/usr --disable-static
+    kpkgConfigure --prefix=/usr --disable-static
     make -j$(nproc)
 }
 

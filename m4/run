@@ -8,7 +8,7 @@ SHA256SUM="3be4a26d825ffdfda52a56fc43246456989a3630093cced3fbddf4771ee58a70"
 DESCRIPTION="GNU m4"
 
 build() {
-    ./configure --prefix=/usr
+    kpkgConfigure
     make -j$(nproc)
 }
 

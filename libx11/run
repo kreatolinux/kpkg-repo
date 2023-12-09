@@ -9,7 +9,7 @@ BUILD_DEPENDS="xtrans"
 DESCRIPTION="X11 client-side library"
 
 build() {
-    ./configure \
+    kpkgConfigure \
         --prefix=/usr \
         --disable-static
     make

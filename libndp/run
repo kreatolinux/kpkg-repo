@@ -9,7 +9,7 @@ DESCRIPTION="Neighbor Discovery library"
 
 build() {
     autoreconf -v -f -i
-    ./configure --prefix=/usr                   \
+    kpkgConfigure --prefix=/usr                   \
                 --sysconfdir=/etc \
                 --build=$(uname -m) \
                 --host=$(uname -m) \

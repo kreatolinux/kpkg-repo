@@ -7,7 +7,7 @@ SHA256SUM="f029ae80cdd75d89bee7f7af61c21e07982adfb9f72344a158b99f91f77ef5ed"
 DESCRIPTION="xorg"
 
 build() {
-    ./configure \
+    kpkgConfigure \
         --prefix=/usr
     make
 }

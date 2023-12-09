@@ -33,7 +33,7 @@ common_build() {
     fi
     
     make distclean
-    ../configure  $extraArgs                           \
+    .kpkgConfigure  $extraArgs                           \
         --enable-languages=c,c++                       \
         --enable-default-pie                           \
         --enable-default-ssp                           \

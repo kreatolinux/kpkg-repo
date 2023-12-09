@@ -9,7 +9,7 @@ SHA256SUM="6fcf18b75d305d99d04d2e42982ed5b787a081af2842220ed63287a2d6a10988"
 DESCRIPTION="Library for password quality checking"
 
 build() {
-    ./configure --prefix=/usr  \
+    kpkgConfigure --prefix=/usr  \
             --sysconfdir=/etc
     make
 }

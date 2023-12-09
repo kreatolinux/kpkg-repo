@@ -9,7 +9,7 @@ DESCRIPTION="cracklib"
 
 build() {
     autoreconf -v -f -i
-    ./configure --prefix=/usr --disable-static
+    kpkgConfigure --prefix=/usr --disable-static
     make
 }
 

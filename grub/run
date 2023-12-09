@@ -15,7 +15,7 @@ prepare() {
 
 build() {
     cd grub-$VERSION
-    ./configure --disable-efiemu --disable-werror --prefix=/usr --sysconfdir=/etc
+    kpkgConfigure --disable-efiemu --disable-werror --prefix=/usr --sysconfdir=/etc
     make
 }
 

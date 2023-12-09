@@ -7,7 +7,7 @@ DEPENDS="shadow zlib"
 SHA256SUM="f026e7b79ba7fb540f75182af96dc8a8f1db395f922bbc9f6ca603672686086b"
 DESCRIPTION="ssh tools"                                                        
 build() {                                                                      
-    ./configure --without-zlib-version-check --prefix=/usr                                                  
+    kpkgConfigure --without-zlib-version-check --prefix=/usr                                                  
     make                                                                       
 }
 

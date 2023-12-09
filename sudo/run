@@ -8,7 +8,7 @@ SHA256SUM="41ee958d0356dafce091244b1bff30dc75d87efcd78713ebea64ac48b4a50358"
 DESCRIPTION="Utility to execute a command as another user"
 
 build() {
-    ./configure --prefix=/usr
+    kpkgConfigure --prefix=/usr
     make
 }
 

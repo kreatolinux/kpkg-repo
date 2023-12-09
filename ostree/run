@@ -7,7 +7,7 @@ DEPENDS="xz-utils fuse e2fsprogs gpgme libarchive curl glib"
 SHA256SUM="19cda718705f7ac8c018c939c38b1bb8412deaaa04862da98cd9fe9243f073bf"
 DESCRIPTION="Operating system and container binary deployment and upgrades"
 build() {
-    ./configure --disable-man --with-curl --with-gpgme --prefix=/usr
+    kpkgConfigure --disable-man --with-curl --with-gpgme --prefix=/usr
     make
 }
 

@@ -15,7 +15,7 @@ common_build() {
     	    export CC="$1-$CC"
     fi
 
-    ./configure $extraArgs --disable-obsolete-api --prefix=$prefix
+    kpkgConfigure $extraArgs --disable-obsolete-api --prefix=$prefix
     /usr/lib/libcrypt.so.2
     make
 }

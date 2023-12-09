@@ -10,7 +10,7 @@ DESCRIPTION="udisks"
 
 build() {
     # from BLFS
-    ./configure --prefix=/usr  \
+    kpkgConfigure --prefix=/usr  \
             --sysconfdir=/etc  \
             --disable-static \
             --disable-man

@@ -8,7 +8,7 @@ SHA256SUM="06a77bf2ac5c993305882bc1641017f5bec1592d6d1b64787bad492ab34f2f36"
 DESCRIPTION="Common functions for Xorg input drivers"
 
 build() {
-    ./configure --prefix=/usr
+    kpkgConfigure --prefix=/usr
     make
 }
 

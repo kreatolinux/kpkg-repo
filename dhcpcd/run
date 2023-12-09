@@ -8,7 +8,7 @@ SHA256SUM="ced5bbde8da3726eac77b9e77e4f31a89c9849d811ef8a2c749664fc5f55a718"
 DESCRIPTION="DHCP client"
 
 build() {
-    ./configure --prefix=/usr                \
+    kpkgConfigure --prefix=/usr                \
             --sysconfdir=/etc            \
             --libexecdir=/usr/lib/dhcpcd \
             --dbdir=/var/lib/dhcpcd      \

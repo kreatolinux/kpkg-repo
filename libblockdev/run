@@ -9,7 +9,7 @@ DESCRIPTION="libblockdev"
 
 build() {
     # from BLFS
-    ./configure --prefix=/usr  \
+    kpkgConfigure --prefix=/usr  \
             --sysconfdir=/etc  \
             --with-python3     \
             --without-escrow   \

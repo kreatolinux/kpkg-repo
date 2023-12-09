@@ -8,7 +8,7 @@ SHA256SUM="bb726c6d7a08b121978d73ff98425bf313fa26a27a331d465e4f1d7ec5b838c6"
 DESCRIPTION="A collection of libraries providing APIs to netlink protocol Linux kernel interfaces"
 
 build() {
-    ./configure --prefix=/usr     \
+    kpkgConfigure --prefix=/usr     \
                 --sysconfdir=/etc \
                 --disable-static
     make

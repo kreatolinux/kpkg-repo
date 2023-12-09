@@ -10,7 +10,7 @@ DESCRIPTION="libwebp"
 build() {
   
   # Flags are from BLFS
-  ./configure --prefix=/usr           \
+  kpkgConfigure --prefix=/usr           \
             --enable-libwebpmux     \
             --enable-libwebpdemux   \
             --enable-libwebpdecoder \

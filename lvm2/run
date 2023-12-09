@@ -9,7 +9,7 @@ DESCRIPTION="Logical Volume Manager"
 REPO_DIR="/etc/nyaa"
 
 build() {
-    ./configure --enable-pkgconfig --prefix=/usr
+    kpkgConfigure --enable-pkgconfig --prefix=/usr
     make -j$(nproc)
 }
 

@@ -8,7 +8,7 @@ SHA256SUM="cabdf3c474529854f7ccce8573c5ac68ad34a7e621037535cbc3981f6b23836c"
 DESCRIPTION="pkgconf is a program which helps to configure compiler and linker flags for development frameworks."
 
 build() {
-    ./configure --prefix=/usr
+    kpkgConfigure --prefix=/usr
     make
 }
 

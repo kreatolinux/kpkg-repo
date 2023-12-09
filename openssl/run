@@ -3,12 +3,18 @@ NAME="openssl"
 RELEASE="1"
 VERSION="3.1.4"
 SOURCES="https://openssl.org/source/openssl-$VERSION.tar.gz"
-DEPENDS=""
 SHA256SUM="840af5366ab9b522bde525826be3ef0fb0af81c6a9ebd84caa600fea1731eee3"
+DEPENDS="zlib"
 DESCRIPTION="TLS library"
 
 build() {
-    ./config --prefix=/usr --openssldir=/etc/ssl --libdir=lib shared zlib-dynamic
+    if [ "$KPKG_ARCH" != "$(uname -m)" ]; then
+	extraArgs="linux-$KPKG_ARCH"
+	export CFLAGS=-I/usr/$KPKG_TARGET/usr/include 
+	export LDFLAGS=-L/usr/$KPKG_TARGET/lib
+	export PKG_CONFIG_PATH=/usr/$KPKG_TARGET/usr/lib/pkgconfig
+    fi
+    ./config $extraArgs --prefix=/usr --openssldir=/etc/ssl --libdir=lib shared zlib-dynamic
     make -j$(nproc)
 }
 

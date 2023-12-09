@@ -8,7 +8,7 @@ SHA256SUM="867577c387f6b4a9a3224eb441ded8fb1638df6cbc060f8d1a1e5d00f318f502"
 DESCRIPTION="GNU xorriso"
 
 build() {
-    ./configure --prefix=/usr
+    kpkgConfigure --prefix=/usr
     make
 }
 

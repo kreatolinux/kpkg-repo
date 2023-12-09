@@ -9,7 +9,7 @@ DESCRIPTION="GNU mpfr"
 
 build() {
     cd mpfr-$VERSION
-    ./configure --prefix=/usr
+    kpkgConfigure --prefix=/usr
     make -j$(nproc)
 }
 

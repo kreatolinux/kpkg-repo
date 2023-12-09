@@ -8,7 +8,7 @@ SHA256SUM="7fa16c80c81bd622f7b198d31356da139cc318a63fc7761217af4130903f54a2"
 DESCRIPTION="FriBidi is an implementation of Unicode Bidirectional Algorithm"
 
 build() {
-    ./configure --prefix=/usr 
+    kpkgConfigure --prefix=/usr 
     make
 }
 

@@ -8,7 +8,7 @@ SHA256SUM="fce7cb3f920e615e63faf265a4cd9f2bf39d4adcaa66211c987697da85a2eedd"
 DESCRIPTION="BTRFS filesystem utilities"
 
 build() {
-    ./configure --disable-documentation --prefix=/usr
+    kpkgConfigure --disable-documentation --prefix=/usr
     make -j$(nproc)
 }
 

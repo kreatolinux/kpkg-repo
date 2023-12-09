@@ -8,7 +8,7 @@ SHA256SUM="f2d4602500362022a473923219ec8d88dc4002a02c6a28ce9811631802cc03d4"
 DESCRIPTION="Modern, advanced, portable, multiprotocol bootloader."
 
 build() {
-    ./configure --prefix=/usr --enable-bios --enable-uefi-x86-64
+    kpkgConfigure --prefix=/usr --enable-bios --enable-uefi-x86-64
     make
 }
 

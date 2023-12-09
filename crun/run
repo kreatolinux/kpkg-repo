@@ -8,7 +8,7 @@ SHA256SUM="0df37442265fc39b6aabd29a00240ff0ebd3baee872d2b2f62d8e72b1e646de0"
 DESCRIPTION="A fast and lightweight fully featured OCI runtime and C library for running containers"
 
 build() {
-    ./configure --disable-systemd --prefix=/usr
+    kpkgConfigure --disable-systemd --prefix=/usr
     make -j$(nproc)
 }
 

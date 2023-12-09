@@ -8,7 +8,7 @@ SHA256SUM="ce2f2e5c424790aa96d09dacb93d9bbfdc0b7eb6249c9cb7538452e8ec77cd48"
 DESCRIPTION="A line-oriented text editor"
 
 build() {
-    ./configure --prefix=/usr
+    kpkgConfigure --prefix=/usr
     make
 }
 

@@ -8,7 +8,7 @@ SHA256SUM="1bd6aa42275313af3141c7cf2e5b964e8b1fd488025caf2f971f43b00776b332"
 DESCRIPTION="Provides message digest functions from BSD systems"
 
 build() {
-    ./configure --prefix=/usr
+    kpkgConfigure --prefix=/usr
     make
 }
 

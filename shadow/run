@@ -8,7 +8,7 @@ SHA256SUM="25df30589d2e31aaff14576d03f980bb578e6d446891da6d24de1e5a09a38949"
 DESCRIPTION="Shadow utils"
 
 build() {
-    ./configure  --disable-static \
+    kpkgConfigure  --disable-static \
                  --sysconfdir=/etc \
                  --with-libpam
     make

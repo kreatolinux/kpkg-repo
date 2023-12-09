@@ -8,6 +8,9 @@ DEPENDS=""
 SHA256SUM="ff0ba4c292013dbc27530b3a81e1f9a813cd39de01ca5e0f8bf355702efa593e"
 
 build() {
+    if [ "$KPKG_ARCH" != "$(uname -m)" ]; then
+	export CROSS_PREFIX="$KPKG_TARGET-"
+    fi
     ./configure --prefix=/usr
     make
 }

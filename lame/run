@@ -9,7 +9,7 @@ SHA256SUM="ddfe36cab873794038ae2c1210557ad34857a4b6bdc515785d1da9e175b1da1e"
 DESCRIPTION="A MP3 encoder"
 
 build() {
-    ./configure --prefix=/usr \
+    kpkgConfigure --prefix=/usr \
                 --enable-shared \
                 --enable-mp3rtp
     make

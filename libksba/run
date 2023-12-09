@@ -8,7 +8,7 @@ SHA256SUM="bbb43f032b9164d86c781ffe42213a83bf4f2fee91455edfa4654521b8b03b6b"
 DESCRIPTION="An easy API to create and parse X.509 and CMS related objects"
 
 build() {
-    ./configure --prefix=/usr
+    kpkgConfigure --prefix=/usr
     make -j$(nproc)
 }
 

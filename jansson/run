@@ -9,7 +9,7 @@ DESCRIPTION="C library for encoding, decoding and manipulating JSON data"
 
 build() {
     export CC=clang
-    ./configure --prefix=/usr                   \
+    kpkgConfigure --prefix=/usr                   \
                 --disable-static
     make
 }

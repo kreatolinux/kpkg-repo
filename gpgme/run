@@ -8,7 +8,7 @@ SHA256SUM="a0c316f7ab7d3bfb01a8753c3370dc906e5b61436021f3b54ff1483b513769bd"
 DESCRIPTION="GNU Privacy Guard Made Easy"
 
 build() {
-    ./configure --prefix=/usr
+    kpkgConfigure --prefix=/usr
     make -j$(nproc)
 }
 

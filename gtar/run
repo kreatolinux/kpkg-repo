@@ -7,7 +7,7 @@ DEPENDS=""
 SHA256SUM="03d908cf5768cfe6b7ad588c921c6ed21acabfb2b79b788d1330453507647aed"
 DESCRIPTION="GNU tar"
 build() {
-    ./configure --prefix=/usr
+    kpkgConfigure --prefix=/usr
     make
 }
 

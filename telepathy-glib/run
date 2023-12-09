@@ -9,7 +9,7 @@ SHA256SUM="b0a374d771cdd081125f38c3abd079657642301c71a543d555e2bf21919273f0"
 DESCRIPTION="glib bindings for telepathy"
 
 build() {
-    ./configure --prefix=/usr
+    kpkgConfigure --prefix=/usr
     make
 }
 

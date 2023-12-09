@@ -8,7 +8,7 @@ SHA256SUM="44be0f5797464ca5b36c68c8fb9152c2d34e91f6ba910ad3945dd7cdd2557cc3"
 DESCRIPTION="A way to load and enumerate PKCS#11 modules"
 
 build() {
-    ./configure --prefix=/usr     \
+    kpkgConfigure --prefix=/usr     \
             --sysconfdir=/etc \
             --with-trust-paths=/etc/pki/anchors
     make

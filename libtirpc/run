@@ -6,7 +6,7 @@ SOURCES="https://netix.dl.sourceforge.net/project/libtirpc/libtirpc/$VERSION/lib
 SHA256SUM="1e0b0c7231c5fa122e06c0609a76723664d068b0dba3b8219b63e6340b347860"
 DESCRIPTION="libtirpc"
 build() {
-    ./configure --prefix=/usr                   \
+    kpkgConfigure --prefix=/usr                   \
                 --disable-gssapi \
                 --disable-static
     make

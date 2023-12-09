@@ -20,7 +20,7 @@ prepare() {
 
 build() {
     cd Linux-PAM-$VERSION
-    ./configure --prefix=/usr --enable-securedir=/usr/lib/security
+    kpkgConfigure --prefix=/usr --enable-securedir=/usr/lib/security
     make
 }
 

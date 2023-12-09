@@ -7,7 +7,7 @@ DEPENDS="libjpeg-turbo libpng"
 SHA256SUM="144dd671373ee67821fb1c579f444758645af1ca9d6d419ffa7947a002847c82"
 DESCRIPTION="Converts jpg images to ASCII"
 build() {
-    ./configure --prefix=/usr
+    kpkgConfigure --prefix=/usr
     make
 }
 

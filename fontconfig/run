@@ -7,7 +7,7 @@ DEPENDS="expat freetype gperf pkgconf"
 SHA256SUM="3ba2dd92158718acec5caaf1a716043b5aa055c27b081d914af3ccb40dce8a55"
 DESCRIPTION="fontconfig"
 build() {
-    ./configure --prefix=/usr
+    kpkgConfigure --prefix=/usr
     make
 }
 

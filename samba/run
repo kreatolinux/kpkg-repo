@@ -15,7 +15,7 @@ build() {
     fi
     
     # Some of these are taken from BLFS
-    ./configure $extraArgs --sysconfdir=/etc \
+    kpkgConfigure $extraArgs --sysconfdir=/etc \
       --localstatedir=/var \
       --with-pammodulesdir=/usr/lib/security \
       --enable-fhs \

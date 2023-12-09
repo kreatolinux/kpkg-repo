@@ -28,7 +28,7 @@ common_build() {
 	headers="/usr/include"
     fi
 
-    ../configure $extraArgs \
+    .kpkgConfigure $extraArgs \
       --prefix=/usr \
       $host \
       $build \

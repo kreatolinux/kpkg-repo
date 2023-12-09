@@ -9,7 +9,7 @@ DESCRIPTION="GNU gmp"
 
 build() {
     cd gmp-$VERSION
-    ./configure --prefix=/usr
+    kpkgConfigure
     make -j$(nproc)
 }
 

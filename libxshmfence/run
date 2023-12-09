@@ -8,7 +8,7 @@ BUILD_DEPENDS="xorgproto"
 DESCRIPTION="libxshmfence"
 
 build() {
-    ./configure \
+    kpkgConfigure \
         --prefix=/usr \
         --disable-static
     make

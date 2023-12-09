@@ -8,7 +8,7 @@ SHA256SUM="4a68a3040da92fd9872c056d0f6b0cd60de8410de10b578f8ade9ecc14d297e0"
 DESCRIPTION="An implementation of the HTTP version 2 in C"
 
 build() {
-    ./configure \
+    kpkgConfigure \
         --prefix=/usr
     make
 }

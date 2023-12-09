@@ -8,7 +8,7 @@ SHA256SUM="f5a6949043cc72c001b728d8c218609c5a15f3c33d75614b78c79418fcf00d80"
 DESCRIPTION="Contains utilities for loading kernel modules"
 
 build() {
-    ./configure --with-zlib --prefix=/usr
+    kpkgConfigure --with-zlib --prefix=/usr
     make
 }
 

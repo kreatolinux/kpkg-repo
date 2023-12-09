@@ -9,7 +9,7 @@ DESCRIPTION="command line tool and library for transferring data with URLs"
 
 build() {
     # Taken from Kiss Linux repo, License here https://github.com/kisslinux/repo/blob/master/LICENSE
-    ./configure \
+    kpkgConfigure \
         --prefix=/usr \
         --disable-manual \
         --disable-ldap \

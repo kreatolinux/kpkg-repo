@@ -18,7 +18,7 @@ actual_build() {
 	
     echo $target
     echo $sysroot
-    ../configure                   \
+    .kpkgConfigure                   \
         --prefix=/usr              \
 	$target			   \
 	$sysroot		   \
@@ -39,7 +39,7 @@ build_aarch64_linux_gnu_binutils() {
 }
 
 build() {
-    actual_build "x86_64-linux-gnu"
+    actual_build "$KPKG_TARGET"
 }
 
 package() {

@@ -13,7 +13,7 @@ build() {
 	extraArgs="--with-systemdsystemunitdir=/usr/lib/systemd/system --with-systemduserunitdir=/usr/lib/systemd/user"
     fi
 
-    ./configure $extraArgs \
+    kpkgConfigure $extraArgs \
 	    --prefix=/usr \
 	    --with-udevdir=/usr/lib/udev/rules.d \
 	    --disable-manpages \
