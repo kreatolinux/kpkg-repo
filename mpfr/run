@@ -8,8 +8,11 @@ SHA256SUM="277807353a6726978996945af13e52829e3abd7a9a5b7fb2793894e18f1fcbb2"
 DESCRIPTION="GNU mpfr"
 
 build() {
-    cd mpfr-$VERSION
-    kpkgConfigure --prefix=/usr
+    if [ "$KPKG_ARCH" != "$(uname -m)" ]; then
+	extraArgs="--with-sysroot=/usr/$KPKG_TARGET"
+    fi
+
+    kpkgConfigure $extraArgs
     make -j$(nproc)
 }
 
