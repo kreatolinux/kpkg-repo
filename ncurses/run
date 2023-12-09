@@ -8,8 +8,11 @@ SHA256SUM="6931283d9ac87c5073f30b6290c4c75f21632bb4fc3603ac8100812bed248159"
 DESCRIPTION="ncurses library allows you to make TUI applications."
 
 build() {
+   if [ "$KPKG_ARCH" != "$(uname -m)" ]; then
+	   extraArgs="--disable-stripping"
+   fi
     # Taken from KISS Linux, LICENSE here https://github.com/kisslinux/repo/blob/master/LICENSE 
-   kpkgConfigure \
+   kpkgConfigure $extraArgs \
     --prefix=/usr \
     --mandir=/usr/share/man \
     --enable-pc-files \
@@ -36,7 +39,7 @@ package() {
     	ln -sf "lib${lib}w.a" "$ROOT/usr/lib/lib${lib}.a"
      done
 
-	# Some packages look for libcurses instead of libncurses when building.
-	printf '%s\n' "INPUT(-lncursesw)" > "$ROOT/usr/lib/libcursesw.so"
-	ln -s libncurses.so "$ROOT/usr/lib/libcurses.so"
+    # Some packages look for libcurses instead of libncurses when building.
+    printf '%s\n' "INPUT(-lncursesw)" > "$ROOT/usr/lib/libcursesw.so"
+    ln -s libncurses.so "$ROOT/usr/lib/libcurses.so"
 }
