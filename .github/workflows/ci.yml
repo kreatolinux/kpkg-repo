@@ -72,16 +72,18 @@ jobs:
 
       - name: Build packages
         run: |
+          chmod +x /tmp/chkupd/chkupd
           for package in ${{ matrix.packages }}; do
             /tmp/chkupd/chkupd repologyCheck --package="$package" --repo="$GITHUB_WORKSPACE" --autoUpdate=true --autoBuild=true
           done
           kpkg build kpkg -y
           kpkg clean --binaries=true
           kpkg build ${{ matrix.packages }} --yes
+          echo RANDOM_ID=$(cat /dev/urandom | tr -dc '[:alpha:]' | fold -w ${1:-20} | head -n 1) >> $GITHUB_ENV
       
       - uses: actions/upload-artifact@v4
         with:
-          name: packages
+          name: packages-${{ env.RANDOM_ID }}
           path: /var/cache/kpkg/arch/
 
       
