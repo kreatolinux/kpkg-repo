@@ -7,13 +7,10 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: self-hosted
-    timeout-minutes: 11520
+  init:
+    runs-on: ubuntu-latest
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -22,8 +19,7 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
       
-      # Runs a single command using the runners shell
-      - name: Check all packages against Repology
+      - name: Initialize chkupd 
         run: |
           export DOCKER_DEFAULT_PLATFORM=linux/amd64
           rm -rf src
@@ -51,32 +47,36 @@ jobs:
           rm -rf src
           cd /tmp/
           sudo ./chkupd cleanUp -v
-          ./chkupd checkAll --jsonPath=/tmp/chkupd.json --repo="$GITHUB_WORKSPACE"
-          ./out/chkupd jsonToMd /tmp/chkupd.json > /tmp/chkupd.md
-    
-      - name: Check all packages against Arch Repositories
-        run: |
-          export DOCKER_DEFAULT_PLATFORM=linux/amd64
-          cd /tmp/
-          ./chkupd checkAll --jsonPath=/tmp/chkupd.json --backend="arch" --repo="$GITHUB_WORKSPACE"
-          echo "# Arch check results" >> /tmp/chkupd.md
-          ./out/chkupd jsonToMd /tmp/chkupd.json >> /tmp/chkupd.md
-          rm -rf chkupd
-          
-          
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v5.0.2
-        with:
-          commit-message: "[CI] Automated update by chkupd"
-          body-path: /tmp/chkupd.md
-          
+          ./chkupd generateJson --repo="$GITHUB_WORKSPACE" --output="/tmp/out1.json"
+          JSON=$(cat /tmp/out1.json)
+          echo "::set-output name=matrix::${JSON//'%'/'%25'}"
       
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@master
         with:
-          name: json
-          path: /tmp/chkupd.json
+          name: chkupd-bin
+          path: /tmp/chkupd
+
+        #- name:  
+          #- name: Check all packages against Arch Repositories
+          #run: |
+          #export DOCKER_DEFAULT_PLATFORM=linux/amd64
+          #cd /tmp/
+          #./chkupd checkAll --jsonPath=/tmp/chkupd.json --backend="arch" --repo="$GITHUB_WORKSPACE"
+          #echo "# Arch check results" >> /tmp/chkupd.md
+          #./out/chkupd jsonToMd /tmp/chkupd.json >> /tmp/chkupd.md
+          #rm -rf chkupd
           
-      - uses: actions/upload-artifact@v3
-        with:
-          name: logs
-          path: /tmp/failed-log-*.log
+          
+            #- name: Create Pull Request
+            #uses: peter-evans/create-pull-request@v5.0.2
+            #with:
+            #commit-message: "[CI] Automated update by chkupd"
+
+  build:
+    needs: init
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:  ${{fromJson(needs.init.outputs.matrix)}}
+    steps:
+      - run: echo ${{ matrix.package }}
+      - run: echo ${{ matrix.repository }}
