@@ -60,6 +60,7 @@ jobs:
     runs-on: ubuntu-latest
     container: ghcr.io/kreatolinux/builder
     strategy:
+      fail-fast: false
       matrix:  ${{fromJson(needs.init.outputs.matrix)}}
     steps:
 
@@ -73,6 +74,8 @@ jobs:
       - name: Build packages
         run: |
           chmod +x /tmp/chkupd/chkupd
+          mkdir -p /etc/kpkg/repos
+          ln -s "$GITHUB_WORKSPACE" /etc/kpkg/repos/main
           for package in ${{ matrix.packages }}; do
             /tmp/chkupd/chkupd repologyCheck --package="$package" --repo="$GITHUB_WORKSPACE" --autoUpdate=true
           done
