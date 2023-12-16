@@ -4,6 +4,7 @@ RELEASE="1"
 VERSION="2023.2"
 SOURCES="https://www.x.org/releases/individual/proto/xorgproto-$VERSION.tar.xz"
 SHA256SUM="b61fbc7db82b14ce2dc705ab590efc32b9ad800037113d1973811781d5118c2c"
+BUILD_DEPENDS="meson"
 DESCRIPTION="X Window System Unified Protocol"
 
 build() {
