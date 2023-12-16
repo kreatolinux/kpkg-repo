@@ -12,12 +12,14 @@ jobs:
   init:
     runs-on: ubuntu-latest
     container: ghcr.io/kreatolinux/builder
-
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
       
       - name: Initialize chkupd 
+        id: set-matrix
         run: |
           rm -rf src
           git clone https://github.com/kreatolinux/src
@@ -57,7 +59,7 @@ jobs:
     needs: init
     runs-on: ubuntu-latest
     strategy:
-      matrix:  ${{fromJson(needs.init.outputs.CHKUPD_JSON)}}
+      matrix:  ${{fromJson(needs.init.outputs.matrix)}}
     steps:
       - run: echo ${{ matrix.package }}
       - run: echo ${{ matrix.repository }}
