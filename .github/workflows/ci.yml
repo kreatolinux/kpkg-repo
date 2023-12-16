@@ -100,7 +100,7 @@ jobs:
           kpkg build rsync openssh --yes
           mkdir -p ~/.ssh
           eval $(ssh-agent)
-          ssh-add - <<< "$SSH_KEY"
+          echo "$SSH_KEY" | ssh-add -
           echo "$KNOWN_HOSTS" >> /tmp/known_hosts
           rsync -avc /var/cache/kpkg/archives/ $SSH_USER@$SSH_URL:/var/cache/kpkg/archives/
 
