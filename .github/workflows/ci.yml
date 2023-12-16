@@ -83,27 +83,33 @@ jobs:
           done
           kpkg build kpkg -y
           kpkg clean --binaries=true
-          kpkg build ${{ matrix.packages }} --yes
+          kpkg build ${{ matrix.packages }} --forceInstallAll=true --yes
           echo RANDOM_ID=$(cat /dev/urandom | tr -dc '[:alpha:]' | fold -w ${1:-20} | head -n 1) >> $GITHUB_ENV
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
           cd "$GITHUB_WORKSPACE"
           git pull
-          
-      - uses: actions/upload-artifact@v4
-        with:
-          name: packages-${{ env.RANDOM_ID }}
-          path: /var/cache/kpkg/archives/arch
-          retention-days: 2
+    
+      - name: Upload to server through rsync
+        env:
+          KNOWN_HOSTS: ${{ secrets.KNOWN_HOSTS }}
+          SSH_URL: ${{ secrets.SSH_URL }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+        run: |
+          kpkg build rsync openssh --yes
+          mkdir -p ~/.ssh
+          eval "$(ssh-agent -s)"
+          echo "$SSH_KEY" > ~/.ssh/id_ed25519
+          ssh-add ~/.ssh/id_ed25519
+          echo "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          rsync -avc /var/cache/kpkg/archives/ $SSH_USER@$SSH_URL:/var/cache/kpkg/archives/
+
+      #- uses: actions/upload-artifact@v4
+      #  with:
+      #    name: packages-${{ env.RANDOM_ID }}
+      #    path: /var/cache/kpkg/archives/arch
+      #    retention-days: 2
       
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Apply auto-update through chkupd
-      
-      
-
-  
-  #finish:
-  #  needs: build
-  #  runs-on: self-hosted
-  #  steps:
-      
