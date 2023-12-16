@@ -18,6 +18,7 @@ jobs:
       - uses: actions/checkout@v3
       
       - name: Initialize chkupd 
+        id: matrix-json
         run: |
           rm -rf src
           git clone https://github.com/kreatolinux/src
@@ -30,8 +31,7 @@ jobs:
           rm -rf src
           cd /tmp/
           ./chkupd generateJson --repo="$GITHUB_WORKSPACE" --output="/tmp/out1.json"
-          JSON=$(cat /tmp/out1.json)
-          echo "::set-output name=matrix::${JSON//'%'/'%25'}"
+          echo "CHKUPD_JSON=$(cat /tmp/out1.json)" >> $GITHUB_OUTPUT
       
       - uses: actions/upload-artifact@master
         with:
@@ -58,7 +58,7 @@ jobs:
     needs: init
     runs-on: ubuntu-latest
     strategy:
-      matrix:  ${{fromJson(needs.init.outputs.matrix)}}
+      matrix:  ${{fromJson(needs.matrix-json.outputs.CHKUPD_JSON)}}
     steps:
       - run: echo ${{ matrix.package }}
       - run: echo ${{ matrix.repository }}
