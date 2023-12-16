@@ -95,12 +95,13 @@ jobs:
           SSH_URL: ${{ secrets.SSH_URL }}
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_KEY: ${{ secrets.SSH_KEY }}
+          RSYNC_RSH: "ssh -o UserKnownHostsFile=/tmp/known_hosts"
         run: |
           kpkg build rsync openssh --yes
           mkdir -p ~/.ssh
-          echo "$SSH_KEY" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          echo "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          eval $(ssh-agent)
+          ssh-add - <<< "$SSH_KEY"
+          echo "$KNOWN_HOSTS" >> /tmp/known_hosts
           rsync -avc /var/cache/kpkg/archives/ $SSH_USER@$SSH_URL:/var/cache/kpkg/archives/
 
       #- uses: actions/upload-artifact@v4
