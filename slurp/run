@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="slurp"
 RELEASE="1"
-VERSION="1.4.0"
+VERSION="1.5.0"
 SOURCES="https://github.com/emersion/slurp/releases/download/v$VERSION/slurp-$VERSION.tar.gz"
 BUILD_DEPENDS="meson"
 DEPENDS="wayland pixman libpng cairo wayland-protocols libxkbcommon"
-SHA256SUM="98f6bb692be6bd015aa6251830837ea4fd9a0c5d51ce832ad147aa62ae7f095d"
+SHA256SUM="eeb282b2adc8db5614b852596340b69da6f3954cf6cfbdc4392da509c934208a"
 DESCRIPTION="Selects a region in a Wayland compositor and prints it to the standard output"
 build() {                                                                                   
     meson setup --prefix=/usr build/
