@@ -58,11 +58,33 @@ jobs:
   build:
     needs: init
     runs-on: ubuntu-latest
+    container: ghcr.io/kreatolinux/builder
     strategy:
       matrix:  ${{fromJson(needs.init.outputs.matrix)}}
     steps:
-      - run: echo ${{ matrix.package }}
-      - run: echo ${{ matrix.repository }}
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: chkupd-bin
+          path: /tmp/chkupd
+
+      - uses: actions/checkout@v3
+
+      - name: Build packages
+        run: |
+          for package in ${{ matrix.packages }}; do
+            /tmp/chkupd/chkupd repologyCheck --package="$package" --repo="$GITHUB_WORKSPACE" --autoUpdate=true --autoBuild=true
+          done
+          kpkg build kpkg -y
+          kpkg clean --binaries=true
+          kpkg build ${{ matrix.packages }} --yes
+      
+      - uses: actions/upload-artifact@v4
+        with:
+          name: packages
+          path: /var/cache/kpkg/arch/
+
+      
 
   # TODO
   #finish:
