@@ -32,7 +32,7 @@ jobs:
           rm -rf src
           cd /tmp/
           ./chkupd generateJson --repo="$GITHUB_WORKSPACE" --output="/tmp/out1.json"
-          echo "CHKUPD_JSON=$(cat /tmp/out1.json)" >> $GITHUB_OUTPUT
+          echo "matrix=$(cat /tmp/out1.json)" >> $GITHUB_OUTPUT
       
       - uses: actions/upload-artifact@master
         with:
