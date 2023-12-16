@@ -86,11 +86,14 @@ jobs:
           kpkg build ${{ matrix.packages }} --yes
           echo RANDOM_ID=$(cat /dev/urandom | tr -dc '[:alpha:]' | fold -w ${1:-20} | head -n 1) >> $GITHUB_ENV
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          cd "$GITHUB_WORKSPACE"
+          git pull
           
       - uses: actions/upload-artifact@v4
         with:
           name: packages-${{ env.RANDOM_ID }}
           path: /var/cache/kpkg/archives/arch
+          retention-days: 2
       
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
