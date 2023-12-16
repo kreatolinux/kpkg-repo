@@ -29,7 +29,6 @@ jobs:
           cd ..
           rm -rf src
           cd /tmp/
-          sudo ./chkupd cleanUp -v
           ./chkupd generateJson --repo="$GITHUB_WORKSPACE" --output="/tmp/out1.json"
           JSON=$(cat /tmp/out1.json)
           echo "::set-output name=matrix::${JSON//'%'/'%25'}"
@@ -63,3 +62,8 @@ jobs:
     steps:
       - run: echo ${{ matrix.package }}
       - run: echo ${{ matrix.repository }}
+
+  # TODO
+  #finish:
+  #  needs: build
+  #  runs-on: ubuntu-latest
