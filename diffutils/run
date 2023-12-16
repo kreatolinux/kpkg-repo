@@ -10,10 +10,8 @@ DESCRIPTION="GNU diffutils"
 build() {
     mkdir -v build
     cd       build
-    .kpkgConfigure                   \
-        --prefix=/usr              \
+    KPKG_CONFIGURE_PATH=../configure kpkgConfigure \
         --build=$(../config.guess) \
-        --host=x86_64-pc-linux-gnu \
         --disable-nls              \
         --enable-shared            \
         --disable-werror           \
