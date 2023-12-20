@@ -13,6 +13,7 @@ common_build() {
 	    prefix="$prefix/$1"
 	    extraArgs="--target=$1 --host=$1"
     	    export CC="$1-$CC"
+    	    export CFLAGS="$CFLAGS -Wno-pedantic"
     fi
 
     kpkgConfigure $extraArgs --disable-obsolete-api --prefix=$prefix
