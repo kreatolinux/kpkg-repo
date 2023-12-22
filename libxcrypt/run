@@ -13,11 +13,13 @@ common_build() {
 	    prefix="$prefix/$1"
 	    extraArgs="--target=$1 --host=$1"
     	    export CC="$1-$CC"
-    	    export CFLAGS="$CFLAGS -Wno-pedantic"
+    fi
+
+    if [ "$KPKG_ARCH" != "$(uname -m)" ]; then
+    	export CFLAGS="$CFLAGS -Wno-error=pedantic"
     fi
 
     kpkgConfigure $extraArgs --disable-obsolete-api --prefix=$prefix
-    /usr/lib/libcrypt.so.2
     make
 }
 
