@@ -8,13 +8,21 @@ SOURCES="https://ftp.osuosl.org/pub/xiph/releases/flac/flac-$VERSION.tar.xz"
 SHA256SUM="6c58e69cd22348f441b861092b825e591d0b822e106de6eb0ee4d05d27205b70"
 DESCRIPTION="Free Lossless Audio Codec"
 
+prepare() {
+    bsdtar -xf flac-$VERSION.tar.xz
+}
+
 build() {
+    cd flac-$VERSION
+    
     cmake -B build \
         -DCMAKE_INSTALL_PREFIX=/usr \
         -DBUILD_DOCS=0
+    
     cmake --build build
 }
 
 package() {
+    cd flac-$VERSION
     cmake --install $ROOT
 }
