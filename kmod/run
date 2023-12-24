@@ -4,6 +4,7 @@ RELEASE="3"
 VERSION="31"
 SOURCES="https://www.kernel.org/pub/linux/utils/kernel/kmod/kmod-$VERSION.tar.xz"
 DEPENDS="zlib"
+BUILD_DEPENDS="pkgconf"
 SHA256SUM="f5a6949043cc72c001b728d8c218609c5a15f3c33d75614b78c79418fcf00d80"
 DESCRIPTION="Contains utilities for loading kernel modules"
 
