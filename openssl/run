@@ -2,7 +2,7 @@
 NAME="openssl"
 RELEASE="1"
 VERSION="3.2.0"
-SOURCES="https://openssl.org/source/openssl-$VERSION.tar.gz"
+SOURCES="https://www.openssl.org/source/openssl-$VERSION.tar.gz"
 SHA256SUM="14c826f07c7e433706fb5c69fa9e25dab95684844b4c962a2cf1bf183eb4690e"
 DEPENDS="zlib"
 DESCRIPTION="TLS library"
