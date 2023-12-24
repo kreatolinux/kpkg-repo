@@ -3,7 +3,7 @@ NAME="gettext"
 RELEASE="1"
 VERSION="0.22.4"
 SOURCES="https://ftp.gnu.org/gnu/gettext/gettext-$VERSION.tar.xz"
-DEPENDS=""
+DEPENDS="attr"
 SHA256SUM="29217f1816ee2e777fa9a01f9956a14139c0c23cc1b20368f06b2888e8a34116"
 DESCRIPTION="Gettext contains utilities for localization."
 
