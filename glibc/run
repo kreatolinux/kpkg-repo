@@ -1,6 +1,6 @@
 #!/bin/sh
 NAME="glibc"
-RELEASE="3"
+RELEASE="4"
 VERSION="2.38"
 SOURCES="https://ftp.gnu.org/gnu/glibc/glibc-$VERSION.tar.xz"
 DEPENDS="grep gawk bison m4"
@@ -61,4 +61,6 @@ build() {
 package() {
     cd build
     make DESTDIR=$ROOT install
+    mkdir -p $ROOT/usr/lib/locale
+    localedef --prefix=$ROOT -i C -f UTF-8 C
 }
