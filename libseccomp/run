@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="libseccomp"
 RELEASE="1"
-VERSION="2.5.4"
+VERSION="2.5.5"
 SOURCES="https://github.com/seccomp/libseccomp/releases/download/v$VERSION/libseccomp-$VERSION.tar.gz"
 DEPENDS="gperf"
-SHA256SUM="d82902400405cf0068574ef3dc1fe5f5926207543ba1ae6f8e7a1576351dcbdb"
+SHA256SUM="248a2c8a4d9b9858aa6baf52712c34afefcf9c9e94b76dce02c1c9aa25fb3375"
 DESCRIPTION="An easy to use, platform independent, interface to the Linux Kernel's syscall filtering mechanism"
 
 build() {
