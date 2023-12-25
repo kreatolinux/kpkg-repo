@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="libsass"
 RELEASE="1"
-VERSION="3.6.5"
+VERSION="3.6.6"
 SOURCES="https://github.com/sass/libsass/archive/$VERSION/libsass-$VERSION.tar.gz"
 BUILD_DEPENDS="autoconf automake libtool"
-SHA256SUM="89d8f2c46ae2b1b826b58ce7dde966a176bac41975b82e84ad46b01a55080582"
+SHA256SUM="11f0bb3709a4f20285507419d7618f3877a425c0131ea8df40fe6196129df15d"
 DESCRIPTION="sass library"
 
 build() {  
