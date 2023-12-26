@@ -3,13 +3,14 @@ NAME="json-glib"
 RELEASE="1"
 VERSION="1.8.0"
 SOURCES="https://download.gnome.org/sources/json-glib/1.8/json-glib-$VERSION.tar.xz" 
-BUILD_DEPENDS="meson ninja"
+BUILD_DEPENDS="meson"
 DEPENDS="glib"
 SHA256SUM="97ef5eb92ca811039ad50a65f06633f1aae64792789307be7170795d8b319454"
 DESCRIPTION="A full JSON parser and generator using GLib and GObject, and integrates JSON with GLib data types"
 
 build() {
-    meson \
+    cd json-glib-$VERSION
+    meson setup \
     --prefix=/usr \
     -Dman=false \
     build
@@ -17,5 +18,6 @@ build() {
 }
 
 package() {
+    cd json-glib-$VERSION
     DESTDIR="$ROOT" ninja -C build install
 }
