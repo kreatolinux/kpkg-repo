@@ -2,22 +2,21 @@
 NAME="appstream"
 RELEASE="1"
 VERSION="0.16.3"
-SOURCES="https://github.com/ximion/appstream/archive/refs/tags/v$VERSION.tar.gz disable-docs.patch"
+SOURCES="https://github.com/ximion/appstream/archive/refs/tags/v$VERSION.tar.gz"
 BUILD_DEPENDS="meson ninja"
 DEPENDS="glib itstool libxslt libxml2 libxmlb curl gobject-introspection libyaml"
 OPTDEPENDS="systemd: For systemd support"
-SHA256SUM="4470a27474dc3cc4938552fbf0394b6a65d8a2055d4f4418df086d65d8f2ba29 30a67dd92c943f97576dc0c1c314dbcc2392c88eeb6ed04895a0b5f2c515d9aa"
+SHA256SUM="4470a27474dc3cc4938552fbf0394b6a65d8a2055d4f4418df086d65d8f2ba29"
 DESCRIPTION="appstream"
 
-prepare() {
-    tar -xvf v$VERSION.tar.gz
-    cd appstream-$VERSION
-    patch -p1 < ../disable-docs.patch
-}
-
 build() {
-    cd appstream-$VERSION
     
+    # https://github.com/ximion/appstream/issues/523
+    # We won't want manpages, so we will just remove the line that adds docs 
+    # as a subdir.
+    grep -v "subdir('docs/')" meson.build > meson.build.new
+    mv meson.build.new meson.build
+
     if command -v systemctl > /dev/null; then
       systemdSupport="true"
     else 
@@ -36,6 +35,5 @@ build() {
 }
 
 package() {
-    cd appstream-$VERSION
     DESTDIR="$ROOT" ninja -C build install
 }
