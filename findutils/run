@@ -3,18 +3,14 @@ NAME="findutils"
 RELEASE="1"
 VERSION="4.9.0"
 SOURCES="https://ftp.gnu.org/gnu/findutils/findutils-$VERSION.tar.xz"
-BUILD_DEPENDS=""
-DEPENDS=""
 SHA256SUM="a2bfb8c09d436770edc59f50fa483e785b161a3b7b9d547573cb08065fd462fe"
 DESCRIPTION="GNU findutils"
 
 build() {
     mkdir -v build
     cd       build
-    .kpkgConfigure                   \
-        --prefix=/usr              \
+    KPKG_CONFIGURE_PATH="../configure" kpkgConfigure                   \
         --build=$(../config.guess) \
-        --host=x86_64-pc-linux-gnu \
         --disable-nls              \
         --enable-shared            \
         --disable-werror           \
