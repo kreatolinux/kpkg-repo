@@ -78,16 +78,20 @@ jobs:
           chmod +x /tmp/chkupd/chkupd
           mkdir -p /etc/kpkg/repos
           ln -s "$GITHUB_WORKSPACE" /etc/kpkg/repos/main
+          
           for package in ${{ matrix.packages }}; do
             /tmp/chkupd/chkupd repologyCheck --package="$package" --repo="$GITHUB_WORKSPACE" --autoUpdate=true
           done
+          
           kpkg build kpkg -y
           kpkg clean --binaries=true
           
           IS_USELESS="true"
+          
           for package in ${{ matrix.packages }}; do
-              kpkg install package || IS_USELESS="false"
+              kpkg install "$package" -y || IS_USELESS="false"
           done
+
           if [ "$IS_USELESS" = "true" ]; then
               mkdir -p /var/cache/kpkg/archives
               touch /var/cache/kpkg/archives/IS_USELESS
