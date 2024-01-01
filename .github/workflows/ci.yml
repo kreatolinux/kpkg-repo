@@ -98,7 +98,7 @@ jobs:
               exit 0
           fi
 
-          kpkg build ${{ matrix.packages }} --forceInstallAll=true --yes
+          kpkg build ${{ matrix.packages }} --yes #--forceInstallAll=true --yes
           #echo RANDOM_ID=$(cat /dev/urandom | tr -dc '[:alpha:]' | fold -w ${1:-20} | head -n 1) >> $GITHUB_ENV
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
           cd "$GITHUB_WORKSPACE"
