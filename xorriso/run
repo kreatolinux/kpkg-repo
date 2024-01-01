@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="1.5.7"
 SOURCES="https://www.gnu.org/software/xorriso/xorriso-$VERSION.tar.gz"
 DEPENDS="readline"
-SHA256SUM="867577c387f6b4a9a3224eb441ded8fb1638df6cbc060f8d1a1e5d00f318f502"
+SHA256SUM="07b955de7dded5a17bc89b0bc708bc0bc9b7b0199451e3e9095f4a7d646e4e6d"
 DESCRIPTION="GNU xorriso"
 
 build() {
