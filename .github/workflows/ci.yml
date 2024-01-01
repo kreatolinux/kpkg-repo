@@ -83,8 +83,19 @@ jobs:
           done
           kpkg build kpkg -y
           kpkg clean --binaries=true
+          
+          IS_USELESS="true"
+          for package in ${{ matrix.packages }}; do
+              kpkg install package || IS_USELESS="false"
+          done
+          if [ "$IS_USELESS" = "true" ]; then
+              mkdir -p /var/cache/kpkg/archives
+              touch /var/cache/kpkg/archives/IS_USELESS
+              exit 0
+          fi
+
           kpkg build ${{ matrix.packages }} --forceInstallAll=true --yes
-          echo RANDOM_ID=$(cat /dev/urandom | tr -dc '[:alpha:]' | fold -w ${1:-20} | head -n 1) >> $GITHUB_ENV
+          #echo RANDOM_ID=$(cat /dev/urandom | tr -dc '[:alpha:]' | fold -w ${1:-20} | head -n 1) >> $GITHUB_ENV
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
           cd "$GITHUB_WORKSPACE"
           git pull
@@ -97,6 +108,9 @@ jobs:
           SSH_KEY: ${{ secrets.SSH_KEY }}
           RSYNC_RSH: "ssh -o UserKnownHostsFile=/tmp/known_hosts"
         run: |
+          if [ -f "/var/cache/kpkg/archives/IS_USELESS" ]; then
+            exit 0
+          fi
           kpkg build rsync openssh --yes
           mkdir -p ~/.ssh
           eval $(ssh-agent)
