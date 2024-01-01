@@ -14,6 +14,9 @@ build() {
     if [ -d "/var/cache/kpkg/installed/dbus" ]; then
 	dbusEnable="enabled"
     fi
+   
+    # Fix for https://github.com/kreatolinux/kpkg-repo/actions/runs/7372713578/job/20061318876
+    export CFLAGS="$CFLAGS -ltinfow"
 
     meson setup \
       --prefix=/usr \
