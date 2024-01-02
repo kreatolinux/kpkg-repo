@@ -11,6 +11,8 @@ DESCRIPTION="Bluetooth protocol stack for Linux"
 build() {
     if command -v systemctl > /dev/null; then
 	extraArgs="--with-systemdsystemunitdir=/usr/lib/systemd/system --with-systemduserunitdir=/usr/lib/systemd/user"
+    else
+	extraArgs="--disable-systemd"
     fi
 
     kpkgConfigure $extraArgs \
