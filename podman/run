@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="podman"
 RELEASE="1"
-VERSION="4.8.2"
+VERSION="4.8.3"
 SOURCES="https://github.com/containers/podman/archive/refs/tags/v$VERSION.tar.gz"
 BUILD_DEPENDS="go"
 DEPENDS="libseccomp gpgme btrfs-progs conmon crun lvm2"
-SHA256SUM="994537a8535f3e4d2f03ced8b0dd58fda44c9d44cef6ba5bf15a970ddfeaf6f8"
+SHA256SUM="3a99b6c82644fa52929cf4143943c63d6784c84094892bc0e14197fa38a1c7fa"
 DESCRIPTION="A tool for managing OCI containers and pods"
 
 build() {
