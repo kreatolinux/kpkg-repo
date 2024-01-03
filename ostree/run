@@ -3,9 +3,10 @@ NAME="ostree"
 RELEASE="2"
 VERSION="2023.7"
 SOURCES="https://github.com/ostreedev/ostree/releases/download/v$VERSION/libostree-$VERSION.tar.xz"
-DEPENDS="xz-utils fuse e2fsprogs gpgme libarchive curl glib"
+DEPENDS="xz-utils fuse e2fsprogs gpgme libarchive curl glib libsoup"
 SHA256SUM="19cda718705f7ac8c018c939c38b1bb8412deaaa04862da98cd9fe9243f073bf"
 DESCRIPTION="Operating system and container binary deployment and upgrades"
+
 build() {
     kpkgConfigure --disable-man --with-curl --with-gpgme --prefix=/usr
     make
