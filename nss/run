@@ -8,6 +8,7 @@ SHA256SUM="c51e89f6fbb06163f4302e368eeb672d748b52d583948bdb15ef1b069237a496"
 DESCRIPTION="network stuff"
 
 build() {
+  cd nss
   if [ "$(uname -m)" = "x86_64" ]; then
     export USE_64=1
   else
@@ -25,6 +26,7 @@ build() {
 }
 
 package() {
+    cd nss
     # Taken from BLFS
     mkdir -p "$ROOT/usr/lib/pkgconfig" "$ROOT/usr/include/" "$ROOT/usr/bin"
     install -v -m755 Linux*/lib/*.so              $ROOT/usr/lib              
