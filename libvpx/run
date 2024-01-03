@@ -10,7 +10,7 @@ DESCRIPTION="Reference implementation of the VP8 Codec"
 build() {
     kpkgConfigure --prefix=/usr                   \
                 --disable-static                \
-                --enable-shared                 \
+                --enable-shared
     make
 }
 
