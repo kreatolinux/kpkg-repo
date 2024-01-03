@@ -4,6 +4,7 @@ RELEASE="1"
 VERSION="1.6"
 SOURCES="https://github.com/linux-nvme/libnvme/archive/refs/tags/v$VERSION.tar.gz"
 BUILD_DEPENDS="meson"
+DEPENDS="dbus"
 SHA256SUM="0dd8ba8b655abe78c09833edb66632aa6bee82aebf117dd252ded968deaaeec7"
 DESCRIPTION="libnvme"
 
