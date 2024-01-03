@@ -75,6 +75,9 @@ jobs:
 
       - name: Build packages
         run: |
+          
+          . /etc/profile
+
           chmod +x /tmp/chkupd/chkupd
           mkdir -p /etc/kpkg/repos
           ln -s "$GITHUB_WORKSPACE" /etc/kpkg/repos/main
