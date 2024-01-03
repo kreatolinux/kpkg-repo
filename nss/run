@@ -2,9 +2,9 @@
 NAME="nss"
 RELEASE="1"
 VERSION="3.96.1"
-SOURCES="https://archive.mozilla.org/pub/security/nss/releases/NSS_3_96_1_RTM/src/nss-3.96.1.tar.gz https://www.linuxfromscratch.org/patches/blfs/svn/nss-3.96.1-standalone-1.patch"
+SOURCES="https://archive.mozilla.org/pub/security/nss/releases/NSS_3_96_1_RTM/src/nss-3.96.1.tar.gz"
 DEPENDS="nspr sqlite p11-kit zlib"
-SHA256SUM="c51e89f6fbb06163f4302e368eeb672d748b52d583948bdb15ef1b069237a496 87bb1af0b11fd41311b9899187f6e4b3fca9940651123c7bc836ec7497d2da84"
+SHA256SUM="c51e89f6fbb06163f4302e368eeb672d748b52d583948bdb15ef1b069237a496"
 DESCRIPTION="network stuff"
 
 build() {
@@ -26,14 +26,45 @@ build() {
 }
 
 package() {
-    cd nss/dist
-    # Taken from BLFS
-    mkdir -p "$ROOT/usr/lib/pkgconfig" "$ROOT/usr/include/" "$ROOT/usr/bin"
-    install -v -m755 Linux*/lib/*.so              $ROOT/usr/lib              
-    install -v -m644 Linux*/lib/{*.chk,libcrmf.a} $ROOT/usr/lib              
-    install -v -m755 -d                           $ROOT/usr/include/nss      
-    cp -v -RL {public,private}/nss/*              $ROOT/usr/include/nss      
+   # From https://gitlab.archlinux.org/archlinux/packaging/packages/nss/-/commit/314bb55c3ab50a9951993c885e6d5df56f5b13a6
+   nsprver="$(pkg-config --modversion nspr)"
+   libdir=/usr/lib includedir=/usr/include/nss
 
-    install -v -m755 Linux*/bin/{certutil,nss-config,pk12util} $ROOT/usr/bin 
-    install -v -m644 Linux*/lib/pkgconfig/nss.pc  $ROOT/usr/lib/pkgconfig  
+  sed nss/pkg/pkg-config/nss.pc.in \
+    -e "s,%prefix%,/usr,g" \
+    -e "s,%exec_prefix%,\${prefix},g" \
+    -e "s,%libdir%,$libdir,g" \
+    -e "s,%includedir%,$includedir,g" \
+    -e "s,%NSPR_VERSION%,$nsprver,g" \
+    -e "s,%NSS_VERSION%,$pkgver,g" |
+    install -Dm644 /dev/stdin "$DESTDIR$libdir/pkgconfig/nss.pc"
+
+  ln -s nss.pc "$DESTDIR$libdir/pkgconfig/mozilla-nss.pc"
+
+  install -Dt "$DESTDIR$libdir" dist/Release/lib/*.so
+
+  { read vmajor; read vminor; read vpatch; } \
+    < <(awk '/#define.*NSS_V(MAJOR|MINOR|PATCH)/ {print $3}' nss/lib/nss/nss.h)
+
+  sed nss/pkg/pkg-config/nss-config.in \
+    -e "s,@prefix@,/usr,g" \
+    -e "s,@exec_prefix@,/usr,g" \
+    -e "s,@libdir@,$libdir,g" \
+    -e "s,@includedir@,$includedir,g" \
+    -e "s,@MOD_MAJOR_VERSION@,$vmajor,g" \
+    -e "s,@MOD_MINOR_VERSION@,$vminor,g" \
+    -e "s,@MOD_PATCH_VERSION@,$vpatch,g" |
+    install -D /dev/stdin "$DESTDIR/usr/bin/nss-config"
+
+  install -Dt "$DESTDIR/usr/bin" \
+    dist/Release/bin/{*util,shlibsign,signtool,signver,ssltap}
+
+  install -Dt "$DESTDIR$includedir" -m644 dist/public/nss/*.h
+
+  install -Dt "$DESTDIR/usr/share/man/man1" -m644 \
+    nss/doc/nroff/{*util,signtool,signver,ssltap}.1
+
+  # Replace built-in trust with p11-kit connection
+  ln -s pkcs11/p11-kit-trust.so "$DESTDIR$libdir/p11-kit-trust.so"
+  ln -sf p11-kit-trust.so "$DESTDIR$libdir/libnssckbi.so"
 }
