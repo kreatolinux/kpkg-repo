@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="6.5.2"
 SOURCES="https://www.mercurial-scm.org/release/mercurial-$VERSION.tar.gz"
 DEPENDS="python"
-BUILD_DEPENDS="gmake"
+BUILD_DEPENDS="gmake python-setuptools"
 SHA256SUM="afc39d7067976593c8332b8e97a12afd393b55037c5fb9c3cab1a42c7560f60a"
 DESCRIPTION="A free, distributed source control management tool"
 
