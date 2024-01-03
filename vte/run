@@ -9,7 +9,12 @@ SHA256SUM="8160ed2c9962f3b559bb73f8e4b51f62eff3221722d964a7955b097272d4c996"
 DESCRIPTION="Visual Terminal Emulator widget"
 
 build() {
-    meson setup \
+    
+    if ! [ -d "/var/cache/kpkg/installed/systemd" ]; then
+        extraArgs="-Dsystemd=false"
+    fi
+
+    meson setup $extraArgs \
     --prefix=/usr \
     --buildtype=release \
     -Ddocs=false \
