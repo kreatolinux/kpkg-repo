@@ -29,6 +29,8 @@ package() {
 postinstall() {
   # From BLFS
   groupadd -fg 27 polkitd &&
-  useradd -c "PolicyKit Daemon Owner" -d /etc/polkit-1 -u 27 \
-        -g polkitd -s /bin/false polkitd
+  if ! id -u "polkitd" >/dev/null 2>&1; then
+  	useradd -c "PolicyKit Daemon Owner" -d /etc/polkit-1 -u 27 \
+        	-g polkitd -s /bin/false polkitd
+  fi
 }
