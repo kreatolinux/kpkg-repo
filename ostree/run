@@ -8,8 +8,8 @@ SHA256SUM="19cda718705f7ac8c018c939c38b1bb8412deaaa04862da98cd9fe9243f073bf"
 DESCRIPTION="Operating system and container binary deployment and upgrades"
 
 build() {
-    
-    if ! [ -d "/var/cache/kpkg/installed/systemd" ]; then
+
+    if ! command -v systemctl > /dev/null; then
         extraArgs="--without-libsystemd"
     fi
 

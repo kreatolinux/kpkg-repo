@@ -10,7 +10,7 @@ DESCRIPTION="Visual Terminal Emulator widget"
 
 build() {
     
-    if ! [ -d "/var/cache/kpkg/installed/systemd" ]; then
+     if ! command -v systemctl > /dev/null; then
         extraArgs="-Dsystemd=false"
     fi
 
