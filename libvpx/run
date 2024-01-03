@@ -3,7 +3,7 @@ NAME="libvpx"
 RELEASE="1"
 VERSION="1.13.1"
 SOURCES="https://github.com/webmproject/libvpx/archive/v$VERSION/libvpx-$VERSION.tar.gz"
-BUILD_DEPENDS="nasm"
+BUILD_DEPENDS="nasm gnu-coreutils"
 SHA256SUM="00dae80465567272abd077f59355f95ac91d7809a2d3006f9ace2637dd429d14"
 DESCRIPTION="Reference implementation of the VP8 Codec"
 
