@@ -11,7 +11,7 @@ DESCRIPTION="Visual Terminal Emulator widget"
 build() {
     
      if ! command -v systemctl > /dev/null; then
-        extraArgs="-Dsystemd=false"
+        extraArgs="-D_systemd=false"
     fi
 
     meson setup $extraArgs \
