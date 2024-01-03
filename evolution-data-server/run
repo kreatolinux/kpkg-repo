@@ -5,7 +5,7 @@ VERSION="3.50.1"
 SOURCES="https://download.gnome.org/sources/evolution-data-server/3.50/evolution-data-server-$VERSION.tar.xz"
 BUILD_DEPENDS="cmake ninja gobject-introspection vala"
 DEPENDS="libical libsecret nss sqlite libgweather gtk3 libcanberra"
-OPTDEPENDS="webkitgtk4: for built-in OAuth2 authentications"
+OPTDEPENDS="webkitgtk4: for built-in OAuth2 authentications ;; gtk4: for gtk4 support"
 SHA256SUM="91f4ffc38a1b8d2fe8939834449ac541c0bff4a39b444edc2a9529344a28e98a"
 DESCRIPTION="evolution-data-server"
 
@@ -17,6 +17,10 @@ build() {
 
     if ! kpkg info webkitgtk4 > /dev/null; then
       extraArgs="$extraArgs -DENABLE_OAUTH2_WEBKITGTK4=OFF"
+    fi
+
+    if ! kpkg info gtk4 > /dev/null; then
+      extraArgs="$extraArgs -DENABLE_GTK4=OFF"
     fi
 
     # Flags taken from BLFS
