@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="libei"
 RELEASE="2"
-VERSION="1.1.0"
+VERSION="1.2.0"
 SOURCES="https://gitlab.freedesktop.org/libinput/libei/-/archive/$VERSION/libei-$VERSION.tar.gz"
 DEPENDS="elogind libxkbcommon libevdev python-attr python-jinja2 gdk-pixbuf"
 BUILD_DEPENDS="meson"
-SHA256SUM="23a6890ba1139249f5c9f6d33ce6be2ad04bd0236f339eeb62c7460cbd4932de"
+SHA256SUM="680f85d49968dd96dff6e4b97340669d4e04a8b6248fbe223cdf192e8fc9e3e8"
 DESCRIPTION="Library for Emulated Input"
 
 build() {
