@@ -12,7 +12,7 @@ build() {
     
     # Thanks for BLFS for the args https://www.linuxfromscratch.org/blfs/view/svn/basicnet/networkmanager.html
     if ! command -v systemctl > /dev/null; then
-      extraArgs = "-Dsystemd_journal=false -Dsystemdunitdir=no -Dsession_tracking=elogind"
+      extraArgs="-Dsystemd_journal=false -Dsystemdunitdir=no -Dsession_tracking=elogind"
     fi
 
     meson setup \
