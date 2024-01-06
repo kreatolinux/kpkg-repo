@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="bluez"
 RELEASE="1"
-VERSION="5.70"
+VERSION="5.71"
 SOURCES="https://mirrors.edge.kernel.org/pub/linux/bluetooth/bluez-$VERSION.tar.gz"
 DEPENDS="sbc libudev dbus glib libical"
 BACKUP="etc/bluetooth/main.conf"
-SHA256SUM="ccb48573488ab74f31865a7411fe7086f7c52b2a1f59eafd83410f5196b31705"
+SHA256SUM="c23e30cbe348a3c62dbd347a561370d105a48299c9ba6e65f4d62e9f6f003720"
 DESCRIPTION="Bluetooth protocol stack for Linux"
 
 build() {
