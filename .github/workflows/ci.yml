@@ -82,6 +82,9 @@ jobs:
           mkdir -p /etc/kpkg/repos
           ln -s "$GITHUB_WORKSPACE" /etc/kpkg/repos/main
           
+          # not necessary so we can force true this
+          kpkg update || true
+
           for package in ${{ matrix.packages }}; do
             /tmp/chkupd/chkupd repologyCheck --package="$package" --repo="$GITHUB_WORKSPACE" --autoUpdate=true
           done
