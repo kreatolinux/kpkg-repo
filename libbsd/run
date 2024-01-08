@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="libbsd"
 RELEASE="1"
-VERSION="0.11.7"
+VERSION="0.11.8"
 SOURCES="https://libbsd.freedesktop.org/releases/libbsd-$VERSION.tar.xz"
 DEPENDS="libmd"
-SHA256SUM="9baa186059ebbf25c06308e9f991fda31f7183c0f24931826d83aa6abd8a0261"
+SHA256SUM="55fdfa2696fb4d55a592fa9ad14a9df897c7b0008ddb3b30c419914841f85f33"
 DESCRIPTION="Useful functions commonly found on BSD systems, and lacking on others like GNU systems"
 
 build() {
