@@ -86,17 +86,19 @@ jobs:
           kpkg update || true
 
           for package in ${{ matrix.packages }}; do
-            . "$GITHUB_WORKSPACE/$package/run"
+              grep "NO_CHKUPD=" "$GITHUB_WORKSPACE/$package/run" > /tmp/sourced_chkupd || NO_CHKUPD=false
+              . /tmp/sourced_chkupd
             case $NO_CHKUPD in
                 "y" | "yes" | "true" | "1" | "on")
                     echo "no_chkupd enabled on $package"
-                    echo "skipping"
+                    echo "skipping autoupdate"
                 ;;
                 *)
                   /tmp/chkupd/chkupd repologyCheck --package="$package" --repo="$GITHUB_WORKSPACE" --autoUpdate=true
                 ;;
             esac
             unset NO_CHKUPD
+            rm -f /tmp/sourced_chkupd
           done
           
           kpkg build kpkg -y
