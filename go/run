@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="go"
 RELEASE="2"
-VERSION="1.21.5"
+VERSION="1.21.6"
 SOURCES="https://go.dev/dl/go$VERSION.src.tar.gz"
 BUILD_DEPENDS="wget"
 DEPENDS="git"
-SHA256SUM="285cbbdf4b6e6e62ed58f370f3f6d8c30825d6e56c5853c66d3c23bcdb09db19"
+SHA256SUM="124926a62e45f78daabbaedb9c011d97633186a33c238ffc1e25320c02046248"
 DESCRIPTION="Go is a statically typed, compiled programming language designed at Google"
 
 build() {
