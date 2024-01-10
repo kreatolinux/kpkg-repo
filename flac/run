@@ -9,8 +9,6 @@ SHA256SUM="6c58e69cd22348f441b861092b825e591d0b822e106de6eb0ee4d05d27205b70"
 DESCRIPTION="Free Lossless Audio Codec"
 
 build() {
-    cd flac-$VERSION
-    
     cmake -B build \
         -DCMAKE_INSTALL_PREFIX=/usr \
         -DBUILD_DOCS=0
@@ -19,6 +17,5 @@ build() {
 }
 
 package() {
-    cd flac-$VERSION
-    cmake --install $ROOT
+    cmake --install build
 }
