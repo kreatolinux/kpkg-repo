@@ -8,6 +8,7 @@ SHA256SUM="55402bb47ca6739d8aba25e41780905b5ce1bce0a5e0dd17dca908b5bc0b49b2"
 DESCRIPTION="The user-friendly command line shell."
 
 build() {
+    export CXXFLAGS="-ltinfow $CXXFLAGS"
 	cmake -S . -B build \
 		-DCMAKE_INSTALL_PREFIX=/usr \
 		-DCMAKE_INSTALL_SYSCONFDIR=/etc \
