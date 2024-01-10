@@ -9,6 +9,7 @@ DESCRIPTION="Vi Improved"
 
 build() {
     export CFLAGS="-ltinfow $CFLAGS"
+    export LDFLAGS="-ltinfow $LDFLAGS"
     kpkgConfigure \
     	--with-local-dir \
     	--prefix=/usr
