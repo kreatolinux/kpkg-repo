@@ -1,0 +1,18 @@
+#!/bin/sh
+NAME="rdfind"
+RELEASE="1"
+VERSION="1.6.0"
+SOURCES="https://github.com/pauldreik/rdfind/archive/refs/tags/releases/$VERSION.tar.gz"
+BUILD_DEPENDS="automake"
+SHA256SUM="9198d41c7a14bdf29c347570bab5001a56a4d23c1bc2e962115dccbc2d0d2265"
+DESCRIPTION="find duplicate files utility"
+
+build() {
+    ./bootstrap.sh
+    kpkgConfigure
+    make
+}
+
+package() {
+    make DESTDIR=$ROOT install
+}
