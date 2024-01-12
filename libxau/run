@@ -8,7 +8,7 @@ DEPENDS="xorgproto"
 DESCRIPTION="X11 authentication library"
 
 build() {
-    ./configure --prefix=/usr
+    kpkgConfigure --prefix=/usr
     make
 }
 

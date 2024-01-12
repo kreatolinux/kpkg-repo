@@ -8,7 +8,7 @@ SHA256SUM="7d550dccdfcd286e33895501829ed971eeb65c614e73aadb4a08aeef719b143a"
 DESCRIPTION="GLib stuff for D-Bus"
 
 build() {
-    ./configure --prefix=/usr   \
+    kpkgConfigure --prefix=/usr   \
                 --sysconfdir=/etc \
                 --disable-static
     make

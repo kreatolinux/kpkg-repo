@@ -5,7 +5,7 @@ VERSION="0.11.0"
 SOURCES="https://ziglang.org/download/$VERSION/zig-$VERSION.tar.xz"
 DEPENDS="llvm"
 BUILD_DEPENDS="cmake"
-SHA256SUM="ead029cfe474d9bf0413332d0e9d3bdfb5990cadce238f44f35ba32d92169295"
+SHA256SUM="72014e700e50c0d3528cef3adf80b76b26ab27730133e8202716a187a799e951"
 DESCRIPTION="A general-purpose programming language and toolchain for maintaining robust, optimal and reusable software."
 
 build() {

@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="45.0"
 SOURCES="https://download.gnome.org/sources/adwaita-icon-theme/45/adwaita-icon-theme-$VERSION.tar.xz"
 BUILD_DEPENDS="meson"
-DEPENDS="librsvg hicolor-icon-theme"
+DEPENDS="librsvg gtk3 hicolor-icon-theme"
 SHA256SUM="2442bfb06f4e6cc95bf6e2682fdff98fa5eddc688751b9d6215c623cb4e42ff1"
 DESCRIPTION="adwaita-icon-theme"
 

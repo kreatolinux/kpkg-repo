@@ -8,7 +8,7 @@ SHA256SUM="6b9a7cd29a12bb95598f5750e8763cee78836a1a207f85b74d8b3275b27e87ca"
 DESCRIPTION="Tool for translating XML documents with PO files"
 
 build() {
-    ./configure --prefix=/usr
+    kpkgConfigure --prefix=/usr
     make
 }
 

@@ -8,7 +8,7 @@ DEPENDS="xorgproto"
 DESCRIPTION="X Display Manager Control Protocol library"
 
 build() {
-    ./configure --prefix=/usr
+    kpkgConfigure --prefix=/usr
     make
 }
 

@@ -1,17 +1,16 @@
 #!/bin/sh
 NAME="libdrm"
 RELEASE="1"
-VERSION="2.4.116"
+VERSION="2.4.119"
 SOURCES="https://dri.freedesktop.org/libdrm/libdrm-$VERSION.tar.xz"
-BUILD_DEPENDS="samurai"
+BUILD_DEPENDS="meson"
 DEPENDS="libpciaccess"
-SHA256SUM="46c53f40735ea3d26d614297f155f6131a510624a24274f654f6469ca905339a"
+SHA256SUM="0a49f12f09b5b6e68eaaaff3f02ca7cff9aa926939b212d343161d3e8ac56291"
 DESCRIPTION="libdrm"
+
 build() {
-    mkdir build
-    cd build
-    meson --prefix=/usr --buildtype=release
-    ninja
+    meson setup --prefix=/usr --buildtype=release build/
+    ninja -C build
 }
 
 package() {

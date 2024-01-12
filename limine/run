@@ -1,14 +1,14 @@
 #!/bin/sh
 NAME="limine"
 RELEASE="1"
-VERSION="5.20231006.0"
+VERSION="6.20240107.0"
 SOURCES="https://github.com/limine-bootloader/limine/releases/download/v$VERSION/limine-$VERSION.tar.xz"
 DEPENDS="efibootmgr nasm"
-SHA256SUM="e759bc39a59d07260d5def19bff5cd6e3f6147708e691383af7b09c33d00e347"
+SHA256SUM="9376963769dc420e1004285c12bec6324de0812bf8b6776a1cebc96a64191dfe"
 DESCRIPTION="Modern, advanced, portable, multiprotocol bootloader."
 
 build() {
-    ./configure --prefix=/usr --enable-bios --enable-uefi-x86-64
+    kpkgConfigure --prefix=/usr --enable-bios --enable-uefi-x86-64
     make
 }
 

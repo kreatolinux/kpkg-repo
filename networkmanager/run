@@ -12,8 +12,11 @@ build() {
     
     # Thanks for BLFS for the args https://www.linuxfromscratch.org/blfs/view/svn/basicnet/networkmanager.html
     if ! command -v systemctl > /dev/null; then
-      extraArgs = "-Dsystemd_journal=false -Dsystemdunitdir=no -Dsession_tracking=elogind"
+      extraArgs="-Dsystemd_journal=false -Dsystemdsystemunitdir=no -Dsession_tracking=elogind"
     fi
+
+    # Fix for https://github.com/kreatolinux/kpkg-repo/actions/runs/7420376342/job/20191707004
+    export CFLAGS="$CFLAGS -ltinfow"
 
     meson setup \
     --prefix=/usr \

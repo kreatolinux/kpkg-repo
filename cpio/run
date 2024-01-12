@@ -9,7 +9,7 @@ DESCRIPTION="GNU cpio"
 REPO_DIR="/etc/kpkg/repos/main"
 build() {
     patch -p1 < $REPO_DIR/$NAME/patches/0001-src-global.c-drop-duplicate-definition-of-program_na.patch
-    ./configure --prefix=/usr
+    kpkgConfigure --prefix=/usr
     make
 }
 

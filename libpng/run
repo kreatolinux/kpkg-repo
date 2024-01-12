@@ -8,7 +8,7 @@ SHA256SUM="62d25af25e636454b005c93cae51ddcd5383c40fa14aa3dae8f6576feb5692c2"
 DESCRIPTION="PNG library"
 
 build() {
-    ./configure --prefix=/usr    \
+    kpkgConfigure --prefix=/usr    \
             --disable-static
     make
 }

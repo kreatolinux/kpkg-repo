@@ -7,7 +7,7 @@ DEPENDS="openssl"
 SHA256SUM="81542f5cefb8faacc39bbbc6c82ded80e3e4a88505ae72ea51df27525bcde04c"
 DESCRIPTION="Network utility to retrieve files from the Web"
 build() {
-    ./configure --prefix=/usr --with-ssl=openssl
+    kpkgConfigure --prefix=/usr --with-ssl=openssl
     make
 }
 

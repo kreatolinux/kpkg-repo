@@ -14,7 +14,7 @@ build() {
       extraArgs="--enable-64bit"
     fi
 
-    ./configure --prefix=/usr \
+    kpkgConfigure --prefix=/usr \
                 --with-pthreads \
                 --with-mozilla $extraArgs
     make

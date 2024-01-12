@@ -15,7 +15,7 @@ build() {
     fi
     
     # Args gotten from blfs
-    ./configure $extraArgs \
+    kpkgConfigure $extraArgs \
     --prefix=/usr \
     --sysconfdir=/etc \
     --localstatedir=/var \

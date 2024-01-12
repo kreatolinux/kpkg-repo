@@ -9,7 +9,7 @@ BUILD_DEPENDS="xtrans"
 DESCRIPTION="X11 font rasterisation library"
 
 build() {
-    ./configure \
+    kpkgConfigure \
         --prefix=/usr \
         --sysconfdir=/etc \
         --disable-static

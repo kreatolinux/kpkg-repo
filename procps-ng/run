@@ -10,7 +10,7 @@ DESCRIPTION="procps"
 
 build() {
     ./autogen.sh
-    ./configure --prefix=/usr
+    kpkgConfigure --prefix=/usr
     make
 }
 

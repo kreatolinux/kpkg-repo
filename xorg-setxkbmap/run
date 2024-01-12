@@ -8,7 +8,7 @@ DEPENDS="libxrandr libxkbfile"
 DESCRIPTION="Utility to set the keyboard layout using XKB"
 
 build() {
-    ./configure \
+    kpkgConfigure \
         --prefix=/usr \
         --disable-static
     make

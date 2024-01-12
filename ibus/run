@@ -14,7 +14,7 @@ build() {
     fi
     
     # From BLFS
-    ./configure $extraArgs --prefix=/usr \
+    kpkgConfigure $extraArgs --prefix=/usr \
                 --sysconfdir=/etc \
                 --disable-python2 \
                 --disable-gtk2 \

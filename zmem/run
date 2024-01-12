@@ -1,0 +1,16 @@
+#!/bin/sh
+NAME="zmem"
+RELEASE="1"
+VERSION="0.2.1"
+SOURCES="https://github.com/xeome/Zmem/archive/refs/tags/v$VERSION.zip"
+BUILD_DEPENDS="rust"
+SHA256SUM="bed2ab060c07bc89d0cf69899f47052535313249d5880140e50739a5b2cac5ad"
+DESCRIPTION="is a Linux memory monitoring program that displays detailed information about virtual memory."
+
+build() {
+	cargo build --release
+}
+
+package() {
+	install -Dm755 target/release/zmem "$ROOT/usr/bin/zmem"
+}

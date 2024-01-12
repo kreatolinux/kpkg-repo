@@ -8,7 +8,7 @@ SHA256SUM="4b352d0f7ec384e332e3e44cdbfdcd5ff2d594af3c8296b5636c710975149e23"
 DESCRIPTION="The Ruby language"
 
 build() {
-    ./configure --prefix=/usr \
+    kpkgConfigure --prefix=/usr \
                 --enable-shared \
                 --without-baseruby \
                 --without-valgrind 

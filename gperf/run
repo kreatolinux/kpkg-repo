@@ -7,7 +7,7 @@ DEPENDS=""
 SHA256SUM="588546b945bba4b70b6a3a616e80b4ab466e3f33024a352fc2198112cdbb3ae2"
 DESCRIPTION="gperf"
 build() {
-    ./configure --prefix=/usr
+    kpkgConfigure --prefix=/usr
     make
 }
 

@@ -8,7 +8,7 @@ SHA256SUM="a271ae6d732f6f4d80c258ad9ee88dd9c94c8fdc33c3e45328c4d7c126bd219d"
 DESCRIPTION="GNU Privacy Guard"
 
 build() {
-    ./configure --disable-dirmngr --prefix=/usr
+    kpkgConfigure --disable-dirmngr --prefix=/usr
     make -j$(nproc)
 }
 

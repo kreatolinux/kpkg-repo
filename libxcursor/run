@@ -8,7 +8,7 @@ DEPENDS="libxfixes libxrender"
 DESCRIPTION="libxcursor"
 
 build() {
-    ./configure \
+    kpkgConfigure \
         --sysconfdir=/etc \
         --prefix=/usr \
         --disable-static

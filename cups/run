@@ -15,7 +15,7 @@ build() {
       extraArgs="--disable-systemd"
     fi
     
-    ./configure $extraArgs --prefix=/usr
+    kpkgConfigure $extraArgs --prefix=/usr
     make
 }
 

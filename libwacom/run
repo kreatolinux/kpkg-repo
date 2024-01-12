@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="2.8.0"
 SOURCES="https://github.com/linuxwacom/libwacom/releases/download/libwacom-$VERSION/libwacom-$VERSION.tar.xz"
 BUILD_DEPENDS="meson"
-DEPENDS="libgudev libxml2"
+DEPENDS="libgudev libxml2 libevdev"
 SHA256SUM="bb04b12c8688d0ff6a108d47a38d2057d572c4d7227d78138abd5fd0ba59f215"
 DESCRIPTION="Library for Wacom tablets"
 

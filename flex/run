@@ -8,7 +8,7 @@ SHA256SUM="e87aae032bf07c26f85ac0ed3250998c37621d95f8bd748b31f15b33c45ee995"
 DESCRIPTION="The Fast Lexical Analyzer - scanner generator for lexing in C and C++"
 
 build() {
-    ./configure --prefix=/usr 
+    kpkgConfigure --prefix=/usr 
     make -j$(nproc)
 }
 

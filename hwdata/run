@@ -1,15 +1,15 @@
 #!/bin/sh
 NAME="hwdata"
 RELEASE="1"
-VERSION="0.375"
+VERSION="0.378"
 SOURCES="https://github.com/vcrhonek/hwdata/archive/refs/tags/v$VERSION.tar.gz"
 BUILD_DEPENDS="gmake"
 DEPENDS=""
-SHA256SUM="69ffbfe4801c12c2d66d51f98044beec35afa406b1baa619c57b25a9b62b43a0"
+SHA256SUM="098ea8db12a50290f4b23f7f521edf9c5bab25935d2740de17e4a487110b40c8"
 DESCRIPTION="hwdata contains various hardware identification and configuration data, such as the pci.ids and usb.ids databases."
 
 build() {
-    ./configure --prefix=/usr
+    kpkgConfigure --prefix=/usr
     sed -i 's/-T//g' -i Makefile
 }
 

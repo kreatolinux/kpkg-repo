@@ -7,7 +7,7 @@ DEPENDS="perl autoconf"
 SHA256SUM="07bd24ad08a64bc17250ce09ec56e921d6343903943e99ccf63bbf0705e34605"
 DESCRIPTION="GNU Automake"
 build() {
-    ./configure --prefix=/usr 
+    kpkgConfigure --prefix=/usr 
     make
 }
 

@@ -7,77 +7,148 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: self-hosted
-    timeout-minutes: 11520
-
+  init:
+    runs-on: ubuntu-latest
+    container: ghcr.io/kreatolinux/builder-aarch64-cross-gnu
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
       
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
-      
-      # Runs a single command using the runners shell
-      - name: Check all packages against Repology
+      - name: Initialize chkupd 
+        id: set-matrix
         run: |
-          export DOCKER_DEFAULT_PLATFORM=linux/amd64
           rm -rf src
           git clone https://github.com/kreatolinux/src
           cd src
-          if [ "$(uname -m)" = "aarch64" ]; then
-            wget https://github.com/nim-lang/nightlies/releases/download/latest-devel/linux_arm64.tar.xz
-            tar -xvf linux_arm64.tar.xz
-            cd nim-*
-            sudo mkdir -p "/usr/include" "/usr/bin" "/etc/nim" "/usr/lib/nim"
-            sudo cp -r lib/ "/usr/lib/nim"
-            sudo cp -r compiler/ "/usr/lib/nim"
-            sudo cp -rf config/* -t "/etc/nim"
-            sudo cp -rf bin/* -t "/usr/bin"
-            sudo cp -rf "/usr/lib/nim/"*.h "/usr/include"
-            sudo rm -rf "/nim"
-            cd ..
-            rm -rf nim* linux_arm64.tar.xz
-          fi
           sed -i s/stable/master/g Makefile
           nimble install cligen fuzzy libsha -y
-          make chkupd
-          mv scripts/jsontomd.sh /tmp/
+          ./build.sh -d -p "chkupd"
           mv out/chkupd /tmp/
           cd ..
           rm -rf src
           cd /tmp/
-          sudo ./chkupd cleanUp -v
-          ./chkupd checkAll --jsonPath=/tmp/chkupd.json --repo="$GITHUB_WORKSPACE"
-          bash jsontomd.sh /tmp/chkupd.json > /tmp/chkupd.md
-    
-      - name: Check all packages against Arch Repositories
-        run: |
-          export DOCKER_DEFAULT_PLATFORM=linux/amd64
-          cd /tmp/
-          ./chkupd checkAll --jsonPath=/tmp/chkupd.json --backend="arch" --repo="$GITHUB_WORKSPACE"
-          echo "# Arch check results" >> /tmp/chkupd.md
-          bash jsontomd.sh /tmp/chkupd.json >> /tmp/chkupd.md
-          rm -rf chkupd jsontomd.sh
-          
-          
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v5.0.2
-        with:
-          commit-message: "[CI] Automated update by chkupd"
-          body-path: /tmp/chkupd.md
-          
+          ./chkupd generateJson --repo="$GITHUB_WORKSPACE" --output="/tmp/out1.json"
+          echo "matrix=$(cat /tmp/out1.json)" >> $GITHUB_OUTPUT
       
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@master
         with:
-          name: json
-          path: /tmp/chkupd.json
+          name: chkupd-bin
+          path: /tmp/chkupd
+
+        #- name:  
+          #- name: Check all packages against Arch Repositories
+          #run: |
+          #export DOCKER_DEFAULT_PLATFORM=linux/amd64
+          #cd /tmp/
+          #./chkupd checkAll --jsonPath=/tmp/chkupd.json --backend="arch" --repo="$GITHUB_WORKSPACE"
+          #echo "# Arch check results" >> /tmp/chkupd.md
+          #./out/chkupd jsonToMd /tmp/chkupd.json >> /tmp/chkupd.md
+          #rm -rf chkupd
           
-      - uses: actions/upload-artifact@v3
+          
+            #- name: Create Pull Request
+            #uses: peter-evans/create-pull-request@v5.0.2
+            #with:
+            #commit-message: "[CI] Automated update by chkupd"
+
+  build:
+    needs: init
+    runs-on: ubuntu-latest
+    container: ghcr.io/kreatolinux/builder
+    strategy:
+      fail-fast: false
+      matrix:  ${{fromJson(needs.init.outputs.matrix)}}
+    permissions:
+      contents: write
+    steps:
+
+      - uses: actions/download-artifact@v4
         with:
-          name: logs
-          path: /tmp/failed-log-*.log
+          name: chkupd-bin
+          path: /tmp/chkupd
+
+      - uses: actions/checkout@v3
+
+      - name: Build packages
+        run: |
+          
+          . /etc/profile
+
+          chmod +x /tmp/chkupd/chkupd
+          mkdir -p /etc/kpkg/repos
+          ln -s "$GITHUB_WORKSPACE" /etc/kpkg/repos/main 
+
+          # not necessary so we can force true these
+          git config --global --add safe.directory "$GITHUB_WORKSPACE" || true
+          kpkg update || true
+
+          for package in ${{ matrix.packages }}; do
+              grep "NO_CHKUPD=" "$GITHUB_WORKSPACE/$package/run" > /tmp/sourced_chkupd || NO_CHKUPD=false
+              . /tmp/sourced_chkupd
+            case $NO_CHKUPD in
+                "y" | "yes" | "true" | "1" | "on")
+                    echo "no_chkupd enabled on $package"
+                    echo "skipping autoupdate"
+                ;;
+                *)
+                  /tmp/chkupd/chkupd repologyCheck --package="$package" --repo="$GITHUB_WORKSPACE" --autoUpdate=true
+                ;;
+            esac
+            unset NO_CHKUPD
+            rm -f /tmp/sourced_chkupd
+          done
+          
+          kpkg build kpkg -y
+          kpkg clean --binaries=true
+          
+          IS_USELESS="true"
+          
+          for package in ${{ matrix.packages }}; do
+              kpkg install "$package" -y || IS_USELESS="false"
+          done
+
+          if [ "$IS_USELESS" = "true" ]; then
+              mkdir -p /var/cache/kpkg/archives
+              touch /var/cache/kpkg/archives/IS_USELESS
+              exit 0
+          fi
+
+          kpkg build ${{ matrix.packages }} --yes #--forceInstallAll=true --yes
+          #echo RANDOM_ID=$(cat /dev/urandom | tr -dc '[:alpha:]' | fold -w ${1:-20} | head -n 1) >> $GITHUB_ENV
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          cd "$GITHUB_WORKSPACE"
+          git pull
+    
+      - name: Upload to server through rsync
+        env:
+          KNOWN_HOSTS: ${{ secrets.KNOWN_HOSTS }}
+          SSH_URL: ${{ secrets.SSH_URL }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+          RSYNC_RSH: "ssh -o UserKnownHostsFile=/tmp/known_hosts"
+        run: |
+          if [ -f "/var/cache/kpkg/archives/IS_USELESS" ]; then
+            exit 0
+          fi
+          kpkg build rsync openssh --yes
+          mkdir -p ~/.ssh
+          eval $(ssh-agent)
+          echo "$SSH_KEY" | ssh-add -
+          echo "$KNOWN_HOSTS" >> /tmp/known_hosts
+          rsync -avc /var/cache/kpkg/archives/ $SSH_USER@$SSH_URL:/var/cache/kpkg/archives/
+          rsync -avc /var/cache/kpkg/sources/ $SSH_USER@$SSH_URL:/var/cache/kpkg/sources/
+
+
+      #- uses: actions/upload-artifact@v4
+      #  with:
+      #    name: packages-${{ env.RANDOM_ID }}
+      #    path: /var/cache/kpkg/archives/arch
+      #    retention-days: 2
+      
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Apply auto-update through chkupd

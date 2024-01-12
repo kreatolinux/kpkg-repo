@@ -13,7 +13,7 @@ build() {
   mkdir firefox-$VERSION/obj
   cd firefox-$VERSION/obj
   # Add CC=clang so it overrides the cc set by the user in the configuration file as it may cause problems.
-  CC=clang CXX=clang++ sh ../js/src/configure \
+  CC=clang CXX=clang++ sh ../js/srkpkgConfigure \
                           --prefix=/usr \
                           --with-intl-api          \
                           --with-system-zlib       \

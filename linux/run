@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="linux"
 RELEASE="7"
-VERSION="6.5.7"
-SOURCES="https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$VERSION.tar.xz https://github.com/projg2/fedora-kernel-config-for-gentoo/raw/6.5.2-gentoo/kernel-x86_64-fedora.config settings.config"
-BUILD_DEPENDS="libelf xz-utils gmake"
+VERSION="6.7"
+SOURCES="https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$VERSION.tar.xz https://github.com/projg2/fedora-kernel-config-for-gentoo/raw/6.5.8-gentoo/kernel-x86_64-fedora.config settings.config"
+BUILD_DEPENDS="flex libelf xz-utils gmake"
 DEPENDS="kmod"
-SHA256SUM="0d09ea448005c9cfe5383e4c72a872b39188b928f8c44e146b03b1b7851fbb8c db3fdcfc55712c93728bc25d3846b9a9c66bf61bbed85efb0562879567a0c9a1 04f33434bb1b16b2a38e3a36d6ce59e0bf032db6954d4a71d07d8f3f5ab37e4c"
+SHA256SUM="ef31144a2576d080d8c31698e83ec9f66bf97c677fa2aaf0d5bbb9f3345b1069 de77bf376569a4c521e7eefea3181d3e44bbdb65cc9bce5a91fd6af09c6a6ad4 04f33434bb1b16b2a38e3a36d6ce59e0bf032db6954d4a71d07d8f3f5ab37e4c"
 DESCRIPTION="The Linux kernel and headers"
 
 prepare() {
@@ -28,6 +28,21 @@ package_linux_headers() {
     cd linux-$VERSION
     mkdir -p $ROOT/usr
     cp -rv usr/include $ROOT/usr/
+}
+
+build_aarch64_linux_gnu_linux_headers() {
+    cd linux-$VERSION
+    make ARCH=arm64 mrproper
+    make ARCH=arm64 headers
+    find usr/include -name '.*' -delete
+    rm usr/include/Makefile
+}
+
+package_aarch64_linux_gnu_linux_headers() {
+    TARGET="aarch64-linux-gnu"
+    cd linux-$VERSION
+    mkdir -p $ROOT/usr/aarch64-linux-gnu
+    cp -rv usr/include/ $ROOT/usr/aarch64-linux-gnu
 }
 
 build() {

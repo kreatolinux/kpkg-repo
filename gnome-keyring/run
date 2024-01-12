@@ -11,7 +11,7 @@ build() {
     # From BLFS
     sed -i 's:"/desktop:"/org:' schema/*.xml
 
-    ./configure --prefix=/usr     \
+    kpkgConfigure --prefix=/usr     \
                 --sysconfdir=/etc \
                 --disable-static \
                 --with-pam-dir=/usr/lib/security \

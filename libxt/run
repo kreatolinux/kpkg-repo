@@ -8,7 +8,7 @@ DEPENDS="libx11 libsm"
 DESCRIPTION="X11 library"
 
 build() {
-    ./configure \
+    kpkgConfigure \
         --prefix=/usr \
         --disable-static
     make

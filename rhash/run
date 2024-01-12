@@ -7,7 +7,7 @@ SHA256SUM="8e7d1a8ccac0143c8fe9b68ebac67d485df119ea17a613f4038cda52f84ef52a"
 DESCRIPTION="Great utility for computing hash sums"
 
 build() {
-    ./configure --prefix=/usr
+    kpkgConfigure --prefix=/usr
     make
 }
 

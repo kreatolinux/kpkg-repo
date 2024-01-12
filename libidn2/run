@@ -7,7 +7,7 @@ DEPENDS="libunistring"
 SHA256SUM="93caba72b4e051d1f8d4f5a076ab63c99b77faee019b72b9783b267986dbb45f"
 DESCRIPTION="libidn2"
 build() {
-    ./configure --prefix=/usr \
+    kpkgConfigure --prefix=/usr \
 	    	--disable-static
     make
 }

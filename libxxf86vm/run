@@ -8,7 +8,7 @@ DEPENDS="libxext xorgproto"
 DESCRIPTION="X11 library"
 
 build() {
-    ./configure \
+    kpkgConfigure \
         --prefix=/usr \
         --disable-static
     make
