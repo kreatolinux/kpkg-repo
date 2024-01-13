@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="js115"
 RELEASE="1"
-VERSION="115.2.0"
+VERSION="115.6.0"
 SOURCES="https://archive.mozilla.org/pub/firefox/releases/$VERSIONesr/source/firefox-$VERSIONesr.source.tar.xz https://d2mfgivbiy2fiw.cloudfront.net/file/data/dwvheoep6ib2aent45rl/PHID-FILE-4kcbyqqwsaxixpwxszyd/D190288.1705253813.diff"
 DEPENDS="readline zlib icu"
 BUILD_DEPENDS="rust python llvm which"
