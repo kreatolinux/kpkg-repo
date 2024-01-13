@@ -9,5 +9,5 @@ SHA256SUM="1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"
 DESCRIPTION="Python 2 and 3 compatibility utilities"
 
 package() {
-    pip install . --optimize=1 --prefix=/usr --root="$ROOT"
+    pip install . --prefix=/usr --root="$ROOT"
 }
