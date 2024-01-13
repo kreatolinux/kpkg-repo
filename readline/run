@@ -1,6 +1,6 @@
 #!/bin/sh
 NAME="readline"
-RELEASE="1"
+RELEASE="2"
 VERSION="8.2"
 SOURCES="https://ftp.gnu.org/gnu/readline/readline-$VERSION.tar.gz"
 DEPENDS="ncurses"
@@ -8,9 +8,10 @@ SHA256SUM="3feb7171f16a84ee82ca18a36d7b9be109a52c04f492a053331d7d1095007c35"
 DESCRIPTION="GNU readline"
 
 build() {
-    kpkgConfigure --prefix=/usr --with-shared 
+    kpkgConfigure --prefix=/usr
+    make SHLIB_LIBS="-lncurses"
 }
 
 package() {
-    make DESTDIR=$ROOT SHLIB_LIBS="-L/tools/lib -lncursesw" install
+    make DESTDIR=$ROOT SHLIB_LIBS="-lncurses" install
 }
