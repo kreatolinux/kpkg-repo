@@ -1,6 +1,6 @@
 #!/bin/sh
 NAME="ncurses"
-RELEASE="1"
+RELEASE="2"
 VERSION="6.4"
 SOURCES="https://ftp.gnu.org/gnu/ncurses/ncurses-$VERSION.tar.gz"
 DEPENDS=""
@@ -22,9 +22,8 @@ build() {
     --enable-widec \
     --without-ada \
     --without-tests \
-    --with-termlib \
     --without-debug \
-    --without-cxx-binding
+    --with-cxx-shared
 
     make
 }
@@ -34,7 +33,7 @@ package() {
     mkdir -p "$ROOT/usr/lib"
     for lib in ncurses form panel menu; do
     	rm -f "$ROOT/usr/lib/lib${lib}.so"
-   	printf '%s\n' "INPUT(-l${lib}w)" > "$ROOT/usr/lib/lib${lib}.so"
+   	    printf '%s\n' "INPUT(-l${lib}w)" > "$ROOT/usr/lib/lib${lib}.so"
     	chmod 755 "$ROOT/usr/lib/lib${lib}.so"
     	ln -sf "lib${lib}w.a" "$ROOT/usr/lib/lib${lib}.a"
      done
@@ -42,4 +41,11 @@ package() {
     # Some packages look for libcurses instead of libncurses when building.
     printf '%s\n' "INPUT(-lncursesw)" > "$ROOT/usr/lib/libcursesw.so"
     ln -s libncurses.so "$ROOT/usr/lib/libcurses.so"
+
+    # tic and ticinfo functionality is built in by default
+    # make sure that anything linking against it links against libncursesw.so instead
+    for lib in tic tinfo tinfow; do
+      printf "INPUT(-lncursesw)" > "$DESTDIR/usr/lib/lib${lib}.so"
+      ln -sv ncursesw.pc "$DESTDIR/usr/lib/pkgconfig/${lib}.pc"
+    done
 }
