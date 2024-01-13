@@ -18,7 +18,6 @@ build() {
   # Thanks to BLFS for configure arguments: https://www.linuxfromscratch.org/blfs/view/svn/general/js102.html
   mkdir firefox-$VERSION/obj
   cd firefox-$VERSION/obj
-  export CFLAGS="$CFLAGS -ltinfow"
   # Add CC=clang so it overrides the cc set by the user in the configuration file as it may cause problems.
   CC=clang CXX=clang++ sh ../js/src/configure \
                           --prefix=/usr \
