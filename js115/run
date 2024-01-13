@@ -2,10 +2,10 @@
 NAME="js115"
 RELEASE="1"
 VERSION="115.6.0"
-SOURCES="https://archive.mozilla.org/pub/firefox/releases/$VERSIONesr/source/firefox-$VERSIONesr.source.tar.xz https://d2mfgivbiy2fiw.cloudfront.net/file/data/dwvheoep6ib2aent45rl/PHID-FILE-4kcbyqqwsaxixpwxszyd/D190288.1705253813.diff"
+SOURCES="https://archive.mozilla.org/pub/firefox/releases/$VERSIONesr/source/firefox-$VERSIONesr.source.tar.xz patches/D190288.1705253813.diff"
 DEPENDS="readline zlib icu"
 BUILD_DEPENDS="rust python llvm which"
-SHA256SUM="66d7e6e5129ac8e6fe83e24227dc7bb8dc42650bc53b21838e614de80d22bc66 bd38c86d631e4e03be6e3acab91166603cd4dbd115ba65e0799a2e36584c93bb"
+SHA256SUM="66d7e6e5129ac8e6fe83e24227dc7bb8dc42650bc53b21838e614de80d22bc66 6b2ceafcc2b64f52e8e38449ab95fd3970493d4e00ffe377f22287ca1f7e6759"
 DESCRIPTION="Spidermonkey JavaScript and WebAssembly Engine"
 
 prepare() {
