@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="libpsl"
 RELEASE="1"
-VERSION="0.21.2"
+VERSION="0.21.5"
 SOURCES="https://github.com/rockdaboot/libpsl/releases/download/$VERSION/libpsl-$VERSION.tar.gz"
 BUILD_DEPENDS="meson"
 DEPENDS="libidn2 libunistring"
-SHA256SUM="e35991b6e17001afa2c0ca3b10c357650602b92596209b7492802f3768a6285f"
+SHA256SUM="1dcc9ceae8b128f3c0b3f654decd0e1e891afc6ff81098f227ef260449dae208"
 DESCRIPTION="libpsl"
 
 build() {
