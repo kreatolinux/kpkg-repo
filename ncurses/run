@@ -48,7 +48,7 @@ package() {
     # make sure that anything linking against it links against libncursesw.so instead
     for lib in tic tinfo tinfow; do
       printf "INPUT(-lncursesw)" > "$DESTDIR/usr/lib/lib${lib}.so"
-      ln -s /usr/lib/lib${lib}.so /usr/lib/lib${lib}.so."$MAJOR_VERSION"
+      ln -s /usr/lib/libncursesw.so."$MAJOR_VERSION" /usr/lib/lib${lib}.so."$MAJOR_VERSION"
       ln -sv ncursesw.pc "$DESTDIR/usr/lib/pkgconfig/${lib}.pc"
     done
 }
