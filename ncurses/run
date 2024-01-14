@@ -42,10 +42,13 @@ package() {
     printf '%s\n' "INPUT(-lncursesw)" > "$ROOT/usr/lib/libcursesw.so"
     ln -s libncurses.so "$ROOT/usr/lib/libcurses.so"
 
+    MAJOR_VERSION="$(echo $VERSION | cut -d '.' -f 1)"
+
     # tic and ticinfo functionality is built in by default
     # make sure that anything linking against it links against libncursesw.so instead
     for lib in tic tinfo tinfow; do
       printf "INPUT(-lncursesw)" > "$DESTDIR/usr/lib/lib${lib}.so"
+      ln -s /usr/lib/lib${lib}.so /usr/lib/lib${lib}.so."$MAJOR_VERSION"
       ln -sv ncursesw.pc "$DESTDIR/usr/lib/pkgconfig/${lib}.pc"
     done
 }
