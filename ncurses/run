@@ -1,9 +1,8 @@
 #!/bin/sh
 NAME="ncurses"
-RELEASE="2"
+RELEASE="3"
 VERSION="6.4"
 SOURCES="https://ftp.gnu.org/gnu/ncurses/ncurses-$VERSION.tar.gz"
-DEPENDS=""
 SHA256SUM="6931283d9ac87c5073f30b6290c4c75f21632bb4fc3603ac8100812bed248159"
 DESCRIPTION="ncurses library allows you to make TUI applications."
 
@@ -48,7 +47,7 @@ package() {
     # make sure that anything linking against it links against libncursesw.so instead
     for lib in tic tinfo tinfow; do
       printf "INPUT(-lncursesw)" > "$DESTDIR/usr/lib/lib${lib}.so"
-      ln -s /usr/lib/libncursesw.so."$MAJOR_VERSION" /usr/lib/lib${lib}.so."$MAJOR_VERSION"
+      ln -s /usr/lib/libncursesw.so."$MAJOR_VERSION" "$DESTDIR"/usr/lib/lib${lib}.so."$MAJOR_VERSION"
       ln -sv ncursesw.pc "$DESTDIR/usr/lib/pkgconfig/${lib}.pc"
     done
 }
