@@ -8,8 +8,6 @@ SHA256SUM="abe876bb18554bb1eb69d23eaabe89caabeef182737e9e8bfa4cc298dee061df"
 DESCRIPTION="Vi Improved"
 
 build() {
-    export CFLAGS="-ltinfow $CFLAGS"
-    export LDFLAGS="-ltinfow $LDFLAGS"
     kpkgConfigure \
     	--with-local-dir \
     	--prefix=/usr

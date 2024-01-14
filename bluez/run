@@ -15,8 +15,6 @@ build() {
 	extraArgs="--disable-systemd"
     fi
 	
-    export CFLAGS="$CFLAGS -ltinfow"
-
     kpkgConfigure $extraArgs \
 	    --prefix=/usr \
 	    --with-udevdir=/usr/lib/udev/rules.d \

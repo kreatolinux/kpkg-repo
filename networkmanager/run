@@ -15,9 +15,6 @@ build() {
       extraArgs="-Dsystemd_journal=false -Dsystemdsystemunitdir=no -Dsession_tracking=elogind"
     fi
 
-    # Fix for https://github.com/kreatolinux/kpkg-repo/actions/runs/7420376342/job/20191707004
-    export CFLAGS="$CFLAGS -ltinfow"
-
     meson setup \
     --prefix=/usr \
     --buildtype=release \
