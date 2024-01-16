@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="vim"
 RELEASE="1"
-VERSION="9.1.0029"
+VERSION="9.1.0031"
 SOURCES="https://github.com/vim/vim/archive/refs/tags/v$VERSION.tar.gz"
 DEPENDS="ncurses"
-SHA256SUM="e1c2bbb7f37aafd39e7e827af0b357af08d290604b6fcccc8acba85a390dfcd4"
+SHA256SUM="da27c73792e670e7ab0046de5dd2a898b91e1d238377aacebfbf05563a7fc457"
 DESCRIPTION="Vi Improved"
 
 build() {
