@@ -80,11 +80,7 @@ jobs:
 
           chmod +x /tmp/chkupd/chkupd
           mkdir -p /etc/kpkg/repos
-          ln -s "$GITHUB_WORKSPACE" /etc/kpkg/repos/main 
-
-          # not necessary so we can force true these
-          git config --global --add safe.directory "$GITHUB_WORKSPACE" || true
-          kpkg update || true
+          ln -s "$GITHUB_WORKSPACE" /etc/kpkg/repos/main
 
           for package in ${{ matrix.packages }}; do
               grep "NO_CHKUPD=" "$GITHUB_WORKSPACE/$package/run" > /tmp/sourced_chkupd || NO_CHKUPD=false
