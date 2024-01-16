@@ -1,11 +1,12 @@
 #!/bin/sh
 NAME="flatpak"
 RELEASE="2"
-VERSION="1.15.4"
+VERSION="1.14.5"
 SOURCES="https://github.com/flatpak/flatpak/releases/download/$VERSION/flatpak-$VERSION.tar.xz"
 BUILD_DEPENDS="meson"
+NO_CHKUPD="true"
 DEPENDS="appstream libseccomp polkit libxau xdg-dbus-proxy bubblewrap json-glib ostree gdk-pixbuf python-pyparsing fuse libxml2 glib gpgme"
-SHA256SUM="bef695d893d1e0239a68441d6b328edeb6d1e58a902c92f9278e94da914ab91f"
+SHA256SUM="5b70c64ce7ac134e1ea08011256e423ae5c54f277297441583f77d013f27ffac"
 DESCRIPTION="Linux application sandboxing and distribution framework"
 
 build() {
