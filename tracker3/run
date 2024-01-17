@@ -10,10 +10,14 @@ DESCRIPTION="An efficient search engine and triplestore for desktop, embedded an
 
 build() {
     
+    if ! command -v systemctl > /dev/null; then
+        extraArgs="-Dsystemd_user_services=disable"
+    fi
+
     rm -rf subprojects/gvdb
     git clone https://gitlab.gnome.org/GNOME/gvdb.git subprojects/gvdb
 
-    meson setup \
+    meson setup $extraArgs \
     --prefix=/usr \
     --buildtype=release \
     -Dman=false \
