@@ -9,10 +9,19 @@ BUILD_DEPENDS="rust python llvm which"
 SHA256SUM="66d7e6e5129ac8e6fe83e24227dc7bb8dc42650bc53b21838e614de80d22bc66 6b2ceafcc2b64f52e8e38449ab95fd3970493d4e00ffe377f22287ca1f7e6759"
 DESCRIPTION="Spidermonkey JavaScript and WebAssembly Engine"
 
+
 prepare() {
   bsdtar -xf firefox-"$VERSION"esr.source.tar.xz
   cd firefox-$VERSION
-  patch -p1 < ../D190288.1705253813.diff
+  patch -p1 < ../D190288.1705253813.diff || errTemp
+}
+
+# TEMPORARY, will remove later
+errTemp() {
+  pwd
+  ls third_party/python/
+  cat third_party/python/poetry.lock
+  exit 1
 }
 
 build() {
