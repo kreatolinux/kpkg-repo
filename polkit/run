@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="polkit"
 RELEASE="1"
-VERSION="123"
+VERSION="124"
 SOURCES="https://gitlab.freedesktop.org/polkit/polkit/-/archive/$VERSION/polkit-$VERSION.tar.gz"
 DEPENDS="elogind linux-pam glib gobject-introspection expat dbus duktape"
 BUILD_DEPENDS="meson"
-SHA256SUM="b69278f6ea0eac406350c45f5720e2fe5e4beaf9f53c16d9902e025965418864"
+SHA256SUM="72457d96a0538fd03a3ca96a6bf9b7faf82184d4d67c793eb759168e4fd49e20"
 DESCRIPTION="A toolkit for defining and handling authorizations"
 
 build() {
