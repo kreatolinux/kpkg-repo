@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="0.40.0"
 SOURCES="https://gitlab.gnome.org/GNOME/dconf/-/archive/$VERSION/dconf-$VERSION.tar.gz"
 DEPENDS="dbus glib vala"
-BUILD_DEPENDS="meson"
+BUILD_DEPENDS="meson python-setuptools"
 SHA256SUM="c144c314a5ab1b0e2c2e5cb381658d19b9577511b62db5df3fac463028b61bca"
 DESCRIPTION="A simple key/value storage system that is heavily optimised for reading"
 
