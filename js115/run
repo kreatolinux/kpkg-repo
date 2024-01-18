@@ -13,15 +13,7 @@ DESCRIPTION="Spidermonkey JavaScript and WebAssembly Engine"
 prepare() {
   bsdtar -xf firefox-"$VERSION"esr.source.tar.xz
   cd firefox-$VERSION
-  git apply ../D190288.1705253813.diff || errTemp
-}
-
-# TEMPORARY, will remove later
-errTemp() {
-  pwd
-  ls third_party/python/
-  cat third_party/python/poetry.lock
-  exit 1
+  git apply ../D190288.1705253813.diff
 }
 
 build() {
