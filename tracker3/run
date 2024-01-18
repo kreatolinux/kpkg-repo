@@ -11,7 +11,7 @@ DESCRIPTION="An efficient search engine and triplestore for desktop, embedded an
 build() {
     
     if ! command -v systemctl > /dev/null; then
-        extraArgs="-Dsystemd_user_services=disable"
+        extraArgs="-Dsystemd_user_services=false"
     fi
 
     rm -rf subprojects/gvdb
