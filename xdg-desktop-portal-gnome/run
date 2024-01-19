@@ -9,10 +9,16 @@ SHA256SUM="bb64df7599c874ac5a942f25d81222fde3a855bd34db07f149e6dbdd41398904"
 DESCRIPTION="GNOME backend for xdg-desktop-portal"
 
 build() {
-    meson setup \
+    
+    if ! command -v systemctl > /dev/null; then
+        extraArgs="-Dsystemd=disabled"
+    fi
+
+    meson setup $extraArgs \
     --prefix=/usr \
     --buildtype=release \
     build
+
     ninja -C build
 }
 
