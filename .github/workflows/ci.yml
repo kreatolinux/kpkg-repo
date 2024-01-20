@@ -17,7 +17,7 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-      
+     
       - name: Initialize chkupd 
         id: set-matrix
         run: |
@@ -68,6 +68,13 @@ jobs:
 
       - uses: actions/download-artifact@v4
         with:
+          name: kpkg-amd64-linux
+          path: /tmp/kpkg-amd64
+          github-token: ${{ secrets.GH_PAT }} # token with actions:read permissions on target repo
+          repository: kreatolinux/src
+
+      - uses: actions/download-artifact@v4
+        with:
           name: chkupd-bin
           path: /tmp/chkupd
 
@@ -98,13 +105,12 @@ jobs:
             rm -f /tmp/sourced_chkupd
           done
           
-          kpkg build kpkg -y
-          kpkg clean --binaries=true
+          /tmp/kpkg-amd64 clean --binaries=true
           
           IS_USELESS="true"
           
           for package in ${{ matrix.packages }}; do
-              kpkg install "$package" -y || IS_USELESS="false"
+              /tmp/kpkg-amd64 install "$package" -y || IS_USELESS="false"
           done
 
           # TODO: make a proper python-pip package
@@ -118,7 +124,7 @@ jobs:
               exit 0
           fi
 
-          kpkg build ${{ matrix.packages }} --yes --ignorePostInstall #--forceInstallAll=true --yes
+          /tmp/kpkg-amd64 build ${{ matrix.packages }} --yes --ignorePostInstall #--forceInstallAll=true --yes
           #echo RANDOM_ID=$(cat /dev/urandom | tr -dc '[:alpha:]' | fold -w ${1:-20} | head -n 1) >> $GITHUB_ENV
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
           cd "$GITHUB_WORKSPACE"
@@ -135,7 +141,7 @@ jobs:
           if [ -f "/var/cache/kpkg/archives/IS_USELESS" ]; then
             exit 0
           fi
-          kpkg build rsync openssh --yes
+          /tmp/kpkg-amd64 build rsync openssh --yes
           mkdir -p ~/.ssh
           eval $(ssh-agent)
           echo "$SSH_KEY" | ssh-add -
