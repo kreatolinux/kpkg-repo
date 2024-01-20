@@ -4,9 +4,9 @@ RELEASE="1"
 VERSION="238"
 SOURCES="https://download.gnome.org/sources/libgudev/$VERSION/libgudev-$VERSION.tar.xz"
 BUILD_DEPENDS="meson"
-DEPENDS="libudev>=1.0.3 glib gobject-introspection"
+DEPENDS="eudev>=1.0.3 glib gobject-introspection"
 SHA256SUM="61266ab1afc9d73dbc60a8b2af73e99d2fdff47d99544d085760e4fa667b5dd1"
-DESCRIPTION="GObject bindings for libudev"
+DESCRIPTION="GObject bindings for eudev"
 
 build() {
     meson setup \

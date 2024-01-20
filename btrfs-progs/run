@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="6.6.3"
 SOURCES="https://mirrors.edge.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v$VERSION.tar.xz"
 BUILD_DEPENDS="python-setuptools"
-DEPENDS="e2fsprogs libudev util-linux liblzo2"
+DEPENDS="e2fsprogs eudev util-linux liblzo2"
 SHA256SUM="f41ce53f6673ff551ee4a3fe7dc9601e5a0dde6b6d09177d1fab62718abc6d9a"
 DESCRIPTION="BTRFS filesystem utilities"
 

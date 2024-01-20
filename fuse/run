@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="3.14.1"
 SOURCES="https://github.com/libfuse/libfuse/releases/download/fuse-$VERSION/fuse-$VERSION.tar.xz"
 BUILD_DEPENDS="ninja meson"
-DEPENDS="libudev"
+DEPENDS="eudev"
 SHA256SUM="126919d72b46b3e0eb58a9c6933a2a50c36f2ea69f61fe9e78bdba9f463ffa20"
 DESCRIPTION="Filesystem in Userspace"
 build() {
