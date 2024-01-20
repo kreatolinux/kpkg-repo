@@ -87,6 +87,7 @@ jobs:
           . /etc/profile
 
           chmod +x /tmp/chkupd/chkupd
+          chmod +x /tmp/kpkg-amd64
           mkdir -p /etc/kpkg/repos
           ln -s "$GITHUB_WORKSPACE" /etc/kpkg/repos/main
 
