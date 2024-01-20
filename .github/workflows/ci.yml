@@ -88,7 +88,7 @@ jobs:
 
           chmod +x /tmp/chkupd/chkupd
           chmod +x /tmp/kpkg-bin/kpkg
-          mkdir -p /etc/kpkg-bin/repos
+          mkdir -p /etc/kpkg/repos
           ln -s "$GITHUB_WORKSPACE" /etc/kpkg/repos/main
 
           for package in ${{ matrix.packages }}; do
