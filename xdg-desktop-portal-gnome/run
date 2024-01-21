@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="xdg-desktop-portal-gnome"
 RELEASE="1"
-VERSION="45.0"
+VERSION="45.1"
 SOURCES="https://gitlab.gnome.org/GNOME/xdg-desktop-portal-gnome/-/archive/$VERSION/xdg-desktop-portal-gnome-$VERSION.tar.gz"
 DEPENDS="gnome-desktop gnome-keyring libadwaita xdg-desktop-portal-gtk xdg-desktop-portal"
 BUILD_DEPENDS="meson"
-SHA256SUM="bb64df7599c874ac5a942f25d81222fde3a855bd34db07f149e6dbdd41398904"
+SHA256SUM="58d847bb7d8bd84e9e0469d230de014471201d8206884f5a99f5ec85317f5fac"
 DESCRIPTION="GNOME backend for xdg-desktop-portal"
 
 build() {

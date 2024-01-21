@@ -1,12 +1,12 @@
 #!/bin/sh
 NAME="xdg-desktop-portal"
 RELEASE="1"
-VERSION="1.18.1"
+VERSION="1.18.2"
 SOURCES="https://github.com/flatpak/xdg-desktop-portal/releases/download/$VERSION/xdg-desktop-portal-$VERSION.tar.xz"
 DEPENDS="glib flatpak bubblewrap geoclue gdk-pixbuf fuse pipewire json-glib"
 BUILD_DEPENDS="meson"
 OPTDEPENDS="xdg-desktop-portal-gtk: GTK backend ;; xdg-desktop-portal-gnome: GNOME backend ;; xdg-desktop-portal-wlr: wlroots backend"
-SHA256SUM="4560478e78b1e246c53e4b0540e63748187143942d6f202a4dcd4864318bfd10"
+SHA256SUM="dfac239c5476aafd117a9a10131a2f0b142f72106c52fc03859938e00545f440"
 DESCRIPTION="A portal frontend service for Flatpak and possibly other desktop containment frameworks"
 
 build() {
