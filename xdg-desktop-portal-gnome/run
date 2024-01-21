@@ -11,7 +11,7 @@ DESCRIPTION="GNOME backend for xdg-desktop-portal"
 build() {
     
     if ! command -v systemctl > /dev/null; then
-        extraArgs="-Dsystemd=disabled"
+        extraArgs="-Dsystemduserunitdir=/opt/deleteme"
     fi
 
     meson setup $extraArgs \
@@ -24,4 +24,7 @@ build() {
 
 package() {
     DESTDIR="$ROOT" ninja -C build install
+    if ! command -v systemctl > /dev/null; then
+        rm -rf "$DESTDIR/opt/deleteme"
+    fi
 }
