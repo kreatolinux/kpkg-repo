@@ -1,0 +1,16 @@
+#!/bin/sh
+NAME="links"
+RELEASE="1"
+VERSION="2.29"
+SOURCES="http://links.twibright.com/download/links-$VERSION.tar.bz2"
+SHA256SUM="22aa96c0b38e1a6f8f7ed9d7a4167a47fc37246097759ef6059ecf8f9ead7998"
+DESCRIPTION="A text WWW browser, similar to Lynx"
+
+build() {
+    kpkgConfigure --disable-javascript
+    make
+}
+
+package() {
+    make DESTDIR=$ROOT install
+}
