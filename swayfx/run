@@ -3,7 +3,7 @@ NAME="swayfx"
 RELEASE="1"
 VERSION="0.3.2"
 SOURCES="https://github.com/WillPower3309/swayfx/archive/refs/tags/$VERSION.tar.gz"
-DEPENDS="pcre wlroots cairo git libevdev wayland libinput wayland-protocols pango json-c jetbrains-mono"
+DEPENDS="pcre wlroots cairo git libevdev wayland libinput wayland-protocols pango json-c jetbrains-mono xwayland"
 SHA256SUM="05b5cdc2d25e9f05817556d7053c02f8b89c9ef629405fcba5b4d240d4fd0545"
 DESCRIPTION="Fork of sway with eye candy features"
 
