@@ -1,0 +1,20 @@
+#!/bin/sh
+NAME="xcb-util-wm"
+RELEASE="1"
+VERSION="0.4.2"
+SOURCES="https://xorg.freedesktop.org/archive/individual/lib/xcb-util-wm-$VERSION.tar.xz"
+SHA256SUM="62c34e21d06264687faea7edbf63632c9f04d55e72114aa4a57bb95e4f888a0b"
+DEPENDS="libxcb"
+BUILD_DEPENDS="xorgproto"
+DESCRIPTION="Utility library for XCB"
+
+build() {
+    kpkgConfigure \
+      --prefix=/usr \
+      --disable-static
+    make
+}
+
+package() {
+    make DESTDIR=$ROOT install
+}
