@@ -7,7 +7,7 @@ DEPENDS_LLVM="gcc"
 BUILD_DEPENDS="cmake ninja"
 BUILD_DEPENDS_LLVM+="binutils"
 BUILD_DEPENDS_LLVM_STANDALONE+="llvm"
-SHA256SUM="58a8818c60e6627064f312dbf46c02d9949956558340938b71cf731ad8bc0813"
+B2SUM="d6ede1a9fda8756995c3e0654111941649e15794179641806f18919f1dc68c41ca0cabd5693b5096d05dccc3a391cd20d34af1137bf8af92ed3117a1ce84d1b2"
 DESCRIPTION="The LLVM Project is a collection of modular and reusable compiler and toolchain technologies."
 
 
