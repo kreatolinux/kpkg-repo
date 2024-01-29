@@ -25,7 +25,7 @@ jobs:
           git clone https://github.com/kreatolinux/src
           cd src
           sed -i s/stable/master/g Makefile
-          nimble install cligen fuzzy libsha -y
+          nimble install cligen fuzzy nimcrypto -y
           ./build.sh -d -p "chkupd"
           mv out/chkupd /tmp/
           cd ..
