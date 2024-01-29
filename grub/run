@@ -1,16 +1,23 @@
 #!/bin/sh
 NAME="grub"
-RELEASE="1"
-VERSION="2.06"
-SOURCES="https://ftp.gnu.org/gnu/grub/grub-$VERSION.tar.xz https://ftp.gnu.org/gnu/unifont/unifont-15.0.06/unifont-15.0.06.bdf.gz"
+RELEASE="2"
+VERSION="2.12"
+SOURCES="https://ftp.gnu.org/gnu/grub/grub-$VERSION.tar.xz"
 DEPENDS="flex freetype pigz"
-SHA256SUM="b79ea44af91b93d17cd3fe80bdae6ed43770678a9a5ae192ccea803ebb657ee1 93cb54fa103a00e25cd3e16550b4b4eb13cbd098e515679ade3ae82cd0739f29"
+DEPENDS_GRUB_EFI+="efibootmgr"
+SHA256SUM="f3c97391f7c4eaa677a78e090c7e97e6dc47b16f655f04683ebd37bef7fe0faa"
 DESCRIPTION="The GNU Grub Bootloader"
 
 prepare() {
-     tar -xvf grub-$VERSION.tar.xz
+     bsdtar -xf grub-$VERSION.tar.xz
      cd grub-$VERSION
-     gzip -cd ../unifont-15.0.06.bdf.gz > unifont.bdf
+     echo "depends bli part_gpt" > grub-core/extra_deps.lst
+}
+
+build_grub_efi() {
+    cd grub-$VERSION
+    kpkgConfigure --disable-efiemu --disable-werror --prefix=/usr --sysconfdir=/etc --with-platform=efi
+    make
 }
 
 build() {
