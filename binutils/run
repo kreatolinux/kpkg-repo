@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="binutils"
 RELEASE="3"
-VERSION="2.41"
+VERSION="2.42"
 SOURCES="https://ftp.gnu.org/gnu/binutils/binutils-$VERSION.tar.xz"
 DEPENDS="flex perl zlib bison texinfo file"
-SHA256SUM="ae9a5789e23459e59606e6714723f2d3ffc31c03174191ef0d015bdf06007450"
+SHA256SUM="f6e4d41fd5fc778b06b7891457b3620da5ecea1006c6a4a41ae998109f85a800"
 DESCRIPTION="GNU Binutils"
 
 actual_build() {
