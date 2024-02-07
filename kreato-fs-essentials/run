@@ -5,6 +5,7 @@ VERSION="0.0.1"
 SOURCES="overlay/"
 EXTRACT="false"
 B2SUM="SKIP"
+BACKUP="etc/group etc/passwd etc/profile etc/resolv.conf etc/shells"
 DESCRIPTION="Kreato Linux filesystem essentials, seperated from src/kreastrap/overlay"
 
 package() {
