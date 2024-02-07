@@ -1,0 +1,12 @@
+#!/bin/sh
+NAME="kreato-fs-essentials"
+RELEASE="1"
+VERSION="0.0.1"
+SOURCES="overlay/"
+EXTRACT="false"
+B2SUM="SKIP"
+DESCRIPTION="Kreato Linux filesystem essentials, seperated from src/kreastrap/overlay"
+
+package() {
+    cp -r etc/ "$DESTDIR"
+}
