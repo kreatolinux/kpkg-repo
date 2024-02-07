@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="curl"
 RELEASE="1"
-VERSION="8.5.0"
+VERSION="8.6.0"
 SOURCES="https://curl.haxx.se/download/curl-$VERSION.tar.xz"
 DEPENDS="nghttp2 zlib nghttp2"
-SHA256SUM="42ab8db9e20d8290a3b633e7fbb3cec15db34df65fd1015ef8ac1e4723750eeb"
+SHA256SUM="3ccd55d91af9516539df80625f818c734dc6f2ecf9bada33c76765e99121db15"
 DESCRIPTION="command line tool and library for transferring data with URLs"
 
 build() {
