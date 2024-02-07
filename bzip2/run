@@ -1,6 +1,6 @@
 #!/bin/sh
 NAME="bzip2"
-RELEASE="3"
+RELEASE="4"
 VERSION="1.0.8"
 SOURCES="https://sourceware.org/pub/bzip2/bzip2-$VERSION.tar.gz"
 BUILD_DEPENDS="gmake"
