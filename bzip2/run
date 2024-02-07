@@ -15,8 +15,26 @@ build() {
 }
 
 package() {
-    make PREFIX=$ROOT/usr install
-    cp bzip2-shared $ROOT/usr/bin/bzip2
-    cp -a libbz2.so* $ROOT/usr/lib
-    ln -s libbz2.so.1.0 $ROOT/usr/lib/libbz2.so
+    # From https://gitlab.archlinux.org/archlinux/packaging/packages/bzip2/-/blob/ee417df2064c7ff4ec317e123d074c6e3213b340/PKGBUILD
+    install -dm755 "$DESTDIR"/usr/{bin,lib,include,share/man/man1}
+
+    install -m755 bzip2-shared "$DESTDIR"/usr/bin/bzip2
+    install -m755 bzip2recover bzdiff bzgrep bzmore "$DESTDIR"/usr/bin
+    ln -sf bzip2 "$DESTDIR"/usr/bin/bunzip2
+    ln -sf bzip2 "$DESTDIR"/usr/bin/bzcat
+
+    cp -a libbz2.so* "$DESTDIR"/usr/lib
+    ln -s libbz2.so.$pkgver "$DESTDIR"/usr/lib/libbz2.so
+    ln -s libbz2.so.$pkgver "$DESTDIR"/usr/lib/libbz2.so.1 # For compatibility with some other distros
+
+    install -m644 bzlib.h "$DESTDIR"/usr/include/
+
+    install -m644 bzip2.1 "$DESTDIR"/usr/share/man/man1/
+    ln -sf bzip2.1 "$DESTDIR"/usr/share/man/man1/bunzip2.1
+    ln -sf bzip2.1 "$DESTDIR"/usr/share/man/man1/bzcat.1
+    ln -sf bzip2.1 "$DESTDIR"/usr/share/man/man1/bzip2recover.1
+
+    install -Dm644 bzip2.pc -t "$DESTDIR"/usr/lib/pkgconfig
+    install -Dm644 LICENSE "$DESTDIR"/usr/share/licenses/${pkgname}/LICENSE
+
 }
