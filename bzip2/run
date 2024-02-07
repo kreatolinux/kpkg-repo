@@ -16,7 +16,7 @@ build() {
 
 package() {
     # From https://gitlab.archlinux.org/archlinux/packaging/packages/bzip2/-/blob/ee417df2064c7ff4ec317e123d074c6e3213b340/PKGBUILD
-    install -dm755 "$DESTDIR"/usr/{bin,lib,include,share/man/man1}
+    install -dm755 "$DESTDIR"/usr/bin "$DESTDIR"/usr/lib "$DESTDIR"/usr/include "$DESTDIR"/usr/share/man/man1
 
     install -m755 bzip2-shared "$DESTDIR"/usr/bin/bzip2
     install -m755 bzip2recover bzdiff bzgrep bzmore "$DESTDIR"/usr/bin
@@ -34,7 +34,6 @@ package() {
     ln -sf bzip2.1 "$DESTDIR"/usr/share/man/man1/bzcat.1
     ln -sf bzip2.1 "$DESTDIR"/usr/share/man/man1/bzip2recover.1
 
-    install -Dm644 bzip2.pc -t "$DESTDIR"/usr/lib/pkgconfig
-    install -Dm644 LICENSE "$DESTDIR"/usr/share/licenses/${pkgname}/LICENSE
+    install -Dm644 LICENSE "$DESTDIR"/usr/share/licenses/"$NAME"/LICENSE
 
 }
