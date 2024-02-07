@@ -24,8 +24,8 @@ package() {
     ln -sf bzip2 "$DESTDIR"/usr/bin/bzcat
 
     cp -a libbz2.so* "$DESTDIR"/usr/lib
-    ln -s libbz2.so.$pkgver "$DESTDIR"/usr/lib/libbz2.so
-    ln -s libbz2.so.$pkgver "$DESTDIR"/usr/lib/libbz2.so.1 # For compatibility with some other distros
+    ln -s libbz2.so.$VERSION "$DESTDIR"/usr/lib/libbz2.so
+    ln -s libbz2.so.$VERSION "$DESTDIR"/usr/lib/libbz2.so.1 # For compatibility with some other distros
 
     install -m644 bzlib.h "$DESTDIR"/usr/include/
 
