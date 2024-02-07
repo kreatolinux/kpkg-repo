@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="mesa"
 RELEASE="2"
-VERSION="23.3.4"
+VERSION="23.3.5"
 SOURCES="https://archive.mesa3d.org/mesa-$VERSION.tar.xz"
 DEPENDS="libelf libxxf86vm libglvnd eudev llvm flex libxshmfence libxdamage"
 BUILD_DEPENDS="libdrm libx11 libxrandr meson libelf python-mako wayland-protocols wayland"
-SHA256SUM="df12d765be4650fe532860b18aa18e6da1d0b07d1a21dfdfe04660e6b7bac39a"
+SHA256SUM="69ccb1278641ff5bad71ca0f866188aeb1a92aadc4dbb9d35f50aebec5b8b50f"
 DESCRIPTION="The 3D Graphics Library"
 build() {
     meson \
