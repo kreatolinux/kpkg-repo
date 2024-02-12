@@ -36,7 +36,7 @@ package() {
     -e "s,%libdir%,$libdir,g" \
     -e "s,%includedir%,$includedir,g" \
     -e "s,%NSPR_VERSION%,$nsprver,g" \
-    -e "s,%NSS_VERSION%,$pkgver,g" |
+    -e "s,%NSS_VERSION%,$VERSION,g" |
     install -Dm644 /dev/stdin "$DESTDIR$libdir/pkgconfig/nss.pc"
 
   ln -s nss.pc "$DESTDIR$libdir/pkgconfig/mozilla-nss.pc"
