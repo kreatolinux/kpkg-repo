@@ -12,7 +12,7 @@ prepare() {
     cd busybox-$VERSION/coreutils
     
     # Got the patch from http://lists.busybox.net/pipermail/busybox/2016-June/084276.html
-    patch -p1 < ../../ln-relative-symlinks.patch
+    #patch -p1 < ../../ln-relative-symlinks.patch
 }
 
 build() {
