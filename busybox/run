@@ -18,15 +18,20 @@ prepare() {
 build() {
     cd busybox-$VERSION
     make -j$(nproc) defconfig
-    make -j$(nproc)
+    make -j$(nproc) busybox
+}
+
+package_busybox_standalone() {
+    cd busybox-$VERSION
+    mkdir -p $ROOT/bin
+    cp busybox $ROOT/bin
 }
 
 package() {
-    cd busybox-$VERSION
-    make install
-    mkdir -p $ROOT/bin $ROOT/sbin $ROOT/usr/bin $ROOT/usr/sbin
-    cp -rf _install/bin/* $ROOT/bin/
-    cp -rf _install/sbin/* $ROOT/sbin/
-    cp -rf _install/usr/bin/* $ROOT/usr/bin/
-    cp -rf _install/usr/sbin/* $ROOT/usr/bin/
+    package_busybox_standalone
+    "$ROOT/bin/busybox" --list | while read APPLET; do
+        echo "Linking /bin/busybox to /bin/$APPLET"
+        ln -s /bin/busybox "$ROOT/bin/$APPLET"
+    done
 }
+
