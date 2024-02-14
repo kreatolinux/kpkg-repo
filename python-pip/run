@@ -1,0 +1,12 @@
+#!/bin/sh
+NAME="python-pip"
+RELEASE="1"
+VERSION="24.0"
+SOURCES="https://github.com/pypa/pip/archive/refs/tags/$VERSION.tar.gz"
+DEPENDS="python python-setuptools"
+B2SUM="17a7ed9e15e9b8efa0d3e3c5586dc446958b62cf9ba52155a0d1ad97a3e212ee7a08a0e88a592718fc3d542eb8f434155a75cb98d90c008904bd8f59bd2b40b6"
+DESCRIPTION="Easily download, build, install, upgrade, and uninstall Python packages"
+
+package() {
+    pip install . --prefix=/usr --root="$ROOT"
+}
