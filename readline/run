@@ -14,5 +14,5 @@ build() {
 
 package() {
     make DESTDIR=$ROOT SHLIB_LIBS="-lncurses" install
-    [ -d "$ROOT/usr/share/info/dir" ] && rm -rf "$ROOT/usr/share/info/dir"
+    rm -rf "$ROOT/usr/share/info/dir"
 }

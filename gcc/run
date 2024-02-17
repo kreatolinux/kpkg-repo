@@ -95,11 +95,12 @@ set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
 set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 EOF
+    rm -rf "$ROOT/usr/share/info/dir"
 }
 
 package_gcc() {
     cd build
     make MAKEINFO=true DESTDIR=$ROOT install-strip
     rm -rf $ROOT/source
-    [ -d "$ROOT/usr/share/info/dir" ] && rm -rf "$ROOT/usr/share/info/dir"
+    rm -rf "$ROOT/usr/share/info/dir"
 }

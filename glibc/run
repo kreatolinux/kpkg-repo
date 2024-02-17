@@ -52,6 +52,7 @@ build_aarch64_linux_gnu_glibc() {
 package_aarch64_linux_gnu_glibc() {
      cd build
      make install_root="$ROOT/usr/aarch64-linux-gnu" install
+     rm -rf "$ROOT/usr/share/info/dir"
 }
 
 build() {
@@ -63,5 +64,5 @@ package() {
     make DESTDIR=$ROOT install
     mkdir -p $ROOT/usr/lib/locale
     localedef --prefix=$ROOT -i C -f UTF-8 C
-    [ -d "$ROOT/usr/share/info/dir" ] && rm -rf "$ROOT/usr/share/info/dir"
+    rm -rf "$ROOT/usr/share/info/dir"
 }
