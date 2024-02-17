@@ -18,5 +18,6 @@ check() {
 
 package() {
     make DESTDIR=$ROOT install
+    [ -d "$ROOT/usr/share/info/dir" ] && rm -rf "$ROOT/usr/share/info/dir"
 }
 

@@ -101,4 +101,5 @@ package_gcc() {
     cd build
     make MAKEINFO=true DESTDIR=$ROOT install-strip
     rm -rf $ROOT/source
+    [ -d "$ROOT/usr/share/info/dir" ] && rm -rf "$ROOT/usr/share/info/dir"
 }
