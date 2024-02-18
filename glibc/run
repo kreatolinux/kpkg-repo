@@ -53,6 +53,11 @@ package_aarch64_linux_gnu_glibc() {
      cd build
      make install_root="$ROOT/usr/aarch64-linux-gnu" install
      rm -rf "$ROOT/usr/share/info/dir"
+     rm -f "$ROOT/etc/ld.so.cache"
+     for file in tzselect zdump zic; do
+         rm -f "$ROOT/usr/bin/$file"
+     done
+      
 }
 
 build() {
