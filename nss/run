@@ -26,6 +26,8 @@ build() {
 }
 
 package() {
+    
+   DIST=$(basename dist/Linux*.OBJ)
    # From https://gitlab.archlinux.org/archlinux/packaging/packages/nss/-/commit/314bb55c3ab50a9951993c885e6d5df56f5b13a6
    nsprver="$(pkg-config --modversion nspr)"
    libdir=/usr/lib includedir=/usr/include/nss
@@ -41,7 +43,7 @@ package() {
 
   ln -s nss.pc "$DESTDIR$libdir/pkgconfig/mozilla-nss.pc"
 
-  install -Dt "$DESTDIR$libdir" dist/Release/lib/*.so
+  install -Dt "$DESTDIR$libdir" dist/$DIST/lib/*.so
 
   { read vmajor; read vminor; read vpatch; } \
     < <(awk '/#define.*NSS_V(MAJOR|MINOR|PATCH)/ {print $3}' nss/lib/nss/nss.h)
@@ -55,14 +57,15 @@ package() {
     -e "s,@MOD_MINOR_VERSION@,$vminor,g" \
     -e "s,@MOD_PATCH_VERSION@,$vpatch,g" |
     install -D /dev/stdin "$DESTDIR/usr/bin/nss-config"
-
-  install -Dt "$DESTDIR/usr/bin" \
-    dist/Release/bin/{*util,shlibsign,signtool,signver,ssltap}
+    
+  cd dist/$DIST/bin
+  for i in *util shlibsign signtool signver ssltap; do
+    install -Dt "$DESTDIR/usr/bin" \
+        "$i"
+  done
+  cd -
 
   install -Dt "$DESTDIR$includedir" -m644 dist/public/nss/*.h
-
-  install -Dt "$DESTDIR/usr/share/man/man1" -m644 \
-    nss/doc/nroff/{*util,signtool,signver,ssltap}.1
 
   # Replace built-in trust with p11-kit connection
   ln -s pkcs11/p11-kit-trust.so "$DESTDIR$libdir/p11-kit-trust.so"
