@@ -1,0 +1,31 @@
+#!/bin/sh
+NAME="ca-certificates"
+RELEASE="1"
+VERSION="0.1"
+SOURCES="update-ca-trust"
+DEPENDS_CA_CERTIFICATES="ca-certificates-mozilla"
+BUILD_DEPENDS="p11-kit"
+B2SUM="SKIP"
+DESCRIPTION=""
+
+package_ca_certificates_utils() {
+    install -Dt "$DESTDIR/usr/bin" update-ca-trust
+    
+    install -d "$DESTDIR/etc/ssl/certs/java"
+    install -d "$DESTDIR/etc/ca-certificates/extracted"
+    
+    # Compatibility link for OpenSSL using /etc/ssl as CAdir
+    # Used in preference to the individual links in /etc/ssl/certs
+    ln -sr "/etc/ca-certificates/extracted/tls-ca-bundle.pem" "$DESTDIR/etc/ssl/cert.pem"
+
+    # Compatibility link for legacy bundle (Debian)
+    ln -sr "/etc/ca-certificates/extracted/tls-ca-bundle.pem" "$DESTDIR/etc/ssl/certs/ca-certificates.crt"
+
+    # Compatibility link for legacy bundle (RHEL/Fedora)
+    ln -sr "/etc/ca-certificates/extracted/tls-ca-bundle.pem" "$DESTDIR/etc/ssl/certs/ca-bundle.crt"
+
+}
+
+package() {
+    :
+}

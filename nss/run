@@ -5,6 +5,7 @@ VERSION="3.96.1"
 SOURCES="https://archive.mozilla.org/pub/security/nss/releases/NSS_3_96_1_RTM/src/nss-3.96.1.tar.gz bundle.sh certdata2pem.py"
 BUILD_DEPENDS="python"
 DEPENDS="nspr sqlite p11-kit zlib"
+DEPENDS_CA_CERTIFICAES_MOZILLA+="ca-certificates-utils"
 SHA256SUM="c51e89f6fbb06163f4302e368eeb672d748b52d583948bdb15ef1b069237a496 SKIP SKIP"
 DESCRIPTION="network stuff"
 
