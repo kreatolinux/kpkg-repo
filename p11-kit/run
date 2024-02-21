@@ -1,6 +1,6 @@
 #!/bin/sh
 NAME="p11-kit"
-RELEASE="1"
+RELEASE="2"
 VERSION="0.25.3"
 SOURCES="https://github.com/p11-glue/p11-kit/releases/download/$VERSION/p11-kit-$VERSION.tar.xz"
 DEPENDS="libtasn libffi pkgconf"
@@ -10,7 +10,7 @@ DESCRIPTION="A way to load and enumerate PKCS#11 modules"
 build() {
     kpkgConfigure --prefix=/usr     \
             --sysconfdir=/etc \
-            --with-trust-paths=/etc/pki/anchors
+            --with-trust-paths=/etc/ca-certificates/trust-source:/usr/share/ca-certificates/trust-source
     make
 }
 
