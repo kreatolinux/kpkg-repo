@@ -3,10 +3,16 @@ NAME="ca-certificates"
 RELEASE="1"
 VERSION="0.1"
 SOURCES="update-ca-trust"
+DEPENDS=""
 DEPENDS_CA_CERTIFICATES="ca-certificates-mozilla"
+EXTRACT="false"
 BUILD_DEPENDS="p11-kit"
 B2SUM="SKIP"
 DESCRIPTION=""
+
+prepare() {
+    :
+}
 
 package_ca_certificates_utils() {
     install -Dt "$DESTDIR/usr/bin" update-ca-trust
