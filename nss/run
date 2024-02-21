@@ -2,12 +2,30 @@
 NAME="nss"
 RELEASE="1"
 VERSION="3.96.1"
-SOURCES="https://archive.mozilla.org/pub/security/nss/releases/NSS_3_96_1_RTM/src/nss-3.96.1.tar.gz"
+SOURCES="https://archive.mozilla.org/pub/security/nss/releases/NSS_3_96_1_RTM/src/nss-3.96.1.tar.gz bundle.sh certdata2pem.py"
+BUILD_DEPENDS="python"
 DEPENDS="nspr sqlite p11-kit zlib"
-SHA256SUM="c51e89f6fbb06163f4302e368eeb672d748b52d583948bdb15ef1b069237a496"
+SHA256SUM="c51e89f6fbb06163f4302e368eeb672d748b52d583948bdb15ef1b069237a496 SKIP SKIP"
 DESCRIPTION="network stuff"
 
+prepare() {
+  mkdir -p certs
+  cd certs
+  for i in certdata.txt nssckbi.h; do
+    ln -srf ../nss/lib/ckfw/builtins/$i $i
+  done
+}
+
+
+
 build() {
+  # Scripts from Arch Linux: https://gitlab.archlinux.org/archlinux/packaging/packages/nss/-/tree/3.98-1?ref_type=tags
+  cd certs
+  python ../../certdata2pem.py || exit 1
+  
+  cd ..
+  sh ../bundle.sh || exit 1
+
   cd nss
   if [ "$(uname -m)" = "x86_64" ]; then
     export USE_64=1
@@ -70,4 +88,9 @@ package() {
   # Replace built-in trust with p11-kit connection
   ln -s pkcs11/p11-kit-trust.so "$DESTDIR$libdir/p11-kit-trust.so"
   ln -sf p11-kit-trust.so "$DESTDIR$libdir/libnssckbi.so"
+}
+
+package_ca_certificates_mozilla() {
+    install -Dm644 ca-bundle.trust.p11-kit \
+        "$DESTDIR/usr/share/ca-certificates/trust-source/mozilla.trust.p11-kit"
 }
