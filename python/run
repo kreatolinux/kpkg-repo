@@ -3,7 +3,7 @@ NAME="python"
 RELEASE="3"
 VERSION="3.12.1"
 SOURCES="https://www.python.org/ftp/python/$VERSION/Python-$VERSION.tar.xz"
-DEPENDS="openssl zlib libxcrypt bzip2"
+DEPENDS="openssl zlib libxcrypt bzip2 libffi"
 SHA256SUM="8dfb8f426fcd226657f9e2bd5f1e96e53264965176fa17d32658e873591aeb21"
 DESCRIPTION="General-Purpose Programming language"
 
