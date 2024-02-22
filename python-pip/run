@@ -8,5 +8,5 @@ B2SUM="17a7ed9e15e9b8efa0d3e3c5586dc446958b62cf9ba52155a0d1ad97a3e212ee7a08a0e88
 DESCRIPTION="Easily download, build, install, upgrade, and uninstall Python packages"
 
 package() {
-    pip install . --ignore-installed --prefix=/usr --root="$ROOT"
+    pip install . --no-dependencies --ignore-installed --prefix=/usr --root="$ROOT"
 }
