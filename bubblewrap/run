@@ -1,9 +1,10 @@
 #!/bin/sh
 NAME="bubblewrap"
-RELEASE="1"
+RELEASE="2"
 VERSION="0.8.0"
 SOURCES="https://github.com/containers/bubblewrap/releases/download/v0.8.0/bubblewrap-0.8.0.tar.xz"
-BUILD_DEPENDS="meson"
+BUILD_DEPENDS="meson pkgconf bash"
+DEPENDS="libcap"
 SHA256SUM="957ad1149db9033db88e988b12bcebe349a445e1efc8a9b59ad2939a113d333a"
 DESCRIPTION="Low-level unprivileged sandboxing tool used by Flatpak and similar projects"
 
