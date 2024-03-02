@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="glibc"
 RELEASE="5"
-VERSION="2.38"
+VERSION="2.39"
 SOURCES="https://ftp.gnu.org/gnu/glibc/glibc-$VERSION.tar.xz"
 DEPENDS="grep gawk bison m4"
 DEPENDS_AARCH64_LINUX_GNU_GLIBC+="aarch64-linux-gnu-linux-headers"
-SHA256SUM="fb82998998b2b29965467bc1b69d152e9c307d2cf301c9eafb4555b770ef3fd2"
+SHA256SUM="f77bd47cf8170c57365ae7bf86696c118adb3b120d3259c64c502d3dc1e2d926"
 DESCRIPTION="The GNU C library"
 
 common_build() {
