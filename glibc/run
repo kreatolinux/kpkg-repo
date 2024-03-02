@@ -1,6 +1,6 @@
 #!/bin/sh
 NAME="glibc"
-RELEASE="4"
+RELEASE="5"
 VERSION="2.38"
 SOURCES="https://ftp.gnu.org/gnu/glibc/glibc-$VERSION.tar.xz"
 DEPENDS="grep gawk bison m4"
@@ -72,6 +72,10 @@ package() {
     rm -rf "$ROOT/usr/share/info/dir"
     rm -f "$ROOT/etc/ld.so.cache"
     for file in tzselect zdump zic; do
+        # to make sure we delete from every directory
         rm -f "$ROOT/usr/bin/$file"
+        rm -f "$ROOT/usr/sbin/$file"
+        rm -f "$ROOT/bin/$file"
+        rm -f "$ROOT/sbin/$file"
     done
 }
