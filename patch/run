@@ -11,10 +11,8 @@ DESCRIPTION="GNU patch"
 build() {
     mkdir -v build
     cd       build
-    .kpkgConfigure                   \
+    KPKG_CONFIGURE_PATH="../configure" kpkgConfigure                  \
         --prefix=/usr              \
-        --build=$(../config.guess) \
-        --host=x86_64-pc-linux-gnu \
         --disable-nls              \
         --enable-shared            \
         --disable-werror           \
