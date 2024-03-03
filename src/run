@@ -1,16 +1,16 @@
 #!/bin/sh
 NAME="src"
 RELEASE="4"
-VERSION="6.8.0"
+VERSION="7.0.0-alpha1"
 SOURCES="https://github.com/kreatolinux/src/releases/download/v$VERSION/src-v$VERSION-dist.tar.gz"
 BUILD_DEPENDS="nim"
-DEPENDS="libarchive shadow openssl git fakeroot bubblewrap"
-DEPENDS_KPKG+="sqlite"
-SHA256SUM="770fd733b4321c10b00eba24de7b725073b91186189e71f4ed50f14a9f4111d9"
+DEPENDS="libarchive shadow openssl git"
+DEPENDS_KPKG+="bubblewrap sqlite"
+SHA256SUM="5fe289081c0193652de7751d8c4062d41c9c83bfbffe7d5260a76a4aea36374e"
 DESCRIPTION="Kreato Linux source tree metapackage"
 
 build_kpkg() {
-        nimble install cligen fuzzy nimcrypto norm taskpools -y
+        nimble install cligen fuzzy nimcrypto norm -y
         nim c -d:release --deepcopy:on -d:useDist --passL:-larchive --threads:on -d:ver="$VERSION" -d:ssl -o="out/kpkg" "kpkg/kpkg.nim"
 }
 
