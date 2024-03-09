@@ -13,4 +13,5 @@ build() {
 
 package() {
     make DESTDIR=$ROOT install
+    rm -rf "$ROOT"/usr/share/info/dir
 }
