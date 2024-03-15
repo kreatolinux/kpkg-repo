@@ -58,7 +58,7 @@ jobs:
   build:
     needs: init
     runs-on: ubuntu-latest
-    container: ghcr.io/kreatolinux/builder
+    container: ghcr.io/kreatolinux/builder-gnu
     strategy:
       fail-fast: false
       matrix:  ${{fromJson(needs.init.outputs.matrix)}}
