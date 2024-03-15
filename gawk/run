@@ -1,6 +1,6 @@
 #!/bin/sh
 NAME="gawk"
-RELEASE="1"
+RELEASE="2"
 VERSION="5.3.0"
 SOURCES="https://ftp.gnu.org/pub/gnu/gawk/gawk-$VERSION.tar.xz"
 DEPENDS="gmp mpfr readline"
