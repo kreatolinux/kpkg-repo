@@ -34,7 +34,7 @@ package() {
         case $APPLET in
             # Dependencies will cover these commands.
             # We don't outright disable these just in case someone needs them.
-            "clear" | "egrep" | "fgrep" | "grep" | "strings" | "setfattr" | "xz" | "su" | "nologin" | "chpasswd" | "groups" | "login" | "tar" | "bzip2" | "bzcat")
+            "clear" | "egrep" | "fgrep" | "grep" | "strings" | "setfattr" | "xz" | "su" | "nologin" | "chpasswd" | "groups" | "login" | "tar" | "bzip2" | "bzcat" | "lzcat")
                 continue
             ;;
             *)
