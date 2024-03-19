@@ -11,7 +11,7 @@ DESCRIPTION="Kreato Linux source tree metapackage"
 
 build_kpkg() {
         nimble install cligen fuzzy nimcrypto norm -y
-        nim c -d:release --deepcopy:on -d:useDist --passL:-larchive --threads:on -d:ver="$VERSION" -d:ssl -o="out/kpkg" "kpkg/kpkg.nim"
+        nim c --deepcopy:on -d:useDist --passL:-larchive --threads:on -d:ver="$VERSION" -d:ssl -o="out/kpkg" "kpkg/kpkg.nim"
 }
 
 package_kpkg() {
