@@ -1,6 +1,6 @@
 #!/bin/sh
 NAME="src"
-RELEASE="4"
+RELEASE="5"
 VERSION="7.0.0-alpha3-sqlite-2"
 SOURCES="https://github.com/kreatolinux/src/releases/download/v$VERSION/src-v$VERSION-dist.tar.gz"
 BUILD_DEPENDS="nim"
