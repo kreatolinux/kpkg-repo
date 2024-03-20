@@ -1,12 +1,12 @@
 #!/bin/sh
 NAME="src"
 RELEASE="5"
-VERSION="7.0.0-alpha3-sqlite-3"
+VERSION="7.0.0-alpha3-sqlite-4"
 SOURCES="https://github.com/kreatolinux/src/releases/download/v$VERSION/src-v$VERSION-dist.tar.gz"
 BUILD_DEPENDS="nim"
 DEPENDS="libarchive shadow openssl git"
 DEPENDS_KPKG+="bubblewrap sqlite"
-B2SUM="b3b814258f8cba3a199a86708ce5fbd49650be13e3b633a8356b64c18a40e489f847a078e300e1bd27f0f23899dd4d7bbd3f2c58b00d87022be829d59a4c904d"
+B2SUM="f0f87717ae88ef32faebe01a2f7aec50149e274f25aab56b72d28073b24aeb2b0dcac174bfd5fa82e74cca576836bff2c306ce12d2b2833fe8e81c29ad0c0e92"
 DESCRIPTION="Kreato Linux source tree metapackage"
 
 build_kpkg() {
