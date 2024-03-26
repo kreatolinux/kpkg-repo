@@ -70,11 +70,11 @@ jobs:
 
       - uses: actions/download-artifact@v4
         with:
-          name: kpkg-amd64-linux
+          name: kpkg-amd64-linux-debug
           path: /tmp/kpkg-bin
           github-token: ${{ secrets.GH_PAT }} # token with actions:read permissions on target repo
           repository: kreatolinux/src
-          run-id: 8362623424 # TODO: Automatically update to latest nightly
+          run-id: 8443701288 # TODO: Automatically update to latest nightly
 
       - uses: actions/download-artifact@v4
         with:
