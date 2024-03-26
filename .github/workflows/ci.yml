@@ -117,18 +117,18 @@ jobs:
               /tmp/kpkg-bin/kpkg install "$package" -y || IS_USELESS="false"
           done
 
-          # TODO: make a proper python-pip package
-          if command -v pip; then
-            pip install pip --upgrade
-          fi
-
           if [ "$IS_USELESS" = "true" ]; then
               mkdir -p /var/cache/kpkg/archives
               touch /var/cache/kpkg/archives/IS_USELESS
               exit 0
           fi
 
-          /tmp/kpkg-bin/kpkg build ${{ matrix.packages }} --yes --ignorePostInstall #--forceInstallAll=true --yes
+          err() {
+             ls -l /var/cache/kpkg/env/bin/sh
+             exit 1
+          }
+
+          /tmp/kpkg-bin/kpkg build ${{ matrix.packages }} --yes --ignorePostInstall #--forceInstallAll=true --yes || err
           #echo RANDOM_ID=$(cat /dev/urandom | tr -dc '[:alpha:]' | fold -w ${1:-20} | head -n 1) >> $GITHUB_ENV
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
           cd "$GITHUB_WORKSPACE"
