@@ -91,7 +91,7 @@ jobs:
           chmod +x /tmp/chkupd/chkupd
           chmod +x /tmp/kpkg-bin/kpkg
           mkdir -p /etc/kpkg/repos
-          ln -s "$GITHUB_WORKSPACE" /etc/kpkg/repos/main
+          ln "$GITHUB_WORKSPACE" /etc/kpkg/repos/main
 
           for package in ${{ matrix.packages }}; do
               grep "NO_CHKUPD=" "$GITHUB_WORKSPACE/$package/run" > /tmp/sourced_chkupd || NO_CHKUPD=false
