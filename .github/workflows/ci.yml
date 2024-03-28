@@ -122,6 +122,10 @@ jobs:
               touch /var/cache/kpkg/archives/IS_USELESS
               exit 0
           fi
+          
+          # tailscale wants sudo for some reason
+          echo '$@' > /bin/sudo
+          chmod +x /bin/sudo
 
           /tmp/kpkg-bin/kpkg build ${{ matrix.packages }} --yes --ignorePostInstall #--forceInstallAll=true --yes 
           #echo RANDOM_ID=$(cat /dev/urandom | tr -dc '[:alpha:]' | fold -w ${1:-20} | head -n 1) >> $GITHUB_ENV
