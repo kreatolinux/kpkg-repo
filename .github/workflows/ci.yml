@@ -128,22 +128,25 @@ jobs:
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
           cd "$GITHUB_WORKSPACE"
           git pull
-    
+   
+      - name: Tailscale
+        uses: tailscale/github-action@v2
+        with:
+            oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+            oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+            tags: tag:gha
+
       - name: Upload to server through rsync
         env:
-          KNOWN_HOSTS: ${{ secrets.KNOWN_HOSTS }}
-          SSH_URL: ${{ secrets.SSH_URL }}
           SSH_USER: ${{ secrets.SSH_USER }}
-          SSH_KEY: ${{ secrets.SSH_KEY }}
+          SSH_URL: ${{ secrets.SSH_URL }}
+          KNOWN_HOSTS: ${{ secrets.KNOWN_HOSTS }}
           RSYNC_RSH: "ssh -o UserKnownHostsFile=/tmp/known_hosts"
         run: |
           if [ -f "/var/cache/kpkg/archives/IS_USELESS" ]; then
             exit 0
           fi
           /tmp/kpkg-bin/kpkg build rsync openssh --yes
-          mkdir -p ~/.ssh
-          eval $(ssh-agent)
-          echo "$SSH_KEY" | ssh-add -
           echo "$KNOWN_HOSTS" >> /tmp/known_hosts
           rsync -avc /var/cache/kpkg/archives/ $SSH_USER@$SSH_URL:/var/cache/kpkg/archives/
           rsync -avc /var/cache/kpkg/sources/ $SSH_USER@$SSH_URL:/var/cache/kpkg/sources/
