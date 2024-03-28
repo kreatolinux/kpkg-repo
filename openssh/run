@@ -4,6 +4,7 @@ RELEASE="2"
 VERSION="9.6p1"
 SOURCES="https://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-$VERSION.tar.gz"
 DEPENDS="shadow zlib"
+BUILD_DEPENDS="gmake"
 SHA256SUM="910211c07255a8c5ad654391b40ee59800710dd8119dd5362de09385aa7a777c"
 DESCRIPTION="ssh tools"                                                        
 build() {                                                                      
