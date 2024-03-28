@@ -59,7 +59,7 @@ jobs:
     needs: init
     runs-on: ubuntu-latest
     container: 
-      image: ghcr.io/kreatolinux/builder #-gnu # builder-gnu doesn't work yet, see TODO in kpkg/modules/isolation
+      image: ghcr.io/kreatolinux/builder-repo #-gnu # builder-gnu doesn't work yet, see TODO in kpkg/modules/isolation
       options: --privileged
     strategy:
       fail-fast: false
@@ -74,7 +74,7 @@ jobs:
           path: /tmp/kpkg-bin
           github-token: ${{ secrets.GH_PAT }} # token with actions:read permissions on target repo
           repository: kreatolinux/src
-          run-id: 8459042429 # TODO: Automatically update to latest nightly
+          run-id: 8461063212 # TODO: Automatically update to latest nightly
 
       - uses: actions/download-artifact@v4
         with:
@@ -123,11 +123,7 @@ jobs:
               exit 0
           fi
           
-          # tailscale wants sudo for some reason
-          echo '$@' > /bin/sudo
-          chmod +x /bin/sudo
-
-          /tmp/kpkg-bin/kpkg build ${{ matrix.packages }} --yes --ignorePostInstall #--forceInstallAll=true --yes 
+          /tmp/kpkg-bin/kpkg build ${{ matrix.packages }} --yes --ignorePostInstall #--forceInstallAll=true --yes
           #echo RANDOM_ID=$(cat /dev/urandom | tr -dc '[:alpha:]' | fold -w ${1:-20} | head -n 1) >> $GITHUB_ENV
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
           cd "$GITHUB_WORKSPACE"
@@ -152,7 +148,6 @@ jobs:
           if [ -f "/var/cache/kpkg/archives/IS_USELESS" ]; then
             exit 0
           fi
-          /tmp/kpkg-bin/kpkg build rsync openssh --yes
           echo "$KNOWN_HOSTS" >> /tmp/known_hosts
           rsync -avc /var/cache/kpkg/archives/ $SSH_USER@$SSH_URL:/var/cache/kpkg/archives/
           rsync -avc /var/cache/kpkg/sources/ $SSH_USER@$SSH_URL:/var/cache/kpkg/sources/
