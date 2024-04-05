@@ -132,7 +132,7 @@ jobs:
           /tmp/kpkg-bin/kpkg install bash --yes || /tmp/kpkg-bin/kpkg build bash --yes
    
       - name: Tailscale
-        uses: tailscale/github-action@v2
+        uses: tailscale/github-action@main
         with:
             oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
             oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
