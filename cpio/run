@@ -2,6 +2,7 @@
 NAME="cpio"
 RELEASE="1"
 VERSION="2.15"
+BUILD_DEPENDS="gmake"
 SOURCES="https://ftp.gnu.org/gnu/cpio/cpio-$VERSION.tar.gz"
 DEPENDS=""
 SHA256SUM="efa50ef983137eefc0a02fdb51509d624b5e3295c980aa127ceee4183455499e"

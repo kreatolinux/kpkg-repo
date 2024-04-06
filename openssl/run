@@ -2,6 +2,7 @@
 NAME="openssl"
 RELEASE="1"
 VERSION="3.2.1"
+BUILD_DEPENDS="gmake"
 SOURCES="https://www.openssl.org/source/openssl-$VERSION.tar.gz"
 SHA256SUM="83c7329fe52c850677d75e5d0b0ca245309b97e8ecbcfdc1dfdc4ab9fac35b39"
 DEPENDS="zlib"

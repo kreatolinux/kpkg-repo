@@ -2,6 +2,7 @@
 NAME="vim"
 RELEASE="1"
 VERSION="9.1.0061"
+BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/vim/vim/archive/refs/tags/v$VERSION.tar.gz"
 DEPENDS="ncurses"
 SHA256SUM="e3c253297730e86dde5abe0a1bdb6f2367d11c75c5c72f86575597299a3e448e"

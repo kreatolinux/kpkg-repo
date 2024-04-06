@@ -2,6 +2,7 @@
 NAME="itstool"
 RELEASE="1"
 VERSION="2.0.7"
+BUILD_DEPENDS="gmake"
 SOURCES="https://files.itstool.org/itstool/itstool-$VERSION.tar.bz2"
 DEPENDS="python libxml2"
 SHA256SUM="6b9a7cd29a12bb95598f5750e8763cee78836a1a207f85b74d8b3275b27e87ca"

@@ -2,6 +2,7 @@
 NAME="jp2a"
 RELEASE="1"
 VERSION="1.2.0"
+BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/Talinx/jp2a/releases/download/v$VERSION/jp2a-$VERSION.tar.gz"
 DEPENDS="libjpeg-turbo libpng"
 SHA256SUM="11b158aa416c2d64c6d02085b404af01c69468164544389a328d0ae1f8ab3b49"

@@ -2,6 +2,7 @@
 NAME="diffutils"
 RELEASE="1"
 VERSION="3.9"
+BUILD_DEPENDS="gmake"
 SOURCES="https://ftp.gnu.org/gnu/diffutils/diffutils-$VERSION.tar.xz"
 DEPENDS=""
 SHA256SUM="d80d3be90a201868de83d78dad3413ad88160cc53bcc36eb9eaf7c20dbf023f1"

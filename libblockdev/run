@@ -2,6 +2,7 @@
 NAME="libblockdev"
 RELEASE="2"
 VERSION="3.0.4"
+BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/storaged-project/libblockdev/releases/download/$VERSION-1/libblockdev-$VERSION.tar.gz"
 DEPENDS="glib keyutils cryptsetup lvm2 e2fsprogs eudev util-linux libbytesize gobject-introspection libnvme"
 SHA256SUM="49841ff92db0ab032931e6f2b5eab63e5969b0ddc14b067b60e46a6eb6c60e47"

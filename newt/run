@@ -2,6 +2,7 @@
 NAME="newt"
 RELEASE="1"
 VERSION="0.52.24"
+BUILD_DEPENDS="gmake"
 SOURCES="https://releases.pagure.org/newt/newt-$VERSION.tar.gz"
 DEPENDS="python slang popt"
 SHA256SUM="5ded7e221f85f642521c49b1826c8de19845aa372baf5d630a51774b544fbdbb"

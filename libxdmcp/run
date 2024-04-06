@@ -2,6 +2,7 @@
 NAME="libxdmcp"
 RELEASE="1"
 VERSION="1.1.4"
+BUILD_DEPENDS="gmake"
 SOURCES="https://www.x.org/releases/individual/lib/libXdmcp-$VERSION.tar.xz"
 SHA256SUM="2dce5cc317f8f0b484ec347d87d81d552cdbebb178bd13c5d8193b6b7cd6ad00"
 DEPENDS="xorgproto"

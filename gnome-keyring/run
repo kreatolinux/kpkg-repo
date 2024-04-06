@@ -2,6 +2,7 @@
 NAME="gnome-keyring"
 RELEASE="1"
 VERSION="42.1"
+BUILD_DEPENDS="gmake"
 SOURCES="https://download.gnome.org/sources/gnome-keyring/42/gnome-keyring-$VERSION.tar.xz"
 DEPENDS="p11-kit gcr-4 gcr-3 dbus linux-pam libxslt openssh"
 SHA256SUM="c7f4d040cc76a6b7fe67e08ef9106911c3c80d40fc88cbfc8e2684a4c946e3e6"

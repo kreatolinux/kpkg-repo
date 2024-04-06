@@ -2,6 +2,7 @@
 NAME="json-c"
 RELEASE="1"
 VERSION="0.17"
+BUILD_DEPENDS="gmake"
 SOURCES="https://s3.amazonaws.com/json-c_releases/releases/json-c-$VERSION.tar.gz"
 DEPENDS="cmake"
 SHA256SUM="7550914d58fb63b2c3546f3ccfbe11f1c094147bd31a69dcd23714d7956159e6"

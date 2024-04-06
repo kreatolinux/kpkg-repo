@@ -2,6 +2,7 @@
 NAME="unifdef"
 RELEASE="1"
 VERSION="2.12"
+BUILD_DEPENDS="gmake"
 SOURCES="https://dotat.at/prog/unifdef/unifdef-$VERSION.tar.gz"
 SHA256SUM="fba564a24db7b97ebe9329713ac970627b902e5e9e8b14e19e024eb6e278d10b"
 DESCRIPTION="unifdef"

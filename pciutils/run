@@ -2,6 +2,7 @@
 NAME="pciutils"
 RELEASE="1"
 VERSION="3.10.0"
+BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/pciutils/pciutils/archive/refs/tags/v$VERSION.tar.gz"
 DEPENDS=""
 SHA256SUM="e579d87f1afe2196db7db648857023f80adb500e8194c4488c8b47f9a238c1c6"

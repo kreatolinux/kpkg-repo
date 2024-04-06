@@ -2,6 +2,7 @@
 NAME="opus"
 RELEASE="1"
 VERSION="1.4"
+BUILD_DEPENDS="gmake"
 SOURCES="https://downloads.xiph.org/releases/opus/opus-$VERSION.tar.gz"
 SHA256SUM="c9b32b4253be5ae63d1ff16eea06b94b5f0f2951b7a02aceef58e3a3ce49c51f"
 DESCRIPTION="Lossy audio compression format"

@@ -2,6 +2,7 @@
 NAME="libaio"
 RELEASE="1"
 VERSION="0.3.113"
+BUILD_DEPENDS="gmake"
 SOURCES="https://pagure.io/libaio/archive/libaio-$VERSION/libaio-$VERSION.tar.gz"
 DEPENDS=""
 SHA256SUM="1c561c20670c5c09cc8437a622008c0693c6a7816c1f30332da3796953b2f454"

@@ -2,6 +2,7 @@
 NAME="builder-essentials"
 RELEASE="1"
 VERSION="0.1"
+BUILD_DEPENDS="gmake"
 NO_CHKUPD="y"
 DEPENDS="autoconf automake binutils bash perl bison meson file linux-headers ninja texinfo gcc gmake gawk grep"
 DESCRIPTION="Group package for building tools"

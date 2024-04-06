@@ -2,6 +2,7 @@
 NAME="efibootmgr"
 RELEASE="1"
 VERSION="18"
+BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/rhboot/efibootmgr/archive/$VERSION/efibootmgr-$VERSION.tar.gz"
 DEPENDS="efivar popt"
 SHA256SUM="442867d12f8525034a404fc8af3036dba8e1fc970998af2486c3b940dfad0874"

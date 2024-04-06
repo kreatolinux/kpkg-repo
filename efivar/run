@@ -2,6 +2,7 @@
 NAME="efivar"
 RELEASE="1"
 VERSION="38"
+BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/rhboot/efivar/releases/download/$VERSION/efivar-$VERSION.tar.bz2"
 DEPENDS=""
 SHA256SUM="f018ed6e49c5f1c16d336d9fd7687ce87023276591921db1e49a314ad6515349"

@@ -2,6 +2,7 @@
 NAME="linux-firmware"
 RELEASE="1"
 VERSION="20240115"
+BUILD_DEPENDS="gmake"
 SOURCES="https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/snapshot/linux-firmware-$VERSION.tar.gz"
 DEPENDS="rdfind"
 SHA256SUM="86c2799516c9dc24e73214bd58ccd8297356186e97c5458baf4eb7cc8dbfea0a"

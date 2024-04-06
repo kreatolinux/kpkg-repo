@@ -2,6 +2,7 @@
 NAME="vulkan-headers"
 RELEASE="1"
 VERSION="1.3.277"
+BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/KhronosGroup/Vulkan-Headers/archive/refs/tags/v$VERSION.tar.gz"
 DEPENDS="cmake ninja"
 SHA256SUM="33e0c000f1e9a8019e4b86106d62b64133314a13fef712390c1f0563f4920614"

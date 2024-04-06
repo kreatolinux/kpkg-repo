@@ -2,6 +2,7 @@
 NAME="libpng"
 RELEASE="1"
 VERSION="1.6.42"
+BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/glennrp/libpng/archive/refs/tags/v$VERSION.tar.gz"
 DEPENDS=""
 SHA256SUM="fe89de292e223829859d21990d9c4d6b7e30e295a268f6a53a022611aa98bd67"

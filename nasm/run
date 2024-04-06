@@ -2,6 +2,7 @@
 NAME="nasm"
 RELEASE="1"
 VERSION="2.16.01"
+BUILD_DEPENDS="gmake"
 SOURCES="https://www.nasm.us/pub/nasm/releasebuilds/$VERSION/nasm-$VERSION.tar.xz"
 DEPENDS=""
 SHA256SUM="c77745f4802375efeee2ec5c0ad6b7f037ea9c87c92b149a9637ff099f162558"

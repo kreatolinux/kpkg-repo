@@ -2,6 +2,7 @@
 NAME="glibc"
 RELEASE="5"
 VERSION="2.39"
+BUILD_DEPENDS="gmake"
 SOURCES="https://ftp.gnu.org/gnu/glibc/glibc-$VERSION.tar.xz"
 DEPENDS="grep gawk bison m4"
 DEPENDS_AARCH64_LINUX_GNU_GLIBC+="aarch64-linux-gnu-linux-headers"

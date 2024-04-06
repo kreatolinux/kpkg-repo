@@ -2,6 +2,7 @@
 NAME="pcre2"
 RELEASE="1"
 VERSION="10.42"
+BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/PCRE2Project/pcre2/releases/download/pcre2-$VERSION/pcre2-$VERSION.tar.gz"
 SHA256SUM="c33b418e3b936ee3153de2c61cc638e7e4fe3156022a5c77d0711bcbb9d64f1f"
 DESCRIPTION="Perl Compatible Regular Expression libraries"

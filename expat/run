@@ -2,6 +2,7 @@
 NAME="expat"
 RELEASE="1"
 VERSION="2.5.0"
+BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/libexpat/libexpat/releases/download/R_2_5_0/expat-$VERSION.tar.xz"
 DEPENDS=""
 SHA256SUM="ef2420f0232c087801abf705e89ae65f6257df6b7931d37846a193ef2e8cdcbe"

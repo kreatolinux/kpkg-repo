@@ -2,6 +2,7 @@
 NAME="dbus-glib"
 RELEASE="1"
 VERSION="0.112"
+BUILD_DEPENDS="gmake"
 SOURCES="https://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-$VERSION.tar.gz"
 DEPENDS="dbus glib"
 SHA256SUM="7d550dccdfcd286e33895501829ed971eeb65c614e73aadb4a08aeef719b143a"

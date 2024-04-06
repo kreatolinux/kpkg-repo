@@ -2,6 +2,7 @@
 NAME="cups"
 RELEASE="1"
 VERSION="2.4.7"
+BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/OpenPrinting/cups/releases/download/v$VERSION/cups-$VERSION-source.tar.gz"
 DEPENDS="colord dbus libusb linux-pam"
 SHA256SUM="dd54228dd903526428ce7e37961afaed230ad310788141da75cebaa08362cf6c"

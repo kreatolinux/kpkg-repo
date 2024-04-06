@@ -2,6 +2,7 @@
 NAME="limine"
 RELEASE="1"
 VERSION="7.0.2"
+BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/limine-bootloader/limine/releases/download/v$VERSION/limine-$VERSION.tar.xz"
 DEPENDS="efibootmgr nasm"
 SHA256SUM="fbd17039063e5746e441ebe9bb4cdfdb10c6f2ed76f2da1a53f9287576af4e4a"

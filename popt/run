@@ -2,6 +2,7 @@
 NAME="popt"
 RELEASE="1"
 VERSION="1.19"
+BUILD_DEPENDS="gmake"
 SOURCES="http://ftp.rpm.org/popt/releases/popt-1.x/popt-$VERSION.tar.gz"
 DEPENDS=""
 SHA256SUM="c25a4838fc8e4c1c8aacb8bd620edb3084a3d63bf8987fdad3ca2758c63240f9"

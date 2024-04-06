@@ -2,6 +2,7 @@
 NAME="libgcrypt"
 RELEASE="1"
 VERSION="1.10.3"
+BUILD_DEPENDS="gmake"
 SOURCES="https://gnupg.org/ftp/gcrypt/libgcrypt/libgcrypt-$VERSION.tar.bz2"
 DEPENDS="libgpg-error"
 SHA256SUM="8b0870897ac5ac67ded568dcfadf45969cfa8a6beb0fd60af2a9eadc2a3272aa"

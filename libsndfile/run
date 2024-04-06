@@ -2,6 +2,7 @@
 NAME="libsndfile"
 RELEASE="1"
 VERSION="1.2.2"
+BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/libsndfile/libsndfile/releases/download/$VERSION/libsndfile-$VERSION.tar.xz"
 DEPENDS="flac opus libvorbis alsa-lib sqlite lame"
 SHA256SUM="3799ca9924d3125038880367bf1468e53a1b7e3686a934f098b7e1d286cdb80e"

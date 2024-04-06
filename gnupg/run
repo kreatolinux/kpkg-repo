@@ -2,6 +2,7 @@
 NAME="gnupg"
 RELEASE="1"
 VERSION="2.4.4"
+BUILD_DEPENDS="gmake"
 SOURCES="https://gnupg.org/ftp/gcrypt/gnupg/gnupg-$VERSION.tar.bz2"
 DEPENDS="libgpg-error libgcrypt libassuan libksba npth"
 SHA256SUM="67ebe016ca90fa7688ce67a387ebd82c6261e95897db7b23df24ff335be85bc6"

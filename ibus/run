@@ -2,6 +2,7 @@
 NAME="ibus"
 RELEASE="1"
 VERSION="1.5.28"
+BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/ibus/ibus/releases/download/$VERSION/ibus-$VERSION.tar.gz"
 DEPENDS="dconf gobject-introspection libnotify iso-codes vala"
 SHA256SUM="6c9ff3a7576c3d61264f386030f47ee467eb7298c8104367002986e008765667"

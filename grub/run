@@ -2,6 +2,7 @@
 NAME="grub"
 RELEASE="2"
 VERSION="2.12"
+BUILD_DEPENDS="gmake"
 SOURCES="https://ftp.gnu.org/gnu/grub/grub-$VERSION.tar.xz"
 DEPENDS="flex freetype pigz"
 DEPENDS_GRUB_EFI+="efibootmgr"

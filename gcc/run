@@ -2,6 +2,7 @@
 NAME="gcc"
 RELEASE="4"
 VERSION="13.2.0"
+BUILD_DEPENDS="gmake"
 SOURCES="https://ftp.gnu.org/gnu/gcc/gcc-$VERSION/gcc-$VERSION.tar.xz"
 DEPENDS="isl libzstd gmp mpc mpfr"
 DEPENDS_GCC+="binutils linux-headers"

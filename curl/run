@@ -2,6 +2,7 @@
 NAME="curl"
 RELEASE="1"
 VERSION="8.6.0"
+BUILD_DEPENDS="gmake"
 SOURCES="https://curl.haxx.se/download/curl-$VERSION.tar.xz"
 DEPENDS="nghttp2 zlib nghttp2"
 SHA256SUM="3ccd55d91af9516539df80625f818c734dc6f2ecf9bada33c76765e99121db15"

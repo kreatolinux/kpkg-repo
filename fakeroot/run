@@ -2,6 +2,7 @@
 NAME="fakeroot"
 RELEASE="1"
 VERSION="1.33"
+BUILD_DEPENDS="gmake"
 SOURCES="https://deb.debian.org/debian/pool/main/f/fakeroot/fakeroot_$VERSION.orig.tar.gz"
 DEPENDS="libcap"
 SHA256SUM="e157d8e5c64d3a755707791e9be93296c6d249d5c4478bf941b675d49c47757d"

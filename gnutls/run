@@ -2,6 +2,7 @@
 NAME="gnutls"
 RELEASE="1"
 VERSION="3.8.3"
+BUILD_DEPENDS="gmake"
 SOURCES="https://www.gnupg.org/ftp/gcrypt/gnutls/v3.8/gnutls-$VERSION.tar.xz"
 DEPENDS="libnettle"
 SHA256SUM="f74fc5954b27d4ec6dfbb11dea987888b5b124289a3703afcada0ee520f4173e"

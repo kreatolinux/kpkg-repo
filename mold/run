@@ -2,6 +2,7 @@
 NAME="mold"
 RELEASE="1"
 VERSION="2.4.0"
+BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/rui314/mold/archive/refs/tags/v$VERSION.tar.gz"
 DEPENDS="cmake"
 SHA256SUM="be65f3d785d32ece7b3204ecaa57810847fdd25c232cf704cbfff2dafb1ac107"

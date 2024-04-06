@@ -2,6 +2,7 @@
 NAME="zlib"
 RELEASE="1"
 VERSION="1.3.1"
+BUILD_DEPENDS="gmake"
 DESCRIPTION="zlib is a software library used for data compression."
 SOURCES="https://zlib.net/zlib-$VERSION.tar.gz"
 DEPENDS=""

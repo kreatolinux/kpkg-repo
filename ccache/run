@@ -2,6 +2,7 @@
 NAME="ccache"
 RELEASE="2"
 VERSION="4.9"
+BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/ccache/ccache/archive/refs/tags/v$VERSION.tar.gz"
 DEPENDS="cmake gcc libzstd"
 SHA256SUM="790ab3a134f837cb2da3599f37e24845065a2e9095bbdfbe7d3d26c42500de20"

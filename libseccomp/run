@@ -2,6 +2,7 @@
 NAME="libseccomp"
 RELEASE="1"
 VERSION="2.5.5"
+BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/seccomp/libseccomp/releases/download/v$VERSION/libseccomp-$VERSION.tar.gz"
 DEPENDS="gperf"
 SHA256SUM="248a2c8a4d9b9858aa6baf52712c34afefcf9c9e94b76dce02c1c9aa25fb3375"

@@ -2,6 +2,7 @@
 NAME="p11-kit"
 RELEASE="2"
 VERSION="0.25.3"
+BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/p11-glue/p11-kit/releases/download/$VERSION/p11-kit-$VERSION.tar.xz"
 DEPENDS="libtasn libffi pkgconf"
 SHA256SUM="d8ddce1bb7e898986f9d250ccae7c09ce14d82f1009046d202a0eb1b428b2adc"

@@ -2,6 +2,7 @@
 NAME="gdbm"
 RELEASE="1"
 VERSION="1.23"
+BUILD_DEPENDS="gmake"
 SOURCES="https://ftp.gnu.org/gnu/gdbm/gdbm-$VERSION.tar.gz"
 SHA256SUM="74b1081d21fff13ae4bd7c16e5d6e504a4c26f7cde1dca0d963a484174bbcacd"
 DESCRIPTION="A library of database functions that use extendible hashing"
