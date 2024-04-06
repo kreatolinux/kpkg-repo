@@ -134,7 +134,8 @@ jobs:
       - name: Tailscale
         uses: tailscale/github-action@main
         with:
-            authkey: ${{ secrets.TS_AUTH_KEY }}
+            oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+            oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
             tags: tag:gha
 
       - name: Upload to server through rsync
