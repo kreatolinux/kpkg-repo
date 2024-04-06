@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="libpng"
 RELEASE="1"
-VERSION="1.6.42"
+VERSION="1.6.43"
 BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/glennrp/libpng/archive/refs/tags/v$VERSION.tar.gz"
 DEPENDS=""
-SHA256SUM="fe89de292e223829859d21990d9c4d6b7e30e295a268f6a53a022611aa98bd67"
+SHA256SUM="fecc95b46cf05e8e3fc8a414750e0ba5aad00d89e9fdf175e94ff041caf1a03a"
 DESCRIPTION="PNG library"
 
 build() {
