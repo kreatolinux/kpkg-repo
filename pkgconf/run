@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="pkgconf"
 RELEASE="1"
-VERSION=2.1.0
+VERSION=2.2.0
 BUILD_DEPENDS="gmake"
 SOURCES="https://distfiles.dereferenced.org/pkgconf/pkgconf-$VERSION.tar.xz"
 DEPENDS=""
-SHA256SUM="266d5861ee51c52bc710293a1d36622ae16d048d71ec56034a02eb9cf9677761"
+SHA256SUM="b06ff63a83536aa8c2f6422fa80ad45e4833f590266feb14eaddfe1d4c853c69"
 DESCRIPTION="pkgconf is a program which helps to configure compiler and linker flags for development frameworks."
 
 build() {
