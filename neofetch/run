@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="7.1.5"
 SOURCES="https://github.com/kreatolinux/neofetch/archive/refs/tags/$VERSION.tar.gz"
 DEPENDS="bash"
-SHA256SUM="9c1dbbff41901b1cfd44a51dd842f635e716e931b71ee0e25f3aec704f8b4553"
+SHA256SUM="1a53befe5e09e5ddb86f5e9022e321468c4a049858fc1a4ea3238565258cb5d8"
 DESCRIPTION="A command-line system information tool written in bash 3.2+"
 
 package() {
