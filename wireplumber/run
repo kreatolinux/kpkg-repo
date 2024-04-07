@@ -1,12 +1,12 @@
 #!/bin/sh
 NAME="wireplumber"
 RELEASE="1"
-VERSION="0.4.81"
+VERSION="0.5.1"
 SOURCES="https://gitlab.freedesktop.org/pipewire/wireplumber/-/archive/$VERSION/wireplumber-$VERSION.tar.gz"
 DEPENDS="pipewire"
 REPLACES="pipewire-session-manager"
 BUILD_DEPENDS="meson python-setuptools"
-SHA256SUM="7535bcef17e9426a53d2ef8eb59f86a5f9b843a6426c1ae81343cf621a20224b"
+SHA256SUM="9b776f5481a52f11b30ed46f8baf743534857b74ca3d3dc09a5b1602d5d5a466"
 DESCRIPTION="Session / policy manager implementation for PipeWire"
 
 build() {
