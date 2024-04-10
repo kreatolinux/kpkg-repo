@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="btrfs-progs"
 RELEASE="1"
-VERSION="6.7"
+VERSION="6.8"
 SOURCES="https://mirrors.edge.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v$VERSION.tar.xz"
 BUILD_DEPENDS="python-setuptools gmake"
 DEPENDS="e2fsprogs eudev util-linux liblzo2"
-SHA256SUM="c27f755185b9f2dab31f42e8a303d36bed2a3f3341cc6d75ee68a0a650a24767"
+SHA256SUM="9c21645feac182611e28b47769d5f613cb9e2ecab58ece60b10e6c55a9ead575"
 DESCRIPTION="BTRFS filesystem utilities"
 
 build() {
