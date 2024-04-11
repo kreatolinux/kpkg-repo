@@ -7,10 +7,6 @@ SOURCES="https://www.docbook.org/xml/$VERSION/docbook-xml-4.5.zip"
 SHA256SUM="4e4e037a2b83c98c6c94818390d4bdd3f6e10f6ec62dd79188594e26190dc7b4"
 DESCRIPTION="A widely used XML scheme for writing documentation and help"
 
-prepare() {
-    bsdtar -xf docbook-xml-$VERSION.zip
-}
-
 # Huge thanks to BLFS for having this batshit crazy installation process figured out
 
 package() {
