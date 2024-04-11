@@ -5,7 +5,7 @@ VERSION="1.1.7"
 SOURCES="https://www.x.org/releases/individual/lib/libfontenc-$VERSION.tar.xz"
 SHA256SUM="c0d36991faee06551ddbaf5d99266e97becdc05edfae87a833c3ff7bf73cfec2"
 DEPENDS="zlib"
-BUILD_DEPENDS="xorgproto"
+BUILD_DEPENDS="xorgproto gmake"
 DESCRIPTION="libfontenc"
 
 build() {

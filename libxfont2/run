@@ -5,7 +5,7 @@ VERSION="2.0.6"
 SOURCES="https://www.x.org/releases/individual/lib/libXfont2-$VERSION.tar.xz"
 SHA256SUM="74ca20017eb0fb3f56d8d5e60685f560fc85e5ff3d84c61c4cb891e40c27aef4"
 DEPENDS="libfontenc freetype xorgproto"
-BUILD_DEPENDS="xtrans"
+BUILD_DEPENDS="xtrans gmake"
 DESCRIPTION="X11 font rasterisation library"
 
 build() {

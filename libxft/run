@@ -5,7 +5,7 @@ VERSION="2.3.8"
 SOURCES="https://www.x.org/releases/individual/lib/libXft-$VERSION.tar.xz"
 SHA256SUM="5e8c3c4bc2d4c0a40aef6b4b38ed2fb74301640da29f6528154b5009b1c6dd49"
 DEPENDS="libx11 libxext libxrender fontconfig freetype"
-BUILD_DEPENDS="xtrans"
+BUILD_DEPENDS="xtrans gmake"
 DESCRIPTION="X11 client-side font rendering library"
 
 build() {

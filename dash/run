@@ -3,7 +3,7 @@ NAME="dash"
 RELEASE="1"
 VERSION="0.5.12"
 SOURCES="https://git.kernel.org/pub/scm/utils/dash/dash.git/snapshot/dash-$VERSION.tar.gz"
-BUILD_DEPENDS="autoconf automake"
+BUILD_DEPENDS="autoconf automake gmake"
 SHA256SUM="0d632f6b945058d84809cac7805326775bd60cb4a316907d0bd4228ff7107154"
 DESCRIPTION="Small and fast POSIX-compliant shell"
 build() {

@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="2.57.1"
 SOURCES="https://gitlab.gnome.org/GNOME/librsvg/-/archive/$VERSION/librsvg-$VERSION.tar.gz"
 DEPENDS="cairo freetype gdk-pixbuf glib harfbuzz libxml2 pango"
-BUILD_DEPENDS="rust vala gobject-introspection"
+BUILD_DEPENDS="rust vala gobject-introspection gmake"
 SHA256SUM="cf265bf04ec75704088a3e8990ce684f4c12762d0858f11d3dbc1f646bb68cff"
 DESCRIPTION="SVG rendering library"
 

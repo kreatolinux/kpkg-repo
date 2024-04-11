@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="0.24.2"
 SOURCES="https://telepathy.freedesktop.org/releases/telepathy-glib/telepathy-glib-$VERSION.tar.gz"
 DEPENDS="dbus-glib"
-BUILD_DEPENDS="gobject-introspection diffutils"
+BUILD_DEPENDS="gobject-introspection diffutils gmake"
 SHA256SUM="b0a374d771cdd081125f38c3abd079657642301c71a543d555e2bf21919273f0"
 DESCRIPTION="glib bindings for telepathy"
 

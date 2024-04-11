@@ -5,7 +5,7 @@ VERSION="1.8.7"
 SOURCES="https://www.x.org/releases/individual/lib/libX11-$VERSION.tar.gz"
 SHA256SUM="793ebebf569f12c864b77401798d38814b51790fce206e01a431e5feb982e20b"
 DEPENDS="libxcb xorgproto"
-BUILD_DEPENDS="xtrans"
+BUILD_DEPENDS="xtrans gmake"
 DESCRIPTION="X11 client-side library"
 
 build() {

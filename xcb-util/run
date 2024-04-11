@@ -5,7 +5,7 @@ VERSION="0.4.1"
 SOURCES="https://xcb.freedesktop.org/dist/xcb-util-$VERSION.tar.xz"
 SHA256SUM="5abe3bbbd8e54f0fa3ec945291b7e8fa8cfd3cccc43718f8758430f94126e512"
 DEPENDS="libxcb"
-BUILD_DEPENDS="gperf xorgproto"
+BUILD_DEPENDS="gperf xorgproto gmake"
 DESCRIPTION="xcb-util"
 
 build() {

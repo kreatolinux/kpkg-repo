@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="2.10.1"
 SOURCES="https://github.com/storaged-project/udisks/releases/download/udisks-$VERSION/udisks-$VERSION.tar.bz2"
 DEPENDS="libatasmart libblockdev elogind libgudev libxslt polkit"
-BUILD_DEPENDS="gobject-introspection"
+BUILD_DEPENDS="gobject-introspection gmake"
 SHA256SUM="b75734ccf602540dedb4068bec206adcb508a4c003725e117ae8f994d92d8ece"
 DESCRIPTION="udisks"
 

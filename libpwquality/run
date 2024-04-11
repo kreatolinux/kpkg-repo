@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="1.4.5"
 SOURCES="https://github.com/libpwquality/libpwquality/releases/download/libpwquality-$VERSION/libpwquality-$VERSION.tar.bz2"
 DEPENDS="cracklib linux-pam"
-BUILD_DEPENDS="python"
+BUILD_DEPENDS="python gmake"
 SHA256SUM="6fcf18b75d305d99d04d2e42982ed5b787a081af2842220ed63287a2d6a10988"
 DESCRIPTION="Library for password quality checking"
 

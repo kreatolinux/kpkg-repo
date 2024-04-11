@@ -5,7 +5,7 @@ VERSION="1.1.5"
 SOURCES="https://www.x.org/releases/individual/lib/libXinerama-$VERSION.tar.gz"
 SHA256SUM="2efa855cb42dc620eff3b77700d8655695e09aaa318f791f201fa60afa72b95c"
 DEPENDS="libxext"
-BUILD_DEPENDS="xorgproto"
+BUILD_DEPENDS="xorgproto gmake"
 DESCRIPTION="libxinerama"
 
 build() {

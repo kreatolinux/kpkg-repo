@@ -5,7 +5,7 @@ VERSION="1.8.1"
 SOURCES="https://www.x.org/releases/individual/lib/libXi-$VERSION.tar.gz"
 SHA256SUM="3b5f47c223e4b63d7f7fe758886b8bf665b20a7edb6962c423892fd150e326ea"
 DEPENDS="libxext libxfixes"
-BUILD_DEPENDS="xorgproto"
+BUILD_DEPENDS="xorgproto gmake"
 DESCRIPTION="libxi"
 
 build() {

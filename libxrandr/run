@@ -5,7 +5,7 @@ VERSION="1.5.4"
 SOURCES="https://www.x.org/releases/individual/lib/libXrandr-$VERSION.tar.gz"
 SHA256SUM="c72c94dc3373512ceb67f578952c5d10915b38cc9ebb0fd176a49857b8048e22"
 DEPENDS="libxext libxrender"
-BUILD_DEPENDS="xorgproto"
+BUILD_DEPENDS="xorgproto gmake"
 DESCRIPTION="libxrandr"
 
 build() {

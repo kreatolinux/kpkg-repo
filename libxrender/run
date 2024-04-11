@@ -5,7 +5,7 @@ VERSION="0.9.11"
 SOURCES="https://www.x.org/releases/individual/lib/libXrender-$VERSION.tar.xz"
 SHA256SUM="bc53759a3a83d1ff702fb59641b3d2f7c56e05051fa0cfa93501166fa782dc24"
 DEPENDS="libx11"
-BUILD_DEPENDS="xorgproto"
+BUILD_DEPENDS="xorgproto gmake"
 DESCRIPTION="libxrender"
 
 build() {

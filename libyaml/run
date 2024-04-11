@@ -3,7 +3,7 @@ NAME="libyaml"
 RELEASE="1"
 VERSION="0.2.5"
 SOURCES="https://github.com/yaml/libyaml/releases/download/$VERSION/yaml-$VERSION.tar.gz"
-BUILD_DEPENDS="libtool"
+BUILD_DEPENDS="libtool gmake"
 SHA256SUM="c642ae9b75fee120b2d96c712538bd2cf283228d2337df2cf2988e3c02678ef4"
 DESCRIPTION="A C library for parsing and emitting YAML"
 
