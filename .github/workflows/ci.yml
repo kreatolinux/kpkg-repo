@@ -116,6 +116,8 @@ jobs:
           for package in ${{ matrix.packages }}; do
               /tmp/kpkg-bin/kpkg install "$package" -y || IS_USELESS="false"
           done
+          
+          git config --system --add safe.directory '*'
 
           if [ "$IS_USELESS" = "true" ]; then
               mkdir -p /var/cache/kpkg/archives
@@ -125,10 +127,8 @@ jobs:
           
           /tmp/kpkg-bin/kpkg build ${{ matrix.packages }} --yes --ignorePostInstall #--forceInstallAll=true --yes
           #echo RANDOM_ID=$(cat /dev/urandom | tr -dc '[:alpha:]' | fold -w ${1:-20} | head -n 1) >> $GITHUB_ENV
-          git config --system --add safe.directory '*'
           cd "$GITHUB_WORKSPACE"
           git pull
-          pwd
           git status
       
       - name: Upload to server through rsync
