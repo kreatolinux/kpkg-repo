@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="nasm"
 RELEASE="1"
-VERSION="2.16.02"
+VERSION="2.16.03"
 BUILD_DEPENDS="gmake"
 SOURCES="https://www.nasm.us/pub/nasm/releasebuilds/$VERSION/nasm-$VERSION.tar.xz"
 DEPENDS=""
-SHA256SUM="1e1b942ea88f22edae89659e15be26fa027eae0747f51413540f52d4eac4790d"
+SHA256SUM="1412a1c760bbd05db026b6c0d1657affd6631cd0a63cddb6f73cc6d4aa616148"
 DESCRIPTION="Assembler designed for portability and modularity."
 
 build() {
