@@ -15,10 +15,9 @@ build() {
 
 package() {
     make DESTDIR=$ROOT install
-    ln -s /usr/bin/kmod $ROOT/usr/bin/depmod
-    ln -s /usr/bin/kmod $ROOT/usr/bin/rmmod
-    ln -s /usr/bin/kmod $ROOT/usr/bin/lsmod
-    ln -s /usr/bin/kmod $ROOT/usr/bin/insmod
-    ln -s /usr/bin/kmod $ROOT/usr/bin/modinfo
-    ln -s /usr/bin/kmod $ROOT/usr/bin/modprobe
+    [ -f "$ROOT/usr/bin/depmod" ] || ln -s /usr/bin/kmod $ROOT/usr/bin/depmod
+    [ -f "$ROOT/usr/bin/rmmod" ] || ln -s /usr/bin/kmod $ROOT/usr/bin/rmmod
+    [ -f "$ROOT/usr/bin/lsmod" ] || ln -s /usr/bin/kmod $ROOT/usr/bin/lsmod
+    [ -f "$ROOT/usr/bin/insmod" ] || ln -s /usr/bin/kmod $ROOT/usr/bin/insmod
+    [ -f "$ROOT/usr/bin/modprobe" ] || ln -s /usr/bin/kmod $ROOT/usr/bin/modprobe
 }
