@@ -10,6 +10,7 @@ SHA256SUM="f77bd47cf8170c57365ae7bf86696c118adb3b120d3259c64c502d3dc1e2d926"
 DESCRIPTION="The GNU C library"
 
 common_build() {
+    export LD_LIBRARY_PATH=$(echo $LD_LIBRARY_PATH | sed 's/:$//;s/:://g')
     export CC=$1-gcc
     export CXX=$1-g++
     
