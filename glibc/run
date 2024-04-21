@@ -11,6 +11,7 @@ DESCRIPTION="The GNU C library"
 
 common_build() {
     export LD_LIBRARY_PATH=$(echo $LD_LIBRARY_PATH | sed 's/:$//;s/:://g')
+    echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
     export CC=$1-gcc
     export CXX=$1-g++
     
