@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="dmidecode"
 RELEASE="1"
-VERSION="3.5"
+VERSION="3.6"
 BUILD_DEPENDS="gmake"
 SOURCES="https://download.savannah.gnu.org/releases/dmidecode/dmidecode-$VERSION.tar.xz"
-SHA256SUM="79d76735ee8e25196e2a722964cf9683f5a09581503537884b256b01389cc073"
+SHA256SUM="e40c65f3ec3dafe31ad8349a4ef1a97122d38f65004ed66575e1a8d575dd8bae"
 DESCRIPTION="Desktop Management Interface table related utilities"
 
 build() {
