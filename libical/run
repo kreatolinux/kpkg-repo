@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="libical"
 RELEASE="1"
-VERSION="3.0.17"
+VERSION="3.0.18"
 SOURCES="https://github.com/libical/libical/releases/download/v$VERSION/libical-$VERSION.tar.gz"
 DEPENDS="glib"
 BUILD_DEPENDS="cmake gobject-introspection vala"
-SHA256SUM="bcda9a6db6870240328752854d1ea475af9bbc6356e6771018200e475e5f781b"
+SHA256SUM="72b7dc1a5937533aee5a2baefc990983b66b141dd80d43b51f80aced4aae219c"
 DESCRIPTION="An implementation of iCalendar protocols and data formats"
 
 build() {
