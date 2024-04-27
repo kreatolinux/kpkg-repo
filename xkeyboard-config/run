@@ -3,6 +3,7 @@ NAME="xkeyboard-config"
 RELEASE="1"
 VERSION="2.41"
 SOURCES="https://www.x.org/archive//individual/data/xkeyboard-config/xkeyboard-config-$VERSION.tar.xz"
+BUILD_DEPENDS="meson"
 SHA256SUM="f02cd6b957295e0d50236a3db15825256c92f67ef1f73bf1c77a4b179edf728f"
 DESCRIPTION="XKB data description files"
 
