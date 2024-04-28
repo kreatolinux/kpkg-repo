@@ -1,12 +1,12 @@
 #!/bin/sh
 NAME="systemd"
 RELEASE="4"
-VERSION="255.3"
+VERSION="255.5"
 SOURCES="https://github.com/systemd/systemd-stable/archive/refs/tags/v$VERSION.tar.gz"
 BUILD_DEPENDS="meson samurai python-setuptools bash"
 DEPENDS="linux-pam gperf kbd libcap util-linux python-jinja2 kmod"
 REPLACES="elogind eudev"
-SHA256SUM="27807c65f969d0e0e44629dee8379e1e2c30e6c5e84be0389438c4ab1b225000"
+SHA256SUM="95e419f0bd80fde9f169533e070348beb94073d9a58daf505d719ed3ebfd2411"
 DESCRIPTION="The systemd System and Service Manager"
 
 prepare() {
