@@ -5,6 +5,7 @@ VERSION="23.2.4"
 SOURCES="https://www.x.org/releases/individual/xserver/xwayland-$VERSION.tar.xz"
 SHA256SUM="a99e159b6d0d33098b3b6ab22a88bfcece23c8b9d0ca72c535c55dcb0681b46b"
 DEPENDS="xorg-xkbcomp libnettle libepoxy libxfont2 pixman xorg-server libxcvt mesa libglvnd libxau wayland libdrm libtirpc libxshmfence"
+BUILD_DEPENDS="meson"
 DESCRIPTION="Run X11 applications in Wayland"
 
 build() {
