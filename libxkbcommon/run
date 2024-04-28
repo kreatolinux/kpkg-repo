@@ -4,6 +4,7 @@ RELEASE="2"
 VERSION="1.6.0"
 SOURCES="https://xkbcommon.org/download/libxkbcommon-$VERSION.tar.xz"
 DEPENDS="wayland wayland-protocols libxcb libxml2 xkeyboard-config"
+BUILD_DEPENDS="meson"
 SHA256SUM="0edc14eccdd391514458bc5f5a4b99863ed2d651e4dd761a90abf4f46ef99c2b"
 DESCRIPTION="Keyboard compiler and support library"
 
