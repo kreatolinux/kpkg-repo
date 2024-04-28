@@ -4,8 +4,10 @@ RELEASE="1"
 VERSION="1.8.1"
 SOURCES="https://github.com/swaywm/sway/releases/download/$VERSION/sway-$VERSION.tar.gz"
 DEPENDS="pcre wlroots cairo git libevdev wayland libinput wayland-protocols pango json-c jetbrains-mono"
+BUILD_DEPENDS="meson"
 SHA256SUM="73f08fd2cf7948e8af900709efe44eae412ae11c5773960e25c9aa09f73bad41"
 DESCRIPTION="Wayland tiling window manager"
+
 build() {
     meson --prefix=/usr -D werror=false build/
     ninja -C build/
