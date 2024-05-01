@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="bemenu"
 RELEASE="1"
-VERSION="0.6.19"
+VERSION="0.6.21"
 SOURCES="https://github.com/Cloudef/bemenu/releases/download/$VERSION/bemenu-$VERSION.tar.gz"
 DEPENDS="wayland wayland-protocols cairo pango libxkbcommon"
 BUILD_DEPENDS="gmake pkgconf"
-SHA256SUM="f9a0df7d8fe822dd05819408d41f36c1010859fb809bab46a60eb4849ebcf92e"
+SHA256SUM="86af530620ecf6db3ebc196656b76f0f15350028c9c5a137e975f085dafdfe6e"
 DESCRIPTION="Dynamic menu library and client program inspired by dmenu"
 
 build() {
