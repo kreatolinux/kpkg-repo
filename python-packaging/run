@@ -1,0 +1,12 @@
+#!/bin/sh
+NAME="python-packaging"
+RELEASE="1"
+VERSION="24.0"
+SOURCES="https://github.com/pypa/packaging/archive/refs/tags/$VERSION.tar.gz"
+DEPENDS="python"
+B2SUM="724c2c4b0b6fc7735c7e219dac508d661601344e0122482ced0941fb424796f630195387612fabc2e255b4893a4c1b4c87cc0fafb4d98ab1f6d61af74802ab80"
+DESCRIPTION="Core utilities for Python packages"
+
+package() {
+    pip install . --prefix=/usr --root="$ROOT"
+}
