@@ -3,7 +3,7 @@ NAME="glib"
 RELEASE="1"
 VERSION="2.78.4"
 SOURCES="https://download.gnome.org/sources/glib/2.78/glib-$VERSION.tar.xz"
-BUILD_DEPENDS="meson ninja python-setuptools"
+BUILD_DEPENDS="meson ninja python-setuptools python-packaging"
 SHA256SUM="24b8e0672dca120cc32d394bccb85844e732e04fe75d18bb0573b2dbc7548f63"
 DESCRIPTION="Low-level core library that forms the basis for projects such as GTK+ and GNOME"
 
