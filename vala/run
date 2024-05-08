@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="vala"
 RELEASE="1"
-VERSION="0.56.14"
+VERSION="0.56.17"
 BUILD_DEPENDS="gmake"
 SOURCES="https://download.gnome.org/sources/vala/0.56/vala-$VERSION.tar.xz"
 DEPENDS="glib gobject-introspection"
-SHA256SUM="9382c268ca9bdc02aaedc8152a9818bf3935273041f629c56de410e360a3f557"
+SHA256SUM="26100c4e4ef0049c619275f140d97cf565883d00c7543c82bcce5a426934ed6a"
 DESCRIPTION="Programming language commonly used in GNOME applications"
 
 build() {
