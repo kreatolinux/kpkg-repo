@@ -20,6 +20,6 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git checkout stable || git checkout -b stable
-          git merge master --ff-only
-          git push origin stable
+          git rebase master
+          git push origin stable --force
 
