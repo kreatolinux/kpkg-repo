@@ -1,0 +1,25 @@
+name: Weekly Push to Stable
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'  # Run at 00:00 UTC every Sunday
+  workflow_dispatch:
+
+jobs:
+  sync-branches:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          ref: master
+          fetch-depth: 0
+
+      - name: Sync to stable
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git checkout stable || git checkout -b stable
+          git merge master --ff-only
+          git push origin stable
+
