@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="vulkan-headers"
 RELEASE="1"
-VERSION="1.3.284"
+VERSION="1.3.285"
 BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/KhronosGroup/Vulkan-Headers/archive/refs/tags/v$VERSION.tar.gz"
 DEPENDS="cmake ninja"
-SHA256SUM="141619d4ce53814802a9311112902a95749ba16b32c0ee7997335c4988689686"
+SHA256SUM="212455eeab2cef5d93b1b991e548afe184f294428118f747989a97677e19ab2a"
 DESCRIPTION="Vulkan headers"
 
 build() {
