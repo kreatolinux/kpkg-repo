@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="lvm2"
 RELEASE="1"
-VERSION="2.03.23"
+VERSION="2.03.24"
 BUILD_DEPENDS="gmake"
 SOURCES="https://mirrors.kernel.org/sourceware/lvm2/LVM2.$VERSION.tgz"
 DEPENDS="libaio util-linux"
-SHA256SUM="74e794a9e9dee1bcf8a2065f65b9196c44fdf321e22d63b98ed7de8c9aa17a5d"
+SHA256SUM="593c5503ba00faab1c6e0b4a597b9605ec7b5881845c04bf412ebf9d1bbfa13c"
 DESCRIPTION="Logical Volume Manager"
 REPO_DIR="/etc/nyaa"
 
