@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="vim"
 RELEASE="1"
-VERSION="9.1.0369"
+VERSION="9.1.0424"
 BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/vim/vim/archive/refs/tags/v$VERSION.tar.gz"
 DEPENDS="ncurses"
-SHA256SUM="c53b65de7ea31ae64b480ec2c5fcaa3c9f0b3628e346e156f44c943cdb474975"
+SHA256SUM="a26544becb8724167eefc87c5bdc346890808473b0b25da15f45f5d2055e3f91"
 DESCRIPTION="Vi Improved"
 
 build() {
