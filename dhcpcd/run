@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="dhcpcd"
 RELEASE="1"
-VERSION="10.0.6"
+VERSION="10.0.8"
 BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/NetworkConfiguration/dhcpcd/releases/download/v$VERSION/dhcpcd-$VERSION.tar.xz"
 DEPENDS="eudev"
-SHA256SUM="779d3ae514e8f24d7449503e1f0a20f5137c773bd04ca98c62386bf81e99f482"
+SHA256SUM="d8dddf9f971a8d9ff828f33d8fa9f6d9a892a4a1429d230e9efb2be97dd0e313"
 DESCRIPTION="DHCP client"
 
 build() {
