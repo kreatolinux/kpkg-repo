@@ -1,12 +1,12 @@
 #!/bin/sh
 NAME="gnome-terminal"
 RELEASE="1"
-VERSION="3.50.1"
+VERSION="3.52.2"
 SOURCES="https://gitlab.gnome.org/GNOME/gnome-terminal/-/archive/$VERSION/gnome-terminal-$VERSION.tar.gz"
 BUILD_DEPENDS="meson"
 DEPENDS="vte util-linux jetbrains-mono gtk3 glib libhandy gsettings-desktop-schemas libxslt"
 OPTDEPENDS="nautilus: For nautilus integration"
-SHA256SUM="f52f16229400ccf91cf6d7859b49852a74efdbdddd2ed71a4e2091c2e89ab4e4"
+SHA256SUM="e4dbb694fcf5f15b6675c5dd9463d200bddf49e4ae42d0b3fbe87aef5829c930"
 DESCRIPTION="GNOME Terminal"
 
 build() {

@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="vte"
 RELEASE="1"
-VERSION="0.74.1"
+VERSION="0.76.2"
 SOURCES="https://gitlab.gnome.org/GNOME/vte/-/archive/$VERSION/vte-$VERSION.tar.gz"
 DEPENDS="gtk3 pcre fribidi gtk4 gnutls"
 BUILD_DEPENDS="meson gobject-introspection vala"
-SHA256SUM="8160ed2c9962f3b559bb73f8e4b51f62eff3221722d964a7955b097272d4c996"
+SHA256SUM="70a38449fda947e5cb7b4cecbe8a7a77586c799168bfb22162708c94084f21ae"
 DESCRIPTION="Visual Terminal Emulator widget"
 
 build() {

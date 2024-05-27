@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="libhandy"
 RELEASE="1"
-VERSION="1.8.2"
+VERSION="1.8.3"
 SOURCES="https://gitlab.gnome.org/GNOME/libhandy/-/archive/$VERSION/libhandy-$VERSION.tar.gz"
 DEPENDS="glib gtk3"
 BUILD_DEPENDS="meson vala gobject-introspection"
-SHA256SUM="2c551aae128dff918b84943a93a58bc9be84f42a709b9e43c8d074538e68c10e"
+SHA256SUM="7e7670f5d0a6d0adc24b888da44dab938a6f52472b8944d6dd4e31b6d3569a5f"
 DESCRIPTION="Building blocks for modern adaptive GNOME apps"
 
 build() {
