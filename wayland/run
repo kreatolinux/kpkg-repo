@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="wayland"
 RELEASE="1"
-VERSION="1.22.0"
+VERSION="1.23.0"
 SOURCES="https://gitlab.freedesktop.org/wayland/wayland/-/archive/$VERSION/wayland-$VERSION.tar.gz"
 BUILD_DEPENDS="meson"
 DEPENDS="expat libxml2"
-SHA256SUM="bbca9c906a8fb8992409ebf51812f19e2a784b2c169d4b784cdd753b4bb448ef"
+SHA256SUM="7c5c28fa73f22d1c5021e17e1148f29ab17bf8b776a406f1c4489d3e2992ec3a"
 DESCRIPTION="Wayland is a project to define a protocol for a compositor to talk to its clients as well as a library implementation of the protocol."
 
 build() {
