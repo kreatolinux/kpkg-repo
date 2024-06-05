@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="limine"
 RELEASE="1"
-VERSION="7.0.2"
+VERSION="7.7.0"
 BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/limine-bootloader/limine/releases/download/v$VERSION/limine-$VERSION.tar.xz"
 DEPENDS="efibootmgr nasm"
-SHA256SUM="fbd17039063e5746e441ebe9bb4cdfdb10c6f2ed76f2da1a53f9287576af4e4a"
+SHA256SUM="5f6cba658d1f973647303cf3301b13820e44f79c64ed85e4a4907510bc276c74"
 DESCRIPTION="Modern, advanced, portable, multiprotocol bootloader."
 
 build() {
