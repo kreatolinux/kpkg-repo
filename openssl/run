@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="openssl"
 RELEASE="1"
-VERSION="3.3.0"
+VERSION="3.3.1"
 BUILD_DEPENDS="gmake"
 SOURCES="https://www.openssl.org/source/openssl-$VERSION.tar.gz"
-SHA256SUM="53e66b043322a606abf0087e7699a0e033a37fa13feb9742df35c3a33b18fb02"
+SHA256SUM="777cd596284c883375a2a7a11bf5d2786fc5413255efab20c50d6ffe6d020b7e"
 DEPENDS="zlib"
 DESCRIPTION="TLS library"
 
