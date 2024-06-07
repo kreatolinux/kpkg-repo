@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="libinput"
 RELEASE="1"
-VERSION=1.25.0
+VERSION=1.26.0
 SOURCES="https://gitlab.freedesktop.org/libinput/libinput/-/archive/$VERSION/libinput-$VERSION.tar.gz"
 DEPENDS="libevdev mtdev eudev"
 BUILD_DEPENDS="meson"
-SHA256SUM="f7e8425f185cadba5761d0a1dae6be041750d351163ffa04adc5b9a79a13c0ec"
+SHA256SUM="bda944e6d60741432e10f29001c3326ee8aba2968787f78611f420f90580bd8b"
 DESCRIPTION="Library that handles input devices"
 
 build() {
