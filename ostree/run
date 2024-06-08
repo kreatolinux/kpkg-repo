@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="ostree"
 RELEASE="2"
-VERSION="2024.1"
+VERSION="2024.6"
 BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/ostreedev/ostree/releases/download/v$VERSION/libostree-$VERSION.tar.xz"
 DEPENDS="xz-utils fuse e2fsprogs gpgme libarchive curl glib libsoup"
-SHA256SUM="152327fe804512d4f896fb9b9e9cdc84ad9b4c0b205b8625472147d5a28164af"
+SHA256SUM="8b61c856697aa412f2f1724322ada40bdd7b1bf9e7783e2c594faa7a594f868f"
 DESCRIPTION="Operating system and container binary deployment and upgrades"
 
 build() {

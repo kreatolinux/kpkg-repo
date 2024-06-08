@@ -1,12 +1,12 @@
 #!/bin/sh
 NAME="appstream"
 RELEASE="1"
-VERSION="1.0.1"
+VERSION="1.0.3"
 SOURCES="https://github.com/ximion/appstream/archive/refs/tags/v$VERSION.tar.gz"
 BUILD_DEPENDS="meson ninja"
 DEPENDS="glib itstool libxslt libxml2 libxmlb curl gobject-introspection libyaml"
 OPTDEPENDS="systemd: For systemd support"
-SHA256SUM="3a6877c887627aed515e9802f63ac7bd83fffab4c2cad33c809c692c4bd8da48"
+SHA256SUM="dd7222519b5d855124fa803ce82a7cbf090ac6b2e44a5bc515e729b1f20a63ae"
 DESCRIPTION="appstream"
 
 build() {
