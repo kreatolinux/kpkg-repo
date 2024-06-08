@@ -16,11 +16,12 @@ build() {
         --wrap-mode=nofallback \
         -Dbuiltin_loaders=all \
         build/
-    ninja -C build/
+    export XDG_DATA_DIRS=/usr/local/share:/usr/share
+    meson compile -C build/
 }
 
 package() {
-    DESTDIR=$ROOT ninja -C build/ install
+    DESTDIR=$ROOT meson install -C build/
 }
 
 postinstall() {
