@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="nautilus"
 RELEASE="1"
-VERSION="45.1"
+VERSION="46.2"
 SOURCES="https://gitlab.gnome.org/GNOME/nautilus/-/archive/$VERSION/nautilus-$VERSION.tar.gz"
 DEPENDS="bubblewrap dconf libgexiv2 gdk-pixbuf gnome-autoar gnome-desktop gst-plugins-base libnotify libadwaita libportal libseccomp tracker3 desktop-file-utils adwaita-icon-theme"
 BUILD_DEPENDS="meson vala gobject-introspection"
-SHA256SUM="292c185c8a65fd35de4f4d9880a10aa6ab4c1f004544fd3ceb8ec8c8a26d8ef3"
+SHA256SUM="4f32a4bd04928ca7db0ab040755e4433d2efc6be37d1e46938d390233b8c6ce8"
 DESCRIPTION="File manager of GNOME"
 
 build() {
