@@ -1,6 +1,6 @@
 #!/bin/sh
 NAME="mesa"
-RELEASE="2"
+RELEASE="3"
 VERSION="24.0.8"
 SOURCES="https://archive.mesa3d.org/mesa-$VERSION.tar.xz"
 DEPENDS="libelf libxxf86vm libglvnd eudev llvm flex libxshmfence libxdamage"
