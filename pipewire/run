@@ -1,12 +1,12 @@
 #!/bin/sh
 NAME="pipewire"
 RELEASE="2"
-VERSION="1.1.82"
+VERSION="1.1.83"
 SOURCES="https://github.com/PipeWire/pipewire/archive/$VERSION/pipewire-$VERSION.tar.gz"
 DEPENDS="glib"
 OPTDEPENDS="dbus: for D-Bus support"
 BUILD_DEPENDS="meson"
-SHA256SUM="189878d58005fe3c22d2dd047688a76a8bd3f6394da3d17ec82f2b691e52e1cb"
+SHA256SUM="6d196a0a57239dd70cf15ccd388cf5fb4a5ca3447a989ab1ef6aa9df451f7d0d"
 DESCRIPTION="Sound server"
 
 build() {
