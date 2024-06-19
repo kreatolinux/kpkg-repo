@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="rust"
 RELEASE="1"
-VERSION="1.75.0"
+VERSION="1.79.0"
 SOURCES="https://static.rust-lang.org/dist/rustc-$VERSION-src.tar.gz"
 DEPENDS="llvm"
 BUILD_DEPENDS="python"
-SHA256SUM="5b739f45bc9d341e2d1c570d65d2375591e22c2d23ef5b8a37711a0386abc088"
+SHA256SUM="172ecf3c7d1f9d9fb16cd2a628869782670416ded0129e524a86751f961448c0"
 DESCRIPTION="Memory-safe programming language that doesn't use garbage collection"
 
 build() {
