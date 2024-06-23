@@ -1,0 +1,18 @@
+#!/bin/sh
+NAME="iptables"
+RELEASE="1"
+VERSION="1.8.10"
+SOURCES="https://www.netfilter.org/projects/iptables/files/iptables-$VERSION.tar.xz"
+BUILD_DEPENDS="gmake"
+B2SUM="417b33fcfc7edeba169caef26ed0322798f6b82500840509f6c10b97b4ef3f11932c0393fc8dcc5946264442bf8ee959a594b6fbd5dc92012cfad30edf130520"
+DESCRIPTION="Userspace program to configure the Linux packet filtering ruleset"
+
+build() {
+    kpkgConfigure --disable-nftables
+    make
+}
+
+package() {
+    make DESTDIR=$ROOT install
+}
+
