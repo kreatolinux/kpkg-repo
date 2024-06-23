@@ -133,18 +133,10 @@ jobs:
 
       - name: Install Tailscale
         uses: tailscale/github-action@v2
-        env:
-          ADDITIONAL_DAEMON_ARGS: "-verbose 5"
         with:
           oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
           oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
           tags: tag:ci
-      
-      - uses: actions/upload-artifact@master
-        if: always()
-        with:
-          name: logs          
-          path: ~/tailscaled.log
       
       - name: Upload to server through rsync
         env:
