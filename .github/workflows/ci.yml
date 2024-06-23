@@ -140,6 +140,12 @@ jobs:
           oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
           tags: tag:ci
       
+      - uses: actions/upload-artifact@master
+        if: always()
+        with:
+          name: logs          
+          path: ~/tailscaled.log
+      
       - name: Upload to server through rsync
         env:
           KNOWN_HOSTS: ${{ secrets.KNOWN_HOSTS }}
