@@ -144,7 +144,7 @@ jobs:
           SSH_URL: ${{ secrets.SSH_URL }}
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_KEY: ${{ secrets.SSH_KEY }}
-          RSYNC_RSH: "ssh -o UserKnownHostsFile=/tmp/known_hosts"
+          RSYNC_RSH: "ssh -o StrictHostKeychecking=no"
         run: |
           if [ -f "/var/cache/kpkg/archives/IS_USELESS" ]; then
             exit 0
