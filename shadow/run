@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="shadow"
 RELEASE="3"
-VERSION="4.15.1"
-SOURCES="https://github.com/shadow-maint/shadow/releases/download/4.15.1/shadow-4.15.1.tar.xz"
+VERSION="4.16.0"
+SOURCES="https://github.com/shadow-maint/shadow/releases/download/4.16.0/shadow-4.16.0.tar.xz"
 BUILD_DEPENDS="pkgconf gmake"
 DEPENDS="libxcrypt linux-pam libbsd"
-SHA256SUM="bb5f70639a0581f9d626f227ce45b31ac137daa7c451c0f672ce14f2731a96ee"
+SHA256SUM="b78e3921a95d53282a38e90628880624736bf6235e36eea50c50835f59a3530b"
 DESCRIPTION="Shadow utils"
 
 build() {
