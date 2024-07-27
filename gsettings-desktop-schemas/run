@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="gsettings-desktop-schemas"
 RELEASE="2"
-VERSION="46.0"
+VERSION="46.1"
 SOURCES="https://gitlab.gnome.org/GNOME/gsettings-desktop-schemas/-/archive/$VERSION/gsettings-desktop-schemas-$VERSION.tar.gz"
 BUILD_DEPENDS="meson ninja"
 DEPENDS="cantarell-fonts gobject-introspection"
-SHA256SUM="7e61db80e827d0648f58499f505353b319fee2173628afd27c930e1608e15f17"
+SHA256SUM="fad2699aef6e2379ed5d7a16d1dbbb284aae9e1d2957293e296c6794061f5939"
 DESCRIPTION="Contains a collection of GSettings schemas for
 settings shared by various components of a desktop"
 
