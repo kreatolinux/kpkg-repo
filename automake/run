@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="automake"
 RELEASE="1"
-VERSION="1.16.5"
+VERSION="1.17"
 BUILD_DEPENDS="gmake"
 SOURCES="https://ftp.gnu.org/gnu/automake/automake-$VERSION.tar.gz"
 DEPENDS="perl autoconf"
-SHA256SUM="07bd24ad08a64bc17250ce09ec56e921d6343903943e99ccf63bbf0705e34605"
+SHA256SUM="397767d4db3018dd4440825b60c64258b636eaf6bf99ac8b0897f06c89310acd"
 DESCRIPTION="GNU Automake"
 build() {
     kpkgConfigure --prefix=/usr 
