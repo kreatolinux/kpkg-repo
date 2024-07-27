@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="linux-firmware"
 RELEASE="1"
-VERSION="20240610"
+VERSION="20240709"
 BUILD_DEPENDS="gmake"
 SOURCES="https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/snapshot/linux-firmware-$VERSION.tar.gz"
 DEPENDS="rdfind"
-SHA256SUM="fe7687f7264ef1193704824c884be515cd385c15303962cb85c929d40c6cd5b9"
+SHA256SUM="72a524675182f2b07a87be16d73f77eb0a78400146bd14d4e7b689aec214687e"
 DESCRIPTION="Linux firmware files"
 
 package() {
