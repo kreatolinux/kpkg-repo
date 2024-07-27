@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="exiv2"
 RELEASE="1"
-VERSION="0.28.2"
+VERSION="0.28.3"
 SOURCES="https://github.com/Exiv2/exiv2/archive/refs/tags/v$VERSION.tar.gz"
 DEPENDS="gettext curl expat zlib"
 BUILD_DEPENDS="cmake ninja"
-SHA256SUM="543bead934135f20f438e0b6d8858c55c5fcb7ff80f5d1d55489965f1aad58b9"
+SHA256SUM="1315e17d454bf4da3cc0edb857b1d2c143670f3485b537d0f946d9ed31d87b70"
 DESCRIPTION="Image metadata library and tools"
 
 build() {
