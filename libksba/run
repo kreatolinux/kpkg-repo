@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="libksba"
 RELEASE="1"
-VERSION="1.6.6"
+VERSION="1.6.7"
 BUILD_DEPENDS="gmake"
 SOURCES="https://gnupg.org/ftp/gcrypt/libksba/libksba-$VERSION.tar.bz2"
 DEPENDS="libgpg-error"
-SHA256SUM="5dec033d211559338838c0c4957c73dfdc3ee86f73977d6279640c9cd08ce6a4"
+SHA256SUM="cf72510b8ebb4eb6693eef765749d83677a03c79291a311040a5bfd79baab763"
 DESCRIPTION="An easy API to create and parse X.509 and CMS related objects"
 
 build() {
