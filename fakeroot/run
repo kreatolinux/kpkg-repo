@@ -9,6 +9,7 @@ SHA256SUM="e5a427b4ab1eb4a2158b3312547a4155aede58735cd5c2910421988834b440a4"
 DESCRIPTION="Tool for simulating superuser privileges"
 
 build() {
+    export CFLAGS="$CFLAGS -Wno-incompatible-pointer-types" 
     kpkgConfigure --prefix=/usr --disable-static
     make
 }
