@@ -1,6 +1,6 @@
 #!/bin/sh
 NAME="llvm"
-RELEASE="1"
+RELEASE="2"
 VERSION="17.0.6"
 SOURCES="https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION/llvm-project-$VERSION.src.tar.xz"
 DEPENDS_LLVM="gcc"
@@ -19,7 +19,7 @@ build() {
         -DLLVM_INSTALL_UTILS=ON \
         -DLLVM_INCLUDE_BENCHMARKS=OFF \
         -DLLVM_BINUTILS_INCDIR=/usr/include \
-        -DLLVM_ENABLE_PROJECTS="lld;clang" \
+        -DLLVM_ENABLE_PROJECTS="lld;clang;libclc" \
         -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi;compiler-rt" \
         -G Ninja
     ninja -C build -j$(nproc)
@@ -38,7 +38,7 @@ build_llvm_standalone() {
         -DCMAKE_INSTALL_PREFIX=/usr \
         -DLLVM_INCLUDE_BENCHMARKS=OFF \
         -DLLVM_BINUTILS_INCDIR=/usr/include \
-        -DLLVM_ENABLE_PROJECTS="lld;clang" \
+        -DLLVM_ENABLE_PROJECTS="lld;clang;libclc" \
         -DLLVM_INSTALL_UTILS=ON \
         -DLIBCXX_CXX_ABI=libcxxabi \
         -DCOMPILER_RT_HAS_GCC_S_LIB=OFF \
