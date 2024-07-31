@@ -6,7 +6,6 @@ SOURCES="https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION
 DEPENDS_LLVM="gcc"
 BUILD_DEPENDS="cmake ninja"
 BUILD_DEPENDS_LLVM+="binutils"
-BUILD_DEPENDS_LLVM_STANDALONE+="llvm"
 B2SUM="d6ede1a9fda8756995c3e0654111941649e15794179641806f18919f1dc68c41ca0cabd5693b5096d05dccc3a391cd20d34af1137bf8af92ed3117a1ce84d1b2"
 DESCRIPTION="The LLVM Project is a collection of modular and reusable compiler and toolchain technologies."
 
@@ -21,40 +20,6 @@ build() {
         -DLLVM_BINUTILS_INCDIR=/usr/include \
         -DLLVM_ENABLE_PROJECTS="lld;clang;libclc" \
         -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi;compiler-rt" \
-        -G Ninja
-    ninja -C build -j$(nproc)
-}
-
-build_llvm_standalone() {
-    # export CC just in case cmake tries to read from there for some reason
-    export CC=clang
-    cmake -S llvm -B build  \
-        -DCMAKE_C_COMPILER=clang \
-        -DCMAKE_CXX_COMPILER=clang++ \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DBUILD_SHARED_LIBS=1 \
-        -DLLVM_ENABLE_RTTI=ON \
-        -DLLVM_INSTALL_BINUTILS_SYMLINKS=ON \
-        -DCMAKE_INSTALL_PREFIX=/usr \
-        -DLLVM_INCLUDE_BENCHMARKS=OFF \
-        -DLLVM_BINUTILS_INCDIR=/usr/include \
-        -DLLVM_ENABLE_PROJECTS="lld;clang;libclc" \
-        -DLLVM_INSTALL_UTILS=ON \
-        -DLIBCXX_CXX_ABI=libcxxabi \
-        -DCOMPILER_RT_HAS_GCC_S_LIB=OFF \
-        -DLLVM_ENABLE_LIBCXX=ON \
-        -DLIBCXXABI_USE_COMPILER_RT=ON \
-        -DLIBCXXABI_USE_LLVM_UNWINDER=ON \
-        -DLIBCXX_USE_COMPILER_RT=ON \
-        -DLIBUNWIND_USE_COMPILER_RT=ON \
-        -DLIBUNWIND_USE_LLVM_UNWINDER=ON \
-        -DCOMPILER_RT_USE_BUILTINS_LIBRARY=ON \
-        -DCOMPILER_RT_EXCLUDE_ATOMIC_BUILTIN=OFF \
-        -DLIBCXX_HAS_ATOMIC_LIB=OFF \
-        -DCLANG_DEFAULT_CXX_STDLIB=libc++ \
-        -DCLANG_DEFAULT_RTLIB=compiler-rt \
-        -DLIBCXX_HAS_GCC_LIB=OFF \
-        -DLLVM_ENABLE_RUNTIMES="libunwind;libcxx;libcxxabi;compiler-rt" \
         -G Ninja
     ninja -C build -j$(nproc)
 }
