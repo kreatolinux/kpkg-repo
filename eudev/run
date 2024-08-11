@@ -16,4 +16,5 @@ build() {
 
 package() {
     make DESTDIR=$ROOT install
+    rm -f /usr/sbin/udevadm
 }
