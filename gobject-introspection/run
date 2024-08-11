@@ -19,6 +19,7 @@ package() {
     DESTDIR="$ROOT" ninja -C build install
     # I hate to do this, but i have to
     cp build/gir/GObject-2.0.gir $ROOT/usr/share/gir-1.0/
+    cp build/gir/GLib-2.0.gir $ROOT/usr/share/gir-1.0/
 }
 
 postinstall() {
