@@ -20,7 +20,7 @@ package() {
     # I hate to do this, but i have to
     [ ! -f "$ROOT/usr/share/gir-1.0/GObject-2.0.gir" ] && cp build/gir/GObject-2.0.gir $ROOT/usr/share/gir-1.0/
     [ ! -f "$ROOT/usr/share/gir-1.0/GLib-2.0.gir" ] && cp build/gir/GLib-2.0.gir $ROOT/usr/share/gir-1.0/
-    [ ! -f "$ROOT/usr/share/gir-1.0/GObject-2.0.gir" ] && cp build/gir/GObject-2.0.gir $ROOT/usr/share/gir-1.0/ 
+    [ ! -f "$ROOT/usr/share/gir-1.0/Gio-2.0.gir" ] && cp build/gir/Gio-2.0.gir $ROOT/usr/share/gir-1.0/ 
 }
 
 postinstall() {
