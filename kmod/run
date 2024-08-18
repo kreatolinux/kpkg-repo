@@ -9,7 +9,7 @@ SHA256SUM="630ed0d92275a88cb9a7bf68f5700e911fdadaf02e051cf2e4680ff8480bd492"
 DESCRIPTION="Contains utilities for loading kernel modules"
 
 build() {
-    kpkgConfigure --with-zlib --prefix=/usr
+    kpkgConfigure --with-zlib --prefix=/usr --disable-manpages
     make
 }
 
