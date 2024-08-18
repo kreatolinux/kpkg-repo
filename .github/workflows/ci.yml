@@ -60,13 +60,16 @@ jobs:
     runs-on: ubuntu-latest
     container: 
       image: ghcr.io/kreatolinux/builder-repo #-gnu # builder-gnu doesn't work yet, see TODO in kpkg/modules/isolation
-      options: --privileged
+      options: --privileged -v /usr/share/dotnet:/usr/share/dotnet -v /opt/ghc:/opt/ghc -v /usr/local/share/boost:/usr/local/share/boost -v $AGENT_TOOLSDIRECTORY:/opt/hostedtoolcache
     strategy:
       fail-fast: false
       matrix:  ${{fromJson(needs.init.outputs.matrix)}}
     permissions:
       contents: write
     steps:
+
+      - name: Remove useless directories
+        run: rm -rf /usr/share/dotnet /opt/ghc /usr/local/share/boost $AGENT_TOOLSDIRECTORY
 
       - uses: actions/download-artifact@v4
         with:
