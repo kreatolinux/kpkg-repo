@@ -1,6 +1,6 @@
 #!/bin/sh
 NAME="gobject-introspection"
-RELEASE="2"
+RELEASE="3"
 VERSION="1.80.1"
 SOURCES="https://gitlab.gnome.org/GNOME/gobject-introspection/-/archive/$VERSION/gobject-introspection-$VERSION.tar.gz"
 BUILD_DEPENDS="meson ninja python-setuptools python-packaging"
@@ -20,6 +20,7 @@ package() {
     # I hate to do this, but i have to
     [ ! -f "$ROOT/usr/share/gir-1.0/GObject-2.0.gir" ] && cp build/gir/GObject-2.0.gir $ROOT/usr/share/gir-1.0/
     [ ! -f "$ROOT/usr/share/gir-1.0/GLib-2.0.gir" ] && cp build/gir/GLib-2.0.gir $ROOT/usr/share/gir-1.0/
+    [ ! -f "$ROOT/usr/share/gir-1.0/GObject-2.0.gir" ] && cp build/gir/GObject-2.0.gir $ROOT/usr/share/gir-1.0/ 
 }
 
 postinstall() {
