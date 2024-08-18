@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="binutils"
 RELEASE="3"
-VERSION="2.43"
+VERSION="2.43.1"
 BUILD_DEPENDS="gmake"
 SOURCES="https://ftp.gnu.org/gnu/binutils/binutils-$VERSION.tar.xz"
 DEPENDS="flex perl zlib bison texinfo file"
-SHA256SUM="b53606f443ac8f01d1d5fc9c39497f2af322d99e14cea5c0b4b124d630379365"
+SHA256SUM="13f74202a3c4c51118b797a39ea4200d3f6cfbe224da6d1d95bb938480132dfd"
 DESCRIPTION="GNU Binutils"
 
 actual_build() {
