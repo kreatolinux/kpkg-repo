@@ -19,7 +19,7 @@ build() {
         -DLLVM_INCLUDE_BENCHMARKS=OFF \
         -DLLVM_BINUTILS_INCDIR=/usr/include \
         -DLLVM_ENABLE_PROJECTS="lld;clang;libclc" \
-        -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi;compiler-rt" \
+        -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi;compiler-rt;libunwind" \
         -G Ninja
     ninja -C build -j$(nproc)
 }
