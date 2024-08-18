@@ -60,7 +60,7 @@ jobs:
     runs-on: ubuntu-latest
     container: 
       image: ghcr.io/kreatolinux/builder-repo #-gnu # builder-gnu doesn't work yet, see TODO in kpkg/modules/isolation
-      options: --privileged -v /usr/share/dotnet:/usr/share/dotnet -v /opt/ghc:/opt/ghc -v /usr/local/share/boost:/usr/local/share/boost -v ${{ runner.tool_cache }}:/opt/hostedtoolcache
+      options: --privileged -v /usr/share/dotnet:/usr/share/dotnet -v /opt/ghc:/opt/ghc -v /usr/local/share/boost:/usr/local/share/boost
     strategy:
       fail-fast: false
       matrix:  ${{fromJson(needs.init.outputs.matrix)}}
