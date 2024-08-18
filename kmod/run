@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="kmod"
 RELEASE="3"
-VERSION="32"
+VERSION="33"
 SOURCES="https://www.kernel.org/pub/linux/utils/kernel/kmod/kmod-$VERSION.tar.xz"
 DEPENDS="zlib"
 BUILD_DEPENDS="pkgconf gmake"
-SHA256SUM="630ed0d92275a88cb9a7bf68f5700e911fdadaf02e051cf2e4680ff8480bd492"
+SHA256SUM="dc768b3155172091f56dc69430b5481f2d76ecd9ccb54ead8c2540dbcf5ea9bc"
 DESCRIPTION="Contains utilities for loading kernel modules"
 
 build() {
