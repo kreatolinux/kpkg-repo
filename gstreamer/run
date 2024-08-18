@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="gstreamer"
 RELEASE="1"
-VERSION="1.24.4"
+VERSION="1.24.6"
 SOURCES="https://gstreamer.freedesktop.org/src/gstreamer/gstreamer-$VERSION.tar.xz"
 BUILD_DEPENDS="meson gobject-introspection python-setuptools"
 DEPENDS="glib"
-SHA256SUM="52c93bc48e03533aa676fd8c15eb6b5fc326c68db311c50bcc0a865f31a6c653"
+SHA256SUM="64342060d7c6f9e36a35e3be38a4f5ac3b41ed93b0853619be45141ef3cc1b9d"
 DESCRIPTION="gstreamer"
 
 build() {
