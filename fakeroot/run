@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="fakeroot"
 RELEASE="1"
-VERSION="1.35.1"
+VERSION="1.36"
 BUILD_DEPENDS="gmake"
 SOURCES="https://deb.debian.org/debian/pool/main/f/fakeroot/fakeroot_$VERSION.orig.tar.gz"
 DEPENDS="libcap"
-SHA256SUM="6a0de53b2de05277d4e6d4a884eb0de7a8ad467b82c07a6f8f2f6a629e655fdc"
+SHA256SUM="7fe3cf3daf95ee93b47e568e85f4d341a1f9ae91766b4f9a9cdc29737dea4988"
 DESCRIPTION="Tool for simulating superuser privileges"
 
 build() {
