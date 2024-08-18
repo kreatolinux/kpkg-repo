@@ -1,6 +1,6 @@
 #!/bin/sh
 NAME="src"
-RELEASE="6"
+RELEASE="7"
 VERSION="7.2.1"
 SOURCES="https://github.com/kreatolinux/src/releases/download/v$VERSION/src-v$VERSION-dist.tar.gz"
 BUILD_DEPENDS="nim"
@@ -19,8 +19,13 @@ package_kpkg() {
         cp out/kpkg "$ROOT/bin/"
         mkdir -p "$ROOT/usr/share/man/man8"
         mkdir "$ROOT/usr/share/man/man5"
-        cp -f man/kpkg.8 "$ROOT/usr/share/man/man8"
-        cp -f man/kpkg_run.8 "$ROOT/usr/share/man/man8"
+        for i in man/kpkg*.5; do
+                cp -f "$i" "$ROOT/usr/share/man/man5"
+        done
+
+        for i in man/kpkg*.8; do
+                cp -f "$i" "$ROOT/usr/share/man/man8"
+        done
 }
 
 build_jumpstart() {
