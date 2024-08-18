@@ -60,7 +60,7 @@ jobs:
     runs-on: ubuntu-latest
     container: 
       image: ghcr.io/kreatolinux/builder-repo #-gnu # builder-gnu doesn't work yet, see TODO in kpkg/modules/isolation
-      options: --privileged -v /usr/share/dotnet:/usr/share/dotnet -v /opt/ghc:/opt/ghc -v /usr/local/share/boost:/usr/local/share/boost
+      options: --privileged -v /:/opt/host
     strategy:
       fail-fast: false
       matrix:  ${{fromJson(needs.init.outputs.matrix)}}
@@ -69,7 +69,7 @@ jobs:
     steps:
 
       - name: Remove useless directories
-        run: rm -rf /usr/share/dotnet /opt/ghc /usr/local/share/boost $AGENT_TOOLSDIRECTORY
+        run: rm -rf /opt/host/usr/share/dotnet /opt/host/opt/ghc /opt/host/usr/local/share/boost
 
       - uses: actions/download-artifact@v4
         with:
