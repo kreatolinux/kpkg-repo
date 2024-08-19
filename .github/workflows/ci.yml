@@ -72,7 +72,7 @@ jobs:
         run: |        
             rm -rf \
                 /opt/host/$AGENT_TOOLSDIRECTORY
-                /opt/google/chrome \
+                /opt/host/opt/google/chrome \
                 /opt/host/opt/microsoft/msedge \
                 /opt/host/opt/microsoft/powershell \
                 /opt/host/opt/pipx \
