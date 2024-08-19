@@ -69,7 +69,25 @@ jobs:
     steps:
 
       - name: Remove useless directories
-        run: rm -rf /opt/host/usr/share/dotnet /opt/host/opt/ghc /opt/host/usr/local/share/boost
+        run: |        
+            rm -rf \
+                /opt/host/$AGENT_TOOLSDIRECTORY
+                /opt/google/chrome \
+                /opt/host/opt/microsoft/msedge \
+                /opt/host/opt/microsoft/powershell \
+                /opt/host/opt/pipx \
+                /opt/host/usr/lib/mono \
+                /opt/host/usr/local/julia* \
+                /opt/host/usr/local/lib/android \
+                /opt/host/usr/local/lib/node_modules \
+                /opt/host/usr/local/share/chromium \
+                /opt/host/usr/local/share/powershell \
+                /opt/host/usr/share/dotnet \
+                /opt/host/usr/share/swift
+        env:
+          AGENT_TOOLSDIRECTORY: ${{ runner.tool_cache }}
+
+           
 
       - uses: actions/download-artifact@v4
         with:
