@@ -10,6 +10,7 @@ DESCRIPTION="A widely used XML scheme for writing documentation and help"
 # Huge thanks to BLFS for having this batshit crazy installation process figured out
 
 package() {
+    cd ..
     install -v -d -m755 $DESTDIR/usr/share/xml/docbook/xml-dtd-$VERSION
     install -v -d -m755 $DESTDIR/etc/xml
     chown -R root:root . 
