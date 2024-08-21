@@ -9,6 +9,7 @@ DEPENDS="libxslt docbook-xml docbook-xsl links"
 DESCRIPTION="Convert xml to many other formats"
 
 build() {
+    export CFLAGS="$CFLAGS -Wno-implicit-int"
     LINKS="/usr/bin/links" kpkgConfigure
     make
 }
