@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="conmon"
 RELEASE="1"
-VERSION="2.1.9"
+VERSION="2.1.12"
 SOURCES="https://github.com/containers/conmon/archive/refs/tags/v$VERSION.tar.gz"
 BUILD_DEPENDS="go gmake"
 DEPENDS="glib"
-SHA256SUM="15a41e78f5e86dba429cc78ef4836f44ba927b6c69f1cd1721118a08ca0fd1f5"
+SHA256SUM="842f0b5614281f7e35eec2a4e35f9f7b9834819aa58ecdad8d0ff6a84f6796a6"
 DESCRIPTION="An OCI container runtime monitor"
 
 build() {
