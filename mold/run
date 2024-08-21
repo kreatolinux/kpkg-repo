@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="mold"
 RELEASE="1"
-VERSION="2.4.0"
+VERSION="2.33.0"
 BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/rui314/mold/archive/refs/tags/v$VERSION.tar.gz"
 DEPENDS="cmake"
-SHA256SUM="be65f3d785d32ece7b3204ecaa57810847fdd25c232cf704cbfff2dafb1ac107"
+SHA256SUM="37b3aacbd9b6accf581b92ba1a98ca418672ae330b78fe56ae542c2dcb10a155"
 DESCRIPTION="A Modern Linker"
 
 build() {
