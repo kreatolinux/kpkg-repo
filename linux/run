@@ -7,6 +7,7 @@ BUILD_DEPENDS="flex libelf xz-utils gmake"
 DEPENDS="kmod"
 SHA256SUM="ef31144a2576d080d8c31698e83ec9f66bf97c677fa2aaf0d5bbb9f3345b1069 de77bf376569a4c521e7eefea3181d3e44bbdb65cc9bce5a91fd6af09c6a6ad4 04f33434bb1b16b2a38e3a36d6ce59e0bf032db6954d4a71d07d8f3f5ab37e4c"
 DESCRIPTION="The Linux kernel and headers"
+IS_SEMVER=true
 
 prepare() {
 	tar -xvf linux-$VERSION.tar.xz
