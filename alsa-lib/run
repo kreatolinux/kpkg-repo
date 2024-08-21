@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="alsa-lib"
 RELEASE="1"
-VERSION="1.2.9"
+VERSION="1.2.12"
 BUILD_DEPENDS="gmake"
 SOURCES="https://www.alsa-project.org/files/pub/lib/alsa-lib-$VERSION.tar.bz2"
-SHA256SUM="dc9c643fdc4ccfd0572cc685858dd41e08afb583f30460b317e4188275f615b2"
+SHA256SUM="4868cd908627279da5a634f468701625be8cc251d84262c7e5b6a218391ad0d2"
 DESCRIPTION="Libraries for ALSA"
 
 build() {
