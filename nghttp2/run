@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="nghttp2"
 RELEASE="1"
-VERSION="1.62.1"
+VERSION="1.63.0"
 BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/nghttp2/nghttp2/releases/download/v$VERSION/nghttp2-$VERSION.tar.xz"
 DEPENDS="zlib python"
-SHA256SUM="2345d4dc136fda28ce243e0bb21f2e7e8ef6293d62c799abbf6f633a6887af72"
+SHA256SUM="4879c75dd32a74421b9857924449460b8341796c0613ba114ab2188e4622354b"
 DESCRIPTION="An implementation of the HTTP version 2 in C"
 
 build() {
