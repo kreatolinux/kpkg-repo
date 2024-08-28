@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="micro"
 RELEASE="1"
-VERSION="2.0.13"
+VERSION="2.0.14"
 SOURCES="https://github.com/zyedidia/micro/archive/refs/tags/v$VERSION.tar.gz"
 BUILD_DEPENDS="go gmake"
 DEPENDS=""
-SHA256SUM="a96fff974ed6bd9a1dd58a33e54ff23b78783bbb3571b86d5c37d787b1e0e4be"
+SHA256SUM="40177579beb3846461036387b649c629395584a4bbe970f61ba7591bd9c0185a"
 DESCRIPTION="micro is a terminal-based text editor that aims to be easy to use and intuitive"
 build() {
 	make build
