@@ -151,19 +151,14 @@ jobs:
       
       - name: Upload to server through rsync
         env:
-          KNOWN_HOSTS: ${{ secrets.KNOWN_HOSTS }}
           SSH_URL: ${{ secrets.SSH_URL }}
           SSH_USER: ${{ secrets.SSH_USER }}
-          SSH_KEY: ${{ secrets.SSH_KEY }}
           RSYNC_RSH: "ssh -o StrictHostKeychecking=no"
         run: |
           if [ -f "/var/cache/kpkg/archives/IS_USELESS" ]; then
             exit 0
           fi
-          mkdir -p ~/.ssh
-          eval $(ssh-agent)
-          echo "$SSH_KEY" | ssh-add -
-          echo "$KNOWN_HOSTS" >> /tmp/known_hosts
+          ping -c 4 "$SSH_URL"
           rsync -avc /var/cache/kpkg/archives/ $SSH_USER@$SSH_URL:/var/cache/kpkg/archives/
           rsync -avc /var/cache/kpkg/sources/ $SSH_USER@$SSH_URL:/var/cache/kpkg/sources/
 
