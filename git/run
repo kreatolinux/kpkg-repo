@@ -1,12 +1,12 @@
 #!/bin/sh
 NAME="git"
 RELEASE="1"
-VERSION="2.46.0"
+VERSION="2.47.0"
 BUILD_DEPENDS="gmake"
 DESCRIPTION="Version control tool"
 SOURCES="https://mirrors.edge.kernel.org/pub/software/scm/git/git-$VERSION.tar.xz"
 DEPENDS="curl openssl zlib"
-SHA256SUM="7f123462a28b7ca3ebe2607485f7168554c2b10dfc155c7ec46300666ac27f95"
+SHA256SUM="1ce114da88704271b43e027c51e04d9399f8c88e9ef7542dae7aebae7d87bc4e"
 build() {
 kpkgConfigure --prefix=/usr
 # Taken from kiss linux, license is https://github.com/kisslinux/repo/blob/master/LICENSE
