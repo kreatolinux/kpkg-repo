@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="jsoncpp"
 RELEASE="1"
-VERSION="1.9.5"
+VERSION="1.9.6"
 SOURCES="https://github.com/open-source-parsers/jsoncpp/archive/refs/tags/$VERSION.tar.gz"
 BUILD_DEPENDS="meson"
-SHA256SUM="f409856e5920c18d0c2fb85276e24ee607d2a09b5e7d5f0a371368903c275da2"
+SHA256SUM="f93b6dd7ce796b13d02c108bc9f79812245a82e577581c4c9aabe57075c90ea2"
 DESCRIPTION="A C++ library for interacting with JSON"
 
 build() {
