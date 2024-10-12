@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="libevdev"
 RELEASE="1"
-VERSION=1.13.2
+VERSION=1.13.3
 BUILD_DEPENDS="gmake"
 SOURCES="https://www.freedesktop.org/software/libevdev/libevdev-$VERSION.tar.xz"
 DEPENDS=""
-SHA256SUM="3eca86a6ce55b81d5bce910637fc451c8bbe373b1f9698f375c7f1ad0de3ac48"
+SHA256SUM="abf1aace86208eebdd5d3550ffded4c8d73bb405b796d51c389c9d0604cbcfbf"
 DESCRIPTION="Common functions for Xorg input drivers"
 
 build() {
