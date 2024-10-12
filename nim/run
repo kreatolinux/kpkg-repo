@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="nim"
 RELEASE="3"
-VERSION="2.0.6"
+VERSION="2.2.0"
 SOURCES="https://nim-lang.org/download/nim-$VERSION.tar.xz"
-SHA256SUM="fbcd5d731743adec2b3bb9bcf6f5fd993ed11b250f957166bebf328f307cba6a"
+SHA256SUM="ce9842849c9760e487ecdd1cdadf7c0f2844cafae605401c7c72ae257644893c"
 DESCRIPTION="The Nim programming language"
 
 build() {
