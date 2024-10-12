@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="libuv"
 RELEASE="1"
-VERSION="1.48.0"
+VERSION="1.49.1"
 BUILD_DEPENDS="gmake"
 SOURCES="https://dist.libuv.org/dist/v$VERSION/libuv-v$VERSION.tar.gz"
 DEPENDS="automake libtool"
-SHA256SUM="7f1db8ac368d89d1baf163bac1ea5fe5120697a73910c8ae6b2fffb3551d59fb"
+SHA256SUM="8d84f714f4cfd167b1576a58b82430cc2166ef135463d0644964fd71c61a6766"
 DESCRIPTION="The libuv package is a multi-platform support library with a focus on asynchronous I/O."
 
 build() {
