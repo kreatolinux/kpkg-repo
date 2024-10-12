@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="openrc"
 RELEASE="1"
-VERSION="0.54.2"
+VERSION="0.55.1"
 SOURCES="https://github.com/OpenRC/openrc/archive/refs/tags/$VERSION.tar.gz"
 BUILD_DEPENDS="ninja meson"
-SHA256SUM="1075c7793c0479a65810984036dc7c82142e934b19310edeb397db8939bf526c"
+SHA256SUM="102e53825031361e4d96a5c0a7eb192bd64b0a6b227bb0568651efc8f5972952"
 DESCRIPTION="The OpenRC init system"
 
 build() {
