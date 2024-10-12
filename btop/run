@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="btop"
 RELEASE="1"
-VERSION="1.3.2"
+VERSION="1.4.0"
 SOURCES="https://github.com/aristocratos/btop/archive/refs/tags/v$VERSION.tar.gz"
 BUILD_DEPENDS="gmake"
-SHA256SUM="331d18488b1dc7f06cfa12cff909230816a24c57790ba3e8224b117e3f0ae03e"
+SHA256SUM="ac0d2371bf69d5136de7e9470c6fb286cbee2e16b4c7a6d2cd48a14796e86650"
 DESCRIPTION="htop alternative"
 
 build() {
