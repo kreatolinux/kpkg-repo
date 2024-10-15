@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="libisl"
 RELEASE="1"
-VERSION="0.26"
+VERSION="0.27"
 BUILD_DEPENDS="gmake"
 SOURCES="https://libisl.sourceforge.io/isl-$VERSION.tar.xz"
 DEPENDS="gmp"
-SHA256SUM="a0b5cb06d24f9fa9e77b55fabbe9a3c94a336190345c2555f9915bb38e976504"
+SHA256SUM="6d8babb59e7b672e8cb7870e874f3f7b813b6e00e6af3f8b04f7579965643d5c"
 DESCRIPTION="isl is a library for manipulating sets and relations of integer points bounded by linear constraints."
 
 build() {
