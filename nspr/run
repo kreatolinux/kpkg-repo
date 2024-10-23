@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="nspr"
 RELEASE="1"
-VERSION="4.35"
+VERSION="4.36"
 BUILD_DEPENDS="gmake"
 SOURCES="https://archive.mozilla.org/pub/nspr/releases/v$VERSION/src/nspr-$VERSION.tar.gz"
-SHA256SUM="7ea3297ea5969b5d25a5dd8d47f2443cda88e9ee746301f6e1e1426f8a6abc8f"
+SHA256SUM="55dec317f1401cd2e5dba844d340b930ab7547f818179a4002bce62e6f1c6895"
 DESCRIPTION="nspr"
 
 build() {
