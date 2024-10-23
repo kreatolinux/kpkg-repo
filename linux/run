@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="linux"
 RELEASE="7"
-VERSION="6.11.3"
+VERSION="6.11.5"
 SOURCES="https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$VERSION.tar.xz https://github.com/projg2/fedora-kernel-config-for-gentoo/raw/6.5.8-gentoo/kernel-x86_64-fedora.config settings.config"
 BUILD_DEPENDS="flex libelf xz-utils gmake"
 DEPENDS="kmod"
-SHA256SUM="057263d0afc17d5253794afd3d239ba4da4aa734b22fa36c1665f41b95449b73 de77bf376569a4c521e7eefea3181d3e44bbdb65cc9bce5a91fd6af09c6a6ad4 04f33434bb1b16b2a38e3a36d6ce59e0bf032db6954d4a71d07d8f3f5ab37e4c"
+SHA256SUM="471485b3b7f2fb637bd8fe3d00944c4c135c7d8ee02f357f33690baab0752a07 de77bf376569a4c521e7eefea3181d3e44bbdb65cc9bce5a91fd6af09c6a6ad4 04f33434bb1b16b2a38e3a36d6ce59e0bf032db6954d4a71d07d8f3f5ab37e4c"
 DESCRIPTION="The Linux kernel and headers"
 IS_SEMVER=true
 
