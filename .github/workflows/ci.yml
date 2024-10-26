@@ -135,7 +135,7 @@ jobs:
               exit 0
           fi
           
-          /tmp/kpkg-bin/kpkg build ${{ matrix.packages }} --yes --ignorePostInstall #--forceInstallAll=true --yes
+          /tmp/kpkg-bin/kpkg build ${{ matrix.packages }} --yes --ignorePostInstall --forceInstallAll=true
           #echo RANDOM_ID=$(cat /dev/urandom | tr -dc '[:alpha:]' | fold -w ${1:-20} | head -n 1) >> $GITHUB_ENV
           cd "$GITHUB_WORKSPACE"
           git pull
