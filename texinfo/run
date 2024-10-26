@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="7.1.1"
 BUILD_DEPENDS="gmake"
 SOURCES="https://ftp.gnu.org/gnu/texinfo/texinfo-$VERSION.tar.xz"
-DEPENDS="gettext"
+DEPENDS="gettext perl"
 SHA256SUM="31ae37e46283529432b61bee1ce01ed0090d599e606fc6a29dca1f77c76a6c82"
 DESCRIPTION="GNU texinfo"
 
