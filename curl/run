@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="curl"
 RELEASE="1"
-VERSION="8.10.1"
+VERSION="8.11.0"
 BUILD_DEPENDS="gmake"
 SOURCES="https://curl.haxx.se/download/curl-$VERSION.tar.xz"
 DEPENDS="nghttp2 zlib nghttp2"
-SHA256SUM="73a4b0e99596a09fa5924a4fb7e4b995a85fda0d18a2c02ab9cf134bebce04ee"
+SHA256SUM="db59cf0d671ca6e7f5c2c5ec177084a33a79e04c97e71cf183a5cdea235054eb"
 DESCRIPTION="command line tool and library for transferring data with URLs"
 
 build() {
