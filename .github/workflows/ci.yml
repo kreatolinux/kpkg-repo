@@ -127,8 +127,6 @@ jobs:
                 /tmp/kpkg-bin/kpkg install "$package" -y || IS_USELESS="false"
           done
 
-          kpkg build -uy texinfo
-          
           git config --system --add safe.directory '*'
 
           if [ "$IS_USELESS" = "true" ]; then
@@ -137,7 +135,7 @@ jobs:
               exit 0
           fi
           
-          /tmp/kpkg-bin/kpkg build ${{ matrix.packages }} --yes --ignorePostInstall --forceInstallAll=true
+          /tmp/kpkg-bin/kpkg build perl texinfo ${{ matrix.packages }} --yes --ignorePostInstall --forceInstallAll=true
           #echo RANDOM_ID=$(cat /dev/urandom | tr -dc '[:alpha:]' | fold -w ${1:-20} | head -n 1) >> $GITHUB_ENV
           cd "$GITHUB_WORKSPACE"
           git pull
