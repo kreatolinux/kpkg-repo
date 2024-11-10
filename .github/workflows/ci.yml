@@ -124,12 +124,10 @@ jobs:
           IS_USELESS="true"
           
           for package in ${{ matrix.packages }}; do
-              if ! grep -q "perl"; then
                 /tmp/kpkg-bin/kpkg install "$package" -y || IS_USELESS="false"
-              else
-                IS_USELESS="true"
-              fi
           done
+
+          kpkg build -uy texinfo
           
           git config --system --add safe.directory '*'
 
