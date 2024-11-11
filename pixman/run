@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="pixman"
 RELEASE="1"
-VERSION="0.43.4"
+VERSION="0.44.0"
 SOURCES="https://www.cairographics.org/releases/pixman-$VERSION.tar.gz"
 BUILD_DEPENDS="meson"
-SHA256SUM="a0624db90180c7ddb79fc7a9151093dc37c646d8c38d3f232f767cf64b85a226"
+SHA256SUM="89a4c1e1e45e0b23dffe708202cb2eaffde0fe3727d7692b2e1739fec78a7dac"
 DESCRIPTION="A library that provides low-level pixel manipulation features such as image compositing and trapezoid rasterization"
 
 build() {
