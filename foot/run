@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="foot"
 RELEASE="1"
-VERSION="1.18.1"
-SOURCES="https://codeberg.org/dnkl/foot/archive/1.18.1.tar.gz"
+VERSION="1.19.0"
+SOURCES="https://codeberg.org/dnkl/foot/archive/1.19.0.tar.gz"
 BUILD_DEPENDS="meson"
 DEPENDS="wayland-protocols wayland fontconfig libxkbcommon pixman freetype"
-SHA256SUM="59d22187f7ceaaaa570a5299b102e8f4692826e98785f89ad9d8911802ccc000"
+SHA256SUM="148b0b545ca37e15b877ff9f6a768a4ce6feb0ed256f8a5f853cb2e16e3323c1"
 DESCRIPTION="A fast, lightweight and minimalistic Wayland terminal emulator"
 build() {
     meson --prefix=/usr build/
