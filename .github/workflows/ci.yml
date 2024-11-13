@@ -124,7 +124,7 @@ jobs:
           IS_USELESS="true"
           
           for package in ${{ matrix.packages }}; do
-                /tmp/kpkg-bin/kpkg install "$package" -y || IS_USELESS="false"
+                /tmp/kpkg-bin/kpkg install "$package" -y --downloadOnly || IS_USELESS="false"
           done
 
           git config --system --add safe.directory '*'
