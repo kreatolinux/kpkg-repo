@@ -133,9 +133,11 @@ jobs:
               mkdir -p /var/cache/kpkg/archives
               touch /var/cache/kpkg/archives/IS_USELESS
               exit 0
+          else
+              /tmp/kpkg-bin/kpkg clean --binaries=true
           fi
           
-          /tmp/kpkg-bin/kpkg build perl texinfo ${{ matrix.packages }} --yes --ignorePostInstall --forceInstallAll=true
+          /tmp/kpkg-bin/kpkg build ${{ matrix.packages }} --yes --ignorePostInstall --forceInstallAll=true
           #echo RANDOM_ID=$(cat /dev/urandom | tr -dc '[:alpha:]' | fold -w ${1:-20} | head -n 1) >> $GITHUB_ENV
           cd "$GITHUB_WORKSPACE"
           git pull
