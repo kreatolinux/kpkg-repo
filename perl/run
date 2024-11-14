@@ -1,6 +1,6 @@
 #!/bin/sh
 NAME="perl"
-RELEASE="1"
+RELEASE="2"
 VERSION="5.40.0"
 BUILD_DEPENDS="gmake"
 SOURCES="https://www.cpan.org/src/5.0/perl-$VERSION.tar.gz"
@@ -8,16 +8,17 @@ SHA256SUM="c740348f357396327a9795d3e8323bafd0fe8a5c7835fc1cbaba0cc8dfe7161f"
 DESCRIPTION="Perl"
 
 build() {
+	VERSION_MAJORANDMINOR=$(echo $VERSION | cut -d. -f1-2) # 5.40
     # Credit: https://www.linuxfromscratch.org/lfs/view/development/chapter08/perl.html
     sh Configure -des                                         \
              -Dprefix=/usr                                \
              -Dvendorprefix=/usr                          \
-             -Dprivlib=/usr/lib/perl5/5.36/core_perl      \
-             -Darchlib=/usr/lib/perl5/5.36/core_perl      \
-             -Dsitelib=/usr/lib/perl5/5.36/site_perl      \
-             -Dsitearch=/usr/lib/perl5/5.36/site_perl     \
-             -Dvendorlib=/usr/lib/perl5/5.36/vendor_perl  \
-             -Dvendorarch=/usr/lib/perl5/5.36/vendor_perl \
+             -Dprivlib=/usr/lib/perl5/$VERSION_MAJORANDMINOR/core_perl      \
+             -Darchlib=/usr/lib/perl5/$VERSION_MAJORANDMINOR/core_perl      \
+             -Dsitelib=/usr/lib/perl5/$VERSION_MAJORANDMINOR/site_perl      \
+             -Dsitearch=/usr/lib/perl5/$VERSION_MAJORANDMINOR/site_perl     \
+             -Dvendorlib=/usr/lib/perl5/$VERSION_MAJORANDMINOR/vendor_perl  \
+             -Dvendorarch=/usr/lib/perl5/$VERSION_MAJORANDMINOR/vendor_perl \
              -Dman1dir=/usr/share/man/man1                \
              -Dman3dir=/usr/share/man/man3                \
              -Dpager="/usr/bin/less -isR"                 \
