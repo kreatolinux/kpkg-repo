@@ -27,6 +27,12 @@ build() {
     make -j$(nproc --all)
 }
 
+check() {
+	make -j$(nproc --all) test
+}
+
 package() {
     make DESTDIR=$ROOT install
+	cd $ROOT
+	tree
 }
