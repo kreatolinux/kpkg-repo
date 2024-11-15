@@ -10,9 +10,9 @@ DESCRIPTION="An arbitrary precision calculator language"
 
 build() {
     kpkgConfigure --prefix=/usr
-    make
+    make MAKEINFO=true
 }
 
 package() {
-    make install 
+    make MAKEINFO=true install 
 }
