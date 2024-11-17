@@ -6,6 +6,7 @@ BUILD_DEPENDS="gmake"
 SOURCES="https://www.python.org/ftp/python/$VERSION/Python-$VERSION.tar.xz"
 DEPENDS="openssl zlib libxcrypt bzip2 libffi"
 SHA256SUM="086de5882e3cb310d4dca48457522e2e48018ecd43da9cdf827f6a0759efb07d"
+NO_CHKUPD=true
 DESCRIPTION="General-Purpose Programming language"
 
 build() {

@@ -133,8 +133,6 @@ jobs:
               mkdir -p /var/cache/kpkg/archives
               touch /var/cache/kpkg/archives/IS_USELESS
               exit 0
-          else
-              /tmp/kpkg-bin/kpkg clean --binaries=true
           fi
           
           /tmp/kpkg-bin/kpkg build ${{ matrix.packages }} --yes --ignorePostInstall --forceInstallAll=true
