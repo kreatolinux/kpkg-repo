@@ -121,7 +121,7 @@ jobs:
           
           kpkg upgrade --yes || true
           
-          /tmp/kpkg-bin/kpkg clean --binaries=true
+          /tmp/kpkg-bin/kpkg clean --binaries=true --environment=true
           
           IS_USELESS="true"
           
