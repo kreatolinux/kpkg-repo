@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="glibc"
 RELEASE="5"
-VERSION="2.39"
+VERSION="2.40"
 BUILD_DEPENDS="gmake"
 SOURCES="https://ftp.gnu.org/gnu/glibc/glibc-$VERSION.tar.xz"
 DEPENDS="grep bash gawk bison m4"
