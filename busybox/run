@@ -3,8 +3,8 @@ NAME="busybox"
 RELEASE="5"
 VERSION="1.36.1"
 BUILD_DEPENDS="gmake"
-SOURCES="https://www.busybox.net/downloads/busybox-$VERSION.tar.bz2 ln-relative-symlinks.patch"
-SHA256SUM="b8cc24c9574d809e7279c3be349795c5d5ceb6fdf19ca709f80cde50e47de314 9dd4c0567e98a745d48414197f7ad711f8ede97452486159d86926ae12a95d04"
+SOURCES="https://www.busybox.net/downloads/busybox-$VERSION.tar.bz2 ln-relative-symlinks.patch https://git.yoctoproject.org/poky/plain/meta/recipes-core/busybox/busybox/busybox-1.36.1-no-cbq.patch"
+SHA256SUM="b8cc24c9574d809e7279c3be349795c5d5ceb6fdf19ca709f80cde50e47de314 9dd4c0567e98a745d48414197f7ad711f8ede97452486159d86926ae12a95d04 c44f69dd7efdf2c7356b723df7169da482942af996e4e1facc5640122766a0c0"
 DEPENDS_BUSYBOX="grep ncurses attr xz-utils shadow gtar bzip2"
 EXTRACT="false"
 DESCRIPTION="The Swiss Army Knife of Embedded Linux"
@@ -15,6 +15,9 @@ prepare() {
     
     # Got the patch from http://lists.busybox.net/pipermail/busybox/2016-June/084276.html
     patch -p1 < ../../ln-relative-symlinks.patch
+
+    # Patch from the Yocto Project to disable CBQ
+    patch -p1 < ../../busybox-1.36.1-no-cbq.patch
 }
 
 build() {
