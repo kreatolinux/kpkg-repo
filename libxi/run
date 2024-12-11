@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="libxi"
 RELEASE="1"
-VERSION="1.8.1"
-SOURCES="https://www.x.org/releases/individual/lib/libXi-$VERSION.tar.gz"
-SHA256SUM="3b5f47c223e4b63d7f7fe758886b8bf665b20a7edb6962c423892fd150e326ea"
+VERSION="1.8.2"
+SOURCES="https://xorg.freedesktop.org/releases/individual/lib/libXi-$VERSION.tar.gz"
+SHA256SUM="5542daec66febfeb6f51d57abfa915826efe2e3af57534f4105b82240ea3188d"
 DEPENDS="libxext libxfixes"
 BUILD_DEPENDS="xorgproto gmake"
 DESCRIPTION="libxi"
