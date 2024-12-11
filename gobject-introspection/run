@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="gobject-introspection"
 RELEASE="3"
-VERSION="1.80.1"
+VERSION="1.82.0"
 SOURCES="https://gitlab.gnome.org/GNOME/gobject-introspection/-/archive/$VERSION/gobject-introspection-$VERSION.tar.gz"
 BUILD_DEPENDS="meson ninja python-setuptools python-packaging"
 DEPENDS="python cairo glib"
-SHA256SUM="03015c2f62bfe5634873f92a9da07ed2c760789b160feac31f0284c93ff8c9a7"
+SHA256SUM="82c2372520d9ec58f0361efddb2ef9ce4026618b7389e99ba73f8a4e683ed361"
 DESCRIPTION="Introspection system for GObject-based libraries"
 
 build() {
