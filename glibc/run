@@ -7,7 +7,7 @@ SOURCES="https://ftp.gnu.org/gnu/glibc/glibc-$VERSION.tar.xz"
 DEPENDS="grep bash gawk bison m4"
 BUILD_DEPENDS="perl texinfo"
 DEPENDS_AARCH64_LINUX_GNU_GLIBC+="aarch64-linux-gnu-linux-headers"
-SHA256SUM="f77bd47cf8170c57365ae7bf86696c118adb3b120d3259c64c502d3dc1e2d926"
+SHA256SUM="19a890175e9263d748f627993de6f4b1af9cd21e03f080e4bfb3a1fac10205a2"
 DESCRIPTION="The GNU C library"
 
 common_build() {
