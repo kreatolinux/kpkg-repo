@@ -71,8 +71,6 @@ build() {
 package() {
     cd build
     make DESTDIR=$ROOT install
-    mkdir -p $ROOT/usr/lib/locale
-    localedef --prefix=$ROOT -i C -f UTF-8 C
     rm -rf "$ROOT/usr/share/info/dir"
     rm -f "$ROOT/etc/ld.so.cache"
     for file in tzselect zdump zic; do
@@ -82,4 +80,9 @@ package() {
         rm -f "$ROOT/bin/$file"
         rm -f "$ROOT/sbin/$file"
     done
+}
+
+postinstall() {
+    mkdir -p $ROOT/usr/lib/locale
+    localedef --prefix=$ROOT -i C -f UTF-8 C
 }
