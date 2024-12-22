@@ -119,7 +119,7 @@ jobs:
             rm -f /tmp/sourced_chkupd
           done
           
-          kpkg upgrade --yes || true
+          #kpkg upgrade --yes || true
           
           /tmp/kpkg-bin/kpkg clean --binaries=true --environment=true
           
