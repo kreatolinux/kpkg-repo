@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="meson"
 RELEASE="1"
-VERSION="1.6.0"
+VERSION="1.6.1"
 SOURCES="https://github.com/mesonbuild/meson/releases/download/$VERSION/meson-$VERSION.tar.gz"
 BUILD_DEPENDS="python-pip"
 DEPENDS="python samurai"
-SHA256SUM="999b65f21c03541cf11365489c1fad22e2418bb0c3d50ca61139f2eec09d5496"
+B2SUM="7ccdb3bf3f701fc787fabf91413db8301a8658b89e08c1d712711bd35845dc2468211e4b666cf46ad68ad9462e62b12b62d60c3767a2804f9b695b4390bb8235"
 DESCRIPTION="Next generation build system"
 
 package() {
