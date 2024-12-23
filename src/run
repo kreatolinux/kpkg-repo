@@ -1,12 +1,12 @@
 #!/bin/sh
 NAME="src"
 RELEASE="7"
-VERSION="7.2.1"
+VERSION="7.3.0"
 SOURCES="https://github.com/kreatolinux/src/releases/download/v$VERSION/src-v$VERSION-dist.tar.gz"
 BUILD_DEPENDS="nim"
 DEPENDS="libarchive shadow openssl git"
 DEPENDS_KPKG+="bubblewrap sqlite"
-B2SUM="e4fbeea11dc1a4767ae6a66e76a62629127529f67cc16d4009d921b88c902393af5027c08041115bc67142158ad5ac504c0fcfd81dc493bbaf84c39594c73e14"
+B2SUM="e8fb17f4f14198d6cd15220cea6e5bbecbcd9543e9094687c34e4c51634aa07cf772c518826dcac78a73e3d7b821fe89e15cbd7d2f27c51ed91ef5ac6a0b09c0"
 DESCRIPTION="Kreato Linux source tree metapackage"
 
 build_kpkg() {
@@ -39,9 +39,3 @@ package_jumpstart() {
         cp out/jumpctl "$ROOT/bin/"
         cp out/jumpstart "$ROOT/bin"
 }
-
-package_mari() {
-        mkdir -p "$ROOT/bin"
-        cp out/mari "$ROOT/bin/"
-}
-
