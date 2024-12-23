@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="linux"
 RELEASE="7"
-VERSION="6.11.8"
+VERSION="6.12.6"
 SOURCES="https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$VERSION.tar.xz https://github.com/projg2/fedora-kernel-config-for-gentoo/raw/6.5.8-gentoo/kernel-x86_64-fedora.config settings.config"
 BUILD_DEPENDS="flex libelf xz-utils gmake"
 DEPENDS="kmod"
