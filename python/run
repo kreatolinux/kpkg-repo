@@ -17,4 +17,6 @@ build() {
 package() {
     make DESTDIR="$ROOT" install || exit 1
     ln -s "python3" "$ROOT/usr/bin/python"
+    find "$ROOT" -type f -name "*.pyc" -delete
+    find "$ROOT" -type d -name "__pycache__" -exec rm -rf {} +
 }

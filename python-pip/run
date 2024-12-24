@@ -9,4 +9,6 @@ DESCRIPTION="Easily download, build, install, upgrade, and uninstall Python pack
 
 package() {
     pip install . --no-dependencies --ignore-installed --prefix=/usr --root="$ROOT"
+    find "$ROOT" -type d -name "__pycache__" -exec rm -rf {} +
+    find "$ROOT" -type f -name "*.pyc" -exec rm -f {} +
 }
