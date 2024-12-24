@@ -8,6 +8,12 @@ B2SUM="17a7ed9e15e9b8efa0d3e3c5586dc446958b62cf9ba52155a0d1ad97a3e212ee7a08a0e88
 DESCRIPTION="Easily download, build, install, upgrade, and uninstall Python packages"
 
 package() {
+    
+    if ! command -v pip || ! pip --version; then
+        # Install pip using ensurepip if it is not available or not working
+        python3 -m ensurepip 
+    fi
+
     pip install . --no-dependencies --ignore-installed --prefix=/usr --root="$ROOT"
     find "$ROOT" -type d -name "__pycache__" -exec rm -rf {} +
     find "$ROOT" -type f -name "*.pyc" -exec rm -f {} +

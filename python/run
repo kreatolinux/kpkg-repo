@@ -1,6 +1,6 @@
 #!/bin/sh
 NAME="python"
-RELEASE="3"
+RELEASE="4"
 VERSION="3.13.0"
 BUILD_DEPENDS="gmake"
 SOURCES="https://www.python.org/ftp/python/$VERSION/Python-$VERSION.tar.xz"
@@ -10,7 +10,7 @@ NO_CHKUPD=true
 DESCRIPTION="General-Purpose Programming language"
 
 build() {
-    kpkgConfigure --disable-static --with-ensurepip=install --enable-shared --prefix=/usr --enable-optimizations
+    kpkgConfigure --disable-static --enable-shared --prefix=/usr --enable-optimizations
     make
 }
 
