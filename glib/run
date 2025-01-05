@@ -1,8 +1,8 @@
 #!/bin/sh
 NAME="glib"
 RELEASE="1"
-VERSION="2.80.4"
-SOURCES="https://download.gnome.org/sources/glib/2.80/glib-$VERSION.tar.xz"
+VERSION="2.82.4"
+SOURCES="https://download.gnome.org/sources/glib/2.82/glib-$VERSION.tar.xz"
 BUILD_DEPENDS="meson ninja python-setuptools python-packaging"
 SHA256SUM="24e029c5dfc9b44e4573697adf33078a9827c48938555004b3b9096fa4ea034f"
 DESCRIPTION="Low-level core library that forms the basis for projects such as GTK+ and GNOME"
