@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="2.82.4"
 SOURCES="https://download.gnome.org/sources/glib/2.82/glib-$VERSION.tar.xz"
 BUILD_DEPENDS="meson ninja python-setuptools python-packaging"
-SHA256SUM="24e029c5dfc9b44e4573697adf33078a9827c48938555004b3b9096fa4ea034f"
+SHA256SUM="37dd0877fe964cd15e9a2710b044a1830fb1bd93652a6d0cb6b8b2dff187c709"
 DESCRIPTION="Low-level core library that forms the basis for projects such as GTK+ and GNOME"
 
 build() {
