@@ -9,7 +9,7 @@ SHA256SUM="82c2372520d9ec58f0361efddb2ef9ce4026618b7389e99ba73f8a4e683ed361"
 DESCRIPTION="Introspection system for GObject-based libraries"
 
 build() {
-    meson \
+    meson setup \
     --prefix=/usr \
     build
     ninja -C build
