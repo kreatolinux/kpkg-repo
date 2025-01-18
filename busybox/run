@@ -15,10 +15,12 @@ prepare() {
     
     # Got the patch from http://lists.busybox.net/pipermail/busybox/2016-June/084276.html
     patch -p1 < ../../ln-relative-symlinks.patch
+    
+    cd ..
 
     # Patch from the Yocto Project to disable CBQ
     # https://git.yoctoproject.org/poky/plain/meta/recipes-core/busybox/busybox/busybox-1.36.1-no-cbq.patch
-    patch -p1 < ../../busybox-1.36.1-no-cbq.patch
+    patch -p1 < ../busybox-1.36.1-no-cbq.patch
 }
 
 build() {
