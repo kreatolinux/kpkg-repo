@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="mercurial"
 RELEASE="1"
-VERSION="6.8.2"
+VERSION="6.9.1"
 SOURCES="https://www.mercurial-scm.org/release/mercurial-$VERSION.tar.gz"
 DEPENDS="python"
 BUILD_DEPENDS="gmake python-setuptools"
-SHA256SUM="aac618106768ad1ed976c3fe7c8659fec99e6f0b5337ea6ea554fae8490c4f4e"
+B2SUM="674b66c05558d9a542f36e02cf20891e43d8017274317218c1fcd4bbdf737c48be580601daeff54488673b36e02cfe5c7edf443860fe2446139d1b989a9f7f5b"
 DESCRIPTION="A free, distributed source control management tool"
 
 build() {
