@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="efivar"
 RELEASE="1"
-VERSION="38"
+VERSION="39"
 BUILD_DEPENDS="gmake"
-SOURCES="https://github.com/rhboot/efivar/releases/download/$VERSION/efivar-$VERSION.tar.bz2"
+SOURCES="https://github.com/rhboot/efivar/archive/refs/tags/$VERSION.tar.gz"
 DEPENDS=""
-SHA256SUM="f018ed6e49c5f1c16d336d9fd7687ce87023276591921db1e49a314ad6515349"
+B2SUM="73ea4b3293cd708923bcd4332a8c7a5a8bbf539d81300c502a764a2ac205ba7cdf1e30b3432c42a101f56c0b6e31af2907a6a38ada69ace3b0d60e90515094cd"
 DESCRIPTION="efivar provides tools and libraries to manipulate EFI variables"
 
 build() {
