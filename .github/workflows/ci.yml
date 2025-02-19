@@ -98,6 +98,9 @@ jobs:
           
           . /etc/profile
 
+          export LC_ALL=en_US.UTF-8
+          export LANG=en_US.UTF-8
+
           chmod +x /tmp/chkupd/chkupd
           chmod +x /tmp/kpkg-bin/kpkg
           mkdir -p /etc/kpkg/repos/main
