@@ -95,11 +95,12 @@ jobs:
 
       - name: Build packages
         run: |
+          LOCALE=en_US
+          mkdir -p /usr/lib/locale
+          localedef -i $LOCALE -c -f UTF-8 $LOCALE
+          echo "export LANG=$LOCALE.UTF-8" >> /etc/profile          
           
           . /etc/profile
-
-          export LC_ALL=en_US.UTF-8
-          export LANG=en_US.UTF-8
 
           chmod +x /tmp/chkupd/chkupd
           chmod +x /tmp/kpkg-bin/kpkg
