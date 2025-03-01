@@ -1,13 +1,13 @@
 #!/bin/sh
 NAME="glibc"
 RELEASE="5"
-VERSION="2.40"
+VERSION="2.41"
 BUILD_DEPENDS="gmake"
 SOURCES="https://ftp.gnu.org/gnu/glibc/glibc-$VERSION.tar.xz"
 DEPENDS="grep bash gawk bison m4"
 BUILD_DEPENDS="perl texinfo"
 DEPENDS_AARCH64_LINUX_GNU_GLIBC+="aarch64-linux-gnu-linux-headers"
-SHA256SUM="19a890175e9263d748f627993de6f4b1af9cd21e03f080e4bfb3a1fac10205a2"
+B2SUM="4da62f489ba7a95bb069c2cfea8cf78e4d37e3a5f7e1736239670ba1dca12b69aa77bd00ced078c27d91b1e622c58cbd70258161a9d18c5b3bcc95863b8d744d"
 DESCRIPTION="The GNU C library"
 
 common_build() {
