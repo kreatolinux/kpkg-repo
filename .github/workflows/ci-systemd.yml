@@ -59,7 +59,7 @@ jobs:
     needs: init
     runs-on: ubuntu-latest
     container: 
-      image: ghcr.io/kreatolinux/builder-repo #-gnu # builder-gnu doesn't work yet, see TODO in kpkg/modules/isolation
+      image: ghcr.io/kreatolinux/builder-repo-systemd #-gnu # builder-gnu doesn't work yet, see TODO in kpkg/modules/isolation
       options: --privileged -v /:/opt/host
     strategy:
       fail-fast: false
@@ -84,7 +84,7 @@ jobs:
           path: /tmp/kpkg-bin
           github-token: ${{ secrets.GH_PAT }} # token with actions:read permissions on target repo
           repository: kreatolinux/src
-          run-id: 14825276283 # TODO: Automatically update to latest nightly
+          run-id: 12660181665 # TODO: Automatically update to latest nightly
 
       - uses: actions/download-artifact@v4
         with:
@@ -95,15 +95,8 @@ jobs:
 
       - name: Build packages
         run: |
-          LOCALE=en_US
-          mkdir -p /usr/lib/locale
-          localedef -i $LOCALE -c -f UTF-8 $LOCALE
-          echo "export LANG=$LOCALE.UTF-8" >> /etc/profile          
           
           . /etc/profile
-          
-          export LC_CTYPE=en_US.UTF-8
-          export LC_ALL=en_US.UTF-8
 
           chmod +x /tmp/chkupd/chkupd
           chmod +x /tmp/kpkg-bin/kpkg
@@ -156,27 +149,21 @@ jobs:
           oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
           oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
           tags: tag:ci
-          version: 1.82.5
+          version: 1.76.0
+      
+      - name: Upload to server through rsync
+        env:
+          SSH_URL: ${{ secrets.SSH_URL }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          RSYNC_RSH: "ssh -o StrictHostKeychecking=no"
+        run: |
+          if [ -f "/var/cache/kpkg/archives/IS_USELESS" ]; then
+            exit 0
+          fi
+          ping -c 4 "$SSH_URL"
+          rsync -avc /var/cache/kpkg/archives/ $SSH_USER@$SSH_URL:/var/cache/kpkg/archives/
+          rsync -avc /var/cache/kpkg/sources/ $SSH_USER@$SSH_URL:/var/cache/kpkg/sources/
 
-      - name: Upload archives through S3
-        uses: shallwefootball/s3-upload-action@v1.3.3
-        with:
-          aws_key_id: ${{ secrets.AWS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws_bucket: ${{ secrets.AWS_BUCKET }}
-          endpoint: ${{ secrets.AWS_ENDPOINT }}
-          source_dir: '/var/cache/kpkg/archives/'
-          destination_dir: '/'
-
-      - name: Upload sources through S3
-        uses: shallwefootball/s3-upload-action@v1.3.3
-        with:
-          aws_key_id: ${{ secrets.AWS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws_bucket: ${{ secrets.AWS_BUCKET }}
-          endpoint: ${{ secrets.AWS_ENDPOINT }}
-          source_dir: '/var/cache/kpkg/sources/'
-          destination_dir: '/'
 
       #- uses: actions/upload-artifact@v4
       #  with:
