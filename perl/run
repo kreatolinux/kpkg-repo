@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="perl"
 RELEASE="2"
-VERSION="5.41.9"
+VERSION="5.40.2"
 BUILD_DEPENDS="gmake"
 SOURCES="https://www.cpan.org/src/5.0/perl-$VERSION.tar.gz"
-SHA256SUM="d15edadedd3cd9f9d374f0793bbd0f616cedd6359521d2fb168f2cee83af8fdb"
+SHA256SUM="10d4647cfbb543a7f9ae3e5f6851ec49305232ea7621aed24c7cfbb0bef4b70d"
 DESCRIPTION="Perl"
 
 build() {
