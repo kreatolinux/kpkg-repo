@@ -163,10 +163,23 @@ jobs:
 
       - name: Upload packages through MinIO
         run: |
-          ls -la /var/cache/kpkg/archives/
-          ls -la /var/cache/kpkg/sources/
-          mc cp --recursive /var/cache/kpkg/archives/* minio/${{ secrets.AWS_BUCKET }}/archives/
-          mc cp --recursive /var/cache/kpkg/sources/* minio/${{ secrets.AWS_BUCKET }}/sources/
+          if [ -d "/var/cache/kpkg/archives" ]; then
+            echo "Listing archives directory contents:"
+            ls -la /var/cache/kpkg/archives/
+            echo "Copying archives..."
+            mc cp --recursive /var/cache/kpkg/archives/* minio/${{ secrets.AWS_BUCKET }}/archives/
+          else
+            echo "Archives directory does not exist, skipping..."
+          fi
+
+          if [ -d "/var/cache/kpkg/sources" ]; then
+            echo "Listing sources directory contents:"
+            ls -la /var/cache/kpkg/sources/
+            echo "Copying sources..."
+            mc cp --recursive /var/cache/kpkg/sources/* minio/${{ secrets.AWS_BUCKET }}/sources/
+          else
+            echo "Sources directory does not exist, skipping..."
+          fi
 
       #- uses: actions/upload-artifact@v4
       #  with:
