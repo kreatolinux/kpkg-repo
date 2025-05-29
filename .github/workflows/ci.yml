@@ -163,7 +163,7 @@ jobs:
 
       - name: Upload packages through MinIO
         run: |
-          mc cp --recursive /var/cache/kpkg/archives/ minio/${{ secrets.AWS_BUCKET }}/archives/
+          mc cp --recursive /var/cache/kpkg/archives/* minio/${{ secrets.AWS_BUCKET }}/archives/
           mc cp --recursive /var/cache/kpkg/sources/ minio/${{ secrets.AWS_BUCKET }}/sources/
 
       #- uses: actions/upload-artifact@v4
