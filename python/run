@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="python"
 RELEASE="4"
-VERSION="3.13.0"
+VERSION="3.13.5"
 BUILD_DEPENDS="gmake"
 SOURCES="https://www.python.org/ftp/python/$VERSION/Python-$VERSION.tar.xz"
 DEPENDS="openssl zlib libxcrypt bzip2 libffi"
-SHA256SUM="086de5882e3cb310d4dca48457522e2e48018ecd43da9cdf827f6a0759efb07d"
+SHA256SUM="93e583f243454e6e9e4588ca2c2662206ad961659863277afcdb96801647d640"
 NO_CHKUPD=true
 DESCRIPTION="General-Purpose Programming language"
 
