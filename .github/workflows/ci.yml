@@ -87,7 +87,8 @@ jobs:
       #    run-id: 15857966848 # TODO: Automatically update to latest nightly
       - name: Tmp
         run: |
-          cp $(which kpkg) /tmp/kpkg-bin
+          mkdir /tmp/kpkg-bin
+          cp $(which kpkg) /tmp/kpkg-bin/kpkg
   
       - uses: actions/download-artifact@v4
         with:
