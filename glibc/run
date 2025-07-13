@@ -55,6 +55,8 @@ common_build() {
     echo "==AFTERBUILD ENVIRONMENT=="
     env
     echo "==END AFTERBUILD ENVIRONMENT=="
+    ldd $(which ls)
+    ldd $(which make)
 }
 
 build_aarch64_linux_gnu_glibc() {
@@ -81,6 +83,9 @@ package() {
     echo "==PACKAGE ENVIRONMENT=="
     env
     echo "==END PACKAGE ENVIRONMENT=="
+    ls
+    ldd $(which ls)
+    ldd $(which make)
     cd build
     make DESTDIR=$ROOT install || exit 1
     rm -rf "$ROOT/usr/share/info/dir"
