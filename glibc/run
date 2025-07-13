@@ -55,8 +55,6 @@ common_build() {
     echo "==AFTERBUILD ENVIRONMENT=="
     env
     echo "==END AFTERBUILD ENVIRONMENT=="
-    ldd $(which ls)
-    ldd $(which make)
 }
 
 build_aarch64_linux_gnu_glibc() {
@@ -84,10 +82,7 @@ package() {
     env
     echo "==END PACKAGE ENVIRONMENT=="
     ls
-    ldd $(which ls)
-    ldd $(which make)
-    cd build
-    make DESTDIR=$ROOT install || exit 1
+    make -C build DESTDIR=$ROOT install || exit 1
     rm -rf "$ROOT/usr/share/info/dir"
     rm -f "$ROOT/etc/ld.so.cache"
     for file in tzselect zdump zic; do
