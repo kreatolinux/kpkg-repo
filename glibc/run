@@ -82,7 +82,7 @@ package() {
     env
     echo "==END PACKAGE ENVIRONMENT=="
     ls
-    make DESTDIR=$ROOT install || exit 1
+    make -r PARALLELMFLAGS="" DESTDIR=$ROOT objdir=`realpath build` install || exit 1
     rm -rf "$ROOT/usr/share/info/dir"
     rm -f "$ROOT/etc/ld.so.cache"
     for file in tzselect zdump zic; do
