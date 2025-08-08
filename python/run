@@ -10,7 +10,7 @@ NO_CHKUPD=true
 DESCRIPTION="General-Purpose Programming language"
 
 build() {
-    kpkgConfigure --disable-static --enable-shared --prefix=/usr
+    kpkgConfigure --disable-static --prefix=/usr --with-system-ffi
     make
 }
 
