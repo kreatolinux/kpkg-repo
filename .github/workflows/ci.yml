@@ -59,7 +59,7 @@ jobs:
     needs: init
     runs-on: ubuntu-latest
     container: 
-      image: ghcr.io/kreatolinux/builder-repo #-gnu # builder-gnu doesn't work yet, see TODO in kpkg/modules/isolation
+      image: ghcr.io/kreatolinux/builder-repo@sha256:5c98776845d18b874e70f412d0adfbb2848eee811594752e1f3f3f6f617101c2 #-gnu # builder-gnu doesn't work yet, see TODO in kpkg/modules/isolation
       options: --privileged -v /:/opt/host
     strategy:
       fail-fast: false
