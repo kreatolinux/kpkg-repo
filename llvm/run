@@ -1,12 +1,12 @@
 #!/bin/sh
 NAME="llvm"
 RELEASE="2"
-VERSION="19.1.7"
+VERSION="20.1.8"
 SOURCES="https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION/llvm-project-$VERSION.src.tar.xz"
 DEPENDS_LLVM="gcc"
 BUILD_DEPENDS="cmake ninja"
 BUILD_DEPENDS_LLVM+="binutils"
-B2SUM="1259ed7f9aca7b35e89d818befdee20fd8bed4d2dc2c2c6f6f56451fd43d35ac03a0a5a406e142d22b25137999dc5b17471c196f8fcf79f20a8296832d900f6d"
+B2SUM="7657ac0b26acc5affb1bfc91b912ade3191c5d77f3979d5a80d5f6ce52f56a7d1c448bd257398390bf10838f02faa6f3ece37a7327cced69d165ec2e2e699316"
 DESCRIPTION="The LLVM Project is a collection of modular and reusable compiler and toolchain technologies."
 
 
