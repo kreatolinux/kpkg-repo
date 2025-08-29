@@ -31,6 +31,8 @@ jobs:
         id: compute-matrix
         run: |
           set -e
+          cd "$GITHUB_WORKSPACE"
+          git config --global --add safe.directory "$GITHUB_WORKSPACE" || true
           PUSH="true"
           EVENT_NAME="${{ github.event_name }}"
           SHOULD_BUILD="true"
