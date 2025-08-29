@@ -34,6 +34,8 @@
       // Optional: keep depName aligned for nicer PR titles
       depNameTemplate: "{{#if depName}}{{{depName}}}{{else}}alpine_edge/{{{packageName}}}{{/if}}",
       versioningTemplate: "{{#if versioning}}{{{versioning}}}{{else}}loose{{/if}}",
+      // Strip optional leading 'v' and any distro revision suffix like '-r0'
+      extractVersionTemplate: "^v?(?<version>[^-]+)",
     },
   ],
 }
