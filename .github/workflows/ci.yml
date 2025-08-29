@@ -120,7 +120,7 @@ jobs:
             if git diff -U0 "$BASE_SHA" "$HEAD_SHA" -- "$f" | grep -E '^\+VERSION=' >/dev/null; then
               if ! git diff -U0 "$BASE_SHA" "$HEAD_SHA" -- "$f" | grep -E '^(\+SHA256SUM=|\+SHA512SUM=|\+B2SUM=)' >/dev/null; then
                 need=true
-                RUNFILES_NEED="$RUNFILES_NEED\n$f"
+                RUNFILES_NEED="${RUNFILES_NEED}"$'\n'"$f"
               fi
             fi
           done

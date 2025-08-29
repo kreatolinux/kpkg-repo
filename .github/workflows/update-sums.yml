@@ -41,7 +41,7 @@ jobs:
           while IFS= read -r f; do
             [ -z "$f" ] && continue
             echo "Updating sums for $f"
-            node scripts/update-sums.mjs "$f" || echo "update-sums failed for $f"
+            node scripts/update-sums.mjs "${f%$'\r'}" || echo "update-sums failed for $f"
           done << 'EOF'
           ${{ steps.files.outputs.targets }}
           EOF
