@@ -58,21 +58,26 @@ jobs:
             MERGE_BASE=$(git merge-base "$BASE_SHA" "$HEAD_SHA" || true)
             if [ -n "$MERGE_BASE" ]; then
               CHANGED_FILES=$(git diff --name-only "$BASE_SHA...$HEAD_SHA" || true)
+              CHANGED_RUNFILES=$(git diff --name-only "$BASE_SHA...$HEAD_SHA" -- '*/run' || true)
             else
               CHANGED_FILES=$(git show --name-only --pretty=format: "$HEAD_SHA" | tail -n +2 || true)
+              CHANGED_RUNFILES=$(git diff-tree --no-commit-id --name-only -r "$HEAD_SHA" -- '*/run' || true)
             fi
           elif [ "$EVENT_NAME" = "push" ]; then
             BEFORE_SHA="${{ github.event.before }}"
             if git cat-file -e "$BEFORE_SHA^{commit}" 2>/dev/null; then
               CHANGED_FILES=$(git diff --name-only "$BEFORE_SHA" "${{ github.sha }}" || true)
+              CHANGED_RUNFILES=$(git diff --name-only "$BEFORE_SHA" "${{ github.sha }}" -- '*/run' || true)
             else
               CHANGED_FILES=$(git show --name-only --pretty=format: "${{ github.sha }}" | tail -n +2 || true)
+              CHANGED_RUNFILES=$(git diff-tree --no-commit-id --name-only -r "${{ github.sha }}" -- '*/run' || true)
             fi
           else
             CHANGED_FILES=""
+            CHANGED_RUNFILES=""
           fi
 
-          RUNFILES=$(echo "$CHANGED_FILES" | grep -E '^[^/]+/run$' || true)
+          RUNFILES=$(echo "$CHANGED_RUNFILES" | awk 'NF' | sed 's#^\./##' | grep -E '^[^/]+/run$' || true)
           RUN_PKG_COUNT=$(echo "$RUNFILES" | awk -F/ '{print $1}' | sort -u | awk 'NF' | wc -l | tr -d ' ')
           TOTAL_CHANGED_COUNT=$(echo "$CHANGED_FILES" | awk 'NF' | wc -l | tr -d ' ')
           SINGLE_RUN_PKG=$(echo "$RUNFILES" | head -n1 | cut -d/ -f1)
