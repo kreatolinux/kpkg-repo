@@ -25,7 +25,7 @@
     },
   ],
 
-  allowedPostUpgradeCommands: [
+  allowedCommands: [
     'node scripts/update-sums.mjs',
   ],
 
