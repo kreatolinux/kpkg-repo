@@ -22,7 +22,6 @@ jobs:
       should_build: ${{ steps.compute-matrix.outputs.should_build }}
       needs_sums: ${{ steps.check-sums.outputs.needs_sums }}
       runfiles: ${{ steps.check-sums.outputs.runfiles }}
-      needs_sums: ${{ steps.check-sums.outputs.needs_sums }}
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
