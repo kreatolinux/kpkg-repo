@@ -20,6 +20,7 @@ jobs:
       matrix: ${{ steps.compute-matrix.outputs.matrix }}
       push: ${{ steps.compute-matrix.outputs.push }}
       should_build: ${{ steps.compute-matrix.outputs.should_build }}
+      needs_sums: ${{ steps.check-sums.outputs.needs_sums }}
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
@@ -98,8 +99,31 @@ jobs:
           echo "push=$PUSH" >> $GITHUB_OUTPUT
           echo "should_build=$SHOULD_BUILD" >> $GITHUB_OUTPUT
 
+      - name: Check if sums need updating
+        id: check-sums
+        run: |
+          set -euo pipefail
+          # Detect if any VERSION was bumped without corresponding sums update in changed run files
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+          if [ "${{ github.event_name }}" != "pull_request" ]; then
+            echo "needs_sums=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          git fetch --no-tags --depth=1 origin "$BASE_SHA" "$HEAD_SHA" || true
+          CHANGED_RUNFILES=$(git diff --name-only "$BASE_SHA" "$HEAD_SHA" -- '*/run' || true)
+          need=false
+          for f in $CHANGED_RUNFILES; do
+            if git diff -U0 "$BASE_SHA" "$HEAD_SHA" -- "$f" | grep -E '^\+VERSION=' >/dev/null; then
+              if ! git diff -U0 "$BASE_SHA" "$HEAD_SHA" -- "$f" | grep -E '^(\+SHA256SUM=|\+SHA512SUM=|\+B2SUM=)' >/dev/null; then
+                need=true; break
+              fi
+            fi
+          done
+          echo "needs_sums=${need}" >> $GITHUB_OUTPUT
+
   build:
-    if: needs.init.outputs.should_build == 'true'
+    if: needs.init.outputs.should_build == 'true' && needs.init.outputs.needs_sums != 'true'
     needs: init
     runs-on: ubuntu-latest
     container: 
@@ -212,4 +236,9 @@ jobs:
       #    name: packages-${{ env.RANDOM_ID }}
       #    path: /var/cache/kpkg/archives/arch
       #    retention-days: 2
+
+  update-sums:
+    if: needs.init.outputs.needs_sums == 'true'
+    needs: init
+    uses: ./.github/workflows/update-sums.yml
       
