@@ -30,7 +30,7 @@ jobs:
       - name: Compute matrix and flags
         id: compute-matrix
         run: |
-          set -e
+          set -ex
           cd "$GITHUB_WORKSPACE"
           git config --global --add safe.directory "$GITHUB_WORKSPACE" || true
           PUSH="true"
