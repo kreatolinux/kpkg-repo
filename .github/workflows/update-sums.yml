@@ -2,7 +2,11 @@ name: Update Sums on Renovate PRs
 
 on:
   workflow_call:
-    inputs: {}
+    inputs:
+      runfiles:
+        description: "Whitespace-separated list of run file paths to update"
+        required: false
+        type: string
 
 jobs:
   update-sums:
@@ -22,7 +26,28 @@ jobs:
         with:
           node-version: 20
 
-      - name: Update sums
+      - name: Determine target runfiles
+        id: files
+        run: |
+          set -euo pipefail
+          TARGETS="${{ inputs.runfiles }}"
+          echo "targets<<EOF" >> $GITHUB_OUTPUT
+          printf "%s\n" $TARGETS >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Update sums (targeted)
+        if: steps.files.outputs.targets != ''
+        run: |
+          while IFS= read -r f; do
+            [ -z "$f" ] && continue
+            echo "Updating sums for $f"
+            node scripts/update-sums.mjs "$f" || echo "update-sums failed for $f"
+          done << 'EOF'
+          ${{ steps.files.outputs.targets }}
+          EOF
+      
+      - name: Update sums (fallback all)
+        if: steps.files.outputs.targets == ''
         run: |
           node scripts/update-sums.mjs || echo "update-sums failed"
 
