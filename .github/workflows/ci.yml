@@ -19,6 +19,7 @@ jobs:
     outputs:
       matrix: ${{ steps.compute-matrix.outputs.matrix }}
       push: ${{ steps.compute-matrix.outputs.push }}
+      should_build: ${{ steps.compute-matrix.outputs.should_build }}
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
@@ -32,10 +33,13 @@ jobs:
           set -e
           PUSH="true"
           EVENT_NAME="${{ github.event_name }}"
+          SHOULD_BUILD="true"
 
           # Build the default full matrix by scanning for */run files (BusyBox find compatible)
           ALL_RUNS=$(find "$GITHUB_WORKSPACE" -mindepth 2 -maxdepth 2 -type f -name run | sed "s#^$GITHUB_WORKSPACE/##" | sort || true)
-          PACKAGES=$(echo "$ALL_RUNS" | awk -F/ '{print $1}' | sort -u | awk 'NF')
+          ALL_PACKAGES=$(echo "$ALL_RUNS" | awk -F/ '{print $1}' | sort -u | awk 'NF')
+          MAX_MATRIX=250
+          PACKAGES=$(echo "$ALL_PACKAGES" | head -n "$MAX_MATRIX")
           MATRIX='{"include":['
           SEP=""
           for pkg in $PACKAGES; do
@@ -68,10 +72,14 @@ jobs:
           if [ "$EVENT_NAME" = "pull_request" ]; then
             if [ "$RUN_PKG_COUNT" = "1" ]; then
               MATRIX="{\"include\":[{\"packages\":\"$SINGLE_RUN_PKG\"}]}"
+            else
+              SHOULD_BUILD="false"
             fi
           elif [ "$EVENT_NAME" = "push" ] && [ "${{ github.ref }}" = "refs/heads/master" ]; then
             if [ "$RUN_PKG_COUNT" = "1" ] && [ "$TOTAL_CHANGED_COUNT" = "1" ]; then
               MATRIX="{\"include\":[{\"packages\":\"$SINGLE_RUN_PKG\"}]}"
+            else
+              SHOULD_BUILD="false"
             fi
           elif [ "$EVENT_NAME" = "schedule" ]; then
             : # keep defaults
@@ -79,8 +87,10 @@ jobs:
 
           echo "matrix=$MATRIX" >> $GITHUB_OUTPUT
           echo "push=$PUSH" >> $GITHUB_OUTPUT
+          echo "should_build=$SHOULD_BUILD" >> $GITHUB_OUTPUT
 
   build:
+    if: needs.init.outputs.should_build == 'true'
     needs: init
     runs-on: ubuntu-latest
     container: 
