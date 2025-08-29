@@ -24,4 +24,15 @@
       extractVersionTemplate: '^v?(?<version>[^-]+)',
     },
   ],
+
+  allowedPostUpgradeCommands: [
+    'node scripts/update-sums.mjs',
+  ],
+
+  postUpgradeTasks: {
+    commands: [
+      "node scripts/update-sums.mjs",
+    ],
+    fileFilters: ["**/run"],
+  },
 }
