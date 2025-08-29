@@ -1,8 +1,6 @@
 name: Update Sums on Renovate PRs
 
 on:
-  pull_request:
-    types: [opened, synchronize, reopened]
   workflow_call:
     inputs: {}
 
