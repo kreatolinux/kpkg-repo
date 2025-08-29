@@ -1,0 +1,38 @@
+{
+  // Global Renovate settings
+  extends: [
+    "config:recommended",
+  ],
+
+  // Limit noise while we roll out
+  prConcurrentLimit: 5,
+  prHourlyLimit: 10,
+  rebaseWhen: "behind-base-branch",
+
+  // Auto-merge patch and minor by default (can be overridden per-package)
+  automerge: false,
+  rangeStrategy: "pin",
+
+  // Regex-based custom manager to parse runfiles
+  customManagers: [
+    {
+      customType: "regex",
+      // Match any file named 'run' anywhere in the repo
+      fileMatch: [
+        "(^|/)run$",
+      ],
+      // Parse VERSION with a required inline renovate hint right above it
+      matchStrings: [
+        // Pattern 1: Inline hint present directly above VERSION
+        "#\\s*renovate:\\s*datasource=(?<datasource>\\S+)\\s+depName=(?<depName>\\S+)(?:\\s+versioning=(?<versioning>\\S+))?\\s*\\n\\s*VERSION\\s*=\\s*(?:\\\"|')(?<currentValue>[^\\\"'\\n]+)(?:\\\"|')",
+        // Pattern 2: No inline hint; capture NAME and VERSION anywhere in file
+        "NAME\\s*=\\s*(?:\\\"|')(?<packageName>[^\\\"'\\n]+)(?:\\\"|')[\\s\\S]*?\\n\\s*VERSION\\s*=\\s*(?:\\\"|')(?<currentValue>[^\\\"'\\n]+)(?:\\\"|')",
+      ],
+      datasourceTemplate: "{{#if datasource}}{{{datasource}}}{{else}}repology{{/if}}",
+      depNameTemplate: "{{#if depName}}{{{depName}}}{{else}}alpine_edge/{{{packageName}}}{{/if}}",
+      versioningTemplate: "{{#if versioning}}{{{versioning}}}{{else}}loose{{/if}}",
+    },
+  ],
+}
+
+
