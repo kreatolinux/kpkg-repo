@@ -46,10 +46,16 @@ jobs:
 
           if [ "$EVENT_NAME" = "pull_request" ]; then
             PUSH="false"
-            BASE_SHA="${{ github.event.pull_request.base.sha }}"
-            CHANGED_FILES=$(git diff --name-only "$BASE_SHA" "${{ github.sha }}")
+            BASE_REF="${{ github.base_ref }}"
+            git fetch --no-tags --prune --depth=1 origin "$BASE_REF":"refs/remotes/origin/$BASE_REF" || true
+            CHANGED_FILES=$(git diff --name-only "origin/$BASE_REF...HEAD" || true)
           elif [ "$EVENT_NAME" = "push" ]; then
-            CHANGED_FILES=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}")
+            BEFORE_SHA="${{ github.event.before }}"
+            if git cat-file -e "$BEFORE_SHA^{commit}" 2>/dev/null; then
+              CHANGED_FILES=$(git diff --name-only "$BEFORE_SHA" "${{ github.sha }}" || true)
+            else
+              CHANGED_FILES=$(git show --name-only --pretty=format: "${{ github.sha }}" | tail -n +2 || true)
+            fi
           else
             CHANGED_FILES=""
           fi
