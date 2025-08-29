@@ -29,6 +29,9 @@
         "NAME\\s*=\\s*(?:\\\"|')(?<packageName>[^\\\"'\\n]+)(?:\\\"|')[\\s\\S]*?\\n\\s*VERSION\\s*=\\s*(?:\\\"|')(?<currentValue>[^\\\"'\\n]+)(?:\\\"|')",
       ],
       datasourceTemplate: "{{#if datasource}}{{{datasource}}}{{else}}repology{{/if}}",
+      // Repology expects repository/package, so ensure packageName is formed accordingly
+      packageNameTemplate: "{{#if depName}}{{{depName}}}{{else}}alpine_edge/{{{packageName}}}{{/if}}",
+      // Optional: keep depName aligned for nicer PR titles
       depNameTemplate: "{{#if depName}}{{{depName}}}{{else}}alpine_edge/{{{packageName}}}{{/if}}",
       versioningTemplate: "{{#if versioning}}{{{versioning}}}{{else}}loose{{/if}}",
     },
