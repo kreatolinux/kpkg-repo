@@ -59,7 +59,7 @@ jobs:
             if [ -n "$MERGE_BASE" ]; then
               CHANGED_FILES=$(git diff --name-only "$BASE_SHA...$HEAD_SHA" || true)
             else
-              CHANGED_FILES=$(git diff --name-only "$HEAD_SHA^" "$HEAD_SHA" || git show --name-only --pretty=format: "$HEAD_SHA" | tail -n +2 || true)
+              CHANGED_FILES=$(git show --name-only --pretty=format: "$HEAD_SHA" | tail -n +2 || true)
             fi
           elif [ "$EVENT_NAME" = "push" ]; then
             BEFORE_SHA="${{ github.event.before }}"
