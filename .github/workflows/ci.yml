@@ -55,7 +55,12 @@ jobs:
             BASE_SHA="${{ github.event.pull_request.base.sha }}"
             HEAD_SHA="${{ github.event.pull_request.head.sha }}"
             git fetch --no-tags --depth=1 origin "$BASE_SHA" "$HEAD_SHA" || true
-            CHANGED_FILES=$(git diff --name-only "$BASE_SHA...$HEAD_SHA" || true)
+            MERGE_BASE=$(git merge-base "$BASE_SHA" "$HEAD_SHA" || true)
+            if [ -n "$MERGE_BASE" ]; then
+              CHANGED_FILES=$(git diff --name-only "$BASE_SHA...$HEAD_SHA" || true)
+            else
+              CHANGED_FILES=$(git diff --name-only "$HEAD_SHA^" "$HEAD_SHA" || git show --name-only --pretty=format: "$HEAD_SHA" | tail -n +2 || true)
+            fi
           elif [ "$EVENT_NAME" = "push" ]; then
             BEFORE_SHA="${{ github.event.before }}"
             if git cat-file -e "$BEFORE_SHA^{commit}" 2>/dev/null; then
