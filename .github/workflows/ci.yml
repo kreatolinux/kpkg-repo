@@ -131,8 +131,8 @@ jobs:
           echo "EOF" >> $GITHUB_OUTPUT
 
   build:
-    if: needs.init.outputs.should_build == 'true' && needs.init.outputs.needs_sums != 'true'
-    needs: init
+    if: needs.init.outputs.should_build == 'true'
+    needs: [init, update-sums]
     runs-on: ubuntu-latest
     container: 
       image: ghcr.io/kreatolinux/builder-repo@sha256:5c98776845d18b874e70f412d0adfbb2848eee811594752e1f3f3f6f617101c2 #-gnu # builder-gnu doesn't work yet, see TODO in kpkg/modules/isolation

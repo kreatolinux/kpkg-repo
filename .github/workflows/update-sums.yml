@@ -48,7 +48,7 @@ jobs:
           EOF
       
       - name: Update sums (fallback all)
-        if: steps.files.outputs.targets == ''
+        if: steps.files.outputs.targets == '' && github.event_name != 'workflow_call'
         run: |
           node scripts/update-sums.mjs || echo "update-sums failed"
 
