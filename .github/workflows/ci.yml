@@ -6,6 +6,10 @@ on:
     - cron: '0 0 * * WED'
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
 jobs:
   # This workflow contains a single job called "build"
@@ -13,47 +17,56 @@ jobs:
     runs-on: ubuntu-latest
     container: ghcr.io/kreatolinux/builder
     outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
+      matrix: ${{ steps.compute-matrix.outputs.matrix }}
+      push: ${{ steps.compute-matrix.outputs.push }}
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
-     
-      - name: Initialize chkupd 
-        id: set-matrix
-        run: |
-          rm -rf src
-          git clone https://github.com/kreatolinux/src
-          cd src
-          sed -i s/stable/master/g Makefile
-          nimble install cligen fuzzy nimcrypto -y
-          ./build.sh -d -p "chkupd"
-          mv out/chkupd /tmp/
-          cd ..
-          rm -rf src
-          cd /tmp/
-          ./chkupd generateJson --limit 250 --repo="$GITHUB_WORKSPACE" --output="/tmp/out1.json"
-          echo "matrix=$(cat /tmp/out1.json)" >> $GITHUB_OUTPUT
-      
-      - uses: actions/upload-artifact@master
         with:
-          name: chkupd-bin
-          path: /tmp/chkupd
+          fetch-depth: 0
+     
 
-        #- name:  
-          #- name: Check all packages against Arch Repositories
-          #run: |
-          #export DOCKER_DEFAULT_PLATFORM=linux/amd64
-          #cd /tmp/
-          #./chkupd checkAll --jsonPath=/tmp/chkupd.json --backend="arch" --repo="$GITHUB_WORKSPACE"
-          #echo "# Arch check results" >> /tmp/chkupd.md
-          #./out/chkupd jsonToMd /tmp/chkupd.json >> /tmp/chkupd.md
-          #rm -rf chkupd
-          
-          
-            #- name: Create Pull Request
-            #uses: peter-evans/create-pull-request@v5.0.2
-            #with:
-            #commit-message: "[CI] Automated update by chkupd"
+      - name: Compute matrix and flags
+        id: compute-matrix
+        run: |
+          set -e
+          DEFAULT_MATRIX=$(cat /tmp/out1.json)
+          MATRIX="$DEFAULT_MATRIX"
+          PUSH="true"
+
+          EVENT_NAME="${{ github.event_name }}"
+
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            PUSH="false"
+            BASE_SHA="${{ github.event.pull_request.base.sha }}"
+            HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+            git fetch origin "$BASE_SHA" || true
+            CHANGED_FILES=$(git diff --name-only "$BASE_SHA" "$HEAD_SHA")
+          elif [ "$EVENT_NAME" = "push" ]; then
+            CHANGED_FILES=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}")
+          else
+            CHANGED_FILES=$(git diff --name-only HEAD^ HEAD || true)
+          fi
+
+          RUNFILES=$(echo "$CHANGED_FILES" | grep -E '^[^/]+/run$' || true)
+          RUN_PKG_COUNT=$(echo "$RUNFILES" | awk -F/ '{print $1}' | sort -u | awk 'NF' | wc -l | tr -d ' ')
+          TOTAL_CHANGED_COUNT=$(echo "$CHANGED_FILES" | awk 'NF' | wc -l | tr -d ' ')
+          SINGLE_RUN_PKG=$(echo "$RUNFILES" | head -n1 | cut -d/ -f1)
+
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            if [ "$RUN_PKG_COUNT" = "1" ]; then
+              MATRIX="{\"include\":[{\"packages\":\"$SINGLE_RUN_PKG\"}]}"
+            fi
+          elif [ "$EVENT_NAME" = "push" ] && [ "${{ github.ref }}" = "refs/heads/master" ]; then
+            if [ "$RUN_PKG_COUNT" = "1" ] && [ "$TOTAL_CHANGED_COUNT" = "1" ]; then
+              MATRIX="{\"include\":[{\"packages\":\"$SINGLE_RUN_PKG\"}]}"
+            fi
+          elif [ "$EVENT_NAME" = "schedule" ]; then
+            : # keep defaults
+          fi
+
+          echo "matrix=$MATRIX" >> $GITHUB_OUTPUT
+          echo "push=$PUSH" >> $GITHUB_OUTPUT
 
   build:
     needs: init
@@ -85,11 +98,6 @@ jobs:
           github-token: ${{ secrets.GH_PAT }} # token with actions:read permissions on target repo
           repository: kreatolinux/src
           run-id: 16851094530 # TODO: Automatically update to latest nightly
-  
-      - uses: actions/download-artifact@v4
-        with:
-          name: chkupd-bin
-          path: /tmp/chkupd
 
       - uses: actions/checkout@v4
 
@@ -105,26 +113,10 @@ jobs:
           export LC_CTYPE=en_US.UTF-8
           export LC_ALL=en_US.UTF-8
 
-          chmod +x /tmp/chkupd/chkupd
           chmod +x /tmp/kpkg-bin/kpkg
           mkdir -p /etc/kpkg/repos/main
           mount --bind "$GITHUB_WORKSPACE" /etc/kpkg/repos/main
 
-          for package in ${{ matrix.packages }}; do
-              grep "NO_CHKUPD=" "$GITHUB_WORKSPACE/$package/run" > /tmp/sourced_chkupd || NO_CHKUPD=false
-              . /tmp/sourced_chkupd
-            case $NO_CHKUPD in
-                "y" | "yes" | "true" | "1" | "on")
-                    echo "no_chkupd enabled on $package"
-                    echo "skipping autoupdate"
-                ;;
-                *)
-                  /tmp/chkupd/chkupd check --package="$package" --repo="$GITHUB_WORKSPACE" --autoUpdate=true --backend="repology"
-                ;;
-            esac
-            unset NO_CHKUPD
-            rm -f /tmp/sourced_chkupd
-          done
           
           #kpkg upgrade --yes || true
           
@@ -151,6 +143,7 @@ jobs:
           git status
 
       - name: Install MinIO Client
+        if: needs.init.outputs.push == 'true'
         run: |
           curl -O https://dl.min.io/client/mc/release/linux-amd64/mc
           chmod +x mc
@@ -158,10 +151,12 @@ jobs:
           mc config host rm minio || true
           
       - name: Configure MinIO Client
+        if: needs.init.outputs.push == 'true'
         run: "mc alias set minio ${{ secrets.AWS_ENDPOINT }} ${{ secrets.AWS_KEY_ID }} ${{ secrets.AWS_SECRET_ACCESS_KEY }}"
 
 
       - name: Upload packages through MinIO
+        if: needs.init.outputs.push == 'true'
         run: |
           if [ -d "/var/cache/kpkg/archives" ]; then
             echo "Listing archives directory contents:"
@@ -187,6 +182,3 @@ jobs:
       #    path: /var/cache/kpkg/archives/arch
       #    retention-days: 2
       
-      - uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: Apply auto-update through chkupd
