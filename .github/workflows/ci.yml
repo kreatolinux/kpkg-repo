@@ -30,11 +30,19 @@ jobs:
         id: compute-matrix
         run: |
           set -e
-          DEFAULT_MATRIX=$(cat /tmp/out1.json)
-          MATRIX="$DEFAULT_MATRIX"
           PUSH="true"
-
           EVENT_NAME="${{ github.event_name }}"
+
+          # Build the default full matrix by scanning for */run files
+          ALL_RUNS=$(find "$GITHUB_WORKSPACE" -mindepth 2 -maxdepth 2 -type f -name run -printf '%P\n' | sort || true)
+          PACKAGES=$(echo "$ALL_RUNS" | awk -F/ '{print $1}' | sort -u | awk 'NF')
+          MATRIX='{"include":['
+          SEP=""
+          for pkg in $PACKAGES; do
+            MATRIX="$MATRIX$SEP{\"packages\":\"$pkg\"}"
+            SEP=",";
+          done
+          MATRIX="$MATRIX]}"
 
           if [ "$EVENT_NAME" = "pull_request" ]; then
             PUSH="false"
@@ -45,7 +53,7 @@ jobs:
           elif [ "$EVENT_NAME" = "push" ]; then
             CHANGED_FILES=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}")
           else
-            CHANGED_FILES=$(git diff --name-only HEAD^ HEAD || true)
+            CHANGED_FILES=""
           fi
 
           RUNFILES=$(echo "$CHANGED_FILES" | grep -E '^[^/]+/run$' || true)
