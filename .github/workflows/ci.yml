@@ -135,7 +135,7 @@ jobs:
     needs: [init, update-sums]
     runs-on: ubuntu-latest
     container: 
-      image: ghcr.io/kreatolinux/builder-repo@sha256:5c98776845d18b874e70f412d0adfbb2848eee811594752e1f3f3f6f617101c2 #-gnu # builder-gnu doesn't work yet, see TODO in kpkg/modules/isolation
+      image: ghcr.io/kreatolinux/builder-repo@sha256:520227d2c279ce8cc3e1e49d4803d1d7e5b804e9755e5401e86a9461a4dc58a4 #-gnu # builder-gnu doesn't work yet, see TODO in kpkg/modules/isolation
       options: --privileged -v /:/opt/host
     strategy:
       fail-fast: false
