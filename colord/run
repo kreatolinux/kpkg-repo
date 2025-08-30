@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="colord"
 RELEASE="2"
-VERSION="1.4.7"
+VERSION="1.4.8"
 SOURCES="https://www.freedesktop.org/software/colord/releases/colord-$VERSION.tar.xz"
 BUILD_DEPENDS="meson vala gobject-introspection"
 DEPENDS="glib eudev libgusb lcms2 elogind libgudev polkit dbus sqlite"
-SHA256SUM="de02d9910634ae159547585cec414e450f711c27235453b4f9b38a9f2361a653"
+SHA256SUM="21500bd68975312a7f0f3ce6019d9f75f42aacaa75ca7115ec720b5445406896"
 DESCRIPTION="A system service that makes it easy to manage, install and generate color profiles"
 
 build() {
