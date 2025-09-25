@@ -26,6 +26,9 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
         with:
+          # Ensure we track the branch head (not the event SHA) so we pick up
+          # the commit pushed by the update-sums job in this same workflow run.
+          ref: ${{ github.head_ref || github.ref_name }}
           fetch-depth: 0
      
 
@@ -163,6 +166,11 @@ jobs:
           run-id: 16851094530 # TODO: Automatically update to latest nightly
 
       - uses: actions/checkout@v4
+        with:
+          # Check out the branch head so the build includes the commit created
+          # by the update-sums job in this workflow run.
+          ref: ${{ github.head_ref || github.ref_name }}
+          fetch-depth: 0
 
       - name: Build packages
         run: |
@@ -246,7 +254,6 @@ jobs:
       #    retention-days: 2
 
   update-sums:
-    if: needs.init.outputs.needs_sums == 'true'
     needs: init
     uses: ./.github/workflows/update-sums.yml
     with:
