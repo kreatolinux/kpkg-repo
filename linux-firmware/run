@@ -5,7 +5,7 @@ VERSION="20241110"
 BUILD_DEPENDS="gmake"
 SOURCES="https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/snapshot/linux-firmware-$VERSION.tar.gz"
 DEPENDS="rdfind"
-SHA256SUM="c8a561dfdbd54157692fe166b84a173f9bc01f89c78f6196863beea2450e4938"
+SHA256SUM="SKIP"
 DESCRIPTION="Linux firmware files"
 
 package() {

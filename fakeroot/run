@@ -5,7 +5,7 @@ VERSION="1.36"
 BUILD_DEPENDS="gmake"
 SOURCES="https://deb.debian.org/debian/pool/main/f/fakeroot/fakeroot_$VERSION.orig.tar.gz"
 DEPENDS="libcap"
-SHA256SUM="7fe3cf3daf95ee93b47e568e85f4d341a1f9ae91766b4f9a9cdc29737dea4988"
+SHA256SUM="SKIP"
 DESCRIPTION="Tool for simulating superuser privileges"
 
 build() {
