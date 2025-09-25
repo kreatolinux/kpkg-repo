@@ -214,7 +214,7 @@ jobs:
           git status
 
       - name: Install MinIO Client
-        if: needs.init.outputs.push == 'true'
+        if: needs.init.outputs.push == 'true' || (github.event_name == 'pull_request' && startsWith(github.head_ref || '', 'renovate/'))
         run: |
           curl -O https://dl.min.io/client/mc/release/linux-amd64/mc
           chmod +x mc
@@ -222,12 +222,12 @@ jobs:
           mc config host rm minio || true
           
       - name: Configure MinIO Client
-        if: needs.init.outputs.push == 'true'
+        if: needs.init.outputs.push == 'true' || (github.event_name == 'pull_request' && startsWith(github.head_ref || '', 'renovate/'))
         run: "mc alias set minio ${{ secrets.AWS_ENDPOINT }} ${{ secrets.AWS_KEY_ID }} ${{ secrets.AWS_SECRET_ACCESS_KEY }}"
 
 
       - name: Upload packages through MinIO
-        if: needs.init.outputs.push == 'true'
+        if: needs.init.outputs.push == 'true' || (github.event_name == 'pull_request' && startsWith(github.head_ref || '', 'renovate/'))
         run: |
           if [ -d "/var/cache/kpkg/archives" ]; then
             echo "Listing archives directory contents:"
