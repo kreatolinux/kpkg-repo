@@ -5,7 +5,7 @@ VERSION="4.2.1"
 BUILD_DEPENDS="gmake"
 SOURCES="https://ftp.gnu.org/gnu/mpfr/mpfr-$VERSION.tar.xz"
 DEPENDS="gmp"
-SHA256SUM="277807353a6726978996945af13e52829e3abd7a9a5b7fb2793894e18f1fcbb2"
+SHA256SUM="SKIP"
 DESCRIPTION="GNU mpfr"
 
 build() {

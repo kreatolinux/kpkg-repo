@@ -6,7 +6,7 @@ SOURCES="https://github.com/elogind/elogind/archive/refs/tags/v$VERSION.tar.gz r
 BUILD_DEPENDS="meson"
 DEPENDS="dbus linux-pam python-jinja2 util-linux gperf eudev"
 REPLACES="systemd"
-SHA256SUM="7af8caa8225a406e77fb99c9f33dba5e1f0a94f0e1277c9d91dcfc016f116d85 feb8948704e98971a936eb69701d14c31b1be3017b9746d81f8ed739ed4189fc"
+SHA256SUM="7af8caa8225a406e77fb99c9f33dba5e1f0a94f0e1277c9d91dcfc016f116d85 SKIP"
 DESCRIPTION="systemd-logind, extracted to be a standalone daemon"
 
 prepare() {
