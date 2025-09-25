@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="alsa-lib"
 RELEASE="1"
-VERSION="1.2.13"
+VERSION="1.2.14"
 BUILD_DEPENDS="gmake"
 SOURCES="https://www.alsa-project.org/files/pub/lib/alsa-lib-$VERSION.tar.bz2"
 SHA256SUM="8c4ff37553cbe89618e187e4c779f71a9bb2a8b27b91f87ed40987cc9233d8f6"
