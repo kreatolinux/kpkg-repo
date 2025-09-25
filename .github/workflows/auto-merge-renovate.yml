@@ -1,0 +1,71 @@
+name: Auto-merge Renovate PRs
+
+on:
+  workflow_run:
+    workflows:
+      - CI
+    types:
+      - completed
+
+concurrency:
+  group: merge-renovate-${{ github.event.workflow_run.head_branch }}
+  cancel-in-progress: true
+
+jobs:
+  merge:
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Merge Renovate PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const wr = context.payload.workflow_run;
+
+            async function getPrByNumberOrBranch() {
+              const prFromPayload = (wr.pull_requests || [])[0];
+              if (prFromPayload && prFromPayload.number) {
+                const { data } = await github.rest.pulls.get({ owner, repo, pull_number: prFromPayload.number });
+                return data;
+              }
+              const branch = wr.head_branch || '';
+              const { data: prs } = await github.rest.pulls.list({ owner, repo, head: `${owner}:${branch}`, state: 'open' });
+              return prs[0];
+            }
+
+            const pr = await getPrByNumberOrBranch();
+            if (!pr) {
+              core.info('No PR associated with this workflow run.');
+              return;
+            }
+
+            // Ensure PR is from Renovate bot and branch naming matches
+            const isRenovateAuthor = (pr.user && pr.user.login === 'renovate[bot]');
+            const isRenovateBranch = pr.head && pr.head.ref && pr.head.ref.startsWith('renovate/');
+            if (!isRenovateAuthor || !isRenovateBranch) {
+              core.info(`Skipping non-Renovate PR #${pr.number} by ${pr.user && pr.user.login} on ${pr.head && pr.head.ref}`);
+              return;
+            }
+
+            // Refresh PR to get up-to-date mergeability
+            const { data: detailedPr } = await github.rest.pulls.get({ owner, repo, pull_number: pr.number });
+            if (detailedPr.mergeable === false) {
+              core.info(`PR #${pr.number} is not mergeable right now (mergeable=false).`);
+              return;
+            }
+
+            try {
+              await github.rest.pulls.merge({
+                owner,
+                repo,
+                pull_number: pr.number,
+                merge_method: 'squash',
+              });
+              core.info(`Merged Renovate PR #${pr.number} (${pr.head.ref}).`);
+            } catch (error) {
+              core.warning(`Merge failed for PR #${pr.number}: ${error.message}`);
+            }
