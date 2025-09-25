@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="1.4.4"
 SOURCES="https://github.com/aristocratos/btop/archive/refs/tags/v$VERSION.tar.gz"
 BUILD_DEPENDS="gmake"
-SHA256SUM="ac0d2371bf69d5136de7e9470c6fb286cbee2e16b4c7a6d2cd48a14796e86650"
+SHA256SUM="98d464041015c888c7b48de14ece5ebc6e410bc00ca7bb7c5a8010fe781f1dd8"
 DESCRIPTION="htop alternative"
 
 build() {
