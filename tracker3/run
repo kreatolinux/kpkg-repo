@@ -5,7 +5,7 @@ VERSION="3.5.3"
 SOURCES="https://gitlab.gnome.org/GNOME/tracker/-/archive/$VERSION/tracker-$VERSION.tar.gz"
 DEPENDS="glib libxml2 libsoup sqlite dbus json-glib libseccomp"
 BUILD_DEPENDS="meson vala gobject-introspection pygobject"
-SHA256SUM="32491e852a5debb4003993922516166dc8ab1f676fbd5a6612aa228593ec0070"
+SHA256SUM="cdc142383b9c64a2a57b04fff9bcf4f154c1b1a03b5529b02546d936d1c46205"
 DESCRIPTION="An efficient search engine and triplestore for desktop, embedded and mobile"
 
 build() {

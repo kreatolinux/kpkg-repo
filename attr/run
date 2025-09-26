@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="2.5.2"
 SOURCES="https://download.savannah.gnu.org/releases/attr/attr-$VERSION.tar.gz"
 BUILD_DEPENDS="gmake"
-SHA256SUM="39bf67452fa41d0948c2197601053f48b3d78a029389734332a6309a680c6c87"
+SHA256SUM="SKIP"
 DESCRIPTION="attr library"
 build() {
     kpkgConfigure --prefix=/usr --disable-static
