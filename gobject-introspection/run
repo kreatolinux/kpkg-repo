@@ -5,7 +5,7 @@ VERSION="1.86.0"
 SOURCES="https://gitlab.gnome.org/GNOME/gobject-introspection/-/archive/$VERSION/gobject-introspection-$VERSION.tar.gz"
 BUILD_DEPENDS="meson ninja python-setuptools python-packaging"
 DEPENDS="python cairo glib"
-SHA256SUM="82c2372520d9ec58f0361efddb2ef9ce4026618b7389e99ba73f8a4e683ed361"
+SHA256SUM="eadae02135e96ad40221b4a9eb5e168f8c70ef3f697485c38345a3638adf51a2"
 DESCRIPTION="Introspection system for GObject-based libraries"
 
 build() {
