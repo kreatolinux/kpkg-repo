@@ -254,6 +254,7 @@ jobs:
       #    retention-days: 2
 
   update-sums:
+    if: github.event_name != 'pull_request' || needs.init.outputs.runfiles != ''
     needs: init
     uses: ./.github/workflows/update-sums.yml
     with:
