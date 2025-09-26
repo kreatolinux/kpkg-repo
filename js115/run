@@ -6,7 +6,7 @@ VERSION="115.6.0"
 SOURCES="https://archive.mozilla.org/pub/firefox/releases/$VERSIONesr/source/firefox-$VERSIONesr.source.tar.xz patches/D190288.1705253813.diff"
 DEPENDS="readline zlib icu"
 BUILD_DEPENDS="rust python llvm which git gmake"
-SHA256SUM="SKIP SKIP"
+SHA256SUM="66d7e6e5129ac8e6fe83e24227dc7bb8dc42650bc53b21838e614de80d22bc66 88d8b9bf64a36bf9a2e9477f86585f18c34e1c97f6e08f1d3215d02a6e5619cd"
 DESCRIPTION="Spidermonkey JavaScript and WebAssembly Engine"
 
 

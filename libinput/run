@@ -5,7 +5,7 @@ VERSION=1.26.2
 SOURCES="https://gitlab.freedesktop.org/libinput/libinput/-/archive/$VERSION/libinput-$VERSION.tar.gz"
 DEPENDS="libevdev mtdev eudev"
 BUILD_DEPENDS="meson"
-SHA256SUM="SKIP"
+SHA256SUM="5c1c4150f217fea1db2d1fd88e2607b2f1928cfde65c34da65a9f24dcfd69464"
 DESCRIPTION="Library that handles input devices"
 
 build() {

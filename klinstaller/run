@@ -5,7 +5,7 @@ VERSION="0.0.1"
 SOURCES="git::https://github.com/kreatolinux/src::master"
 BUILD_DEPENDS="gmake"
 DEPENDS="kpkg"
-SHA256SUM="SKIP"
+SHA256SUM=""
 DESCRIPTION="Kreato Linux's Installer"
 
 package() {

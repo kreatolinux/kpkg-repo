@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="4.16.0"
 SOURCES="https://ftp.debian.org/debian/pool/main/i/iso-codes/iso-codes_$VERSION.orig.tar.xz"
 BUILD_DEPENDS="python gmake"
-SHA256SUM="SKIP"
+SHA256SUM="d37ff1b2b76e63926e8043b42e0ff806bb4e41e2a57d93c9d4ec99c06b409530"
 DESCRIPTION="Provides lists of various ISO standards (countries, languages, language scripts, and currency names) in one place"
 
 build() {
