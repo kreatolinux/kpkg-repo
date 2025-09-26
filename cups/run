@@ -5,7 +5,7 @@ VERSION="2.4.13"
 BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/OpenPrinting/cups/releases/download/v$VERSION/cups-$VERSION-source.tar.gz"
 DEPENDS="colord dbus libusb linux-pam"
-SHA256SUM="dd54228dd903526428ce7e37961afaed230ad310788141da75cebaa08362cf6c"
+SHA256SUM="8255ecf037be72660de24a73bcada042fc5bf509fc87bc8ad16cd0675735c1a8"
 DESCRIPTION="The Common Unix Printing System"
 build() {
 
