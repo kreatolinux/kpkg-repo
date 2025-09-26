@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="e2fsprogs"
 RELEASE="2"
-VERSION="1.47.1"
+VERSION="1.47.2"
 BUILD_DEPENDS="gmake"
 SOURCES="https://mirrors.edge.kernel.org/pub/linux/kernel/people/tytso/e2fsprogs/v$VERSION/e2fsprogs-$VERSION.tar.gz"
 SHA256SUM="0d2e0bf80935c3392b73a60dbff82d8a6ef7ea88b806c2eea964b6837d3fd6c2"
