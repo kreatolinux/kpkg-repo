@@ -11,6 +11,7 @@ DESCRIPTION="Introspection system for GObject-based libraries"
 build() {
     meson setup \
     --prefix=/usr \
+    -D tests=false \
     build
     ninja -C build
 }
