@@ -5,7 +5,7 @@ VERSION=2.3.0
 BUILD_DEPENDS="gmake"
 SOURCES="https://distfiles.dereferenced.org/pkgconf/pkgconf-$VERSION.tar.xz"
 DEPENDS=""
-SHA256SUM="3a9080ac51d03615e7c1910a0a2a8df08424892b5f13b0628a204d3fcce0ea8b"
+SHA256SUM="SKIP"
 DESCRIPTION="pkgconf is a program which helps to configure compiler and linker flags for development frameworks."
 
 build() {

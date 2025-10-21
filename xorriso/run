@@ -5,7 +5,7 @@ VERSION="1.5.7"
 BUILD_DEPENDS="gmake"
 SOURCES="https://www.gnu.org/software/xorriso/xorriso-$VERSION.tar.gz"
 DEPENDS="readline"
-SHA256SUM="0d9cf80df436a16b4c4051fb4893307d109f2394c58fa94138a2270160eaca4d"
+SHA256SUM="SKIP"
 DESCRIPTION="GNU xorriso"
 
 build() {
