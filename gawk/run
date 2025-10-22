@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="gawk"
 RELEASE="2"
-VERSION="5.3.1"
+VERSION="5.3.2"
 BUILD_DEPENDS="gmake"
 SOURCES="https://ftp.gnu.org/pub/gnu/gawk/gawk-$VERSION.tar.xz"
 DEPENDS="gmp mpfr readline"
