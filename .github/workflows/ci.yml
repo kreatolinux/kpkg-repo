@@ -206,6 +206,14 @@ jobs:
               touch /var/cache/kpkg/archives/IS_USELESS
               exit 0
           fi
+
+          for package in ${{ matrix.packages }}; do
+                RUNFILE="/etc/kpkg/repos/main/$package/run"
+                if [ -f "$RUNFILE" ] && grep -q "BOOTSTRAP_DEPENDS" "$RUNFILE"; then
+                    echo "Bootstrapping $package"
+                    /tmp/kpkg-bin/kpkg build "$package" --bootstrap --yes --ignorePostInstall --forceInstallAll=true
+                fi
+          done
           
           /tmp/kpkg-bin/kpkg build ${{ matrix.packages }} --yes --ignorePostInstall --forceInstallAll=true
           #echo RANDOM_ID=$(cat /dev/urandom | tr -dc '[:alpha:]' | fold -w ${1:-20} | head -n 1) >> $GITHUB_ENV
