@@ -156,7 +156,7 @@ jobs:
           echo "EOF" >> $GITHUB_OUTPUT
 
   build:
-    if: needs.init.outputs.should_build != 'false'
+    if: needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch'
     needs: [init, update-sums]
     runs-on: ubuntu-latest
     container: 
