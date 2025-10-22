@@ -6,6 +6,11 @@ on:
     - cron: '0 0 * * WED'
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+    inputs:
+      package:
+        description: 'Space-separated list of packages to build'
+        required: false
+        default: ''
   push:
     branches: [ master ]
   pull_request:
@@ -34,6 +39,8 @@ jobs:
 
       - name: Compute matrix and flags
         id: compute-matrix
+        env:
+          PACKAGE_INPUT: ${{ github.event.inputs.package }}
         run: |
           set -ex
           cd "$GITHUB_WORKSPACE"
@@ -41,6 +48,21 @@ jobs:
           PUSH="true"
           EVENT_NAME="${{ github.event_name }}"
           SHOULD_BUILD="true"
+
+          if [ -n "${PACKAGE_INPUT:-}" ]; then
+            PUSH="false"
+            MATRIX='{"include":['
+            SEP=""
+            for pkg in $PACKAGE_INPUT; do
+              MATRIX="$MATRIX$SEP{\"packages\":\"$pkg\"}"
+              SEP=",";
+            done
+            MATRIX="$MATRIX]}"
+            echo "matrix=$MATRIX" >> $GITHUB_OUTPUT
+            echo "push=$PUSH" >> $GITHUB_OUTPUT
+            echo "should_build=$SHOULD_BUILD" >> $GITHUB_OUTPUT
+            exit 0
+          fi
 
           # Build the default full matrix by scanning for */run files (BusyBox find compatible)
           ALL_RUNS=$(find "$GITHUB_WORKSPACE" -mindepth 2 -maxdepth 2 -type f -name run | sed "s#^$GITHUB_WORKSPACE/##" | sort || true)
