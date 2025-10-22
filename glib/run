@@ -1,16 +1,24 @@
 #!/bin/sh
 NAME="glib"
-RELEASE="1"
+RELEASE="2"
 VERSION="2.82.4"
 SOURCES="https://download.gnome.org/sources/glib/2.82/glib-$VERSION.tar.xz"
-BUILD_DEPENDS="meson ninja python-setuptools python-packaging"
+BUILD_DEPENDS="meson ninja gobject-introspection python-setuptools python-packaging"
+BOOTSTRAP_DEPENDS="meson ninja python-setuptools python-packaging"
 SHA256SUM="37dd0877fe964cd15e9a2710b044a1830fb1bd93652a6d0cb6b8b2dff187c709"
 DESCRIPTION="Low-level core library that forms the basis for projects such as GTK+ and GNOME"
 
 build() {
+    if [ "$KPKG_BOOTSTRAP" = "1" ]; then
+        INTROSPECTION="disabled"
+    else
+        INTROSPECTION="enabled"
+    fi
+
     meson setup \
     --prefix=/usr \
     --buildtype=release \
+    -Dintrospection="$INTROSPECTION" \
     -Dman=false \
     build
     ninja -C build
