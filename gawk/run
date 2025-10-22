@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="gawk"
 RELEASE="2"
-VERSION="5.3.1"
+VERSION="5.3.2"
 BUILD_DEPENDS="gmake"
 SOURCES="https://ftp.gnu.org/pub/gnu/gawk/gawk-$VERSION.tar.xz"
 DEPENDS="gmp mpfr readline"
-SHA256SUM="694db764812a6236423d4ff40ceb7b6c4c441301b72ad502bb5c27e00cd56f78"
+SHA256SUM="f8c3486509de705192138b00ef2c00bbbdd0e84c30d5c07d23fc73a9dc4cc9cc"
 DESCRIPTION="GNU awk"
 
 build() {
