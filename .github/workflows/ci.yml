@@ -233,11 +233,11 @@ jobs:
                 RUNFILE="/etc/kpkg/repos/main/$package/run"
                 if [ -f "$RUNFILE" ] && grep -q "BOOTSTRAP_DEPENDS" "$RUNFILE"; then
                     echo "Bootstrapping $package"
-                    /tmp/kpkg-bin/kpkg build "$package" --bootstrap --yes --ignorePostInstall --forceInstallAll=true
+                    /tmp/kpkg-bin/kpkg build "$package" --bootstrap --yes --ignorePostInstall
                 fi
           done
           
-          /tmp/kpkg-bin/kpkg build ${{ matrix.packages }} --yes --ignorePostInstall --forceInstallAll=true
+          /tmp/kpkg-bin/kpkg build ${{ matrix.packages }} --yes --ignorePostInstall
           #echo RANDOM_ID=$(cat /dev/urandom | tr -dc '[:alpha:]' | fold -w ${1:-20} | head -n 1) >> $GITHUB_ENV
           cd "$GITHUB_WORKSPACE"
           git pull
