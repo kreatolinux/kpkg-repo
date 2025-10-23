@@ -244,7 +244,7 @@ jobs:
           git status
 
       - name: Install MinIO Client
-        if: needs.init.outputs.push == 'true' || (github.event_name == 'pull_request' && startsWith(github.head_ref || '', 'renovate/'))
+        if: needs.init.outputs.push == 'true' || (github.event_name == 'pull_request' && startsWith(github.head_ref || '', 'renovate/')) || github.event_name == 'workflow_dispatch'
         run: |
           curl -O https://dl.min.io/client/mc/release/linux-amd64/mc
           chmod +x mc
@@ -252,12 +252,12 @@ jobs:
           mc config host rm minio || true
           
       - name: Configure MinIO Client
-        if: needs.init.outputs.push == 'true' || (github.event_name == 'pull_request' && startsWith(github.head_ref || '', 'renovate/'))
+        if: needs.init.outputs.push == 'true' || (github.event_name == 'pull_request' && startsWith(github.head_ref || '', 'renovate/')) || github.event_name == 'workflow_dispatch'
         run: "mc alias set minio ${{ secrets.AWS_ENDPOINT }} ${{ secrets.AWS_KEY_ID }} ${{ secrets.AWS_SECRET_ACCESS_KEY }}"
 
 
       - name: Upload packages through MinIO
-        if: needs.init.outputs.push == 'true' || (github.event_name == 'pull_request' && startsWith(github.head_ref || '', 'renovate/'))
+        if: needs.init.outputs.push == 'true' || (github.event_name == 'pull_request' && startsWith(github.head_ref || '', 'renovate/')) || github.event_name == 'workflow_dispatch'
         run: |
           if [ -d "/var/cache/kpkg/archives" ]; then
             echo "Listing archives directory contents:"
