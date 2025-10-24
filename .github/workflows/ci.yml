@@ -253,7 +253,9 @@ jobs:
           
       - name: Configure MinIO Client
         if: needs.init.outputs.push == 'true' || (github.event_name == 'pull_request' && startsWith(github.head_ref || '', 'renovate/')) || github.event_name == 'workflow_dispatch'
-        run: "mc alias set minio ${{ secrets.AWS_ENDPOINT }} ${{ secrets.AWS_KEY_ID }} ${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+        run: |
+          mc alias set minio ${{ secrets.AWS_ENDPOINT }} ${{ secrets.AWS_KEY_ID }} ${{ secrets.AWS_SECRET_ACCESS_KEY }} --api s3v4
+          mc config host set minio region s3
 
 
       - name: Upload packages through MinIO
