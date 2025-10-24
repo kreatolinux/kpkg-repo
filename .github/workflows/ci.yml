@@ -237,12 +237,17 @@ jobs:
                 # Extract package list from "Packages (X): pkg1 pkg2 pkg3" line
                 PACKAGES=$(echo "$PACKAGE_OUTPUT" | grep -oP 'Packages \(\d+\): \K.*' || true)
                 
+                echo "PACKAGES: $PACKAGES"
+
                 # Install each package in the list using kpkg install
                 if [ -n "$PACKAGES" ]; then
+                   echo '$PACKAGES exist'
                     for dep in $PACKAGES; do
                         # Remove version indicators and repo prefixes (e.g., "main/pkg -> version" becomes "pkg")
                         CLEAN_DEP=$(echo "$dep" | sed 's/.*\///' | sed 's/ .*//')
+                        echo "CLEAN_DEP: $CLEAN_DEP"
                         [ -n "$CLEAN_DEP" ] && /tmp/kpkg-bin/kpkg install "$CLEAN_DEP" -y || true
+                        echo "$CLEAN_DEP done, continuing"
                     done
                 fi
                 
