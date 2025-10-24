@@ -232,24 +232,16 @@ jobs:
           # Parse dependencies from kpkg build --no output and install them
           for package in ${{ matrix.packages }}; do
                 # Run kpkg build with --no to get the package list
-                PACKAGE_OUTPUT=$(KPKG_ENABLE_DEBUG=0 /tmp/kpkg-bin/kpkg get depends.$package.build 2>&1 | head -1 || true)
-               
-                echo "PACKAGE_OUTPUT: $PACKAGE_OUTPUT"
-
-                # Extract package list from "Packages (X): pkg1 pkg2 pkg3" line
-                PACKAGES=$(echo "$PACKAGE_OUTPUT" | grep -oP 'Packages \(\d+\): \K.*' || true)
-                
+                PACKAGES=$(KPKG_ENABLE_DEBUG=0 /tmp/kpkg-bin/kpkg get depends.$package.build 2>&1 || true)
+                  
                 echo "PACKAGES: $PACKAGES"
 
-                # Install each package in the list using kpkg install
                 if [ -n "$PACKAGES" ]; then
                    echo '$PACKAGES exist'
                     for dep in $PACKAGES; do
-                        # Remove version indicators and repo prefixes (e.g., "main/pkg -> version" becomes "pkg")
-                        CLEAN_DEP=$(echo "$dep" | sed 's/.*\///' | sed 's/ .*//')
-                        echo "CLEAN_DEP: $CLEAN_DEP"
-                        [ -n "$CLEAN_DEP" ] && /tmp/kpkg-bin/kpkg install "$CLEAN_DEP" -y || true
-                        echo "$CLEAN_DEP done, continuing"
+                        echo "trying to install $dep"
+                        /tmp/kpkg-bin/kpkg install "$dep" -y || true
+                        echo "$dep is installed, continuing"
                     done
                 fi
                 
