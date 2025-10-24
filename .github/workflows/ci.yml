@@ -185,7 +185,7 @@ jobs:
           path: /tmp/kpkg-bin
           github-token: ${{ secrets.GH_PAT }} # token with actions:read permissions on target repo
           repository: kreatolinux/src
-          run-id: 18747522811 # TODO: Automatically update to latest nightly
+          run-id: 18794222407 # TODO: Automatically update to latest nightly
 
       - uses: actions/checkout@v4
         with:
@@ -232,7 +232,7 @@ jobs:
           # Parse dependencies from kpkg build --no output and install them
           for package in ${{ matrix.packages }}; do
                 # Run kpkg build with --no to get the package list
-                PACKAGE_OUTPUT=$(KPKG_ENABLE_DEBUG=0 /tmp/kpkg-bin/kpkg install "$package" --no 2>&1 | head -1 || true)
+                PACKAGE_OUTPUT=$(KPKG_ENABLE_DEBUG=0 /tmp/kpkg-bin/kpkg get depends.$package.build 2>&1 | head -1 || true)
                
                 echo "PACKAGE_OUTPUT: $PACKAGE_OUTPUT"
 
