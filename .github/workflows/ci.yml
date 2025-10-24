@@ -233,7 +233,9 @@ jobs:
           for package in ${{ matrix.packages }}; do
                 # Run kpkg build with --no to get the package list
                 PACKAGE_OUTPUT=$(/tmp/kpkg-bin/kpkg build "$package" --no 2>&1 || true)
-                
+               
+                echo "PACKAGE_OUTPUT: $PACKAGE_OUTPUT"
+
                 # Extract package list from "Packages (X): pkg1 pkg2 pkg3" line
                 PACKAGES=$(echo "$PACKAGE_OUTPUT" | grep -oP 'Packages \(\d+\): \K.*' || true)
                 
