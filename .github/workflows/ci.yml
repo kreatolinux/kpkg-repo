@@ -229,7 +229,24 @@ jobs:
               exit 0
           fi
 
+          # Parse dependencies from kpkg build --no output and install them
           for package in ${{ matrix.packages }}; do
+                # Run kpkg build with --no to get the package list
+                PACKAGE_OUTPUT=$(/tmp/kpkg-bin/kpkg build "$package" --no 2>&1 || true)
+                
+                # Extract package list from "Packages (X): pkg1 pkg2 pkg3" line
+                PACKAGES=$(echo "$PACKAGE_OUTPUT" | grep -oP 'Packages \(\d+\): \K.*' || true)
+                
+                # Install each package in the list using kpkg install
+                if [ -n "$PACKAGES" ]; then
+                    for dep in $PACKAGES; do
+                        # Remove version indicators and repo prefixes (e.g., "main/pkg -> version" becomes "pkg")
+                        CLEAN_DEP=$(echo "$dep" | sed 's/.*\///' | sed 's/ .*//')
+                        [ -n "$CLEAN_DEP" ] && /tmp/kpkg-bin/kpkg install "$CLEAN_DEP" -y || true
+                    done
+                fi
+                
+                # Check if bootstrap is needed
                 RUNFILE="/etc/kpkg/repos/main/$package/run"
                 if [ -f "$RUNFILE" ] && grep -q "BOOTSTRAP_DEPENDS" "$RUNFILE"; then
                     echo "Bootstrapping $package"
