@@ -11,6 +11,11 @@ on:
         description: 'Space-separated list of packages to build'
         required: false
         default: ''
+      systemd:
+        description: 'Use builder-systemd instead of builder-repo'
+        required: false
+        default: false
+        type: boolean
   push:
     branches: [ master ]
   pull_request:
@@ -160,7 +165,7 @@ jobs:
     needs: [init, update-sums]
     runs-on: ubuntu-latest
     container: 
-      image: ghcr.io/kreatolinux/builder-repo@sha256:5c98776845d18b874e70f412d0adfbb2848eee811594752e1f3f3f6f617101c2 #-gnu # builder-gnu doesn't work yet, see TODO in kpkg/modules/isolation
+      image: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.systemd == 'true' && 'ghcr.io/kreatolinux/builder-systemd' || 'ghcr.io/kreatolinux/builder-repo@sha256:5c98776845d18b874e70f412d0adfbb2848eee811594752e1f3f3f6f617101c2' }} #-gnu # builder-gnu doesn't work yet, see TODO in kpkg/modules/isolation
       options: --privileged -v /:/opt/host
     strategy:
       fail-fast: false
