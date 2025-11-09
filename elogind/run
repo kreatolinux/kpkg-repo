@@ -10,7 +10,6 @@ SHA256SUM="7af8caa8225a406e77fb99c9f33dba5e1f0a94f0e1277c9d91dcfc016f116d85 feb8
 DESCRIPTION="systemd-logind, extracted to be a standalone daemon"
 
 prepare() {
-  tar -xf elogind-$VERSION.tar.gz
   cd elogind-$VERSION
   patch -p1 < ../realpath.patch
 }
