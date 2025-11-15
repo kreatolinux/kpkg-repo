@@ -19,7 +19,7 @@ package() {
   ls
   echo "PWD END"
   echo "ROOT: $ROOT"
-  ls $ROOT
+  tree $ROOT
   echo "ROOT END"
   mkdir -p "$ROOT/usr/include" "$ROOT/usr/bin" "$ROOT/etc/nim" "$ROOT/usr/lib/nim"
   cp -r lib/ "$ROOT/usr/lib/nim"
@@ -29,7 +29,7 @@ package() {
   cp -rf config/* -t "$ROOT/etc/nim"
   cp -rf bin/* -t "$ROOT/usr/bin"
   echo "ROOT: $ROOT"
-  ls $ROOT
+  tree $ROOT
   echo "ROOT END"
   cp -rf "$ROOT/usr/lib/nim/"*.h "$ROOT/usr/include"
   rm -rf "$ROOT/nim"
