@@ -10,12 +10,10 @@ SHA256SUM="7af8caa8225a406e77fb99c9f33dba5e1f0a94f0e1277c9d91dcfc016f116d85 feb8
 DESCRIPTION="systemd-logind, extracted to be a standalone daemon"
 
 prepare() {
-  ls # TODO: remove this
   patch -p1 < ../realpath.patch
 }
 
 build() {
-    ls # TODO: remove this
     meson setup \
     --prefix=/usr \
     --buildtype=release \
@@ -26,7 +24,6 @@ build() {
 }
 
 package() {
-    cd elogind-$VERSION
     DESTDIR="$ROOT" ninja -C build install
     mkdir -p $ROOT/usr/lib/pkgconfig $ROOT/usr/include/systemd
     ln -s  libelogind.pc $ROOT/usr/lib/pkgconfig/libsystemd.pc
