@@ -190,7 +190,7 @@ jobs:
           path: /tmp/kpkg-bin
           github-token: ${{ secrets.GH_PAT }} # token with actions:read permissions on target repo
           repository: kreatolinux/src
-          run-id: 19385544752 # TODO: Automatically update to latest nightly
+          run-id: 19391167657 # TODO: Automatically update to latest nightly
 
       - uses: actions/checkout@v4
         with:
