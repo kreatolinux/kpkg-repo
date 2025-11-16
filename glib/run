@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="glib"
 RELEASE="2"
-VERSION="2.82.4"
-SOURCES="https://download.gnome.org/sources/glib/2.82/glib-$VERSION.tar.xz"
+VERSION="2.86.1"
+SOURCES="https://download.gnome.org/sources/glib/2.86/glib-$VERSION.tar.xz"
 BUILD_DEPENDS="meson ninja gobject-introspection python-setuptools python-packaging"
 BOOTSTRAP_DEPENDS="meson ninja python-setuptools python-packaging"
-SHA256SUM="37dd0877fe964cd15e9a2710b044a1830fb1bd93652a6d0cb6b8b2dff187c709"
+SHA256SUM="119d1708ca022556d6d2989ee90ad1b82bd9c0d1667e066944a6d0020e2d5e57"
 DESCRIPTION="Low-level core library that forms the basis for projects such as GTK+ and GNOME"
 
 build() {
@@ -14,6 +14,8 @@ build() {
     else
         INTROSPECTION="enabled"
     fi
+
+    echo "debug: introspection is $INTROSPECTION"
 
     meson setup \
     --prefix=/usr \
