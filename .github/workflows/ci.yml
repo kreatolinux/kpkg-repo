@@ -184,13 +184,21 @@ jobs:
 
            
 
+      - name: Get latest workflow run
+        id: get-run-id
+        run: |
+          LATEST_RUN_ID=$(curl -s -H "Authorization: Bearer ${{ secrets.GH_PAT }}" \
+            "https://api.github.com/repos/kreatolinux/src/actions/workflows/build.yml/runs?status=success&per_page=1" \
+            | jq -r '.workflow_runs[0].id')
+          echo "run_id=$LATEST_RUN_ID" >> $GITHUB_OUTPUT
+
       - uses: actions/download-artifact@v4
         with:
           name: kpkg-amd64-linux-debug
           path: /tmp/kpkg-bin
           github-token: ${{ secrets.GH_PAT }} # token with actions:read permissions on target repo
           repository: kreatolinux/src
-          run-id: 19407881109 # TODO: Automatically update to latest nightly
+          run-id: ${{ steps.get-run-id.outputs.run_id }}
 
       - uses: actions/checkout@v4
         with:
@@ -255,6 +263,11 @@ jobs:
                 if [ -f "$RUNFILE" ] && grep -q "BOOTSTRAP_DEPENDS" "$RUNFILE"; then
                     echo "Bootstrapping $package"
                     /tmp/kpkg-bin/kpkg build "$package" --bootstrap --yes --ignorePostInstall --forceInstallAll=true
+
+                    echo "Bootstrapping $package complete, now removing it from cache"
+                    /tmp/kpkg-bin/kpkg clean --binaries --packages "$package"
+
+                    KPKG_EXTRA_ARGS="--useCacheIfAvailable=false"
                 fi
           done
           
