@@ -16,6 +16,11 @@ on:
         required: false
         default: false
         type: boolean
+      force_build:
+        description: 'Force build even if no changes detected'
+        required: false
+        default: false
+        type: boolean
   push:
     branches: [ master ]
   pull_request:
@@ -208,6 +213,8 @@ jobs:
           fetch-depth: 0
 
       - name: Build packages
+        env:
+          FORCE_BUILD: ${{ github.event.inputs.force_build }}
         run: |
           LOCALE=en_US
           mkdir -p /usr/lib/locale
@@ -233,6 +240,14 @@ jobs:
           for package in ${{ matrix.packages }}; do
                 /tmp/kpkg-bin/kpkg install "$package" -y --downloadOnly || IS_USELESS="false"
           done
+          
+
+          if [ "$FORCE_BUILD" = "true" ]; then
+              IS_USELESS="false"
+              for package in ${{ matrix.packages }}; do
+                /tmp/kpkg-bin/kpkg clean --binaries --packages "$package"
+              done
+          fi
 
           git config --system --add safe.directory '*'
 
