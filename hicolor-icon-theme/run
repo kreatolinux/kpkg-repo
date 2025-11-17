@@ -2,16 +2,19 @@
 NAME="hicolor-icon-theme"
 RELEASE="1"
 VERSION="0.18"
-BUILD_DEPENDS="gmake"
+BUILD_DEPENDS="meson"
 SOURCES="https://icon-theme.freedesktop.org/releases/hicolor-icon-theme-$VERSION.tar.xz"
 SHA256SUM="db0e50a80aa3bf64bb45cbca5cf9f75efd9348cf2ac690b907435238c3cf81d7"
 DESCRIPTION="hicolor-icon-theme"
 
 build() {
-    kpkgConfigure --prefix=/usr
-    make
+    meson setup \
+        --prefix=/usr \
+        --buildtype=release \
+        build
+    ninja -C build
 }
 
 package() {
-    make DESTDIR=$ROOT install
+    DESTDIR="$ROOT" ninja -C build install
 }
