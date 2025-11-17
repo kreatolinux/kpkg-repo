@@ -5,7 +5,7 @@ VERSION="3.8.8"
 BUILD_DEPENDS="gmake"
 SOURCES="https://www.gnupg.org/ftp/gcrypt/gnutls/v3.8/gnutls-$VERSION.tar.xz"
 DEPENDS="libnettle"
-SHA256SUM="9ca0ddaccce28a74fa18d738744190afb3b0daebef74e6ad686bf7bef99abd60"
+SHA256SUM="ac4f020e583880b51380ed226e59033244bc536cad2623f2e26f5afa2939d8fb"
 DESCRIPTION="GNU TLS"
 
 build() {
