@@ -1,19 +1,18 @@
 #!/bin/sh
 NAME="rust"
 RELEASE="1"
-VERSION="1.82.0"
+VERSION="1.91.1"
 SOURCES="https://static.rust-lang.org/dist/rustc-$VERSION-src.tar.gz"
 DEPENDS="llvm"
 BUILD_DEPENDS="python"
-SHA256SUM="7c53f4509eda184e174efa6ba7d5eeb586585686ce8edefc781a2b11a7cf512a"
+SHA256SUM="38dce205d39f61571261f0444237a1ce9efecb970e760d8ec4d957af5b445723"
 DESCRIPTION="Memory-safe programming language that doesn't use garbage collection"
 
 build() {
-  :
+  kpkgConfigure --set install.prefix="/usr" --set llvm.link-shared=true --llvm-config=/usr/bin/llvm-config 
+  ./x.py build
 }
 
 package() {
-  kpkgConfigure --set install.prefix="/usr" --set llvm.link-shared=true --llvm-config=/usr/bin/llvm-config 
-  ./x.py build
   DESTDIR="$ROOT" ./x.py install
 }
