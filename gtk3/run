@@ -15,6 +15,7 @@ build() {
     --buildtype=release \
     -Dx11_backend=true \
     -Ddemos=false \
+    -Dtests=false \
     build
     ninja -C build
 }
