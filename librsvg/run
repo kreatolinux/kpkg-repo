@@ -4,20 +4,23 @@ RELEASE="1"
 VERSION="2.61.3"
 SOURCES="https://gitlab.gnome.org/GNOME/librsvg/-/archive/$VERSION/librsvg-$VERSION.tar.gz"
 DEPENDS="cairo freetype gdk-pixbuf glib harfbuzz libxml2 pango"
-BUILD_DEPENDS="rust vala gobject-introspection gmake automake autoconf libtool"
+BUILD_DEPENDS="rust vala gobject-introspection meson ninja"
 SHA256SUM="408499a98ad9a84402e8c6de98bfa8e81889ed64ce89b7ffa4feeb95166ea036"
 DESCRIPTION="SVG rendering library"
 
 build() {
-    ./autogen.sh \
-      --prefix=/usr \
-      --disable-static \
-      --enable-vala
-    make
+    meson setup build \
+        --prefix=/usr \
+        --libexecdir=/usr/lib \
+        -Ddefault_library=shared \
+        -Dvala=enabled \
+        -Dintrospection=enabled \
+        -Ddocs=disabled
+    meson compile -C build
 }
 
 package() {
-    make DESTDIR=$ROOT install
+    DESTDIR=$ROOT meson install -C build
 }
 
 postinstall() {
