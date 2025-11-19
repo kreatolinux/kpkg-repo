@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="2.61.3"
 SOURCES="https://gitlab.gnome.org/GNOME/librsvg/-/archive/$VERSION/librsvg-$VERSION.tar.gz"
 DEPENDS="cairo freetype gdk-pixbuf glib harfbuzz libxml2 pango"
-BUILD_DEPENDS="rust vala gobject-introspection meson ninja"
+BUILD_DEPENDS="rust vala gobject-introspection meson ninja cargo-c"
 SHA256SUM="408499a98ad9a84402e8c6de98bfa8e81889ed64ce89b7ffa4feeb95166ea036"
 DESCRIPTION="SVG rendering library"
 
