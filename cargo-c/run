@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="0.10.18"
 SOURCES="https://github.com/lu-zero/cargo-c/archive/refs/tags/v$VERSION.tar.gz"
 DEPENDS="rust openssl"
-BUILD_DEPENDS="pkg-config openssl"
+BUILD_DEPENDS="pkgconf openssl"
 SHA256SUM="0f2b699be7ad5cac05624701065ae521c7f6b8159bdbcb8103445fc2440d1a7e"
 DESCRIPTION="Helper to build and install C-compatible libraries from Rust"
 
