@@ -1,6 +1,6 @@
 #!/bin/sh
 NAME="gobject-introspection"
-RELEASE="3"
+RELEASE="4"
 VERSION="1.86.0"
 SOURCES="https://gitlab.gnome.org/GNOME/gobject-introspection/-/archive/$VERSION/gobject-introspection-$VERSION.tar.gz"
 BUILD_DEPENDS="meson ninja python-setuptools python-packaging"
