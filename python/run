@@ -17,8 +17,7 @@ build() {
         --prefix=/usr \
         --without-ensurepip \
         --without-static-libpython \
-        --with-system-expat \
-        --enable-optimizations
+        --with-system-expat
     make
 }
 
