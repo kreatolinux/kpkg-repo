@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="python-pip"
 RELEASE="1"
-VERSION="25.2"
+VERSION="25.3"
 SOURCES="https://github.com/pypa/pip/archive/refs/tags/$VERSION.tar.gz"
 DEPENDS="python python-setuptools"
-B2SUM="3bfe61d6d0d6f3a79c3fd801f5cb40b203fd12085d925ae7cde53adca3c5ee523fdfd9449546e1bc8ca719b3e8766cfef3162919e13a77f7adc0d20a951d11c7"
+B2SUM="87d848c497163a45ee3de8f6f75c80b5051b07062c5a15450ae98b59a6cebc6bf03ca8525d57929493f2cfeb28d5623401eba69f0bdfc734389efbb84eafdf53"
 DESCRIPTION="Easily download, build, install, upgrade, and uninstall Python packages"
 
 package() {
