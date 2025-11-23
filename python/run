@@ -10,14 +10,13 @@ NO_CHKUPD=true
 DESCRIPTION="General-Purpose Programming language"
 
 build() {
-    export CFLAGS="${CFLAGS} -O2 -Wno-stringop-overflow"
     kpkgConfigure \
-        --disable-static \
-        --enable-shared \
-        --prefix=/usr \
-        --without-ensurepip \
-        --without-static-libpython \
-        --with-system-expat
+        --prefix=/usr
+        #--disable-static \
+        #--enable-shared \
+        #--without-ensurepip \
+        #--without-static-libpython \
+        #--with-system-expat
     make
 }
 
