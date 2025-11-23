@@ -18,6 +18,7 @@ build() {
         #--without-static-libpython \
         #--with-system-expat
     make
+    cat Makefile
 }
 
 package() {
