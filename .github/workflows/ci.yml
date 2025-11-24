@@ -16,6 +16,11 @@ on:
         required: false
         default: false
         type: boolean
+      latest_builder:
+        description: 'Use ghcr.io/kreatolinux/builder:latest image'
+        required: false
+        default: false
+        type: boolean
       force_build:
         description: 'Force build even if no changes detected'
         required: false
@@ -169,8 +174,8 @@ jobs:
     if: always() && !cancelled() && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
     needs: [init, update-sums]
     runs-on: ubuntu-latest
-    container: 
-      image: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.systemd == 'true' && 'ghcr.io/kreatolinux/builder-systemd' || 'ghcr.io/kreatolinux/builder-repo:latest' }} #-gnu # builder-gnu doesn't work yet, see TODO in kpkg/modules/isolation
+    container:
+      image: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.latest_builder == 'true' && 'ghcr.io/kreatolinux/builder:latest' || github.event_name == 'workflow_dispatch' && github.event.inputs.systemd == 'true' && 'ghcr.io/kreatolinux/builder-systemd' || 'ghcr.io/kreatolinux/builder-repo:latest' }} #-gnu # builder-gnu doesn't work yet, see TODO in kpkg/modules/isolation
       options: --privileged -v /:/opt/host
     strategy:
       fail-fast: false
