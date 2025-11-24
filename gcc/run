@@ -1,13 +1,13 @@
 #!/bin/sh
 NAME="gcc"
 RELEASE="4"
-VERSION="14.2.0"
+VERSION="15.2.0"
 BUILD_DEPENDS="gmake"
 SOURCES="https://ftp.gnu.org/gnu/gcc/gcc-$VERSION/gcc-$VERSION.tar.xz"
 DEPENDS="isl libzstd gmp mpc mpfr"
 DEPENDS_GCC+="binutils linux-headers"
 DEPENDS_AARCH64_LINUX_GNU_GCC+="aarch64-linux-gnu-linux-headers aarch64-linux-gnu-glibc aarch64-linux-gnu-binutils aarch64-linux-gnu-libxcrypt"
-SHA256SUM="a7b39bc69cbf9e25826c5a60ab26477001f7c08d85cec04bc0e29cabed6f3cc9"
+SHA256SUM="438fd996826b0c82485a29da03a72d71d6e3541a83ec702df4271f6fe025d24e"
 DESCRIPTION="The GNU C Compiler"
 
 common_build() {
