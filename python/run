@@ -10,13 +10,14 @@ NO_CHKUPD=true
 DESCRIPTION="General-Purpose Programming language"
 
 build() {
-    export LC_ALL=en_US.UTF-8
     kpkgConfigure \
         --prefix=/usr \
         --enable-shared \
         --without-ensurepip \
         --with-system-expat
-    export LD_LIBRARY_PATH="$(pwd):${LD_LIBRARY_PATH}"
+    echo "===MAKEFILE START==="
+    cat Makefile
+    echo "===MAKEFILE END==="
     make
 }
 
