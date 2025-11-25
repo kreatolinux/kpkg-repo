@@ -26,6 +26,11 @@ on:
         required: false
         default: false
         type: boolean
+      llvm:
+        description: 'Enable LLVM and set clang as compiler'
+        required: false
+        default: false
+        type: boolean
   push:
     branches: [ master ]
   pull_request:
@@ -235,10 +240,16 @@ jobs:
           mkdir -p /etc/kpkg/repos/main
           mount --bind "$GITHUB_WORKSPACE" /etc/kpkg/repos/main
 
-          
+
           #kpkg upgrade --yes || true
-          
+
           /tmp/kpkg-bin/kpkg clean --binaries=true --environment=true
+
+          # Enable LLVM if requested
+          if [ "${{ github.event.inputs.llvm }}" = "true" ]; then
+            /tmp/kpkg-bin/kpkg install llvm -y
+            /tmp/kpkg-bin/kpkg set config.Options.cc clang
+          fi
           
           IS_USELESS="true"
           
