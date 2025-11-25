@@ -1,17 +1,15 @@
 #!/bin/sh
 NAME="python"
 RELEASE="4"
-VERSION="3.13.5"
+VERSION="3.14.0"
 BUILD_DEPENDS="gmake"
 SOURCES="https://www.python.org/ftp/python/$VERSION/Python-$VERSION.tar.xz"
 DEPENDS="openssl zlib libxcrypt expat bzip2 libffi"
-BUILD_DEPENDS="llvm"
 SHA256SUM="2299dae542d395ce3883aca00d3c910307cd68e0b2f7336098c8e7b7eee9f3e9"
 NO_CHKUPD=true
 DESCRIPTION="General-Purpose Programming language"
 
 build() {
-    export CC=clang
     export LD_LIBRARY_PATH=$(echo $LD_LIBRARY_PATH | sed 's/^://;s/:$//;s/:://g')
     kpkgConfigure \
         --prefix=/usr \
