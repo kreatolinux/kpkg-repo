@@ -248,7 +248,7 @@ jobs:
           if [ "${{ github.event.inputs.llvm }}" = "true" ]; then
             /tmp/kpkg-bin/kpkg install llvm -y
             /tmp/kpkg-bin/kpkg set config.Options.cc clang
-            sed -i 's/gcc/llvm/' /etc/kreato-release # TODO: we shouldn't need to do this, kpkg should add it to sandbox just thru looking at config
+            sed -i 's/gcc/clang/' /etc/kreato-release # TODO: we shouldn't need to do this, kpkg should add it to sandbox just thru looking at config
           fi
           
           IS_USELESS="true"
