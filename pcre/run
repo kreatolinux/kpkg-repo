@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="10.47"
 BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/PCRE2Project/pcre2/releases/download/pcre2-$VERSION/pcre2-$VERSION.tar.gz"
-SHA256SUM="c33b418e3b936ee3153de2c61cc638e7e4fe3156022a5c77d0711bcbb9d64f1f"
+SHA256SUM="c08ae2388ef333e8403e670ad70c0a11f1eed021fd88308d7e02f596fcd9dc16"
 DESCRIPTION="Perl Compatible Regular Expression libraries"
 
 build() {
