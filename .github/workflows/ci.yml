@@ -34,6 +34,11 @@ on:
         required: false
         default: false
         type: boolean
+      enable_tailscale_ssh:
+        description: 'Enable Tailscale SSH if build fails'
+        required: false
+        default: false
+        type: boolean
   push:
     branches: [ master ]
   pull_request:
@@ -345,6 +350,32 @@ jobs:
           else
             echo "Sources directory does not exist, skipping..."
           fi
+
+      - name: Initialize Tailscale
+        if: failure() && github.event_name == 'workflow_dispatch' && github.event.inputs.enable_tailscale_ssh == 'true'
+        uses: tailscale/github-action@v4
+        with:
+          tags: tag:ci
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          args: '--ssh'
+          version: latest
+
+      - name: Wait for SSH Session
+        if: failure() && github.event_name == 'workflow_dispatch' && github.event.inputs.enable_tailscale_ssh == 'true'
+        timeout-minutes: 60
+        run: |
+          echo "-------------------------------------------------------"
+          echo "TO FINISH THIS JOB AND DISCONNECT: Run the following command in the SSH session:"
+          echo "   touch /tmp/stop-job"
+          echo "-------------------------------------------------------"
+          
+          # This loop blocks the job from finishing
+          while [ ! -f /tmp/stop-job ]; do
+            sleep 10
+          done
+          
+          echo "Stop signal received. Shutting down runner..."
 
       #- uses: actions/upload-artifact@v4
       #  with:
