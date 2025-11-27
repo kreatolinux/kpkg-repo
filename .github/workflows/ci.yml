@@ -19,7 +19,7 @@ on:
         options:
           - builder-repo
           - builder-systemd
-          - builder-latest
+          - builder
       image_sha:
         description: 'Optional: Specific SHA256 digest for the docker image (e.g., sha256:abc123...)'
         required: false
