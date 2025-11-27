@@ -1,0 +1,18 @@
+#!/bin/sh
+NAME="tmux"
+RELEASE="1"
+VERSION="3.6"
+BUILD_DEPENDS="gmake"
+SOURCES="https://github.com/tmux/tmux/releases/download/$VERSION/tmux-$VERSION.tar.gz"
+DEPENDS="libevent ncurses"
+SHA256SUM="136db80cfbfba617a103401f52874e7c64927986b65b1b700350b6058ad69607"
+DESCRIPTION="Terminal multiplexer"
+
+build() {
+    kpkgConfigure --prefix=/usr
+    make
+}
+
+package() {
+    make DESTDIR=$ROOT install
+}
