@@ -358,13 +358,13 @@ jobs:
           tags: tag:ci
           oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
           oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
-          args: '--ssh=true'
-          version: latest
+          args: '--ssh'
 
       - name: Wait for SSH Session
         if: failure() && github.event_name == 'workflow_dispatch' && github.event.inputs.enable_tailscale_ssh == 'true'
         timeout-minutes: 60
         run: |
+          tailscale debug prefs | grep -i runssh
           echo "-------------------------------------------------------"
           echo "TO FINISH THIS JOB AND DISCONNECT: Run the following command in the SSH session:"
           echo "   touch /tmp/stop-job"
