@@ -52,7 +52,7 @@ jobs:
       runfiles: ${{ steps.check-sums.outputs.runfiles }}
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           # Ensure we track the branch head (not the event SHA) so we pick up
           # the commit pushed by the update-sums job in this same workflow run.
@@ -218,7 +218,7 @@ jobs:
           repository: kreatolinux/src
           run-id: ${{ steps.get-run-id.outputs.run_id }}
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           # Check out the branch head so the build includes the commit created
           # by the update-sums job in this workflow run.
