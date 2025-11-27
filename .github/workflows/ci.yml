@@ -20,6 +20,10 @@ on:
           - builder-repo
           - builder-systemd
           - builder-latest
+      image_sha:
+        description: 'Optional: Specific SHA256 digest for the docker image (e.g., sha256:abc123...)'
+        required: false
+        default: ''
       force_build:
         description: 'Force build even if no changes detected'
         required: false
@@ -179,7 +183,7 @@ jobs:
     needs: [init, update-sums]
     runs-on: ubuntu-latest
     container:
-      image: ${{ github.event_name == 'workflow_dispatch' && format('ghcr.io/kreatolinux/{0}:latest', github.event.inputs.image) || 'ghcr.io/kreatolinux/builder-repo:latest' }} #-gnu # builder-gnu doesn't work yet, see TODO in kpkg/modules/isolation
+      image: ${{ github.event_name == 'workflow_dispatch' && (github.event.inputs.image_sha != '' && format('ghcr.io/kreatolinux/{0}@{1}', github.event.inputs.image, github.event.inputs.image_sha) || format('ghcr.io/kreatolinux/{0}:latest', github.event.inputs.image)) || 'ghcr.io/kreatolinux/builder-repo:latest' }} #-gnu # builder-gnu doesn't work yet, see TODO in kpkg/modules/isolation
       options: --privileged -v /:/opt/host
     strategy:
       fail-fast: false
