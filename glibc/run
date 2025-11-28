@@ -95,6 +95,6 @@ package() {
 }
 
 postinstall() {
-    mkdir -p $ROOT/usr/lib/locale
-    localedef --prefix=$ROOT -i C -f UTF-8 C
+    mkdir -p /usr/lib/locale
+    localedef -i C -f UTF-8 C
 }
