@@ -372,6 +372,9 @@ jobs:
             kpkg build tmux -y
           fi
 
+          rm -f /bin/sh
+          ln -s /bin/bash /bin/sh # Regression, see https://github.com/owenthereal/action-upterm/issues/20
+
       - name: Setup upterm session
         if: failure() && github.event_name == 'workflow_dispatch' && github.event.inputs.enable_upterm_ssh == 'true'
         uses: owenthereal/action-upterm@v1
