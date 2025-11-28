@@ -364,6 +364,14 @@ jobs:
             echo "Sources directory does not exist, skipping..."
           fi
 
+
+      - name: Install dependencies for upterm session
+        if: failure() && github.event_name == 'workflow_dispatch' && github.event.inputs.enable_upterm_ssh == 'true'
+        run: |
+          if ! kpkg install tmux -y; then
+            kpkg build tmux -y
+          fi
+
       - name: Setup upterm session
         if: failure() && github.event_name == 'workflow_dispatch' && github.event.inputs.enable_upterm_ssh == 'true'
         uses: owenthereal/action-upterm@v1
