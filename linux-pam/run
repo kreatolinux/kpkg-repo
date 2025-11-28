@@ -26,6 +26,7 @@ build() {
         --prefix=/usr \
         --buildtype=release \
         -D securedir=/usr/lib/security \
+        -D docs=disabled \
         build
     meson compile -C build
 }
