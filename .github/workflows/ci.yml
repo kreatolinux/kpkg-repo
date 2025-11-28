@@ -39,6 +39,11 @@ on:
         required: false
         default: false
         type: boolean
+      disable_force_install_all:
+        description: 'Disable forceInstallAll flag during build'
+        required: false
+        default: false
+        type: boolean
   push:
     branches: [ master ]
   pull_request:
@@ -302,7 +307,11 @@ jobs:
                 RUNFILE="/etc/kpkg/repos/main/$package/run"
                 if [ -f "$RUNFILE" ] && grep -q "BOOTSTRAP_DEPENDS" "$RUNFILE"; then
                     echo "Bootstrapping $package"
-                    /tmp/kpkg-bin/kpkg build "$package" --bootstrap --yes --ignorePostInstall --forceInstallAll=true
+                    FORCE_INSTALL_ALL_FLAG=""
+                    if [ "${{ github.event.inputs.disable_force_install_all }}" != "true" ]; then
+                        FORCE_INSTALL_ALL_FLAG="--forceInstallAll=true"
+                    fi
+                    /tmp/kpkg-bin/kpkg build "$package" --bootstrap --yes --ignorePostInstall $FORCE_INSTALL_ALL_FLAG
 
                     echo "Bootstrapping $package complete, now removing it from cache"
                     /tmp/kpkg-bin/kpkg clean --binaries --packages "$package"
@@ -311,7 +320,11 @@ jobs:
                 fi
           done
           
-          /tmp/kpkg-bin/kpkg build ${{ matrix.packages }} --yes --ignorePostInstall --forceInstallAll=true
+          FORCE_INSTALL_ALL_FLAG=""
+          if [ "${{ github.event.inputs.disable_force_install_all }}" != "true" ]; then
+              FORCE_INSTALL_ALL_FLAG="--forceInstallAll=true"
+          fi
+          /tmp/kpkg-bin/kpkg build ${{ matrix.packages }} --yes --ignorePostInstall $FORCE_INSTALL_ALL_FLAG
           #echo RANDOM_ID=$(cat /dev/urandom | tr -dc '[:alpha:]' | fold -w ${1:-20} | head -n 1) >> $GITHUB_ENV
           cd "$GITHUB_WORKSPACE"
           git pull
