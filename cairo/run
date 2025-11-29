@@ -2,19 +2,17 @@
 NAME="cairo"
 RELEASE="5"
 VERSION="1.18.4"
-BUILD_DEPENDS="gmake"
+BUILD_DEPENDS="meson"
 SOURCES="https://gitlab.freedesktop.org/cairo/cairo/-/archive/$VERSION/cairo-$VERSION.tar.gz?ref_type=tags"
 DEPENDS="libpng libx11 libxcb libxext libxrender libxext pixman fontconfig glib freetype pkgconf"
 SHA256SUM="2f3e6e665dbbb420809102b71ad7d0f7ce870a0b1bf8b34c073f06aefb511fc6"
 DESCRIPTION="2D graphics library"
 
 build() {
-    kpkgConfigure --prefix=/usr    \
-            --disable-static     \
-            --enable-tee
-    make
+    meson setup --prefix=/usr --buildtype=release
+    meson compile -C build
 }
 
 package() {
-    make DESTDIR="$ROOT" install
+    meson install --destdir="$ROOT" -C build
 }
