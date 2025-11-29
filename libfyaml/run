@@ -1,0 +1,18 @@
+#!/bin/sh
+NAME="libfyaml"
+RELEASE="1"
+VERSION="0.9"
+BUILD_DEPENDS="gmake"
+SOURCES="https://github.com/pantoniou/libfyaml/releases/download/v$VERSION/libfyaml-$VERSION.tar.gz"
+DEPENDS="libyaml"
+SHA256SUM="7731edc5dfcc345d5c5c9f6ce597133991a689dabede393cd77bae89b327cd6d"
+DESCRIPTION="Fully feature complete YAML parser and emitter"
+
+build() {
+    kpkgConfigure --prefix=/usr --disable-static
+    make -j$(nproc)
+}
+
+package() {
+    make DESTDIR=$ROOT install
+}
