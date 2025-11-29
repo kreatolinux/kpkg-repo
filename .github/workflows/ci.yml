@@ -346,23 +346,57 @@ jobs:
       - name: Upload packages through MinIO
         if: needs.init.outputs.push == 'true' || (github.event_name == 'pull_request' && startsWith(github.head_ref || '', 'renovate/')) || github.event_name == 'workflow_dispatch'
         run: |
-          if [ -d "/var/cache/kpkg/archives" ]; then
-            echo "Listing archives directory contents:"
-            ls -la /var/cache/kpkg/archives/
-            echo "Copying archives..."
-            mc cp --recursive /var/cache/kpkg/archives/* minio/${{ secrets.AWS_BUCKET }}/archives/
-          else
-            echo "Archives directory does not exist, skipping..."
-          fi
+          upload_with_retry() {
+            local retries=3
+            local cooldown=5
+            local attempt=1
 
-          if [ -d "/var/cache/kpkg/sources" ]; then
-            echo "Listing sources directory contents:"
-            ls -la /var/cache/kpkg/sources/
-            echo "Copying sources..."
-            mc cp --recursive /var/cache/kpkg/sources/* minio/${{ secrets.AWS_BUCKET }}/sources/
-          else
-            echo "Sources directory does not exist, skipping..."
-          fi
+            while [ $attempt -le $retries ]; do
+              echo "Upload attempt $attempt of $retries..."
+
+              if [ -d "/var/cache/kpkg/archives" ]; then
+                echo "Listing archives directory contents:"
+                ls -la /var/cache/kpkg/archives/
+                echo "Copying archives..."
+                if mc cp --recursive /var/cache/kpkg/archives/* minio/${{ secrets.AWS_BUCKET }}/archives/; then
+                  echo "Archives upload successful on attempt $attempt"
+                else
+                  echo "Archives upload failed on attempt $attempt"
+                  if [ $attempt -eq $retries ]; then
+                    return 1
+                  fi
+                fi
+              else
+                echo "Archives directory does not exist, skipping..."
+              fi
+
+              if [ -d "/var/cache/kpkg/sources" ]; then
+                echo "Listing sources directory contents:"
+                ls -la /var/cache/kpkg/sources/
+                echo "Copying sources..."
+                if mc cp --recursive /var/cache/kpkg/sources/* minio/${{ secrets.AWS_BUCKET }}/sources/; then
+                  echo "Sources upload successful on attempt $attempt"
+                else
+                  echo "Sources upload failed on attempt $attempt"
+                  if [ $attempt -eq $retries ]; then
+                    return 1
+                  fi
+                fi
+              else
+                echo "Sources directory does not exist, skipping..."
+              fi
+
+              # If we got here, upload was successful
+              return 0
+
+              # Cooldown before retry
+              echo "Waiting $cooldown seconds before retry..."
+              sleep $cooldown
+              attempt=$((attempt + 1))
+            done
+          }
+
+          upload_with_retry
 
 
       - name: Install dependencies for upterm session
