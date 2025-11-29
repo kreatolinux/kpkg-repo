@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="ibus"
 RELEASE="1"
-VERSION="1.5.28"
+VERSION="1.5.33"
 BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/ibus/ibus/releases/download/$VERSION/ibus-$VERSION.tar.gz"
 DEPENDS="dconf gobject-introspection libnotify iso-codes vala gtk3 gtk4 libnotify"
