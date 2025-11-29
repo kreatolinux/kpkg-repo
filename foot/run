@@ -5,7 +5,7 @@ VERSION="1.25.0"
 SOURCES="https://codeberg.org/dnkl/foot/archive/$VERSION.tar.gz"
 BUILD_DEPENDS="meson"
 DEPENDS="wayland-protocols wayland fontconfig libxkbcommon pixman freetype"
-SHA256SUM="148b0b545ca37e15b877ff9f6a768a4ce6feb0ed256f8a5f853cb2e16e3323c1"
+SHA256SUM="442a42d576ec72dd50f2d3faea8a664230a47bac79dc1eb6e7c9125ee76c130f"
 DESCRIPTION="A fast, lightweight and minimalistic Wayland terminal emulator"
 build() {
     export CFLAGS="${CFLAGS} -Wno-error=deprecated-declarations"
