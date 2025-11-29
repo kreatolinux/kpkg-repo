@@ -3,9 +3,9 @@ NAME="cairo"
 RELEASE="5"
 VERSION="1.18.4"
 BUILD_DEPENDS="gmake"
-SOURCES="https://download.gnome.org/sources/cairo/1.17/cairo-$VERSION.tar.xz https://gitlab.freedesktop.org/cairo/cairo/-/commit/24996e6ee241ebcd303dd34a2b06b37a6dd0c217.patch"
+SOURCES="https://gitlab.freedesktop.org/cairo/cairo/-/archive/$VERSION/cairo-$VERSION.tar.gz?ref_type=tags"
 DEPENDS="libpng libx11 libxcb libxext libxrender libxext pixman fontconfig glib freetype pkgconf"
-SHA256SUM="SKIP 0024c697dc3cc42dc509fff6efeec14858acafb0e51679f1816b76c62705bc4a"
+SHA256SUM="2f3e6e665dbbb420809102b71ad7d0f7ce870a0b1bf8b34c073f06aefb511fc6"
 DESCRIPTION="2D graphics library"
 
 prepare() {
