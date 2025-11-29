@@ -9,7 +9,7 @@ SHA256SUM="2f3e6e665dbbb420809102b71ad7d0f7ce870a0b1bf8b34c073f06aefb511fc6"
 DESCRIPTION="2D graphics library"
 
 build() {
-    meson setup --prefix=/usr --buildtype=release
+    meson setup --prefix=/usr --buildtype=release build/
     meson compile -C build
 }
 
