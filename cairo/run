@@ -8,14 +8,7 @@ DEPENDS="libpng libx11 libxcb libxext libxrender libxext pixman fontconfig glib 
 SHA256SUM="2f3e6e665dbbb420809102b71ad7d0f7ce870a0b1bf8b34c073f06aefb511fc6"
 DESCRIPTION="2D graphics library"
 
-prepare() {
-        tar -xvf cairo-$VERSION.tar.xz
-        cd cairo-$VERSION
-        patch -p1 < ../24996e6ee241ebcd303dd34a2b06b37a6dd0c217.patch
-}
-
 build() {
-    cd cairo-$VERSION
     kpkgConfigure --prefix=/usr    \
             --disable-static     \
             --enable-tee
@@ -23,6 +16,5 @@ build() {
 }
 
 package() {
-    cd cairo-$VERSION
     make DESTDIR="$ROOT" install
 }
