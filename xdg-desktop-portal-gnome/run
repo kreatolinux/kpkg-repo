@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="xdg-desktop-portal-gnome"
 RELEASE="1"
-VERSION="45.1"
+VERSION="49.0"
 SOURCES="https://gitlab.gnome.org/GNOME/xdg-desktop-portal-gnome/-/archive/$VERSION/xdg-desktop-portal-gnome-$VERSION.tar.gz"
 DEPENDS="gnome-desktop gnome-keyring libadwaita xdg-desktop-portal-gtk xdg-desktop-portal"
 BUILD_DEPENDS="meson"
