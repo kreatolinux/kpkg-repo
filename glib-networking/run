@@ -2,10 +2,10 @@
 NAME="glib-networking"
 RELEASE="1"
 VERSION="2.80.1"
-SOURCES="https://download.gnome.org/sources/glib-networking/2.78/glib-networking-$VERSION.tar.xz"
+SOURCES="https://download.gnome.org/sources/glib-networking/2.80/glib-networking-$VERSION.tar.xz"
 BUILD_DEPENDS="meson"
 DEPENDS="glib gnutls gsettings-desktop-schemas ca-certificates"
-SHA256SUM="SKIP"
+SHA256SUM="b80e2874157cd55071f1b6710fa0b911d5ac5de106a9ee2a4c9c7bee61782f8e"
 DESCRIPTION="Network extensions for GLib"
 
 build() {
