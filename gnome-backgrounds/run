@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="49.0"
 SOURCES="https://gitlab.gnome.org/GNOME/gnome-backgrounds/-/archive/$VERSION/gnome-backgrounds-$VERSION.tar.gz"
 BUILD_DEPENDS="meson"
-SHA256SUM="d143242e10e48747a74dc61a29976bd9d4ce5327aff8e7bf8342ec603bf2155b"
+SHA256SUM="d4254738caf443cbed9881d2f64bb22aeab397e651b3e60cecea1b6452dc7edb"
 DESCRIPTION="Backgrounds for GNOME"
 
 build() {
