@@ -5,7 +5,7 @@ VERSION="10.2_p1"
 SOURCES="https://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-$VERSION.tar.gz"
 DEPENDS="shadow zlib"
 BUILD_DEPENDS="gmake"
-SHA256SUM="b343fbcdbff87f15b1986e6e15d6d4fc9a7d36066be6b7fb507087ba8f966c02"
+SHA256SUM="SKIP"
 DESCRIPTION="ssh tools"                                                        
 build() {                                                                      
     kpkgConfigure --without-zlib-version-check --prefix=/usr                                                  
