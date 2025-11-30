@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="1.22.2"
 SOURCES="https://ftp.gnu.org/gnu/ed/ed-$VERSION.tar.lz"
 BUILD_DEPENDS="lzip gmake"
-SHA256SUM="65fec7318f48c2ca17f334ac0f4703defe62037bb13cc23920de077b5fa24523"
+SHA256SUM="f58d15242056e15af76f13f34c60d890fa2a2d5cb0abef91c115e4d83794ffe3"
 DESCRIPTION="A line-oriented text editor"
 
 build() {
