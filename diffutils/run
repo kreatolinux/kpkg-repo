@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="diffutils"
 RELEASE="1"
-VERSION="3.10"
+VERSION="3.12"
 BUILD_DEPENDS="gmake"
 SOURCES="https://ftp.gnu.org/gnu/diffutils/diffutils-$VERSION.tar.xz"
 DEPENDS=""
