@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="dconf"
 RELEASE="1"
-VERSION="0.40.0"
+VERSION="0.49.0"
 SOURCES="https://gitlab.gnome.org/GNOME/dconf/-/archive/$VERSION/dconf-$VERSION.tar.gz"
 DEPENDS="dbus glib vala"
 BUILD_DEPENDS="meson python-setuptools"
