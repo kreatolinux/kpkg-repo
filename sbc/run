@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="sbc"
 RELEASE="1"
-VERSION="2.0"
+VERSION="2.1"
 BUILD_DEPENDS="gmake"
 SOURCES="https://www.kernel.org/pub/linux/bluetooth/sbc-$VERSION.tar.xz"
 SHA256SUM="8f12368e1dbbf55e14536520473cfb338c84b392939cc9b64298360fd4a07992"
