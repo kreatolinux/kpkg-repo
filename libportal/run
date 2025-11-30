@@ -5,7 +5,7 @@ VERSION="0.9.1"
 SOURCES="https://github.com/flatpak/libportal/releases/download/$VERSION/libportal-$VERSION.tar.xz"
 DEPENDS="gtk3 gtk4"
 BUILD_DEPENDS="meson gobject-introspection vala gjs"
-SHA256SUM="297b90b263fad22190a26b8c7e8ea938fe6b18fb936265e588927179920d3805"
+SHA256SUM="de801ee349ed3c255a9af3c01b1a401fab5b3fc1c35eb2fd7dfb35d4b8194d7f"
 DESCRIPTION="libportal"
 
 build() {
