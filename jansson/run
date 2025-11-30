@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="jansson"
 RELEASE="1"
-VERSION="2.14"
+VERSION="2.14.1"
 SOURCES="https://github.com/akheron/jansson/releases/download/v$VERSION/jansson-$VERSION.tar.gz"
 BUILD_DEPENDS="llvm gmake"
 SHA256SUM="5798d010e41cf8d76b66236cfb2f2543c8d082181d16bc3085ab49538d4b9929"
