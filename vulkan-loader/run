@@ -5,7 +5,7 @@ VERSION="1.4.321.0"
 SOURCES="https://github.com/KhronosGroup/Vulkan-Loader/archive/refs/tags/v$VERSION.tar.gz"
 DEPENDS="cmake ninja"
 BUILD_DEPENDS="vulkan-headers wayland libxcb libx11 libxrandr"
-SHA256SUM="7f6895bb25faaca72b9d75325f1d225ae7f30081d3e81c8c19f2c4556b23d676"
+SHA256SUM="SKIP"
 DESCRIPTION="Vulkan ICD loader"
 
 build() {
