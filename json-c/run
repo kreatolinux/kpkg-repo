@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="json-c"
 RELEASE="1"
-VERSION="0.17"
+VERSION="0.18"
 BUILD_DEPENDS="gmake"
 SOURCES="https://s3.amazonaws.com/json-c_releases/releases/json-c-$VERSION.tar.gz"
 DEPENDS="cmake"
