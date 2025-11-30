@@ -7,7 +7,7 @@ NO_CHKUPD="true"
 BUILD_DEPENDS="meson samurai xwayland xcb-util-wm"
 DEPENDS="wayland wayland-protocols libdrm libxkbcommon libinput hwdata seatd pixman eudev mesa"
 OPTDEPENDS="xwayland: XWayland support"
-SHA256SUM="f502959db8bc029e32f10a837b37257bb8c5ed269bceddf9492f0bb381bebf76"
+SHA256SUM="f0530ecaa8739d15f97bd1e1edddb77e281d57e42d4263fccb67157f71730d17"
 DESCRIPTION="Modules for building a Wayland compositor"
 
 build() {
