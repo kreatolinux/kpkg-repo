@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="gnome-bluetooth"
 RELEASE="1"
-VERSION="42.6"
+VERSION="47.1"
 SOURCES="https://download.gnome.org/sources/gnome-bluetooth/42/gnome-bluetooth-$VERSION.tar.xz"
 BUILD_DEPENDS="meson gobject-introspection"
 DEPENDS="bluez gtk4 libadwaita libnotify upower gsound"
