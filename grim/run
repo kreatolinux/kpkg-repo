@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="grim"
 RELEASE="1"
-VERSION="1.4.1"
+VERSION="1.5.0"
 SOURCES="https://git.sr.ht/~emersion/grim/refs/download/v1.4.1/grim-1.4.1.tar.gz"
 DEPENDS="wayland wayland-protocols pixman libpng"
 BUILD_DEPENDS="meson"
