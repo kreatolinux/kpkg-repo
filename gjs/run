@@ -5,7 +5,7 @@ VERSION="1.86.0"
 SOURCES="https://gitlab.gnome.org/GNOME/gjs/-/archive/$VERSION/gjs-$VERSION.tar.gz"
 DEPENDS="glib js115 libffi cairo dbus gobject-introspection readline dconf"
 BUILD_DEPENDS="meson"
-SHA256SUM="c854ed3c76127361b2c6fa3c4e0199a6d687b5e47cdac3be837c6017c305d686"
+SHA256SUM="2d35bc4830f732e88e2c389e7f573bc973378ce0d13725973a75f6d478f55932"
 DESCRIPTION="Javascript bindings for GNOME"
 
 build() {
