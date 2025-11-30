@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="sway"
 RELEASE="1"
-VERSION="1.8.1"
+VERSION="1.11"
 SOURCES="https://github.com/swaywm/sway/releases/download/$VERSION/sway-$VERSION.tar.gz"
 DEPENDS="pcre wlroots cairo git libevdev wayland libinput wayland-protocols pango json-c jetbrains-mono"
 BUILD_DEPENDS="meson"
