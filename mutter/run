@@ -5,7 +5,7 @@ VERSION="49.1.1"
 SOURCES="https://gitlab.gnome.org/GNOME/mutter/-/archive/$VERSION/mutter-$VERSION.tar.gz"
 BUILD_DEPENDS="meson gobject-introspection gtk3"
 DEPENDS="libx11 libei libxcvt startup-notification libxtst libxkbfile libxfixes libxext libxcomposite libxcursor libxrandr libxau libxinerama libxcb libxrender libxdamage libxi xwayland gnome-settings-daemon graphene libxkbcommon pipewire desktop-file-utils libinput wayland wayland-protocols"
-SHA256SUM="9bb60af832ca72e909c951af4cf1d53d0027a247fd90c8285669e7152d6d9dbb"
+SHA256SUM="41399d4cdfb64ed90106b4cf9eb57846d8692731d1c0ee711407c98740c2f335"
 DESCRIPTION="Wayland compositor for GNOME"
 
 build() {
