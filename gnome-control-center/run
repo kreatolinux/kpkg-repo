@@ -5,7 +5,7 @@ VERSION="49.2.2"
 SOURCES="https://gitlab.gnome.org/GNOME/gnome-control-center/-/archive/$VERSION/gnome-control-center-$VERSION.tar.gz https://raw.githubusercontent.com/kreatolinux/assets/master/klinux_pixmap.png"
 DEPENDS="libnma modemmanager cups samba gcr-3 gnome-online-accounts accountsservice colord-gtk libgtop udisks libpwquality gnome-settings-daemon gsound gnome-bluetooth ibus libadwaita"
 BUILD_DEPENDS="meson git"
-SHA256SUM="a43db0e8ab36bfa9ecfadd68d1dccced4b9da4766febe744a988879406a3e2ad 6e1fc322ed757a024a39a80a8de43d184323e2e781aa21cf618fc67655e6cb28"
+SHA256SUM="206ed45adb73707ceb23547fca56a2c1dae8ffc463ba2a2e6c79b8753664b28b 6e1fc322ed757a024a39a80a8de43d184323e2e781aa21cf618fc67655e6cb28"
 DESCRIPTION="GNOME Control Center"
 
 prepare() {
