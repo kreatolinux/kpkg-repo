@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="gnome-tweaks"
 RELEASE="1"
-VERSION="45.0"
+VERSION="49.0"
 SOURCES="https://github.com/GNOME/gnome-tweaks/archive/refs/tags/$VERSION.tar.gz"
 BUILD_DEPENDS="meson"
 DEPENDS="pygobject python gnome-settings-daemon glib gtk3 gnome-desktop libhandy pango gsettings-desktop-schemas gnome-shell mutter"
