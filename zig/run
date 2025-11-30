@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="zig"
 RELEASE="2"
-VERSION="0.13.0"
+VERSION="0.15.2"
 SOURCES="https://ziglang.org/download/$VERSION/zig-$VERSION.tar.xz"
 DEPENDS="llvm"
 BUILD_DEPENDS="cmake"
