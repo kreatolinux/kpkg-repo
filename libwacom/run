@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="libwacom"
 RELEASE="1"
-VERSION="2.13.0"
+VERSION="2.17.0"
 SOURCES="https://github.com/linuxwacom/libwacom/releases/download/libwacom-$VERSION/libwacom-$VERSION.tar.xz"
 BUILD_DEPENDS="meson"
 DEPENDS="libgudev libxml2 libevdev"
