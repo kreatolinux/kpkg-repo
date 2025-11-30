@@ -5,7 +5,7 @@ VERSION="49.0"
 SOURCES="https://gitlab.gnome.org/GNOME/xdg-desktop-portal-gnome/-/archive/$VERSION/xdg-desktop-portal-gnome-$VERSION.tar.gz"
 DEPENDS="gnome-desktop gnome-keyring libadwaita xdg-desktop-portal-gtk xdg-desktop-portal"
 BUILD_DEPENDS="meson"
-SHA256SUM="98b772b94a39eaef4cc2555ed2fd80839a42817fe1d1c8c1e06091f09c4146b3"
+SHA256SUM="3ea1fbec0d845c07802574d863aac47e383ca3c27b91320acecccb867ff06dc1"
 DESCRIPTION="GNOME backend for xdg-desktop-portal"
 
 build() {
