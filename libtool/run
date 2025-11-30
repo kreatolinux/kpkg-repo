@@ -5,7 +5,7 @@ VERSION="2.5.4"
 BUILD_DEPENDS="gmake"
 SOURCES="https://ftp.gnu.org/gnu/libtool/libtool-$VERSION.tar.gz"
 DEPENDS="m4"
-SHA256SUM="9322bd8f6bc848fda3e385899dd1934957169652acef716d19d19d24053abb95"
+SHA256SUM="da8ebb2ce4dcf46b90098daf962cffa68f4b4f62ea60f798d0ef12929ede6adf"
 DESCRIPTION="The GNU Portable Library Tool"
 build() {
     kpkgConfigure --prefix=/usr
