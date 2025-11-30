@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="gnome-desktop"
 RELEASE="1"
-VERSION="44.0"
+VERSION="44.4"
 SOURCES="https://download.gnome.org/sources/gnome-desktop/44/gnome-desktop-$VERSION.tar.xz" 
 BUILD_DEPENDS="meson python-setuptools"
 DEPENDS="gsettings-desktop-schemas gtk3 gtk4 iso-codes itstool libseccomp libxml2 xkeyboard-config gobject-introspection"
