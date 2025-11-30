@@ -5,7 +5,7 @@ VERSION="0.194"
 BUILD_DEPENDS="gmake"
 SOURCES="https://sourceware.org/elfutils/ftp/$VERSION/elfutils-$VERSION.tar.bz2"
 DEPENDS="zlib"
-SHA256SUM="39bd8f1a338e2b7cd4abc3ff11a0eddc6e690f69578a57478d8179b4148708c8"
+SHA256SUM="09e2ff033d39baa8b388a2d7fbc5390bfde99ae3b7c67c7daaf7433fbcf0f01e"
 DESCRIPTION="elfutils"
 build() {
     kpkgConfigure --prefix=/usr \
