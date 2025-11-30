@@ -5,7 +5,7 @@ VERSION="0.114"
 BUILD_DEPENDS="gmake"
 SOURCES="https://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-$VERSION.tar.gz"
 DEPENDS="dbus glib"
-SHA256SUM="7d550dccdfcd286e33895501829ed971eeb65c614e73aadb4a08aeef719b143a"
+SHA256SUM="c09c5c085b2a0e391b8ee7d783a1d63fe444e96717cc1814d61b5e8fc2827a7c"
 DESCRIPTION="GLib stuff for D-Bus"
 
 build() {
