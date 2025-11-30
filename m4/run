@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="m4"
 RELEASE="1"
-VERSION="1.4.19"
+VERSION="1.4.20"
 BUILD_DEPENDS="gmake"
 SOURCES="https://ftp.gnu.org/gnu/m4/m4-$VERSION.tar.gz"
 DEPENDS=""
