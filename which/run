@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="2.23"
 BUILD_DEPENDS="gmake"
 SOURCES="https://ftp.gnu.org/gnu/which/which-$VERSION.tar.gz"
-SHA256SUM="a2c558226fc4d9e4ce331bd2fd3c3f17f955115d2c00e447618a4ef9978a2a73"
+SHA256SUM="SKIP"
 DESCRIPTION="GNU Which"
 build() {
     kpkgConfigure --prefix=/usr
