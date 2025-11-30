@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="libei"
 RELEASE="2"
-VERSION="1.2.0"
+VERSION="1.4.1"
 SOURCES="https://gitlab.freedesktop.org/libinput/libei/-/archive/$VERSION/libei-$VERSION.tar.gz"
 DEPENDS="elogind libxkbcommon libevdev python-attr python-jinja2 gdk-pixbuf"
 BUILD_DEPENDS="meson"
