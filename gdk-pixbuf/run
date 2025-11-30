@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="gdk-pixbuf"
 RELEASE="2"
-VERSION="2.42.12"
+VERSION="2.44.4"
 SOURCES="https://gitlab.gnome.org/GNOME/gdk-pixbuf/-/archive/$VERSION/gdk-pixbuf-$VERSION.tar.gz"
 DEPENDS="glib libpng libjpeg-turbo libtiff shared-mime-info"
 BUILD_DEPENDS="meson gobject-introspection"
