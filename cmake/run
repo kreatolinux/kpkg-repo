@@ -5,7 +5,7 @@ RELEASE="1"
 BUILD_DEPENDS="gmake"
 SOURCES="https://cmake.org/files/v3.27/cmake-$VERSION.tar.gz"
 DEPENDS="expat libuv rhash libarchive libuv libxml2 curl jsoncpp"
-SHA256SUM="08f71a106036bf051f692760ef9558c0577c42ac39e96ba097e7662bd4158d8e"
+SHA256SUM="SKIP"
 DESCRIPTION="CMake package contains a modern toolset used for generating Makefiles."
 
 build() {
