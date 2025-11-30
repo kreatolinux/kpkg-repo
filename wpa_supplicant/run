@@ -5,7 +5,7 @@ VERSION="2.11"
 BUILD_DEPENDS="gmake"
 SOURCES="https://w1.fi/releases/wpa_supplicant-$VERSION.tar.gz"
 DEPENDS="openssl dbus libnl libxml2 readline pkgconf"
-SHA256SUM="20df7ae5154b3830355f8ab4269123a87affdea59fe74fe9292a91d0d7e17b2f"
+SHA256SUM="912ea06f74e30a8e36fbb68064d6cdff218d8d591db0fc5d75dee6c81ac7fc0a"
 DESCRIPTION="WPA client"
 
 build() {
