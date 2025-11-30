@@ -5,7 +5,7 @@ VERSION="6.17"
 SOURCES="https://mirrors.edge.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v$VERSION.tar.xz"
 BUILD_DEPENDS="python-setuptools gmake"
 DEPENDS="e2fsprogs eudev util-linux liblzo2"
-SHA256SUM="25684696bc5b5d07c98f19d4bf7a48b53ab94870ca4c468a68af3df9e2c8a35e"
+SHA256SUM="277d696c9d79713ff5afb53c7efebdcead2e6a6007789b1742ec411f4e4ca229"
 DESCRIPTION="BTRFS filesystem utilities"
 
 build() {
