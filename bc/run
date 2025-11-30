@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="bc"
 RELEASE="1"
-VERSION="1.07.1"
+VERSION="1.08.2"
 SOURCES="https://ftp.gnu.org/gnu/bc/bc-$VERSION.tar.gz"
 DEPENDS="readline"
 BUILD_DEPENDS="ed texinfo"
