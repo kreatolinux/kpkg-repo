@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="kmod"
 RELEASE="3"
-VERSION="33"
+VERSION="34.2"
 SOURCES="https://www.kernel.org/pub/linux/utils/kernel/kmod/kmod-$VERSION.tar.xz"
 DEPENDS="zlib"
 BUILD_DEPENDS="pkgconf gmake"
