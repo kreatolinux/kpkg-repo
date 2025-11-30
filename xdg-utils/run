@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="xdg-utils"
 RELEASE="1"
-VERSION="1.1.3"
+VERSION="1.2.1"
 SOURCES="https://portland.freedesktop.org/download/xdg-utils-$VERSION.tar.gz"
 SHA256SUM="d798b08af8a8e2063ddde6c9fa3398ca81484f27dec642c5627ffcaa0d4051d9"
 BUILD_DEPENDS="libxslt xmlto gmake"
