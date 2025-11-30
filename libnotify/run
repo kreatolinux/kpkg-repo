@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="libnotify"
 RELEASE="1"
-VERSION="0.8.3"
+VERSION="0.8.7"
 SOURCES="https://gitlab.gnome.org/GNOME/libnotify/-/archive/$VERSION/libnotify-$VERSION.tar.gz"
 BUILD_DEPENDS="meson"
 DEPENDS="gdk-pixbuf gobject-introspection"
