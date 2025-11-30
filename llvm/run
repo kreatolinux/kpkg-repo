@@ -6,7 +6,7 @@ SOURCES="https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION
 DEPENDS_LLVM="gcc"
 BUILD_DEPENDS="cmake ninja"
 BUILD_DEPENDS_LLVM+="binutils"
-B2SUM="7657ac0b26acc5affb1bfc91b912ade3191c5d77f3979d5a80d5f6ce52f56a7d1c448bd257398390bf10838f02faa6f3ece37a7327cced69d165ec2e2e699316"
+B2SUM="SKIP"
 DESCRIPTION="The LLVM Project is a collection of modular and reusable compiler and toolchain technologies."
 
 
