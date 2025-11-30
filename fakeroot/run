@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="fakeroot"
 RELEASE="1"
-VERSION="1.36"
+VERSION="1.37.1.2"
 BUILD_DEPENDS="gmake"
 SOURCES="https://deb.debian.org/debian/pool/main/f/fakeroot/fakeroot_$VERSION.orig.tar.gz"
 DEPENDS="libcap"
