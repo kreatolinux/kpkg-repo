@@ -5,7 +5,7 @@ VERSION="0.401"
 SOURCES="https://github.com/vcrhonek/hwdata/archive/refs/tags/v$VERSION.tar.gz"
 BUILD_DEPENDS="gmake"
 DEPENDS=""
-SHA256SUM="34813e6821a5dab0f663a363026e4d17e880e5f5f2ed49244c42263b226ff98a"
+SHA256SUM="e9ff93b9807cc014ed8f7f5cb5dc2c31e714058c82ddc59b7355f5c57c9b759e"
 DESCRIPTION="hwdata contains various hardware identification and configuration data, such as the pci.ids and usb.ids databases."
 
 build() {
