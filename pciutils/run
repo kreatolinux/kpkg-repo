@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="pciutils"
 RELEASE="1"
-VERSION="3.13.0"
+VERSION="3.14.0"
 BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/pciutils/pciutils/archive/refs/tags/v$VERSION.tar.gz"
 DEPENDS=""
