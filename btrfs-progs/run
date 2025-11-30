@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="btrfs-progs"
 RELEASE="1"
-VERSION="6.10.1"
+VERSION="6.17"
 SOURCES="https://mirrors.edge.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v$VERSION.tar.xz"
 BUILD_DEPENDS="python-setuptools gmake"
 DEPENDS="e2fsprogs eudev util-linux liblzo2"
