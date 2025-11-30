@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="elogind"
 RELEASE="1"
-VERSION="252.9"
+VERSION="255.22"
 SOURCES="https://github.com/elogind/elogind/archive/refs/tags/v$VERSION.tar.gz realpath.patch"
 BUILD_DEPENDS="meson"
 DEPENDS="dbus linux-pam python-jinja2 util-linux gperf eudev"
