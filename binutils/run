@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="binutils"
 RELEASE="3"
-VERSION="2.43.1"
+VERSION="2.45.1"
 BUILD_DEPENDS="gmake"
 SOURCES="https://ftp.gnu.org/gnu/binutils/binutils-$VERSION.tar.xz"
 DEPENDS="flex perl zlib bison texinfo file"
