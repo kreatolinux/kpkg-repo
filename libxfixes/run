@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="libxfixes"
 RELEASE="1"
-VERSION="6.0.1"
+VERSION="6.0.2"
 SOURCES="https://www.x.org/releases/individual/lib/libXfixes-$VERSION.tar.gz"
-SHA256SUM="e69eaa321173c748ba6e2f15c7cf8da87f911d3ea1b6af4b547974aef6366bec"
+SHA256SUM="041331b8e6e36038b3bf836785b6b175ec8515f964c9e4e3316b3bfed0f53ac7"
 DEPENDS="libx11"
 BUILD_DEPENDS="xorgproto gmake"
 DESCRIPTION="libxfixes"
