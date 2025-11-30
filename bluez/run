@@ -6,7 +6,7 @@ BUILD_DEPENDS="gmake"
 SOURCES="https://mirrors.edge.kernel.org/pub/linux/bluetooth/bluez-$VERSION.tar.gz"
 DEPENDS="sbc eudev dbus glib libical"
 BACKUP="etc/bluetooth/main.conf"
-SHA256SUM="c84ba5d5a44990daa09ca4f7d880e8fceecefdf93063d792729998464a47e3c4"
+SHA256SUM="7516f167f6aaabff9a48eac1515638fd349ecb884d254b558481b02520e7abe8"
 DESCRIPTION="Bluetooth protocol stack for Linux"
 
 build() {
