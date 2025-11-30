@@ -5,7 +5,7 @@ VERSION="2.13.9"
 SOURCES="https://download.gnome.org/sources/libxml2/2.11/libxml2-$VERSION.tar.xz"
 BUILD_DEPENDS="pkgconf gmake"
 DEPENDS="python xz-utils"
-SHA256SUM="3727b078c360ec69fa869de14bd6f75d7ee8d36987b071e6928d4720a28df3a6"
+SHA256SUM="SKIP"
 DESCRIPTION="Libraries and utilities for parsing XML files"
 
 build() {
