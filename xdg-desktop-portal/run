@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="xdg-desktop-portal"
 RELEASE="1"
-VERSION="1.18.2"
+VERSION="1.20.3"
 SOURCES="https://github.com/flatpak/xdg-desktop-portal/releases/download/$VERSION/xdg-desktop-portal-$VERSION.tar.xz"
 DEPENDS="glib flatpak bubblewrap geoclue gdk-pixbuf fuse pipewire json-glib"
 BUILD_DEPENDS="meson"
