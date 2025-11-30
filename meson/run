@@ -5,7 +5,7 @@ VERSION="1.9.1"
 SOURCES="https://github.com/mesonbuild/meson/releases/download/$VERSION/meson-$VERSION.tar.gz"
 BUILD_DEPENDS="python-pip"
 DEPENDS="python samurai"
-B2SUM="7ccdb3bf3f701fc787fabf91413db8301a8658b89e08c1d712711bd35845dc2468211e4b666cf46ad68ad9462e62b12b62d60c3767a2804f9b695b4390bb8235"
+B2SUM="a4d1894636ee61fa0101153f07d53717d34ba9de620b69becf669e06dc09a85874b4c5d619a509347c97e4112502a431affecccc5faf96464b072b5563247b9e"
 DESCRIPTION="Next generation build system"
 
 package() {
