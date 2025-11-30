@@ -5,7 +5,7 @@ VERSION="4.7.4"
 BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/plougher/squashfs-tools/archive/refs/tags/$VERSION.tar.gz"
 DEPENDS=""
-SHA256SUM="94201754b36121a9f022a190c75f718441df15402df32c2b520ca331a107511c"
+SHA256SUM="91c49f9a1ed972ad00688a38222119e2baf49ba74cf5fda05729a79d7d59d335"
 DESCRIPTION="Tools for managing SquashFS"
 
 build() {
