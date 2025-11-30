@@ -5,7 +5,7 @@ VERSION="1.26.8"
 SOURCES="https://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-$VERSION.tar.xz"
 BUILD_DEPENDS="meson gobject-introspection"
 DEPENDS="alsa-lib gdk-pixbuf gtk3 gstreamer iso-codes libgudev libjpeg-turbo libpng libogg libvorbis mesa pango wayland-protocols libx11"
-SHA256SUM="edd4338b45c26a9af28c0d35aab964a024c3884ba6f520d8428df04212c8c93a"
+SHA256SUM="513cace4b02cb183ee47665d64bb2a25088abb6678c4cc57bb100b841add746b"
 DESCRIPTION="gst-plugins-base"
 
 build() {
