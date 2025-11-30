@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="lcms2"
 RELEASE="1"
-VERSION="2.15"
+VERSION="2.17"
 SOURCES="https://github.com/mm2/Little-CMS/releases/download/lcms$VERSION/lcms2-$VERSION.tar.gz"
 BUILD_DEPENDS="meson"
 DEPENDS="libjpeg-turbo"
