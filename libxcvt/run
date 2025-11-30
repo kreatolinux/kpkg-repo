@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="libxcvt"
 RELEASE="1"
-VERSION="0.1.2"
+VERSION="0.1.3"
 SOURCES="https://www.x.org/releases/individual/lib/libxcvt-$VERSION.tar.xz"
 BUILD_DEPENDS="meson"
 SHA256SUM="0561690544796e25cfbd71806ba1b0d797ffe464e9796411123e79450f71db38"
