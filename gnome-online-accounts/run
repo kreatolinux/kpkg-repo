@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="gnome-online-accounts"
 RELEASE="2"
-VERSION="3.48.0"
+VERSION="3.56.2"
 SOURCES="https://gitlab.gnome.org/GNOME/gnome-online-accounts/-/archive/$VERSION/gnome-online-accounts-$VERSION.tar.gz"
 BUILD_DEPENDS="meson vala gobject-introspection webkitgtk3"
 DEPENDS="json-glib rest"
