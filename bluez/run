@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="bluez"
 RELEASE="1"
-VERSION="5.78"
+VERSION="5.85"
 BUILD_DEPENDS="gmake"
 SOURCES="https://mirrors.edge.kernel.org/pub/linux/bluetooth/bluez-$VERSION.tar.gz"
 DEPENDS="sbc eudev dbus glib libical"
