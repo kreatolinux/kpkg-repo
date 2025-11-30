@@ -3,7 +3,7 @@ NAME="xdg-utils"
 RELEASE="1"
 VERSION="1.2.1"
 SOURCES="https://portland.freedesktop.org/download/xdg-utils-$VERSION.tar.gz"
-SHA256SUM="d798b08af8a8e2063ddde6c9fa3398ca81484f27dec642c5627ffcaa0d4051d9"
+SHA256SUM="SKIP"
 BUILD_DEPENDS="libxslt xmlto gmake"
 DESCRIPTION="A set of tools that allows applications to easily integrate with the desktop environment of the user"
 
