@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="evolution-data-server"
 RELEASE="1"
-VERSION="3.50.1"
+VERSION="3.58.2"
 SOURCES="https://download.gnome.org/sources/evolution-data-server/3.50/evolution-data-server-$VERSION.tar.xz"
 BUILD_DEPENDS="cmake ninja gobject-introspection vala"
 DEPENDS="libical libsecret nss sqlite libgweather gtk3 libcanberra gnome-online-accounts webkitgtk3"
