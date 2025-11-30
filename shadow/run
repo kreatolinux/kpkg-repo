@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="shadow"
 RELEASE="3"
-VERSION="4.16.0"
+VERSION="4.18.0"
 SOURCES="https://github.com/shadow-maint/shadow/releases/download/4.16.0/shadow-4.16.0.tar.xz"
 BUILD_DEPENDS="pkgconf gmake"
 DEPENDS="libxcrypt linux-pam libbsd"
