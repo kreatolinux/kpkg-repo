@@ -5,7 +5,7 @@ VERSION="8.17.0"
 BUILD_DEPENDS="gmake"
 SOURCES="https://curl.haxx.se/download/curl-$VERSION.tar.xz"
 DEPENDS="nghttp2 zlib nghttp2"
-SHA256SUM="db59cf0d671ca6e7f5c2c5ec177084a33a79e04c97e71cf183a5cdea235054eb"
+SHA256SUM="955f6e729ad6b3566260e8fef68620e76ba3c31acf0a18524416a185acf77992"
 DESCRIPTION="command line tool and library for transferring data with URLs"
 
 build() {
