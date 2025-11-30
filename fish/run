@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="fish"
 RELEASE="1"
-VERSION="3.7.1"
+VERSION="4.0.2"
 BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/fish-shell/fish-shell/releases/download/$VERSION/fish-$VERSION.tar.xz"
 DEPENDS="cmake ncurses pcre gettext"
