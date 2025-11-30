@@ -5,7 +5,7 @@ VERSION="1.12.2"
 SOURCES="https://xkbcommon.org/download/libxkbcommon-$VERSION.tar.xz"
 DEPENDS="wayland wayland-protocols libxcb libxml2 xkeyboard-config"
 BUILD_DEPENDS="meson"
-SHA256SUM="65782f0a10a4b455af9c6baab7040e2f537520caa2ec2092805cdfd36863b247"
+SHA256SUM="SKIP"
 DESCRIPTION="Keyboard compiler and support library"
 
 build() {
