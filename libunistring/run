@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="libunistring"
 RELEASE="1"
-VERSION="1.3"
+VERSION="1.4.1"
 BUILD_DEPENDS="gmake"
 SOURCES="https://ftp.gnu.org/gnu/libunistring/libunistring-$VERSION.tar.xz"
 SHA256SUM="f245786c831d25150f3dfb4317cda1acc5e3f79a5da4ad073ddca58886569527"
