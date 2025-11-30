@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="glib-networking"
 RELEASE="1"
-VERSION="2.78.0"
+VERSION="2.80.1"
 SOURCES="https://download.gnome.org/sources/glib-networking/2.78/glib-networking-$VERSION.tar.xz"
 BUILD_DEPENDS="meson"
 DEPENDS="glib gnutls gsettings-desktop-schemas ca-certificates"
