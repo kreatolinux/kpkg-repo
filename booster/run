@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="booster"
 RELEASE="1"
-VERSION="0.11"
+VERSION="0.12"
 SOURCES="https://github.com/anatol/booster/archive/refs/tags/$VERSION.tar.gz"
 BUILD_DEPENDS="go"
 DEPENDS=""
-SHA256SUM="2f111b1729143c38ec287e5567ae9f57e0fb8118cc11afa22657da8ac9b0105a"
+SHA256SUM="a2515923e919c99b69ce50f7828aa5df6e7ff80ea145c93c5a8c981d015d8bd4"
 DESCRIPTION="fast and secure initramfs generator"
 
 build() {
