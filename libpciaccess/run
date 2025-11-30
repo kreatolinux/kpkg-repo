@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="libpciaccess"
 RELEASE="1"
-VERSION="0.17"
+VERSION="0.18.1"
 BUILD_DEPENDS="gmake"
 SOURCES="https://x.org/releases/individual/lib/libpciaccess-$VERSION.tar.gz"
 DEPENDS=""
