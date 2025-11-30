@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="harfbuzz"
 RELEASE="3"
-VERSION="9.0.0"
+VERSION="12.2.0"
 SOURCES="https://github.com/harfbuzz/harfbuzz/releases/download/$VERSION/harfbuzz-$VERSION.tar.xz" 
 BUILD_DEPENDS="meson ninja"
 DEPENDS="freetype icu gobject-introspection glib"
