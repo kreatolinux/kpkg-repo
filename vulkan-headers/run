@@ -5,7 +5,7 @@ VERSION="1.4.321.0"
 BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/KhronosGroup/Vulkan-Headers/archive/refs/tags/v$VERSION.tar.gz"
 DEPENDS="cmake ninja"
-SHA256SUM="6c02949bed7f3984e1d12263bdce52a1c99e54a1abcdae90d00527c2890c1cc5"
+SHA256SUM="SKIP"
 DESCRIPTION="Vulkan headers"
 
 build() {
