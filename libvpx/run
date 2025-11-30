@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="1.15.2"
 SOURCES="https://github.com/webmproject/libvpx/archive/v$VERSION/libvpx-$VERSION.tar.gz"
 BUILD_DEPENDS="nasm diffutils gmake"
-SHA256SUM="e935eded7d81631a538bfae703fd1e293aad1c7fd3407ba00440c95105d2011e"
+SHA256SUM="26fcd3db88045dee380e581862a6ef106f49b74b6396ee95c2993a260b4636aa"
 DESCRIPTION="Reference implementation of the VP8 Codec"
 
 build() {
