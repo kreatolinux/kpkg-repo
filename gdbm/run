@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="gdbm"
 RELEASE="1"
-VERSION="1.24"
+VERSION="1.26"
 BUILD_DEPENDS="gmake"
 SOURCES="https://ftp.gnu.org/gnu/gdbm/gdbm-$VERSION.tar.gz"
 SHA256SUM="695e9827fdf763513f133910bc7e6cfdb9187943a4fec943e57449723d2b8dbf"
