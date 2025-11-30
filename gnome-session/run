@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="gnome-session"
 RELEASE="1"
-VERSION="45.0"
+VERSION="48.0"
 SOURCES="https://gitlab.gnome.org/GNOME/gnome-session/-/archive/$VERSION/gnome-session-$VERSION.tar.gz"
 BUILD_DEPENDS="meson"
 DEPENDS="elogind xtrans libsm libx11 libxcomposite libice libglvnd gnome-desktop json-glib mesa upower"
