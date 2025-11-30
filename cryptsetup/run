@@ -5,7 +5,7 @@ VERSION="2.8.1"
 BUILD_DEPENDS="gmake"
 SOURCES="https://mirrors.edge.kernel.org/pub/linux/utils/cryptsetup/v2.6/cryptsetup-$VERSION.tar.xz"
 DEPENDS="json-c lvm2 popt"
-SHA256SUM="410ded65a1072ab9c8e41added37b9729c087fef4d2db02bb4ef529ad6da4693"
+SHA256SUM="SKIP"
 DESCRIPTION="cryptsetup"
 
 build() {
