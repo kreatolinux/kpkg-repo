@@ -5,7 +5,7 @@ VERSION="4.12.1"
 BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/ccache/ccache/archive/refs/tags/v$VERSION.tar.gz"
 DEPENDS="cmake gcc libzstd"
-SHA256SUM="d22a4e59b58cdb3af5dd2a5a8fa3c40179bf35c985d17bc9bdeed2cffa3265be"
+SHA256SUM="7250b1d6b9f598049d0a3802b3195c580d7c0b1e9a708d8a9bfbfaf12cbc5fcd"
 DESCRIPTION="ccache - a fast compiler cache"
 build() {
     mkdir build && cd build || exit 1
