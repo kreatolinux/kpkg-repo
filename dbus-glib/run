@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="dbus-glib"
 RELEASE="1"
-VERSION="0.112"
+VERSION="0.114"
 BUILD_DEPENDS="gmake"
 SOURCES="https://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-$VERSION.tar.gz"
 DEPENDS="dbus glib"
