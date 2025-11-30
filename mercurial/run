@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="mercurial"
 RELEASE="1"
-VERSION="6.9.1"
+VERSION="7.1.2"
 SOURCES="https://www.mercurial-scm.org/release/mercurial-$VERSION.tar.gz"
 DEPENDS="python"
 BUILD_DEPENDS="gmake python-setuptools"
