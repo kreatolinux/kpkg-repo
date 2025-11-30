@@ -5,7 +5,7 @@ VERSION="1.4.20"
 BUILD_DEPENDS="gmake"
 SOURCES="https://ftp.gnu.org/gnu/m4/m4-$VERSION.tar.gz"
 DEPENDS=""
-SHA256SUM="SKIP"
+SHA256SUM="6ac4fc31ce440debe63987c2ebbf9d7b6634e67a7c3279257dc7361de8bdb3ef"
 DESCRIPTION="GNU m4"
 
 build() {
