@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="file"
 RELEASE="1"
-VERSION="5.45"
+VERSION="5.46"
 BUILD_DEPENDS="gmake"
 SOURCES="https://astron.com/pub/file/file-$VERSION.tar.gz"
 DEPENDS=""
