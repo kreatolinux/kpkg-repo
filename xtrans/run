@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="xtrans"
 RELEASE="1"
-VERSION="1.5.2"
+VERSION="1.6.0"
 BUILD_DEPENDS="gmake"
 SOURCES="https://www.x.org/releases/individual/lib/xtrans-$VERSION.tar.xz"
 SHA256SUM="5c5cbfe34764a9131d048f03c31c19e57fb4c682d67713eab6a65541b4dff86c"
