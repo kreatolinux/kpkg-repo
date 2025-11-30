@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="upower"
 RELEASE="1"
-VERSION="1.90.2"
+VERSION="1.91.0"
 SOURCES="https://gitlab.freedesktop.org/upower/upower/-/archive/v$VERSION/upower-v$VERSION.tar.gz"
 BUILD_DEPENDS="meson"
 DEPENDS="libgudev eudev gobject-introspection"
