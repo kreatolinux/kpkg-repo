@@ -1,12 +1,12 @@
 #!/bin/sh
 NAME="appstream"
 RELEASE="1"
-VERSION="1.0.3"
+VERSION="1.1.1"
 SOURCES="https://github.com/ximion/appstream/archive/refs/tags/v$VERSION.tar.gz"
 BUILD_DEPENDS="meson"
 DEPENDS="glib itstool libxslt libxml2 libxmlb curl gobject-introspection libfyaml gperf"
 OPTDEPENDS="systemd: For systemd support"
-SHA256SUM="dd7222519b5d855124fa803ce82a7cbf090ac6b2e44a5bc515e729b1f20a63ae"
+SHA256SUM="1615468b8d1e5edb9a9081f81841c8a22439c64bee5f02b008b3b8d5a5204c91"
 DESCRIPTION="Tools and libraries to work with AppStream metadata"
 
 build() {
