@@ -5,7 +5,7 @@ VERSION="49.0"
 SOURCES="https://github.com/GNOME/gnome-tweaks/archive/refs/tags/$VERSION.tar.gz"
 BUILD_DEPENDS="meson"
 DEPENDS="pygobject python gnome-settings-daemon glib gtk3 gnome-desktop libhandy pango gsettings-desktop-schemas gnome-shell mutter"
-SHA256SUM="8bfa7dc1b4d4a7988269fd9424414cd1a630f4f6c7634c653efc32c6226c47c2"
+SHA256SUM="a9ca755f5bc1540c8970f02dfcaf7782e2efb31314ae19e8d6667dde2548d1a5"
 DESCRIPTION="GNOME Tweaks app"
 
 build() {
