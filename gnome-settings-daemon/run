@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="gnome-settings-daemon"
 RELEASE="1"
-VERSION="45.0"
+VERSION="48.1"
 SOURCES="https://gitlab.gnome.org/GNOME/gnome-settings-daemon/-/archive/$VERSION/gnome-settings-daemon-$VERSION.tar.gz"
 BUILD_DEPENDS="meson"
 DEPENDS="alsa-lib networkmanager colord fontconfig gcr-4 geoclue geocode-glib gnome-desktop lcms2 libcanberra libgweather libnotify libwacom pulseaudio upower wayland gnome-session"
