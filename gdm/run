@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="gdm"
 RELEASE="1"
-VERSION="44.1"
+VERSION="48.0"
 SOURCES="https://gitlab.gnome.org/GNOME/gdm/-/archive/$VERSION/gdm-$VERSION.tar.gz"
 DEPENDS="accountsservice dconf dbus libcanberra linux-pam gnome-session elogind"
 BUILD_DEPENDS="meson"
