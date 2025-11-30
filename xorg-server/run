@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="xorg-server"
 RELEASE="1"
-VERSION="21.1.9"
+VERSION="21.1.21"
 SOURCES="https://www.x.org/releases/individual/xserver/xorg-server-$VERSION.tar.gz"
 SHA256SUM="455ac22c411b3e74adb4d1b3fd48b9037b6b5ba9260247c59b669f67a08fd26e"
 DEPENDS="libdrm libtirpc xorg-setxkbmap xorg-font-util libx11 libxrender libxshmfence libepoxy dbus libglvnd libpciaccess libxcvt libxfont2 libxshmfence libnettle pixman"
