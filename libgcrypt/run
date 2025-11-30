@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="libgcrypt"
 RELEASE="1"
-VERSION="1.11.0"
+VERSION="1.11.2"
 BUILD_DEPENDS="gmake"
 SOURCES="https://gnupg.org/ftp/gcrypt/libgcrypt/libgcrypt-$VERSION.tar.bz2"
 DEPENDS="libgpg-error"
-SHA256SUM="09120c9867ce7f2081d6aaa1775386b98c2f2f246135761aae47d81f58685b9c"
+SHA256SUM="6ba59dd192270e8c1d22ddb41a07d95dcdbc1f0fb02d03c4b54b235814330aac"
 DESCRIPTION="A general purpose cryptographic library"
 
 build() {
