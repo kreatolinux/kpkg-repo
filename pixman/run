@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="pixman"
 RELEASE="1"
-VERSION="0.44.0"
+VERSION="0.46.4"
 SOURCES="https://www.cairographics.org/releases/pixman-$VERSION.tar.gz"
 BUILD_DEPENDS="meson"
 SHA256SUM="89a4c1e1e45e0b23dffe708202cb2eaffde0fe3727d7692b2e1739fec78a7dac"
