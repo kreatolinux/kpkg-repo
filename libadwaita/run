@@ -5,7 +5,7 @@ VERSION="1.8.2"
 SOURCES="https://gitlab.gnome.org/GNOME/libadwaita/-/archive/$VERSION/libadwaita-$VERSION.tar.gz"
 DEPENDS="gtk4"
 BUILD_DEPENDS="meson vala sassc"
-SHA256SUM="a54fd75d06d5ce2a66ee34ed253b5b1244a783b1548eb4bc1907a334f4a846d2"
+SHA256SUM="4d1c92c1a955c9947c5788773733523ae927b742191ea5f881ad358188391771"
 DESCRIPTION="GNOME ui stuff"
 
 build() {
