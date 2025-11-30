@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="lvm2"
 RELEASE="1"
-VERSION="2.03.24"
+VERSION="2.03.35"
 BUILD_DEPENDS="gmake"
 SOURCES="https://mirrors.kernel.org/sourceware/lvm2/LVM2.$VERSION.tgz"
 DEPENDS="libaio util-linux"
