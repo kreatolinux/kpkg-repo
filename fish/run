@@ -5,7 +5,7 @@ VERSION="4.0.2"
 BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/fish-shell/fish-shell/releases/download/$VERSION/fish-$VERSION.tar.xz"
 DEPENDS="cmake ncurses pcre gettext"
-SHA256SUM="614c9f5643cd0799df391395fa6bbc3649427bb839722ce3b114d3bbc1a3b250"
+SHA256SUM="6e1ecdb164285fc057b2f35acbdc20815c1623099e7bb47bbfc011120adf7e83"
 DESCRIPTION="The user-friendly command line shell."
 
 build() {
