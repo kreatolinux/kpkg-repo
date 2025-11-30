@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="rhash"
 RELEASE="1"
-VERSION="1.4.5"
+VERSION="1.4.6"
 BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/rhash/RHash/archive/refs/tags/v$VERSION.tar.gz"
-SHA256SUM="6db837e7bbaa7c72c5fd43ca5af04b1d370c5ce32367b9f6a1f7b49b2338c09a"
+SHA256SUM="9f6019cfeeae8ace7067ad22da4e4f857bb2cfa6c2deaa2258f55b2227ec937a"
 DESCRIPTION="Great utility for computing hash sums"
 
 build() {
