@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="libxau"
 RELEASE="1"
-VERSION="1.0.11"
+VERSION="1.0.12"
 BUILD_DEPENDS="gmake"
 SOURCES="https://www.x.org/releases/individual/lib/libXau-$VERSION.tar.xz"
 SHA256SUM="f3fa3282f5570c3f6bd620244438dbfbdd580fc80f02f549587a0f8ab329bbeb"
