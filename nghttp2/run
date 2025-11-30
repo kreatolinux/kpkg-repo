@@ -5,7 +5,7 @@ VERSION="1.68.0"
 BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/nghttp2/nghttp2/releases/download/v$VERSION/nghttp2-$VERSION.tar.xz"
 DEPENDS="zlib python"
-SHA256SUM="88bb94c9e4fd1c499967f83dece36a78122af7d5fb40da2019c56b9ccc6eb9dd"
+SHA256SUM="5511d3128850e01b5b26ec92bf39df15381c767a63441438b25ad6235def902c"
 DESCRIPTION="An implementation of the HTTP version 2 in C"
 
 build() {
