@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="libical"
 RELEASE="1"
-VERSION="3.0.18"
+VERSION="3.0.20"
 SOURCES="https://github.com/libical/libical/releases/download/v$VERSION/libical-$VERSION.tar.gz"
 DEPENDS="glib"
 BUILD_DEPENDS="cmake gobject-introspection vala"
