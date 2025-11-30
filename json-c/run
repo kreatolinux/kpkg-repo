@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="json-c"
 RELEASE="1"
-VERSION="0.17"
+VERSION="0.18"
 BUILD_DEPENDS="gmake"
 SOURCES="https://s3.amazonaws.com/json-c_releases/releases/json-c-$VERSION.tar.gz"
 DEPENDS="cmake"
-SHA256SUM="7550914d58fb63b2c3546f3ccfbe11f1c094147bd31a69dcd23714d7956159e6"
+SHA256SUM="876ab046479166b869afc6896d288183bbc0e5843f141200c677b3e8dfb11724"
 DESCRIPTION="Construct JSON objects in C"
 
 build() {
