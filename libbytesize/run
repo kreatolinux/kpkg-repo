@@ -5,7 +5,7 @@ VERSION="2.11"
 BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/storaged-project/libbytesize/releases/download/$VERSION/libbytesize-$VERSION.tar.gz"
 DEPENDS="python"
-SHA256SUM="bd0ea11ece2c2423382a7c4534679050e72a8ee91b4fdea3a7cc85199846d0c3"
+SHA256SUM="1f6ce157750ed1201ce83edd3c23d997a615c7da30f9a0e5bb44635f66768d81"
 DESCRIPTION="libbytesize"
 
 build() {
