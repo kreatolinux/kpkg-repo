@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="libogg"
 RELEASE="1"
-VERSION="1.3.5"
+VERSION="1.3.6"
 BUILD_DEPENDS="gmake"
 SOURCES="https://downloads.xiph.org/releases/ogg/libogg-$VERSION.tar.xz"
 SHA256SUM="c4d91be36fc8e54deae7575241e03f4211eb102afb3fc0775fbbc1b740016705"
