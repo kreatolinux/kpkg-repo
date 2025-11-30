@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="wpa_supplicant"
 RELEASE="3"
-VERSION="2.10"
+VERSION="2.11"
 BUILD_DEPENDS="gmake"
 SOURCES="https://w1.fi/releases/wpa_supplicant-$VERSION.tar.gz"
 DEPENDS="openssl dbus libnl libxml2 readline pkgconf"
