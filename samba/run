@@ -5,7 +5,7 @@ VERSION="4.22.6"
 SOURCES="https://download.samba.org/pub/samba/stable/samba-$VERSION.tar.gz"
 DEPENDS="gnutls jansson dbus fuse gpgme icu libtasn linux-pam"
 BUILD_DEPENDS="perl-parse-yapp rpcsvc-proto libtirpc perl-json gmake"
-SHA256SUM="9e63f0505e1c631f1db0b7a9349a51e925c026ca03af3fd5d812228bb597d393"
+SHA256SUM="8e6beb0cce87fb3c763af94c2dc21fd47b8fd02d46b3cb1deb2a72df9259c425"
 DESCRIPTION="samba"
 
 build() {
