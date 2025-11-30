@@ -6,7 +6,7 @@ SOURCES="https://gitlab.gnome.org/GNOME/gdk-pixbuf/-/archive/$VERSION/gdk-pixbuf
 DEPENDS="glib libpng libjpeg-turbo libtiff shared-mime-info"
 BUILD_DEPENDS="meson gobject-introspection"
 OPTDEPENDS="webp-pixbuf-loader: For webp support (runtime)"
-SHA256SUM="75ef79de653822ac9c35bb89c15bae09d592bf9fd16659fd0b19b76c4e6623a4"
+SHA256SUM="31af288aa94d0ab0989ad4fd0c0e845efdea86bcbf4df597386297bb96722c9c"
 DESCRIPTION="GdkPixbuf is a library that loads image data in various formats and stores it as linear buffers in memory"
 build() {
     meson setup \
