@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="libblockdev"
 RELEASE="2"
-VERSION="3.0.4"
+VERSION="3.4.0"
 BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/storaged-project/libblockdev/releases/download/$VERSION-1/libblockdev-$VERSION.tar.gz"
 DEPENDS="glib keyutils cryptsetup lvm2 e2fsprogs eudev util-linux libbytesize gobject-introspection libnvme"
