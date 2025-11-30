@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="1.6.0"
 BUILD_DEPENDS="gmake"
 SOURCES="https://www.x.org/releases/individual/lib/xtrans-$VERSION.tar.xz"
-SHA256SUM="SKIP"
+SHA256SUM="faafea166bf2451a173d9d593352940ec6404145c5d1da5c213423ce4d359e92"
 DESCRIPTION="X transport library"
 
 build() {
