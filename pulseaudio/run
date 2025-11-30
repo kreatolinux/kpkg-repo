@@ -6,7 +6,7 @@ SOURCES="https://www.freedesktop.org/software/pulseaudio/releases/pulseaudio-$VE
 BUILD_DEPENDS="meson"
 DEPENDS="libsndfile libtool gdbm alsa-lib dbus elogind glib"
 OPTDEPENDS="bluez: for Bluetooth support"
-SHA256SUM="dbb89a4c4a5f30f03b2c8c95de864ad53f7a40d4fdee29063f966cf66cfa800a"
+SHA256SUM="053794d6671a3e397d849e478a80b82a63cb9d8ca296bd35b73317bb5ceb87b5"
 DESCRIPTION="Sound system"
 
 build() {
