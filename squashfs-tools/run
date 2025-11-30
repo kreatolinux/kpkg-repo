@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="squashfs-tools"
 RELEASE="1"
-VERSION="4.6.1"
+VERSION="4.7.4"
 BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/plougher/squashfs-tools/archive/refs/tags/$VERSION.tar.gz"
 DEPENDS=""
