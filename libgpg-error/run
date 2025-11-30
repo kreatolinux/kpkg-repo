@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="libgpg-error"
 RELEASE="1"
-VERSION="1.51"
+VERSION="1.55"
 BUILD_DEPENDS="gmake"
 SOURCES="https://gnupg.org/ftp/gcrypt/libgpg-error/libgpg-error-$VERSION.tar.bz2"
 DEPENDS=""
