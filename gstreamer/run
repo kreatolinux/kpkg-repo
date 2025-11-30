@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="gstreamer"
 RELEASE="1"
-VERSION="1.24.6"
+VERSION="1.26.8"
 SOURCES="https://gstreamer.freedesktop.org/src/gstreamer/gstreamer-$VERSION.tar.xz"
 BUILD_DEPENDS="meson gobject-introspection python-setuptools"
 DEPENDS="glib"
