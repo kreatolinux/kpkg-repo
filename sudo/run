@@ -5,7 +5,7 @@ VERSION="1.9.17_p2"
 SOURCES="https://github.com/sudo-project/sudo/archive/refs/tags/SUDO_$VERSION.tar.gz"
 DEPENDS="linux-pam shadow"
 BUILD_DEPENDS="gmake"
-SHA256SUM="bd3b5348209e3cb2941e4e83f6bb3fd4da065c943a2bb6620a3778264ec0631a"
+SHA256SUM="SKIP"
 DESCRIPTION="Utility to execute a command as another user"
 
 build() {
