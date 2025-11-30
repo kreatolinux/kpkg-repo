@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="libwebp"
 RELEASE="1"
-VERSION="1.4.0"
+VERSION="1.6.0"
 BUILD_DEPENDS="gmake"
 SOURCES="https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-$VERSION.tar.gz"
 DEPENDS="libjpeg-turbo libpng libtiff"
