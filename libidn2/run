@@ -5,7 +5,7 @@ VERSION="2.3.8"
 BUILD_DEPENDS="gmake"
 SOURCES="https://ftp.gnu.org/gnu/libidn/libidn2-$VERSION.tar.gz"
 DEPENDS="libunistring"
-SHA256SUM="4c21a791b610b9519b9d0e12b8097bf2f359b12f8dd92647611a929e6bfd7d64"
+SHA256SUM="f557911bf6171621e1f72ff35f5b1825bb35b52ed45325dcdee931e5d3c0787a"
 DESCRIPTION="libidn2"
 build() {
     kpkgConfigure --prefix=/usr \
