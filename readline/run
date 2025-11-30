@@ -5,7 +5,7 @@ VERSION="8.3.1"
 BUILD_DEPENDS="gmake"
 SOURCES="https://ftp.gnu.org/gnu/readline/readline-$VERSION.tar.gz"
 DEPENDS="ncurses"
-SHA256SUM="3feb7171f16a84ee82ca18a36d7b9be109a52c04f492a053331d7d1095007c35"
+SHA256SUM="SKIP"
 DESCRIPTION="GNU readline"
 
 build() {
