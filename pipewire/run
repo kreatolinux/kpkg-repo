@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="pipewire"
 RELEASE="2"
-VERSION="1.2.5"
+VERSION="1.4.9"
 SOURCES="https://github.com/PipeWire/pipewire/archive/$VERSION/pipewire-$VERSION.tar.gz"
 DEPENDS="glib"
 OPTDEPENDS="dbus: for D-Bus support"
