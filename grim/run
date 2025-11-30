@@ -2,10 +2,10 @@
 NAME="grim"
 RELEASE="1"
 VERSION="1.5.0"
-SOURCES="https://git.sr.ht/~emersion/grim/refs/download/v1.4.1/grim-1.4.1.tar.gz"
+SOURCES="https://gitlab.freedesktop.org/emersion/grim/-/archive/v$VERSION/grim-v$VERSION.tar.gz"
 DEPENDS="wayland wayland-protocols pixman libpng"
 BUILD_DEPENDS="meson"
-SHA256SUM="93dbbc6608ae541a209c82d7e3cf1035d93844b99d2e40592d0b355f088d9ac5"
+SHA256SUM="9e72a98f7621b1f5741b405b8dbd447acf7d300ddb12667ec526db1ce6154eaa"
 DESCRIPTION="Grabs images from a Wayland compositor"
 build() {                                                                                                              
     meson --prefix=/usr build/                                                                                         
