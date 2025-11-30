@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="gjs"
 RELEASE="1"
-VERSION="1.78.3"
+VERSION="1.86.0"
 SOURCES="https://gitlab.gnome.org/GNOME/gjs/-/archive/$VERSION/gjs-$VERSION.tar.gz"
 DEPENDS="glib js115 libffi cairo dbus gobject-introspection readline dconf"
 BUILD_DEPENDS="meson"
