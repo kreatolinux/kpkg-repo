@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="sudo"
 RELEASE="2"
-VERSION="1_9_15p4"
+VERSION="1.9.17_p2"
 SOURCES="https://github.com/sudo-project/sudo/archive/refs/tags/SUDO_$VERSION.tar.gz"
 DEPENDS="linux-pam shadow"
 BUILD_DEPENDS="gmake"
