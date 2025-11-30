@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="samba"
 RELEASE="1"
-VERSION="4.19.2"
+VERSION="4.22.6"
 SOURCES="https://download.samba.org/pub/samba/stable/samba-$VERSION.tar.gz"
 DEPENDS="gnutls jansson dbus fuse gpgme icu libtasn linux-pam"
 BUILD_DEPENDS="perl-parse-yapp rpcsvc-proto libtirpc perl-json gmake"
