@@ -5,7 +5,7 @@ VERSION="49.1"
 SOURCES="https://gitlab.gnome.org/GNOME/gsettings-desktop-schemas/-/archive/$VERSION/gsettings-desktop-schemas-$VERSION.tar.gz"
 BUILD_DEPENDS="meson ninja"
 DEPENDS="cantarell-fonts gobject-introspection"
-SHA256SUM="031cddec5d8f44a67d7a3ecf0025d1d95e1aa2166ebd5b96e05d21da31e360f1"
+SHA256SUM="53fbcdc5aa2af27d33113e438c6f37a187ad1968a41e74e5ff0a1c30a3caa55e"
 DESCRIPTION="Contains a collection of GSettings schemas for
 settings shared by various components of a desktop"
 
