@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="nss"
 RELEASE="1"
-VERSION="3.96.1"
+VERSION="3.118.1"
 SOURCES="https://archive.mozilla.org/pub/security/nss/releases/NSS_3_96_1_RTM/src/nss-3.96.1.tar.gz bundle.sh certdata2pem.py"
 BUILD_DEPENDS="python gmake"
 EXTRACT="false"
