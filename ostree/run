@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="ostree"
 RELEASE="2"
-VERSION="2024.6"
+VERSION="2025.6"
 BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/ostreedev/ostree/releases/download/v$VERSION/libostree-$VERSION.tar.xz"
 DEPENDS="xz-utils fuse e2fsprogs gpgme libarchive curl glib libsoup"
