@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="rhash"
 RELEASE="1"
-VERSION="1.4.5"
+VERSION="1.4.6"
 BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/rhash/RHash/archive/refs/tags/v$VERSION.tar.gz"
 SHA256SUM="6db837e7bbaa7c72c5fd43ca5af04b1d370c5ce32367b9f6a1f7b49b2338c09a"
