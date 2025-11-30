@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="libtool"
 RELEASE="1"
-VERSION="2.5.3"
+VERSION="2.5.4"
 BUILD_DEPENDS="gmake"
 SOURCES="https://ftp.gnu.org/gnu/libtool/libtool-$VERSION.tar.gz"
 DEPENDS="m4"
