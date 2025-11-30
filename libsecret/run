@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="libsecret"
 RELEASE="1"
-VERSION="0.21.2"
+VERSION="0.21.7"
 SOURCES="https://download.gnome.org/sources/libsecret/0.21/libsecret-$VERSION.tar.xz"
 DEPENDS="glib libgcrypt gobject-introspection vala"
 BUILD_DEPENDS="meson"
-SHA256SUM="e4a341496a0815e64c8d3b8fabab33d7bae7efdeab77b843669731d5b181dcee"
+SHA256SUM="6b452e4750590a2b5617adc40026f28d2f4903de15f1250e1d1c40bfd68ed55e"
 DESCRIPTION="A GObject-based library for accessing the Secret Service API"
 
 build() {
