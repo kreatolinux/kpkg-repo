@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="cracklib"
 RELEASE="1"
-VERSION="2.9.11"
+VERSION="2.10.3"
 SOURCES="https://github.com/cracklib/cracklib/releases/download/v$VERSION/cracklib-$VERSION.tar.gz"
 BUILD_DEPENDS="autoconf automake libtool gmake"
-SHA256SUM="6213b986a5209fc0d4ca93734e349b8f66b36bfe9a3fae6eead14a15d82a68dc"
+SHA256SUM="877b823198eb29aa1778b16a70cad05f7b54b164b3bf7ab656fc326c393f4c85"
 DESCRIPTION="cracklib"
 
 build() {
