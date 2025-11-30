@@ -5,7 +5,7 @@ VERSION="49.1"
 SOURCES="https://gitlab.gnome.org/GNOME/gnome-shell/-/archive/$VERSION/gnome-shell-$VERSION.tar.gz"
 BUILD_DEPENDS="meson"
 DEPENDS="dconf gnome-autoar elogind adwaita-icon-theme dconf gdm gnome-backgrounds gnome-control-center libgweather telepathy-mission-control evolution-data-server gnome-bluetooth networkmanager desktop-file-utils gcr-4 gjs gnome-desktop ibus mutter polkit sassc startup-notification pipewire"
-SHA256SUM="cba0ec57785499ca3cd36abcae94a2148b5261250d3b91ee4cdf0384ffe94c3c"
+SHA256SUM="2ae904e71b8375dadb27a445c5a6e9c5f52a1875bec9182d5b3ffdc427b32724"
 DESCRIPTION="The GNOME shell"
 
 build() {
