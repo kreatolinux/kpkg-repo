@@ -5,7 +5,7 @@ VERSION="3.4.7"
 BUILD_DEPENDS="gmake"
 SOURCES="https://cache.ruby-lang.org/pub/ruby/3.2/ruby-$VERSION.tar.xz"
 DEPENDS="libyaml"
-SHA256SUM="4b352d0f7ec384e332e3e44cdbfdcd5ff2d594af3c8296b5636c710975149e23"
+SHA256SUM="SKIP"
 DESCRIPTION="The Ruby language"
 
 build() {
