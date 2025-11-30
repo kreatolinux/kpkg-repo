@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="2.46"
 SOURCES="https://www.x.org/archive//individual/data/xkeyboard-config/xkeyboard-config-$VERSION.tar.xz"
 BUILD_DEPENDS="meson"
-SHA256SUM="SKIP"
+SHA256SUM="10c58218fb60d08fb1f7b30304deb3ba47613195aa8a08a81f1972775ccc3640"
 DESCRIPTION="XKB data description files"
 
 build() {
