@@ -6,7 +6,7 @@ SOURCES="https://gitlab.gnome.org/GNOME/gnome-terminal/-/archive/$VERSION/gnome-
 BUILD_DEPENDS="meson"
 DEPENDS="vte util-linux jetbrains-mono gtk3 glib libhandy gsettings-desktop-schemas libxslt"
 OPTDEPENDS="nautilus: For nautilus integration"
-SHA256SUM="6c9f577dfe0679dd736674117ab827b4fddc2224728753a0079124b979b8fdf8"
+SHA256SUM="d47ceefa5f8f503281689098a188bea6dda65b81314aac35c26e71ce329ac8af"
 DESCRIPTION="GNOME Terminal"
 
 build() {
