@@ -5,7 +5,7 @@ VERSION="2.39.1"
 BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/rui314/mold/archive/refs/tags/v$VERSION.tar.gz"
 DEPENDS="cmake"
-SHA256SUM="a8cf638045b4a4b2697d0bcc77fd96eae93d54d57ad3021bf03b0333a727a59d"
+SHA256SUM="231ea3643a14fe5b88478c97b68b31f7c975b57b247a81356ffd889d015b5cc1"
 DESCRIPTION="A Modern Linker"
 
 build() {
