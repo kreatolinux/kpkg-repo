@@ -5,7 +5,7 @@ VERSION="1.0.29"
 BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/libusb/libusb/releases/download/v$VERSION/libusb-$VERSION.tar.bz2"
 DEPENDS="eudev"
-SHA256SUM="ffaa41d741a8a3bee244ac8e54a72ea05bf2879663c098c82fc5757853441575"
+SHA256SUM="5977fc950f8d1395ccea9bd48c06b3f808fd3c2c961b44b0c2e6e29fc3a70a85"
 DESCRIPTION="A cross-platform library to access USB devices"
 
 build() {
