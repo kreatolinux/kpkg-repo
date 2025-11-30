@@ -5,7 +5,7 @@ VERSION="48.0"
 SOURCES="https://gitlab.gnome.org/GNOME/gnome-session/-/archive/$VERSION/gnome-session-$VERSION.tar.gz"
 BUILD_DEPENDS="meson"
 DEPENDS="elogind xtrans libsm libx11 libxcomposite libice libglvnd gnome-desktop json-glib mesa upower"
-SHA256SUM="a44316d44464a081e254da08a2cb9a050c64e9a28057bfcf6c677f26bec03297"
+SHA256SUM="79bf2e9ceb55b633fa7d94eae03ca69b71285d70ba17104b5d8f1769dd25a8a7"
 DESCRIPTION="The GNOME session manager"
 
 build() {
