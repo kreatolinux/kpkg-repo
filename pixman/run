@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="0.46.4"
 SOURCES="https://www.cairographics.org/releases/pixman-$VERSION.tar.gz"
 BUILD_DEPENDS="meson"
-SHA256SUM="89a4c1e1e45e0b23dffe708202cb2eaffde0fe3727d7692b2e1739fec78a7dac"
+SHA256SUM="d09c44ebc3bd5bee7021c79f922fe8fb2fb57f7320f55e97ff9914d2346a591c"
 DESCRIPTION="A library that provides low-level pixel manipulation features such as image compositing and trapezoid rasterization"
 
 build() {
