@@ -6,7 +6,7 @@ SOURCES="https://github.com/PipeWire/pipewire/archive/$VERSION/pipewire-$VERSION
 DEPENDS="glib"
 OPTDEPENDS="dbus: for D-Bus support"
 BUILD_DEPENDS="meson"
-SHA256SUM="4c3209c78ce63af6bd2658e5092c220d844fc2b7a039bbbb950e71890cc8ac78"
+SHA256SUM="8066a7b220069e4c6e3b02bd2b6ea303bba66df255023c07c99323449ba8fe3c"
 DESCRIPTION="Sound server"
 
 build() {
