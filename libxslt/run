@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="libxslt"
 RELEASE="2"
-VERSION="1.1.42"
+VERSION="1.1.43"
 SOURCES="https://download.gnome.org/sources/libxslt/1.1/libxslt-$VERSION.tar.xz"
 BUILD_DEPENDS="pkgconf gmake"
 DEPENDS="python libxml2"
