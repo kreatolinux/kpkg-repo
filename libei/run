@@ -5,7 +5,7 @@ VERSION="1.4.1"
 SOURCES="https://gitlab.freedesktop.org/libinput/libei/-/archive/$VERSION/libei-$VERSION.tar.gz"
 DEPENDS="elogind libxkbcommon libevdev python-attr python-jinja2 gdk-pixbuf"
 BUILD_DEPENDS="meson"
-SHA256SUM="680f85d49968dd96dff6e4b97340669d4e04a8b6248fbe223cdf192e8fc9e3e8"
+SHA256SUM="d0e8f18eb3617fbcc3d860bb54a47e17709e94e8e7cb0ae01ae221c67f000872"
 DESCRIPTION="Library for Emulated Input"
 
 build() {
