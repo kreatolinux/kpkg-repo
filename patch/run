@@ -5,7 +5,7 @@ VERSION="2.8"
 SOURCES="https://ftp.gnu.org/gnu/patch/patch-$VERSION.tar.gz"
 BUILD_DEPENDS="gmake"
 DEPENDS=""
-SHA256SUM="8cf86e00ad3aaa6d26aca30640e86b0e3e1f395ed99f189b06d4c9f74bc58a4e"
+SHA256SUM="308a4983ff324521b9b21310bfc2398ca861798f02307c79eb99bb0e0d2bf980"
 DESCRIPTION="GNU patch"
 
 build() {
