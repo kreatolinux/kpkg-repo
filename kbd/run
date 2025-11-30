@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="2.8.0"
 SOURCES="https://git.kernel.org/pub/scm/linux/kernel/git/legion/kbd.git/snapshot/kbd-$VERSION.tar.gz"
 BUILD_DEPENDS="autoconf automake gettext libtool gmake"
-SHA256SUM="f5c7be3fd5365bd5150a3293cff58f836acc2b5914515c1ca91540a7f9be50f7"
+SHA256SUM="001ebe04b336406207e35fb513ba4fc329c11fb6fc18ac3da854fa49e74225e5"
 DESCRIPTION="Linux keyboard tools"
 
 build() {
