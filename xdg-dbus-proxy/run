@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="xdg-dbus-proxy"
 RELEASE="1"
-VERSION="0.1.5"
+VERSION="0.1.6"
 SOURCES="https://github.com/flatpak/xdg-dbus-proxy/releases/download/$VERSION/xdg-dbus-proxy-$VERSION.tar.xz"
 BUILD_DEPENDS="meson"
 DEPENDS="glib"
