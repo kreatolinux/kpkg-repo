@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="4.2.1"
 BUILD_DEPENDS="gmake"
 SOURCES="https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-$VERSION.tar.gz"
-SHA256SUM="4d841955f0acc3dfc71d0e3dd35f283af461222350e26843fea9731c0246a1e4"
+SHA256SUM="6d5c2f58583588ea791f4c8645004071d00dfa554a5bf788a006ca1eb5abd70b"
 DESCRIPTION="TLS library"
 
 build() {
