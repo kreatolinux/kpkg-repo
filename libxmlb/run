@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="libxmlb"
 RELEASE="1"
-VERSION="0.3.19"
+VERSION="0.3.24"
 SOURCES="https://github.com/hughsie/libxmlb/releases/download/$VERSION/libxmlb-$VERSION.tar.xz"
 BUILD_DEPENDS="meson ninja"
 DEPENDS="glib gobject-introspection"
-SHA256SUM="0a3ec258b12dbf10e5fe840b2421c84137eb7cc1b09c3de6210f3f7d51733733"
+SHA256SUM="ded52667aac942bb1ff4d1e977e8274a9432d99033d86918feb82ade82b8e001"
 DESCRIPTION="A library to help create and query binary XML blobs"
 
 build() {
