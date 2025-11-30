@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="0.63"
 SOURCES="https://github.com/OpenRC/openrc/archive/refs/tags/$VERSION.tar.gz"
 BUILD_DEPENDS="ninja meson"
-SHA256SUM="102e53825031361e4d96a5c0a7eb192bd64b0a6b227bb0568651efc8f5972952"
+SHA256SUM="1b661016bd8cd4189be83b441dd7062c967b641fdc00f741e359e22d06857df8"
 DESCRIPTION="The OpenRC init system"
 
 build() {
