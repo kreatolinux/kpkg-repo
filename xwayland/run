@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="xwayland"
 RELEASE="1"
-VERSION="23.2.4"
+VERSION="24.1.9"
 SOURCES="https://www.x.org/releases/individual/xserver/xwayland-$VERSION.tar.xz"
 SHA256SUM="a99e159b6d0d33098b3b6ab22a88bfcece23c8b9d0ca72c535c55dcb0681b46b"
 DEPENDS="xorg-xkbcomp libnettle libepoxy libxfont2 pixman xorg-server libxcvt mesa libglvnd libxau wayland libdrm libtirpc libxshmfence"
