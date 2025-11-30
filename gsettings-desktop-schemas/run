@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="gsettings-desktop-schemas"
 RELEASE="2"
-VERSION="47.1"
+VERSION="49.1"
 SOURCES="https://gitlab.gnome.org/GNOME/gsettings-desktop-schemas/-/archive/$VERSION/gsettings-desktop-schemas-$VERSION.tar.gz"
 BUILD_DEPENDS="meson ninja"
 DEPENDS="cantarell-fonts gobject-introspection"
