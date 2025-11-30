@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="libsixel"
 RELEASE="1"
-VERSION="1.10.3"
+VERSION="1.10.5"
 SOURCES="https://github.com/libsixel/libsixel/archive/refs/tags/v$VERSION.tar.gz"
 DEPENDS="libpng"
 BUILD_DEPENDS="meson"
