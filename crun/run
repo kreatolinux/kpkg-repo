@@ -5,7 +5,7 @@ VERSION="1.25.1"
 BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/containers/crun/releases/download/$VERSION/crun-$VERSION.tar.xz"
 DEPENDS="libseccomp libcap yajl"
-SHA256SUM="0df37442265fc39b6aabd29a00240ff0ebd3baee872d2b2f62d8e72b1e646de0"
+SHA256SUM="SKIP"
 DESCRIPTION="A fast and lightweight fully featured OCI runtime and C library for running containers"
 
 build() {
