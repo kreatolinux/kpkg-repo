@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="libgtop"
 RELEASE="1"
-VERSION="2.41.1"
+VERSION="2.41.3"
 SOURCES="https://download.gnome.org/sources/libgtop/2.41/libgtop-$VERSION.tar.xz"
 DEPENDS="glib libxau"
 BUILD_DEPENDS="gobject-introspection gmake"
-SHA256SUM="43ea9ad13f7caf98303e64172b191be9b96bab340b019deeec72251ee140fe3b"
+SHA256SUM="775676df958e2ea2452f7568f28b2ea581063d312773dd5c0b7624c1b9b2da8c"
 DESCRIPTION="libgtop"
 
 build() {
