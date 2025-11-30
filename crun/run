@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="crun"
 RELEASE="1"
-VERSION="1.9.2"
+VERSION="1.25.1"
 BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/containers/crun/releases/download/$VERSION/crun-$VERSION.tar.xz"
 DEPENDS="libseccomp libcap yajl"
