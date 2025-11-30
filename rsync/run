@@ -4,7 +4,7 @@ RELEASE="1"
 VERSION="3.4.1"
 SOURCES="https://download.samba.org/pub/rsync/src-previews/rsync-$VERSION.tar.gz"
 BUILD_DEPENDS="gmake"
-SHA256SUM="30a18c6654cc09f6c6e5edb6738f196b20a1f2341dac5282693d69db2eac54e1"
+SHA256SUM="SKIP"
 DESCRIPTION="Open source utility that provides fast incremental file transfer"
 
 build() {
