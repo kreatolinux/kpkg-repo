@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="gnome-online-accounts"
 RELEASE="2"
-VERSION="3.48.0"
+VERSION="3.56.2"
 SOURCES="https://gitlab.gnome.org/GNOME/gnome-online-accounts/-/archive/$VERSION/gnome-online-accounts-$VERSION.tar.gz"
 BUILD_DEPENDS="meson vala gobject-introspection webkitgtk3"
 DEPENDS="json-glib rest"
-SHA256SUM="2a24734ab3f8dc4f846c961a15f133b90d209b34598c396f2014dff53540e8c3"
+SHA256SUM="5f0fa722b7a551298c7ff67f4e7ebb1a4cdcc8ca88a6a7ee630c513203760af5"
 DESCRIPTION="The GNOME online account manager"
 
 build() {
