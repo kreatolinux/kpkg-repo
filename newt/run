@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="newt"
 RELEASE="1"
-VERSION="0.52.24"
+VERSION="0.52.25"
 BUILD_DEPENDS="gmake"
 SOURCES="https://releases.pagure.org/newt/newt-$VERSION.tar.gz"
 DEPENDS="python slang popt"
