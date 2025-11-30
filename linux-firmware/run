@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="linux-firmware"
 RELEASE="1"
-VERSION="20251111"
+VERSION="20251125"
 BUILD_DEPENDS="gmake"
 SOURCES="https://cdn.kernel.org/pub/linux/kernel/firmware/linux-firmware-$VERSION.tar.xz"
 DEPENDS="rdfind"
