@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="glib"
 RELEASE="2"
-VERSION="2.86.1"
+VERSION="2.86.2"
 SOURCES="https://download.gnome.org/sources/glib/2.86/glib-$VERSION.tar.xz"
 BUILD_DEPENDS="meson ninja gobject-introspection python-setuptools python-packaging"
 BOOTSTRAP_DEPENDS="meson ninja python-setuptools python-packaging"
