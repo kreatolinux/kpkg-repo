@@ -5,7 +5,7 @@ VERSION="48.1"
 SOURCES="https://gitlab.gnome.org/GNOME/gnome-settings-daemon/-/archive/$VERSION/gnome-settings-daemon-$VERSION.tar.gz"
 BUILD_DEPENDS="meson"
 DEPENDS="alsa-lib networkmanager colord fontconfig gcr-4 geoclue geocode-glib gnome-desktop lcms2 libcanberra libgweather libnotify libwacom pulseaudio upower wayland gnome-session"
-SHA256SUM="1953a54fa177ffc2e4708ea0df070859a672832198c67995ed68faa8f83b3d87"
+SHA256SUM="5754d0aa52884fc717f9c0e15a46deb2ea5d8f130efc8a2b2d56d838e5526590"
 DESCRIPTION="gnome-settings-daemon"
 
 build() {
