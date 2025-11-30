@@ -5,7 +5,7 @@ VERSION="48.0"
 SOURCES="https://gitlab.gnome.org/GNOME/gdm/-/archive/$VERSION/gdm-$VERSION.tar.gz"
 DEPENDS="accountsservice dconf dbus libcanberra linux-pam gnome-session elogind"
 BUILD_DEPENDS="meson"
-SHA256SUM="9f7e28a5e658d881805935874ca0037b902792bee9f879aec0670f6d0c0617c2"
+SHA256SUM="1fb80d525eb0199be962e66fe26b46d634c43a7eb38492196f65bb1895616bd9"
 DESCRIPTION="GNOME Display Manager"
 
 build() {
