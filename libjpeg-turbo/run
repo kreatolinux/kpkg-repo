@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="libjpeg-turbo"
 RELEASE="1"
-VERSION="3.0.1"
+VERSION="3.1.2"
 SOURCES="https://downloads.sourceforge.net/project/libjpeg-turbo/3.0.1/libjpeg-turbo-3.0.1.tar.gz"
 BUILD_DEPENDS="cmake ninja"
 DEPENDS=""
