@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="flatpak"
 RELEASE="2"
-VERSION="1.14.5"
+VERSION="1.16.1"
 BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/flatpak/flatpak/releases/download/$VERSION/flatpak-$VERSION.tar.xz"
 NO_CHKUPD="true"
