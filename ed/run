@@ -1,7 +1,7 @@
 #!/bin/sh
 NAME="ed"
 RELEASE="1"
-VERSION="1.20.2"
+VERSION="1.22.2"
 SOURCES="https://ftp.gnu.org/gnu/ed/ed-$VERSION.tar.lz"
 BUILD_DEPENDS="lzip gmake"
 SHA256SUM="65fec7318f48c2ca17f334ac0f4703defe62037bb13cc23920de077b5fa24523"
