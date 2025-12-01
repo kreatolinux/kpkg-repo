@@ -33,7 +33,6 @@ common_build() {
 	    extraArgs="--libdir=/usr/lib --libexecdir=/usr/lib --with-local-prefix=/usr/$target --with-sysroot=/usr/$target --with-build-sysroot=/usr/$target --with-native-system-header-dir=/include --program-prefix=$target-"
     fi
     
-    make distclean
     ../configure  $extraArgs                           \
         --enable-languages=c,c++                       \
         --enable-default-pie                           \
