@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="p11-kit"
 RELEASE="2"
-VERSION="0.25.5"
+VERSION="0.25.10"
 BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/p11-glue/p11-kit/releases/download/$VERSION/p11-kit-$VERSION.tar.xz"
 DEPENDS="libtasn libffi pkgconf"
-SHA256SUM="04d0a86450cdb1be018f26af6699857171a188ac6d5b8c90786a60854e1198e5"
+SHA256SUM="a62a137a966fb3a9bbfa670b4422161e369ddea216be51425e3be0ab2096e408"
 DESCRIPTION="A way to load and enumerate PKCS#11 modules"
 
 build() {
