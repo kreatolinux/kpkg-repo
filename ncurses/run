@@ -8,6 +8,8 @@ SHA256SUM="136d91bc269a9a5785e5f9e980bc76ab57428f604ce3e5a5a90cebc767971cc6"
 DESCRIPTION="ncurses library allows you to make TUI applications."
 
 build() {
+
+   export CPPFLAGS="-DNCURSES_ENABLE_STDBOOL_H=1 $CPPFLAGS"
    if [ "$KPKG_ARCH" != "$(uname -m)" ]; then
 	   extraArgs="--disable-stripping"
    fi
