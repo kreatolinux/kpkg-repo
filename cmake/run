@@ -9,6 +9,7 @@ SHA256SUM="08f71a106036bf051f692760ef9558c0577c42ac39e96ba097e7662bd4158d8e"
 DESCRIPTION="CMake package contains a modern toolset used for generating Makefiles."
 
 build() {
+    sed -i '19i #include <cstdint>' Utilities/cmcppdap/include/dap/network.h
     sed -i '/"lib64"/s/64//' Modules/GNUInstallDirs.cmake
     ./bootstrap --prefix=/usr        \
                 --mandir=/share/man  \
