@@ -1,14 +1,13 @@
 #!/bin/sh
 NAME="ed"
 RELEASE="1"
-VERSION="1.20.2"
+VERSION="1.22.3"
 SOURCES="https://ftp.gnu.org/gnu/ed/ed-$VERSION.tar.lz"
 BUILD_DEPENDS="lzip gmake"
-SHA256SUM="65fec7318f48c2ca17f334ac0f4703defe62037bb13cc23920de077b5fa24523"
+SHA256SUM="47a55ddfc52d4a1ff6f7559fbd00cf948a16b6cf151ec520392761aeae4e97be"
 DESCRIPTION="A line-oriented text editor"
 
 build() {
-    export CFLAGS="$CFLAGS -std=gnu17"
     kpkgConfigure --prefix=/usr
     make
 }
