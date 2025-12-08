@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="kbd"
 RELEASE="1"
-VERSION="2.6.4"
+VERSION="2.9.0"
 SOURCES="https://git.kernel.org/pub/scm/linux/kernel/git/legion/kbd.git/snapshot/kbd-$VERSION.tar.gz"
 BUILD_DEPENDS="autoconf automake gettext libtool gmake"
-SHA256SUM="f5c7be3fd5365bd5150a3293cff58f836acc2b5914515c1ca91540a7f9be50f7"
+SHA256SUM="fa493b5b6a6f749c674bce4f01ae9c478976654f2c2821cb0a66c7436e3669b2"
 DESCRIPTION="Linux keyboard tools"
 
 build() {
