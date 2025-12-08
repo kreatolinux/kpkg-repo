@@ -1,9 +1,9 @@
 #!/bin/sh
 NAME="libsm"
 RELEASE="1"
-VERSION="1.2.4"
+VERSION="1.2.6"
 SOURCES="https://www.x.org/releases/individual/lib/libSM-$VERSION.tar.xz"
-SHA256SUM="fdcbe51e4d1276b1183da77a8a4e74a137ca203e0bcfb20972dd5f3347e97b84"
+SHA256SUM="be7c0abdb15cbfd29ac62573c1c82e877f9d4047ad15321e7ea97d1e43d835be"
 DEPENDS="libice util-linux"
 BUILD_DEPENDS="xorgproto xtrans gmake"
 DESCRIPTION="X11 Session Management Library"
