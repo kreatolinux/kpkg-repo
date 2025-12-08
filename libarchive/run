@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="libarchive"
 RELEASE="4"
-VERSION="3.7.4"
+VERSION="3.8.4"
 BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/libarchive/libarchive/releases/download/v$VERSION/libarchive-$VERSION.tar.xz"
 DEPENDS="openssl expat bzip2 xz-utils zlib libxml2 libzstd linux-headers"
-SHA256SUM="f887755c434a736a609cbd28d87ddbfbe9d6a3bb5b703c22c02f6af80a802735"
+SHA256SUM="c7b847b57feacf5e182f4d14dd6cae545ac6843d55cb725f58e107cdf1c9ad73"
 DESCRIPTION="Multi-format archive and compression library"
 
 build() {
