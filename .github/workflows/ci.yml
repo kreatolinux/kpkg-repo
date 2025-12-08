@@ -228,12 +228,30 @@ jobs:
           repository: kreatolinux/src
           run-id: ${{ steps.get-run-id.outputs.run_id }}
 
+      - uses: actions/download-artifact@v6
+        with:
+          name: chkupd-amd64-linux-debug
+          path: /tmp/chkupd-bin
+          github-token: ${{ secrets.GH_PAT }} # token with actions:read permissions on target repo
+          repository: kreatolinux/src
+          run-id: ${{ steps.get-run-id.outputs.run_id }}
+
       - uses: actions/checkout@v6
         with:
           # Check out the branch head so the build includes the commit created
           # by the update-sums job in this workflow run.
           ref: ${{ github.head_ref || github.ref_name }}
           fetch-depth: 0
+
+      - name: Run chkupd
+        run: |
+          chmod +x /tmp/chkupd-bin/chkupd
+          for package in ${{ matrix.packages }}; do
+            if [ -f "$GITHUB_WORKSPACE/$package/run" ]; then
+              echo "Running chkupd on $package"
+              /tmp/chkupd-bin/chkupd check --package="$package" --repo "$GITHUB_WORKSPACE" --backend repology
+            fi
+          done
 
       - name: Build packages
         env:
@@ -329,6 +347,34 @@ jobs:
           cd "$GITHUB_WORKSPACE"
           git pull
           git status
+
+      - name: Commit chkupd changes
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE" || true
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          
+          cd "$GITHUB_WORKSPACE"
+          committed_any=false
+          for package in ${{ matrix.packages }}; do
+            # commit only if this package has changes
+            if git status --porcelain; then
+              version=$(/tmp/kpkg-bin/kpkg info "$package" 2>/dev/null | awk '/^package version:/ {print $3; exit}')
+              if [ -z "$version" ]; then
+                version="unknown"
+              fi
+              echo "Committing updates for $package (version=${version:-unknown})"
+              git add "$package"
+              git commit -m "${package}: update to ${version:-unknown}"
+              committed_any=true
+            fi
+          done
+
+          if [ "$committed_any" = "true" ]; then
+            git push
+          else
+            echo "No package changes detected"
+          fi
 
       - name: Install MinIO Client
         if: needs.init.outputs.push == 'true' || (github.event_name == 'pull_request' && github.event.pull_request.user.login == 'renovate[bot]' && startsWith(github.head_ref || '', 'renovate/')) || github.event_name == 'workflow_dispatch'
