@@ -358,7 +358,7 @@ jobs:
           committed_any=false
           for package in ${{ matrix.packages }}; do
             # commit only if this package has changes
-            if git status --porcelain; then
+            if git status --porcelain | grep -q run; then
               version=$(/tmp/kpkg-bin/kpkg info "$package" 2>/dev/null | awk '/^package version:/ {print $3; exit}')
               if [ -z "$version" ]; then
                 version="unknown"
