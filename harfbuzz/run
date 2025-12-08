@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="harfbuzz"
 RELEASE="3"
-VERSION="9.0.0"
+VERSION="12.2.0"
 SOURCES="https://github.com/harfbuzz/harfbuzz/releases/download/$VERSION/harfbuzz-$VERSION.tar.xz" 
 BUILD_DEPENDS="meson ninja"
 DEPENDS="freetype icu gobject-introspection glib"
-SHA256SUM="a41b272ceeb920c57263ec851604542d9ec85ee3030506d94662067c7b6ab89e"
+SHA256SUM="ecb603aa426a8b24665718667bda64a84c1504db7454ee4cadbd362eea64e545"
 DESCRIPTION="FriBidi is an implementation of Unicode Bidirectional Algorithm"
 
 
