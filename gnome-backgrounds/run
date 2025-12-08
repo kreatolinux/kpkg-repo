@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="gnome-backgrounds"
 RELEASE="1"
-VERSION="47.0"
+VERSION="49.0"
 SOURCES="https://gitlab.gnome.org/GNOME/gnome-backgrounds/-/archive/$VERSION/gnome-backgrounds-$VERSION.tar.gz"
 BUILD_DEPENDS="meson"
-SHA256SUM="c66fe489d1db6933ea0f1d88d192eee8f0df64f53f8ec6c227b31d9148e910e7"
+SHA256SUM="67f8c020249a83daf5d9b9f71ec62d910d542fa8cf9deba837f4ca2669735996"
 DESCRIPTION="Backgrounds for GNOME"
 
 build() {
