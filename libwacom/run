@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="libwacom"
 RELEASE="1"
-VERSION="2.13.0"
+VERSION="2.17.0"
 SOURCES="https://github.com/linuxwacom/libwacom/releases/download/libwacom-$VERSION/libwacom-$VERSION.tar.xz"
 BUILD_DEPENDS="meson"
 DEPENDS="libgudev libxml2 libevdev"
-SHA256SUM="acd18121441bbc00fc5c881fca08a33319ab814b798eac8d0be6354923f8fb08"
+SHA256SUM="41a0f239841567b101904df8ced81e1e0115334ccfd82a024412aa0903dae5a7"
 DESCRIPTION="Library for Wacom tablets"
 
 build() {
