@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="ccache"
 RELEASE="2"
-VERSION="4.10.2"
+VERSION="4.12.2"
 BUILD_DEPENDS="gmake"
 SOURCES="https://github.com/ccache/ccache/archive/refs/tags/v$VERSION.tar.gz"
 DEPENDS="cmake gcc libzstd"
-SHA256SUM="d22a4e59b58cdb3af5dd2a5a8fa3c40179bf35c985d17bc9bdeed2cffa3265be"
+SHA256SUM="89a9df3b291c4df9f8b9e1696c4f811e548568171954cb14c00f621c0db66127"
 DESCRIPTION="ccache - a fast compiler cache"
 build() {
     mkdir build && cd build || exit 1
