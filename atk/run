@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="atk"
 RELEASE="2"
-VERSION="2.50.1"
-SOURCES="https://download.gnome.org/sources/at-spi2-core/2.50/at-spi2-core-$VERSION.tar.xz"
+VERSION="2.58.2"
+SOURCES="https://download.gnome.org/sources/at-spi2-core/2.58/at-spi2-core-$VERSION.tar.xz"
 BUILD_DEPENDS="pkgconf meson python-setuptools"
 DEPENDS="libx11 libxtst glib gobject-introspection libffi dbus"
-SHA256SUM="5727b5c0687ac57ba8040e79bd6731b714a36b8fcf32190f236b8fb3698789e7"
+SHA256SUM="a2823b962ed16cdd5cb1fc5365029fd218394d852acd4098b321854bd6692f6e"
 DESCRIPTION="Base DBus XML interfaces for accessibility, the accessibility registry daemon, and atspi library"
 
 build() {
