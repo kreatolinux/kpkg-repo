@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="libressl"
 RELEASE="1"
-VERSION="4.0.0"
+VERSION="4.0.1"
 BUILD_DEPENDS="gmake"
 SOURCES="https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-$VERSION.tar.gz"
-SHA256SUM="4d841955f0acc3dfc71d0e3dd35f283af461222350e26843fea9731c0246a1e4"
+SHA256SUM="20294b87778c26274893863943c86358979b499d37b49977d6bf868f7b597cbd"
 DESCRIPTION="TLS library"
 
 build() {
