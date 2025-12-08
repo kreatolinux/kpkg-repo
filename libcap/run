@@ -1,10 +1,10 @@
 #!/bin/sh
 NAME="libcap"
 RELEASE="1"
-VERSION="2.72"
+VERSION="2.77"
 SOURCES="https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/libcap-$VERSION.tar.xz"
 BUILD_DEPENDS="gmake bash"
-SHA256SUM="0274f5a15a5205f656d8f0169eef711dd29158ba8ad3b240618b342b2460175b"
+SHA256SUM="897bc18b44afc26c70e78cead3dbb31e154acc24bee085a5a09079a88dbf6f52"
 DESCRIPTION="ninja-compatible build tool written in C"
 
 build() {
