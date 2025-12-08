@@ -1,11 +1,11 @@
 #!/bin/sh
 NAME="libgpg-error"
 RELEASE="1"
-VERSION="1.51"
+VERSION="1.56"
 BUILD_DEPENDS="gmake"
 SOURCES="https://gnupg.org/ftp/gcrypt/libgpg-error/libgpg-error-$VERSION.tar.bz2"
 DEPENDS=""
-SHA256SUM="be0f1b2db6b93eed55369cdf79f19f72750c8c7c39fc20b577e724545427e6b2"
+SHA256SUM="82c3d2deb4ad96ad3925d6f9f124fe7205716055ab50e291116ef27975d169c0"
 DESCRIPTION="A small library that originally defined common error values for all GnuPG components"
 
 build() {
