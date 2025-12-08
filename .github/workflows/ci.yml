@@ -363,6 +363,8 @@ jobs:
               if [ -z "$version" ]; then
                 version="unknown"
               fi
+              echo "Pulling for latest changes..."
+              git pull origin master
               echo "Committing updates for $package (version=${version:-unknown})"
               git add "$package"
               git commit -m "${package}: update to ${version:-unknown}"
