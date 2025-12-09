@@ -5,7 +5,7 @@ VERSION="6.18"
 SOURCES="https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$VERSION.tar.xz https://github.com/projg2/fedora-kernel-config-for-gentoo/raw/6.7.10-gentoo/kernel-x86_64-fedora.config settings.config"
 BUILD_DEPENDS="flex elfutils xz-utils gmake"
 DEPENDS="kmod"
-SHA256SUM="9106a4605da9e31ff17659d958782b815f9591ab308d03b0ee21aad6c7dced4b de77bf376569a4c521e7eefea3181d3e44bbdb65cc9bce5a91fd6af09c6a6ad4 04f33434bb1b16b2a38e3a36d6ce59e0bf032db6954d4a71d07d8f3f5ab37e4c"
+SHA256SUM="9106a4605da9e31ff17659d958782b815f9591ab308d03b0ee21aad6c7dced4b 62cda75cb56faa94551e14200f4dff00e27ea30189d5399c3ce863ef2ba2b4b3 04f33434bb1b16b2a38e3a36d6ce59e0bf032db6954d4a71d07d8f3f5ab37e4c"
 DESCRIPTION="The Linux kernel and headers"
 IS_SEMVER=true
 
