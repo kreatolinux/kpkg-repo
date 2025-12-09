@@ -243,7 +243,51 @@ jobs:
           ref: ${{ github.head_ref || github.ref_name }}
           fetch-depth: 0
 
+      - name: Evaluate usefulness
+        id: useless-check
+        env:
+          FORCE_BUILD: ${{ github.event.inputs.force_build }}
+        run: |
+          set -euo pipefail
+          LOCALE=en_US
+          mkdir -p /usr/lib/locale
+          localedef -i $LOCALE -c -f UTF-8 $LOCALE
+          echo "export LANG=$LOCALE.UTF-8" >> /etc/profile
+          . /etc/profile
+          export LC_CTYPE=en_US.UTF-8
+          export LC_ALL=en_US.UTF-8
+
+          chmod +x /tmp/kpkg-bin/kpkg
+          mkdir -p /etc/kpkg/repos/main
+          if command -v mountpoint >/dev/null 2>&1 && mountpoint -q /etc/kpkg/repos/main; then
+            :
+          else
+            mount --bind "$GITHUB_WORKSPACE" /etc/kpkg/repos/main
+          fi
+
+          /tmp/kpkg-bin/kpkg clean --binaries=true --environment=true
+
+          IS_USELESS="true"
+          for package in ${{ matrix.packages }}; do
+            /tmp/kpkg-bin/kpkg install "$package" -y --downloadOnly || IS_USELESS="false"
+          done
+
+          if [ "$FORCE_BUILD" = "true" ]; then
+            IS_USELESS="false"
+            for package in ${{ matrix.packages }}; do
+              /tmp/kpkg-bin/kpkg clean --binaries --packages "$package"
+            done
+          fi
+
+          if [ "$IS_USELESS" = "true" ]; then
+            mkdir -p /var/cache/kpkg/archives
+            touch /var/cache/kpkg/archives/IS_USELESS
+          fi
+
+          echo "is_useless=$IS_USELESS" >> $GITHUB_OUTPUT
+
       - name: Run chkupd
+        if: steps.useless-check.outputs.is_useless != 'true'
         run: |
           chmod +x /tmp/chkupd-bin/chkupd
           for package in ${{ matrix.packages }}; do
@@ -254,8 +298,7 @@ jobs:
           done
 
       - name: Build packages
-        env:
-          FORCE_BUILD: ${{ github.event.inputs.force_build }}
+        if: steps.useless-check.outputs.is_useless != 'true'
         run: |
           LOCALE=en_US
           mkdir -p /usr/lib/locale
@@ -269,7 +312,11 @@ jobs:
 
           chmod +x /tmp/kpkg-bin/kpkg
           mkdir -p /etc/kpkg/repos/main
-          mount --bind "$GITHUB_WORKSPACE" /etc/kpkg/repos/main
+          if command -v mountpoint >/dev/null 2>&1 && mountpoint -q /etc/kpkg/repos/main; then
+            :
+          else
+            mount --bind "$GITHUB_WORKSPACE" /etc/kpkg/repos/main
+          fi
 
 
           #kpkg upgrade --yes || true
@@ -283,27 +330,7 @@ jobs:
             sed -i 's/gcc/clang/' /etc/kreato-release # TODO: we shouldn't need to do this, kpkg should add it to sandbox just thru looking at config
           fi
           
-          IS_USELESS="true"
-          
-          for package in ${{ matrix.packages }}; do
-                /tmp/kpkg-bin/kpkg install "$package" -y --downloadOnly || IS_USELESS="false"
-          done
-          
-
-          if [ "$FORCE_BUILD" = "true" ]; then
-              IS_USELESS="false"
-              for package in ${{ matrix.packages }}; do
-                /tmp/kpkg-bin/kpkg clean --binaries --packages "$package"
-              done
-          fi
-
           git config --system --add safe.directory '*'
-
-          if [ "$IS_USELESS" = "true" ]; then
-              mkdir -p /var/cache/kpkg/archives
-              touch /var/cache/kpkg/archives/IS_USELESS
-              exit 0
-          fi
 
           # Parse dependencies from kpkg build --no output and install them
           for package in ${{ matrix.packages }}; do
