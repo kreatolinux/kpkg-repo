@@ -253,6 +253,8 @@ jobs:
           mkdir -p /usr/lib/locale
           localedef -i $LOCALE -c -f UTF-8 $LOCALE
           echo "export LANG=$LOCALE.UTF-8" >> /etc/profile
+          # Avoid set -u failures if LD_LIBRARY_PATH is unset inside /etc/profile
+          export LD_LIBRARY_PATH="${LD_LIBRARY_PATH-}"
           . /etc/profile
           export LC_CTYPE=en_US.UTF-8
           export LC_ALL=en_US.UTF-8
@@ -305,6 +307,8 @@ jobs:
           localedef -i $LOCALE -c -f UTF-8 $LOCALE
           echo "export LANG=$LOCALE.UTF-8" >> /etc/profile          
           
+          # Avoid set -u failures if LD_LIBRARY_PATH is unset inside /etc/profile
+          export LD_LIBRARY_PATH="${LD_LIBRARY_PATH-}"
           . /etc/profile
           
           export LC_CTYPE=en_US.UTF-8
