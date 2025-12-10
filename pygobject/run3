@@ -1,0 +1,26 @@
+name: "pygobject"
+version: "3.44.1"
+release: "2"
+description: "Python bindings for gobject-introspection"
+sources:
+ - "https://gitlab.gnome.org/GNOME/pygobject/-/archive/${version}/pygobject-${version}.tar.gz"
+sha256sum:
+ - "f2c3f85161c32791a60c2f2b54fdb89e38f1acde0f6a8f0be4e0e36f73f144ad"
+depends:
+ - "python"
+ - "pycairo"
+ - "gobject-introspection"
+build_depends:
+ - "meson"
+ - "python-setuptools"
+
+build {
+ macro build 
+
+}
+
+package {
+ macro package
+}
+
+

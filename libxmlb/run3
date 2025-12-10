@@ -1,0 +1,24 @@
+name: "libxmlb"
+version: "0.3.24"
+release: "1"
+description: "A library to help create and query binary XML blobs"
+sources:
+ - "https://github.com/hughsie/libxmlb/releases/download/${version}/libxmlb-${version}.tar.xz"
+sha256sum:
+ - "ded52667aac942bb1ff4d1e977e8274a9432d99033d86918feb82ade82b8e001"
+depends:
+ - "glib"
+ - "gobject-introspection"
+build_depends:
+ - "meson"
+ - "ninja"
+
+build {
+ macro build -Dgtkdoc=false
+}
+
+package {
+ macro package
+}
+
+

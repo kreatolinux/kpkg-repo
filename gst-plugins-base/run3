@@ -1,0 +1,36 @@
+name: "gst-plugins-base"
+version: "1.22.5"
+release: "1"
+description: "gst-plugins-base"
+sources:
+ - "https://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-${version}.tar.xz"
+sha256sum:
+ - "edd4338b45c26a9af28c0d35aab964a024c3884ba6f520d8428df04212c8c93a"
+depends:
+ - "alsa-lib"
+ - "gdk-pixbuf"
+ - "gtk3"
+ - "gstreamer"
+ - "iso-codes"
+ - "libgudev"
+ - "libjpeg-turbo"
+ - "libpng"
+ - "libogg"
+ - "libvorbis"
+ - "mesa"
+ - "pango"
+ - "wayland-protocols"
+ - "libx11"
+build_depends:
+ - "meson"
+ - "gobject-introspection"
+
+build {
+ macro build --wrap-mode=nodownload
+}
+
+package {
+ macro package
+}
+
+

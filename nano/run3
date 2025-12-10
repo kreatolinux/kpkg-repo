@@ -1,0 +1,20 @@
+name: "nano"
+version: "7.2"
+release: "1"
+description: "Text editor with a TUI and intuitive keybinds"
+sources:
+ - "https://nano-editor.org/dist/v7/nano-7.2.tar.gz"
+sha256sum:
+ - "b4edaab0a037b5760484907c674e980053896f33759e43f834a212145fd085f1"
+build_depends:
+ - "gmake"
+
+build {
+ macro build
+}
+
+package {
+ macro package
+}
+
+

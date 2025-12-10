@@ -1,0 +1,22 @@
+name: "wayland-protocols"
+version: "1.32"
+release: "1"
+description: "Additional Wayland protocols that add functionality outside of protocols already in the Wayland core"
+sources:
+ - "https://gitlab.freedesktop.org/wayland/wayland-protocols/uploads/8e42ac41cda1522d5a39ca79f3b3899d/wayland-protocols-1.32.tar.xz"
+sha256sum:
+ - "7459799d340c8296b695ef857c07ddef24c5a09b09ab6a74f7b92640d2b1ba11"
+depends:
+ - "wayland"
+build_depends:
+ - "meson"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+}
+
+

@@ -1,0 +1,24 @@
+name: "newt"
+version: "0.52.25"
+release: "1"
+description: "newt"
+sources:
+ - "https://releases.pagure.org/newt/newt-${version}.tar.gz"
+sha256sum:
+ - "ef0ca9ee27850d1a5c863bb7ff9aa08096c9ed312ece9087b30f3a426828de82"
+depends:
+ - "python"
+ - "slang"
+ - "popt"
+build_depends:
+ - "gmake"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+}
+
+

@@ -1,0 +1,20 @@
+name: "rpcsvc-proto"
+version: "1.4.4"
+release: "1"
+description: "rpcsvc-proto"
+sources:
+ - "https://github.com/thkukuk/rpcsvc-proto/releases/download/v${version}/rpcsvc-proto-${version}.tar.xz"
+sha256sum:
+ - "81c3aa27edb5d8a18ef027081ebb984234d5b5860c65bd99d4ac8f03145a558b"
+build_depends:
+ - "gmake"
+
+build {
+ macro build --sysconfdir=/etc
+}
+
+package {
+ macro package
+}
+
+

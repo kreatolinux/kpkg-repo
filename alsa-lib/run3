@@ -1,0 +1,20 @@
+name: "alsa-lib"
+version: "1.2.15"
+release: "1"
+description: "Libraries for ALSA"
+sources:
+ - "https://www.alsa-project.org/files/pub/lib/alsa-lib-${version}.tar.bz2"
+sha256sum:
+ - "83770841585e766a60c99fd23f8c574c22643ae0cb1f2d20b793c3d84eb95a8d"
+build_depends:
+ - "gmake"
+
+build {
+ macro build
+}
+
+package {
+ macro package
+}
+
+

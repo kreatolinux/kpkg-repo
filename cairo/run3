@@ -1,0 +1,32 @@
+name: "cairo"
+version: "1.18.4"
+release: "5"
+description: "2D graphics library"
+sources:
+ - "https://gitlab.freedesktop.org/cairo/cairo/-/archive/${version}/cairo-${version}.tar.gz?ref_type=tags"
+sha256sum:
+ - "2f3e6e665dbbb420809102b71ad7d0f7ce870a0b1bf8b34c073f06aefb511fc6"
+depends:
+ - "libpng"
+ - "libx11"
+ - "libxcb"
+ - "libxext"
+ - "libxrender"
+ - "libxext"
+ - "pixman"
+ - "fontconfig"
+ - "glib"
+ - "freetype"
+ - "pkgconf"
+build_depends:
+ - "meson"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+}
+
+

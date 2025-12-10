@@ -1,0 +1,22 @@
+name: "jansson"
+version: "2.14"
+release: "1"
+description: "C library for encoding, decoding and manipulating JSON data"
+sources:
+ - "https://github.com/akheron/jansson/releases/download/v${version}/jansson-${version}.tar.gz"
+sha256sum:
+ - "5798d010e41cf8d76b66236cfb2f2543c8d082181d16bc3085ab49538d4b9929"
+build_depends:
+ - "llvm"
+ - "gmake"
+
+build {
+ env CC="clang"
+ macro build --disable-static
+}
+
+package {
+ macro package
+}
+
+

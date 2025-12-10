@@ -1,0 +1,25 @@
+name: "dmenu-wl"
+version: "1.0"
+release: "1"
+description: "An efficient dynamic menu for wayland (wlroots)"
+sources:
+ - "git::https://github.com/nyyManni/dmenu-wayland::master"
+depends:
+ - "wayland"
+ - "cairo"
+ - "pango"
+ - "libxkbcommon"
+ - "glib"
+build_depends:
+ - "meson"
+ - "pkgconf"
+
+build {
+ macro build
+}
+
+package {
+ macro package
+}
+
+

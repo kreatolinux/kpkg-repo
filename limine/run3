@@ -1,0 +1,23 @@
+name: "limine"
+version: "8.0.14"
+release: "1"
+description: "Modern, advanced, portable, multiprotocol bootloader."
+sources:
+ - "https://github.com/limine-bootloader/limine/releases/download/v${version}/limine-${version}.tar.xz"
+sha256sum:
+ - "9422af86014a1414cac618375ed1e1be6b6f6d9b2217b46ce39f0a5b7ec5e7eb"
+depends:
+ - "efibootmgr"
+ - "nasm"
+build_depends:
+ - "gmake"
+
+build {
+ macro build --enable-bios --enable-uefi-x86-64
+}
+
+package {
+ macro package
+}
+
+

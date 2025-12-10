@@ -1,0 +1,24 @@
+name: "libxrandr"
+version: "1.5.4"
+release: "1"
+description: "libxrandr"
+sources:
+ - "https://www.x.org/releases/individual/lib/libXrandr-${version}.tar.gz"
+sha256sum:
+ - "c72c94dc3373512ceb67f578952c5d10915b38cc9ebb0fd176a49857b8048e22"
+depends:
+ - "libxext"
+ - "libxrender"
+build_depends:
+ - "xorgproto"
+ - "gmake"
+
+build {
+ macro build --disable-static
+}
+
+package {
+ macro package
+}
+
+

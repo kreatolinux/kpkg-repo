@@ -1,0 +1,30 @@
+name: "libsoup"
+version: "3.4.4"
+release: "1"
+description: "libsoup"
+sources:
+ - "https://download.gnome.org/sources/libsoup/3.4/libsoup-${version}.tar.xz"
+sha256sum:
+ - "291c67725f36ed90ea43efff25064b69c5a2d1981488477c05c481a3b4b0c5aa"
+depends:
+ - "glib"
+ - "glib-networking"
+ - "libxml2"
+ - "nghttp2"
+ - "sqlite"
+ - "gobject-introspection"
+ - "vala"
+ - "libpsl"
+build_depends:
+ - "meson"
+
+build {
+# Got options from https://www.linuxfromscratch.org/blfs/view/svn/basicnet/libsoup3.html
+ macro build -Dvapi=enabled -Dgssapi=disabled -Dsysprof=disabled --wrap-mode=nofallback
+}
+
+package {
+ macro package
+}
+
+

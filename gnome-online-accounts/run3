@@ -1,0 +1,26 @@
+name: "gnome-online-accounts"
+version: "3.56.2"
+release: "2"
+description: "The GNOME online account manager"
+sources:
+ - "https://gitlab.gnome.org/GNOME/gnome-online-accounts/-/archive/${version}/gnome-online-accounts-${version}.tar.gz"
+sha256sum:
+ - "5f0fa722b7a551298c7ff67f4e7ebb1a4cdcc8ca88a6a7ee630c513203760af5"
+depends:
+ - "json-glib"
+ - "rest"
+build_depends:
+ - "meson"
+ - "vala"
+ - "gobject-introspection"
+ - "webkitgtk3"
+
+build {
+ macro build -Dkerberos=false
+}
+
+package {
+ macro package
+}
+
+

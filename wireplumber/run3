@@ -1,0 +1,25 @@
+name: "wireplumber"
+version: "0.5.12"
+release: "1"
+description: "Session / policy manager implementation for PipeWire"
+sources:
+ - "https://gitlab.freedesktop.org/pipewire/wireplumber/-/archive/${version}/wireplumber-${version}.tar.gz"
+sha256sum:
+ - "0ce5cd48087bc5b559d7e1a947e9e0adb2a9b6f1dabd984af801f30fbba5e19c"
+depends:
+ - "pipewire"
+build_depends:
+ - "meson"
+ - "python-setuptools"
+replaces:
+ - "pipewire-session-manager"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+}
+
+

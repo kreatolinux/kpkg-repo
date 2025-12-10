@@ -1,0 +1,22 @@
+name: "gpgme"
+version: "1.23.2"
+release: "1"
+description: "GNU Privacy Guard Made Easy"
+sources:
+ - "https://gnupg.org/ftp/gcrypt/gpgme/gpgme-1.23.2.tar.bz2"
+sha256sum:
+ - "9499e8b1f33cccb6815527a1bc16049d35a6198a6c5fae0185f2bd561bce5224"
+depends:
+ - "gnupg"
+build_depends:
+ - "gmake"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+}
+
+

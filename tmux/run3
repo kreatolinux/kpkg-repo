@@ -1,0 +1,23 @@
+name: "tmux"
+version: "3.6"
+release: "1"
+description: "Terminal multiplexer"
+sources:
+ - "https://github.com/tmux/tmux/releases/download/${version}/tmux-${version}.tar.gz"
+sha256sum:
+ - "136db80cfbfba617a103401f52874e7c64927986b65b1b700350b6058ad69607"
+depends:
+ - "libevent"
+ - "ncurses"
+build_depends:
+ - "gmake"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+}
+
+

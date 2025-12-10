@@ -1,0 +1,21 @@
+name: "tzdb"
+version: "2023c"
+release: "1"
+description: "Time-zone database"
+sources:
+ - "https://data.iana.org/time-zones/releases/tzdb-${version}.tar.lz"
+sha256sum:
+ - "08fd090f1a16d522ae4e9247445056f4155002239e5be760b31ba0376d2e632c"
+build_depends:
+ - "lzip"
+ - "gmake"
+
+build {
+ exec "make"
+}
+
+package {
+ macro package
+}
+
+

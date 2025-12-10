@@ -1,0 +1,21 @@
+name: "libxshmfence"
+version: "1.3.3"
+release: "1"
+description: "libxshmfence"
+sources:
+ - "https://www.x.org/releases/individual/lib/libxshmfence-${version}.tar.gz"
+sha256sum:
+ - "6233ccd9fa80198835efc3039cdf8086ab2b218b17e77ebdb0a19913fcee58d3"
+build_depends:
+ - "xorgproto"
+ - "gmake"
+
+build {
+ macro build --disable-static
+}
+
+package {
+ macro package
+}
+
+

@@ -1,0 +1,23 @@
+name: "libpsl"
+version: "0.21.5"
+release: "1"
+description: "libpsl"
+sources:
+ - "https://github.com/rockdaboot/libpsl/releases/download/${version}/libpsl-${version}.tar.gz"
+sha256sum:
+ - "1dcc9ceae8b128f3c0b3f654decd0e1e891afc6ff81098f227ef260449dae208"
+depends:
+ - "libidn2"
+ - "libunistring"
+build_depends:
+ - "meson"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+}
+
+

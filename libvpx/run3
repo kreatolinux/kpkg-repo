@@ -1,0 +1,22 @@
+name: "libvpx"
+version: "1.15.2"
+release: "1"
+description: "Reference implementation of the VP8 Codec"
+sources:
+ - "https://github.com/webmproject/libvpx/archive/v${version}/libvpx-${version}.tar.gz"
+sha256sum:
+ - "26fcd3db88045dee380e581862a6ef106f49b74b6396ee95c2993a260b4636aa"
+build_depends:
+ - "nasm"
+ - "diffutils"
+ - "gmake"
+
+build {
+ macro build --disable-static --enable-shared
+}
+
+package {
+ macro package
+}
+
+

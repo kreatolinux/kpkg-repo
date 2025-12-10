@@ -1,0 +1,20 @@
+name: "libpng"
+version: "1.6.53"
+release: "1"
+description: "PNG library"
+sources:
+ - "https://github.com/glennrp/libpng/archive/refs/tags/v${version}.tar.gz"
+sha256sum:
+ - "b20cee717e11416d2f96ccc7d184f63730ca8cb2f03bfd0c4ed77fbc909c0bff"
+build_depends:
+ - "gmake"
+
+build {
+ macro build --disable-static
+}
+
+package {
+ macro package
+}
+
+

@@ -1,0 +1,22 @@
+name: "libxau"
+version: "1.0.12"
+release: "1"
+description: "X11 authentication library"
+sources:
+ - "https://www.x.org/releases/individual/lib/libXau-${version}.tar.xz"
+sha256sum:
+ - "74d0e4dfa3d39ad8939e99bda37f5967aba528211076828464d2777d477fc0fb"
+depends:
+ - "xorgproto"
+build_depends:
+ - "gmake"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+}
+
+

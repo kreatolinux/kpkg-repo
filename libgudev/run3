@@ -1,0 +1,24 @@
+name: "libgudev"
+version: "238"
+release: "1"
+description: "GObject bindings for eudev"
+sources:
+ - "https://download.gnome.org/sources/libgudev/${version}/libgudev-${version}.tar.xz"
+sha256sum:
+ - "61266ab1afc9d73dbc60a8b2af73e99d2fdff47d99544d085760e4fa667b5dd1"
+depends:
+ - "eudev"
+ - "glib"
+ - "gobject-introspection"
+build_depends:
+ - "meson"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+}
+
+

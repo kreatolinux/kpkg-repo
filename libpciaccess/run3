@@ -1,0 +1,20 @@
+name: "libpciaccess"
+version: "0.18.1"
+release: "1"
+description: "libpciaccess"
+sources:
+ - "https://x.org/releases/individual/lib/libpciaccess-${version}.tar.gz"
+sha256sum:
+ - "SKIP"
+build_depends:
+ - "gmake"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+}
+
+

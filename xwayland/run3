@@ -1,0 +1,35 @@
+name: "xwayland"
+version: "23.2.4"
+release: "1"
+description: "Run X11 applications in Wayland"
+sources:
+ - "https://www.x.org/releases/individual/xserver/xwayland-${version}.tar.xz"
+sha256sum:
+ - "a99e159b6d0d33098b3b6ab22a88bfcece23c8b9d0ca72c535c55dcb0681b46b"
+depends:
+ - "xorg-xkbcomp"
+ - "libnettle"
+ - "libepoxy"
+ - "libxfont2"
+ - "pixman"
+ - "xorg-server"
+ - "libxcvt"
+ - "mesa"
+ - "libglvnd"
+ - "libxau"
+ - "wayland"
+ - "libdrm"
+ - "libtirpc"
+ - "libxshmfence"
+build_depends:
+ - "meson"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+}
+
+

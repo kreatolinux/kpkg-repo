@@ -1,0 +1,27 @@
+name: "libcanberra"
+version: "0.30"
+release: "3"
+description: "libcanberra"
+sources:
+ - "https://0pointer.de/lennart/projects/libcanberra/libcanberra-${version}.tar.xz"
+sha256sum:
+ - "c2b671e67e0c288a69fc33dc1b6f1b534d07882c2aceed37004bf48c601afa72"
+depends:
+ - "libvorbis"
+ - "gstreamer"
+ - "gtk3"
+ - "alsa-lib"
+build_depends:
+ - "libtool"
+ - "gmake"
+
+build {
+ macro build --disable-oss --disable-static
+
+}
+
+package {
+ meson package
+}
+
+

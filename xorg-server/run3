@@ -1,0 +1,37 @@
+name: "xorg-server"
+version: "21.1.9"
+release: "1"
+description: "Open source display server for the X Window System"
+sources:
+ - "https://www.x.org/releases/individual/xserver/xorg-server-${version}.tar.gz"
+sha256sum:
+ - "455ac22c411b3e74adb4d1b3fd48b9037b6b5ba9260247c59b669f67a08fd26e"
+depends:
+ - "libdrm"
+ - "libtirpc"
+ - "xorg-setxkbmap"
+ - "xorg-font-util"
+ - "libx11"
+ - "libxrender"
+ - "libxshmfence"
+ - "libepoxy"
+ - "dbus"
+ - "libglvnd"
+ - "libpciaccess"
+ - "libxcvt"
+ - "libxfont2"
+ - "libxshmfence"
+ - "libnettle"
+ - "pixman"
+build_depends:
+ - "meson"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+}
+
+

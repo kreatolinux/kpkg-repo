@@ -1,0 +1,28 @@
+name: "gnome-bluetooth"
+version: "42.6"
+release: "1"
+description: "Bluetooth tools for GNOME"
+sources:
+ - "https://download.gnome.org/sources/gnome-bluetooth/42/gnome-bluetooth-${version}.tar.xz"
+sha256sum:
+ - "5864fe6f1e718715db26b62201b75a59020cf4247fec37645b3559cd2dba59d0"
+depends:
+ - "bluez"
+ - "gtk4"
+ - "libadwaita"
+ - "libnotify"
+ - "upower"
+ - "gsound"
+build_depends:
+ - "meson"
+ - "gobject-introspection"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+}
+
+

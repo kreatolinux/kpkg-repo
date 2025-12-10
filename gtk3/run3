@@ -1,0 +1,35 @@
+name: "gtk3"
+version: "3.24.38"
+release: "1"
+description: "gtk3"
+sources:
+ - "https://download.gnome.org/sources/gtk+/3.24/gtk+-${version}.tar.xz"
+sha256sum:
+ - "ce11decf018b25bdd8505544a4f87242854ec88be054d9ade5f3a20444dd8ee7"
+depends:
+ - "atk"
+ - "libx11"
+ - "cantarell-fonts"
+ - "libxcomposite"
+ - "libxrandr"
+ - "libxrender"
+ - "gdk-pixbuf"
+ - "libepoxy"
+ - "pango"
+ - "iso-codes"
+ - "libxkbcommon"
+ - "gobject-introspection"
+ - "wayland"
+ - "wayland-protocols"
+build_depends:
+ - "meson"
+
+build {
+ macro build -Dman=false -Dx11_backend=true -Ddemos=false -Dtests=false
+}
+
+package {
+ macro package
+}
+
+

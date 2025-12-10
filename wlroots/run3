@@ -1,0 +1,37 @@
+name: "wlroots"
+version: "0.16.2"
+release: "2"
+description: "Modules for building a Wayland compositor"
+sources:
+ - "https://gitlab.freedesktop.org/wlroots/wlroots/-/archive/${version}/wlroots-${version}.tar.gz"
+sha256sum:
+ - "f502959db8bc029e32f10a837b37257bb8c5ed269bceddf9492f0bb381bebf76"
+depends:
+ - "wayland"
+ - "wayland-protocols"
+ - "libdrm"
+ - "libxkbcommon"
+ - "libinput"
+ - "hwdata"
+ - "seatd"
+ - "pixman"
+ - "eudev"
+ - "mesa"
+build_depends:
+ - "meson"
+ - "samurai"
+ - "xwayland"
+ - "xcb-util-wm"
+opt_depends:
+ - "xwayland: XWayland support"
+no_chkupd: true
+
+build {
+ macro build -Dwayland=enabled
+}
+
+package {
+ macro package
+}
+
+

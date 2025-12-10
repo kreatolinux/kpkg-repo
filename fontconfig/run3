@@ -1,0 +1,25 @@
+name: "fontconfig"
+version: "2.15.0"
+release: "1"
+description: "fontconfig"
+sources:
+ - "https://www.freedesktop.org/software/fontconfig/release/fontconfig-${version}.tar.gz"
+sha256sum:
+ - "f5f359d6332861bd497570848fcb42520964a9e83d5e3abe397b6b6db9bcaaf4"
+depends:
+ - "expat"
+ - "freetype"
+ - "gperf"
+ - "pkgconf"
+build_depends:
+ - "gmake"
+
+build {
+ macro build
+}
+
+package {
+ macro package
+}
+
+

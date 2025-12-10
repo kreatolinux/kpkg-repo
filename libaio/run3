@@ -1,0 +1,20 @@
+name: "libaio"
+version: "0.3.113"
+release: "1"
+description: "Asynchronous I/O library"
+sources:
+ - "https://pagure.io/libaio/archive/libaio-${version}/libaio-${version}.tar.gz"
+sha256sum:
+ - "1c561c20670c5c09cc8437a622008c0693c6a7816c1f30332da3796953b2f454"
+build_depends:
+ - "gmake"
+
+build {
+ exec "make -j$(nproc)"
+}
+
+package {
+ meson package
+}
+
+

@@ -1,0 +1,25 @@
+name: "kbd"
+version: "2.9.0"
+release: "1"
+description: "Linux keyboard tools"
+sources:
+ - "https://git.kernel.org/pub/scm/linux/kernel/git/legion/kbd.git/snapshot/kbd-${version}.tar.gz"
+sha256sum:
+ - "fa493b5b6a6f749c674bce4f01ae9c478976654f2c2821cb0a66c7436e3669b2"
+build_depends:
+ - "autoconf"
+ - "automake"
+ - "gettext"
+ - "libtool"
+ - "gmake"
+
+build {
+ exec "autoreconf -v -f -i"
+ macro build --disable-vlock --bindir=/usr/bin
+}
+
+package {
+ macro package
+}
+
+

@@ -1,0 +1,22 @@
+name: "lcms2"
+version: "2.15"
+release: "1"
+description: "A free, open source, CMM engine"
+sources:
+ - "https://github.com/mm2/Little-CMS/releases/download/lcms${version}/lcms2-${version}.tar.gz"
+sha256sum:
+ - "b20cbcbd0f503433be2a4e81462106fa61050a35074dc24a4e356792d971ab39"
+depends:
+ - "libjpeg-turbo"
+build_depends:
+ - "meson"
+
+build {
+ macro build -Djpeg=enabled
+}
+
+package {
+ macro package
+}
+
+

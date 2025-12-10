@@ -1,0 +1,17 @@
+name: "gnome"
+version: "0.1"
+release: "1"
+description: "GNOME group"
+depends:
+ - "gnome-shell"
+ - "gnome-terminal"
+ - "nautilus"
+ - "gnome-keyring"
+no_chkupd: true
+is_group: true
+
+postinstall {
+ exec "glib-compile-schemas /usr/share/glib-2.0/schemas"
+}
+
+

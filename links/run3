@@ -1,0 +1,20 @@
+name: "links"
+version: "2.30"
+release: "1"
+description: "A text WWW browser, similar to Lynx"
+sources:
+ - "http://links.twibright.com/download/links-${version}.tar.bz2"
+sha256sum:
+ - "c4631c6b5a11527cdc3cb7872fc23b7f2b25c2b021d596be410dadb40315f166"
+build_depends:
+ - "gmake"
+
+build {
+ macro build --disable-javascript
+}
+
+package {
+ macro package
+}
+
+

@@ -1,0 +1,20 @@
+name: "xtrans"
+version: "1.5.2"
+release: "1"
+description: "X transport library"
+sources:
+ - "https://www.x.org/releases/individual/lib/xtrans-${version}.tar.xz"
+sha256sum:
+ - "5c5cbfe34764a9131d048f03c31c19e57fb4c682d67713eab6a65541b4dff86c"
+build_depends:
+ - "gmake"
+
+build {
+ macro build
+}
+
+package {
+ macro package
+}
+
+

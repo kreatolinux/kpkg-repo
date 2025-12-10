@@ -1,0 +1,20 @@
+name: "noto-fonts"
+version: "23.9.1"
+release: "1"
+description: "Google Noto fonts"
+sources:
+ - "https://github.com/notofonts/notofonts.github.io/archive/refs/tags/noto-monthly-release-${version}.tar.gz"
+sha256sum:
+ - "90335582faf06c61511f0a2a9f7f1ffaafd160c79fe8115b4c4fb5ef7992d526"
+depends:
+ - "fontconfig"
+
+package {
+ exec "install -Dm644 fonts/*/hinted/ttf/*.tt[fc] -t \"$ROOT/usr/share/fonts/noto\""
+}
+
+postinstall {
+ exec "fc-cache -fv"
+}
+
+

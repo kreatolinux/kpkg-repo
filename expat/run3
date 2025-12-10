@@ -1,0 +1,20 @@
+name: "expat"
+version: "2.5.0"
+release: "1"
+description: "a stream oriented C library for parsing XML"
+sources:
+ - "https://github.com/libexpat/libexpat/releases/download/R_2_5_0/expat-${version}.tar.xz"
+sha256sum:
+ - "ef2420f0232c087801abf705e89ae65f6257df6b7931d37846a193ef2e8cdcbe"
+build_depends:
+ - "gmake"
+
+build {
+ macro build --disable-static
+}
+
+package {
+ macro package
+}
+
+

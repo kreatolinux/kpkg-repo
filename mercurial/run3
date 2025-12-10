@@ -1,0 +1,23 @@
+name: "mercurial"
+version: "6.9.1"
+release: "1"
+description: "A free, distributed source control management tool"
+sources:
+ - "https://www.mercurial-scm.org/release/mercurial-${version}.tar.gz"
+b2sum:
+ - "674b66c05558d9a542f36e02cf20891e43d8017274317218c1fcd4bbdf737c48be580601daeff54488673b36e02cfe5c7edf443860fe2446139d1b989a9f7f5b"
+depends:
+ - "python"
+build_depends:
+ - "gmake"
+ - "python-setuptools"
+
+build {
+ exec "make build"
+}
+
+package {
+ macro package
+}
+
+

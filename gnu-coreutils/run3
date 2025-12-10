@@ -1,0 +1,24 @@
+name: "gnu-coreutils"
+version: "9.1"
+release: "2"
+description: "Basic core utilities (cat, ls, etc.)"
+sources:
+ - "https://ftp.gnu.org/gnu/coreutils/coreutils-${version}.tar.gz"
+sha256sum:
+ - "6055df9268603e8239a5c9c1d64cb25b9a992530df66e33b8d78a660edb37b35"
+depends:
+ - "libcap"
+ - "attr"
+ - "texinfo"
+build_depends:
+ - "gmake"
+
+build {
+ macro build 
+}
+
+package {
+ meson package
+}
+
+

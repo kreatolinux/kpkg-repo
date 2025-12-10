@@ -1,0 +1,22 @@
+name: "xdg-dbus-proxy"
+version: "0.1.6"
+release: "1"
+description: "xdg-dbus-proxy"
+sources:
+ - "https://github.com/flatpak/xdg-dbus-proxy/releases/download/${version}/xdg-dbus-proxy-${version}.tar.xz"
+sha256sum:
+ - "131bf59fce7c7ee7ecbc5d9106d6750f4f597bfe609966573240f7e4952973a1"
+depends:
+ - "glib"
+build_depends:
+ - "meson"
+
+build {
+ macro build -Dman=disabled
+}
+
+package {
+ macro package
+}
+
+

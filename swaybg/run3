@@ -1,0 +1,26 @@
+name: "swaybg"
+version: "1.2.1"
+release: "1"
+description: "Wallpaper utility for Wayland compositors"
+sources:
+ - "https://github.com/swaywm/swaybg/releases/download/v${version}/swaybg-${version}.tar.gz"
+sha256sum:
+ - "6af1fdf0e57b1cc5345febed786b761fea0e170943a82639f94cfaed7df84f8f"
+depends:
+ - "wayland-protocols"
+ - "wayland"
+ - "pixman"
+ - "cairo"
+ - "libpng"
+build_depends:
+ - "meson"
+
+build {
+ macro build
+}
+
+package {
+ macro package
+}
+
+

@@ -1,0 +1,24 @@
+name: "gstreamer"
+version: "1.26.9"
+release: "1"
+description: "gstreamer"
+sources:
+ - "https://gstreamer.freedesktop.org/src/gstreamer/gstreamer-${version}.tar.xz"
+sha256sum:
+ - "8ee8772e468102ebe86d414d8c4c7440dd91d9f3e9396952ff23aecde80670c8"
+depends:
+ - "glib"
+build_depends:
+ - "meson"
+ - "gobject-introspection"
+ - "python-setuptools"
+
+build {
+ macro build
+}
+
+package {
+ macro package
+}
+
+

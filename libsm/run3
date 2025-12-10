@@ -1,0 +1,25 @@
+name: "libsm"
+version: "1.2.6"
+release: "1"
+description: "X11 Session Management Library"
+sources:
+ - "https://www.x.org/releases/individual/lib/libSM-${version}.tar.xz"
+sha256sum:
+ - "be7c0abdb15cbfd29ac62573c1c82e877f9d4047ad15321e7ea97d1e43d835be"
+depends:
+ - "libice"
+ - "util-linux"
+build_depends:
+ - "xorgproto"
+ - "xtrans"
+ - "gmake"
+
+build {
+ macro build --disable-static
+}
+
+package {
+ macro package
+}
+
+

@@ -1,0 +1,22 @@
+name: "libfyaml"
+version: "0.9"
+release: "1"
+description: "Fully feature complete YAML parser and emitter"
+sources:
+ - "https://github.com/pantoniou/libfyaml/releases/download/v${version}/libfyaml-${version}.tar.gz"
+sha256sum:
+ - "7731edc5dfcc345d5c5c9f6ce597133991a689dabede393cd77bae89b327cd6d"
+depends:
+ - "libyaml"
+build_depends:
+ - "gmake"
+
+build {
+ macro build --disable-static
+}
+
+package {
+ macro package
+}
+
+

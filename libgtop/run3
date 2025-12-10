@@ -1,0 +1,24 @@
+name: "libgtop"
+version: "2.41.3"
+release: "1"
+description: "libgtop"
+sources:
+ - "https://download.gnome.org/sources/libgtop/2.41/libgtop-${version}.tar.xz"
+sha256sum:
+ - "775676df958e2ea2452f7568f28b2ea581063d312773dd5c0b7624c1b9b2da8c"
+depends:
+ - "glib"
+ - "libxau"
+build_depends:
+ - "gobject-introspection"
+ - "gmake"
+
+build {
+ macro build --disable-static
+}
+
+package {
+ macro package
+}
+
+

@@ -1,0 +1,21 @@
+name: "meson"
+version: "1.6.1"
+release: "1"
+description: "Next generation build system"
+sources:
+ - "https://github.com/mesonbuild/meson/releases/download/${version}/meson-${version}.tar.gz"
+b2sum:
+ - "7ccdb3bf3f701fc787fabf91413db8301a8658b89e08c1d712711bd35845dc2468211e4b666cf46ad68ad9462e62b12b62d60c3767a2804f9b695b4390bb8235"
+depends:
+ - "python"
+ - "samurai"
+build_depends:
+ - "python-pip"
+
+package {
+ exec "pip install . --root=$ROOT"
+#install -vDm644 data/shell-completions/bash/meson "$ROOT/usr/share/bash-completion/completions/meson"
+#install -vDm644 data/shell-completions/zsh/_meson "$ROOT/usr/share/zsh/site-functions/_meson"
+}
+
+

@@ -1,0 +1,23 @@
+name: "openssh"
+version: "9.9p1"
+release: "2"
+description: "ssh tools"
+sources:
+ - "https://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-${version}.tar.gz"
+sha256sum:
+ - "b343fbcdbff87f15b1986e6e15d6d4fc9a7d36066be6b7fb507087ba8f966c02"
+depends:
+ - "shadow"
+ - "zlib"
+build_depends:
+ - "gmake"
+
+build {
+ macro build --without-zlib-version-check
+}
+
+package {
+ macro package
+}
+
+

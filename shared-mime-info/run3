@@ -1,0 +1,26 @@
+name: "shared-mime-info"
+version: "2.4"
+release: "1"
+description: "shared-mime-info"
+sources:
+ - "https://gitlab.freedesktop.org/xdg/shared-mime-info/-/archive/${version}/shared-mime-info-${version}.tar.gz"
+sha256sum:
+ - "531291d0387eb94e16e775d7e73788d06d2b2fdd8cd2ac6b6b15287593b6a2de"
+depends:
+ - "glib"
+build_depends:
+ - "meson"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+}
+
+postinstall {
+ exec "update-mime-database /usr/share/mime"
+}
+
+

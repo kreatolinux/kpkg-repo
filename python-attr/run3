@@ -1,0 +1,18 @@
+name: "python-attr"
+version: "22.2.0"
+release: "2"
+description: "attr"
+sources:
+ - "https://files.pythonhosted.org/packages/source/a/attrs/attrs-${version}.tar.gz"
+sha256sum:
+ - "c9227bfc2f01993c03f68db37d1d15c9690188323c067c641f1a35ca58185f99"
+depends:
+ - "python"
+build_depends:
+ - "python-setuptools"
+
+package {
+ exec "pip install . --prefix=/usr --root=\"$ROOT\""
+}
+
+

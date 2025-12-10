@@ -1,0 +1,20 @@
+name: "xorgproto"
+version: "2024.1"
+release: "1"
+description: "X Window System Unified Protocol"
+sources:
+ - "https://www.x.org/releases/individual/proto/xorgproto-${version}.tar.xz"
+sha256sum:
+ - "372225fd40815b8423547f5d890c5debc72e88b91088fbfb13158c20495ccb59"
+build_depends:
+ - "meson"
+
+build {
+ macro build
+}
+
+package {
+ macro package
+}
+
+

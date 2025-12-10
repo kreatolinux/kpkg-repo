@@ -1,0 +1,23 @@
+name: "graphene"
+version: "1.10.8"
+release: "1"
+description: "graphene"
+sources:
+ - "https://download.gnome.org/sources/graphene/1.10/graphene-${version}.tar.xz"
+sha256sum:
+ - "a37bb0e78a419dcbeaa9c7027bcff52f5ec2367c25ec859da31dfde2928f279a"
+depends:
+ - "glib"
+build_depends:
+ - "meson"
+ - "gobject-introspection"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+}
+
+

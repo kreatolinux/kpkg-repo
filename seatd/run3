@@ -1,0 +1,20 @@
+name: "seatd"
+version: "0.9.0"
+release: "1"
+description: "Seat daemon."
+sources:
+ - "https://git.sr.ht/~kennylevinsen/seatd/archive/${version}.tar.gz"
+sha256sum:
+ - "4276d1380c67e30a63c289b35f7bf955e126e6daf3596cd5aa6080670aa1214c"
+build_depends:
+ - "meson"
+
+build {
+ macro build
+}
+
+package {
+ macro package
+}
+
+

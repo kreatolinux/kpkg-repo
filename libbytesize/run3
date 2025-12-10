@@ -1,0 +1,22 @@
+name: "libbytesize"
+version: "2.9"
+release: "1"
+description: "libbytesize"
+sources:
+ - "https://github.com/storaged-project/libbytesize/releases/download/${version}/libbytesize-${version}.tar.gz"
+sha256sum:
+ - "bd0ea11ece2c2423382a7c4534679050e72a8ee91b4fdea3a7cc85199846d0c3"
+depends:
+ - "python"
+build_depends:
+ - "gmake"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+}
+
+

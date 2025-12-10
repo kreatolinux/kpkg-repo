@@ -1,0 +1,38 @@
+name: "librsvg"
+version: "2.61.3"
+release: "1"
+description: "SVG rendering library"
+sources:
+ - "https://gitlab.gnome.org/GNOME/librsvg/-/archive/${version}/librsvg-${version}.tar.gz"
+sha256sum:
+ - "408499a98ad9a84402e8c6de98bfa8e81889ed64ce89b7ffa4feeb95166ea036"
+depends:
+ - "cairo"
+ - "freetype"
+ - "gdk-pixbuf"
+ - "glib"
+ - "harfbuzz"
+ - "libxml2"
+ - "pango"
+build_depends:
+ - "rust"
+ - "vala"
+ - "gobject-introspection"
+ - "meson"
+ - "ninja"
+ - "cargo-c"
+
+build {
+ macro build --libdir=/usr/lib -Ddefault_library=shared -Dvala=enabled -Dintrospection=enabled -Ddocs=disabled
+ macro build --libexecdir=/usr/lib -Ddefault_library=shared -Dvala=enabled -Dintrospection=enabled -Ddocs=disabled
+}
+
+package {
+ macro package
+}
+
+postinstall {
+ exec "gdk-pixbuf-query-loaders --update-cache"
+}
+
+

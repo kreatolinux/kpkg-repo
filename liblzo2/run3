@@ -1,0 +1,20 @@
+name: "liblzo2"
+version: "2.10"
+release: "1"
+description: "A portable lossless data compression library"
+sources:
+ - "https://www.oberhumer.com/opensource/lzo/download/lzo-${version}.tar.gz"
+sha256sum:
+ - "c0f892943208266f9b6543b3ae308fab6284c5c90e627931446fb49b4221a072"
+build_depends:
+ - "gmake"
+
+build {
+ macro build 
+}
+
+package {
+ meson package
+}
+
+

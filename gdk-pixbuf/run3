@@ -1,0 +1,35 @@
+name: "gdk-pixbuf"
+version: "2.42.12"
+release: "2"
+description: "GdkPixbuf is a library that loads image data in various formats and stores it as linear buffers in memory"
+sources:
+ - "https://gitlab.gnome.org/GNOME/gdk-pixbuf/-/archive/${version}/gdk-pixbuf-${version}.tar.gz"
+sha256sum:
+ - "d41966831b3d291fcdfe31f683bea4b3f03241d591ddbe550b5db873af3da364"
+depends:
+ - "glib"
+ - "libpng"
+ - "libjpeg-turbo"
+ - "libtiff"
+ - "shared-mime-info"
+build_depends:
+ - "meson"
+ - "gobject-introspection"
+opt_depends:
+ - "webp-pixbuf-loader: For webp support (runtime)"
+
+build {
+ macro build -Dman=false -Dgtk_doc=false --wrap-mode=nofallback -Dbuiltin_loaders=all
+ env XDG_DATA_DIRS="/usr/local/share:/usr/share"
+ macro build -Dman=false -Dgtk_doc=false --wrap-mode=nofallback -Dbuiltin_loaders=all
+}
+
+package {
+ macro package
+}
+
+postinstall {
+ exec "gdk-pixbuf-query-loaders --update-cache"
+}
+
+

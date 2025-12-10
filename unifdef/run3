@@ -1,0 +1,20 @@
+name: "unifdef"
+version: "2.12"
+release: "1"
+description: "unifdef"
+sources:
+ - "https://dotat.at/prog/unifdef/unifdef-${version}.tar.gz"
+sha256sum:
+ - "fba564a24db7b97ebe9329713ac970627b902e5e9e8b14e19e024eb6e278d10b"
+build_depends:
+ - "gmake"
+
+build {
+ exec "make"
+}
+
+package {
+ macro package
+}
+
+

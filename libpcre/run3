@@ -1,0 +1,20 @@
+name: "pcre"
+version: "8.45"
+release: "1"
+description: "Perl Compatible Regular Expression libraries"
+sources:
+ - "https://netcologne.dl.sourceforge.net/project/pcre/pcre/${version}/pcre-${version}.zip"
+sha256sum:
+ - "5b709aa45ea3b8bb73052947200ad187f651a2049158fb5bbfed329e4322a977"
+build_depends:
+ - "gmake"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+}
+
+

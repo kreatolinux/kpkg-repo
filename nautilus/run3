@@ -1,0 +1,41 @@
+name: "nautilus"
+version: "46.2"
+release: "1"
+description: "File manager of GNOME"
+sources:
+ - "https://gitlab.gnome.org/GNOME/nautilus/-/archive/${version}/nautilus-${version}.tar.gz"
+sha256sum:
+ - "4f32a4bd04928ca7db0ab040755e4433d2efc6be37d1e46938d390233b8c6ce8"
+depends:
+ - "bubblewrap"
+ - "dconf"
+ - "libgexiv2"
+ - "gdk-pixbuf"
+ - "gnome-autoar"
+ - "gnome-desktop"
+ - "gst-plugins-base"
+ - "libnotify"
+ - "libadwaita"
+ - "libportal"
+ - "libseccomp"
+ - "tracker3"
+ - "desktop-file-utils"
+ - "adwaita-icon-theme"
+build_depends:
+ - "meson"
+ - "vala"
+ - "gobject-introspection"
+
+build {
+ macro build -Dcloudproviders=false
+}
+
+package {
+ macro package
+}
+
+postinstall {
+ exec "glib-compile-schemas /usr/share/glib-2.0/schemas"
+}
+
+

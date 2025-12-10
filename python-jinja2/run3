@@ -1,0 +1,18 @@
+name: "python-jinja2"
+version: "3.1.2"
+release: "2"
+description: "fast, expressive, extensible templating engine"
+sources:
+ - "https://files.pythonhosted.org/packages/source/J/Jinja2/Jinja2-${version}.tar.gz"
+sha256sum:
+ - "31351a702a408a9e7595a8fc6150fc3f43bb6bf7e319770cbc0db9df9437e852"
+depends:
+ - "python"
+build_depends:
+ - "python-setuptools"
+
+package {
+ exec "pip install . --prefix=/usr --root=\"$ROOT\""
+}
+
+

@@ -1,0 +1,22 @@
+name: "xorriso"
+version: "1.5.7"
+release: "1"
+description: "GNU xorriso"
+sources:
+ - "https://www.gnu.org/software/xorriso/xorriso-${version}.tar.gz"
+sha256sum:
+ - "0d9cf80df436a16b4c4051fb4893307d109f2394c58fa94138a2270160eaca4d"
+depends:
+ - "readline"
+build_depends:
+ - "gmake"
+
+build {
+ macro build
+}
+
+package {
+ macro package
+}
+
+

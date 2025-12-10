@@ -1,0 +1,24 @@
+name: "crun"
+version: "1.25.1"
+release: "1"
+description: "A fast and lightweight fully featured OCI runtime and C library for running containers"
+sources:
+ - "https://github.com/containers/crun/releases/download/${version}/crun-${version}.tar.gz"
+sha256sum:
+ - "3d23b434fe98711a041c608e1f11dc775d8b74f547167c2b9a640825edd6730a"
+depends:
+ - "libseccomp"
+ - "libcap"
+ - "yajl"
+build_depends:
+ - "gmake"
+
+build {
+ macro build --disable-systemd 
+}
+
+package {
+ meson package
+}
+
+

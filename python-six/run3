@@ -1,0 +1,18 @@
+name: "python-six"
+version: "1.16.0"
+release: "1"
+description: "Python 2 and 3 compatibility utilities"
+sources:
+ - "https://pypi.io/packages/source/s/six/six-${version}.tar.gz"
+sha256sum:
+ - "1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"
+depends:
+ - "python"
+build_depends:
+ - "python-setuptools"
+
+package {
+ exec "pip install . --prefix=/usr --root=\"$ROOT\""
+}
+
+

@@ -1,0 +1,26 @@
+name: "procps-ng"
+version: "4.0.4"
+release: "1"
+description: "procps"
+sources:
+ - "https://gitlab.com/procps-ng/procps/-/archive/v${version}/procps-v${version}.tar.gz"
+sha256sum:
+ - "3214fab0f817d169f2c117842ba635bafb1cd6090273e311a8b5c6fc393ddb9d"
+depends:
+ - "gettext"
+build_depends:
+ - "autoconf"
+ - "automake"
+ - "libtool"
+ - "gmake"
+
+build {
+ exec "./autogen.sh"
+ macro build 
+}
+
+package {
+ macro package
+}
+
+

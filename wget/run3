@@ -1,0 +1,22 @@
+name: "wget"
+version: "1.21.4"
+release: "2"
+description: "Network utility to retrieve files from the Web"
+sources:
+ - "https://ftp.gnu.org/gnu/wget/wget-${version}.tar.gz"
+sha256sum:
+ - "81542f5cefb8faacc39bbbc6c82ded80e3e4a88505ae72ea51df27525bcde04c"
+depends:
+ - "openssl"
+build_depends:
+ - "gmake"
+
+build {
+ macro build --with-ssl=openssl
+}
+
+package {
+ macro package
+}
+
+

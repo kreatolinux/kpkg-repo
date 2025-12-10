@@ -1,0 +1,23 @@
+name: "automake"
+version: "1.18.1"
+release: "1"
+description: "GNU Automake"
+sources:
+ - "https://ftp.gnu.org/gnu/automake/automake-${version}.tar.gz"
+sha256sum:
+ - "63e585246d0fc8772dffdee0724f2f988146d1a3f1c756a3dc5cfbefa3c01915"
+depends:
+ - "perl"
+ - "autoconf"
+build_depends:
+ - "gmake"
+
+build {
+ macro build
+}
+
+package {
+ macro package
+}
+
+

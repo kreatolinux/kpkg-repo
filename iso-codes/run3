@@ -1,0 +1,21 @@
+name: "iso-codes"
+version: "4.19.0"
+release: "1"
+description: "Provides lists of various ISO standards (countries, languages, language scripts, and currency names) in one place"
+sources:
+ - "https://ftp.debian.org/debian/pool/main/i/iso-codes/iso-codes_${version}.orig.tar.xz"
+sha256sum:
+ - "3f74176b82f03294d9043ee24596d2b91e97e50c2c26124236aa7a6214ab7c06"
+build_depends:
+ - "python"
+ - "gmake"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+}
+
+

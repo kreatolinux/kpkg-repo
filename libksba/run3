@@ -1,0 +1,22 @@
+name: "libksba"
+version: "1.6.7"
+release: "1"
+description: "An easy API to create and parse X.509 and CMS related objects"
+sources:
+ - "https://gnupg.org/ftp/gcrypt/libksba/libksba-${version}.tar.bz2"
+sha256sum:
+ - "cf72510b8ebb4eb6693eef765749d83677a03c79291a311040a5bfd79baab763"
+depends:
+ - "libgpg-error"
+build_depends:
+ - "gmake"
+
+build {
+ macro build 
+}
+
+package {
+ meson package
+}
+
+

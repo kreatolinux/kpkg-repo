@@ -1,0 +1,22 @@
+name: "libisl"
+version: "0.27"
+release: "1"
+description: "isl is a library for manipulating sets and relations of integer points bounded by linear constraints."
+sources:
+ - "https://libisl.sourceforge.io/isl-${version}.tar.xz"
+sha256sum:
+ - "6d8babb59e7b672e8cb7870e874f3f7b813b6e00e6af3f8b04f7579965643d5c"
+depends:
+ - "gmp"
+build_depends:
+ - "gmake"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+}
+
+

@@ -1,0 +1,30 @@
+name: "gcr-3"
+version: "3.41.1"
+release: "1"
+description: "gcr-3"
+sources:
+ - "https://gitlab.gnome.org/GNOME/gcr/-/archive/${version}/gcr-${version}.tar.gz"
+sha256sum:
+ - "f25de5063ffe6359c79f86d70a53c2d398db4e256e2de58c2a3bd2e8111b8f11"
+depends:
+ - "p11-kit"
+ - "gnupg"
+ - "openssh"
+ - "libsecret"
+ - "libgcrypt"
+ - "gtk3"
+build_depends:
+ - "meson"
+ - "vala"
+ - "libxslt"
+ - "gobject-introspection"
+
+build {
+ macro build -Dgtk_doc=false
+}
+
+package {
+ macro package
+}
+
+

@@ -1,0 +1,23 @@
+name: "libxfixes"
+version: "6.0.2"
+release: "1"
+description: "libxfixes"
+sources:
+ - "https://www.x.org/releases/individual/lib/libXfixes-${version}.tar.gz"
+sha256sum:
+ - "041331b8e6e36038b3bf836785b6b175ec8515f964c9e4e3316b3bfed0f53ac7"
+depends:
+ - "libx11"
+build_depends:
+ - "xorgproto"
+ - "gmake"
+
+build {
+ macro build --sysconfdir=/etc --disable-static
+}
+
+package {
+ macro package
+}
+
+

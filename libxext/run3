@@ -1,0 +1,23 @@
+name: "libxext"
+version: "1.3.6"
+release: "1"
+description: "libxext"
+sources:
+ - "https://www.x.org/releases/individual/lib/libXext-${version}.tar.gz"
+sha256sum:
+ - "1a0ac5cd792a55d5d465ced8dbf403ed016c8e6d14380c0ea3646c4415496e3d"
+depends:
+ - "libx11"
+build_depends:
+ - "xorgproto"
+ - "gmake"
+
+build {
+ macro build --sysconfdir=/etc --disable-static
+}
+
+package {
+ macro package
+}
+
+

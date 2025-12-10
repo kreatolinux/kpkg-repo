@@ -1,0 +1,24 @@
+name: "startup-notification"
+version: "0.12"
+release: "1"
+description: "startup-notification"
+sources:
+ - "https://www.freedesktop.org/software/startup-notification/releases/startup-notification-${version}.tar.gz"
+sha256sum:
+ - "3c391f7e930c583095045cd2d10eb73a64f085c7fde9d260f2652c7cb3cfbe4a"
+depends:
+ - "libx11"
+ - "libxcb"
+ - "xcb-util"
+build_depends:
+ - "gmake"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+}
+
+

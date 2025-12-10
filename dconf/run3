@@ -1,0 +1,25 @@
+name: "dconf"
+version: "0.40.0"
+release: "1"
+description: "A simple key/value storage system that is heavily optimised for reading"
+sources:
+ - "https://gitlab.gnome.org/GNOME/dconf/-/archive/${version}/dconf-${version}.tar.gz"
+sha256sum:
+ - "c144c314a5ab1b0e2c2e5cb381658d19b9577511b62db5df3fac463028b61bca"
+depends:
+ - "dbus"
+ - "glib"
+ - "vala"
+build_depends:
+ - "meson"
+ - "python-setuptools"
+
+build {
+ macro build -Dbash_completion=false -Dman=false
+}
+
+package {
+ macro package
+}
+
+

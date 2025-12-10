@@ -1,0 +1,18 @@
+name: "neofetch"
+version: "7.1.5"
+release: "1"
+description: "A command-line system information tool written in bash 3.2+"
+sources:
+ - "https://github.com/kreatolinux/neofetch/archive/refs/tags/${version}.tar.gz"
+sha256sum:
+ - "1a53befe5e09e5ddb86f5e9022e321468c4a049858fc1a4ea3238565258cb5d8"
+depends:
+ - "bash"
+
+package {
+ exec "mkdir -p $ROOT/usr/bin"
+ exec "cp -rf neofetch $ROOT/usr/bin"
+ exec "chmod +x $ROOT/usr/bin/neofetch"
+}
+
+

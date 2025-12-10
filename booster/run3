@@ -1,0 +1,25 @@
+name: "booster"
+version: "0.12"
+release: "1"
+description: "fast and secure initramfs generator"
+sources:
+ - "https://github.com/anatol/booster/archive/refs/tags/${version}.tar.gz"
+sha256sum:
+ - "a2515923e919c99b69ce50f7828aa5df6e7ff80ea145c93c5a8c981d015d8bd4"
+build_depends:
+ - "go"
+
+build {
+ cd "init"
+ exec "go build"
+ cd "../generator"
+ exec "go build"
+}
+
+package {
+# Taken from https://github.com/anatol/booster/blob/master/packaging/arch/PKGBUILD
+ exec "env install -Dp -m755 generator/generator \"$ROOT/usr/bin/booster\""
+ exec "env install -Dp -m755 init/init \"$ROOT/usr/lib/booster/init\""
+}
+
+

@@ -1,0 +1,22 @@
+name: "ruby"
+version: "3.2.2"
+release: "1"
+description: "The Ruby language"
+sources:
+ - "https://cache.ruby-lang.org/pub/ruby/3.2/ruby-${version}.tar.xz"
+sha256sum:
+ - "4b352d0f7ec384e332e3e44cdbfdcd5ff2d594af3c8296b5636c710975149e23"
+depends:
+ - "libyaml"
+build_depends:
+ - "gmake"
+
+build {
+ macro build --enable-shared --without-baseruby --without-valgrind
+}
+
+package {
+ macro package
+}
+
+

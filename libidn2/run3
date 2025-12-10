@@ -1,0 +1,22 @@
+name: "libidn2"
+version: "2.3.8"
+release: "1"
+description: "libidn2"
+sources:
+ - "https://ftp.gnu.org/gnu/libidn/libidn2-${version}.tar.gz"
+sha256sum:
+ - "f557911bf6171621e1f72ff35f5b1825bb35b52ed45325dcdee931e5d3c0787a"
+depends:
+ - "libunistring"
+build_depends:
+ - "gmake"
+
+build {
+ macro build --disable-static
+}
+
+package {
+ macro package
+}
+
+

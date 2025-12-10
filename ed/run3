@@ -1,0 +1,21 @@
+name: "ed"
+version: "1.22.3"
+release: "1"
+description: "A line-oriented text editor"
+sources:
+ - "https://ftp.gnu.org/gnu/ed/ed-${version}.tar.lz"
+sha256sum:
+ - "47a55ddfc52d4a1ff6f7559fbd00cf948a16b6cf151ec520392761aeae4e97be"
+build_depends:
+ - "lzip"
+ - "gmake"
+
+build {
+ macro build
+}
+
+package {
+ meson package
+}
+
+

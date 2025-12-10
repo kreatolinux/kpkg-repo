@@ -1,0 +1,27 @@
+name: "xf86-input-libinput"
+version: "1.4.0"
+release: "1"
+description: "xf86-input-libinput"
+sources:
+ - "https://xorg.freedesktop.org/releases/individual/driver/xf86-input-libinput-${version}.tar.xz"
+sha256sum:
+ - "3a3d14cd895dc75b59ae2783b888031956a0bac7a1eff16d240dbb9d5df3e398"
+depends:
+ - "libinput"
+build_depends:
+ - "libxi"
+ - "libx11"
+ - "xorgproto"
+ - "xorg-util-macros"
+ - "xorg-server"
+ - "gmake"
+
+build {
+ macro build --disable-static
+}
+
+package {
+ macro package
+}
+
+

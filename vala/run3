@@ -1,0 +1,23 @@
+name: "vala"
+version: "0.56.18"
+release: "1"
+description: "Programming language commonly used in GNOME applications"
+sources:
+ - "https://download.gnome.org/sources/vala/0.56/vala-${version}.tar.xz"
+sha256sum:
+ - "f2affe7d40ab63db8e7b9ecc3f6bdc9c2fc7e3134c84ff2d795f482fe926a382"
+depends:
+ - "glib"
+ - "gobject-introspection"
+build_depends:
+ - "gmake"
+
+build {
+ macro build --disable-valadoc
+}
+
+package {
+ macro package
+}
+
+

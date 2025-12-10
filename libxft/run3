@@ -1,0 +1,27 @@
+name: "libxft"
+version: "2.3.9"
+release: "1"
+description: "X11 client-side font rendering library"
+sources:
+ - "https://www.x.org/releases/individual/lib/libXft-${version}.tar.xz"
+sha256sum:
+ - "60a25b78945ed6932635b3bb1899a517d31df7456e69867ffba27f89ff3976f5"
+depends:
+ - "libx11"
+ - "libxext"
+ - "libxrender"
+ - "fontconfig"
+ - "freetype"
+build_depends:
+ - "xtrans"
+ - "gmake"
+
+build {
+ macro build --disable-static
+}
+
+package {
+ macro package
+}
+
+

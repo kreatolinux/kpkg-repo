@@ -1,0 +1,26 @@
+name: "libxcb"
+version: "1.17.0"
+release: "1"
+description: "X11 client-side library"
+sources:
+ - "https://www.x.org/releases/individual/lib/libxcb-${version}.tar.xz"
+sha256sum:
+ - "599ebf9996710fea71622e6e184f3a8ad5b43d0e5fa8c4e407123c88a59a6d55"
+depends:
+ - "xcb-proto"
+ - "libxdmcp"
+ - "libxau"
+build_depends:
+ - "python"
+ - "xorgproto"
+ - "libxslt"
+
+build {
+ macro build --disable-static
+}
+
+package {
+ macro package
+}
+
+

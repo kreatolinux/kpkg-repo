@@ -1,0 +1,22 @@
+name: "xcb-proto"
+version: "1.17.0"
+release: "1"
+description: "XML-XCB protocol descriptions"
+sources:
+ - "https://www.x.org/releases/individual/proto/xcb-proto-${version}.tar.xz"
+sha256sum:
+ - "2c1bacd2110f4799f74de6ebb714b94cf6f80fb112316b1219480fd22562148c"
+build_depends:
+ - "python"
+ - "libxml2"
+ - "gmake"
+
+build {
+ macro build --disable-static
+}
+
+package {
+ macro package
+}
+
+

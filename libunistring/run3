@@ -1,0 +1,20 @@
+name: "libunistring"
+version: "1.4.1"
+release: "1"
+description: "libunistring"
+sources:
+ - "https://ftp.gnu.org/gnu/libunistring/libunistring-${version}.tar.xz"
+sha256sum:
+ - "67d88430892527861903788868c77802a217b0959990f7449f2976126a307763"
+build_depends:
+ - "gmake"
+
+build {
+ macro build --disable-static
+}
+
+package {
+ macro package
+}
+
+

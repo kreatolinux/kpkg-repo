@@ -1,0 +1,25 @@
+name: "libsecret"
+version: "0.21.7"
+release: "1"
+description: "A GObject-based library for accessing the Secret Service API"
+sources:
+ - "https://download.gnome.org/sources/libsecret/0.21/libsecret-${version}.tar.xz"
+sha256sum:
+ - "6b452e4750590a2b5617adc40026f28d2f4903de15f1250e1d1c40bfd68ed55e"
+depends:
+ - "glib"
+ - "libgcrypt"
+ - "gobject-introspection"
+ - "vala"
+build_depends:
+ - "meson"
+
+build {
+ macro build -Dgtk_doc=false -Dmanpage=false
+}
+
+package {
+ macro package
+}
+
+

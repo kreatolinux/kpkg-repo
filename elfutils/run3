@@ -1,0 +1,22 @@
+name: "elfutils"
+version: "0.194"
+release: "1"
+description: "elfutils"
+sources:
+ - "https://sourceware.org/elfutils/ftp/${version}/elfutils-${version}.tar.bz2"
+sha256sum:
+ - "09e2ff033d39baa8b388a2d7fbc5390bfde99ae3b7c67c7daaf7433fbcf0f01e"
+depends:
+ - "zlib"
+build_depends:
+ - "gmake"
+
+build {
+ macro build --disable-debuginfod --disable-libdebuginfod
+}
+
+package {
+ macro package
+}
+
+

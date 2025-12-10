@@ -1,0 +1,22 @@
+name: "libbsd"
+version: "0.12.2"
+release: "1"
+description: "Useful functions commonly found on BSD systems, and lacking on others like GNU systems"
+sources:
+ - "https://libbsd.freedesktop.org/releases/libbsd-${version}.tar.xz"
+sha256sum:
+ - "b88cc9163d0c652aaf39a99991d974ddba1c3a9711db8f1b5838af2a14731014"
+depends:
+ - "libmd"
+build_depends:
+ - "gmake"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+}
+
+

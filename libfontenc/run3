@@ -1,0 +1,23 @@
+name: "libfontenc"
+version: "1.1.8"
+release: "1"
+description: "libfontenc"
+sources:
+ - "https://www.x.org/releases/individual/lib/libfontenc-${version}.tar.xz"
+sha256sum:
+ - "7b02c3d405236e0d86806b1de9d6868fe60c313628b38350b032914aa4fd14c6"
+depends:
+ - "zlib"
+build_depends:
+ - "xorgproto"
+ - "gmake"
+
+build {
+ macro build --disable-static
+}
+
+package {
+ macro package
+}
+
+

@@ -1,0 +1,20 @@
+name: "xorg-util-macros"
+version: "1.20.0"
+release: "1"
+description: "xorg-util-macros"
+sources:
+ - "https://www.x.org/archive/individual/util/util-macros-${version}.tar.xz"
+sha256sum:
+ - "0b86b262dbe971edb4ff233bc370dfad9f241d09f078a3f6d5b7f4b8ea4430db"
+build_depends:
+ - "gmake"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+}
+
+

@@ -1,0 +1,38 @@
+name: "elogind"
+version: "252.9"
+release: "1"
+description: "systemd-logind, extracted to be a standalone daemon"
+sources:
+ - "https://github.com/elogind/elogind/archive/refs/tags/v${version}.tar.gz"
+ - "realpath.patch"
+sha256sum:
+ - "7af8caa8225a406e77fb99c9f33dba5e1f0a94f0e1277c9d91dcfc016f116d85"
+ - "feb8948704e98971a936eb69701d14c31b1be3017b9746d81f8ed739ed4189fc"
+depends:
+ - "dbus"
+ - "linux-pam"
+ - "python-jinja2"
+ - "util-linux"
+ - "gperf"
+ - "eudev"
+build_depends:
+ - "meson"
+replaces:
+ - "systemd"
+
+prepare {
+ exec "patch -p1 < ../realpath.patch"
+}
+
+build {
+ macro build -Dman=false -Ddbuspolicydir=/etc/dbus-1/system.d
+}
+
+package {
+ macro package
+ exec "mkdir -p $ROOT/usr/lib/pkgconfig $ROOT/usr/include/systemd"
+ exec "ln -s libelogind.pc $ROOT/usr/lib/pkgconfig/libsystemd.pc"
+ exec "ln -sn elogind $ROOT/usr/include/systemd"
+}
+
+

@@ -1,0 +1,22 @@
+name: "vim"
+version: "9.1.1930"
+release: "1"
+description: "Vi Improved"
+sources:
+ - "https://github.com/vim/vim/archive/refs/tags/v${version}.tar.gz"
+sha256sum:
+ - "d4601a7d0ce3428834d4509bc409988cb84069835be40e58b34dfb2dd4f4eb46"
+depends:
+ - "ncurses"
+build_depends:
+ - "gmake"
+
+build {
+ macro build --with-local-dir
+}
+
+package {
+ macro package
+}
+
+

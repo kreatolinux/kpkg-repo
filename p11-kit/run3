@@ -1,0 +1,24 @@
+name: "p11-kit"
+version: "0.25.10"
+release: "2"
+description: "A way to load and enumerate PKCS#11 modules"
+sources:
+ - "https://github.com/p11-glue/p11-kit/releases/download/${version}/p11-kit-${version}.tar.xz"
+sha256sum:
+ - "a62a137a966fb3a9bbfa670b4422161e369ddea216be51425e3be0ab2096e408"
+depends:
+ - "libtasn"
+ - "libffi"
+ - "pkgconf"
+build_depends:
+ - "gmake"
+
+build {
+ macro build --sysconfdir=/etc --with-trust-paths=/etc/ca-certificates/trust-source:/usr/share/ca-certificates/trust-source
+}
+
+package {
+ macro package
+}
+
+

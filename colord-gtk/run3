@@ -1,0 +1,26 @@
+name: "colord-gtk"
+version: "0.3.1"
+release: "1"
+description: "GTK stuff for colord"
+sources:
+ - "https://www.freedesktop.org/software/colord/releases/colord-gtk-${version}.tar.xz"
+sha256sum:
+ - "c176b889b75630a17f4e3d7ef24c09a3e12368e633496087459c8b53ac3a122d"
+depends:
+ - "gtk4"
+ - "colord"
+build_depends:
+ - "meson"
+ - "lcms2"
+ - "gtk3"
+ - "gobject-introspection"
+
+build {
+ macro build -Dgtk4=true -Dvapi=true -Ddocs=false -Dman=false
+}
+
+package {
+ macro package
+}
+
+

@@ -1,0 +1,25 @@
+name: "libgusb"
+version: "0.4.9"
+release: "2"
+description: "GObject bindings for libusb"
+sources:
+ - "https://github.com/hughsie/libgusb/releases/download/${version}/libgusb-${version}.tar.xz"
+sha256sum:
+ - "9df5ef301d6a4b361002aa52cce1165a87a89744055879bdbab31e7e86f1e846"
+depends:
+ - "json-glib"
+ - "libusb"
+build_depends:
+ - "meson"
+ - "gobject-introspection"
+ - "vala"
+
+build {
+ macro build -Ddocs=false
+}
+
+package {
+ macro package
+}
+
+

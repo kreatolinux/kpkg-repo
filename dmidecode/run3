@@ -1,0 +1,21 @@
+name: "dmidecode"
+version: "3.6"
+release: "1"
+description: "Desktop Management Interface table related utilities"
+sources:
+ - "https://download.savannah.gnu.org/releases/dmidecode/dmidecode-${version}.tar.xz"
+sha256sum:
+ - "e40c65f3ec3dafe31ad8349a4ef1a97122d38f65004ed66575e1a8d575dd8bae"
+build_depends:
+ - "gmake"
+
+build {
+ exec "make"
+ exec "make strip"
+}
+
+package {
+ macro package
+}
+
+

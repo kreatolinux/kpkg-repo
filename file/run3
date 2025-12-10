@@ -1,0 +1,20 @@
+name: "file"
+version: "5.46"
+release: "1"
+description: "File tool"
+sources:
+ - "https://astron.com/pub/file/file-${version}.tar.gz"
+sha256sum:
+ - "c9cc77c7c560c543135edc555af609d5619dbef011997e988ce40a3d75d86088"
+build_depends:
+ - "gmake"
+
+build {
+ macro build
+}
+
+package {
+ macro package
+}
+
+

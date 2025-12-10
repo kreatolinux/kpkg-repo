@@ -1,0 +1,24 @@
+name: "libx11"
+version: "1.8.12"
+release: "1"
+description: "X11 client-side library"
+sources:
+ - "https://www.x.org/releases/individual/lib/libX11-${version}.tar.gz"
+sha256sum:
+ - "220fbcf54b6e4d8dc40076ff4ab87954358019982490b33c7802190b62d89ce1"
+depends:
+ - "libxcb"
+ - "xorgproto"
+build_depends:
+ - "xtrans"
+ - "gmake"
+
+build {
+ macro build --disable-static
+}
+
+package {
+ macro package
+}
+
+

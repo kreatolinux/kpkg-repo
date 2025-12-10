@@ -1,0 +1,23 @@
+name: "dbus-glib"
+version: "0.114"
+release: "1"
+description: "GLib stuff for D-Bus"
+sources:
+ - "https://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-${version}.tar.gz"
+sha256sum:
+ - "c09c5c085b2a0e391b8ee7d783a1d63fe444e96717cc1814d61b5e8fc2827a7c"
+depends:
+ - "dbus"
+ - "glib"
+build_depends:
+ - "gmake"
+
+build {
+ macro build --sysconfdir=/etc --disable-static
+}
+
+package {
+ macro package
+}
+
+

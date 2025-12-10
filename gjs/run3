@@ -1,0 +1,29 @@
+name: "gjs"
+version: "1.86.0"
+release: "1"
+description: "Javascript bindings for GNOME"
+sources:
+ - "https://gitlab.gnome.org/GNOME/gjs/-/archive/${version}/gjs-${version}.tar.gz"
+sha256sum:
+ - "2d35bc4830f732e88e2c389e7f573bc973378ce0d13725973a75f6d478f55932"
+depends:
+ - "glib"
+ - "js115"
+ - "libffi"
+ - "cairo"
+ - "dbus"
+ - "gobject-introspection"
+ - "readline"
+ - "dconf"
+build_depends:
+ - "meson"
+
+build {
+ macro build --wrap-mode=nofallback
+}
+
+package {
+ macro package
+}
+
+

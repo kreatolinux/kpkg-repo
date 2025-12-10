@@ -1,0 +1,26 @@
+name: "libportal"
+version: "0.7.1"
+release: "1"
+description: "libportal"
+sources:
+ - "https://github.com/flatpak/libportal/releases/download/${version}/libportal-${version}.tar.xz"
+sha256sum:
+ - "297b90b263fad22190a26b8c7e8ea938fe6b18fb936265e588927179920d3805"
+depends:
+ - "gtk3"
+ - "gtk4"
+build_depends:
+ - "meson"
+ - "gobject-introspection"
+ - "vala"
+ - "gjs"
+
+build {
+ macro build -Ddocs=false
+}
+
+package {
+ macro package
+}
+
+

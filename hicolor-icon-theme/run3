@@ -1,0 +1,20 @@
+name: "hicolor-icon-theme"
+version: "0.18"
+release: "1"
+description: "hicolor-icon-theme"
+sources:
+ - "https://icon-theme.freedesktop.org/releases/hicolor-icon-theme-${version}.tar.xz"
+sha256sum:
+ - "db0e50a80aa3bf64bb45cbca5cf9f75efd9348cf2ac690b907435238c3cf81d7"
+build_depends:
+ - "meson"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+}
+
+

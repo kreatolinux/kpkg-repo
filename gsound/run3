@@ -1,0 +1,24 @@
+name: "gsound"
+version: "1.0.3"
+release: "1"
+description: "A small library for playing system sounds"
+sources:
+ - "https://gitlab.gnome.org/GNOME/gsound/-/archive/${version}/gsound-${version}.tar.gz"
+sha256sum:
+ - "ebee33c77f43bcae87406c20e051acaff08e86f8960c35b92911e243fddc7a0b"
+depends:
+ - "libcanberra"
+build_depends:
+ - "meson"
+ - "vala"
+ - "gobject-introspection"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+}
+
+

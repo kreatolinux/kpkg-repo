@@ -1,0 +1,24 @@
+name: "rdfind"
+version: "1.6.0"
+release: "1"
+description: "find duplicate files utility"
+sources:
+ - "https://github.com/pauldreik/rdfind/archive/refs/tags/releases/${version}.tar.gz"
+sha256sum:
+ - "9198d41c7a14bdf29c347570bab5001a56a4d23c1bc2e962115dccbc2d0d2265"
+depends:
+ - "libnettle"
+build_depends:
+ - "automake"
+ - "gmake"
+
+build {
+ exec "./bootstrap.sh"
+ macro build
+}
+
+package {
+ macro package
+}
+
+

@@ -1,0 +1,20 @@
+name: "lzip"
+version: "1.24.1"
+release: "1"
+description: "A lossless data compressor"
+sources:
+ - "https://download.savannah.gnu.org/releases/lzip/lzip-${version}.tar.gz"
+sha256sum:
+ - "30c9cb6a0605f479c496c376eb629a48b0a1696d167e3c1e090c5defa481b162"
+build_depends:
+ - "gmake"
+
+build {
+ macro build 
+}
+
+package {
+ meson package
+}
+
+

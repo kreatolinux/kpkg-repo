@@ -1,0 +1,20 @@
+name: "pcre2"
+version: "10.47"
+release: "1"
+description: "Perl Compatible Regular Expression libraries"
+sources:
+ - "https://github.com/PCRE2Project/pcre2/releases/download/pcre2-${version}/pcre2-${version}.tar.gz"
+sha256sum:
+ - "c08ae2388ef333e8403e670ad70c0a11f1eed021fd88308d7e02f596fcd9dc16"
+build_depends:
+ - "gmake"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+}
+
+

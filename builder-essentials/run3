@@ -1,0 +1,26 @@
+name: "builder-essentials"
+version: "0.1"
+release: "1"
+description: "Group package for building tools"
+depends:
+ - "autoconf"
+ - "automake"
+ - "binutils"
+ - "bash"
+ - "perl"
+ - "bison"
+ - "meson"
+ - "file"
+ - "linux-headers"
+ - "ninja"
+ - "texinfo"
+ - "gcc"
+ - "gmake"
+ - "gawk"
+ - "grep"
+build_depends:
+ - "gmake"
+no_chkupd: true
+is_group: true
+
+

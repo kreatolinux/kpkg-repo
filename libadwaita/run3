@@ -1,0 +1,24 @@
+name: "libadwaita"
+version: "1.4.2"
+release: "1"
+description: "GNOME ui stuff"
+sources:
+ - "https://gitlab.gnome.org/GNOME/libadwaita/-/archive/${version}/libadwaita-${version}.tar.gz"
+sha256sum:
+ - "47ce895ce87c0a66a1e700b6d778520c14339cfc88af7bd30f6b401d782214f1"
+depends:
+ - "gtk4"
+build_depends:
+ - "meson"
+ - "vala"
+ - "sassc"
+
+build {
+ macro build -Dgtk_doc=false
+}
+
+package {
+ macro package
+}
+
+

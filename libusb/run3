@@ -1,0 +1,22 @@
+name: "libusb"
+version: "1.0.29"
+release: "1"
+description: "A cross-platform library to access USB devices"
+sources:
+ - "https://github.com/libusb/libusb/releases/download/v${version}/libusb-${version}.tar.bz2"
+sha256sum:
+ - "5977fc950f8d1395ccea9bd48c06b3f808fd3c2c961b44b0c2e6e29fc3a70a85"
+depends:
+ - "eudev"
+build_depends:
+ - "gmake"
+
+build {
+ macro build --disable-static
+}
+
+package {
+ macro package
+}
+
+

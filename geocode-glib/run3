@@ -1,0 +1,24 @@
+name: "geocode-glib"
+version: "3.26.4"
+release: "1"
+description: "geocode-glib"
+sources:
+ - "https://github.com/GNOME/geocode-glib/archive/refs/tags/${version}.tar.gz"
+sha256sum:
+ - "cd4464f74add58584f04e6a7f16347f07caf271509e0b7ef067a4170b74518c9"
+depends:
+ - "glib"
+ - "libsoup"
+ - "json-glib"
+build_depends:
+ - "meson"
+
+build {
+ macro build -Denable-gtk-doc=false -Dsoup2=false
+}
+
+package {
+ macro package
+}
+
+

@@ -1,0 +1,26 @@
+name: "libgexiv2"
+version: "0.14.2"
+release: "1"
+description: "GObject wrapper around the Exiv2 photo metadata library"
+sources:
+ - "https://gitlab.gnome.org/GNOME/gexiv2/-/archive/gexiv2-${version}/gexiv2-gexiv2-${version}.tar.gz"
+sha256sum:
+ - "7489d00e2bfafd7e09b0c4e7f01d075831d5f6b3280210b4c690c20853aad82d"
+depends:
+ - "exiv2"
+build_depends:
+ - "meson"
+ - "glib"
+ - "gobject-introspection"
+ - "pygobject"
+ - "vala"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+}
+
+

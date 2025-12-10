@@ -1,0 +1,20 @@
+name: "gperf"
+version: "3.3"
+release: "1"
+description: "gperf"
+sources:
+ - "https://ftp.gnu.org/pub/gnu/gperf/gperf-${version}.tar.gz"
+sha256sum:
+ - "fd87e0aba7e43ae054837afd6cd4db03a3f2693deb3619085e6ed9d8d9604ad8"
+build_depends:
+ - "gmake"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+}
+
+

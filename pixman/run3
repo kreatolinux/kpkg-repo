@@ -1,0 +1,20 @@
+name: "pixman"
+version: "0.44.0"
+release: "1"
+description: "A library that provides low-level pixel manipulation features such as image compositing and trapezoid rasterization"
+sources:
+ - "https://www.cairographics.org/releases/pixman-${version}.tar.gz"
+sha256sum:
+ - "89a4c1e1e45e0b23dffe708202cb2eaffde0fe3727d7692b2e1739fec78a7dac"
+build_depends:
+ - "meson"
+
+build {
+ macro build
+}
+
+package {
+ macro package
+}
+
+

@@ -1,0 +1,23 @@
+name: "libwpe"
+version: "1.16.0"
+release: "1"
+description: "libwpe"
+sources:
+ - "https://wpewebkit.org/releases/libwpe-${version}.tar.xz"
+sha256sum:
+ - "c7f3a3c6b3d006790d486dc7cceda2b6d2e329de07f33bc47dfc53f00f334b2a"
+depends:
+ - "libxkbcommon"
+ - "mesa"
+build_depends:
+ - "meson"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+}
+
+

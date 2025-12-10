@@ -1,0 +1,24 @@
+name: "libxslt"
+version: "1.1.43"
+release: "2"
+description: "XSLT processor based on libxml2"
+sources:
+ - "https://download.gnome.org/sources/libxslt/1.1/libxslt-${version}.tar.xz"
+sha256sum:
+ - "5a3d6b383ca5afc235b171118e90f5ff6aa27e9fea3303065231a6d403f0183a"
+depends:
+ - "python"
+ - "libxml2"
+build_depends:
+ - "pkgconf"
+ - "gmake"
+
+build {
+ macro build --disable-static --with-history --with-python=/usr/bin/python3
+}
+
+package {
+ macro package
+}
+
+

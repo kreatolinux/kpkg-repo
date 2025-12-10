@@ -1,0 +1,29 @@
+name: "udisks"
+version: "2.10.1"
+release: "1"
+description: "udisks"
+sources:
+ - "https://github.com/storaged-project/udisks/releases/download/udisks-${version}/udisks-${version}.tar.bz2"
+sha256sum:
+ - "b75734ccf602540dedb4068bec206adcb508a4c003725e117ae8f994d92d8ece"
+depends:
+ - "libatasmart"
+ - "libblockdev"
+ - "elogind"
+ - "libgudev"
+ - "libxslt"
+ - "polkit"
+build_depends:
+ - "gobject-introspection"
+ - "gmake"
+
+build {
+# from BLFS
+ macro build --sysconfdir=/etc --disable-static --disable-man
+}
+
+package {
+ macro package
+}
+
+

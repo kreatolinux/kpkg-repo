@@ -1,0 +1,22 @@
+name: "gnu-core"
+version: "0.1"
+release: "1"
+description: "GNU core group"
+depends:
+ - "gnu-coreutils"
+ - "pigz"
+ - "xz-utils"
+ - "bash"
+ - "gsed"
+ - "bzip2"
+ - "patch"
+ - "diffutils"
+ - "findutils"
+ - "util-linux"
+ - "bc"
+ - "cpio"
+ - "which"
+no_chkupd: true
+is_group: true
+
+

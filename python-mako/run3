@@ -1,0 +1,18 @@
+name: "python-mako"
+version: "1.2.4"
+release: "2"
+description: "Hyperfast and lightweight templating for the Python platform"
+sources:
+ - "https://files.pythonhosted.org/packages/source/M/Mako/Mako-${version}.tar.gz"
+sha256sum:
+ - "d60a3903dc3bb01a18ad6a89cdbe2e4eadc69c0bc8ef1e3773ba53d44c3f7a34"
+depends:
+ - "python"
+build_depends:
+ - "python-setuptools"
+
+package {
+ exec "pip install . --prefix=/usr --root=\"$ROOT\""
+}
+
+

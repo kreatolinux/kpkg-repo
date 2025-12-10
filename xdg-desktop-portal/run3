@@ -1,0 +1,33 @@
+name: "xdg-desktop-portal"
+version: "1.18.2"
+release: "1"
+description: "A portal frontend service for Flatpak and possibly other desktop containment frameworks"
+sources:
+ - "https://github.com/flatpak/xdg-desktop-portal/releases/download/${version}/xdg-desktop-portal-${version}.tar.xz"
+sha256sum:
+ - "dfac239c5476aafd117a9a10131a2f0b142f72106c52fc03859938e00545f440"
+depends:
+ - "glib"
+ - "flatpak"
+ - "bubblewrap"
+ - "geoclue"
+ - "gdk-pixbuf"
+ - "fuse"
+ - "pipewire"
+ - "json-glib"
+build_depends:
+ - "meson"
+opt_depends:
+ - "xdg-desktop-portal-gtk: GTK backend"
+ - "xdg-desktop-portal-gnome: GNOME backend"
+ - "xdg-desktop-portal-wlr: wlroots backend"
+
+build {
+ macro build -Ddocbook-docs=disabled
+}
+
+package {
+ macro package
+}
+
+

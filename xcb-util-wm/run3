@@ -1,0 +1,23 @@
+name: "xcb-util-wm"
+version: "0.4.2"
+release: "1"
+description: "Utility library for XCB"
+sources:
+ - "https://xorg.freedesktop.org/archive/individual/lib/xcb-util-wm-${version}.tar.xz"
+sha256sum:
+ - "62c34e21d06264687faea7edbf63632c9f04d55e72114aa4a57bb95e4f888a0b"
+depends:
+ - "libxcb"
+build_depends:
+ - "xorgproto"
+ - "gmake"
+
+build {
+ macro build --disable-static
+}
+
+package {
+ macro package
+}
+
+

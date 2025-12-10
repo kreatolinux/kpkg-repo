@@ -1,0 +1,20 @@
+name: "gdbm"
+version: "1.26"
+release: "1"
+description: "A library of database functions that use extendible hashing"
+sources:
+ - "https://ftp.gnu.org/gnu/gdbm/gdbm-${version}.tar.gz"
+sha256sum:
+ - "6a24504a14de4a744103dcb936be976df6fbe88ccff26065e54c1c47946f4a5e"
+build_depends:
+ - "gmake"
+
+build {
+ macro build --disable-static
+}
+
+package {
+ macro package
+}
+
+

@@ -1,0 +1,23 @@
+name: "libxrender"
+version: "0.9.12"
+release: "1"
+description: "libxrender"
+sources:
+ - "https://www.x.org/releases/individual/lib/libXrender-${version}.tar.xz"
+sha256sum:
+ - "b832128da48b39c8d608224481743403ad1691bf4e554e4be9c174df171d1b97"
+depends:
+ - "libx11"
+build_depends:
+ - "xorgproto"
+ - "gmake"
+
+build {
+ macro build --disable-static
+}
+
+package {
+ macro package
+}
+
+

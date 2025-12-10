@@ -1,0 +1,20 @@
+name: "mtdev"
+version: "1.1.7"
+release: "1"
+description: "The mtdev package contains Multitouch Protocol Translation Library which is used to transform all variants of kernel MT (Multitouch) events to the slotted type B protocol."
+sources:
+ - "https://bitmath.org/code/mtdev/mtdev-${version}.tar.bz2"
+sha256sum:
+ - "a107adad2101fecac54ac7f9f0e0a0dd155d954193da55c2340c97f2ff1d814e"
+build_depends:
+ - "gmake"
+
+build {
+ macro build --disable-static
+}
+
+package {
+ macro package
+}
+
+

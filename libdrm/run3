@@ -1,0 +1,22 @@
+name: "libdrm"
+version: "2.4.129"
+release: "1"
+description: "libdrm"
+sources:
+ - "https://dri.freedesktop.org/libdrm/libdrm-${version}.tar.xz"
+sha256sum:
+ - "5978183f978d697e26a50ba066174964efb0ab97caa1ecaa1b861fbe5ddf77dc"
+depends:
+ - "libpciaccess"
+build_depends:
+ - "meson"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+}
+
+

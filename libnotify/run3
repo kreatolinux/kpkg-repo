@@ -1,0 +1,23 @@
+name: "libnotify"
+version: "0.8.3"
+release: "1"
+description: "Notification library"
+sources:
+ - "https://gitlab.gnome.org/GNOME/libnotify/-/archive/${version}/libnotify-${version}.tar.gz"
+sha256sum:
+ - "5bcfeff21b6669c009c862e25c42556723f7a46c2c3454fce0fd532ebed715a0"
+depends:
+ - "gdk-pixbuf"
+ - "gobject-introspection"
+build_depends:
+ - "meson"
+
+build {
+ macro build -Dtests=false -Dman=false -Dgtk_doc=false
+}
+
+package {
+ macro package
+}
+
+

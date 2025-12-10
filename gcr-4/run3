@@ -1,0 +1,30 @@
+name: "gcr-4"
+version: "4.1.0"
+release: "1"
+description: "A library for displaying certificates and crypto UI"
+sources:
+ - "https://download.gnome.org/sources/gcr/4.1/gcr-${version}.tar.xz"
+sha256sum:
+ - "9ceaad29284ba919b9216e2888c18ec67240c2c93b3a4856bc5488bbc1f3a383"
+depends:
+ - "glib"
+ - "gtk4"
+ - "libgcrypt"
+ - "p11-kit"
+ - "gnupg"
+ - "libsecret"
+ - "openssh"
+ - "libxslt"
+build_depends:
+ - "meson"
+ - "gobject-introspection"
+
+build {
+ macro build -Dgtk_doc=false
+}
+
+package {
+ macro package
+}
+
+

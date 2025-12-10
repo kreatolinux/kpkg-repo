@@ -1,0 +1,23 @@
+name: "jp2a"
+version: "1.2.0"
+release: "1"
+description: "Converts jpg images to ASCII"
+sources:
+ - "https://github.com/Talinx/jp2a/releases/download/v${version}/jp2a-${version}.tar.gz"
+sha256sum:
+ - "11b158aa416c2d64c6d02085b404af01c69468164544389a328d0ae1f8ab3b49"
+depends:
+ - "libjpeg-turbo"
+ - "libpng"
+build_depends:
+ - "gmake"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+}
+
+

@@ -1,0 +1,31 @@
+name: "shadow"
+version: "4.16.0"
+release: "3"
+description: "Shadow utils"
+sources:
+ - "https://github.com/shadow-maint/shadow/releases/download/4.16.0/shadow-4.16.0.tar.xz"
+sha256sum:
+ - "b78e3921a95d53282a38e90628880624736bf6235e36eea50c50835f59a3530b"
+depends:
+ - "libxcrypt"
+ - "linux-pam"
+ - "libbsd"
+build_depends:
+ - "pkgconf"
+ - "gmake"
+
+build {
+ macro build --disable-static --sysconfdir=/etc --with-libpam
+}
+
+package {
+ macro package
+ exec "sed -i 's/account.*/account include system-account/g' \"$ROOT/etc/pam.d/su\""
+ exec "rm -f $ROOT/etc/pam.d/login"
+}
+
+postinstall {
+ exec "pwconv"
+}
+
+

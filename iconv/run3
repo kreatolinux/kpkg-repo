@@ -1,0 +1,20 @@
+name: "iconv"
+version: "1.17"
+release: "2"
+description: "standardized API used to convert between different character encodings"
+sources:
+ - "https://ftp.gnu.org/pub/gnu/libiconv/libiconv-${version}.tar.gz"
+sha256sum:
+ - "8f74213b56238c85a50a5329f77e06198771e70dd9a739779f4c02f65d971313"
+build_depends:
+ - "gmake"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+}
+
+

@@ -1,0 +1,23 @@
+name: "libxcomposite"
+version: "0.4.6"
+release: "1"
+description: "libxcomposite"
+sources:
+ - "https://www.x.org/releases/individual/lib/libXcomposite-${version}.tar.gz"
+sha256sum:
+ - "3599dfcd96cd48d45e6aeb08578aa27636fa903f480f880c863622c2b352d076"
+depends:
+ - "libxfixes"
+build_depends:
+ - "xorgproto"
+ - "gmake"
+
+build {
+ macro build --sysconfdir=/etc --disable-static
+}
+
+package {
+ macro package
+}
+
+

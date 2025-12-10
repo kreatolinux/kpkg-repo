@@ -1,0 +1,22 @@
+name: "libatasmart"
+version: "0.19"
+release: "1"
+description: "disk library"
+sources:
+ - "https://0pointer.de/public/libatasmart-${version}.tar.xz"
+sha256sum:
+ - "61f0ea345f63d28ab2ff0dc352c22271661b66bf09642db3a4049ac9dbdb0f8d"
+depends:
+ - "eudev"
+build_depends:
+ - "gmake"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+}
+
+

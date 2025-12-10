@@ -1,0 +1,23 @@
+name: "libxinerama"
+version: "1.1.5"
+release: "1"
+description: "libxinerama"
+sources:
+ - "https://www.x.org/releases/individual/lib/libXinerama-${version}.tar.gz"
+sha256sum:
+ - "2efa855cb42dc620eff3b77700d8655695e09aaa318f791f201fa60afa72b95c"
+depends:
+ - "libxext"
+build_depends:
+ - "xorgproto"
+ - "gmake"
+
+build {
+ macro build --sysconfdir=/etc --disable-static
+}
+
+package {
+ macro package
+}
+
+

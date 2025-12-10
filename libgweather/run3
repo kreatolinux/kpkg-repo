@@ -1,0 +1,28 @@
+name: "libgweather"
+version: "4.4.0"
+release: "1"
+description: "libgweather"
+sources:
+ - "https://gitlab.gnome.org/GNOME/libgweather/-/archive/${version}/libgweather-${version}.tar.gz"
+sha256sum:
+ - "9a7dabd9252f547fabfc277154025c2a9098bc3b6f2473dcead055689a969d1f"
+depends:
+ - "geocode-glib"
+ - "glib"
+ - "libsoup"
+ - "json-glib"
+build_depends:
+ - "meson"
+ - "vala"
+ - "pygobject"
+ - "gobject-introspection"
+
+build {
+ macro build -Dintrospection=true -Dgtk_doc=false -Denable_vala=true
+}
+
+package {
+ macro package 
+}
+
+

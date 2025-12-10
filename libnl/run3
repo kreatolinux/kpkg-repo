@@ -1,0 +1,22 @@
+name: "libnl"
+version: "3.8.0"
+release: "1"
+description: "A collection of libraries providing APIs to netlink protocol Linux kernel interfaces"
+sources:
+ - "https://github.com/thom311/libnl/releases/download/libnl3_8_0/libnl-3.8.0.tar.gz"
+sha256sum:
+ - "bb726c6d7a08b121978d73ff98425bf313fa26a27a331d465e4f1d7ec5b838c6"
+depends:
+ - "flex"
+build_depends:
+ - "gmake"
+
+build {
+ macro build --sysconfdir=/etc --disable-static
+}
+
+package {
+ macro package
+}
+
+

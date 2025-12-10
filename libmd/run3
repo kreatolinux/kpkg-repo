@@ -1,0 +1,20 @@
+name: "libmd"
+version: "1.1.0"
+release: "1"
+description: "Provides message digest functions from BSD systems"
+sources:
+ - "https://libbsd.freedesktop.org/releases/libmd-${version}.tar.xz"
+sha256sum:
+ - "1bd6aa42275313af3141c7cf2e5b964e8b1fd488025caf2f971f43b00776b332"
+build_depends:
+ - "gmake"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+}
+
+

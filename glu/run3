@@ -1,0 +1,22 @@
+name: "glu"
+version: "9.0.3"
+release: "1"
+description: "glu"
+sources:
+ - "https://gitlab.freedesktop.org/mesa/glu/-/archive/glu-${version}/glu-glu-${version}.tar.gz"
+sha256sum:
+ - "7e919cbc1b2677b01d65fc28fd36a19d1f3e23d76663020e0f3b82b991475e8b"
+depends:
+ - "libglvnd"
+build_depends:
+ - "meson"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+}
+
+

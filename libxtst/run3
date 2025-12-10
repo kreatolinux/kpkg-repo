@@ -1,0 +1,25 @@
+name: "libxtst"
+version: "1.2.5"
+release: "1"
+description: "libxtst"
+sources:
+ - "https://www.x.org/releases/individual/lib/libXtst-${version}.tar.xz"
+sha256sum:
+ - "b50d4c25b97009a744706c1039c598f4d8e64910c9fde381994e1cae235d9242"
+depends:
+ - "libxext"
+ - "libxfixes"
+ - "libxi"
+build_depends:
+ - "xorgproto"
+ - "gmake"
+
+build {
+ macro build --disable-static
+}
+
+package {
+ macro package
+}
+
+

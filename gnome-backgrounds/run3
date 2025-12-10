@@ -1,0 +1,20 @@
+name: "gnome-backgrounds"
+version: "49.0"
+release: "1"
+description: "Backgrounds for GNOME"
+sources:
+ - "https://gitlab.gnome.org/GNOME/gnome-backgrounds/-/archive/${version}/gnome-backgrounds-${version}.tar.gz"
+sha256sum:
+ - "67f8c020249a83daf5d9b9f71ec62d910d542fa8cf9deba837f4ca2669735996"
+build_depends:
+ - "meson"
+
+build {
+ macro build
+}
+
+package {
+ macro package
+}
+
+

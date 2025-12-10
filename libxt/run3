@@ -1,0 +1,23 @@
+name: "libxt"
+version: "1.3.1"
+release: "1"
+description: "X11 library"
+sources:
+ - "https://www.x.org/releases/individual/lib/libXt-${version}.tar.xz"
+sha256sum:
+ - "e0a774b33324f4d4c05b199ea45050f87206586d81655f8bef4dba434d931288"
+depends:
+ - "libx11"
+ - "libsm"
+build_depends:
+ - "gmake"
+
+build {
+ macro build --disable-static
+}
+
+package {
+ macro package
+}
+
+

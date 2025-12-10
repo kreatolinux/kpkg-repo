@@ -1,0 +1,20 @@
+name: "libzstd"
+version: "1.5.1"
+release: "1"
+description: "Facebook's zstd library"
+sources:
+ - "https://github.com/facebook/zstd/releases/download/v${version}/zstd-${version}.tar.gz"
+sha256sum:
+ - "e28b2f2ed5710ea0d3a1ecac3f6a947a016b972b9dd30242369010e5f53d7002"
+build_depends:
+ - "gmake"
+
+build {
+ exec "make"
+}
+
+package {
+ macro package
+}
+
+

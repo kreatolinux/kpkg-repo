@@ -1,0 +1,32 @@
+name: "libblockdev"
+version: "3.0.4"
+release: "2"
+description: "libblockdev"
+sources:
+ - "https://github.com/storaged-project/libblockdev/releases/download/${version}-1/libblockdev-${version}.tar.gz"
+sha256sum:
+ - "49841ff92db0ab032931e6f2b5eab63e5969b0ddc14b067b60e46a6eb6c60e47"
+depends:
+ - "glib"
+ - "keyutils"
+ - "cryptsetup"
+ - "lvm2"
+ - "e2fsprogs"
+ - "eudev"
+ - "util-linux"
+ - "libbytesize"
+ - "gobject-introspection"
+ - "libnvme"
+build_depends:
+ - "gmake"
+
+build {
+# from BLFS
+ macro build --sysconfdir=/etc --with-python3 --without-escrow --without-gtk-doc --without-lvm_dbus --without-nvdimm --without-tools
+}
+
+package {
+ macro package
+}
+
+

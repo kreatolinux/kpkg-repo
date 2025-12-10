@@ -1,0 +1,26 @@
+name: "btrfs-progs"
+version: "6.17.1"
+release: "1"
+description: "BTRFS filesystem utilities"
+sources:
+ - "https://mirrors.edge.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v${version}.tar.xz"
+sha256sum:
+ - "a4be0a6ebb3c476427fb5d97b2cf027b0ccdb6b0c55ff16323320c1e8cb77658"
+depends:
+ - "e2fsprogs"
+ - "eudev"
+ - "util-linux"
+ - "liblzo2"
+build_depends:
+ - "python-setuptools"
+ - "gmake"
+
+build {
+ macro build --disable-documentation 
+}
+
+package {
+ meson package
+}
+
+

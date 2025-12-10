@@ -1,0 +1,22 @@
+name: "libgcrypt"
+version: "1.11.2"
+release: "1"
+description: "A general purpose cryptographic library"
+sources:
+ - "https://gnupg.org/ftp/gcrypt/libgcrypt/libgcrypt-${version}.tar.bz2"
+sha256sum:
+ - "6ba59dd192270e8c1d22ddb41a07d95dcdbc1f0fb02d03c4b54b235814330aac"
+depends:
+ - "libgpg-error"
+build_depends:
+ - "gmake"
+
+build {
+ macro build 
+}
+
+package {
+ meson package
+}
+
+

@@ -1,0 +1,22 @@
+name: "xorg-xkbcomp"
+version: "1.4.7"
+release: "1"
+description: "X11 client-side library"
+sources:
+ - "https://www.x.org/archive/individual/app/xkbcomp-${version}.tar.xz"
+sha256sum:
+ - "0a288114e5f44e31987042c79aecff1ffad53a8154b8ec971c24a69a80f81f77"
+depends:
+ - "libxkbfile"
+build_depends:
+ - "xorg-util-macros"
+
+build {
+ macro build --disable-static
+}
+
+package {
+ macro package
+}
+
+

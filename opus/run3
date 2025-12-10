@@ -1,0 +1,20 @@
+name: "opus"
+version: "1.4"
+release: "1"
+description: "Lossy audio compression format"
+sources:
+ - "https://downloads.xiph.org/releases/opus/opus-${version}.tar.gz"
+sha256sum:
+ - "c9b32b4253be5ae63d1ff16eea06b94b5f0f2951b7a02aceef58e3a3ce49c51f"
+build_depends:
+ - "gmake"
+
+build {
+ macro build --disable-static
+}
+
+package {
+ macro package
+}
+
+

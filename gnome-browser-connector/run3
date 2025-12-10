@@ -1,0 +1,25 @@
+name: "gnome-browser-connector"
+version: "42.1"
+release: "1"
+description: "Browser connector for extensions.gnome.org integration"
+sources:
+ - "https://gitlab.gnome.org/GNOME/gnome-browser-connector/-/archive/v${version}/gnome-browser-connector-v${version}.tar.gz"
+sha256sum:
+ - "b624f53ce329a667746a0f3771b44a704d26b58e6ee93d76896ca7a8df512b2c"
+depends:
+ - "gnome-shell"
+ - "gobject-introspection"
+ - "hicolor-icon-theme"
+ - "python"
+build_depends:
+ - "meson"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+}
+
+

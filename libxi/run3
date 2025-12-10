@@ -1,0 +1,24 @@
+name: "libxi"
+version: "1.8.2"
+release: "1"
+description: "libxi"
+sources:
+ - "https://xorg.freedesktop.org/releases/individual/lib/libXi-${version}.tar.gz"
+sha256sum:
+ - "5542daec66febfeb6f51d57abfa915826efe2e3af57534f4105b82240ea3188d"
+depends:
+ - "libxext"
+ - "libxfixes"
+build_depends:
+ - "xorgproto"
+ - "gmake"
+
+build {
+ macro build --sysconfdir=/etc --disable-static
+}
+
+package {
+ macro package
+}
+
+

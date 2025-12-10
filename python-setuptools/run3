@@ -1,0 +1,16 @@
+name: "python-setuptools"
+version: "68.2.2"
+release: "1"
+description: "Easily download, build, install, upgrade, and uninstall Python packages"
+sources:
+ - "https://github.com/pypa/setuptools/archive/refs/tags/v${version}.tar.gz"
+sha256sum:
+ - "d75a319a180cdacde13d8b37c4f8de2e8bd6325943fcb51ae3c631179879150c"
+depends:
+ - "python"
+
+package {
+ exec "pip install . --prefix=/usr --root=\"$ROOT\""
+}
+
+
