@@ -3,7 +3,7 @@ version: "49.0"
 release: "1"
 description: "adwaita-icon-theme"
 sources:
- - "https://download.gnome.org/sources/adwaita-icon-theme/49/adwaita-icon-theme-${version}.tar.xz"
+ - "https://download.gnome.org/sources/adwaita-icon-theme/${version.split('.')[0:2].join('.')}/adwaita-icon-theme-${version}.tar.xz"
 sha256sum:
  - "65166461d1b278aa942f59aa8d0fccf1108d71c65f372c6266e172449791755c"
 depends:
