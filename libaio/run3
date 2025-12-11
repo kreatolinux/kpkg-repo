@@ -10,11 +10,11 @@ build_depends:
  - "gmake"
 
 build {
- exec "make -j$(nproc)"
+ exec "make -j${exec("nproc")}.output()}"
 }
 
 package {
- meson package
+ macro package
 }
 
 
