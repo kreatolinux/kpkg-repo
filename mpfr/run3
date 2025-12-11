@@ -1,0 +1,28 @@
+name: "mpfr"
+version: "4.2.1"
+release: "1"
+description: "GNU mpfr"
+sources:
+ - "https://ftp.gnu.org/gnu/mpfr/mpfr-${version}.tar.xz"
+sha256sum:
+ - "277807353a6726978996945af13e52829e3abd7a9a5b7fb2793894e18f1fcbb2"
+depends:
+ - "gmp"
+build_depends:
+ - "gmake"
+
+build {
+ local extraArgs=""
+ if "$KPKG_ARCH" != "${exec("uname -m")}.output()}" {
+ global extraArgs="--with-sysroot=/usr/$KPKG_TARGET"
+}
+
+ macro build ${extraArgs} -j${exec("nproc")}.output()}
+}
+
+package {
+ macro package
+ exec "rm -rf \"$ROOT/usr/share/info/dir\""
+}
+
+

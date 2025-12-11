@@ -1,0 +1,21 @@
+name: "libtasn"
+version: "4.19.0"
+release: "1"
+description: "GNU libtasn"
+sources:
+ - "https://ftp.gnu.org/gnu/libtasn1/libtasn1-${version}.tar.gz"
+sha256sum:
+ - "1613f0ac1cf484d6ec0ce3b8c06d56263cc7242f1c23b30d82d23de345a63f7a"
+build_depends:
+ - "gmake"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+ exec "rm -rf \"$ROOT/usr/share/info/dir\""
+}
+
+

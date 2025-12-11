@@ -1,0 +1,28 @@
+name: "json-glib"
+version: "1.10.8"
+release: "1"
+description: "A full JSON parser and generator using GLib and GObject, and integrates JSON with GLib data types"
+sources:
+ - "https://download.gnome.org/sources/json-glib/1.10/json-glib-${version}.tar.xz"
+sha256sum:
+ - "55c5c141a564245b8f8fbe7698663c87a45a7333c2a2c56f06f811ab73b212dd"
+depends:
+ - "glib"
+build_depends:
+ - "meson"
+ - "ninja"
+ - "gobject-introspection"
+
+build {
+ macro build -Dman=false
+}
+
+package {
+ macro package
+}
+
+postinstall {
+ exec "glib-compile-schemas /usr/share/glib-2.0/schemas"
+}
+
+

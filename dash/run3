@@ -1,0 +1,23 @@
+name: "dash"
+version: "0.5.13"
+release: "1"
+description: "Small and fast POSIX-compliant shell"
+sources:
+ - "https://git.kernel.org/pub/scm/utils/dash/dash.git/snapshot/dash-${version}.tar.gz"
+sha256sum:
+ - "e1dddd60704f68764f453ee43c50248dd97d6d7ebe59182896ff82113550942a"
+build_depends:
+ - "autoconf"
+ - "automake"
+ - "gmake"
+
+build {
+ exec "autoreconf -v -f -i"
+ macro build --bindir=/usr/bin
+}
+
+package {
+ macro package
+}
+
+

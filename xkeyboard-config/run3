@@ -1,0 +1,20 @@
+name: "xkeyboard-config"
+version: "2.41"
+release: "1"
+description: "XKB data description files"
+sources:
+ - "https://www.x.org/archive//individual/data/xkeyboard-config/xkeyboard-config-${version}.tar.xz"
+sha256sum:
+ - "f02cd6b957295e0d50236a3db15825256c92f67ef1f73bf1c77a4b179edf728f"
+build_depends:
+ - "meson"
+
+build {
+ macro build
+}
+
+package {
+ macro package
+}
+
+

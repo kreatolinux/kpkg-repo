@@ -1,0 +1,21 @@
+name: "kreato-fs-essentials"
+version: "0.0.2"
+release: "1"
+description: "Kreato Linux filesystem essentials, seperated from src/kreastrap/overlay"
+sources:
+ - "overlay/"
+b2sum:
+ - "SKIP"
+backup:
+ - "etc/group"
+ - "etc/passwd"
+ - "etc/profile"
+ - "etc/resolv.conf"
+ - "etc/shells"
+extract: false
+
+package {
+ exec "cp -r etc/ \"$ROOT\""
+}
+
+

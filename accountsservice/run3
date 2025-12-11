@@ -1,0 +1,37 @@
+name: "accountsservice"
+version: "23.13.9"
+release: "1"
+description: "accountsservice"
+sources:
+ - "https://www.freedesktop.org/software/accountsservice/accountsservice-${version}.tar.xz"
+sha256sum:
+ - "adda4cdeae24fa0992e7df3ffff9effa7090be3ac233a3edfdf69d5a9c9b924f"
+depends:
+ - "gobject-introspection"
+ - "polkit"
+ - "elogind"
+build_depends:
+ - "meson"
+ - "vala"
+
+build {
+ if ${exec("command -v systemctl")}.exit() != 0 {
+ local extraArgs="-Delogind=true -Dsystemdsystemunitdir=no"
+}
+
+# Thanks to BLFS (again)
+ exec "mv tests/dbusmock{,-tests}"
+ macro build -Dadmin_group=wheel ${extraArgs}
+}
+
+package {
+ macro package
+ exec "mkdir -p $ROOT/etc/polkit-1/rules.d"
+ write "$ROOT/etc/polkit-1/rules.d/40-wheel.rules" """
+polkit.addAdminRule(function(action, subject) {
+ return ["unix-group:wheel"];
+});
+"""
+}
+
+

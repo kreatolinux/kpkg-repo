@@ -1,0 +1,41 @@
+name: "polkit"
+version: "124"
+release: "1"
+description: "A toolkit for defining and handling authorizations"
+sources:
+ - "https://gitlab.freedesktop.org/polkit/polkit/-/archive/${version}/polkit-${version}.tar.gz"
+sha256sum:
+ - "72457d96a0538fd03a3ca96a6bf9b7faf82184d4d67c793eb759168e4fd49e20"
+depends:
+ - "elogind"
+ - "linux-pam"
+ - "glib"
+ - "gobject-introspection"
+ - "expat"
+ - "dbus"
+ - "duktape"
+build_depends:
+ - "meson"
+
+build {
+
+ if ${exec("command -v systemctl")}.exit() == 0 {
+ local extraArgs="-Dsession_tracking=libsystemd-login"
+}
+
+ macro build ${extraArgs}
+}
+
+package {
+ macro package
+}
+
+postinstall {
+# From BLFS
+ exec "groupadd -fg 27 polkitd || true"
+ if ${exec("id -u polkitd")}.exit() != 0 {
+ exec "useradd -c \"PolicyKit Daemon Owner\" -d /etc/polkit-1 -u 27 -g polkitd -s /bin/false polkitd"
+}
+}
+
+

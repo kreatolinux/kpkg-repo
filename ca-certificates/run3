@@ -1,0 +1,40 @@
+name: "ca-certificates"
+version: "0.1"
+release: "1"
+sources:
+ - "update-ca-trust"
+b2sum:
+ - "SKIP"
+build_depends:
+ - "p11-kit"
+extract: false
+depends_ca_certificates:
+ - "ca-certificates-mozilla"
+
+prepare {
+ exec ":"
+}
+
+package_ca_certificates_utils {
+ exec "install -Dt \"$ROOT/usr/bin\" update-ca-trust"
+
+ exec "install -d \"$ROOT/etc/ssl/certs/java\""
+ exec "install -d \"$ROOT/etc/ca-certificates/extracted\""
+
+# Compatibility link for OpenSSL using /etc/ssl as CAdir
+# Used in preference to the individual links in /etc/ssl/certs
+ exec "ln -sr \"/etc/ca-certificates/extracted/tls-ca-bundle.pem\" \"$ROOT/etc/ssl/cert.pem\""
+
+# Compatibility link for legacy bundle (Debian)
+ exec "ln -sr \"/etc/ca-certificates/extracted/tls-ca-bundle.pem\" \"$ROOT/etc/ssl/certs/ca-certificates.crt\""
+
+# Compatibility link for legacy bundle (RHEL/Fedora)
+ exec "ln -sr \"/etc/ca-certificates/extracted/tls-ca-bundle.pem\" \"$ROOT/etc/ssl/certs/ca-bundle.crt\""
+
+}
+
+package {
+ exec ":"
+}
+
+

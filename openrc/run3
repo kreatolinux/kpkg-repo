@@ -1,0 +1,21 @@
+name: "openrc"
+version: "0.55.1"
+release: "1"
+description: "The OpenRC init system"
+sources:
+ - "https://github.com/OpenRC/openrc/archive/refs/tags/${version}.tar.gz"
+sha256sum:
+ - "102e53825031361e4d96a5c0a7eb192bd64b0a6b227bb0568651efc8f5972952"
+build_depends:
+ - "ninja"
+ - "meson"
+
+build {
+ macro build -Dpam=false
+}
+
+package {
+ macro package
+}
+
+

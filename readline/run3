@@ -1,0 +1,23 @@
+name: "readline"
+version: "8.2"
+release: "2"
+description: "GNU readline"
+sources:
+ - "https://ftp.gnu.org/gnu/readline/readline-${version}.tar.gz"
+sha256sum:
+ - "3feb7171f16a84ee82ca18a36d7b9be109a52c04f492a053331d7d1095007c35"
+depends:
+ - "ncurses"
+build_depends:
+ - "gmake"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+ exec "rm -rf \"$ROOT/usr/share/info/dir\""
+}
+
+

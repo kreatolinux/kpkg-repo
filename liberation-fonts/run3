@@ -1,0 +1,20 @@
+name: "liberation-fonts"
+version: "2.1.5"
+release: "1"
+description: "Font family which aims at metric compatibility with Arial, Times New Roman, and Courier New"
+sources:
+ - "https://github.com/liberationfonts/liberation-fonts/files/7261482/liberation-fonts-ttf-${version}.tar.gz"
+sha256sum:
+ - "7191c669bf38899f73a2094ed00f7b800553364f90e2637010a69c0e268f25d0"
+depends:
+ - "fontconfig"
+
+package {
+ exec "install -Dm644 *.tt[fc] -t \"$ROOT/usr/share/fonts/liberation\""
+}
+
+postinstall {
+ exec "fc-cache -fv"
+}
+
+

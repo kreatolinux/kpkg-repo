@@ -1,0 +1,23 @@
+name: "bison"
+version: "3.8.2"
+release: "1"
+description: "a general-purpose parser generator"
+sources:
+ - "https://ftp.gnu.org/gnu/bison/bison-${version}.tar.xz"
+sha256sum:
+ - "9bba0214ccf7f1079c5d59210045227bcf619519840ebfa80cd3849cff5a5bf2"
+depends:
+ - "m4"
+build_depends:
+ - "gmake"
+
+build {
+ macro build
+}
+
+package {
+ macro package
+ exec "rm -rf \"$ROOT/usr/share/info/dir\""
+}
+
+

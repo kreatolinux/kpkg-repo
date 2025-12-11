@@ -1,0 +1,21 @@
+name: "mpc"
+version: "1.2.1"
+release: "1"
+description: "GNU MPC"
+sources:
+ - "https://ftp.gnu.org/gnu/mpc/mpc-${version}.tar.gz"
+sha256sum:
+ - "17503d2c395dfcf106b622dc142683c1199431d095367c6aacba6eec30340459"
+build_depends:
+ - "gmake"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+ exec "rm -rf \"$ROOT/usr/share/info/dir\""
+}
+
+

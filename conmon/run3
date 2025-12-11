@@ -1,0 +1,23 @@
+name: "conmon"
+version: "2.1.13"
+release: "1"
+description: "An OCI container runtime monitor"
+sources:
+ - "https://github.com/containers/conmon/archive/refs/tags/v${version}.tar.gz"
+sha256sum:
+ - "350992cb2fe4a69c0caddcade67be20462b21b4078dae00750e8da1774926d60"
+depends:
+ - "glib"
+build_depends:
+ - "go"
+ - "gmake"
+
+build {
+ exec "make -j${exec("nproc")}.output()}"
+}
+
+package {
+ macro package
+}
+
+

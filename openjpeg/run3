@@ -1,0 +1,21 @@
+name: "OpenJPEG"
+version: "2.5.2"
+release: "1"
+description: "Implementation of JPEG-2000"
+sources:
+ - "https://github.com/uclouvain/openjpeg/archive/v${version}/openjpeg-${version}.tar.gz"
+sha256sum:
+ - "90e3896fed910c376aaf79cdd98bdfdaf98c6472efd8e1debf0a854938cbda6a"
+build_depends:
+ - "cmake"
+ - "ninja"
+
+build {
+ macro build -DBUILD_STATIC_LIBS=OFF
+}
+
+package {
+ macro package
+}
+
+

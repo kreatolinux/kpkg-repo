@@ -1,0 +1,34 @@
+name: "ModemManager"
+version: "1.18.12"
+release: "1"
+description: "modemmanager"
+sources:
+ - "https://www.freedesktop.org/software/ModemManager/ModemManager-${version}.tar.xz"
+sha256sum:
+ - "b464e4925d955a6ca86dd08616e763b26ae46d7fd37dbe281678e34065b1e430"
+depends:
+ - "libgudev"
+ - "elogind"
+ - "polkit"
+build_depends:
+ - "meson"
+ - "gobject-introspection"
+ - "vala"
+ - "gmake"
+
+build {
+
+ local extraArgs=""
+ if ${exec("command -v systemctl")}.exit() != 0 {
+ global extraArgs="--with-systemd-journal=no --with-systemd-suspend-resume"
+}
+
+# Args gotten from blfs
+ macro build ${extraArgs} --sysconfdir=/etc --localstatedir=/var --without-mbim --without-qmi --disable-static --disable-maintainer-mode
+}
+
+package {
+ macro package
+}
+
+

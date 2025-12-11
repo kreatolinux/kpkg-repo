@@ -1,0 +1,22 @@
+name: "libffi"
+version: "3.5.2"
+release: "1"
+description: "A portable foreign-function interface library."
+sources:
+ - "https://github.com/libffi/libffi/releases/download/v${version}/libffi-${version}.tar.gz"
+sha256sum:
+ - "f3a3082a23b37c293a4fcd1053147b371f2ff91fa7ea1b2a52e335676bac82dc"
+build_depends:
+ - "gmake"
+
+build {
+ env CFLAGS="$CFLAGS -Wno-implicit-function-declaration"
+ macro build 
+}
+
+package {
+ macro package
+ exec "rm -rf \"$ROOT/usr/share/info/dir\""
+}
+
+

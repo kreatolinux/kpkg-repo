@@ -1,0 +1,30 @@
+name: "nim"
+version: "2.2.0"
+release: "3"
+description: "The Nim programming language"
+sources:
+ - "https://nim-lang.org/download/nim-${version}.tar.xz"
+sha256sum:
+ - "ce9842849c9760e487ecdd1cdadf7c0f2844cafae605401c7c72ae257644893c"
+
+build {
+ exec "sh build.sh"
+ exec "bin/nim c --nimcache=/opt/kpkg/srcdir/cache koch"
+ exec "./koch boot -d:release --nimcache=/opt/kpkg/srcdir/cache"
+ exec "./koch tools --nimcache=/opt/kpkg/srcdir/cache"
+ exec "./koch nimble --nimcache=/opt/kpkg/srcdir/cache"
+}
+
+package {
+ exec "mkdir -p \"$ROOT/usr/include\" \"$ROOT/usr/bin\" \"$ROOT/etc/nim\" \"$ROOT/usr/lib/nim\""
+ exec "cp -r lib/ \"$ROOT/usr/lib/nim\""
+ exec "cp -r compiler/ \"$ROOT/usr/lib/nim\""
+ exec "cp -r doc/ \"$ROOT/usr/lib/nim\""
+ exec "cp -r tools/ \"$ROOT/usr/lib/nim\""
+ exec "cp -rf config/* -t \"$ROOT/etc/nim\""
+ exec "cp -rf bin/* -t \"$ROOT/usr/bin\""
+ exec "cp -rf \"$ROOT/usr/lib/nim/\"*.h \"$ROOT/usr/include\" || true"
+ exec "rm -rf \"$ROOT/nim\""
+}
+
+

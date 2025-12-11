@@ -1,0 +1,24 @@
+name: "groff"
+version: "1.23.0"
+release: "1"
+description: "GNU implementation of the traditional Unix document formatting tools"
+sources:
+ - "https://ftp.gnu.org/gnu/groff/groff-${version}.tar.gz"
+sha256sum:
+ - "6b9757f592b7518b4902eb6af7e54570bdccba37a871fddb2d30ae3863511c13"
+depends:
+ - "bison"
+ - "perl"
+build_depends:
+ - "gmake"
+
+build {
+ macro build
+}
+
+package {
+ macro package
+ exec "rm -rf \"$ROOT/usr/share/info/dir\""
+}
+
+

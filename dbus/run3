@@ -1,0 +1,29 @@
+name: "dbus"
+version: "1.14.10"
+release: "6"
+description: "Message bus system"
+sources:
+ - "https://dbus.freedesktop.org/releases/dbus/dbus-${version}.tar.xz"
+sha256sum:
+ - "ba1f21d2bd9d339da2d4aa8780c09df32fea87998b73da24f49ab9df1e36a50f"
+depends:
+ - "expat"
+build_depends:
+ - "python-setuptools"
+ - "gmake"
+
+build {
+
+ local extraArgs=""
+ if ${exec("command -v systemctl")}.exit() == 0 {
+ global extraArgs="--enable-systemd"
+}
+
+ macro build ${extraArgs} --disable-static --runstatedir=/run --sysconfdir=/etc --enable-user-session
+}
+
+package {
+ macro package
+}
+
+

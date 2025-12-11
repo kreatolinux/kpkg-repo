@@ -1,0 +1,34 @@
+name: "xdg-desktop-portal-gnome"
+version: "45.1"
+release: "1"
+description: "GNOME backend for xdg-desktop-portal"
+sources:
+ - "https://gitlab.gnome.org/GNOME/xdg-desktop-portal-gnome/-/archive/${version}/xdg-desktop-portal-gnome-${version}.tar.gz"
+sha256sum:
+ - "58d847bb7d8bd84e9e0469d230de014471201d8206884f5a99f5ec85317f5fac"
+depends:
+ - "gnome-desktop"
+ - "gnome-keyring"
+ - "libadwaita"
+ - "xdg-desktop-portal-gtk"
+ - "xdg-desktop-portal"
+build_depends:
+ - "meson"
+
+build {
+
+ if ${exec("command -v systemctl")}.exit() != 0 {
+  local extraArgs="-Dsystemduserunitdir=/opt/deleteme"
+ }
+
+ macro build ${extraArgs}
+}
+
+package {
+ macro package
+ if ${exec("command -v systemctl")}.exit() != 0 {
+  exec "rm -rf \"$ROOT/opt/deleteme\""
+ }
+}
+
+

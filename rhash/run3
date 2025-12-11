@@ -1,0 +1,20 @@
+name: "rhash"
+version: "1.4.6"
+release: "1"
+description: "Great utility for computing hash sums"
+sources:
+ - "https://github.com/rhash/RHash/archive/refs/tags/v${version}.tar.gz"
+sha256sum:
+ - "9f6019cfeeae8ace7067ad22da4e4f857bb2cfa6c2deaa2258f55b2227ec937a"
+build_depends:
+ - "gmake"
+
+build {
+ macro build 
+}
+
+package {
+ macro package
+}
+
+

@@ -1,0 +1,29 @@
+name: "podman"
+version: "5.1.1"
+release: "1"
+description: "A tool for managing OCI containers and pods"
+sources:
+ - "https://github.com/containers/podman/archive/refs/tags/v${version}.tar.gz"
+sha256sum:
+ - "ba1022c467dbc3e551e4d391dc6a5c03f33040a0764304b334afd7c6217c4894"
+depends:
+ - "libseccomp"
+ - "gpgme"
+ - "btrfs-progs"
+ - "conmon"
+ - "crun"
+ - "lvm2"
+build_depends:
+ - "go"
+ - "gmake"
+
+build {
+ exec "make BUILDTAGS=\"seccomp\" -j${exec("nproc")}.output()}"
+}
+
+package {
+ exec "sed -i 's/-sfr/-sf/g' Makefile"
+ macro package
+}
+
+

@@ -1,0 +1,27 @@
+name: "xmlto"
+version: "0.0.28"
+release: "1"
+description: "Convert xml to many other formats"
+sources:
+ - "https://releases.pagure.org/xmlto/xmlto-${version}.tar.gz"
+sha256sum:
+ - "2f986b7c9a0e9ac6728147668e776d405465284e13c74d4146c9cbc51fd8aad3"
+depends:
+ - "libxslt"
+ - "docbook-xml"
+ - "docbook-xsl"
+ - "links"
+build_depends:
+ - "gmake"
+
+build {
+ env CFLAGS="$CFLAGS -Wno-implicit-int"
+ env LINKS="/usr/bin/links"
+ macro build
+}
+
+package {
+ macro package
+}
+
+

@@ -1,0 +1,25 @@
+name: "grim"
+version: "1.5.0"
+release: "1"
+description: "Grabs images from a Wayland compositor"
+sources:
+ - "https://gitlab.freedesktop.org/emersion/grim/-/archive/v${version}/grim-v${version}.tar.gz"
+sha256sum:
+ - "9e72a98f7621b1f5741b405b8dbd447acf7d300ddb12667ec526db1ce6154eaa"
+depends:
+ - "wayland"
+ - "wayland-protocols"
+ - "pixman"
+ - "libpng"
+build_depends:
+ - "meson"
+
+build {
+ macro build
+}
+
+package {
+ macro package
+}
+
+

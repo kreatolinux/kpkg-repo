@@ -1,0 +1,51 @@
+name: "gtk4"
+version: "4.13.0"
+release: "2"
+description: "gtk4"
+sources:
+ - "https://download.gnome.org/sources/gtk/4.13/gtk-${version}.tar.xz"
+sha256sum:
+ - "0e2e928a271ac5ef9c95d891a2b9a8c46df9598d12efd9ccfa31695e88cab6aa"
+depends:
+ - "libx11"
+ - "cantarell-fonts"
+ - "libxcursor"
+ - "libxdamage"
+ - "libxext"
+ - "libxfixes"
+ - "libxi"
+ - "libxinerama"
+ - "libxkbcommon"
+ - "libxrandr"
+ - "libxrender"
+ - "gdk-pixbuf"
+ - "libtiff"
+ - "libepoxy"
+ - "pango"
+ - "graphene"
+ - "adwaita-icon-theme"
+ - "iso-codes"
+ - "libxkbcommon"
+ - "wayland"
+ - "wayland-protocols"
+build_depends:
+ - "meson"
+ - "gobject-introspection"
+
+prepare {
+ exec "tar -xvf gtk-${version}.tar.xz"
+ cd "gtk-${version}"
+ exec "sed -i 's/can_use_objcopy_for_resources = true/can_use_objcopy_for_resources = false/g' meson.build"
+}
+
+build {
+ cd "gtk-${version}"
+ macro build -Dx11-backend=true -Dmedia-gstreamer=disabled -Dintrospection=enabled
+}
+
+package {
+ cd "gtk-${version}"
+ macro package
+}
+
+

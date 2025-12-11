@@ -1,0 +1,40 @@
+name: "bash"
+version: "5.2.15"
+release: "1"
+description: "The GNU bash shell"
+sources:
+ - "https://ftp.gnu.org/gnu/bash/bash-${version}.tar.gz"
+sha256sum:
+ - "13720965b5f4fc3a0d4b61dd37e7565c741da9a5be24edc2ae00182fc1b3588c"
+depends:
+ - "ncurses"
+build_depends:
+ - "gmake"
+
+build {
+ env CFLAGS="$CFLAGS -std=gnu17 -Wno-implicit-function-declaration"
+ env CFLAGS_FOR_BUILD="$CFLAGS_FOR_BUILD -std=gnu89 -Wno-implicit-function-declaration"
+
+ macro build --without-bash-malloc
+}
+
+package {
+ macro package
+}
+
+postinstall {
+ exec "grep -q \"/bin/bash\" /etc/shells || echo \"/bin/bash\" >> /etc/shells"
+ exec "grep -q \"/usr/bin/bash\" /etc/shells || echo \"/usr/bin/bash\" >> /etc/shells"
+ exec "grep -q \"/bin/sh\" /etc/shells || echo \"/bin/sh\" >> /etc/shells"
+ exec "grep -q \"/usr/bin/sh\" /etc/shells || echo \"/usr/bin/sh\" >> /etc/shells"
+}
+
+postremove {
+ exec "grep -q \"/usr/bin/bash\" /etc/shells && sed -i \"s#/usr/bin/bash##g\" /etc/shells"
+ exec "grep -q \"/bin/bash\" /etc/shells && sed -i \"s#/bin/bash##g\" /etc/shells"
+ exec "grep -q \"/usr/bin/sh\" /etc/shells && sed -i \"s#/usr/bin/sh##g\" /etc/shells"
+ exec "grep -q \"/bin/sh\" /etc/shells && sed -i \"s#/bin/sh##g\" /etc/shells"
+ exec "sed -i '/^[[:space:]]*$/d' /etc/shells"
+}
+
+

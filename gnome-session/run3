@@ -1,0 +1,38 @@
+name: "gnome-session"
+version: "45.0"
+release: "1"
+description: "The GNOME session manager"
+sources:
+ - "https://gitlab.gnome.org/GNOME/gnome-session/-/archive/${version}/gnome-session-${version}.tar.gz"
+sha256sum:
+ - "a44316d44464a081e254da08a2cb9a050c64e9a28057bfcf6c677f26bec03297"
+depends:
+ - "elogind"
+ - "xtrans"
+ - "libsm"
+ - "libx11"
+ - "libxcomposite"
+ - "libice"
+ - "libglvnd"
+ - "gnome-desktop"
+ - "json-glib"
+ - "mesa"
+ - "upower"
+build_depends:
+ - "meson"
+
+build {
+
+ if ${exec("command -v systemctl")}.exit() != 0 {
+# Credits to https://www.linuxfromscratch.org/blfs/view/svn/gnome/gnome-session.html
+ local extraArgs="-Dsystemd_journal=false -Dsystemduserunitdir=/tmp"
+}
+
+ macro build ${extraArgs}
+}
+
+package {
+ macro package
+}
+
+

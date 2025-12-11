@@ -1,0 +1,34 @@
+name: "swayfx"
+version: "0.3.2"
+release: "1"
+description: "Fork of sway with eye candy features"
+sources:
+ - "https://github.com/WillPower3309/swayfx/archive/refs/tags/${version}.tar.gz"
+sha256sum:
+ - "05b5cdc2d25e9f05817556d7053c02f8b89c9ef629405fcba5b4d240d4fd0545"
+depends:
+ - "pcre"
+ - "wlroots"
+ - "cairo"
+ - "git"
+ - "libevdev"
+ - "wayland"
+ - "libinput"
+ - "wayland-protocols"
+ - "pango"
+ - "json-c"
+ - "jetbrains-mono"
+ - "xwayland"
+ - "xcb-util-wm"
+build_depends:
+ - "meson"
+
+build {
+ macro build -Dwerror=false
+}
+
+package {
+ macro package
+}
+
+

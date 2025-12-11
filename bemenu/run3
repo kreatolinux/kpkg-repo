@@ -1,0 +1,27 @@
+name: "bemenu"
+version: "0.6.23"
+release: "1"
+description: "Dynamic menu library and client program inspired by dmenu"
+sources:
+ - "https://github.com/Cloudef/bemenu/releases/download/${version}/bemenu-${version}.tar.gz"
+sha256sum:
+ - "7cd336fb827b50a12c398a5daf6d2e6a07e291217116e725e7f1e021d9e0cdd9"
+depends:
+ - "wayland"
+ - "wayland-protocols"
+ - "cairo"
+ - "pango"
+ - "libxkbcommon"
+build_depends:
+ - "gmake"
+ - "pkgconf"
+
+build {
+ exec "make clients wayland"
+}
+
+package {
+ macro package
+}
+
+

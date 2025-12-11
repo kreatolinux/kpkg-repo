@@ -1,0 +1,25 @@
+name: "libcap"
+version: "2.77"
+release: "1"
+description: "ninja-compatible build tool written in C"
+sources:
+ - "https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/libcap-${version}.tar.xz"
+sha256sum:
+ - "897bc18b44afc26c70e78cead3dbb31e154acc24bee085a5a09079a88dbf6f52"
+build_depends:
+ - "gmake"
+ - "bash"
+
+build {
+ exec "make -j${exec("nproc")}.output()}"
+}
+
+package {
+ macro package
+}
+
+func install {
+ macro package
+}
+
+

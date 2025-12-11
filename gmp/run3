@@ -1,0 +1,28 @@
+name: "gmp"
+version: "6.3.0"
+release: "1"
+description: "GNU gmp"
+sources:
+ - "https://ftp.gnu.org/gnu/gmp/gmp-${version}.tar.xz"
+sha256sum:
+ - "a3c2b80201b89e68616f4ad30bc66aee4927c3ce50e33929ca819d5c43538898"
+depends:
+ - "m4"
+build_depends:
+ - "gmake"
+
+build {
+ env CFLAGS="$CFLAGS -std=gnu17"
+ macro build
+}
+
+check {
+ exec "make check"
+}
+
+package {
+ macro package
+ exec "rm -rf \"$ROOT/usr/share/info/dir\""
+}
+
+

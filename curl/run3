@@ -1,0 +1,26 @@
+name: "curl"
+version: "8.11.0"
+release: "1"
+description: "command line tool and library for transferring data with URLs"
+sources:
+ - "https://curl.haxx.se/download/curl-${version}.tar.xz"
+sha256sum:
+ - "db59cf0d671ca6e7f5c2c5ec177084a33a79e04c97e71cf183a5cdea235054eb"
+depends:
+ - "nghttp2"
+ - "zlib"
+ - "nghttp2"
+build_depends:
+ - "gmake"
+
+build {
+# Taken from Kiss Linux repo, License here https://github.com/kisslinux/repo/blob/master/LICENSE
+ macro build --disable-manual --disable-ldap --disable-ares --without-librtmp --without-libpsl --without-libidn2 --without-brotli --without-zstd --with-openssl --with-nghttp2 --with-ca-path=/etc/ssl/certs
+
+}
+
+package {
+ macro package
+}
+
+

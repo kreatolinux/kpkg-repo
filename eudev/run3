@@ -1,0 +1,26 @@
+name: "eudev"
+version: "3.2.14"
+release: "1"
+description: "Fork of systemd with the aim of making udev init-independent"
+sources:
+ - "https://github.com/eudev-project/eudev/releases/download/v${version}/eudev-${version}.tar.gz"
+sha256sum:
+ - "8da4319102f24abbf7fff5ce9c416af848df163b29590e666d334cc1927f006f"
+depends:
+ - "gperf"
+ - "kmod"
+build_depends:
+ - "gmake"
+replaces:
+ - "systemd"
+
+build {
+ macro build
+}
+
+package {
+ macro package
+ exec "rm -f \"$ROOT\"/usr/sbin/udevadm"
+}
+
+

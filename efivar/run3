@@ -1,0 +1,20 @@
+name: "efivar"
+version: "39"
+release: "1"
+description: "efivar provides tools and libraries to manipulate EFI variables"
+sources:
+ - "https://github.com/rhboot/efivar/archive/refs/tags/${version}.tar.gz"
+b2sum:
+ - "73ea4b3293cd708923bcd4332a8c7a5a8bbf539d81300c502a764a2ac205ba7cdf1e30b3432c42a101f56c0b6e31af2907a6a38ada69ace3b0d60e90515094cd"
+build_depends:
+ - "gmake"
+
+build {
+ exec "make MANDOC=\"\" CFLAGS=-Wno-error=enum-int-mismatch"
+}
+
+package {
+ macro package
+}
+
+
