@@ -1,0 +1,44 @@
+name: "appstream"
+version: "1.1.1"
+release: "1"
+description: "Tools and libraries to work with AppStream metadata"
+sources:
+ - "https://github.com/ximion/appstream/archive/refs/tags/v${version}.tar.gz"
+sha256sum:
+ - "1615468b8d1e5edb9a9081f81841c8a22439c64bee5f02b008b3b8d5a5204c91"
+depends:
+ - "glib"
+ - "itstool"
+ - "libxslt"
+ - "libxml2"
+ - "libxmlb"
+ - "curl"
+ - "gobject-introspection"
+ - "libfyaml"
+ - "gperf"
+build_depends:
+ - "meson"
+opt_depends:
+ - "systemd: For systemd support"
+
+build {
+
+# https://github.com/ximion/appstream/issues/523
+# We won't want manpages, so we will just remove the line that adds docs
+# as a subdir.
+ exec "grep -v \"subdir('docs/')\" meson.build > meson.build.new"
+ exec "mv meson.build.new meson.build"
+
+ local systemdSupport = "false"
+ if ${exec("command -v systemctl")}.exit() == 0 {
+ global systemdSupport = "true"
+}
+
+ macro build
+}
+
+package {
+ macro package
+}
+
+

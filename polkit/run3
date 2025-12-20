@@ -20,7 +20,7 @@ build_depends:
 build {
 
  if ${exec("command -v systemctl")}.exit() == 0 {
- local extraArgs="-Dsession_tracking=libsystemd-login"
+ local extraArgs = "-Dsession_tracking=libsystemd-login"
 }
 
  macro build ${extraArgs}

@@ -19,9 +19,9 @@ bootstrap_depends:
  - "python-packaging"
 
 build {
- local INTROSPECTION="enabled"
+ local INTROSPECTION = "enabled"
  if "${KPKG_BOOTSTRAP}" == "1" {
-   global INTROSPECTION="disabled"
+   global INTROSPECTION = "disabled"
  }
 
  print "debug: introspection is $INTROSPECTION"

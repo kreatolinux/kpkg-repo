@@ -14,9 +14,9 @@ build_depends:
 
 build {
 
- local extraArgs=""
+ local extraArgs = ""
  if ${exec("command -v systemctl")}.exit() == 0 {
- global extraArgs="--enable-systemd"
+ global extraArgs = "--enable-systemd"
 }
 
  macro build ${extraArgs} --disable-static --runstatedir=/run --sysconfdir=/etc --enable-user-session

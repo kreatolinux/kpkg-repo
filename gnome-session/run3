@@ -25,7 +25,7 @@ build {
 
  if ${exec("command -v systemctl")}.exit() != 0 {
 # Credits to https://www.linuxfromscratch.org/blfs/view/svn/gnome/gnome-session.html
- local extraArgs="-Dsystemd_journal=false -Dsystemduserunitdir=/tmp"
+ local extraArgs = "-Dsystemd_journal=false -Dsystemduserunitdir=/tmp"
 }
 
  macro build ${extraArgs}

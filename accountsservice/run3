@@ -16,7 +16,7 @@ build_depends:
 
 build {
  if ${exec("command -v systemctl")}.exit() != 0 {
- local extraArgs="-Delogind=true -Dsystemdsystemunitdir=no"
+ local extraArgs = "-Delogind=true -Dsystemdsystemunitdir=no"
 }
 
 # Thanks to BLFS (again)
