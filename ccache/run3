@@ -1,0 +1,26 @@
+name: ccache
+version: 4.12.2
+release: 2
+description: "ccache - a fast compiler cache"
+sources:
+  - "https://github.com/ccache/ccache/archive/refs/tags/v$version.tar.gz"
+sha256sum:
+  - 89a9df3b291c4df9f8b9e1696c4f811e548568171954cb14c00f621c0db66127
+depends:
+  - cmake
+  - gcc
+  - libzstd
+build_depends:
+  - gmake
+
+build {
+  macro build --cmake
+}
+
+package {
+  macro package --cmake
+  exec "mkdir -p $ROOT/usr/lib/ccache"
+  for i in [gcc, clang, cc, g++, c++, clang++] {
+    exec "ln -s /usr/bin/ccache $ROOT/usr/lib/ccache/$i"
+  }
+}
