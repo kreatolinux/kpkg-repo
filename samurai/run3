@@ -1,0 +1,22 @@
+name: samurai
+version: 1.2
+release: 1
+description: "ninja-compatible build tool written in C"
+sources:
+  - "https://github.com/michaelforney/samurai/releases/download/$VERSION/samurai-$VERSION.tar.gz"
+sha256sum:
+  - 3b8cf51548dfc49b7efe035e191ff5e1963ebc4fe8f6064a5eefc5343eaf78a5
+build_depends:
+  - gmake
+replaces:
+  - ninja
+
+build {
+  exec "make -j${exec(\"nproc\").output()}"
+}
+
+package {
+  exec "make PREFIX=/usr DESTDIR=$ROOT install"
+  exec "mkdir -p \"$ROOT/usr/bin\""
+  exec "ln -s /usr/bin/samu \"$ROOT/usr/bin/ninja\""
+}
