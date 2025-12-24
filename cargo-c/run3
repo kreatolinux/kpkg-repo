@@ -3,7 +3,7 @@ version: "0.10.18"
 release: "1"
 description: "Helper to build and install C-compatible libraries from Rust"
 sources:
-  - "https://github.com/lu-zero/cargo-c/archive/refs/tags/v$VERSION.tar.gz"
+  - "https://github.com/lu-zero/cargo-c/archive/refs/tags/v$version.tar.gz"
 sha256sum:
   - "0f2b699be7ad5cac05624701065ae521c7f6b8159bdbcb8103445fc2440d1a7e"
 depends:
@@ -21,7 +21,7 @@ package {
   exec "mkdir -p \"$ROOT/usr/bin\""
   exec "find \"target/release\" -maxdepth 1 -type f -executable ! -name \"*.so\" ! -name \"*.a\" -exec install -m755 {} \"$ROOT/usr/bin\" \\;"
 
-  exec "mkdir -p \"$ROOT/usr/share/licenses/$NAME\""
-  exec "install -m644 \"LICENSE\" \"$ROOT/usr/share/licenses/$NAME\""
+  exec "mkdir -p \"$ROOT/usr/share/licenses/$name\""
+  exec "install -m644 \"LICENSE\" \"$ROOT/usr/share/licenses/$name\""
 }
 

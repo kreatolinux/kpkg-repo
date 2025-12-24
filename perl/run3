@@ -3,14 +3,14 @@ version: "5.42.0"
 release: "2"
 description: "Perl"
 sources:
-  - "https://www.cpan.org/src/5.0/perl-$VERSION.tar.gz"
+  - "https://www.cpan.org/src/5.0/perl-$version.tar.gz"
 sha256sum:
   - "e093ef184d7f9a1b9797e2465296f55510adb6dab8842b0c3ed53329663096dc"
 build_depends:
   - "gmake"
 
 build {
-  exec "VERSION_MAJORANDMINOR=$(echo $VERSION | cut -d. -f1-2) # 5.40"
+  exec "VERSION_MAJORANDMINOR=$(echo $version | cut -d. -f1-2) # 5.40"
   # Credit: https://www.linuxfromscratch.org/lfs/view/development/chapter08/perl.html
   exec "sh Configure -des                                          -Dprefix=/usr                                 -Dvendorprefix=/usr                           -Dprivlib=/usr/lib/perl5/$VERSION_MAJORANDMINOR/core_perl       -Darchlib=/usr/lib/perl5/$VERSION_MAJORANDMINOR/core_perl       -Dsitelib=/usr/lib/perl5/$VERSION_MAJORANDMINOR/site_perl       -Dsitearch=/usr/lib/perl5/$VERSION_MAJORANDMINOR/site_perl      -Dvendorlib=/usr/lib/perl5/$VERSION_MAJORANDMINOR/vendor_perl   -Dvendorarch=/usr/lib/perl5/$VERSION_MAJORANDMINOR/vendor_perl  -Dman1dir=/usr/share/man/man1                 -Dman3dir=/usr/share/man/man3                 -Dpager=\"/usr/bin/less -isR\"                  -Duseshrplib                                  -Dusethreads"
   exec "make -j$(nproc --all)"

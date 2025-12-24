@@ -3,7 +3,7 @@ version: "45.1"
 release: "1"
 description: "Wayland compositor for GNOME"
 sources:
-  - "https://gitlab.gnome.org/GNOME/mutter/-/archive/$VERSION/mutter-$VERSION.tar.gz"
+  - "https://gitlab.gnome.org/GNOME/mutter/-/archive/$version/mutter-$version.tar.gz"
 sha256sum:
   - "0194248c30a28ab8e0b659193a330fcc8de09d8f8eaeb255f5408d12322ee981"
 depends:

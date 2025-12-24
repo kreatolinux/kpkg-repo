@@ -3,7 +3,7 @@ version: "1.7.1"
 release: "6"
 description: "Pluggable Authentication Modules for Linux"
 sources:
-  - "https://github.com/linux-pam/linux-pam/releases/download/v$VERSION/Linux-PAM-$VERSION.tar.xz"
+  - "https://github.com/linux-pam/linux-pam/releases/download/v$version/Linux-PAM-$version.tar.xz"
   - "pam.d/other"
   - "pam.d/system-account"
   - "pam.d/system-auth"
@@ -20,7 +20,6 @@ sha256sum:
   - "216eb2abc095566afa0ed5394f5b32765d3e3b63295c0e972ecd8ebda1a734d2"
 build_depends:
   - "meson"
-extract: false
 
 prepare {
   exec "mkdir pam.d"
@@ -30,18 +29,18 @@ prepare {
   exec "cp -f \"$i\" \"pam.d/$i\""
   exec "done"
 
-  exec "tar -xvf Linux-PAM-$VERSION.tar.xz"
-  cd "Linux-PAM-$VERSION"
+  exec "tar -xvf Linux-PAM-$version.tar.xz"
+  cd "Linux-PAM-$version"
 }
 
 build {
-  cd "Linux-PAM-$VERSION"
+  cd "Linux-PAM-$version"
   exec "meson setup  --prefix=/usr  --buildtype=release  -D securedir=/usr/lib/security  -D docs=disabled  build"
   exec "meson compile -C build"
 }
 
 package {
-  cd "Linux-PAM-$VERSION"
+  cd "Linux-PAM-$version"
   exec "meson install --destdir=\"$ROOT\" -C build"
   exec "mkdir -p \"$ROOT/etc/pam.d\""
   exec "cp -rf ../pam.d/* \"$ROOT/etc/pam.d/\""

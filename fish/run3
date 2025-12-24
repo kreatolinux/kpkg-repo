@@ -3,7 +3,7 @@ version: "3.7.1"
 release: "1"
 description: "The user-friendly command line shell."
 sources:
-  - "https://github.com/fish-shell/fish-shell/releases/download/$VERSION/fish-$VERSION.tar.xz"
+  - "https://github.com/fish-shell/fish-shell/releases/download/$version/fish-$version.tar.xz"
 sha256sum:
   - "614c9f5643cd0799df391395fa6bbc3649427bb839722ce3b114d3bbc1a3b250"
 depends:

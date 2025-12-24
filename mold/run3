@@ -3,7 +3,7 @@ version: "2.34.1"
 release: "1"
 description: "A Modern Linker"
 sources:
-  - "https://github.com/rui314/mold/archive/refs/tags/v$VERSION.tar.gz"
+  - "https://github.com/rui314/mold/archive/refs/tags/v$version.tar.gz"
 sha256sum:
   - "a8cf638045b4a4b2697d0bcc77fd96eae93d54d57ad3021bf03b0333a727a59d"
 depends:

@@ -3,7 +3,7 @@ version: "1.36.1"
 release: "5"
 description: "The Swiss Army Knife of Embedded Linux"
 sources:
-  - "https://www.busybox.net/downloads/busybox-$VERSION.tar.bz2"
+  - "https://www.busybox.net/downloads/busybox-$version.tar.bz2"
   - "ln-relative-symlinks.patch"
   - "busybox-1.36.1-no-cbq.patch"
 sha256sum:
@@ -12,7 +12,6 @@ sha256sum:
   - "c44f69dd7efdf2c7356b723df7169da482942af996e4e1facc5640122766a0c0"
 build_depends:
   - "gmake"
-extract: false
 depends_busybox:
   - "grep"
   - "ncurses"
@@ -23,8 +22,8 @@ depends_busybox:
   - "bzip2"
 
 prepare {
-  exec "tar -xvf busybox-$VERSION.tar.bz2"
-  cd "busybox-$VERSION/coreutils"
+  exec "tar -xvf busybox-$version.tar.bz2"
+  cd "busybox-$version/coreutils"
 
   # Got the patch from http://lists.busybox.net/pipermail/busybox/2016-June/084276.html
   exec "patch -p1 < ../../ln-relative-symlinks.patch"
@@ -37,19 +36,19 @@ prepare {
 }
 
 build {
-  cd "busybox-$VERSION"
+  cd "busybox-$version"
   exec "make -j$(nproc) defconfig"
   exec "make -j$(nproc) busybox"
 }
 
 package_busybox_standalone {
-  cd "busybox-$VERSION"
+  cd "busybox-$version"
   exec "mkdir -p $ROOT/bin"
   exec "cp busybox $ROOT/bin"
 }
 
 package {
-  exec "package_busybox_standalone"
+  package_busybox_standalone
   exec "\"$ROOT/bin/busybox\" --list | while read APPLET; do"
   exec "case $APPLET in"
   # Dependencies will cover these commands.

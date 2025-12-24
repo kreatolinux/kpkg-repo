@@ -3,7 +3,7 @@ version: "46.2"
 release: "1"
 description: "The GNOME shell"
 sources:
-  - "https://gitlab.gnome.org/GNOME/gnome-shell/-/archive/$VERSION/gnome-shell-$VERSION.tar.gz"
+  - "https://gitlab.gnome.org/GNOME/gnome-shell/-/archive/$version/gnome-shell-$version.tar.gz"
 sha256sum:
   - "cba0ec57785499ca3cd36abcae94a2148b5261250d3b91ee4cdf0384ffe94c3c"
 depends:

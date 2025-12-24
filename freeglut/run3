@@ -3,7 +3,7 @@ version: "3.4.0"
 release: "1"
 description: "freeglut"
 sources:
-  - "https://netix.dl.sourceforge.net/project/freeglut/freeglut/$VERSION/freeglut-$VERSION.tar.gz"
+  - "https://netix.dl.sourceforge.net/project/freeglut/freeglut/$version/freeglut-$version.tar.gz"
 sha256sum:
   - "3c0bcb915d9b180a97edaebd011b7a1de54583a838644dcd42bb0ea0c6f3eaec"
 depends:

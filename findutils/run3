@@ -3,7 +3,7 @@ version: "4.10.0"
 release: "1"
 description: "GNU findutils"
 sources:
-  - "https://ftp.gnu.org/gnu/findutils/findutils-$VERSION.tar.xz"
+  - "https://ftp.gnu.org/gnu/findutils/findutils-$version.tar.xz"
 sha256sum:
   - "1387e0b67ff247d2abde998f90dfbf70c1491391a59ddfecb8ae698789f0a4f5"
 build_depends:

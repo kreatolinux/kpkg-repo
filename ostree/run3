@@ -3,7 +3,7 @@ version: "2025.6"
 release: "2"
 description: "Operating system and container binary deployment and upgrades"
 sources:
-  - "https://github.com/ostreedev/ostree/releases/download/v$VERSION/libostree-$VERSION.tar.xz"
+  - "https://github.com/ostreedev/ostree/releases/download/v$version/libostree-$version.tar.xz"
 sha256sum:
   - "6750627df600f28c8ef2c7f443a9d72aef7061a342cde234162ebdf850a7e575"
 depends:

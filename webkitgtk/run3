@@ -3,7 +3,7 @@ version: "2.42.1"
 release: "1"
 description: "webkit"
 sources:
-  - "https://webkitgtk.org/releases/webkitgtk-$VERSION.tar.xz"
+  - "https://webkitgtk.org/releases/webkitgtk-$version.tar.xz"
 sha256sum:
   - "6f41fac9989d3ee51c08c48de1d439cdeddecbc757e34b6180987d99b16d2499"
 depends:

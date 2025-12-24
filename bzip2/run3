@@ -3,7 +3,7 @@ version: "1.0.8"
 release: "4"
 description: "A freely available, patent free, high-quality data compressor"
 sources:
-  - "https://sourceware.org/pub/bzip2/bzip2-$VERSION.tar.gz"
+  - "https://sourceware.org/pub/bzip2/bzip2-$version.tar.gz"
 sha256sum:
   - "ab5a03176ee106d3f0fa90e381da478ddae405918153cca248e682cd0c4a2269"
 build_depends:
@@ -17,25 +17,25 @@ build {
 
 package {
   # From https://gitlab.archlinux.org/archlinux/packaging/packages/bzip2/-/blob/ee417df2064c7ff4ec317e123d074c6e3213b340/PKGBUILD
-  exec "install -dm755 \"$DESTDIR\"/usr/bin \"$DESTDIR\"/usr/lib \"$DESTDIR\"/usr/include \"$DESTDIR\"/usr/share/man/man1"
+  exec "install -dm755 \"$ROOT\"/usr/bin \"$ROOT\"/usr/lib \"$ROOT\"/usr/include \"$ROOT\"/usr/share/man/man1"
 
-  exec "install -m755 bzip2-shared \"$DESTDIR\"/usr/bin/bzip2"
-  exec "install -m755 bzip2recover bzdiff bzgrep bzmore \"$DESTDIR\"/usr/bin"
-  exec "ln -sf bzip2 \"$DESTDIR\"/usr/bin/bunzip2"
-  exec "ln -sf bzip2 \"$DESTDIR\"/usr/bin/bzcat"
+  exec "install -m755 bzip2-shared \"$ROOT\"/usr/bin/bzip2"
+  exec "install -m755 bzip2recover bzdiff bzgrep bzmore \"$ROOT\"/usr/bin"
+  exec "ln -sf bzip2 \"$ROOT\"/usr/bin/bunzip2"
+  exec "ln -sf bzip2 \"$ROOT\"/usr/bin/bzcat"
 
-  exec "cp -a libbz2.so* \"$DESTDIR\"/usr/lib"
-  exec "ln -s libbz2.so.$VERSION \"$DESTDIR\"/usr/lib/libbz2.so"
-  exec "ln -s libbz2.so.$VERSION \"$DESTDIR\"/usr/lib/libbz2.so.1 # For compatibility with some other distros"
+  exec "cp -a libbz2.so* \"$ROOT\"/usr/lib"
+  exec "ln -s libbz2.so.$version \"$ROOT\"/usr/lib/libbz2.so"
+  exec "ln -s libbz2.so.$version \"$ROOT\"/usr/lib/libbz2.so.1 # For compatibility with some other distros"
 
-  exec "install -m644 bzlib.h \"$DESTDIR\"/usr/include/"
+  exec "install -m644 bzlib.h \"$ROOT\"/usr/include/"
 
-  exec "install -m644 bzip2.1 \"$DESTDIR\"/usr/share/man/man1/"
-  exec "ln -sf bzip2.1 \"$DESTDIR\"/usr/share/man/man1/bunzip2.1"
-  exec "ln -sf bzip2.1 \"$DESTDIR\"/usr/share/man/man1/bzcat.1"
-  exec "ln -sf bzip2.1 \"$DESTDIR\"/usr/share/man/man1/bzip2recover.1"
+  exec "install -m644 bzip2.1 \"$ROOT\"/usr/share/man/man1/"
+  exec "ln -sf bzip2.1 \"$ROOT\"/usr/share/man/man1/bunzip2.1"
+  exec "ln -sf bzip2.1 \"$ROOT\"/usr/share/man/man1/bzcat.1"
+  exec "ln -sf bzip2.1 \"$ROOT\"/usr/share/man/man1/bzip2recover.1"
 
-  exec "install -Dm644 LICENSE \"$DESTDIR\"/usr/share/licenses/\"$NAME\"/LICENSE"
+  exec "install -Dm644 LICENSE \"$ROOT\"/usr/share/licenses/\"$name\"/LICENSE"
 
 }
 

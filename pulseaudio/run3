@@ -3,7 +3,7 @@ version: "16.99.1"
 release: "1"
 description: "Sound system"
 sources:
-  - "https://www.freedesktop.org/software/pulseaudio/releases/pulseaudio-$VERSION.tar.xz"
+  - "https://www.freedesktop.org/software/pulseaudio/releases/pulseaudio-$version.tar.xz"
 sha256sum:
   - "dbb89a4c4a5f30f03b2c8c95de864ad53f7a40d4fdee29063f966cf66cfa800a"
 depends:

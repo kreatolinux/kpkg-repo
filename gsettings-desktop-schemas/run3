@@ -1,9 +1,9 @@
 name: "gsettings-desktop-schemas"
 version: "49.1"
 release: "2"
-description: ""Contains a collection of GSettings schemas for"
+description: "A collection of GSettings schemas for GNOME desktop settings"
 sources:
-  - "https://gitlab.gnome.org/GNOME/gsettings-desktop-schemas/-/archive/$VERSION/gsettings-desktop-schemas-$VERSION.tar.gz"
+  - "https://gitlab.gnome.org/GNOME/gsettings-desktop-schemas/-/archive/$version/gsettings-desktop-schemas-$version.tar.gz"
 sha256sum:
   - "c6baabe8c2c8b56825d0cfcc2ef859e5878a9de100be2894342640c094334517"
 depends:

@@ -3,7 +3,7 @@ version: "2.42"
 release: "5"
 description: "The GNU C library"
 sources:
-  - "https://ftp.gnu.org/gnu/glibc/glibc-$VERSION.tar.xz"
+  - "https://ftp.gnu.org/gnu/glibc/glibc-$version.tar.xz"
 b2sum:
   - "6ffabfe7942034a5a4fb5097679cb47bc3431eb2a3864af07cea0cb6aa5db63fbaf6f026b3c9299e00268058a6762eb21e92499f012d552ed87d65c7ffbd0bbe"
 depends:
@@ -19,16 +19,16 @@ depends_aarch64_linux_gnu_glibc:
   - "aarch64-linux-gnu-linux-headers"
 
 func common_build {
-  env LD_LIBRARY_PATH = "$(echo $LD_LIBRARY_PATH | sed 's/^://;s/:$//;s/:://g')"
-  env CC = "$1-gcc"
-  env CXX = "$1-g++"
+  env LD_LIBRARY_PATH="$(echo $LD_LIBRARY_PATH | sed 's/^://;s/:$//;s/:://g')"
+  env CC="$1-gcc"
+  env CXX="$1-g++"
 
   print "==OLD ENVIRONMENT=="
   exec "env"
   print "==END OLD ENVIRONMENT=="
 
   exec "mkdir -v build"
-  cd "build || exit"
+  cd "build"
 
   exec "if [ \"$1\" != \"$(uname -m)-linux-gnu\" ]; then"
   exec "target=\"--target=$1\""
@@ -58,7 +58,7 @@ func common_build {
 }
 
 func build_aarch64_linux_gnu_glibc {
-  exec "common_build \"aarch64-linux-gnu\""
+  common_build "aarch64-linux-gnu"
 }
 
 package_aarch64_linux_gnu_glibc {
@@ -74,7 +74,7 @@ package_aarch64_linux_gnu_glibc {
 }
 
 build {
-  exec "common_build \"$KPKG_TARGET\""
+  common_build "$KPKG_TARGET"
 }
 
 package {

@@ -1,13 +1,13 @@
 name: "ca-certificates"
 version: "0.1"
 release: "1"
+description: "Common CA certificates"
 sources:
  - "update-ca-trust"
 b2sum:
  - "SKIP"
 build_depends:
  - "p11-kit"
-extract: false
 depends_ca_certificates:
  - "ca-certificates-mozilla"
 

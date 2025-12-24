@@ -3,7 +3,7 @@ version: "1.2.5"
 release: "2"
 description: "Sound server"
 sources:
-  - "https://github.com/PipeWire/pipewire/archive/$VERSION/pipewire-$VERSION.tar.gz"
+  - "https://github.com/PipeWire/pipewire/archive/$version/pipewire-$version.tar.gz"
 sha256sum:
   - "4c3209c78ce63af6bd2658e5092c220d844fc2b7a039bbbb950e71890cc8ac78"
 depends:

@@ -3,7 +3,7 @@ version: "1.45.1"
 release: "1"
 description: "networkmanager"
 sources:
-  - "https://download.gnome.org/sources/NetworkManager/1.45/NetworkManager-$VERSION.tar.xz"
+  - "https://download.gnome.org/sources/NetworkManager/1.45/NetworkManager-$version.tar.xz"
 sha256sum:
   - "6757f95317853dc2782c44ed8939249574677518b3a1f7d112aad961f20adc43"
 depends:

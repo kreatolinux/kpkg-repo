@@ -3,7 +3,7 @@ version: "2.0.14"
 release: "1"
 description: "micro is a terminal-based text editor that aims to be easy to use and intuitive"
 sources:
-  - "https://github.com/zyedidia/micro/archive/refs/tags/v$VERSION.tar.gz"
+  - "https://github.com/zyedidia/micro/archive/refs/tags/v$version.tar.gz"
 sha256sum:
   - "40177579beb3846461036387b649c629395584a4bbe970f61ba7591bd9c0185a"
 build_depends:

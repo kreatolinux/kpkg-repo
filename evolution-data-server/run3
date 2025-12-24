@@ -3,7 +3,7 @@ version: "3.50.1"
 release: "1"
 description: "evolution-data-server"
 sources:
-  - "https://download.gnome.org/sources/evolution-data-server/3.50/evolution-data-server-$VERSION.tar.xz"
+  - "https://download.gnome.org/sources/evolution-data-server/3.50/evolution-data-server-$version.tar.xz"
 sha256sum:
   - "91f4ffc38a1b8d2fe8939834449ac541c0bff4a39b444edc2a9529344a28e98a"
 depends:

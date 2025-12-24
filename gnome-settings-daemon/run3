@@ -3,7 +3,7 @@ version: "45.0"
 release: "1"
 description: "gnome-settings-daemon"
 sources:
-  - "https://gitlab.gnome.org/GNOME/gnome-settings-daemon/-/archive/$VERSION/gnome-settings-daemon-$VERSION.tar.gz"
+  - "https://gitlab.gnome.org/GNOME/gnome-settings-daemon/-/archive/$version/gnome-settings-daemon-$version.tar.gz"
 sha256sum:
   - "1953a54fa177ffc2e4708ea0df070859a672832198c67995ed68faa8f83b3d87"
 depends:

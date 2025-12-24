@@ -3,7 +3,7 @@ version: "6.18"
 release: "7"
 description: "The Linux kernel and headers"
 sources:
-  - "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$VERSION.tar.xz"
+  - "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$version.tar.xz"
   - "https://github.com/projg2/fedora-kernel-config-for-gentoo/raw/6.7.10-gentoo/kernel-x86_64-fedora.config"
   - "settings.config"
 sha256sum:
@@ -19,15 +19,15 @@ build_depends:
   - "gmake"
 
 prepare {
-  exec "tar -xvf linux-$VERSION.tar.xz"
-  cd "linux-$VERSION"
+  exec "tar -xvf linux-$version.tar.xz"
+  cd "linux-$version"
   exec "make mrproper"
   exec "./scripts/kconfig/merge_config.sh -m ../kernel-x86_64-fedora.config ../settings.config || exit 1"
   exec "make olddefconfig"
 }
 
 func build_linux_headers {
-  cd "linux-$VERSION"
+  cd "linux-$version"
   exec "make mrproper"
   exec "make headers"
   exec "find usr/include -name '.*' -delete"
@@ -35,13 +35,13 @@ func build_linux_headers {
 }
 
 package_linux_headers {
-  cd "linux-$VERSION"
+  cd "linux-$version"
   exec "mkdir -p $ROOT/usr"
   exec "cp -rv usr/include $ROOT/usr/"
 }
 
 func build_aarch64_linux_gnu_linux_headers {
-  cd "linux-$VERSION"
+  cd "linux-$version"
   exec "make ARCH=arm64 mrproper"
   exec "make ARCH=arm64 headers"
   exec "find usr/include -name '.*' -delete"
@@ -50,30 +50,30 @@ func build_aarch64_linux_gnu_linux_headers {
 
 package_aarch64_linux_gnu_linux_headers {
   exec "TARGET=\"aarch64-linux-gnu\""
-  cd "linux-$VERSION"
+  cd "linux-$version"
   exec "mkdir -p $ROOT/usr/aarch64-linux-gnu"
   exec "cp -rv usr/include/ $ROOT/usr/aarch64-linux-gnu"
 }
 
 build {
-  cd "linux-$VERSION"
+  cd "linux-$version"
   exec "make -j$(nproc) || exit 1"
 }
 
 package {
-  cd "linux-$VERSION"
-  env INSTALL_MOD_PATH = "$DESTDIR/usr"
-  env INSTALL_PATH = "$DESTDIR/boot"
+  cd "linux-$version"
+  env INSTALL_MOD_PATH="$ROOT/usr"
+  env INSTALL_PATH="$ROOT/boot"
   exec "mkdir -p \"$INSTALL_PATH\" \"$INSTALL_MOD_PATH\""
   exec "make install"
   exec "make INSTALL_MOD_STRIP=1 DEPMOD=/nodepmod/here modules_install"
 
   # Mostly from linux-headers PKGBUILD
   # https://gitlab.archlinux.org/archlinux/packaging/packages/linux/-/blob/de68606a2ee79eb1471daedd209a70192c35df14/PKGBUILD
-  exec "MODPATH=\"$DESTDIR/usr/lib/modules/$VERSION/build\""
-  exec "rm -f \"$MODPATH\" \"$DESTDIR/usr/lib/modules/$VERSION/source\""
-  exec "mkdir -p \"$MODPATH\" \"$DESTDIR/usr/src\""
-  exec "ln -s \"$MODPATH\" \"$DESTDIR/usr/lib/modules/$VERSION/source\""
+  exec "MODPATH=\"$ROOT/usr/lib/modules/$version/build\""
+  exec "rm -f \"$MODPATH\" \"$ROOT/usr/lib/modules/$version/source\""
+  exec "mkdir -p \"$MODPATH\" \"$ROOT/usr/src\""
+  exec "ln -s \"$MODPATH\" \"$ROOT/usr/lib/modules/$version/source\""
   exec "install -Dt \"$MODPATH\" -m644 .config Makefile Module.symvers System.map localversion.* version vmlinux"
   exec "install -Dt \"$MODPATH/kernel\" -m644 kernel/Makefile"
   exec "install -Dt \"$MODPATH/arch/x86\" -m644 arch/x86/Makefile"
@@ -107,13 +107,13 @@ package {
   # https://bugs.archlinux.org/task/71392
   exec "install -Dt \"$MODPATH/drivers/iio/common/hid-sensors\" -m644 drivers/iio/common/hid-sensors/*.h"
 
-  exec "ln -s \"/usr/lib/modules/$VERSION\" \"$DESTDIR/usr/src/linux\""
+  exec "ln -s \"/usr/lib/modules/$version\" \"$ROOT/usr/src/linux\""
 
-  exec "mv \"$DESTDIR/boot/vmlinuz\" \"$DESTDIR/boot/vmlinuz-$VERSION\""
-  exec "mv \"$DESTDIR/boot/System.map\" \"$DESTDIR/boot/System.map-$VERSION\""
+  exec "mv \"$ROOT/boot/vmlinuz\" \"$ROOT/boot/vmlinuz-$version\""
+  exec "mv \"$ROOT/boot/System.map\" \"$ROOT/boot/System.map-$version\""
 }
 
 func postinstall_linux {
-  exec "depmod $VERSION"
+  exec "depmod $version"
 }
 

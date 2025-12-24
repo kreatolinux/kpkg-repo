@@ -3,7 +3,7 @@ version: "3.52.2"
 release: "1"
 description: "GNOME Terminal"
 sources:
-  - "https://gitlab.gnome.org/GNOME/gnome-terminal/-/archive/$VERSION/gnome-terminal-$VERSION.tar.gz"
+  - "https://gitlab.gnome.org/GNOME/gnome-terminal/-/archive/$version/gnome-terminal-$version.tar.gz"
 sha256sum:
   - "e4dbb694fcf5f15b6675c5dd9463d200bddf49e4ae42d0b3fbe87aef5829c930"
 depends:

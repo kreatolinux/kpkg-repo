@@ -14,6 +14,6 @@ prepare {
 }
 
 package {
-  exec "pip install pyparsing-$VERSION-py3-none-any.whl --prefix=/usr --root=\"$ROOT\""
+  exec "pip install pyparsing-$version-py3-none-any.whl --prefix=/usr --root=\"$ROOT\""
 }
 

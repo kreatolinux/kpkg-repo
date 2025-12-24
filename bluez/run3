@@ -3,7 +3,7 @@ version: "5.85"
 release: "1"
 description: "Bluetooth protocol stack for Linux"
 sources:
-  - "https://mirrors.edge.kernel.org/pub/linux/bluetooth/bluez-$VERSION.tar.gz"
+  - "https://mirrors.edge.kernel.org/pub/linux/bluetooth/bluez-$version.tar.gz"
 sha256sum:
   - "7516f167f6aaabff9a48eac1515638fd349ecb884d254b558481b02520e7abe8"
 depends:

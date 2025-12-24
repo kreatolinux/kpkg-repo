@@ -3,7 +3,7 @@ version: "1.25.0"
 release: "1"
 description: "A fast, lightweight and minimalistic Wayland terminal emulator"
 sources:
-  - "https://codeberg.org/dnkl/foot/archive/$VERSION.tar.gz"
+  - "https://codeberg.org/dnkl/foot/archive/$version.tar.gz"
 sha256sum:
   - "442a42d576ec72dd50f2d3faea8a664230a47bac79dc1eb6e7c9125ee76c130f"
 depends:
@@ -17,7 +17,7 @@ build_depends:
   - "meson"
 
 build {
-  env CFLAGS = "${CFLAGS} -Wno-error=deprecated-declarations"
+  env CFLAGS="${CFLAGS} -Wno-error=deprecated-declarations"
   exec "meson --prefix=/usr build/"
   exec "ninja -C build/"
 }

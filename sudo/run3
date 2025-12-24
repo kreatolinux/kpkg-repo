@@ -3,7 +3,7 @@ version: "1_9_15p4"
 release: "2"
 description: "Utility to execute a command as another user"
 sources:
-  - "https://github.com/sudo-project/sudo/archive/refs/tags/SUDO_$VERSION.tar.gz"
+  - "https://github.com/sudo-project/sudo/archive/refs/tags/SUDO_$version.tar.gz"
 sha256sum:
   - "bd3b5348209e3cb2941e4e83f6bb3fd4da065c943a2bb6620a3778264ec0631a"
 depends:
@@ -21,7 +21,7 @@ package {
   exec "make install"
   # From BLFS
   exec "mkdir -p $ROOT/etc/pam.d"
-  write "$ROOT/etc/pam.d/sudo << EOF" """
+  write "$ROOT/etc/pam.d/sudo" """
 # Begin /etc/pam.d/sudo
 
 # include the default auth settings

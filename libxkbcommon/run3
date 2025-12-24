@@ -3,7 +3,7 @@ version: "1.7.0"
 release: "2"
 description: "Keyboard compiler and support library"
 sources:
-  - "https://xkbcommon.org/download/libxkbcommon-$VERSION.tar.xz"
+  - "https://xkbcommon.org/download/libxkbcommon-$version.tar.xz"
 sha256sum:
   - "65782f0a10a4b455af9c6baab7040e2f537520caa2ec2092805cdfd36863b247"
 depends:

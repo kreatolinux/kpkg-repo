@@ -3,7 +3,7 @@ version: "1.5.28"
 release: "1"
 description: "ibus"
 sources:
-  - "https://github.com/ibus/ibus/releases/download/$VERSION/ibus-$VERSION.tar.gz"
+  - "https://github.com/ibus/ibus/releases/download/$version/ibus-$version.tar.gz"
 sha256sum:
   - "6c9ff3a7576c3d61264f386030f47ee467eb7298c8104367002986e008765667"
 depends:

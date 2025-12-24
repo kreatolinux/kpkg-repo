@@ -3,7 +3,7 @@ version: "2.10"
 release: "3"
 description: "WPA client"
 sources:
-  - "https://w1.fi/releases/wpa_supplicant-$VERSION.tar.gz"
+  - "https://w1.fi/releases/wpa_supplicant-$version.tar.gz"
 sha256sum:
   - "20df7ae5154b3830355f8ab4269123a87affdea59fe74fe9292a91d0d7e17b2f"
 depends:
@@ -17,7 +17,7 @@ build_depends:
   - "gmake"
 
 build {
-  write "wpa_supplicant/.config << EOF" """
+  write "wpa_supplicant/.config" """
 CONFIG_BACKEND=file
 CONFIG_CTRL_IFACE=y
 CONFIG_DEBUG_FILE=y

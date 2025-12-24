@@ -3,7 +3,7 @@ version: "45.1"
 release: "2"
 description: "GNOME Control Center"
 sources:
-  - "https://gitlab.gnome.org/GNOME/gnome-control-center/-/archive/$VERSION/gnome-control-center-$VERSION.tar.gz"
+  - "https://gitlab.gnome.org/GNOME/gnome-control-center/-/archive/$version/gnome-control-center-$version.tar.gz"
   - "https://raw.githubusercontent.com/kreatolinux/assets/master/klinux_pixmap.png"
 sha256sum:
   - "a43db0e8ab36bfa9ecfadd68d1dccced4b9da4766febe744a988879406a3e2ad"
@@ -30,8 +30,8 @@ build_depends:
   - "git"
 
 prepare {
-  exec "tar -xvf gnome-control-center-$VERSION.tar.gz"
-  cd "gnome-control-center-$VERSION"
+  exec "tar -xvf gnome-control-center-$version.tar.gz"
+  cd "gnome-control-center-$version"
   exec "rm -r subprojects/gvc"
   exec "git clone https://gitlab.gnome.org/GNOME/libgnome-volume-control subprojects/gvc"
   cd "subprojects/gvc"
@@ -40,13 +40,13 @@ prepare {
 }
 
 build {
-  cd "gnome-control-center-$VERSION"
+  cd "gnome-control-center-$version"
   exec "meson setup  --prefix=/usr  --buildtype=release  -Ddistributor_logo=/usr/share/pixmaps/klinux_logo.png  -Ddark_mode_distributor_logo=/usr/share/pixmaps/klinux_logo.png  build"
   exec "ninja -C build"
 }
 
 package {
-  cd "gnome-control-center-$VERSION"
+  cd "gnome-control-center-$version"
   exec "DESTDIR=\"$ROOT\" ninja -C build install"
   exec "mkdir -p \"$ROOT/usr/share/pixmaps\""
   exec "cp ../klinux_pixmap.png \"$ROOT/usr/share/pixmaps/klinux_logo.png\""

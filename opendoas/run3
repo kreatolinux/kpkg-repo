@@ -3,7 +3,7 @@ version: "6.8.2"
 release: "1"
 description: "Utility to execute a command as another user, sudo alternative"
 sources:
-  - "https://github.com/Duncaen/OpenDoas/releases/download/v$VERSION/opendoas-$VERSION.tar.gz"
+  - "https://github.com/Duncaen/OpenDoas/releases/download/v$version/opendoas-$version.tar.gz"
 sha256sum:
   - "28dca29adec5f4336465812d9e2243f599e62a78903de71c24f0cd6fe667edac"
 depends:
@@ -21,7 +21,7 @@ package {
   exec "make install"
   # From BLFS
   exec "mkdir -p $ROOT/etc/pam.d"
-  write "$ROOT/etc/pam.d/doas << EOF" """
+  write "$ROOT/etc/pam.d/doas" """
 # Begin /etc/pam.d/doas
 
 # include the default auth settings

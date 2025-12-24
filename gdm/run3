@@ -3,7 +3,7 @@ version: "44.1"
 release: "1"
 description: "GNOME Display Manager"
 sources:
-  - "https://gitlab.gnome.org/GNOME/gdm/-/archive/$VERSION/gdm-$VERSION.tar.gz"
+  - "https://gitlab.gnome.org/GNOME/gdm/-/archive/$version/gdm-$version.tar.gz"
 sha256sum:
   - "fd50fb023ee2aa5118bbeba8f6b9ffe93c54d68be8da189e5f835a7d8f900357"
 depends:

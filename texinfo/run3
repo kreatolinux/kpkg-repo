@@ -3,7 +3,7 @@ version: "7.1.1"
 release: "2"
 description: "GNU texinfo"
 sources:
-  - "https://ftp.gnu.org/gnu/texinfo/texinfo-$VERSION.tar.xz"
+  - "https://ftp.gnu.org/gnu/texinfo/texinfo-$version.tar.xz"
 sha256sum:
   - "31ae37e46283529432b61bee1ce01ed0090d599e606fc6a29dca1f77c76a6c82"
 depends:

@@ -3,7 +3,7 @@ version: "3.0.20"
 release: "1"
 description: "An implementation of iCalendar protocols and data formats"
 sources:
-  - "https://github.com/libical/libical/releases/download/v$VERSION/libical-$VERSION.tar.gz"
+  - "https://github.com/libical/libical/releases/download/v$version/libical-$version.tar.gz"
 sha256sum:
   - "e73de92f5a6ce84c1b00306446b290a2b08cdf0a80988eca0a2c9d5c3510b4c2"
 depends:

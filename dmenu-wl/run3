@@ -4,6 +4,8 @@ release: "1"
 description: "An efficient dynamic menu for wayland (wlroots)"
 sources:
  - "git::https://github.com/nyyManni/dmenu-wayland::master"
+b2sum:
+ - "SKIP"
 depends:
  - "wayland"
  - "cairo"

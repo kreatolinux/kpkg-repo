@@ -3,7 +3,7 @@ version: 1.2
 release: 1
 description: "ninja-compatible build tool written in C"
 sources:
-  - "https://github.com/michaelforney/samurai/releases/download/$VERSION/samurai-$VERSION.tar.gz"
+  - "https://github.com/michaelforney/samurai/releases/download/$version/samurai-$version.tar.gz"
 sha256sum:
   - 3b8cf51548dfc49b7efe035e191ff5e1963ebc4fe8f6064a5eefc5343eaf78a5
 build_depends:

@@ -8,7 +8,7 @@ sha256sum:
   - 136d91bc269a0571c0c0f2e6e003165dc1a2c15f46cf25293883a5ec0945e1e0
 
 build {
-  env CPPFLAGS = "-DNCURSES_ENABLE_STDBOOL_H=1 $CPPFLAGS"
+  env CPPFLAGS="-DNCURSES_ENABLE_STDBOOL_H=1 $CPPFLAGS"
   local extraArgs = ""
   if "$KPKG_ARCH" != "${exec("uname -m").output()}" {
     global extraArgs = "--disable-stripping"

@@ -3,7 +3,7 @@ version: "4.4.36"
 release: "1"
 description: "Extended crypt library"
 sources:
-  - "https://github.com/besser82/libxcrypt/releases/download/v$VERSION/libxcrypt-$VERSION.tar.xz"
+  - "https://github.com/besser82/libxcrypt/releases/download/v$version/libxcrypt-$version.tar.xz"
 sha256sum:
   - "e5e1f4caee0a01de2aee26e3138807d6d3ca2b8e67287966d1fefd65e1fd8943"
 build_depends:
@@ -12,16 +12,16 @@ build_depends:
 func common_build {
   exec "prefix=\"/usr\""
 
-  env CFLAGS = "$CFLAGS -Wno-error=unterminated-string-initialization"
+  env CFLAGS="$CFLAGS -Wno-error=unterminated-string-initialization"
 
   exec "if [ \"$1\" != \"$(uname -m)-linux-gnu\" ]; then"
   exec "prefix=\"$prefix/$1\""
   exec "extraArgs=\"--target=$1 --host=$1\""
-  env CC = "$1-$CC"
+  env CC="$1-$CC"
   exec "fi"
 
   exec "if [ \"$KPKG_ARCH\" != \"$(uname -m)\" ]; then"
-  env CFLAGS = "$CFLAGS -Wno-error=pedantic"
+  env CFLAGS="$CFLAGS -Wno-error=pedantic"
   exec "fi"
 
   macro build $extraArgs --disable-obsolete-api --prefix=$prefix
@@ -37,18 +37,18 @@ func common_package {
 }
 
 func build_libxcrypt {
-  exec "common_build \"$(uname -m)-linux-gnu\""
+  common_build "$(uname -m)-linux-gnu"
 }
 
 func build_aarch64_linux_gnu_libxcrypt {
-  exec "common_build \"aarch64-linux-gnu\""
+  common_build "aarch64-linux-gnu"
 }
 
 package_libxcrypt {
-  exec "common_package \"$(uname -m)-linux-gnu\""
+  common_package "$(uname -m)-linux-gnu"
 }
 
 package_aarch64_linux_gnu_libxcrypt {
-  exec "common_package \"aarch64-linux-gnu\""
+  common_package "aarch64-linux-gnu"
 }
 

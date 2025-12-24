@@ -3,7 +3,7 @@ version: "2.4.13"
 release: "1"
 description: "The Common Unix Printing System"
 sources:
-  - "https://github.com/OpenPrinting/cups/releases/download/v$VERSION/cups-$VERSION-source.tar.gz"
+  - "https://github.com/OpenPrinting/cups/releases/download/v$version/cups-$version-source.tar.gz"
 sha256sum:
   - "8255ecf037be72660de24a73bcada042fc5bf509fc87bc8ad16cd0675735c1a8"
 depends:

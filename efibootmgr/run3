@@ -3,7 +3,7 @@ version: "18"
 release: "1"
 description: "efibootmgr provides tools and libraries to manipulate EFI variables"
 sources:
-  - "https://github.com/rhboot/efibootmgr/archive/$VERSION/efibootmgr-$VERSION.tar.gz"
+  - "https://github.com/rhboot/efibootmgr/archive/$version/efibootmgr-$version.tar.gz"
 sha256sum:
   - "442867d12f8525034a404fc8af3036dba8e1fc970998af2486c3b940dfad0874"
 depends:

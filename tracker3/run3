@@ -3,7 +3,7 @@ version: 3.5.3
 release: 1
 description: "An efficient search engine and triplestore for desktop, embedded and mobile"
 sources:
-  - "https://gitlab.gnome.org/GNOME/tracker/-/archive/$VERSION/tracker-$VERSION.tar.gz"
+  - "https://gitlab.gnome.org/GNOME/tracker/-/archive/$version/tracker-$version.tar.gz"
 sha256sum:
   - 32491e852a5debb4003993922516166dc8ab1f676fbd5a6612aa228593ec0070
 depends:

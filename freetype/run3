@@ -3,7 +3,7 @@ version: "2.14.1"
 release: "2"
 description: "FriBidi is an implementation of Unicode Bidirectional Algorithm"
 sources:
-  - "https://download-mirror.savannah.gnu.org/releases/freetype/freetype-$VERSION.tar.gz"
+  - "https://download-mirror.savannah.gnu.org/releases/freetype/freetype-$version.tar.gz"
 sha256sum:
   - "174d9e53402e1bf9ec7277e22ec199ba3e55a6be2c0740cb18c0ee9850fc8c34"
 depends:

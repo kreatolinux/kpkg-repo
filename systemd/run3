@@ -3,7 +3,7 @@ version: "257.2"
 release: "4"
 description: "The systemd System and Service Manager"
 sources:
-  - "https://github.com/systemd/systemd/archive/refs/tags/v$VERSION.tar.gz"
+  - "https://github.com/systemd/systemd/archive/refs/tags/v$version.tar.gz"
 sha256sum:
   - "7f2bc3253e4f87578132c5e433ef9ff7e8fee01d9eb5a5b7c64376d617f694d0"
 depends:
@@ -24,8 +24,8 @@ replaces:
   - "eudev"
 
 prepare {
-  exec "tar -xvf v$VERSION.tar.gz"
-  cd "systemd-stable-$VERSION"
+  exec "tar -xvf v$version.tar.gz"
+  cd "systemd-stable-$version"
 
   # Force set relative_source_path as realpath on busybox doesn't support
   # arguments used there.
@@ -42,19 +42,19 @@ prepare {
 }
 
 build {
-  cd "systemd-stable-$VERSION"
-  env PATH = "$(realpath ../):$PATH"
+  cd "systemd-stable-$version"
+  env PATH="$(realpath ../):$PATH"
   exec "meson setup  --prefix=/usr  -Dpamconfdir=/etc/pam.d  -Dpam=true  -Dldconfig=false  build/"
   exec "ninja -C build/"
 }
 
 package {
-  cd "systemd-stable-$VERSION"
-  env PATH = "$(realpath ../):$PATH"
+  cd "systemd-stable-$version"
+  env PATH="$(realpath ../):$PATH"
   exec "DESTDIR=$ROOT ninja -C build/ install"
 
   # From BLFS https://www.linuxfromscratch.org/blfs/view/stable-systemd/general/systemd.html
-  write "$ROOT/etc/pam.d/systemd-user << EOF" """
+  write "$ROOT/etc/pam.d/systemd-user" """
 # Begin /etc/pam.d/systemd-user
 
 account  required    pam_access.so

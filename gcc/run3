@@ -3,7 +3,7 @@ version: "15.2.0"
 release: "4"
 description: "The GNU C Compiler"
 sources:
-  - "https://ftp.gnu.org/gnu/gcc/gcc-$VERSION/gcc-$VERSION.tar.xz"
+  - "https://ftp.gnu.org/gnu/gcc/gcc-$version/gcc-$version.tar.xz"
 sha256sum:
   - "438fd996826b0c82485a29da03a72d71d6e3541a83ec702df4271f6fe025d24e"
 depends:
@@ -51,11 +51,11 @@ func common_build {
 }
 
 func build_aarch64_linux_gnu_gcc {
-  exec "common_build \"aarch64-linux-gnu\""
+  common_build "aarch64-linux-gnu"
 }
 
 func build_gcc {
-  exec "common_build \"$KPKG_TARGET\""
+  common_build "$KPKG_TARGET"
 }
 
 package_aarch64_linux_gnu_gcc {

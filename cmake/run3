@@ -3,7 +3,7 @@ version: "3.27.7"
 release: "1"
 description: "CMake package contains a modern toolset used for generating Makefiles."
 sources:
-  - "https://cmake.org/files/v3.27/cmake-$VERSION.tar.gz"
+  - "https://cmake.org/files/v3.27/cmake-$version.tar.gz"
 sha256sum:
   - "08f71a106036bf051f692760ef9558c0577c42ac39e96ba097e7662bd4158d8e"
 depends:
@@ -21,7 +21,7 @@ build_depends:
 build {
   exec "sed -i '19i #include <cstdint>' Utilities/cmcppdap/include/dap/network.h"
   exec "sed -i '/\"lib64\"/s/64//' Modules/GNUInstallDirs.cmake"
-  exec "./bootstrap --prefix=/usr         --mandir=/share/man   --docdir=/share/doc/cmake-$VERSION"
+  exec "./bootstrap --prefix=/usr         --mandir=/share/man   --docdir=/share/doc/cmake-$version"
   exec "make -j$(nproc)"
 }
 

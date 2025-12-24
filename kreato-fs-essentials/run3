@@ -12,7 +12,10 @@ backup:
  - "etc/profile"
  - "etc/resolv.conf"
  - "etc/shells"
-extract: false
+
+prepare {
+ exec ":"
+}
 
 package {
  exec "cp -r etc/ \"$ROOT\""

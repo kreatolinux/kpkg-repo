@@ -1,7 +1,7 @@
 name: "desktop-file-utils"
 version: "0.28"
 release: "1"
-description: ""A few command line utilities for working"
+description: "A few command line utilities for working with desktop files"
 sources:
  - "https://www.freedesktop.org/software/desktop-file-utils/releases/desktop-file-utils-${version}.tar.xz"
 sha256sum:
