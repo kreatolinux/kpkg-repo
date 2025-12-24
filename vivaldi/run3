@@ -1,0 +1,32 @@
+name: vivaldi
+version: 6.4.3160.41
+release: 1
+description: "An advanced browser made with the power user in mind"
+sources:
+  - "https://downloads.vivaldi.com/stable/vivaldi-stable_$VERSION_amd64.deb"
+sha256sum:
+  - c66b12f7d6c45561387da99503c9539ed15d55ff02d5763dc9f69f35aa29841c
+depends:
+  - alsa-lib
+  - liberation-fonts
+  - desktop-file-utils
+  - gtk3
+  - hicolor-icon-theme
+  - libnotify
+  - cups
+  - nss
+
+prepare {
+  exec "bsdtar -xf *.deb"
+}
+
+package {
+  exec "tar -xf data.tar.xz"
+  exec "mv etc $ROOT"
+  exec "mv usr $ROOT"
+  exec "mv opt $ROOT"
+  for res in [16, 22, 24, 32, 48, 64, 128, 256] {
+    exec "install -Dm644 \"$ROOT/opt/vivaldi/product_logo_${res}.png\" \"$ROOT/usr/share/icons/hicolor/${res}x${res}/apps/vivaldi.png\""
+  }
+  exec "install -Dm644 \"$ROOT/opt/vivaldi/product_logo_256.png\" \"$ROOT/usr/share/pixmaps/vivaldi.png\""
+}
