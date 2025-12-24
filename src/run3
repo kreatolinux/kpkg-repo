@@ -1,0 +1,50 @@
+name: "src"
+version: "7.4.0"
+release: "7"
+description: "Kreato Linux source tree metapackage"
+sources:
+  - "https://github.com/kreatolinux/src/releases/download/v$version/src-v$version-dist.tar.gz"
+b2sum:
+  - "790af4e1d20d81b02b3866faf0b2bace718b96bb8967f0d4effc1fbc81e0ee329810de0ed081a5df599230f636de147f292ec6cb882b386c8a167ee51febe7c6"
+depends:
+  - "libarchive"
+  - "shadow"
+  - "openssl"
+  - "git"
+build_depends:
+  - "nim"
+depends_kpkg:
+  - "bubblewrap"
+  - "sqlite"
+
+func build_kpkg {
+  exec "nimble install cligen fuzzy nimcrypto norm -y"
+  exec "nim c --deepcopy:on -d:release -d:useDist --passL:-larchive --threads:on -d:ver=\"$version\" -d:ssl -o=\"out/kpkg\" \"kpkg/kpkg.nim\""
+}
+
+package_kpkg {
+  exec "mkdir -p \"$ROOT/bin\""
+  exec "cp out/kpkg \"$ROOT/bin/\""
+  exec "mkdir -p \"$ROOT/usr/share/man/man8\""
+  exec "mkdir \"$ROOT/usr/share/man/man5\""
+  for i in "${exec(\"ls man/kpkg*.5\").output()}" {
+    exec "cp -f \"$i\" \"$ROOT/usr/share/man/man5\""
+  }
+
+  for i in "${exec(\"ls man/kpkg*.8\").output()}" {
+    exec "cp -f \"$i\" \"$ROOT/usr/share/man/man8\""
+  }
+}
+
+func build_jumpstart {
+  exec "nimble install cligen fusion -y"
+  exec "nim c -d:release --threads:on -o=\"out/jumpstart\" \"jumpstart/jumpstart.nim\""
+  exec "nim c -d:release --threads:on -o=\"out/jumpctl\" \"jumpstart/jumpctl.nim\""
+}
+
+package_jumpstart {
+  exec "mkdir -p \"$ROOT/bin\""
+  exec "cp out/jumpctl \"$ROOT/bin/\""
+  exec "cp out/jumpstart \"$ROOT/bin\""
+}
+
