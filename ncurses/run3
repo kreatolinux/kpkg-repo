@@ -1,0 +1,36 @@
+name: ncurses
+version: 6.5
+release: 3
+description: "ncurses library allows you to make TUI applications."
+sources:
+  - "https://ftp.gnu.org/gnu/ncurses/ncurses-${version}.tar.gz"
+sha256sum:
+  - 136d91bc269a0571c0c0f2e6e003165dc1a2c15f46cf25293883a5ec0945e1e0
+
+build {
+  env CPPFLAGS = "-DNCURSES_ENABLE_STDBOOL_H=1 $CPPFLAGS"
+  local extraArgs = ""
+  if "$KPKG_ARCH" != "${exec("uname -m").output()}" {
+    global extraArgs = "--disable-stripping"
+  }
+  macro build ${extraArgs} --mandir=/usr/share/man --enable-pc-files --disable-rpath-hack --with-pkg-config-libdir=/usr/lib/pkgconfig --with-shared --enable-widec --without-ada --without-tests --without-debug --with-cxx-shared
+}
+
+package {
+  macro package
+  exec "mkdir -p $ROOT/usr/lib"
+  for lib in [ncurses, form, panel, menu] {
+    exec "rm -f $ROOT/usr/lib/lib${lib}.so"
+    exec "printf '%s\n' 'INPUT(-l${lib}w)' > $ROOT/usr/lib/lib${lib}.so"
+    exec "chmod 755 $ROOT/usr/lib/lib${lib}.so"
+    exec "ln -sf lib${lib}w.a $ROOT/usr/lib/lib${lib}.a"
+  }
+  exec "printf '%s\n' 'INPUT(-lncursesw)' > $ROOT/usr/lib/libcursesw.so"
+  exec "ln -s libncurses.so $ROOT/usr/lib/libcurses.so"
+  local MAJOR_VERSION = "${version.split('.')[0]}"
+  for lib in [tic, tinfo, tinfow] {
+    exec "printf 'INPUT(-lncursesw)' > $ROOT/usr/lib/lib${lib}.so"
+    exec "ln -s /usr/lib/libncursesw.so.$MAJOR_VERSION $ROOT/usr/lib/lib${lib}.so.$MAJOR_VERSION"
+    exec "ln -sv ncursesw.pc $ROOT/usr/lib/pkgconfig/${lib}.pc"
+  }
+}
