@@ -1,0 +1,24 @@
+name: openssl
+version: 3.5.4
+release: 1
+description: "TLS library"
+sources:
+  - "https://www.openssl.org/source/openssl-${version}.tar.gz"
+sha256sum:
+  - a21c1eb7e824a063f26fd7420ad378f4603a34f27e2ba712dcaf276644481776
+
+build {
+  local extraArgs = ""
+  if "$KPKG_ARCH" != "${exec("uname -m").output()}" {
+    global extraArgs = "linux-$KPKG_ARCH"
+    env CFLAGS = "-I/usr/$KPKG_TARGET/usr/include"
+    env LDFLAGS = "-L/usr/$KPKG_TARGET/lib"
+    env PKG_CONFIG_PATH = "/usr/$KPKG_TARGET/usr/lib/pkgconfig"
+  }
+  exec "./config ${extraArgs} --prefix=/usr --openssldir=/etc/ssl --libdir=lib shared zlib-dynamic"
+  exec "make -j${exec("nproc").output()}"
+}
+
+package {
+  macro package
+}
