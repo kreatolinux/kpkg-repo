@@ -1,0 +1,35 @@
+name: "libarchive"
+version: "3.8.4"
+release: "4"
+description: "Multi-format archive and compression library"
+sources:
+  - "https://github.com/libarchive/libarchive/releases/download/v$VERSION/libarchive-$VERSION.tar.xz"
+sha256sum:
+  - "c7b847b57feacf5e182f4d14dd6cae545ac6843d55cb725f58e107cdf1c9ad73"
+depends:
+  - "openssl"
+  - "expat"
+  - "bzip2"
+  - "xz-utils"
+  - "zlib"
+  - "libxml2"
+  - "libzstd"
+  - "linux-headers"
+build_depends:
+  - "gmake"
+
+build {
+  cd "libarchive-$VERSION"
+  # Taken from BLFS r11.2-232
+  exec "sed '/linux\\/fs\\.h/d' -i libarchive/archive_read_disk_posix.c"
+  macro build --prefix=/usr --disable-static
+  exec "make -j$(nproc)"
+}
+
+package {
+  cd "libarchive-$VERSION"
+  exec "make DESTDIR=$ROOT install"
+  exec "sed -i '/Libs.private: /s|$| -liconv|' \"$ROOT/usr/lib/pkgconfig/libarchive.pc\""
+  exec "sed -i '/Requires.private:/d'          \"$ROOT/usr/lib/pkgconfig/libarchive.pc\""
+}
+

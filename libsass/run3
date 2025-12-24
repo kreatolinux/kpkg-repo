@@ -1,0 +1,26 @@
+name: "libsass"
+version: "3.6.6"
+release: "1"
+description: "sass library"
+sources:
+  - "https://github.com/sass/libsass/archive/$VERSION/libsass-$VERSION.tar.gz"
+sha256sum:
+  - "11f0bb3709a4f20285507419d7618f3877a425c0131ea8df40fe6196129df15d"
+build_depends:
+  - "autoconf"
+  - "automake"
+  - "libtool"
+  - "gmake"
+
+build {
+  env LIBSASS_VERSION = "$VERSION"
+  exec "autoreconf -v -f -i"
+  macro build --prefix=/usr  --disable-tests  --enable-shared
+  exec "make"
+}
+
+package {
+  exec "mkdir -p \"$ROOT/usr/local\""
+  exec "make DESTDIR=$ROOT install"
+}
+

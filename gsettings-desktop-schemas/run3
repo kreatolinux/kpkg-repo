@@ -1,0 +1,29 @@
+name: "gsettings-desktop-schemas"
+version: "49.1"
+release: "2"
+description: ""Contains a collection of GSettings schemas for"
+sources:
+  - "https://gitlab.gnome.org/GNOME/gsettings-desktop-schemas/-/archive/$VERSION/gsettings-desktop-schemas-$VERSION.tar.gz"
+sha256sum:
+  - "c6baabe8c2c8b56825d0cfcc2ef859e5878a9de100be2894342640c094334517"
+depends:
+  - "cantarell-fonts"
+  - "gobject-introspection"
+build_depends:
+  - "meson"
+  - "ninja"
+
+build {
+  exec "sed -i -r 's:\"(/system):\"/org/gnome\\1:g' schemas/*.in"
+  exec "meson setup  --prefix=/usr  --buildtype=release  build"
+  exec "ninja -C build"
+}
+
+package {
+  exec "DESTDIR=\"$ROOT\" ninja -C build install"
+}
+
+postinstall {
+  exec "glib-compile-schemas /usr/share/glib-2.0/schemas"
+}
+

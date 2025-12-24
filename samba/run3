@@ -1,0 +1,39 @@
+name: "samba"
+version: "4.19.2"
+release: "1"
+description: "samba"
+sources:
+  - "https://download.samba.org/pub/samba/stable/samba-$VERSION.tar.gz"
+sha256sum:
+  - "9e63f0505e1c631f1db0b7a9349a51e925c026ca03af3fd5d812228bb597d393"
+depends:
+  - "gnutls"
+  - "jansson"
+  - "dbus"
+  - "fuse"
+  - "gpgme"
+  - "icu"
+  - "libtasn"
+  - "linux-pam"
+build_depends:
+  - "perl-parse-yapp"
+  - "rpcsvc-proto"
+  - "libtirpc"
+  - "perl-json"
+  - "gmake"
+
+build {
+
+  exec "if ! command -v systemctl > /dev/null; then"
+  exec "extraArgs=\"--disable-systemd\""
+  exec "fi"
+
+  # Some of these are taken from BLFS
+  macro build $extraArgs --sysconfdir=/etc  --localstatedir=/var  --with-pammodulesdir=/usr/lib/security  --enable-fhs  --without-acl-support  --without-ad-dc  --without-ldap  --without-ads  --prefix=/usr
+  exec "make"
+}
+
+package {
+  exec "make DESTDIR=$ROOT install"
+}
+

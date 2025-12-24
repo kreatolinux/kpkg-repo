@@ -1,0 +1,24 @@
+name: "libical"
+version: "3.0.20"
+release: "1"
+description: "An implementation of iCalendar protocols and data formats"
+sources:
+  - "https://github.com/libical/libical/releases/download/v$VERSION/libical-$VERSION.tar.gz"
+sha256sum:
+  - "e73de92f5a6ce84c1b00306446b290a2b08cdf0a80988eca0a2c9d5c3510b4c2"
+depends:
+  - "glib"
+build_depends:
+  - "cmake"
+  - "gobject-introspection"
+  - "vala"
+
+build {
+  exec "cmake -DCMAKE_INSTALL_PREFIX=/usr  -DCMAKE_BUILD_TYPE=Release   -DSHARED_ONLY=yes             -DGOBJECT_INTROSPECTION=true  -DICAL_GLIB_VAPI=true         -DENABLE_GTK_DOC=OFF  -B build"
+  exec "cmake --build build"
+}
+
+package {
+  exec "DESTDIR=\"$ROOT\" cmake --install build"
+}
+

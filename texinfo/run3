@@ -1,0 +1,24 @@
+name: "texinfo"
+version: "7.1.1"
+release: "2"
+description: "GNU texinfo"
+sources:
+  - "https://ftp.gnu.org/gnu/texinfo/texinfo-$VERSION.tar.xz"
+sha256sum:
+  - "31ae37e46283529432b61bee1ce01ed0090d599e606fc6a29dca1f77c76a6c82"
+depends:
+  - "gettext"
+  - "perl"
+build_depends:
+  - "gmake"
+
+build {
+  exec "sed -e 's/__attribute_nonnull__/__nonnull/'  -i gnulib/lib/malloc/dynarray-skeleton.c"
+  macro build --prefix=/usr
+}
+
+package {
+  exec "make DESTDIR=$ROOT install"
+  exec "rm -rf \"$ROOT/usr/share/info/dir\""
+}
+

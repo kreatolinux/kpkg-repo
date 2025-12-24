@@ -1,0 +1,23 @@
+name: "findutils"
+version: "4.10.0"
+release: "1"
+description: "GNU findutils"
+sources:
+  - "https://ftp.gnu.org/gnu/findutils/findutils-$VERSION.tar.xz"
+sha256sum:
+  - "1387e0b67ff247d2abde998f90dfbf70c1491391a59ddfecb8ae698789f0a4f5"
+build_depends:
+  - "gmake"
+
+build {
+  exec "mkdir -v build"
+  cd "build"
+  exec "KPKG_CONFIGURE_PATH=\"../configure\" kpkgConfigure                    --build=$(../config.guess)  --disable-nls               --enable-shared             --disable-werror            --enable-64-bit-bfd"
+  exec "make"
+}
+
+package {
+  cd "build"
+  exec "make DESTDIR=$ROOT install -j1"
+}
+

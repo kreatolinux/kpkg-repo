@@ -1,0 +1,24 @@
+name: "mold"
+version: "2.34.1"
+release: "1"
+description: "A Modern Linker"
+sources:
+  - "https://github.com/rui314/mold/archive/refs/tags/v$VERSION.tar.gz"
+sha256sum:
+  - "a8cf638045b4a4b2697d0bcc77fd96eae93d54d57ad3021bf03b0333a727a59d"
+depends:
+  - "cmake"
+build_depends:
+  - "gmake"
+
+build {
+  exec "mkdir build"
+  cd "build"
+  exec "cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=c++ -DCMAKE_INSTALL_PREFIX=/usr .."
+  exec "cmake --build . -j $(nproc)"
+}
+
+package {
+  exec "cmake --install build"
+}
+

@@ -1,0 +1,49 @@
+name: "binutils"
+version: "2.45.1"
+release: "3"
+description: "GNU Binutils"
+sources:
+  - "https://ftp.gnu.org/gnu/binutils/binutils-$VERSION.tar.xz"
+sha256sum:
+  - "5fe101e6fe9d18fdec95962d81ed670fdee5f37e3f48f0bef87bddf862513aa5"
+depends:
+  - "flex"
+  - "perl"
+  - "zlib"
+  - "bison"
+  - "texinfo"
+  - "file"
+build_depends:
+  - "gmake"
+
+func actual_build {
+  exec "mkdir -v build"
+  cd "build"
+
+  exec "if [ \"$1\" != \"$(uname -m)-linux-gnu\" ]; then"
+  exec "target=\"--target=$1\""
+  exec "sysroot=\"--with-sysroot=/usr/$1\""
+  exec "fi"
+
+  print "$target"
+  print "$sysroot"
+  exec "../configure                    --prefix=/usr               $target\t\t\t    $sysroot\t\t    --enable-gnu-as\t\t    --enable-gnu-ld\t\t    --enable-gold\t\t    --build=$(../config.guess)  --disable-nls               --enable-shared             --disable-werror            --enable-64-bit-bfd"
+
+  exec "make -j$(nproc)"
+}
+
+func build_aarch64_linux_gnu_binutils {
+  exec "actual_build \"aarch64-linux-gnu\""
+}
+
+build {
+  exec "actual_build \"$KPKG_TARGET\""
+}
+
+package {
+  cd "build"
+  exec "make DESTDIR=$ROOT install -j1"
+  exec "rm -f $ROOT/usr/lib/libbfd.la"
+  exec "rm -rf \"$ROOT/usr/share/info/dir\""
+}
+

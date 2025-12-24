@@ -1,0 +1,23 @@
+name: "libtiff"
+version: "4.5.1"
+release: "1"
+description: "Library to read TIFF files"
+sources:
+  - "https://download.osgeo.org/libtiff/tiff-$VERSION.tar.gz"
+sha256sum:
+  - "d7f38b6788e4a8f5da7940c5ac9424f494d8a79eba53d555f4a507167dca5e2b"
+depends:
+  - "libjpeg-turbo"
+build_depends:
+  - "cmake"
+  - "ninja"
+
+build {
+  exec "cmake -B build -DCMAKE_BUILD_TYPE=Release  -DCMAKE_INSTALL_PREFIX=/usr  -G Ninja"
+  exec "ninja -C build -j$(nproc)"
+}
+
+package {
+  exec "DESTDIR=\"$ROOT\" ninja -C build install"
+}
+

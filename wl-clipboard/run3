@@ -1,0 +1,23 @@
+name: "wl-clipboard"
+version: "2.2.1"
+release: "1"
+description: "Command-line copy/paste utilities for Wayland"
+sources:
+  - "https://github.com/bugaevc/wl-clipboard/archive/refs/tags/v$VERSION.tar.gz"
+sha256sum:
+  - "6eb8081207fb5581d1d82c4bcd9587205a31a3d47bea3ebeb7f41aa1143783eb"
+depends:
+  - "wayland"
+  - "wayland-protocols"
+build_depends:
+  - "meson"
+
+build {
+  exec "meson --prefix=/usr build/"
+  exec "ninja -C build/"
+}
+
+package {
+  exec "DESTDIR=$ROOT ninja -C build/ install"
+}
+

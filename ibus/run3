@@ -1,0 +1,37 @@
+name: "ibus"
+version: "1.5.28"
+release: "1"
+description: "ibus"
+sources:
+  - "https://github.com/ibus/ibus/releases/download/$VERSION/ibus-$VERSION.tar.gz"
+sha256sum:
+  - "6c9ff3a7576c3d61264f386030f47ee467eb7298c8104367002986e008765667"
+depends:
+  - "dconf"
+  - "gobject-introspection"
+  - "libnotify"
+  - "iso-codes"
+  - "vala"
+  - "gtk3"
+  - "gtk4"
+  - "libnotify"
+build_depends:
+  - "gmake"
+
+build {
+
+  exec "if ! command -v systemd > /dev/null; then"
+  exec "extraArgs=\"--disable-systemd-services\""
+  exec "fi"
+
+  # From BLFS
+  macro build $extraArgs --prefix=/usr  --sysconfdir=/etc  --disable-python2  --disable-gtk2  --disable-emoji-dict  --disable-unicode-dict
+
+  exec "rm -f tools/main.c"
+  exec "make"
+}
+
+package {
+  exec "make DESTDIR=$ROOT install"
+}
+

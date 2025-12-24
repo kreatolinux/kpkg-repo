@@ -1,0 +1,36 @@
+name: "fish"
+version: "3.7.1"
+release: "1"
+description: "The user-friendly command line shell."
+sources:
+  - "https://github.com/fish-shell/fish-shell/releases/download/$VERSION/fish-$VERSION.tar.xz"
+sha256sum:
+  - "614c9f5643cd0799df391395fa6bbc3649427bb839722ce3b114d3bbc1a3b250"
+depends:
+  - "cmake"
+  - "ncurses"
+  - "pcre"
+  - "gettext"
+build_depends:
+  - "gmake"
+
+build {
+  exec "cmake -S . -B build  -DCMAKE_INSTALL_PREFIX=/usr  -DCMAKE_INSTALL_SYSCONFDIR=/etc  -DCMAKE_BUILD_TYPE=Release  -DBUILD_DOCS=False  -Wno-dev"
+  exec "cmake --build build"
+}
+
+package {
+  exec "cmake --install build"
+}
+
+postinstall {
+  exec "grep -q \"/bin/fish\" /etc/shells || echo \"/bin/fish\" >> /etc/shells"
+  exec "grep -q \"/usr/bin/fish\" /etc/shells || echo \"/usr/bin/fish\" >> /etc/shells"
+}
+
+postremove {
+  exec "grep -q \"/usr/bin/fish\" /etc/shells && sed -i \"s#/usr/bin/fish##g\" /etc/shells"
+  exec "grep -q \"/bin/fish\" /etc/shells && sed -i \"s#/bin/fish##g\" /etc/shells"
+  exec "sed -i '/^[[:space:]]*$/d' /etc/shells"
+}
+

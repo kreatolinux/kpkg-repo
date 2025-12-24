@@ -1,0 +1,23 @@
+name: "libtool"
+version: "2.5.4"
+release: "1"
+description: "The GNU Portable Library Tool"
+sources:
+  - "https://ftp.gnu.org/gnu/libtool/libtool-$VERSION.tar.gz"
+sha256sum:
+  - "da8ebb2ce4dcf46b90098daf962cffa68f4b4f62ea60f798d0ef12929ede6adf"
+depends:
+  - "m4"
+build_depends:
+  - "gmake"
+
+build {
+  macro build --prefix=/usr
+  exec "make"
+}
+
+package {
+  exec "make DESTDIR=$ROOT install"
+  exec "rm -rf \"$ROOT\"/usr/share/info/dir"
+}
+

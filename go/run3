@@ -1,0 +1,54 @@
+name: "go"
+version: "1.25.5"
+release: "2"
+description: "Go is a statically typed, compiled programming language designed at Google"
+sources:
+  - "https://go.dev/dl/go$VERSION.src.tar.gz"
+sha256sum:
+  - "22a5fd0a91efcd28a1b0537106b9959b2804b61f59c3758b51e8e5429c1a954f"
+depends:
+  - "git"
+build_depends:
+  - "wget"
+  - "bash"
+  - "gmake"
+
+build {
+  exec "if ! command -v go > /dev/null; then"
+  print "go: go not found to bootstrap, downloading binary to bootstrap..."
+  # We get the architecture by hand since
+  # kpkg doesn't currently offer any variable to do this.
+  exec "ARCH=\"\""
+  exec "case $(uname -m)"
+  exec "in"
+  exec "\"x86_64\")"
+  exec "ARCH=\"amd64\""
+  exec ";;"
+  exec "*)"
+  exec "ARCH=\"$(uname -m)\""
+  exec ";;"
+  exec "esac"
+  cd ".."
+  exec "wget https://go.dev/dl/go$VERSION.linux-$ARCH.tar.gz"
+  exec "mkdir go-bin"
+  exec "tar -xvf go$VERSION.linux-$ARCH.tar.gz -C go-bin"
+  env PATH = "$PATH:$PWD/go-bin/go/bin"
+  cd "-"
+  exec "fi"
+  cd "src || exit 1"
+  env GOENV = "/opt/kpkg/srcdir/go/env"
+  env GOCACHE = "/opt/kpkg/srcdir/go-build"
+  env GOROOT_FINAL = "/usr/local/go"
+  exec "go env -w  GOCACHE=\"/opt/kpkg/srcdir/go-build\""
+  exec "./make.bash -v"
+}
+
+package {
+  exec "mkdir -p \"$ROOT\"/bin"
+  exec "mkdir -p \"$ROOT\"/usr/local/go"
+  exec "cp -r . \"$ROOT\"/usr/local/go"
+  exec "ln -s /usr/local/go/bin/go \"$ROOT/bin/go\""
+  exec "ln -s /usr/local/go/bin/gofmt \"$ROOT/bin/gofmt\""
+  exec "mkdir -p /opt/kpkg/srcdir/go"
+}
+

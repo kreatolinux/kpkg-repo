@@ -1,0 +1,38 @@
+name: "gnome-terminal"
+version: "3.52.2"
+release: "1"
+description: "GNOME Terminal"
+sources:
+  - "https://gitlab.gnome.org/GNOME/gnome-terminal/-/archive/$VERSION/gnome-terminal-$VERSION.tar.gz"
+sha256sum:
+  - "e4dbb694fcf5f15b6675c5dd9463d200bddf49e4ae42d0b3fbe87aef5829c930"
+depends:
+  - "vte"
+  - "util-linux"
+  - "jetbrains-mono"
+  - "gtk3"
+  - "glib"
+  - "libhandy"
+  - "gsettings-desktop-schemas"
+  - "libxslt"
+build_depends:
+  - "meson"
+opt_depends:
+  - "nautilus: For nautilus integration"
+
+build {
+
+  exec "if kpkg info nautilus; then"
+  exec "nautilusEnabled=\"true\""
+  exec "else"
+  exec "nautilusEnabled=\"false\""
+  exec "fi"
+
+  exec "meson setup  --prefix=/usr  --buildtype=release  -Ddocs=false  -Dnautilus_extension=$nautilusEnabled  build"
+  exec "ninja -C build"
+}
+
+package {
+  exec "DESTDIR=\"$ROOT\" ninja -C build install"
+}
+

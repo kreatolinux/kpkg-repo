@@ -1,0 +1,19 @@
+name: "python-pyparsing"
+version: "3.0.9"
+release: "1"
+description: "python-pyparsing binary package"
+sources:
+  - "https://files.pythonhosted.org/packages/6c/10/a7d0fa5baea8fe7b50f448ab742f26f52b80bfca85ac2be9d35cdd9a3246/pyparsing-3.0.9-py3-none-any.whl"
+sha256sum:
+  - "5026bae9a10eeaefb61dab2f09052b9f4307d44aee4eda64b309723d8d206bbc"
+depends:
+  - "python"
+
+prepare {
+  exec ":"
+}
+
+package {
+  exec "pip install pyparsing-$VERSION-py3-none-any.whl --prefix=/usr --root=\"$ROOT\""
+}
+

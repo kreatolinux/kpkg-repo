@@ -1,0 +1,93 @@
+name: "nss"
+version: "3.96.1"
+release: "1"
+description: "network stuff"
+sources:
+  - "https://archive.mozilla.org/pub/security/nss/releases/NSS_3_96_1_RTM/src/nss-3.96.1.tar.gz"
+  - "bundle.sh"
+  - "certdata2pem.py"
+sha256sum:
+  - "c51e89f6fbb06163f4302e368eeb672d748b52d583948bdb15ef1b069237a496"
+  - "SKIP"
+  - "SKIP"
+depends:
+  - "nspr"
+  - "sqlite"
+  - "p11-kit"
+  - "zlib"
+build_depends:
+  - "python"
+  - "gmake"
+extract: false
+depends_ca_certificates_mozilla:
+  - "ca-certificates-utils"
+
+prepare {
+  exec "bsdtar -xf nss-$VERSION.tar.gz"
+  cd "nss-$VERSION"
+  exec "mkdir -p certs"
+  cd "certs"
+  exec "for i in certdata.txt nssckbi.h; do"
+  exec "ln -srf ../nss/lib/ckfw/builtins/$i $i"
+  exec "done"
+}
+
+build {
+  cd "nss-$VERSION/certs"
+
+  # Scripts from Arch Linux: https://gitlab.archlinux.org/archlinux/packaging/packages/nss/-/tree/3.98-1?ref_type=tags
+  exec "python ../../certdata2pem.py || exit 1"
+
+  cd ".."
+  exec "sh ../bundle.sh || exit 1"
+
+  cd "nss"
+  exec "if [ \"$(uname -m)\" = \"x86_64\" ]; then"
+  env USE_64 = "1"
+  exec "else"
+  env USE_64 = "0"
+  exec "fi"
+
+  # Taken from BLFS
+  exec "make -j$(nproc) BUILD_OPT=1                   NSPR_INCLUDE_DIR=/usr/include/nspr   USE_SYSTEM_ZLIB=1                    ZLIB_LIBS=-lz                        NSS_ENABLE_WERROR=0                  NSS_USE_SYSTEM_SQLITE=1              USE_64=$USE_64"
+}
+
+package {
+
+  cd "nss-$VERSION"
+
+  exec "DIST=$(basename dist/Linux*.OBJ)"
+  # From https://gitlab.archlinux.org/archlinux/packaging/packages/nss/-/commit/314bb55c3ab50a9951993c885e6d5df56f5b13a6
+  exec "nsprver=\"$(pkg-config --modversion nspr)\""
+  exec "libdir=/usr/lib includedir=/usr/include/nss"
+
+  exec "sed nss/pkg/pkg-config/nss.pc.in  -e \"s,%prefix%,/usr,g\"  -e \"s,%exec_prefix%,\\${prefix},g\"  -e \"s,%libdir%,$libdir,g\"  -e \"s,%includedir%,$includedir,g\"  -e \"s,%NSPR_VERSION%,$nsprver,g\"  -e \"s,%NSS_VERSION%,$VERSION,g\" |"
+  exec "install -Dm644 /dev/stdin \"$DESTDIR$libdir/pkgconfig/nss.pc\""
+
+  exec "ln -s nss.pc \"$DESTDIR$libdir/pkgconfig/mozilla-nss.pc\""
+
+  exec "install -Dt \"$DESTDIR$libdir\" dist/$DIST/lib/*.so"
+
+  exec "{ read vmajor; read vminor; read vpatch; }  < <(awk '/#define.*NSS_V(MAJOR|MINOR|PATCH)/ {print $3}' nss/lib/nss/nss.h)"
+
+  exec "sed nss/pkg/pkg-config/nss-config.in  -e \"s,@prefix@,/usr,g\"  -e \"s,@exec_prefix@,/usr,g\"  -e \"s,@libdir@,$libdir,g\"  -e \"s,@includedir@,$includedir,g\"  -e \"s,@MOD_MAJOR_VERSION@,$vmajor,g\"  -e \"s,@MOD_MINOR_VERSION@,$vminor,g\"  -e \"s,@MOD_PATCH_VERSION@,$vpatch,g\" |"
+  exec "install -D /dev/stdin \"$DESTDIR/usr/bin/nss-config\""
+
+  cd "dist/$DIST/bin"
+  exec "for i in *util shlibsign signtool signver ssltap; do"
+  exec "install -Dt \"$DESTDIR/usr/bin\"  \"$i\""
+  exec "done"
+  cd "-"
+
+  exec "install -Dt \"$DESTDIR$includedir\" -m644 dist/public/nss/*.h"
+
+  # Replace built-in trust with p11-kit connection
+  exec "ln -s pkcs11/p11-kit-trust.so \"$DESTDIR$libdir/p11-kit-trust.so\""
+  exec "ln -sf p11-kit-trust.so \"$DESTDIR$libdir/libnssckbi.so\""
+}
+
+package_ca_certificates_mozilla {
+  cd "nss-$VERSION"
+  exec "install -Dm644 ca-bundle.trust.p11-kit  \"$DESTDIR/usr/share/ca-certificates/trust-source/mozilla.trust.p11-kit\""
+}
+

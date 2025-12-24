@@ -1,0 +1,28 @@
+name: "krb5"
+version: "1.22.1"
+release: "1"
+description: "kerberos"
+sources:
+  - "https://kerberos.org/dist/krb5/1.22/krb5-$VERSION.tar.gz"
+sha256sum:
+  - "1a8832b8cad923ebbf1394f67e2efcf41e3a49f460285a66e35adec8fa0053af"
+depends:
+  - "e2fsprogs"
+build_depends:
+  - "perl"
+  - "gmake"
+
+build {
+
+  cd "src"
+
+  # Got flags from BLFS
+  macro build --prefix=/usr             --sysconfdir=/etc         --localstatedir=/var/lib  --runstatedir=/run        --with-system-et          --with-system-ss          --with-system-verto=no    --enable-dns-for-realm
+  exec "make"
+}
+
+package {
+  cd "src"
+  exec "make DESTDIR=$ROOT install"
+}
+

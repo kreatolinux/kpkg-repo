@@ -1,0 +1,41 @@
+name: "docbook-xsl"
+version: "1.79.2"
+release: "1"
+description: "XML stylesheets for Docbook-xml transformations"
+sources:
+  - "https://github.com/docbook/xslt10-stylesheets/releases/download/release/$VERSION/docbook-xsl-$VERSION.tar.bz2"
+sha256sum:
+  - "316524ea444e53208a2fb90eeb676af755da96e1417835ba5f5eb719c81fa371"
+depends:
+  - "libxml2"
+  - "libxslt"
+  - "docbook-xml"
+
+package {
+
+  exec "install -v -m755 -d $DESTDIR/usr/share/xml/docbook/xsl-stylesheets-$VERSION"
+
+  exec "cp -v -R VERSION assembly common eclipse epub epub3 extensions fo        highlighting html htmlhelp images javahelp lib manpages params   profiling roundtrip slides template tests tools webhelp website  xhtml xhtml-1_1 xhtml5                                           $DESTDIR/usr/share/xml/docbook/xsl-stylesheets-$VERSION"
+
+  exec "ln -s VERSION $DESTDIR/usr/share/xml/docbook/xsl-stylesheets-$VERSION/VERSION.xsl"
+
+  exec "install -v -m644 -D README  $DESTDIR/usr/share/doc/docbook-xsl-$VERSION/README.txt"
+  exec "install -v -m644    RELEASE-NOTES* NEWS*  $DESTDIR/usr/share/doc/docbook-xsl-$VERSION"
+  exec "rm -f $DESTDIR/etc/xml/docbook"
+}
+
+postinstall {
+  exec "if [ ! -d /etc/xml ]; then install -v -m755 -d /etc/xml; fi &&"
+  exec "if [ ! -f /etc/xml/catalog ]; then"
+  exec "xmlcatalog --noout --create /etc/xml/catalog"
+  exec "fi &&"
+
+  exec "xmlcatalog --noout --add \"rewriteSystem\"  \"http://docbook.sourceforge.net/release/xsl/1.79.2\"  \"/usr/share/xml/docbook/xsl-stylesheets-1.79.2\"  /etc/xml/catalog &&"
+
+  exec "xmlcatalog --noout --add \"rewriteURI\"  \"http://docbook.sourceforge.net/release/xsl/1.79.2\"  \"/usr/share/xml/docbook/xsl-stylesheets-1.79.2\"  /etc/xml/catalog &&"
+
+  exec "xmlcatalog --noout --add \"rewriteSystem\"  \"http://docbook.sourceforge.net/release/xsl/current\"  \"/usr/share/xml/docbook/xsl-stylesheets-1.79.2\"  /etc/xml/catalog &&"
+
+  exec "xmlcatalog --noout --add \"rewriteURI\"  \"http://docbook.sourceforge.net/release/xsl/current\"  \"/usr/share/xml/docbook/xsl-stylesheets-1.79.2\"  /etc/xml/catalog"
+}
+

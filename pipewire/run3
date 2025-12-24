@@ -1,0 +1,29 @@
+name: "pipewire"
+version: "1.2.5"
+release: "2"
+description: "Sound server"
+sources:
+  - "https://github.com/PipeWire/pipewire/archive/$VERSION/pipewire-$VERSION.tar.gz"
+sha256sum:
+  - "4c3209c78ce63af6bd2658e5092c220d844fc2b7a039bbbb950e71890cc8ac78"
+depends:
+  - "glib"
+build_depends:
+  - "meson"
+opt_depends:
+  - "dbus: for D-Bus support"
+
+build {
+  exec "dbusEnable=\"disabled\""
+  exec "if [ -d \"/var/cache/kpkg/installed/dbus\" ]; then"
+  exec "dbusEnable=\"enabled\""
+  exec "fi"
+
+  exec "meson setup  --prefix=/usr  --buildtype=release    -Dsession-managers=[]  -Ddbus=$dbusEnable    build"
+  exec "ninja -C build"
+}
+
+package {
+  exec "DESTDIR=\"$ROOT\" ninja -C build install"
+}
+

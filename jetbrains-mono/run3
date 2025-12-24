@@ -1,0 +1,20 @@
+name: "jetbrains-mono"
+version: "2.304"
+release: "1"
+description: "Free and open-source typeface for developers"
+sources:
+  - "https://github.com/JetBrains/JetBrainsMono/releases/download/v$VERSION/JetBrainsMono-$VERSION.zip"
+sha256sum:
+  - "6f6376c6ed2960ea8a963cd7387ec9d76e3f629125bc33d1fdcd7eb7012f7bbf"
+depends:
+  - "fontconfig"
+
+package {
+  exec "mkdir -p $DESTDIR/usr/share/fonts/jetbrains-mono"
+  exec "mv ttf/* $DESTDIR/usr/share/fonts/jetbrains-mono/"
+}
+
+postinstall {
+  exec "fc-cache -fv"
+}
+

@@ -1,0 +1,40 @@
+name: "grub"
+version: "2.12"
+release: "2"
+description: "The GNU Grub Bootloader"
+sources:
+  - "https://ftp.gnu.org/gnu/grub/grub-$VERSION.tar.xz"
+sha256sum:
+  - "f3c97391f7c4eaa677a78e090c7e97e6dc47b16f655f04683ebd37bef7fe0faa"
+depends:
+  - "flex"
+  - "freetype"
+  - "pigz"
+build_depends:
+  - "gmake"
+depends_grub_efi:
+  - "efibootmgr"
+
+prepare {
+  exec "bsdtar -xf grub-$VERSION.tar.xz"
+  cd "grub-$VERSION"
+  write "grub-core/extra_deps.lst" "depends bli part_gpt"
+}
+
+func build_grub_efi {
+  cd "grub-$VERSION"
+  macro build --disable-efiemu --disable-werror --prefix=/usr --sysconfdir=/etc --with-platform=efi
+  exec "make"
+}
+
+build {
+  cd "grub-$VERSION"
+  macro build --disable-efiemu --disable-werror --prefix=/usr --sysconfdir=/etc
+  exec "make"
+}
+
+package {
+  cd "grub-$VERSION"
+  exec "make DESTDIR=\"$ROOT\" install"
+}
+

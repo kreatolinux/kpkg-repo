@@ -1,0 +1,37 @@
+name: "git"
+version: "2.52.0"
+release: "1"
+description: "Version control tool"
+sources:
+  - "https://mirrors.edge.kernel.org/pub/software/scm/git/git-$VERSION.tar.xz"
+sha256sum:
+  - "3cd8fee86f69a949cb610fee8cd9264e6873d07fa58411f6060b3d62729ed7c5"
+depends:
+  - "curl"
+  - "openssl"
+  - "zlib"
+build_depends:
+  - "gmake"
+
+build {
+  macro build --prefix=/usr
+  # Taken from kiss linux, license is https://github.com/kisslinux/repo/blob/master/LICENSE
+  write "config.mak <<EOF" """
+NO_GETTEXT=YesPlease
+NO_SVN_TESTS=YesPlease
+NO_TCLTK=YesPlease
+NO_EXPAT=YesPlease
+NO_NSEC=YesPlease
+NO_PYTHON=YesPlease
+NO_PERL=YesPlease
+NO_SYS_POLL_H=1
+NO_CROSS_DIRECTORY_HARDLINKS=1
+NO_INSTALL_HARDLINKS=1
+"""
+  exec "make -j$(nproc)"
+}
+
+package {
+  exec "make DESTDIR=$ROOT install"
+}
+

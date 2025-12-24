@@ -1,0 +1,23 @@
+name: "ninja"
+version: "1.12.1"
+release: "1"
+description: "a small build tool with a focus on speed"
+sources:
+  - "https://github.com/ninja-build/ninja/archive/refs/tags/v$VERSION.tar.gz"
+sha256sum:
+  - "821bdff48a3f683bc4bb3b6f0b5fe7b2d647cf65d52aeb63328c91a6c6df285a"
+build_depends:
+  - "python"
+replaces:
+  - "samurai"
+
+build {
+  exec "python configure.py --bootstrap"
+}
+
+package {
+  exec "mkdir -p \"$ROOT/usr/bin\""
+  exec "mv ninja \"$ROOT/usr/bin\""
+  exec "ln -s /usr/bin/ninja \"$ROOT/usr/bin/samu\""
+}
+

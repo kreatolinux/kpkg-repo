@@ -1,0 +1,60 @@
+name: "webkitgtk"
+version: "2.42.1"
+release: "1"
+description: "webkit"
+sources:
+  - "https://webkitgtk.org/releases/webkitgtk-$VERSION.tar.xz"
+sha256sum:
+  - "6f41fac9989d3ee51c08c48de1d439cdeddecbc757e34b6180987d99b16d2499"
+depends:
+  - "libxt"
+  - "libdrm"
+  - "libseccomp"
+  - "xdg-dbus-proxy"
+  - "bubblewrap"
+  - "cairo"
+  - "harfbuzz"
+  - "gst-plugins-base"
+  - "gtk3"
+  - "gtk4"
+  - "icu"
+  - "lcms2"
+  - "libgudev"
+  - "libsecret"
+  - "libsoup"
+  - "libtasn"
+  - "libwebp"
+  - "mesa"
+  - "openjpeg"
+  - "sqlite"
+  - "wpebackend-fdo"
+  - "wayland"
+  - "libx11"
+  - "libxcomposite"
+  - "libxml2"
+  - "libxslt"
+build_depends:
+  - "cmake"
+  - "unifdef"
+  - "ninja"
+  - "ruby"
+  - "gst-plugins-bad"
+  - "gobject-introspection"
+  - "wayland-protocols"
+
+func build_webkitgtk4 {
+  # Got flags from BLFS
+  exec "cmake -B build -DCMAKE_BUILD_TYPE=Release   -DCMAKE_INSTALL_PREFIX=/usr  -DCMAKE_SKIP_RPATH=ON        -DPORT=GTK                   -DLIB_INSTALL_DIR=/usr/lib   -DUSE_LIBHYPHEN=OFF          -DENABLE_GAMEPAD=OFF         -DENABLE_MINIBROWSER=ON      -DENABLE_SPELLCHECK=OFF      -DENABLE_DOCUMENTATION=OFF   -DUSE_AVIF=OFF               -DUSE_WOFF2=OFF              -DUSE_GTK4=ON                -DUSE_GSTREAMER_TRANSCODER=NO  -DUSE_JPEGXL=OFF             -DUSE_WPE_RENDERER=ON        -DENABLE_JOURNALD_LOG=OFF    -DENABLE_BUBBLEWRAP_SANDBOX=ON  -Wno-dev -G Ninja"
+  exec "ninja -C build"
+}
+
+func build_webkitgtk3 {
+  # Got flags from BLFS
+  exec "cmake -B build -DCMAKE_BUILD_TYPE=Release   -DCMAKE_INSTALL_PREFIX=/usr  -DCMAKE_SKIP_RPATH=ON        -DPORT=GTK                   -DLIB_INSTALL_DIR=/usr/lib   -DUSE_LIBHYPHEN=OFF          -DENABLE_GAMEPAD=OFF         -DENABLE_MINIBROWSER=ON      -DENABLE_SPELLCHECK=OFF      -DENABLE_DOCUMENTATION=OFF   -DUSE_GSTREAMER_TRANSCODER=NO  -DUSE_AVIF=OFF               -DUSE_WOFF2=OFF              -DUSE_GTK4=OFF               -DUSE_JPEGXL=OFF             -DUSE_WPE_RENDERER=ON        -DENABLE_JOURNALD_LOG=OFF    -DENABLE_BUBBLEWRAP_SANDBOX=ON  -Wno-dev -G Ninja"
+  exec "ninja -C build"
+}
+
+package {
+  exec "DESTDIR=\"$ROOT\" ninja -C build install"
+}
+

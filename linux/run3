@@ -1,0 +1,119 @@
+name: "linux"
+version: "6.18"
+release: "7"
+description: "The Linux kernel and headers"
+sources:
+  - "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$VERSION.tar.xz"
+  - "https://github.com/projg2/fedora-kernel-config-for-gentoo/raw/6.7.10-gentoo/kernel-x86_64-fedora.config"
+  - "settings.config"
+sha256sum:
+  - "9106a4605da9e31ff17659d958782b815f9591ab308d03b0ee21aad6c7dced4b"
+  - "62cda75cb56faa94551e14200f4dff00e27ea30189d5399c3ce863ef2ba2b4b3"
+  - "04f33434bb1b16b2a38e3a36d6ce59e0bf032db6954d4a71d07d8f3f5ab37e4c"
+depends:
+  - "kmod"
+build_depends:
+  - "flex"
+  - "elfutils"
+  - "xz-utils"
+  - "gmake"
+
+prepare {
+  exec "tar -xvf linux-$VERSION.tar.xz"
+  cd "linux-$VERSION"
+  exec "make mrproper"
+  exec "./scripts/kconfig/merge_config.sh -m ../kernel-x86_64-fedora.config ../settings.config || exit 1"
+  exec "make olddefconfig"
+}
+
+func build_linux_headers {
+  cd "linux-$VERSION"
+  exec "make mrproper"
+  exec "make headers"
+  exec "find usr/include -name '.*' -delete"
+  exec "rm usr/include/Makefile"
+}
+
+package_linux_headers {
+  cd "linux-$VERSION"
+  exec "mkdir -p $ROOT/usr"
+  exec "cp -rv usr/include $ROOT/usr/"
+}
+
+func build_aarch64_linux_gnu_linux_headers {
+  cd "linux-$VERSION"
+  exec "make ARCH=arm64 mrproper"
+  exec "make ARCH=arm64 headers"
+  exec "find usr/include -name '.*' -delete"
+  exec "rm usr/include/Makefile"
+}
+
+package_aarch64_linux_gnu_linux_headers {
+  exec "TARGET=\"aarch64-linux-gnu\""
+  cd "linux-$VERSION"
+  exec "mkdir -p $ROOT/usr/aarch64-linux-gnu"
+  exec "cp -rv usr/include/ $ROOT/usr/aarch64-linux-gnu"
+}
+
+build {
+  cd "linux-$VERSION"
+  exec "make -j$(nproc) || exit 1"
+}
+
+package {
+  cd "linux-$VERSION"
+  env INSTALL_MOD_PATH = "$DESTDIR/usr"
+  env INSTALL_PATH = "$DESTDIR/boot"
+  exec "mkdir -p \"$INSTALL_PATH\" \"$INSTALL_MOD_PATH\""
+  exec "make install"
+  exec "make INSTALL_MOD_STRIP=1 DEPMOD=/nodepmod/here modules_install"
+
+  # Mostly from linux-headers PKGBUILD
+  # https://gitlab.archlinux.org/archlinux/packaging/packages/linux/-/blob/de68606a2ee79eb1471daedd209a70192c35df14/PKGBUILD
+  exec "MODPATH=\"$DESTDIR/usr/lib/modules/$VERSION/build\""
+  exec "rm -f \"$MODPATH\" \"$DESTDIR/usr/lib/modules/$VERSION/source\""
+  exec "mkdir -p \"$MODPATH\" \"$DESTDIR/usr/src\""
+  exec "ln -s \"$MODPATH\" \"$DESTDIR/usr/lib/modules/$VERSION/source\""
+  exec "install -Dt \"$MODPATH\" -m644 .config Makefile Module.symvers System.map localversion.* version vmlinux"
+  exec "install -Dt \"$MODPATH/kernel\" -m644 kernel/Makefile"
+  exec "install -Dt \"$MODPATH/arch/x86\" -m644 arch/x86/Makefile"
+  exec "cp -t \"$MODPATH\" -a scripts"
+
+  # required when STACK_VALIDATION is enabled
+  exec "install -Dt \"$MODPATH/tools/objtool\" tools/objtool/objtool"
+
+  # required when DEBUG_INFO_BTF_MODULES is enabled
+  exec "install -Dt \"$MODPATH/tools/bpf/resolve_btfids\" tools/bpf/resolve_btfids/resolve_btfids"
+
+  exec "find . -name 'Kconfig*' -exec install -Dm644 {} \"$MODPATH/{}\" \\;"
+  exec "find -L \"$MODPATH\" -type l -printf 'Removing %P\\n' -delete"
+  exec "find \"$MODPATH\" -type f -name '*.o' -printf 'Removing %P\\n' -delete"
+
+  exec "cp -t \"$MODPATH\" -a include"
+  exec "cp -t \"$MODPATH/arch/x86\" -a arch/x86/include"
+  exec "install -Dt \"$MODPATH/arch/x86/kernel\" -m644 arch/x86/kernel/asm-offsets.s"
+
+  exec "install -Dt \"$MODPATH/drivers/md\" -m644 drivers/md/*.h"
+  exec "install -Dt \"$MODPATH/net/mac80211\" -m644 net/mac80211/*.h"
+
+  # https://bugs.archlinux.org/task/13146
+  exec "install -Dt \"$MODPATH/drivers/media/i2c\" -m644 drivers/media/i2c/msp3400-driver.h"
+
+  # https://bugs.archlinux.org/task/20402
+  exec "install -Dt \"$MODPATH/drivers/media/usb/dvb-usb\" -m644 drivers/media/usb/dvb-usb/*.h"
+  exec "install -Dt \"$MODPATH/drivers/media/dvb-frontends\" -m644 drivers/media/dvb-frontends/*.h"
+  exec "install -Dt \"$MODPATH/drivers/media/tuners\" -m644 drivers/media/tuners/*.h"
+
+  # https://bugs.archlinux.org/task/71392
+  exec "install -Dt \"$MODPATH/drivers/iio/common/hid-sensors\" -m644 drivers/iio/common/hid-sensors/*.h"
+
+  exec "ln -s \"/usr/lib/modules/$VERSION\" \"$DESTDIR/usr/src/linux\""
+
+  exec "mv \"$DESTDIR/boot/vmlinuz\" \"$DESTDIR/boot/vmlinuz-$VERSION\""
+  exec "mv \"$DESTDIR/boot/System.map\" \"$DESTDIR/boot/System.map-$VERSION\""
+}
+
+func postinstall_linux {
+  exec "depmod $VERSION"
+}
+

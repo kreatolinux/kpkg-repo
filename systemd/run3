@@ -1,0 +1,77 @@
+name: "systemd"
+version: "257.2"
+release: "4"
+description: "The systemd System and Service Manager"
+sources:
+  - "https://github.com/systemd/systemd/archive/refs/tags/v$VERSION.tar.gz"
+sha256sum:
+  - "7f2bc3253e4f87578132c5e433ef9ff7e8fee01d9eb5a5b7c64376d617f694d0"
+depends:
+  - "linux-pam"
+  - "gperf"
+  - "kbd"
+  - "libcap"
+  - "util-linux"
+  - "python-jinja2"
+  - "kmod"
+build_depends:
+  - "meson"
+  - "samurai"
+  - "python-setuptools"
+  - "bash"
+replaces:
+  - "elogind"
+  - "eudev"
+
+prepare {
+  exec "tar -xvf v$VERSION.tar.gz"
+  cd "systemd-stable-$VERSION"
+
+  # Force set relative_source_path as realpath on busybox doesn't support
+  # arguments used there.
+  exec "sed -ie '/relative_source_path = /{n;N;N;d}' meson.build"
+  exec "sed -i \"/^relative_source_path = run_command/c\\relative_source_path = '..'\" meson.build"
+
+  exec "sed -i \"s/--relative/-r/g\" meson.build"
+
+  write "../ln" "#!/bin/sh"
+  append "../ln" "ARGS=$(echo $@ | sed \"s/--relative/-r/g;s/--help//g\")"
+  append "../ln" "/bin/ln $ARGS"
+  append "../ln" "exit 0"
+  exec "chmod +x ../ln"
+}
+
+build {
+  cd "systemd-stable-$VERSION"
+  env PATH = "$(realpath ../):$PATH"
+  exec "meson setup  --prefix=/usr  -Dpamconfdir=/etc/pam.d  -Dpam=true  -Dldconfig=false  build/"
+  exec "ninja -C build/"
+}
+
+package {
+  cd "systemd-stable-$VERSION"
+  env PATH = "$(realpath ../):$PATH"
+  exec "DESTDIR=$ROOT ninja -C build/ install"
+
+  # From BLFS https://www.linuxfromscratch.org/blfs/view/stable-systemd/general/systemd.html
+  write "$ROOT/etc/pam.d/systemd-user << EOF" """
+# Begin /etc/pam.d/systemd-user
+
+account  required    pam_access.so
+account  include     system-account
+
+session  required    pam_env.so
+session  required    pam_limits.so
+session  required    pam_unix.so
+session  required    pam_loginuid.so
+session  optional    pam_keyinit.so force revoke
+session  optional    pam_systemd.so
+
+auth     required    pam_deny.so
+password required    pam_deny.so
+
+# End /etc/pam.d/systemd-user
+"""
+
+}
+

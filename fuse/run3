@@ -1,0 +1,24 @@
+name: "fuse"
+version: "3.14.1"
+release: "1"
+description: "Filesystem in Userspace"
+sources:
+  - "https://github.com/libfuse/libfuse/releases/download/fuse-$VERSION/fuse-$VERSION.tar.xz"
+sha256sum:
+  - "126919d72b46b3e0eb58a9c6933a2a50c36f2ea69f61fe9e78bdba9f463ffa20"
+depends:
+  - "eudev"
+build_depends:
+  - "ninja"
+  - "meson"
+
+build {
+  exec "meson -Dudevrulesdir=/usr/lib/udev/rules.d/ --prefix=/usr build/"
+  exec "ninja -C build/"
+}
+
+package {
+  exec "DESTDIR=$ROOT ninja -C build/ install"
+  exec "rm -rf \"$ROOT/dev\""
+}
+

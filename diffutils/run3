@@ -1,0 +1,23 @@
+name: "diffutils"
+version: "3.12"
+release: "1"
+description: "GNU diffutils"
+sources:
+  - "https://ftp.gnu.org/gnu/diffutils/diffutils-$VERSION.tar.xz"
+sha256sum:
+  - "7c8b7f9fc8609141fdea9cece85249d308624391ff61dedaf528fcb337727dfd"
+build_depends:
+  - "gmake"
+
+build {
+  exec "mkdir -v build"
+  cd "build"
+  exec "KPKG_CONFIGURE_PATH=../configure kpkgConfigure  --build=$(../config.guess)  --disable-nls               --enable-shared             --disable-werror            --enable-64-bit-bfd"
+  exec "make"
+}
+
+package {
+  cd "build"
+  exec "make DESTDIR=$ROOT install -j1"
+}
+

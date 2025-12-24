@@ -1,0 +1,101 @@
+name: "glibc"
+version: "2.42"
+release: "5"
+description: "The GNU C library"
+sources:
+  - "https://ftp.gnu.org/gnu/glibc/glibc-$VERSION.tar.xz"
+b2sum:
+  - "6ffabfe7942034a5a4fb5097679cb47bc3431eb2a3864af07cea0cb6aa5db63fbaf6f026b3c9299e00268058a6762eb21e92499f012d552ed87d65c7ffbd0bbe"
+depends:
+  - "grep"
+  - "bash"
+  - "gawk"
+  - "bison"
+  - "m4"
+build_depends:
+  - "perl"
+  - "texinfo"
+depends_aarch64_linux_gnu_glibc:
+  - "aarch64-linux-gnu-linux-headers"
+
+func common_build {
+  env LD_LIBRARY_PATH = "$(echo $LD_LIBRARY_PATH | sed 's/^://;s/:$//;s/:://g')"
+  env CC = "$1-gcc"
+  env CXX = "$1-g++"
+
+  print "==OLD ENVIRONMENT=="
+  exec "env"
+  print "==END OLD ENVIRONMENT=="
+
+  exec "mkdir -v build"
+  cd "build || exit"
+
+  exec "if [ \"$1\" != \"$(uname -m)-linux-gnu\" ]; then"
+  exec "target=\"--target=$1\""
+  exec "host=\"--host=$1\""
+  exec "build=\"--build=$(uname -m)-linux-gnu\""
+  exec "headers=\"/usr/$1/include\""
+  # taken from arch https://gitlab.archlinux.org/archlinux/packaging/packages/aarch64-linux-gnu-glibc/-/blob/main/PKGBUILD?ref_type=heads
+  exec "extraArgs=\"--includedir=/include --libdir=/lib --libexecdir=/lib\""
+  exec "else"
+  exec "host=\"--host=$(uname -m)-linux-gnu\""
+  exec "build=\"--build=$(uname -m)-linux-gnu\""
+  exec "headers=\"/usr/include\""
+  exec "fi"
+
+  exec "../configure $extraArgs  --prefix=/usr  $host  $build  $target  --enable-kernel=4.14  --enable-stack-protector=strong  --with-headers=$headers  --disable-crypt"
+
+  exec "if [ \"$1\" != \"$(uname -m)-linux-gnu\" ]; then"
+  append "configparms" "build-programs=no"
+  exec "fi"
+
+  exec "make || exit 1"
+  exec "ls"
+
+  print "==AFTERBUILD ENVIRONMENT=="
+  exec "env"
+  print "==END AFTERBUILD ENVIRONMENT=="
+}
+
+func build_aarch64_linux_gnu_glibc {
+  exec "common_build \"aarch64-linux-gnu\""
+}
+
+package_aarch64_linux_gnu_glibc {
+  cd "build"
+  exec "ls"
+  exec "make install_root=\"$ROOT/usr/aarch64-linux-gnu\" install"
+  exec "rm -rf \"$ROOT/usr/share/info/dir\""
+  exec "rm -f \"$ROOT/etc/ld.so.cache\""
+  exec "for file in tzselect zdump zic; do"
+  exec "rm -f \"$ROOT/usr/bin/$file\""
+  exec "done"
+
+}
+
+build {
+  exec "common_build \"$KPKG_TARGET\""
+}
+
+package {
+  print "==PACKAGE ENVIRONMENT=="
+  exec "env"
+  print "==END PACKAGE ENVIRONMENT=="
+  exec "ls"
+  exec "make -r PARALLELMFLAGS=\"\" DESTDIR=$ROOT objdir=`realpath build` install || exit 1"
+  exec "rm -rf \"$ROOT/usr/share/info/dir\""
+  exec "rm -f \"$ROOT/etc/ld.so.cache\""
+  exec "for file in tzselect zdump zic; do"
+  # to make sure we delete from every directory
+  exec "rm -f \"$ROOT/usr/bin/$file\""
+  exec "rm -f \"$ROOT/usr/sbin/$file\""
+  exec "rm -f \"$ROOT/bin/$file\""
+  exec "rm -f \"$ROOT/sbin/$file\""
+  exec "done"
+}
+
+postinstall {
+  exec "mkdir -p /usr/lib/locale"
+  exec "localedef -i C -f UTF-8 C"
+}
+

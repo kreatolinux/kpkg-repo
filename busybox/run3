@@ -1,0 +1,67 @@
+name: "busybox"
+version: "1.36.1"
+release: "5"
+description: "The Swiss Army Knife of Embedded Linux"
+sources:
+  - "https://www.busybox.net/downloads/busybox-$VERSION.tar.bz2"
+  - "ln-relative-symlinks.patch"
+  - "busybox-1.36.1-no-cbq.patch"
+sha256sum:
+  - "b8cc24c9574d809e7279c3be349795c5d5ceb6fdf19ca709f80cde50e47de314"
+  - "9dd4c0567e98a745d48414197f7ad711f8ede97452486159d86926ae12a95d04"
+  - "c44f69dd7efdf2c7356b723df7169da482942af996e4e1facc5640122766a0c0"
+build_depends:
+  - "gmake"
+extract: false
+depends_busybox:
+  - "grep"
+  - "ncurses"
+  - "attr"
+  - "xz-utils"
+  - "shadow"
+  - "gtar"
+  - "bzip2"
+
+prepare {
+  exec "tar -xvf busybox-$VERSION.tar.bz2"
+  cd "busybox-$VERSION/coreutils"
+
+  # Got the patch from http://lists.busybox.net/pipermail/busybox/2016-June/084276.html
+  exec "patch -p1 < ../../ln-relative-symlinks.patch"
+
+  cd ".."
+
+  # Patch from the Yocto Project to disable CBQ
+  # https://git.yoctoproject.org/poky/plain/meta/recipes-core/busybox/busybox/busybox-1.36.1-no-cbq.patch
+  exec "patch -p1 < ../busybox-1.36.1-no-cbq.patch"
+}
+
+build {
+  cd "busybox-$VERSION"
+  exec "make -j$(nproc) defconfig"
+  exec "make -j$(nproc) busybox"
+}
+
+package_busybox_standalone {
+  cd "busybox-$VERSION"
+  exec "mkdir -p $ROOT/bin"
+  exec "cp busybox $ROOT/bin"
+}
+
+package {
+  exec "package_busybox_standalone"
+  exec "\"$ROOT/bin/busybox\" --list | while read APPLET; do"
+  exec "case $APPLET in"
+  # Dependencies will cover these commands.
+  # We don't outright disable these just in case someone needs them.
+  exec "\"clear\" | \"egrep\" | \"fgrep\" | \"grep\" | \"strings\" | \"setfattr\" | \"xz\" | \"su\" | \"nologin\" | \"chpasswd\" | \"groups\" | \"login\" | \"tar\" | \"bzip2\" | \"bzcat\" | \"lzcat\" | \"unxz\")"
+  exec "continue"
+  exec ";;"
+  exec "*)"
+  print "Linking /bin/busybox to /bin/$APPLET"
+  exec "ln -s /bin/busybox \"$ROOT/bin/$APPLET\""
+  exec ";;"
+  exec "esac"
+  exec "done"
+}
+

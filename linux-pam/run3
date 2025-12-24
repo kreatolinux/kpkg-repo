@@ -1,0 +1,49 @@
+name: "linux-pam"
+version: "1.7.1"
+release: "6"
+description: "Pluggable Authentication Modules for Linux"
+sources:
+  - "https://github.com/linux-pam/linux-pam/releases/download/v$VERSION/Linux-PAM-$VERSION.tar.xz"
+  - "pam.d/other"
+  - "pam.d/system-account"
+  - "pam.d/system-auth"
+  - "pam.d/system-password"
+  - "pam.d/system-session"
+  - "pam.d/login"
+sha256sum:
+  - "21dbcec6e01dd578f14789eac9024a18941e6f2702a05cf91b28c232eeb26ab0"
+  - "b75c8f08585e25ad5fbc1d78ef6256dcea052e0ce630ddb32e694a63fa979380"
+  - "a8295e4780b323cac83ca08c65c8cd47ca26e516d64ed857fd3f4ac1f1a8ccc4"
+  - "da912d0b5fe0ee9d70403ca88402974f2c24b6dfeb2c8adc037c72297a859590"
+  - "29ef099774837bf3fe01ef6b22fc87ac55bf222a4c0f8544d007f57b6aa4b61a"
+  - "01a02779791bc29e111b9f7e29dd1f2c0ea0ae750b43ac87a25c26e6dd4d8173"
+  - "216eb2abc095566afa0ed5394f5b32765d3e3b63295c0e972ecd8ebda1a734d2"
+build_depends:
+  - "meson"
+extract: false
+
+prepare {
+  exec "mkdir pam.d"
+
+  exec "for i in other system-account system-auth system-password system-session login"
+  exec "do"
+  exec "cp -f \"$i\" \"pam.d/$i\""
+  exec "done"
+
+  exec "tar -xvf Linux-PAM-$VERSION.tar.xz"
+  cd "Linux-PAM-$VERSION"
+}
+
+build {
+  cd "Linux-PAM-$VERSION"
+  exec "meson setup  --prefix=/usr  --buildtype=release  -D securedir=/usr/lib/security  -D docs=disabled  build"
+  exec "meson compile -C build"
+}
+
+package {
+  cd "Linux-PAM-$VERSION"
+  exec "meson install --destdir=\"$ROOT\" -C build"
+  exec "mkdir -p \"$ROOT/etc/pam.d\""
+  exec "cp -rf ../pam.d/* \"$ROOT/etc/pam.d/\""
+}
+

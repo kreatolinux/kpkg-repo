@@ -1,0 +1,33 @@
+name: "cups"
+version: "2.4.13"
+release: "1"
+description: "The Common Unix Printing System"
+sources:
+  - "https://github.com/OpenPrinting/cups/releases/download/v$VERSION/cups-$VERSION-source.tar.gz"
+sha256sum:
+  - "8255ecf037be72660de24a73bcada042fc5bf509fc87bc8ad16cd0675735c1a8"
+depends:
+  - "colord"
+  - "dbus"
+  - "libusb"
+  - "linux-pam"
+build_depends:
+  - "gmake"
+
+build {
+
+  # from BLFS, temporary
+  exec "sed -i 's#@CUPS_HTMLVIEW@#firefox#' desktop/cups.desktop.in"
+
+  exec "if ! command -v systemctl > /dev/null; then"
+  exec "extraArgs=\"--disable-systemd\""
+  exec "fi"
+
+  macro build $extraArgs --prefix=/usr
+  exec "make"
+}
+
+package {
+  exec "make DESTDIR=$ROOT install"
+}
+

@@ -1,0 +1,30 @@
+name: "gobject-introspection"
+version: "1.86.0"
+release: "4"
+description: "Introspection system for GObject-based libraries"
+sources:
+  - "https://gitlab.gnome.org/GNOME/gobject-introspection/-/archive/$VERSION/gobject-introspection-$VERSION.tar.gz"
+sha256sum:
+  - "eadae02135e96ad40221b4a9eb5e168f8c70ef3f697485c38345a3638adf51a2"
+depends:
+  - "python"
+  - "glib"
+build_depends:
+  - "meson"
+  - "ninja"
+  - "python-setuptools"
+  - "python-packaging"
+
+build {
+  exec "meson setup  --prefix=/usr  -D tests=false  build"
+  exec "ninja -C build"
+}
+
+package {
+  exec "DESTDIR=\"$ROOT\" ninja -C build install"
+}
+
+postinstall {
+  exec "[ -d /usr/share/glib-2.0/schemas ] && glib-compile-schemas /usr/share/glib-2.0/schemas || true"
+}
+

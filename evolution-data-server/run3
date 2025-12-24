@@ -1,0 +1,51 @@
+name: "evolution-data-server"
+version: "3.50.1"
+release: "1"
+description: "evolution-data-server"
+sources:
+  - "https://download.gnome.org/sources/evolution-data-server/3.50/evolution-data-server-$VERSION.tar.xz"
+sha256sum:
+  - "91f4ffc38a1b8d2fe8939834449ac541c0bff4a39b444edc2a9529344a28e98a"
+depends:
+  - "libical"
+  - "libsecret"
+  - "nss"
+  - "sqlite"
+  - "libgweather"
+  - "gtk3"
+  - "libcanberra"
+  - "gnome-online-accounts"
+  - "webkitgtk3"
+build_depends:
+  - "cmake"
+  - "ninja"
+  - "gobject-introspection"
+  - "vala"
+opt_depends:
+  - "webkitgtk4: for built-in OAuth2 authentications"
+  - "gtk4: for gtk4 support"
+no_chkupd: true
+
+build {
+
+  exec "if ! command -v systemctl > /dev/null; then"
+  exec "extraArgs=\"-DWITH_SYSTEMDUSERUNITDIR=no\""
+  exec "fi"
+
+  exec "if ! kpkg info webkitgtk4 > /dev/null; then"
+  exec "extraArgs=\"$extraArgs -DENABLE_OAUTH2_WEBKITGTK4=OFF\""
+  exec "fi"
+
+  exec "if ! kpkg info gtk4 > /dev/null; then"
+  exec "extraArgs=\"$extraArgs -DENABLE_GTK4=OFF\""
+  exec "fi"
+
+  # Flags taken from BLFS
+  exec "cmake -B build $extraArgs -DCMAKE_BUILD_TYPE=Release  -DCMAKE_INSTALL_PREFIX=/usr  -DWITH_KRB5=OFF                 -DENABLE_VALA_BINDINGS=ON  -DWITH_OPENLDAP=OFF  -DENABLE_INTROSPECTION=ON  -DENABLE_GTK_DOC=OFF  -DWITH_LIBDB=OFF  -DENABLE_INSTALLED_TESTS=OFF  -DSYSCONF_INSTALL_DIR=/etc  -G Ninja"
+  exec "ninja -C build -j$(nproc)"
+}
+
+package {
+  exec "DESTDIR=\"$ROOT\" ninja -C build install"
+}
+

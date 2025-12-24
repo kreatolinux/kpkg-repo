@@ -1,0 +1,43 @@
+name: "gdm"
+version: "44.1"
+release: "1"
+description: "GNOME Display Manager"
+sources:
+  - "https://gitlab.gnome.org/GNOME/gdm/-/archive/$VERSION/gdm-$VERSION.tar.gz"
+sha256sum:
+  - "fd50fb023ee2aa5118bbeba8f6b9ffe93c54d68be8da189e5f835a7d8f900357"
+depends:
+  - "accountsservice"
+  - "dconf"
+  - "dbus"
+  - "libcanberra"
+  - "linux-pam"
+  - "gnome-session"
+  - "elogind"
+build_depends:
+  - "meson"
+
+build {
+
+  # Thanks to BLFS
+  exec "if ! command -v systemctl > /dev/null; then"
+  exec "extraArgs=\"-Dsystemd-journal=false -Dsystemdsystemunitdir=/tmp -Dsystemduserunitdir=/tmp\""
+  exec "sed -i -r '/(^| )systemd_dep/d' meson.build"
+  exec "sed -e 's@systemd@elogind@'                                 -e '/elogind/isession  required       pam_loginuid.so'  -i data/pam-lfs/gdm-launch-environment.pam"
+  exec "fi"
+
+  exec "meson setup $extraArgs       --prefix=/usr                --buildtype=release          -Dgdm-xsession=true          -Drun-dir=/run/gdm           -Ddefault-pam-config=lfs     -Ddbus-sys=\"/usr/share/dbus-1/system.d\"  -Ddefault-path=\"/usr/bin:/usr/local/bin:/usr/local/sbin:/bin\"  build"
+  exec "ninja -C build"
+}
+
+package {
+  exec "DESTDIR=\"$ROOT\" ninja -C build install"
+}
+
+postinstall {
+  # from blfs
+  exec "groupadd -g 21 gdm"
+  exec "useradd -c \"GDM Daemon Owner\" -d /var/lib/gdm -u 21  -g gdm -s /bin/false gdm"
+  exec "passwd -ql gdm"
+}
+

@@ -1,0 +1,24 @@
+name: "efibootmgr"
+version: "18"
+release: "1"
+description: "efibootmgr provides tools and libraries to manipulate EFI variables"
+sources:
+  - "https://github.com/rhboot/efibootmgr/archive/$VERSION/efibootmgr-$VERSION.tar.gz"
+sha256sum:
+  - "442867d12f8525034a404fc8af3036dba8e1fc970998af2486c3b940dfad0874"
+depends:
+  - "efivar"
+  - "popt"
+build_depends:
+  - "gmake"
+
+build {
+  exec "sed -e '/-Werror/d' -i Make.defaults"
+  exec "sed -e '/extern int efi_set_verbose/d' -i src/efibootmgr.c"
+  exec "make EFI_LOADER=grubx64.efi EFIDIR=KLX"
+}
+
+package {
+  exec "make DESTDIR=\"$ROOT\" EFIDIR=KLX install"
+}
+

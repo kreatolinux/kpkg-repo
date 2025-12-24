@@ -1,0 +1,54 @@
+name: "gnome-control-center"
+version: "45.1"
+release: "2"
+description: "GNOME Control Center"
+sources:
+  - "https://gitlab.gnome.org/GNOME/gnome-control-center/-/archive/$VERSION/gnome-control-center-$VERSION.tar.gz"
+  - "https://raw.githubusercontent.com/kreatolinux/assets/master/klinux_pixmap.png"
+sha256sum:
+  - "a43db0e8ab36bfa9ecfadd68d1dccced4b9da4766febe744a988879406a3e2ad"
+  - "6e1fc322ed757a024a39a80a8de43d184323e2e781aa21cf618fc67655e6cb28"
+depends:
+  - "libnma"
+  - "modemmanager"
+  - "cups"
+  - "samba"
+  - "gcr-3"
+  - "gnome-online-accounts"
+  - "accountsservice"
+  - "colord-gtk"
+  - "libgtop"
+  - "udisks"
+  - "libpwquality"
+  - "gnome-settings-daemon"
+  - "gsound"
+  - "gnome-bluetooth"
+  - "ibus"
+  - "libadwaita"
+build_depends:
+  - "meson"
+  - "git"
+
+prepare {
+  exec "tar -xvf gnome-control-center-$VERSION.tar.gz"
+  cd "gnome-control-center-$VERSION"
+  exec "rm -r subprojects/gvc"
+  exec "git clone https://gitlab.gnome.org/GNOME/libgnome-volume-control subprojects/gvc"
+  cd "subprojects/gvc"
+  exec "git checkout dbfbacc9571fade87855907b78c6ed5e27c910dd"
+
+}
+
+build {
+  cd "gnome-control-center-$VERSION"
+  exec "meson setup  --prefix=/usr  --buildtype=release  -Ddistributor_logo=/usr/share/pixmaps/klinux_logo.png  -Ddark_mode_distributor_logo=/usr/share/pixmaps/klinux_logo.png  build"
+  exec "ninja -C build"
+}
+
+package {
+  cd "gnome-control-center-$VERSION"
+  exec "DESTDIR=\"$ROOT\" ninja -C build install"
+  exec "mkdir -p \"$ROOT/usr/share/pixmaps\""
+  exec "cp ../klinux_pixmap.png \"$ROOT/usr/share/pixmaps/klinux_logo.png\""
+}
+

@@ -1,0 +1,53 @@
+name: "gnome-settings-daemon"
+version: "45.0"
+release: "1"
+description: "gnome-settings-daemon"
+sources:
+  - "https://gitlab.gnome.org/GNOME/gnome-settings-daemon/-/archive/$VERSION/gnome-settings-daemon-$VERSION.tar.gz"
+sha256sum:
+  - "1953a54fa177ffc2e4708ea0df070859a672832198c67995ed68faa8f83b3d87"
+depends:
+  - "alsa-lib"
+  - "networkmanager"
+  - "colord"
+  - "fontconfig"
+  - "gcr-4"
+  - "geoclue"
+  - "geocode-glib"
+  - "gnome-desktop"
+  - "lcms2"
+  - "libcanberra"
+  - "libgweather"
+  - "libnotify"
+  - "libwacom"
+  - "pulseaudio"
+  - "upower"
+  - "wayland"
+  - "gnome-session"
+build_depends:
+  - "meson"
+
+build {
+
+  exec "rm -r subprojects/gvc"
+  exec "git clone https://gitlab.gnome.org/GNOME/libgnome-volume-control subprojects/gvc"
+  cd "subprojects/gvc"
+  exec "git checkout 7a621180b46421e356b33972e3446775a504139c"
+  cd "../.."
+
+  exec "if ! command -v systemctl > /dev/null; then"
+  # Credits to https://www.linuxfromscratch.org/blfs/view/svn/gnome/gnome-settings-daemon.html for these
+  exec "sed -e 's/libsystemd/libelogind/'  -i plugins/power/test.py"
+  exec "systemd=\"false\""
+  exec "else"
+  exec "systemd=\"true\""
+  exec "fi"
+
+  exec "meson setup  --prefix=/usr  --buildtype=release  -Dsystemd=$systemd  -Dsmartcard=false  -Dcups=false  -Dwwan=false  build"
+  exec "ninja -C build"
+}
+
+package {
+  exec "DESTDIR=\"$ROOT\" ninja -C build install"
+}
+

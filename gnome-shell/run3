@@ -1,0 +1,60 @@
+name: "gnome-shell"
+version: "46.2"
+release: "1"
+description: "The GNOME shell"
+sources:
+  - "https://gitlab.gnome.org/GNOME/gnome-shell/-/archive/$VERSION/gnome-shell-$VERSION.tar.gz"
+sha256sum:
+  - "cba0ec57785499ca3cd36abcae94a2148b5261250d3b91ee4cdf0384ffe94c3c"
+depends:
+  - "dconf"
+  - "gnome-autoar"
+  - "elogind"
+  - "adwaita-icon-theme"
+  - "dconf"
+  - "gdm"
+  - "gnome-backgrounds"
+  - "gnome-control-center"
+  - "libgweather"
+  - "telepathy-mission-control"
+  - "evolution-data-server"
+  - "gnome-bluetooth"
+  - "networkmanager"
+  - "desktop-file-utils"
+  - "gcr-4"
+  - "gjs"
+  - "gnome-desktop"
+  - "ibus"
+  - "mutter"
+  - "polkit"
+  - "sassc"
+  - "startup-notification"
+  - "pipewire"
+build_depends:
+  - "meson"
+
+build {
+
+  exec "if ! command -v systemctl > /dev/null; then"
+  # Credits to https://www.linuxfromscratch.org/blfs/view/svn/gnome/gnome-shell.html
+  exec "extraArgs=\"-Dsystemd=false\""
+  exec "fi"
+
+  exec "rm -r subprojects/gvc"
+  exec "git clone https://gitlab.gnome.org/GNOME/libgnome-volume-control subprojects/gvc"
+  cd "subprojects/gvc"
+  exec "git checkout 000046e88714de77db320b0711af3baacb2813a2"
+  cd "../.."
+
+  exec "meson setup  --prefix=/usr  --buildtype=release  -Dtests=false  -Dman=false  -Dgtk_doc=false  $extraArgs build"
+  exec "ninja -C build"
+}
+
+package {
+  exec "DESTDIR=\"$ROOT\" ninja -C build install"
+}
+
+postinstall {
+  exec "glib-compile-schemas /usr/share/glib-2.0/schemas"
+}
+

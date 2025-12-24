@@ -1,0 +1,37 @@
+name: "pulseaudio"
+version: "16.99.1"
+release: "1"
+description: "Sound system"
+sources:
+  - "https://www.freedesktop.org/software/pulseaudio/releases/pulseaudio-$VERSION.tar.xz"
+sha256sum:
+  - "dbb89a4c4a5f30f03b2c8c95de864ad53f7a40d4fdee29063f966cf66cfa800a"
+depends:
+  - "libsndfile"
+  - "libtool"
+  - "gdbm"
+  - "alsa-lib"
+  - "dbus"
+  - "elogind"
+  - "glib"
+build_depends:
+  - "meson"
+opt_depends:
+  - "bluez: for Bluetooth support"
+
+build {
+
+  exec "if command -v bluetoothctl > /dev/null; then"
+  exec "bluez5=\"enabled\""
+  exec "else"
+  exec "bluez5=\"disabled\""
+  exec "fi"
+
+  exec "meson setup  --prefix=/usr  --buildtype=release  -Dman=false  -Ddoxygen=false  -Dtests=false  -Ddatabase=gdbm      -Dbluez5=$bluez5  build"
+  exec "ninja -C build"
+}
+
+package {
+  exec "DESTDIR=\"$ROOT\" ninja -C build install"
+}
+

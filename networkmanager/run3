@@ -1,0 +1,41 @@
+name: "networkmanager"
+version: "1.45.1"
+release: "1"
+description: "networkmanager"
+sources:
+  - "https://download.gnome.org/sources/NetworkManager/1.45/NetworkManager-$VERSION.tar.xz"
+sha256sum:
+  - "6757f95317853dc2782c44ed8939249574677518b3a1f7d112aad961f20adc43"
+depends:
+  - "jansson"
+  - "libndp"
+  - "curl"
+  - "dhcpcd"
+  - "newt"
+  - "gnutls"
+  - "polkit"
+  - "pygobject"
+  - "elogind"
+  - "vala"
+  - "wpa_supplicant"
+build_depends:
+  - "meson"
+  - "gobject-introspection"
+  - "libxslt"
+  - "python-setuptools"
+
+build {
+
+  # Thanks for BLFS for the args https://www.linuxfromscratch.org/blfs/view/svn/basicnet/networkmanager.html
+  exec "if ! command -v systemctl > /dev/null; then"
+  exec "extraArgs=\"-Dsystemd_journal=false -Dsystemdsystemunitdir=no -Dsession_tracking=elogind\""
+  exec "fi"
+
+  exec "meson setup  --prefix=/usr  --buildtype=release  -Dnmtui=true  -Ddocs=false  -Dcrypto=gnutls  -Dqt=false  -Dppp=false  -Dlibaudit=no  -Dselinux=false  -Dlibpsl=false  -Dovs=false  -Dmodem_manager=false  $extraArgs build"
+  exec "ninja -C build"
+}
+
+package {
+  exec "DESTDIR=\"$ROOT\" ninja -C build install"
+}
+

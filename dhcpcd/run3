@@ -1,0 +1,31 @@
+name: "dhcpcd"
+version: "10.3.0"
+release: "1"
+description: "DHCP client"
+sources:
+  - "https://github.com/NetworkConfiguration/dhcpcd/releases/download/v$VERSION/dhcpcd-$VERSION.tar.xz"
+sha256sum:
+  - "06e4c1aaf958523f3fd1c57258c613c6c7ae56b8f1d678fa7943495d5ea6aeb5"
+depends:
+  - "eudev"
+build_depends:
+  - "gmake"
+
+build {
+  macro build --prefix=/usr                 --sysconfdir=/etc             --libexecdir=/usr/lib/dhcpcd  --dbdir=/var/lib/dhcpcd       --runstatedir=/run            --privsepuser=dhcpcd
+  exec "make"
+  exec "make -j$(nproc)"
+}
+
+package {
+  exec "make DESTDIR=$ROOT install"
+  exec "mkdir \"$ROOT/bin/\""
+  exec "printf '"
+  #!/bin/sh
+  append "/etc/passwd" "dhcpcd:x:981:981:dhcpcd privilege separation:/:/usr/bin/nologin"
+  append "/etc/group" "dhcpcd:x:981:"
+  exec "' > \"$ROOT/bin/install-dhcpcd-groups\""
+  exec "chmod +x \"$ROOT/bin/install-dhcpcd-groups\""
+  print "dhcpcd: please run install-dhcpcd-groups to install groups"
+}
+

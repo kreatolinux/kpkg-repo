@@ -1,0 +1,20 @@
+name: "slang"
+version: "2.3.3"
+release: "1"
+description: "slang"
+sources:
+  - "https://www.jedsoft.org/releases/slang/slang-$VERSION.tar.bz2"
+sha256sum:
+  - "f9145054ae131973c61208ea82486d5dd10e3c5cdad23b7c4a0617743c8f5a18"
+build_depends:
+  - "gmake"
+
+build {
+  macro build --prefix=/usr                    --sysconfdir=/etc                --build=$(uname -m)  --host=$(uname -m)  --target=$(uname -m)
+  exec "make"
+}
+
+package {
+  exec "make DESTDIR=$ROOT install"
+}
+
