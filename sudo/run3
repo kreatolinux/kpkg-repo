@@ -1,0 +1,43 @@
+name: "sudo"
+version: "1_9_15p4"
+release: "2"
+description: "Utility to execute a command as another user"
+sources:
+  - "https://github.com/sudo-project/sudo/archive/refs/tags/SUDO_$VERSION.tar.gz"
+sha256sum:
+  - "bd3b5348209e3cb2941e4e83f6bb3fd4da065c943a2bb6620a3778264ec0631a"
+depends:
+  - "linux-pam"
+  - "shadow"
+build_depends:
+  - "gmake"
+
+build {
+  macro build
+  exec "make"
+}
+
+package {
+  exec "make install"
+  # From BLFS
+  exec "mkdir -p $ROOT/etc/pam.d"
+  write "$ROOT/etc/pam.d/sudo << EOF" """
+# Begin /etc/pam.d/sudo
+
+# include the default auth settings
+auth      include     system-auth
+
+# include the default account settings
+account   include     system-account
+
+# Set default environment variables for the service user
+session   required    pam_env.so
+
+# include system session defaults
+session   include     system-session
+
+# End /etc/pam.d/sudo
+"""
+  exec "chmod 644 $ROOT/etc/pam.d/sudo"
+}
+
