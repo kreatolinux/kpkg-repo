@@ -40,9 +40,9 @@ build_depends:
 
 build {
 
-  exec "if ! kpkg info xwayland > /dev/null; then"
-  exec "extraArgs=\"-Dxwayland=false\""
-  exec "fi"
+  if ${exec("kpkg info xwayland")}.exit() != 0 {
+    local extraArgs = "-Dxwayland=false"
+  }
 
   exec "meson setup  --prefix=/usr  --buildtype=release  -Dtests=false  -Dprofiler=false  $extraArgs build"
   exec "ninja -C build"

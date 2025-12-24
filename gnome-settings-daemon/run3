@@ -35,13 +35,12 @@ build {
   exec "git checkout 7a621180b46421e356b33972e3446775a504139c"
   cd "../.."
 
-  exec "if ! command -v systemctl > /dev/null; then"
-  # Credits to https://www.linuxfromscratch.org/blfs/view/svn/gnome/gnome-settings-daemon.html for these
-  exec "sed -e 's/libsystemd/libelogind/'  -i plugins/power/test.py"
-  exec "systemd=\"false\""
-  exec "else"
-  exec "systemd=\"true\""
-  exec "fi"
+  local systemd = "true"
+  if ${exec("command -v systemctl")}.exit() != 0 {
+    # Credits to https://www.linuxfromscratch.org/blfs/view/svn/gnome/gnome-settings-daemon.html for these
+    exec "sed -e 's/libsystemd/libelogind/'  -i plugins/power/test.py"
+    local systemd = "false"
+  }
 
   exec "meson setup  --prefix=/usr  --buildtype=release  -Dsystemd=$systemd  -Dsmartcard=false  -Dcups=false  -Dwwan=false  build"
   exec "ninja -C build"

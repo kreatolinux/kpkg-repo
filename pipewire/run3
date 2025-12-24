@@ -14,10 +14,10 @@ opt_depends:
   - "dbus: for D-Bus support"
 
 build {
-  exec "dbusEnable=\"disabled\""
-  exec "if [ -d \"/var/cache/kpkg/installed/dbus\" ]; then"
-  exec "dbusEnable=\"enabled\""
-  exec "fi"
+  local dbusEnable = "disabled"
+  if ${exec("test -d /var/cache/kpkg/installed/dbus")}.exit() == 0 {
+    local dbusEnable = "enabled"
+  }
 
   exec "meson setup  --prefix=/usr  --buildtype=release    -Dsession-managers=[]  -Ddbus=$dbusEnable    build"
   exec "ninja -C build"

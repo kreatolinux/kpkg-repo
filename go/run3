@@ -14,27 +14,27 @@ build_depends:
   - "gmake"
 
 build {
-  exec "if ! command -v go > /dev/null; then"
-  print "go: go not found to bootstrap, downloading binary to bootstrap..."
-  # We get the architecture by hand since
-  # kpkg doesn't currently offer any variable to do this.
-  exec "ARCH=\"\""
-  exec "case $(uname -m)"
-  exec "in"
-  exec "\"x86_64\")"
-  exec "ARCH=\"amd64\""
-  exec ";;"
-  exec "*)"
-  exec "ARCH=\"$(uname -m)\""
-  exec ";;"
-  exec "esac"
-  cd ".."
-  exec "wget https://go.dev/dl/go$version.linux-$ARCH.tar.gz"
-  exec "mkdir go-bin"
-  exec "tar -xvf go$version.linux-$ARCH.tar.gz -C go-bin"
-  env PATH="$PATH:$PWD/go-bin/go/bin"
-  cd "-"
-  exec "fi"
+  if ${exec("command -v go")}.exit() != 0 {
+    print "go: go not found to bootstrap, downloading binary to bootstrap..."
+    # We get the architecture by hand since
+    # kpkg doesn't currently offer any variable to do this.
+    exec "ARCH=\"\""
+    exec "case $(uname -m)"
+    exec "in"
+    exec "\"x86_64\")"
+    exec "ARCH=\"amd64\""
+    exec ";;"
+    exec "*)"
+    exec "ARCH=\"$(uname -m)\""
+    exec ";;"
+    exec "esac"
+    cd ".."
+    exec "wget https://go.dev/dl/go$version.linux-$ARCH.tar.gz"
+    exec "mkdir go-bin"
+    exec "tar -xvf go$version.linux-$ARCH.tar.gz -C go-bin"
+    env PATH="$PATH:$PWD/go-bin/go/bin"
+    cd "-"
+  }
   cd "src"
   env GOENV="/opt/kpkg/srcdir/go/env"
   env GOCACHE="/opt/kpkg/srcdir/go-build"

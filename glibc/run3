@@ -30,24 +30,24 @@ func common_build {
   exec "mkdir -v build"
   cd "build"
 
-  exec "if [ \"$1\" != \"$(uname -m)-linux-gnu\" ]; then"
-  exec "target=\"--target=$1\""
-  exec "host=\"--host=$1\""
-  exec "build=\"--build=$(uname -m)-linux-gnu\""
-  exec "headers=\"/usr/$1/include\""
-  # taken from arch https://gitlab.archlinux.org/archlinux/packaging/packages/aarch64-linux-gnu-glibc/-/blob/main/PKGBUILD?ref_type=heads
-  exec "extraArgs=\"--includedir=/include --libdir=/lib --libexecdir=/lib\""
-  exec "else"
-  exec "host=\"--host=$(uname -m)-linux-gnu\""
-  exec "build=\"--build=$(uname -m)-linux-gnu\""
-  exec "headers=\"/usr/include\""
-  exec "fi"
+  if "$1" != "${exec("uname -m").output()}-linux-gnu" {
+    local target = "--target=$1"
+    local host = "--host=$1"
+    local build = "--build=${exec("uname -m").output()}-linux-gnu"
+    local headers = "/usr/$1/include"
+    # taken from arch https://gitlab.archlinux.org/archlinux/packaging/packages/aarch64-linux-gnu-glibc/-/blob/main/PKGBUILD?ref_type=heads
+    local extraArgs = "--includedir=/include --libdir=/lib --libexecdir=/lib"
+  } else {
+    local host = "--host=${exec("uname -m").output()}-linux-gnu"
+    local build = "--build=${exec("uname -m").output()}-linux-gnu"
+    local headers = "/usr/include"
+  }
 
   exec "../configure $extraArgs  --prefix=/usr  $host  $build  $target  --enable-kernel=4.14  --enable-stack-protector=strong  --with-headers=$headers  --disable-crypt"
 
-  exec "if [ \"$1\" != \"$(uname -m)-linux-gnu\" ]; then"
-  append "configparms" "build-programs=no"
-  exec "fi"
+  if "$1" != "${exec("uname -m").output()}-linux-gnu" {
+    append "configparms" "build-programs=no"
+  }
 
   exec "make || exit 1"
   exec "ls"
@@ -67,9 +67,9 @@ package_aarch64_linux_gnu_glibc {
   exec "make install_root=\"$ROOT/usr/aarch64-linux-gnu\" install"
   exec "rm -rf \"$ROOT/usr/share/info/dir\""
   exec "rm -f \"$ROOT/etc/ld.so.cache\""
-  exec "for file in tzselect zdump zic; do"
-  exec "rm -f \"$ROOT/usr/bin/$file\""
-  exec "done"
+  for file in ["tzselect", "zdump", "zic"] {
+    exec "rm -f \"$ROOT/usr/bin/$file\""
+  }
 
 }
 
@@ -85,13 +85,13 @@ package {
   exec "make -r PARALLELMFLAGS=\"\" DESTDIR=$ROOT objdir=`realpath build` install || exit 1"
   exec "rm -rf \"$ROOT/usr/share/info/dir\""
   exec "rm -f \"$ROOT/etc/ld.so.cache\""
-  exec "for file in tzselect zdump zic; do"
-  # to make sure we delete from every directory
-  exec "rm -f \"$ROOT/usr/bin/$file\""
-  exec "rm -f \"$ROOT/usr/sbin/$file\""
-  exec "rm -f \"$ROOT/bin/$file\""
-  exec "rm -f \"$ROOT/sbin/$file\""
-  exec "done"
+  for file in ["tzselect", "zdump", "zic"] {
+    # to make sure we delete from every directory
+    exec "rm -f \"$ROOT/usr/bin/$file\""
+    exec "rm -f \"$ROOT/usr/sbin/$file\""
+    exec "rm -f \"$ROOT/bin/$file\""
+    exec "rm -f \"$ROOT/sbin/$file\""
+  }
 }
 
 postinstall {

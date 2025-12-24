@@ -35,15 +35,15 @@ func common_build {
   cd "build"
 
   exec "prefix=\"/usr\""
-  exec "if [ \"$1\" = \"$(uname -m)-linux-gnu\" ]; then"
-  exec "target=\"$(uname -m)-linux-gnu\""
-  exec "else"
-  exec "target=\"$1\""
-  #prefix="/usr/$target"
-  # Taken from arch
-  # https://gitlab.archlinux.org/archlinux/packaging/packages/aarch64-linux-gnu-gcc/-/blob/main/PKGBUILD?ref_type=heads
-  exec "extraArgs=\"--libdir=/usr/lib --libexecdir=/usr/lib --with-local-prefix=/usr/$target --with-sysroot=/usr/$target --with-build-sysroot=/usr/$target --with-native-system-header-dir=/include --program-prefix=$target-\""
-  exec "fi"
+  if "$1" == "${exec("uname -m").output()}-linux-gnu" {
+    local target = "${exec("uname -m").output()}-linux-gnu"
+  } else {
+    local target = "$1"
+    #prefix="/usr/$target"
+    # Taken from arch
+    # https://gitlab.archlinux.org/archlinux/packaging/packages/aarch64-linux-gnu-gcc/-/blob/main/PKGBUILD?ref_type=heads
+    local extraArgs = "--libdir=/usr/lib --libexecdir=/usr/lib --with-local-prefix=/usr/$target --with-sysroot=/usr/$target --with-build-sysroot=/usr/$target --with-native-system-header-dir=/include --program-prefix=$target-"
+  }
 
   exec "../configure  $extraArgs                            --enable-languages=c,c++                        --enable-default-pie                            --enable-default-ssp                            --prefix=\"$prefix\"                              --host=\"$(uname -m)-linux-gnu\"\t\t        --build=\"$(uname -m)-linux-gnu\"\t\t        --target=\"$target\"\t\t\t        --disable-fixincludes                           --disable-multilib                              --without-headers                               --disable-nls                                   --enable-initfini-array                         --with-system-zlib"
 

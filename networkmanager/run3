@@ -27,9 +27,9 @@ build_depends:
 build {
 
   # Thanks for BLFS for the args https://www.linuxfromscratch.org/blfs/view/svn/basicnet/networkmanager.html
-  exec "if ! command -v systemctl > /dev/null; then"
-  exec "extraArgs=\"-Dsystemd_journal=false -Dsystemdsystemunitdir=no -Dsession_tracking=elogind\""
-  exec "fi"
+  if ${exec("command -v systemctl")}.exit() != 0 {
+    local extraArgs = "-Dsystemd_journal=false -Dsystemdsystemunitdir=no -Dsession_tracking=elogind"
+  }
 
   exec "meson setup  --prefix=/usr  --buildtype=release  -Dnmtui=true  -Ddocs=false  -Dcrypto=gnutls  -Dqt=false  -Dppp=false  -Dlibaudit=no  -Dselinux=false  -Dlibpsl=false  -Dovs=false  -Dmodem_manager=false  $extraArgs build"
   exec "ninja -C build"

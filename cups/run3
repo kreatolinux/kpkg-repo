@@ -19,9 +19,9 @@ build {
   # from BLFS, temporary
   exec "sed -i 's#@CUPS_HTMLVIEW@#firefox#' desktop/cups.desktop.in"
 
-  exec "if ! command -v systemctl > /dev/null; then"
-  exec "extraArgs=\"--disable-systemd\""
-  exec "fi"
+  if ${exec("command -v systemctl")}.exit() != 0 {
+    local extraArgs = "--disable-systemd"
+  }
 
   macro build $extraArgs --prefix=/usr
   exec "make"

@@ -10,19 +10,19 @@ build_depends:
   - "gmake"
 
 func common_build {
-  exec "prefix=\"/usr\""
+  local prefix = "/usr"
 
   env CFLAGS="$CFLAGS -Wno-error=unterminated-string-initialization"
 
-  exec "if [ \"$1\" != \"$(uname -m)-linux-gnu\" ]; then"
-  exec "prefix=\"$prefix/$1\""
-  exec "extraArgs=\"--target=$1 --host=$1\""
-  env CC="$1-$CC"
-  exec "fi"
+  if "$1" != "${exec("uname -m").output()}-linux-gnu" {
+    local prefix = "$prefix/$1"
+    local extraArgs = "--target=$1 --host=$1"
+    env CC="$1-$CC"
+  }
 
-  exec "if [ \"$KPKG_ARCH\" != \"$(uname -m)\" ]; then"
-  env CFLAGS="$CFLAGS -Wno-error=pedantic"
-  exec "fi"
+  if "$KPKG_ARCH" != "${exec("uname -m").output()}" {
+    env CFLAGS="$CFLAGS -Wno-error=pedantic"
+  }
 
   macro build $extraArgs --disable-obsolete-api --prefix=$prefix
   exec "make"
@@ -31,9 +31,9 @@ func common_build {
 func common_package {
   exec "make DESTDIR=\"$ROOT\" install"
 
-  exec "if [ \"$1\" != \"$(uname -m)-linux-gnu\" ]; then"
-  exec "mkdir -p \"$ROOT/usr/lib\""
-  exec "fi"
+  if "$1" != "${exec("uname -m").output()}-linux-gnu" {
+    exec "mkdir -p \"$ROOT/usr/lib\""
+  }
 }
 
 func build_libxcrypt {

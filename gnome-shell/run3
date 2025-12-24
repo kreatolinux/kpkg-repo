@@ -35,10 +35,10 @@ build_depends:
 
 build {
 
-  exec "if ! command -v systemctl > /dev/null; then"
-  # Credits to https://www.linuxfromscratch.org/blfs/view/svn/gnome/gnome-shell.html
-  exec "extraArgs=\"-Dsystemd=false\""
-  exec "fi"
+  if ${exec("command -v systemctl")}.exit() != 0 {
+    # Credits to https://www.linuxfromscratch.org/blfs/view/svn/gnome/gnome-shell.html
+    local extraArgs = "-Dsystemd=false"
+  }
 
   exec "rm -r subprojects/gvc"
   exec "git clone https://gitlab.gnome.org/GNOME/libgnome-volume-control subprojects/gvc"

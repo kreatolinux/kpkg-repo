@@ -26,9 +26,9 @@ prepare {
   cd "nss-$version"
   exec "mkdir -p certs"
   cd "certs"
-  exec "for i in certdata.txt nssckbi.h; do"
-  exec "ln -srf ../nss/lib/ckfw/builtins/$i $i"
-  exec "done"
+  for i in ["certdata.txt", "nssckbi.h"] {
+    exec "ln -srf ../nss/lib/ckfw/builtins/$i $i"
+  }
 }
 
 build {
@@ -41,11 +41,11 @@ build {
   exec "sh ../bundle.sh || exit 1"
 
   cd "nss"
-  exec "if [ \"$(uname -m)\" = \"x86_64\" ]; then"
-  env USE_64="1"
-  exec "else"
-  env USE_64="0"
-  exec "fi"
+  if "${exec("uname -m").output()}" == "x86_64" {
+    env USE_64="1"
+  } else {
+    env USE_64="0"
+  }
 
   # Taken from BLFS
   exec "make -j$(nproc) BUILD_OPT=1                   NSPR_INCLUDE_DIR=/usr/include/nspr   USE_SYSTEM_ZLIB=1                    ZLIB_LIBS=-lz                        NSS_ENABLE_WERROR=0                  NSS_USE_SYSTEM_SQLITE=1              USE_64=$USE_64"
@@ -73,9 +73,9 @@ package {
   exec "install -D /dev/stdin \"$ROOT/usr/bin/nss-config\""
 
   cd "dist/$DIST/bin"
-  exec "for i in *util shlibsign signtool signver ssltap; do"
-  exec "install -Dt \"$ROOT/usr/bin\"  \"$i\""
-  exec "done"
+  for i in ["*util", "shlibsign", "signtool", "signver", "ssltap"] {
+    exec "install -Dt \"$ROOT/usr/bin\"  \"$i\""
+  }
   cd "-"
 
   exec "install -Dt \"$ROOT$includedir\" -m644 dist/public/nss/*.h"

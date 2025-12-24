@@ -13,9 +13,9 @@ build {
 
   cd "nspr"
 
-  exec "if [ \"$(uname -m)\" = \"x86_64\" ]; then"
-  exec "extraArgs=\"--enable-64bit\""
-  exec "fi"
+  if "${exec("uname -m").output()}" == "x86_64" {
+    local extraArgs = "--enable-64bit"
+  }
 
   macro build --prefix=/usr  --with-pthreads  --with-mozilla $extraArgs
   exec "make"

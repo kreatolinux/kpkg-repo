@@ -20,9 +20,9 @@ build_depends:
 
 build {
 
-  exec "if ! command -v systemd > /dev/null; then"
-  exec "extraArgs=\"--disable-systemd-services\""
-  exec "fi"
+  if ${exec("command -v systemd")}.exit() != 0 {
+    local extraArgs = "--disable-systemd-services"
+  }
 
   # From BLFS
   macro build $extraArgs --prefix=/usr  --sysconfdir=/etc  --disable-python2  --disable-gtk2  --disable-emoji-dict  --disable-unicode-dict

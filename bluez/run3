@@ -18,13 +18,13 @@ backup:
   - "etc/bluetooth/main.conf"
 
 build {
-  exec "if command -v systemctl > /dev/null; then"
-  exec "extraArgs=\"--with-systemdsystemunitdir=/usr/lib/systemd/system --with-systemduserunitdir=/usr/lib/systemd/user\""
-  exec "else"
-  exec "extraArgs=\"--disable-systemd\""
-  exec "fi"
+  if ${exec("command -v systemctl")}.exit() == 0 {
+    local extraArgs = "--with-systemdsystemunitdir=/usr/lib/systemd/system --with-systemduserunitdir=/usr/lib/systemd/user"
+  } else {
+    local extraArgs = "--disable-systemd"
+  }
 
-  macro build $extraArgs  --prefix=/usr  --with-udevdir=/usr/lib/udev/rules.d  --disable-manpages  --sysconfdir=/etc  --enable-library
+  macro build $extraArgs --prefix=/usr --with-udevdir=/usr/lib/udev/rules.d --disable-manpages --sysconfdir=/etc --enable-library
   exec "make"
 }
 

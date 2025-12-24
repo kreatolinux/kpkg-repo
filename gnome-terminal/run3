@@ -22,11 +22,10 @@ opt_depends:
 
 build {
 
-  exec "if kpkg info nautilus; then"
-  exec "nautilusEnabled=\"true\""
-  exec "else"
-  exec "nautilusEnabled=\"false\""
-  exec "fi"
+  local nautilusEnabled = "false"
+  if ${exec("kpkg info nautilus")}.exit() == 0 {
+    local nautilusEnabled = "true"
+  }
 
   exec "meson setup  --prefix=/usr  --buildtype=release  -Ddocs=false  -Dnautilus_extension=$nautilusEnabled  build"
   exec "ninja -C build"

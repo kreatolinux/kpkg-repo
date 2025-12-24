@@ -20,14 +20,14 @@ func actual_build {
   exec "mkdir -v build"
   cd "build"
 
-  exec "if [ \"$1\" != \"$(uname -m)-linux-gnu\" ]; then"
-  exec "target=\"--target=$1\""
-  exec "sysroot=\"--with-sysroot=/usr/$1\""
-  exec "fi"
+  if "$1" != "${exec("uname -m").output()}-linux-gnu" {
+    local target = "--target=$1"
+    local sysroot = "--with-sysroot=/usr/$1"
+  }
 
   print "$target"
   print "$sysroot"
-  exec "../configure                    --prefix=/usr               $target\t\t\t    $sysroot\t\t    --enable-gnu-as\t\t    --enable-gnu-ld\t\t    --enable-gold\t\t    --build=$(../config.guess)  --disable-nls               --enable-shared             --disable-werror            --enable-64-bit-bfd"
+  exec "../configure --prefix=/usr $target $sysroot --enable-gnu-as --enable-gnu-ld --enable-gold --build=$(../config.guess) --disable-nls --enable-shared --disable-werror --enable-64-bit-bfd"
 
   exec "make -j$(nproc)"
 }

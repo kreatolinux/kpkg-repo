@@ -28,17 +28,17 @@ no_chkupd: true
 
 build {
 
-  exec "if ! command -v systemctl > /dev/null; then"
-  exec "extraArgs=\"-DWITH_SYSTEMDUSERUNITDIR=no\""
-  exec "fi"
+  if ${exec("command -v systemctl")}.exit() != 0 {
+    local extraArgs = "-DWITH_SYSTEMDUSERUNITDIR=no"
+  }
 
-  exec "if ! kpkg info webkitgtk4 > /dev/null; then"
-  exec "extraArgs=\"$extraArgs -DENABLE_OAUTH2_WEBKITGTK4=OFF\""
-  exec "fi"
+  if ${exec("kpkg info webkitgtk4")}.exit() != 0 {
+    local extraArgs = "$extraArgs -DENABLE_OAUTH2_WEBKITGTK4=OFF"
+  }
 
-  exec "if ! kpkg info gtk4 > /dev/null; then"
-  exec "extraArgs=\"$extraArgs -DENABLE_GTK4=OFF\""
-  exec "fi"
+  if ${exec("kpkg info gtk4")}.exit() != 0 {
+    local extraArgs = "$extraArgs -DENABLE_GTK4=OFF"
+  }
 
   # Flags taken from BLFS
   exec "cmake -B build $extraArgs -DCMAKE_BUILD_TYPE=Release  -DCMAKE_INSTALL_PREFIX=/usr  -DWITH_KRB5=OFF                 -DENABLE_VALA_BINDINGS=ON  -DWITH_OPENLDAP=OFF  -DENABLE_INTROSPECTION=ON  -DENABLE_GTK_DOC=OFF  -DWITH_LIBDB=OFF  -DENABLE_INSTALLED_TESTS=OFF  -DSYSCONF_INSTALL_DIR=/etc  -G Ninja"

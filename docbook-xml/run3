@@ -15,9 +15,9 @@ package {
   exec "chown -R root:root ."
   exec "cp -v -af docbook.cat *.dtd ent/ *.mod  $ROOT/usr/share/xml/docbook/xml-dtd-$version"
 
-  exec "if [ ! -e $ROOT/etc/xml/docbook ]; then"
-  exec "xmlcatalog --noout --create $ROOT/etc/xml/docbook"
-  exec "fi"
+  if ${exec("test -e $ROOT/etc/xml/docbook")}.exit() != 0 {
+    exec "xmlcatalog --noout --create $ROOT/etc/xml/docbook"
+  }
 
   exec "xmlcatalog --noout --add \"public\"  \"-//OASIS//DTD DocBook XML V$version//EN\"  \"http://www.oasis-open.org/docbook/xml/$version/docbookx.dtd\"  $ROOT/etc/xml/docbook"
   exec "xmlcatalog --noout --add \"public\"  \"-//OASIS//DTD DocBook XML CALS Table Model V$version//EN\"  \"file:///usr/share/xml/docbook/xml-dtd-$version/calstblx.dtd\"  $ROOT/etc/xml/docbook"
@@ -36,23 +36,22 @@ package {
 
 postinstall {
 
-  exec "if [ ! -e /etc/xml/catalog ]; then"
-  exec "xmlcatalog --noout --create /etc/xml/catalog"
-  exec "fi"
+  if ${exec("test -e /etc/xml/catalog")}.exit() != 0 {
+    exec "xmlcatalog --noout --create /etc/xml/catalog"
+  }
 
   exec "xmlcatalog --noout --add \"delegatePublic\"  \"-//OASIS//ENTITIES DocBook XML\"  \"file:///etc/xml/docbook\"  /etc/xml/catalog"
   exec "xmlcatalog --noout --add \"delegatePublic\"  \"-//OASIS//DTD DocBook XML\"  \"file:///etc/xml/docbook\"  /etc/xml/catalog"
   exec "xmlcatalog --noout --add \"delegateSystem\"  \"http://www.oasis-open.org/docbook/\"  \"file:///etc/xml/docbook\"  /etc/xml/catalog"
   exec "xmlcatalog --noout --add \"delegateURI\"  \"http://www.oasis-open.org/docbook/\"  \"file:///etc/xml/docbook\"  /etc/xml/catalog"
 
-  exec "for DTDVERSION in 4.1.2 4.2 4.3 4.4"
-  exec "do"
-  exec "xmlcatalog --noout --add \"public\"  \"-//OASIS//DTD DocBook XML V$DTDVERSION//EN\"  \"http://www.oasis-open.org/docbook/xml/$DTDVERSION/docbookx.dtd\"  /etc/xml/docbook"
-  exec "xmlcatalog --noout --add \"rewriteSystem\"  \"http://www.oasis-open.org/docbook/xml/$DTDVERSION\"  \"file:///usr/share/xml/docbook/xml-dtd-4.5\"  /etc/xml/docbook"
-  exec "xmlcatalog --noout --add \"rewriteURI\"  \"http://www.oasis-open.org/docbook/xml/$DTDVERSION\"  \"file:///usr/share/xml/docbook/xml-dtd-4.5\"  /etc/xml/docbook"
-  exec "xmlcatalog --noout --add \"delegateSystem\"  \"http://www.oasis-open.org/docbook/xml/$DTDVERSION/\"  \"file:///etc/xml/docbook\"  /etc/xml/catalog"
-  exec "xmlcatalog --noout --add \"delegateURI\"  \"http://www.oasis-open.org/docbook/xml/$DTDVERSION/\"  \"file:///etc/xml/docbook\"  /etc/xml/catalog"
-  exec "done"
+  for DTDVERSION in ["4.1.2", "4.2", "4.3", "4.4"] {
+    exec "xmlcatalog --noout --add \"public\"  \"-//OASIS//DTD DocBook XML V$DTDVERSION//EN\"  \"http://www.oasis-open.org/docbook/xml/$DTDVERSION/docbookx.dtd\"  /etc/xml/docbook"
+    exec "xmlcatalog --noout --add \"rewriteSystem\"  \"http://www.oasis-open.org/docbook/xml/$DTDVERSION\"  \"file:///usr/share/xml/docbook/xml-dtd-4.5\"  /etc/xml/docbook"
+    exec "xmlcatalog --noout --add \"rewriteURI\"  \"http://www.oasis-open.org/docbook/xml/$DTDVERSION\"  \"file:///usr/share/xml/docbook/xml-dtd-4.5\"  /etc/xml/docbook"
+    exec "xmlcatalog --noout --add \"delegateSystem\"  \"http://www.oasis-open.org/docbook/xml/$DTDVERSION/\"  \"file:///etc/xml/docbook\"  /etc/xml/catalog"
+    exec "xmlcatalog --noout --add \"delegateURI\"  \"http://www.oasis-open.org/docbook/xml/$DTDVERSION/\"  \"file:///etc/xml/docbook\"  /etc/xml/catalog"
+  }
 }
 
 postremove {
