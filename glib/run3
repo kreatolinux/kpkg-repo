@@ -1,11 +1,11 @@
 name: "glib"
-version: "2.86.2"
+version: "2.86.3"
 release: "2"
 description: "Low-level core library that forms the basis for projects such as GTK+ and GNOME"
 sources:
  - "https://download.gnome.org/sources/glib/2.86/glib-${version}.tar.xz"
 sha256sum:
- - "8a724e970855357ea8101e27727202392a0ffd5410a98336aed54ec59113e611"
+ - "b3211d8d34b9df5dca05787ef0ad5d7ca75dec998b970e1aab0001d229977c65"
 build_depends:
  - "meson"
  - "ninja"
