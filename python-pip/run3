@@ -1,0 +1,24 @@
+name: "python-pip"
+version: "25.3"
+release: "1"
+description: "Easily download, build, install, upgrade, and uninstall Python packages"
+sources:
+  - "https://github.com/pypa/pip/archive/refs/tags/$VERSION.tar.gz"
+b2sum:
+  - "87d848c497163a45ee3de8f6f75c80b5051b07062c5a15450ae98b59a6cebc6bf03ca8525d57929493f2cfeb28d5623401eba69f0bdfc734389efbb84eafdf53"
+depends:
+  - "python"
+  - "python-setuptools"
+
+package {
+
+  # Install pip using ensurepip if it is not available or not working
+  if ${exec("command -v pip && pip --version").exit()} != 0 {
+    exec "python3 -m ensurepip"
+  }
+
+  exec "pip install . --no-dependencies --ignore-installed --prefix=/usr --root=\"$ROOT\""
+  exec "find \"$ROOT\" -type d -name \"__pycache__\" -exec rm -rf {} +"
+  exec "find \"$ROOT\" -type f -name \"*.pyc\" -exec rm -f {} +"
+}
+
