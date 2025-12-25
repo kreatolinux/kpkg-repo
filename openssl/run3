@@ -5,7 +5,7 @@ description: "TLS library"
 sources:
   - "https://www.openssl.org/source/openssl-${version}.tar.gz"
 sha256sum:
-  - a21c1eb7e824a063f26fd7420ad378f4603a34f27e2ba712dcaf276644481776
+  - "967311f84955316969bdb1d8d4b983718ef42338639c621ec4c34fddef355e99"
 
 build {
   local extraArgs = ""

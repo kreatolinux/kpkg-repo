@@ -5,7 +5,7 @@ description: "Notification library"
 sources:
  - "https://gitlab.gnome.org/GNOME/libnotify/-/archive/${version}/libnotify-${version}.tar.gz"
 sha256sum:
- - "5bcfeff21b6669c009c862e25c42556723f7a46c2c3454fce0fd532ebed715a0"
+ - "b041ab7e4eb8cd16eafa6ae853274120ee3210aa6913614d9e774e6c45839723"
 depends:
  - "gdk-pixbuf"
  - "gobject-introspection"

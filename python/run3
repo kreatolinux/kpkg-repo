@@ -5,7 +5,7 @@ description: "General-Purpose Programming language"
 sources:
   - "https://www.python.org/ftp/python/${version}/Python-${version}.tar.xz"
 sha256sum:
-  - e2ba0c845f9cf89ff3fb0df606e67ad8a45c5b1f9bc5a6f26cf8f545f8f67a76
+  - "2299dae542d395ce3883aca00d3c910307cd68e0b2f7336098c8e7b7eee9f3e9"
 
 build {
   macro build --enable-shared --with-system-expat
