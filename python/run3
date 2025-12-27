@@ -15,5 +15,5 @@ package {
   macro package
   exec "ln -s python3 $ROOT/usr/bin/python"
   exec "find $ROOT -type f -name '*.pyc' -delete"
-  exec "find $ROOT -type d -name '__pycache__' -exec rm -rf {} +"
+  exec "find $ROOT -type d -name '__pycache__' | xargs rm -rf"
 }
