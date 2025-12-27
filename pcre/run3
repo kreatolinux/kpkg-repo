@@ -7,7 +7,7 @@ sources:
 sha256sum:
  - "c08ae2388ef333e8403e670ad70c0a11f1eed021fd88308d7e02f596fcd9dc16"
 build_depends:
- - "gmake"
+ - "cmake"
 
 build {
  macro build 
