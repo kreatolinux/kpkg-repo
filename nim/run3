@@ -16,15 +16,15 @@ build {
 }
 
 package {
- exec "mkdir -p \"$ROOT/usr/include\" \"$ROOT/usr/bin\" \"$ROOT/etc/nim\" \"$ROOT/usr/lib/nim\""
- exec "cp -r lib/ \"$ROOT/usr/lib/nim\""
- exec "cp -r compiler/ \"$ROOT/usr/lib/nim\""
- exec "cp -r doc/ \"$ROOT/usr/lib/nim\""
- exec "cp -r tools/ \"$ROOT/usr/lib/nim\""
- exec "cp -rf config/* -t \"$ROOT/etc/nim\""
- exec "cp -rf bin/* -t \"$ROOT/usr/bin\""
- exec "cp -rf \"$ROOT/usr/lib/nim/\"*.h \"$ROOT/usr/include\" || true"
- exec "rm -rf \"$ROOT/nim\""
+ exec "mkdir -p $ROOT/usr/include $ROOT/usr/bin $ROOT/etc/nim $ROOT/usr/lib/nim"
+ exec "cp -r lib/ $ROOT/usr/lib/nim"
+ exec "cp -r compiler/ $ROOT/usr/lib/nim"
+ exec "cp -r doc/ $ROOT/usr/lib/nim"
+ exec "cp -r tools/ $ROOT/usr/lib/nim"
+ exec "cp -rf config/* -t $ROOT/etc/nim"
+ exec "cp -rf bin/* -t $ROOT/usr/bin"
+ exec "cp -rf $ROOT/usr/lib/nim/*.h $ROOT/usr/include || true"
+ exec "rm -rf $ROOT/nim"
 }
 
 
