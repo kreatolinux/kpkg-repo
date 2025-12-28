@@ -10,11 +10,10 @@ depends:
  - "automake"
  - "libtool"
 build_depends:
- - "gmake"
+ - "cmake"
 
 build {
- exec "sh autogen.sh"
- macro build --disable-static
+ macro build
 }
 
 package {
