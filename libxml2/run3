@@ -11,10 +11,10 @@ depends:
  - "xz-utils"
 build_depends:
  - "pkgconf"
- - "gmake"
+ - "cmake"
 
 build {
- macro build --disable-static --with-history --with-python=/usr/bin/python3
+ macro build
 }
 
 package {
