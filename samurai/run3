@@ -12,11 +12,11 @@ replaces:
   - ninja
 
 build {
-  exec "make -j${exec(\"nproc\").output()}"
+  exec "make -j${exec('nproc').output()}"
 }
 
 package {
   exec "make PREFIX=/usr DESTDIR=$ROOT install"
-  exec "mkdir -p \"$ROOT/usr/bin\""
-  exec "ln -s /usr/bin/samu \"$ROOT/usr/bin/ninja\""
+  exec "mkdir -p $ROOT/usr/bin"
+  exec "ln -s /usr/bin/samu $ROOT/usr/bin/ninja"
 }
