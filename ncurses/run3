@@ -13,7 +13,7 @@ build {
   if "$KPKG_ARCH" != "${exec("uname -m").output()}" {
     global extraArgs = "--disable-stripping"
   }
-  macro build ${extraArgs} --mandir=/usr/share/man --enable-pc-files --disable-rpath-hack --with-pkg-config-libdir=/usr/lib/pkgconfig --with-shared --enable-widec --without-ada --without-tests --without-debug --with-cxx-shared
+  macro build ${extraArgs} --mandir=/usr/share/man --enable-pc-files --disable-rpath-hack --with-pkg-config-libdir=/usr/lib/pkgconfig --with-shared --enable-widec --without-ada --without-tests --without-debug --with-cxx-shared --enable-termcap
 }
 
 package {
