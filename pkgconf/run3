@@ -10,13 +10,14 @@ build_depends:
   - "meson"
 
 build {
-  macro build --prefix=/usr
-  exec "make"
+  macro build
 }
 
 package {
-  exec "make DESTDIR=\"$ROOT\" install"
-  exec "[ ! -d \"$ROOT/usr/bin\" ] && mkdir -p \"$ROOT/usr/bin\""
-  exec "ln -s pkgconf \"$ROOT/usr/bin/pkg-config\""
+  macro package 
+  if ${exec("test -d $ROOT/usr/bin")}.exit() != 0 {
+    exec "mkdir -p $ROOT/usr/bin"
+  }
+  exec "ln -s pkgconf $ROOT/usr/bin/pkg-config"
 }
 
