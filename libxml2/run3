@@ -1,11 +1,11 @@
 name: "libxml2"
-version: "2.11.5"
+version: "2.15.1"
 release: "2"
 description: "Libraries and utilities for parsing XML files"
 sources:
- - "https://download.gnome.org/sources/libxml2/2.11/libxml2-${version}.tar.xz"
+ - "https://download.gnome.org/sources/libxml2/${version.split('.')[0:2].join('.')}/libxml2-${version}.tar.xz"
 sha256sum:
- - "3727b078c360ec69fa869de14bd6f75d7ee8d36987b071e6928d4720a28df3a6"
+ - "c008bac08fd5c7b4a87f7b8a71f283fa581d80d80ff8d2efd3b26224c39bc54c"
 depends:
  - "python"
  - "xz-utils"
