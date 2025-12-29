@@ -1,6 +1,6 @@
 name: "readline"
 version: "8.2"
-release: "2"
+release: "3"
 description: "GNU readline"
 sources:
  - "https://ftp.gnu.org/gnu/readline/readline-${version}.tar.gz"
@@ -17,7 +17,7 @@ build {
 
 package {
  macro package
- exec "rm -rf \"$ROOT/usr/share/info/dir\""
+ exec "rm -rf $ROOT/usr/share/info/dir"
 }
 
 

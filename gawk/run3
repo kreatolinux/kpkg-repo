@@ -1,6 +1,6 @@
 name: "gawk"
 version: "5.3.2"
-release: "2"
+release: "3"
 description: "GNU awk"
 sources:
   - "https://ftp.gnu.org/pub/gnu/gawk/gawk-$version.tar.xz"
@@ -14,11 +14,11 @@ build_depends:
   - "gmake"
 
 build {
-  macro build --prefix=/usr
+  macro build
 }
 
 package {
-  exec "make DESTDIR=$ROOT install"
-  exec "rm -rf \"$ROOT\"/usr/share/info/dir"
+  macro package
+  exec "rm -rf $ROOT/usr/share/info/dir"
 }
 
