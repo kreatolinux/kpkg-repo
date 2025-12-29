@@ -11,14 +11,14 @@ depends:
  - "xz-utils"
 build_depends:
  - "pkgconf"
- - "cmake"
+ - "meson"
 
 build {
- macro build
+ macro build --meson
 }
 
 package {
- macro package
+ macro package --meson
 }
 
 
