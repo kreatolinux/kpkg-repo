@@ -1,6 +1,6 @@
 name: "readline"
 version: "8.2"
-release: "3"
+release: "4"
 description: "GNU readline"
 sources:
  - "https://ftp.gnu.org/gnu/readline/readline-${version}.tar.gz"
@@ -12,10 +12,12 @@ build_depends:
  - "gmake"
 
 build {
- macro build 
+ env SHLIB_LIBS="-lncurses"
+ macro build
 }
 
 package {
+ env SHLIB_LIBS="-lncurses"
  macro package
  exec "rm -rf $ROOT/usr/share/info/dir"
 }
