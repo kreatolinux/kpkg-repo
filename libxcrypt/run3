@@ -29,10 +29,10 @@ func common_build {
 }
 
 func common_package {
-  exec "make DESTDIR=\"$ROOT\" install"
+  macro package
 
   if "$1" != "${exec("uname -m").output()}-linux-gnu" {
-    exec "mkdir -p \"$ROOT/usr/lib\""
+    exec "mkdir -p $ROOT/usr/lib"
   }
 }
 
