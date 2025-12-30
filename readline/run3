@@ -12,13 +12,12 @@ build_depends:
  - "gmake"
 
 build {
- env SHLIB_LIBS="-lncurses"
- macro build
+ exec "./configure --prefix=/usr"
+ exec "make SHLIB_LIBS='-lncurses'"
 }
 
 package {
- env SHLIB_LIBS="-lncurses"
- macro package
+ exec "make DESTDIR=$ROOT SHLIB_LIBS='-lncurses' install"
  exec "rm -rf $ROOT/usr/share/info/dir"
 }
 
