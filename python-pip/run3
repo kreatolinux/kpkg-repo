@@ -17,8 +17,8 @@ package {
     exec "python3 -m ensurepip"
   }
 
-  exec "pip install . --no-dependencies --ignore-installed --prefix=/usr --root=\"$ROOT\""
-  exec "find \"$ROOT\" -type d -name \"__pycache__\" | xargs rm -rf"
-  exec "find \"$ROOT\" -type f -name \"*.pyc\" | xargs rm -f"
+  exec "pip install . --no-dependencies --ignore-installed --prefix=/usr --root=$ROOT"
+  exec "find $ROOT -type d -name '__pycache__' | xargs rm -rf"
+  exec "find $ROOT -type f -name '*.pyc' | xargs rm -f"
 }
 
