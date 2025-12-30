@@ -37,7 +37,7 @@ func common_package {
 }
 
 func build_libxcrypt {
-  common_build "$(uname -m)-linux-gnu"
+  common_build "${exec('uname -m').output()}-linux-gnu"
 }
 
 func build_aarch64_linux_gnu_libxcrypt {
@@ -45,7 +45,7 @@ func build_aarch64_linux_gnu_libxcrypt {
 }
 
 package_libxcrypt {
-  common_package "$(uname -m)-linux-gnu"
+  common_package "${exec('uname -m').output()}-linux-gnu"
 }
 
 package_aarch64_linux_gnu_libxcrypt {
