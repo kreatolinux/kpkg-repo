@@ -10,7 +10,7 @@ depends:
  - "zlib"
  - "python"
 build_depends:
- - "gmake"
+ - "cmake"
 
 build {
  macro build 
