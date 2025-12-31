@@ -12,7 +12,7 @@ build {
 }
 
 package {
- macro install
+ macro package --configure
 }
 
 
