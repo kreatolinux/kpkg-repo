@@ -9,15 +9,13 @@ sha256sum:
 depends:
  - "zlib"
  - "python"
-build_depends:
- - "cmake"
 
 build {
- macro build 
+ macro build --configure 
 }
 
 package {
- macro package
+ macro package --configure
 }
 
 
