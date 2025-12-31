@@ -7,13 +7,13 @@ sources:
 sha256sum:
  - "5f0557b90b1106de71951a3c3931de5e0430d78da1d9a10287ebc7a3f78ef8eb"
 depends:
- - "automake"
  - "libtool"
 build_depends:
- - "cmake"
+ - "automake"
 
 build {
- macro build
+ exec "sh autogen.sh"
+ macro build --autotools
 }
 
 package {
