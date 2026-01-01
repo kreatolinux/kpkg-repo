@@ -15,12 +15,12 @@ build_depends:
 
 build {
 # Taken from Kiss Linux repo, License here https://github.com/kisslinux/repo/blob/master/LICENSE
- macro build --disable-manual --disable-ldap --disable-ares --without-librtmp --without-libpsl --without-libidn2 --without-brotli --without-zstd --with-openssl --with-nghttp2 --with-ca-path=/etc/ssl/certs
+ macro build --configure --disable-manual --disable-ldap --disable-ares --without-librtmp --without-libpsl --without-libidn2 --without-brotli --without-zstd --with-openssl --with-nghttp2 --with-ca-path=/etc/ssl/certs
 
 }
 
 package {
- macro package
+ macro package --configure
 }
 
 
