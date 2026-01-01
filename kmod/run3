@@ -13,16 +13,25 @@ build_depends:
   - "gmake"
 
 build {
-  macro build --with-zlib --prefix=/usr --disable-manpages
-  exec "make"
+  macro build --configure --with-zlib --prefix=/usr --disable-manpages
 }
 
 package {
-  exec "make DESTDIR=$ROOT install"
-  exec "[ -f \"$ROOT/usr/bin/depmod\" ] || ln -s /usr/bin/kmod $ROOT/usr/bin/depmod"
-  exec "[ -f \"$ROOT/usr/bin/rmmod\" ] || ln -s /usr/bin/kmod $ROOT/usr/bin/rmmod"
-  exec "[ -f \"$ROOT/usr/bin/lsmod\" ] || ln -s /usr/bin/kmod $ROOT/usr/bin/lsmod"
-  exec "[ -f \"$ROOT/usr/bin/insmod\" ] || ln -s /usr/bin/kmod $ROOT/usr/bin/insmod"
-  exec "[ -f \"$ROOT/usr/bin/modprobe\" ] || ln -s /usr/bin/kmod $ROOT/usr/bin/modprobe"
+  macro package --configure
+  if ${exec("test ! -f $ROOT/usr/bin/depmod").exit()} == 0 {
+    exec "ln -s /usr/bin/kmod $ROOT/usr/bin/depmod"
+  }
+  if ${exec("test ! -f $ROOT/usr/bin/rmmod").exit()} == 0 {
+    exec "ln -s /usr/bin/kmod $ROOT/usr/bin/rmmod"
+  }
+  if ${exec("test ! -f $ROOT/usr/bin/lsmod").exit()} == 0 {
+    exec "ln -s /usr/bin/kmod $ROOT/usr/bin/lsmod"
+  }
+  if ${exec("test ! -f $ROOT/usr/bin/insmod").exit()} == 0 {
+    exec "ln -s /usr/bin/kmod $ROOT/usr/bin/insmod"
+  }
+  if ${exec("test ! -f $ROOT/usr/bin/modprobe").exit()} == 0 {
+    exec "ln -s /usr/bin/kmod $ROOT/usr/bin/modprobe"
+  }
 }
 
