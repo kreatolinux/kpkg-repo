@@ -1,16 +1,23 @@
 name: "kmod"
 version: "34.2"
-release: "3"
+release: "4"
 description: "Contains utilities for loading kernel modules"
 sources:
   - "https://www.kernel.org/pub/linux/utils/kernel/kmod/kmod-$version.tar.xz"
+  - "busybox-ln-compat.patch"
 sha256sum:
   - "5a5d5073070cc7e0c7a7a3c6ec2a0e1780850c8b47b3e3892226b93ffcb9cb54"
+  - "b9efc9e6baf4a3821f52e88a69203902564cfec70689e008946c538569b0bb96"
 depends:
   - "zlib"
 build_depends:
   - "pkgconf"
   - "gmake"
+
+prepare {
+  macro extract --autocd=true
+  exec "patch -p0 < ../../busybox-ln-compat.patch"
+}
 
 build {
   macro build --configure --with-zlib --prefix=/usr --disable-manpages
@@ -18,20 +25,5 @@ build {
 
 package {
   macro package --configure
-  if ${exec("test ! -f $ROOT/usr/bin/depmod").exit()} == 0 {
-    exec "ln -s /usr/bin/kmod $ROOT/usr/bin/depmod"
-  }
-  if ${exec("test ! -f $ROOT/usr/bin/rmmod").exit()} == 0 {
-    exec "ln -s /usr/bin/kmod $ROOT/usr/bin/rmmod"
-  }
-  if ${exec("test ! -f $ROOT/usr/bin/lsmod").exit()} == 0 {
-    exec "ln -s /usr/bin/kmod $ROOT/usr/bin/lsmod"
-  }
-  if ${exec("test ! -f $ROOT/usr/bin/insmod").exit()} == 0 {
-    exec "ln -s /usr/bin/kmod $ROOT/usr/bin/insmod"
-  }
-  if ${exec("test ! -f $ROOT/usr/bin/modprobe").exit()} == 0 {
-    exec "ln -s /usr/bin/kmod $ROOT/usr/bin/modprobe"
-  }
 }
 
