@@ -9,6 +9,7 @@ sha256sum:
 depends:
  - "perl"
  - "autoconf"
+ - "libtool"
 build_depends:
  - "gmake"
 
