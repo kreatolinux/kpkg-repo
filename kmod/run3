@@ -1,31 +1,22 @@
 name: "kmod"
 version: "34.2"
-release: "4"
+release: "5"
 description: "Contains utilities for loading kernel modules"
 sources:
   - "https://www.kernel.org/pub/linux/utils/kernel/kmod/kmod-$version.tar.xz"
-  - "busybox-ln-compat.patch"
 sha256sum:
   - "5a5d5073070cc7e0c7a7a3c6ec2a0e1780850c8b47b3e3892226b93ffcb9cb54"
-  - "b9efc9e6baf4a3821f52e88a69203902564cfec70689e008946c538569b0bb96"
 depends:
   - "zlib"
 build_depends:
   - "pkgconf"
-  - "gmake"
-  - "automake"
-
-prepare {
-  macro extract --autocd=true
-  exec "patch -p0 < ../busybox-ln-compat.patch"
-  exec "autoreconf -fi"
-}
+  - "meson"
 
 build {
-  macro build --configure --with-zlib --prefix=/usr --disable-manpages
+  macro build -Dmanpages=false
 }
 
 package {
-  macro package --configure
+  macro package
 }
 
