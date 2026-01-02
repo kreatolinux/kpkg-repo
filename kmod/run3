@@ -13,6 +13,7 @@ depends:
 build_depends:
   - "pkgconf"
   - "gmake"
+  - "automake"
 
 prepare {
   macro extract --autocd=true
