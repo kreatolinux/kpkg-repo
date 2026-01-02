@@ -18,6 +18,7 @@ build_depends:
 prepare {
   macro extract --autocd=true
   exec "patch -p0 < ../busybox-ln-compat.patch"
+  exec "autoreconf -fi"
 }
 
 build {
