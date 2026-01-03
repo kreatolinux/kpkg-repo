@@ -19,7 +19,6 @@ build_depends:
   - "gmake"
 
 build {
-  cd "libarchive-$version"
   # Taken from BLFS r11.2-232
   exec "sed '/linux\\/fs\\.h/d' -i libarchive/archive_read_disk_posix.c"
   macro build --prefix=/usr --disable-static
@@ -27,7 +26,6 @@ build {
 }
 
 package {
-  cd "libarchive-$version"
   exec "make DESTDIR=$ROOT install"
   exec "sed -i '/Libs.private: /s|$| -liconv|' \"$ROOT/usr/lib/pkgconfig/libarchive.pc\""
   exec "sed -i '/Requires.private:/d'          \"$ROOT/usr/lib/pkgconfig/libarchive.pc\""
