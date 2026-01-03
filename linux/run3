@@ -1,5 +1,5 @@
 name: "linux"
-version: "6.18"
+version: "6.18.3"
 release: "7"
 description: "The Linux kernel and headers"
 sources:
@@ -7,7 +7,7 @@ sources:
   - "https://github.com/projg2/fedora-kernel-config-for-gentoo/raw/6.7.10-gentoo/kernel-x86_64-fedora.config"
   - "settings.config"
 sha256sum:
-  - "9106a4605da9e31ff17659d958782b815f9591ab308d03b0ee21aad6c7dced4b"
+  - "7a8879167b89c4bae077d6f39c4f2130769f05dbdad2aad914adab9afb7d7f9a"
   - "62cda75cb56faa94551e14200f4dff00e27ea30189d5399c3ce863ef2ba2b4b3"
   - "04f33434bb1b16b2a38e3a36d6ce59e0bf032db6954d4a71d07d8f3f5ab37e4c"
 depends:
