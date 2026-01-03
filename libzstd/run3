@@ -10,11 +10,11 @@ build_depends:
  - "gmake"
 
 build {
- exec "make"
+ exec "make PREFIX=/usr"
 }
 
 package {
- macro package
+ exec "make PREFIX=/usr DESTDIR=$ROOT install"
 }
 
 
