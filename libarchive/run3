@@ -12,7 +12,6 @@ depends:
   - "bzip2"
   - "xz-utils"
   - "zlib"
-  - "libxml2"
   - "libzstd"
   - "linux-headers"
 build_depends:
@@ -21,7 +20,7 @@ build_depends:
 build {
   # Taken from BLFS r11.2-232
   exec "sed '/linux\\/fs\\.h/d' -i libarchive/archive_read_disk_posix.c"
-  macro build --configure --prefix=/usr --disable-static
+  macro build --configure --prefix=/usr --disable-static --without-xml2
   exec "make -j${exec('nproc').output()}"
 }
 
