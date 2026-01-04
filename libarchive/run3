@@ -21,13 +21,13 @@ build_depends:
 build {
   # Taken from BLFS r11.2-232
   exec "sed '/linux\\/fs\\.h/d' -i libarchive/archive_read_disk_posix.c"
-  macro build --prefix=/usr --disable-static
-  exec "make -j$(nproc)"
+  macro build --configure --prefix=/usr --disable-static
+  exec "make -j${exec('nproc').output()}"
 }
 
 package {
-  exec "make DESTDIR=$ROOT install"
-  exec "sed -i '/Libs.private: /s|$| -liconv|' \"$ROOT/usr/lib/pkgconfig/libarchive.pc\""
-  exec "sed -i '/Requires.private:/d'          \"$ROOT/usr/lib/pkgconfig/libarchive.pc\""
+  macro package --configure
+  exec "sed -i '/Libs.private: /s|$| -liconv|' $ROOT/usr/lib/pkgconfig/libarchive.pc"
+  exec "sed -i '/Requires.private:/d'          $ROOT/usr/lib/pkgconfig/libarchive.pc"
 }
 
