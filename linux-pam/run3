@@ -24,10 +24,9 @@ build_depends:
 prepare {
   exec "mkdir pam.d"
 
-  exec "for i in other system-account system-auth system-password system-session login"
-  exec "do"
-  exec "cp -f \"$i\" \"pam.d/$i\""
-  exec "done"
+  for i in ["other", "system-account", "system-auth", "system-password", "system-session", "login"] {
+    exec "cp -f $i pam.d/$i"
+  }
 
   exec "tar -xvf Linux-PAM-$version.tar.xz"
   cd "Linux-PAM-$version"
@@ -41,8 +40,8 @@ build {
 
 package {
   cd "Linux-PAM-$version"
-  exec "meson install --destdir=\"$ROOT\" -C build"
-  exec "mkdir -p \"$ROOT/etc/pam.d\""
-  exec "cp -rf ../pam.d/* \"$ROOT/etc/pam.d/\""
+  exec "meson install --destdir=$ROOT -C build"
+  exec "mkdir -p $ROOT/etc/pam.d"
+  exec "cp -rf ../pam.d/* $ROOT/etc/pam.d/"
 }
 
