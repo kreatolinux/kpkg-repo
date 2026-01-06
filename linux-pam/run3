@@ -18,6 +18,7 @@ sha256sum:
   - "29ef099774837bf3fe01ef6b22fc87ac55bf222a4c0f8544d007f57b6aa4b61a"
   - "01a02779791bc29e111b9f7e29dd1f2c0ea0ae750b43ac87a25c26e6dd4d8173"
   - "216eb2abc095566afa0ed5394f5b32765d3e3b63295c0e972ecd8ebda1a734d2"
+extract: false
 build_depends:
   - "meson"
 
