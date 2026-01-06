@@ -34,13 +34,11 @@ prepare {
 }
 
 build {
-  cd "Linux-PAM-$version"
   exec "meson setup  --prefix=/usr  --buildtype=release  -D securedir=/usr/lib/security  -D docs=disabled  build"
   exec "meson compile -C build"
 }
 
 package {
-  cd "Linux-PAM-$version"
   exec "meson install --destdir=$ROOT -C build"
   exec "mkdir -p $ROOT/etc/pam.d"
   exec "cp -rf ../pam.d/* $ROOT/etc/pam.d/"
