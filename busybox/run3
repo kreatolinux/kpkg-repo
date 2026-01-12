@@ -2,6 +2,7 @@ name: "busybox"
 version: "1.36.1"
 release: "5"
 description: "The Swiss Army Knife of Embedded Linux"
+extract: false
 sources:
   - "https://www.busybox.net/downloads/busybox-$version.tar.bz2"
   - "ln-relative-symlinks.patch"
