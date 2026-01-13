@@ -13,16 +13,16 @@ build_depends:
 
 build {
  local extraArgs=""
- if "$KPKG_ARCH" != "${exec(\"uname -m\").output()}" {
+ if "$KPKG_ARCH" != "${exec('uname -m').output()}" {
  global extraArgs="--with-sysroot=/usr/$KPKG_TARGET"
 }
 
- macro build ${extraArgs} -j"${exec(\\\"nproc\\\").output()}"
+ macro build ${extraArgs} -j"${exec('nproc').output()}"
 }
 
 package {
  macro package
- exec "rm -rf \"$ROOT/usr/share/info/dir\""
+ exec "rm -rf $ROOT/usr/share/info/dir"
 }
 
 
