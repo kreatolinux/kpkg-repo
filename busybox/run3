@@ -37,31 +37,23 @@ prepare {
 }
 
 build {
-  cd "busybox-$version"
   exec "make -j$(nproc) defconfig"
   exec "make -j$(nproc) busybox"
 }
 
 package_busybox_standalone {
-  cd "busybox-$version"
   exec "mkdir -p $ROOT/bin"
   exec "cp busybox $ROOT/bin"
 }
 
 package {
   package_busybox_standalone
-  exec "\"$ROOT/bin/busybox\" --list | while read APPLET; do"
-  exec "case $APPLET in"
-  # Dependencies will cover these commands.
-  # We don't outright disable these just in case someone needs them.
-  exec "\"clear\" | \"egrep\" | \"fgrep\" | \"grep\" | \"strings\" | \"setfattr\" | \"xz\" | \"su\" | \"nologin\" | \"chpasswd\" | \"groups\" | \"login\" | \"tar\" | \"bzip2\" | \"bzcat\" | \"lzcat\" | \"unxz\")"
-  exec "continue"
-  exec ";;"
-  exec "*)"
-  print "Linking /bin/busybox to /bin/$APPLET"
-  exec "ln -s /bin/busybox \"$ROOT/bin/$APPLET\""
-  exec ";;"
-  exec "esac"
-  exec "done"
+  for APPLET in "${exec(\"$ROOT/bin/busybox --list\").output()}" {
+    if "$APPLET" =~ e"clear|egrep|fgrep|grep|strings|setfattr|xz|su|nologin|chpasswd|groups|login|tar|bzip2|bzcat|lzcat|unxz" {
+      continue
+    }
+    print "Linking /bin/busybox to /bin/$APPLET"
+    exec "ln -s /bin/busybox $ROOT/bin/$APPLET"
+  }
 }
 
