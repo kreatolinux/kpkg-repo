@@ -17,7 +17,7 @@ build {
  global extraArgs="--with-sysroot=/usr/$KPKG_TARGET"
 }
 
- macro build ${extraArgs} -j"${exec('nproc').output()}"
+ macro build ${extraArgs}
 }
 
 package {
