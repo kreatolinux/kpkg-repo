@@ -1,11 +1,11 @@
 name: "alsa-lib"
-version: "1.2.15.1"
+version: "1.2.15.3"
 release: "1"
 description: "Libraries for ALSA"
 sources:
  - "https://www.alsa-project.org/files/pub/lib/alsa-lib-${version}.tar.bz2"
 sha256sum:
- - "83770841585e766a60c99fd23f8c574c22643ae0cb1f2d20b793c3d84eb95a8d"
+ - "7b079d614d582cade7ab8db2364e65271d0877a37df8757ac4ac0c8970be861e"
 build_depends:
  - "gmake"
 
