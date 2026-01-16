@@ -42,14 +42,12 @@ prepare {
 }
 
 build {
-  cd "systemd-stable-$version"
   env PATH="$(realpath ../):$PATH"
   exec "meson setup  --prefix=/usr  -Dpamconfdir=/etc/pam.d  -Dpam=true  -Dldconfig=false  build/"
   exec "ninja -C build/"
 }
 
 package {
-  cd "systemd-stable-$version"
   env PATH="$(realpath ../):$PATH"
   exec "DESTDIR=$ROOT ninja -C build/ install"
 

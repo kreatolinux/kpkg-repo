@@ -22,7 +22,6 @@ build {
 }
 
 package {
-  cd "nspr"
   exec "make DESTDIR=$ROOT install"
 }
 

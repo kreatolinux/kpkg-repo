@@ -19,7 +19,6 @@ build {
 }
 
 package {
-  cd "build"
   exec "make DESTDIR=\"$ROOT\" install"
 }
 

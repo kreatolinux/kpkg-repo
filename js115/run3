@@ -28,13 +28,12 @@ prepare {
 }
 
 build {
-  exec "mkdir firefox-$version/obj"
-  cd "firefox-$version/obj"
+  exec "mkdir obj"
+  cd "obj"
   exec "CC=clang CXX=clang++ sh ../js/src/configure  --prefix=/usr  --with-intl-api           --with-system-zlib        --with-system-icu         --disable-jemalloc        --disable-debug-symbols   --enable-readline"
   exec "make -j${exec(\"nproc\").output()}"
 }
 
 package {
-  cd "firefox-$version/obj"
   exec "make install"
 }

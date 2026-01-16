@@ -39,12 +39,10 @@ prepare {
 }
 
 build {
- cd "gtk-${version}"
  macro build -Dx11-backend=true -Dmedia-gstreamer=disabled -Dintrospection=enabled
 }
 
 package {
- cd "gtk-${version}"
  macro package
 }
 

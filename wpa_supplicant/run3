@@ -52,7 +52,6 @@ CFLAGS += -I/usr/include/libnl3
 }
 
 package {
-  cd "wpa_supplicant"
   exec "make BINDIR=/usr/sbin LIBDIR=/usr/lib DESTDIR=$ROOT install"
   # from blfs
   exec "mkdir $ROOT/usr/share/dbus-1/system-services"

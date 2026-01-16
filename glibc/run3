@@ -62,7 +62,6 @@ func build_aarch64_linux_gnu_glibc {
 }
 
 package_aarch64_linux_gnu_glibc {
-  cd "build"
   exec "ls"
   exec "make install_root=\"$ROOT/usr/aarch64-linux-gnu\" install"
   exec "rm -rf \"$ROOT/usr/share/info/dir\""

@@ -15,7 +15,6 @@ build {
 }
 
 package {
- cd "source"
  macro package
 }
 

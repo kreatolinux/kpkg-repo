@@ -41,7 +41,6 @@ build {
 }
 
 package {
-  cd "build"
   exec "make DESTDIR=$ROOT install -j1"
   exec "rm -f $ROOT/usr/lib/libbfd.la"
   exec "rm -rf \"$ROOT/usr/share/info/dir\""

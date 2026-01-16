@@ -40,13 +40,12 @@ prepare {
 }
 
 build {
-  cd "gnome-control-center-$version"
+  cd "../.."
   exec "meson setup  --prefix=/usr  --buildtype=release  -Ddistributor_logo=/usr/share/pixmaps/klinux_logo.png  -Ddark_mode_distributor_logo=/usr/share/pixmaps/klinux_logo.png  build"
   exec "ninja -C build"
 }
 
 package {
-  cd "gnome-control-center-$version"
   exec "DESTDIR=\"$ROOT\" ninja -C build install"
   exec "mkdir -p \"$ROOT/usr/share/pixmaps\""
   exec "cp ../klinux_pixmap.png \"$ROOT/usr/share/pixmaps/klinux_logo.png\""

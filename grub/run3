@@ -22,19 +22,16 @@ prepare {
 }
 
 func build_grub_efi {
-  cd "grub-$version"
   macro build --disable-efiemu --disable-werror --prefix=/usr --sysconfdir=/etc --with-platform=efi
   exec "make"
 }
 
 build {
-  cd "grub-$version"
   macro build --disable-efiemu --disable-werror --prefix=/usr --sysconfdir=/etc
   exec "make"
 }
 
 package {
-  cd "grub-$version"
   exec "make DESTDIR=\"$ROOT\" install"
 }
 

@@ -15,7 +15,6 @@ build {
 }
 
 package {
-  cd "squashfs-tools"
   exec "rm -f ../generate-manpages/install-manpages.sh"
   exec "touch ../generate-manpages/install-manpages.sh"
   exec "chmod +x ../generate-manpages/install-manpages.sh"

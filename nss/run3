@@ -53,7 +53,7 @@ build {
 
 package {
 
-  cd "nss-$version"
+  cd ".."
 
   exec "DIST=$(basename dist/Linux*.OBJ)"
   # From https://gitlab.archlinux.org/archlinux/packaging/packages/nss/-/commit/314bb55c3ab50a9951993c885e6d5df56f5b13a6
@@ -86,7 +86,6 @@ package {
 }
 
 package_ca_certificates_mozilla {
-  cd "nss-$version"
   exec "install -Dm644 ca-bundle.trust.p11-kit  \"$ROOT/usr/share/ca-certificates/trust-source/mozilla.trust.p11-kit\""
 }
 
