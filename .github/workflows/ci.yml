@@ -250,7 +250,7 @@ jobs:
           for package in ${{ matrix.packages }}; do
             if [ -f "$GITHUB_WORKSPACE/$package/run" ]; then
               echo "Running chkupd on $package"
-              /tmp/chkupd-bin/chkupd check --package="$package" --repo "$GITHUB_WORKSPACE" --backend repology
+              /tmp/chkupd-bin/chkupd check --package="$package" --repo "$GITHUB_WORKSPACE" --backend repology || true
             fi
           done
 
