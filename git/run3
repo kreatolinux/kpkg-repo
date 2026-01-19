@@ -12,6 +12,7 @@ depends:
   - "zlib"
 build_depends:
   - "gmake"
+  - "gsed"
 
 build {
   exec "./configure --prefix=/usr"
