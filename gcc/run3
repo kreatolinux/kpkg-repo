@@ -24,17 +24,14 @@ depends_gcc:
   - "linux-headers"
 
 func common_build {
-  # Source: https://www.linuxfromscratch.org/lfs/view/development/chapter08/gcc.html
-  exec "case $(uname -m) in"
-  exec "x86_64)"
-  exec "sed -e '/m64=/s/lib64/lib/'  -i.orig gcc/config/i386/t-linux64"
-  exec ";;"
-  exec "esac"
+  if "${exec("uname -m").output()}" == "x86_64" {
+    exec "sed -e '/m64=/s/lib64/lib/' -i.orig gcc/config/i386/t-linux64"
+  }
   exec "rm -rf build"
   exec "mkdir -v build"
-  cd "build"
+cd "build"
 
-  exec "prefix=\"/usr\""
+  local prefix = "/usr"
   if "$1" == "${exec("uname -m").output()}-linux-gnu" {
     local target = "${exec("uname -m").output()}-linux-gnu"
   } else {
@@ -45,7 +42,7 @@ func common_build {
     local extraArgs = "--libdir=/usr/lib --libexecdir=/usr/lib --with-local-prefix=/usr/$target --with-sysroot=/usr/$target --with-build-sysroot=/usr/$target --with-native-system-header-dir=/include --program-prefix=$target-"
   }
 
-  exec "../configure  $extraArgs                            --enable-languages=c,c++                        --enable-default-pie                            --enable-default-ssp                            --prefix=\"$prefix\"                              --host=\"$(uname -m)-linux-gnu\"\t\t        --build=\"$(uname -m)-linux-gnu\"\t\t        --target=\"$target\"\t\t\t        --disable-fixincludes                           --disable-multilib                              --without-headers                               --disable-nls                                   --enable-initfini-array                         --with-system-zlib"
+  exec "../configure $extraArgs --enable-languages=c,c++ --enable-default-pie --enable-default-ssp --prefix="$prefix" --host="$(uname -m)-linux-gnu" --build="$(uname -m)-linux-gnu" --target="$target" --disable-fixincludes --disable-multilib --without-headers --disable-nls --enable-initfini-array --with-system-zlib"
 
   exec "make MAKEINFO=true -j$(nproc)"
 }
@@ -62,7 +59,7 @@ package_aarch64_linux_gnu_gcc {
   exec "make MAKEINFO=true DESTDIR=$ROOT install-strip"
   exec "rm -rf $ROOT/source"
   write "$ROOT/usr/aarch64-linux-gnu/aarch64-linux-gnu-meson.txt" """
-    [binaries]
+[binaries]
 c = 'aarch64-linux-gnu-gcc'
 cpp = 'aarch64-linux-gnu-g++'
 ar = 'aarch64-linux-gnu-ar'
@@ -93,12 +90,13 @@ set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
 set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 """
-  exec "rm -rf \"$ROOT/usr/share/info/dir\""
+exec "rm -rf $ROOT/usr/share/info/dir"
+
 }
 
 package_gcc {
   exec "make MAKEINFO=true DESTDIR=$ROOT install-strip"
   exec "rm -rf $ROOT/source"
-  exec "rm -rf \"$ROOT/usr/share/info/dir\""
+  exec "rm -rf $ROOT/usr/share/info/dir"
 }
 
