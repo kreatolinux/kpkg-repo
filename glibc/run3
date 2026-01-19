@@ -19,7 +19,6 @@ depends_aarch64_linux_gnu_glibc:
   - "aarch64-linux-gnu-linux-headers"
 
 func common_build {
-  env LD_LIBRARY_PATH="$(echo $LD_LIBRARY_PATH | sed 's/^://;s/:$//;s/:://g')"
   env CC="$1-gcc"
   env CXX="$1-g++"
 
