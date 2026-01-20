@@ -11,7 +11,7 @@ build_depends:
  - "bash"
 
 build {
- exec "make -j\"${exec(\\\"nproc\\\").output()}\""
+ exec "make -j${exec('nproc').output()}"
 }
 
 package {

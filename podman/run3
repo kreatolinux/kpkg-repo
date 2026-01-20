@@ -18,7 +18,8 @@ build_depends:
  - "gmake"
 
 build {
- exec "make BUILDTAGS=\"seccomp\" -j\"${exec(\\\"nproc\\\").output()}\""
+  env BUILDTAGS="seccomp"
+  exec "make -j${exec('nproc').output()}"
 }
 
 package {
