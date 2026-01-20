@@ -29,22 +29,21 @@ func common_build {
   }
   exec "rm -rf build"
   exec "mkdir -v build"
-cd "build"
-
+  cd "build"
+  
   local prefix = "/usr"
-  if "$1" == "${exec("uname -m").output()}-linux-gnu" {
-    local target = "${exec("uname -m").output()}-linux-gnu"
+  local arch = "${exec("uname -m").output()}"
+  if "$1" == "${arch}-linux-gnu" {
+    local target = "${arch}-linux-gnu"
+    local extraArgs = ""
   } else {
     local target = "$1"
-    #prefix="/usr/$target"
-    # Taken from arch
-    # https://gitlab.archlinux.org/archlinux/packaging/packages/aarch64-linux-gnu-gcc/-/blob/main/PKGBUILD?ref_type=heads
-    local extraArgs = "--libdir=/usr/lib --libexecdir=/usr/lib --with-local-prefix=/usr/$target --with-sysroot=/usr/$target --with-build-sysroot=/usr/$target --with-native-system-header-dir=/include --program-prefix=$target-"
+    local extraArgs = "--libdir=/usr/lib --libexecdir=/usr/lib --with-local-prefix=/usr/${target} --with-sysroot=/usr/${target} --with-build-sysroot=/usr/${target} --with-native-system-header-dir=/include --program-prefix=${target}-"
   }
 
-  exec "../configure $extraArgs --enable-languages=c,c++ --enable-default-pie --enable-default-ssp --prefix="$prefix" --host="$(uname -m)-linux-gnu" --build="$(uname -m)-linux-gnu" --target="$target" --disable-fixincludes --disable-multilib --without-headers --disable-nls --enable-initfini-array --with-system-zlib"
+  exec "../configure ${extraArgs} --enable-languages=c,c++ --enable-default-pie --enable-default-ssp --prefix=\"${prefix}\" --host=\"${arch}-linux-gnu\" --build=\"${arch}-linux-gnu\" --target=\"${target}\" --disable-fixincludes --disable-multilib --without-headers --disable-nls --enable-initfini-array --with-system-zlib"
 
-  exec "make MAKEINFO=true -j$(nproc)"
+  exec "make MAKEINFO=true -j${exec("nproc").output()}"
 }
 
 func build_aarch64_linux_gnu_gcc {
@@ -90,8 +89,7 @@ set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
 set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 """
-exec "rm -rf $ROOT/usr/share/info/dir"
-
+  exec "rm -rf $ROOT/usr/share/info/dir"
 }
 
 package_gcc {
@@ -99,4 +97,3 @@ package_gcc {
   exec "rm -rf $ROOT/source"
   exec "rm -rf $ROOT/usr/share/info/dir"
 }
-
