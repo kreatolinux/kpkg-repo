@@ -14,11 +14,11 @@ build_depends:
  - "gmake"
 
 build {
- macro build --sysconfdir=/etc --with-trust-paths=/etc/ca-certificates/trust-source:/usr/share/ca-certificates/trust-source
+ macro build --configure --sysconfdir=/etc --with-trust-paths=/etc/ca-certificates/trust-source:/usr/share/ca-certificates/trust-source
 }
 
 package {
- macro package
+ macro package --configure
 }
 
 
