@@ -2,7 +2,7 @@
 NAME="git"
 RELEASE="1"
 VERSION="2.52.0"
-BUILD_DEPENDS="gmake"
+BUILD_DEPENDS="gmake gsed"
 DESCRIPTION="Version control tool"
 SOURCES="https://mirrors.edge.kernel.org/pub/software/scm/git/git-$VERSION.tar.xz"
 DEPENDS="curl openssl zlib"
@@ -18,6 +18,8 @@ NO_EXPAT=YesPlease
 NO_NSEC=YesPlease
 NO_PYTHON=YesPlease
 NO_PERL=YesPlease
+NO_PERL_CPAN_FALLBACKS=YesPlease
+NO_ARCHIMPORT=YesPlease
 NO_SYS_POLL_H=1
 NO_CROSS_DIRECTORY_HARDLINKS=1
 NO_INSTALL_HARDLINKS=1

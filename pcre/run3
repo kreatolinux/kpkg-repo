@@ -10,7 +10,7 @@ build_depends:
  - "cmake"
 
 build {
- macro build 
+ macro build -DBUILD_SHARED_LIBS=ON
 }
 
 package {
