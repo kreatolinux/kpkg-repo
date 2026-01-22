@@ -30,6 +30,7 @@ NO_CROSS_DIRECTORY_HARDLINKS=1
 NO_INSTALL_HARDLINKS=1
 """
   exec "./configure --prefix=/usr"
+  exec "sed -i '/SCRIPT_PERL +=/d' Makefile"
   exec "make -j${exec('nproc').output()}"
 }
 
