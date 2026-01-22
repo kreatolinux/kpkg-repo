@@ -10,7 +10,7 @@ B2SUM="591e5d93049e7d02f410158893e8fc9faf658e4ec2aaf12fb8069642a0c2cabb80c839f00
 DESCRIPTION="Kreato Linux source tree metapackage"
 
 build_kpkg() {
-        nimble install cligen fuzzy nimcrypto norm -y
+        nimble install cligen fuzzy nimcrypto norm regex -y
         nim c --deepcopy:on -d:release -d:useDist --passL:-larchive --threads:on -d:ver="$VERSION" -d:ssl -o="out/kpkg" "kpkg/kpkg.nim"
 }
 
