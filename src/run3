@@ -18,7 +18,7 @@ depends_kpkg:
   - "sqlite"
 
 func build_kpkg {
-  exec "nimble install cligen fuzzy nimcrypto norm -y"
+  exec "nimble install cligen fuzzy nimcrypto norm regex -y"
   exec "nim c --deepcopy:on -d:release -d:useDist --passL:-larchive --threads:on -d:ver=\"$version\" -d:ssl -o=\"out/kpkg\" \"kpkg/kpkg.nim\""
 }
 
