@@ -22,17 +22,16 @@ depends_ca_certificates_mozilla:
   - "ca-certificates-utils"
 
 prepare {
-  exec "bsdtar -xf nss-$version.tar.gz"
-  cd "nss-$version"
   exec "mkdir -p certs"
   cd "certs"
   for i in ["certdata.txt", "nssckbi.h"] {
     exec "ln -srf ../nss/lib/ckfw/builtins/$i $i"
   }
+  cd ".."
 }
 
 build {
-  cd "nss-$version/certs"
+  cd "certs"
 
   # Scripts from Arch Linux: https://gitlab.archlinux.org/archlinux/packaging/packages/nss/-/tree/3.98-1?ref_type=tags
   exec "python ../../certdata2pem.py || exit 1"
@@ -41,7 +40,7 @@ build {
   exec "sh ../bundle.sh || exit 1"
 
   cd "nss"
-  if "${exec("uname -m").output()}" == "x86_64" {
+  if ${exec("uname -m").output()} == "x86_64" {
     env USE_64="1"
   } else {
     env USE_64="0"
@@ -52,29 +51,30 @@ build {
 }
 
 package {
-
   cd ".."
 
-  exec "DIST=$(basename dist/Linux*.OBJ)"
-  # From https://gitlab.archlinux.org/archlinux/packaging/packages/nss/-/commit/314bb55c3ab50a9951993c885e6d5df56f5b13a6
-  exec "nsprver=\"$(pkg-config --modversion nspr)\""
-  exec "libdir=/usr/lib includedir=/usr/include/nss"
+  local DIST = ${exec("basename dist/Linux*.OBJ").output()}
+  local nsprver = ${exec("pkg-config --modversion nspr").output()}
+  local libdir = "/usr/lib"
+  local includedir = "/usr/include/nss"
+  local vmajor = ${exec("awk '/#define.*NSS_VMAJOR/ {print $3}' nss/lib/nss/nss.h").output()}
+  local vminor = ${exec("awk '/#define.*NSS_VMINOR/ {print $3}' nss/lib/nss/nss.h").output()}
+  local vpatch = ${exec("awk '/#define.*NSS_VPATCH/ {print $3}' nss/lib/nss/nss.h").output()}
 
-  exec "sed nss/pkg/pkg-config/nss.pc.in  -e \"s,%prefix%,/usr,g\"  -e \"s,%exec_prefix%,\\${prefix},g\"  -e \"s,%libdir%,$libdir,g\"  -e \"s,%includedir%,$includedir,g\"  -e \"s,%NSPR_VERSION%,$nsprver,g\"  -e \"s,%NSS_VERSION%,$version,g\" |"
-  exec "install -Dm644 /dev/stdin \"$ROOT$libdir/pkgconfig/nss.pc\""
+  exec "sed nss/pkg/pkg-config/nss.pc.in -e \"s,%prefix%,/usr,g\" -e \"s,%exec_prefix%,\\${prefix},g\" -e \"s,%libdir%,$libdir,g\" -e \"s,%includedir%,$includedir,g\" -e \"s,%NSPR_VERSION%,$nsprver,g\" -e \"s,%NSS_VERSION%,$version,g\" | install -Dm644 /dev/stdin \"$ROOT$libdir/pkgconfig/nss.pc\""
 
   exec "ln -s nss.pc \"$ROOT$libdir/pkgconfig/mozilla-nss.pc\""
 
   exec "install -Dt \"$ROOT$libdir\" dist/$DIST/lib/*.so"
 
-  exec "{ read vmajor; read vminor; read vpatch; }  < <(awk '/#define.*NSS_V(MAJOR|MINOR|PATCH)/ {print $3}' nss/lib/nss/nss.h)"
+  exec "sed nss/pkg/pkg-config/nss-config.in -e \"s,@prefix@,/usr,g\" -e \"s,@exec_prefix@,/usr,g\" -e \"s,@libdir@,$libdir,g\" -e \"s,@includedir@,$includedir,g\" -e \"s,@MOD_MAJOR_VERSION@,$vmajor,g\" -e \"s,@MOD_MINOR_VERSION@,$vminor,g\" -e \"s,@MOD_PATCH_VERSION@,$vpatch,g\" | install -D /dev/stdin \"$ROOT/usr/bin/nss-config\""
 
-  exec "sed nss/pkg/pkg-config/nss-config.in  -e \"s,@prefix@,/usr,g\"  -e \"s,@exec_prefix@,/usr,g\"  -e \"s,@libdir@,$libdir,g\"  -e \"s,@includedir@,$includedir,g\"  -e \"s,@MOD_MAJOR_VERSION@,$vmajor,g\"  -e \"s,@MOD_MINOR_VERSION@,$vminor,g\"  -e \"s,@MOD_PATCH_VERSION@,$vpatch,g\" |"
-  exec "install -D /dev/stdin \"$ROOT/usr/bin/nss-config\""
-
-  cd "dist/$DIST/bin"
-  for i in ["*util", "shlibsign", "signtool", "signver", "ssltap"] {
-    exec "install -Dt \"$ROOT/usr/bin\"  \"$i\""
+cd "dist/$DIST/bin"
+  for util in "${exec("ls -1 *util 2>/dev/null").output()}" {
+    exec "install -Dt \"$ROOT/usr/bin\" \"$util\""
+  }
+  for i in ["shlibsign", "signtool", "signver", "ssltap"] {
+    exec "install -Dt \"$ROOT/usr/bin\" \"$i\""
   }
   cd "-"
 
@@ -86,6 +86,6 @@ package {
 }
 
 package_ca_certificates_mozilla {
-  exec "install -Dm644 ca-bundle.trust.p11-kit  \"$ROOT/usr/share/ca-certificates/trust-source/mozilla.trust.p11-kit\""
+  exec "install -Dm644 ca-bundle.trust.p11-kit \"$ROOT/usr/share/ca-certificates/trust-source/mozilla.trust.p11-kit\""
 }
 
