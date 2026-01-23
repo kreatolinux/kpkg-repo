@@ -15,8 +15,7 @@ build_depends:
   - "gsed"
 
 build {
-  # Write config.mak BEFORE configure (like KISS Linux)
-  # Taken from kiss linux, license is https://github.com/kisslinux/repo/blob/master/LICENSE
+  exec "rm -rf perl"
   write "config.mak" """
 NO_GETTEXT=YesPlease
 NO_SVN_TESTS=YesPlease
@@ -30,7 +29,6 @@ NO_CROSS_DIRECTORY_HARDLINKS=1
 NO_INSTALL_HARDLINKS=1
 """
   exec "./configure --prefix=/usr"
-  exec "sed -i '/SCRIPT_PERL +=/d' Makefile"
   exec "make -j${exec('nproc').output()}"
 }
 
