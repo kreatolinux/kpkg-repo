@@ -51,8 +51,6 @@ build {
 }
 
 package {
-  cd ".."
-
   local DIST = ${exec("basename dist/Linux*.OBJ").output()}
   local nsprver = ${exec("pkg-config --modversion nspr").output()}
   local libdir = "/usr/lib"
