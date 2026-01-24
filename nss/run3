@@ -84,6 +84,7 @@ cd "dist/$DIST/bin"
 }
 
 package_ca_certificates_mozilla {
+  cd "-"
   exec "install -Dm644 ca-bundle.trust.p11-kit \"$ROOT/usr/share/ca-certificates/trust-source/mozilla.trust.p11-kit\""
 }
 
