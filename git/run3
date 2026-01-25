@@ -15,7 +15,6 @@ build_depends:
   - "gsed"
 
 build {
-  exec "rm -rf perl"
   write "config.mak" """
 NO_GETTEXT=YesPlease
 NO_SVN_TESTS=YesPlease
@@ -28,8 +27,8 @@ NO_SYS_POLL_H=1
 NO_CROSS_DIRECTORY_HARDLINKS=1
 NO_INSTALL_HARDLINKS=1
 """
-  exec "./configure --prefix=/usr"
-  exec "make -j${exec('nproc').output()}"
+  exec "./configure --prefix=/usr --without-perl"
+  exec "make NO_PERL=YesPlease -j${exec('nproc').output()}"
 }
 
 package {
