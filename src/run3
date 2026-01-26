@@ -1,11 +1,11 @@
 name: "src"
-version: "8.0.0-alpha2"
+version: "8.0.0-alpha2.1"
 release: "1"
 description: "Kreato Linux source tree metapackage"
 sources:
   - "https://github.com/kreatolinux/src/releases/download/v$version/src-v$version-dist.tar.gz"
 b2sum:
-  - "2a2b7bc9667582f8e68e90f245e2c003f7aa73005d04448cf18a8294b786330d43170373e473f614518c6ecf4048a597701088109e518352d6b25898fccb512a"
+  - "d85b95134d947985f6603263a09194738d90524eeed227c10a327ffdd171ba72b2c821e3a71ea79c152b779d1a718d2bafbe3b823295009457bd62885c9ef534"
 depends:
   - "libarchive"
   - "shadow"
