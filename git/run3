@@ -27,6 +27,11 @@ NO_SYS_POLL_H=1
 NO_CROSS_DIRECTORY_HARDLINKS=1
 NO_INSTALL_HARDLINKS=1
 """
+  echo "--- DEBUG START ---"
+  exec "which -a sed || true"
+  exec "sed --version || true"
+  exec "ls -l /usr/bin/sed || true"
+  echo "--- DEBUG END ---"
   exec "./configure --prefix=/usr"
   exec "make -j${exec('nproc').output()}"
 }
