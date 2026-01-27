@@ -11,7 +11,7 @@ build_depends:
  - "gmake"
 
 build {
- macro build 
+ macro build --program-prefix=g
 }
 
 package {
