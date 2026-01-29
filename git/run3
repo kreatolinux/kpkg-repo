@@ -9,6 +9,7 @@ sha256sum:
 depends:
   - "curl"
   - "openssl"
+  - "perl"
   - "zlib"
 build_depends:
   - "gmake"
@@ -20,7 +21,8 @@ build {
   exec "ln -sf $(which gsed) bin-shim/sed"
   env PATH="${exec('pwd').output().replace('\n', '')}/bin-shim:$PATH"
 
-  write "config.mak" """
+  # Write config.mak using exec to ensure it's inside the sandbox
+  exec "cat > config.mak << 'EOF'
 NO_GETTEXT=YesPlease
 NO_SVN_TESTS=YesPlease
 NO_TCLTK=YesPlease
@@ -34,9 +36,9 @@ NO_SYS_POLL_H=1
 NO_CROSS_DIRECTORY_HARDLINKS=1
 NO_INSTALL_HARDLINKS=1
 SED=gsed
-"""
+EOF"
   exec "SED=gsed ./configure --prefix=/usr"
-  exec "make SED=gsed -j${exec('nproc').output()}"
+  exec "make SED=gsed NO_PERL=YesPlease NO_ARCHIMPORT=YesPlease -j${exec('nproc').output()}"
 }
 
 package {
