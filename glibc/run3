@@ -26,6 +26,10 @@ func common_build {
   exec "env"
   print "==END OLD ENVIRONMENT=="
 
+  # glibc configure fails if LD_LIBRARY_PATH contains current directory
+  # Filter out "." and empty components from LD_LIBRARY_PATH
+  env LD_LIBRARY_PATH="${exec('echo \"$LD_LIBRARY_PATH\" | tr : \"\\n\" | grep -v \"^\\.$\" | grep -v \"^$\" | tr \"\\n\" : | sed \"s/:$//\"').output()}"
+
   exec "mkdir -v build"
   cd "build"
 
