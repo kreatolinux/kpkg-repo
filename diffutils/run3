@@ -12,7 +12,7 @@ build_depends:
 build {
   exec "mkdir -v build"
   cd "build"
-  macro build --configure --disable-nls --enable-shared --disable-werror --enable-64-bit-bfd
+  macro build --configure=.. --disable-nls --enable-shared --disable-werror --enable-64-bit-bfd
   exec "make"
 }
 
