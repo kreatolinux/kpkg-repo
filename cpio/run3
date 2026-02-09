@@ -10,12 +10,10 @@ build_depends:
   - "gmake"
 
 build {
-  exec "patch -p1 < $REPO_DIR/$name/patches/0001-src-global.c-drop-duplicate-definition-of-program_na.patch"
-  macro build --prefix=/usr
-  exec "make"
+  macro build --configure
 }
 
 package {
-  exec "make DESTDIR=$ROOT install"
+  macro package --configure
 }
 
