@@ -1,0 +1,90 @@
+diff -ur cpio-2.15/src/copyout.c cpio-2.15-patched/src/copyout.c
+--- cpio-2.15/src/copyout.c	2024-01-14 14:42:18
++++ cpio-2.15-patched/src/copyout.c	2026-02-09 19:23:45
+@@ -643,7 +643,7 @@
+ 	}
+ 
+       /* Process next file.  */
+-      if ((*xstat) (input_name.ds_string, &file_stat) < 0)
++      if ((*cpio_xstat) (input_name.ds_string, &file_stat) < 0)
+ 	stat_error (input_name.ds_string);
+       else
+ 	{
+diff -ur cpio-2.15/src/copypass.c cpio-2.15-patched/src/copypass.c
+--- cpio-2.15/src/copypass.c	2024-01-14 14:42:18
++++ cpio-2.15-patched/src/copypass.c	2026-02-09 19:23:45
+@@ -101,7 +101,7 @@
+ 		  && input_name.ds_string[2] == '\0')))
+ 	continue;
+ 
+-      if ((*xstat) (input_name.ds_string, &in_file_stat) < 0)
++      if ((*cpio_xstat) (input_name.ds_string, &in_file_stat) < 0)
+ 	{
+ 	  stat_error (input_name.ds_string);
+ 	  continue;
+diff -ur cpio-2.15/src/extern.h cpio-2.15-patched/src/extern.h
+--- cpio-2.15/src/extern.h	2024-01-14 14:42:18
++++ cpio-2.15-patched/src/extern.h	2026-02-09 19:23:45
+@@ -97,7 +97,7 @@
+ extern char output_is_special;
+ extern char input_is_seekable;
+ extern char output_is_seekable;
+-extern int (*xstat) ();
++extern int (*cpio_xstat) ();
+ extern void (*copy_function) ();
+ extern char *change_directory_option;
+ 
+diff -ur cpio-2.15/src/global.c cpio-2.15-patched/src/global.c
+--- cpio-2.15/src/global.c	2024-01-14 14:42:18
++++ cpio-2.15-patched/src/global.c	2026-02-09 19:23:45
+@@ -185,7 +185,7 @@
+ 
+ /* A pointer to either lstat or stat, depending on whether
+    dereferencing of symlinks is done for input files.  */
+-int (*xstat) ();
++int (*cpio_xstat) ();
+ 
+ /* Which copy operation to perform. (-i, -o, -p) */
+ void (*copy_function) () = 0;
+diff -ur cpio-2.15/src/main.c cpio-2.15-patched/src/main.c
+--- cpio-2.15/src/main.c	2024-01-14 14:42:18
++++ cpio-2.15-patched/src/main.c	2026-02-09 19:23:45
+@@ -404,7 +404,7 @@
+       break;
+ 
+     case 'L':		/* Dereference symbolic links.  */
+-      xstat = stat;
++      cpio_xstat = stat;
+       break;
+ 
+     case 'm':		/* Retain previous file modify times.  */
+@@ -591,7 +591,7 @@
+ {
+   int index;
+ 
+-  xstat = lstat;
++  cpio_xstat = lstat;
+ 
+   if (argp_parse (&argp, argc, argv, ARGP_IN_ORDER, &index, NULL))
+     exit (PAXEXIT_FAILURE);
+@@ -612,7 +612,7 @@
+       archive_des = 0;
+       CHECK_USAGE (link_flag, "--link", "--extract");
+       CHECK_USAGE (reset_time_flag, "--reset", "--extract");
+-      CHECK_USAGE (xstat != lstat, "--dereference", "--extract");
++      CHECK_USAGE (cpio_xstat != lstat, "--dereference", "--extract");
+       CHECK_USAGE (append_flag, "--append", "--extract");
+       CHECK_USAGE (output_archive_name, "-O", "--extract");
+       CHECK_USAGE (renumber_inodes_option, "--renumber-inodes", "--extract");
+diff -ur cpio-2.15/src/util.c cpio-2.15-patched/src/util.c
+--- cpio-2.15/src/util.c	2024-01-14 14:42:18
++++ cpio-2.15-patched/src/util.c	2026-02-09 19:23:45
+@@ -573,7 +573,7 @@
+ 		      time_t old_file_mtime)
+ {
+   struct stat new_file_stat;
+-  if ((*xstat) (file_name, &new_file_stat) < 0)
++  if ((*cpio_xstat) (file_name, &new_file_stat) < 0)
+     {
+       stat_error (file_name);
+       return;
