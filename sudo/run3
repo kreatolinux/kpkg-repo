@@ -13,12 +13,12 @@ build_depends:
   - "gmake"
 
 build {
-  macro build
-  exec "make"
+  env CFLAGS="$CFLAGS -Wno-error=incompatible-pointer-types"
+  macro build --configure
 }
 
 package {
-  exec "make install"
+  macro package --configure
   # From BLFS
   exec "mkdir -p $ROOT/etc/pam.d"
   write "$ROOT/etc/pam.d/sudo" """
