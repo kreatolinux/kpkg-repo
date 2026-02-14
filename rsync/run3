@@ -4,10 +4,16 @@ release: "1"
 description: "Open source utility that provides fast incremental file transfer"
 sources:
  - "https://download.samba.org/pub/rsync/src-previews/rsync-${version}.tar.gz"
+ - "patches/fix-lseek64-declaration.patch"
 sha256sum:
  - "30a18c6654cc09f6c6e5edb6738f196b20a1f2341dac5282693d69db2eac54e1"
+ - "7fb3410a120ce025ec4cd3fb85d78d99701b7e1ac9e1ca753dd7430f3390e4c4"
 build_depends:
  - "gmake"
+
+prepare {
+ exec "patch -p1 < ../fix-lseek64-declaration.patch"
+}
 
 build {
  macro build --disable-lz4 --disable-xxhash
