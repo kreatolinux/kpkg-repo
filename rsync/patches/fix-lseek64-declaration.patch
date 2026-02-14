@@ -1,11 +1,14 @@
 --- a/syscall.c
 +++ b/syscall.c
-@@ -391,8 +391,6 @@ OFF_T do_lseek(int fd, OFF_T offset, int whence)
+@@ -391,12 +391,7 @@ OFF_T do_lseek(int fd, OFF_T offset, int whence)
  {
  #ifdef HAVE_LSEEK64
- #if !defined(__LP64__) && SIZEOF_OFF64_T == 8
+-#if !SIZEOF_OFF64_T
+-	OFF_T lseek64();
+-#else
 -	off64_t lseek64();
--
+-#endif
  	return lseek64(fd, offset, whence);
- #endif
+ #else
+ 	return lseek(fd, offset, whence);
  #endif
