@@ -1,6 +1,6 @@
 --- a/syscall.c
 +++ b/syscall.c
-@@ -391,12 +391,7 @@ OFF_T do_lseek(int fd, OFF_T offset, int whence)
+@@ -388,12 +388,7 @@ OFF_T do_lseek(int fd, OFF_T offset, int whence)
  {
  #ifdef HAVE_LSEEK64
 -#if !SIZEOF_OFF64_T

@@ -7,7 +7,7 @@ sources:
  - "patches/fix-lseek64-declaration.patch"
 sha256sum:
  - "30a18c6654cc09f6c6e5edb6738f196b20a1f2341dac5282693d69db2eac54e1"
- - "1ae6932f0e7dccc77169a713b46e10ded7618a2bf7e7eb0fd24d4f3add1d2e73"
+ - "1421a0b1e26673358c62b9d3f8e9e5d90fbc9e74c57cd7dc477380cdaac7a0c0"
 build_depends:
  - "gmake"
 
