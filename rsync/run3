@@ -1,19 +1,13 @@
 name: "rsync"
-version: "3.3.0pre1"
+version: "3.4.1"
 release: "1"
 description: "Open source utility that provides fast incremental file transfer"
 sources:
- - "https://download.samba.org/pub/rsync/src-previews/rsync-${version}.tar.gz"
- - "patches/fix-lseek64-declaration.patch"
+ - "https://download.samba.org/pub/rsync/src/rsync-${version}.tar.gz"
 sha256sum:
- - "30a18c6654cc09f6c6e5edb6738f196b20a1f2341dac5282693d69db2eac54e1"
- - "1421a0b1e26673358c62b9d3f8e9e5d90fbc9e74c57cd7dc477380cdaac7a0c0"
+ - "2924bcb3a1ed8b551fc101f740b9f0fe0a202b115027647cf69850d65fd88c52"
 build_depends:
  - "gmake"
-
-prepare {
- exec "patch -p1 < ../fix-lseek64-declaration.patch"
-}
 
 build {
  macro build --disable-lz4 --disable-xxhash
