@@ -12,6 +12,7 @@ build_depends:
  - "gmake"
 
 build {
+ env CFLAGS="$CFLAGS -Wno-error=discarded-qualifiers"
  macro build --disable-debuginfod --disable-libdebuginfod
 }
 
