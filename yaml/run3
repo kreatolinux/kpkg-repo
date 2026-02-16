@@ -10,11 +10,11 @@ build_depends:
  - "gmake"
 
 build {
- macro build
+ macro build --configure
 }
 
 package {
- macro package
+ macro package --configure
 }
 
 
