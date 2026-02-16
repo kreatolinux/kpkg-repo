@@ -18,7 +18,7 @@ prepare {
 }
 
 package {
- exec "cp -r etc/ \"$ROOT\""
+ exec "cp -r etc/ $ROOT"
 }
 
 
