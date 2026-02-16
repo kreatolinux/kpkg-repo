@@ -1,11 +1,11 @@
 name: "ninja"
-version: "1.12.1"
+version: "1.13.2"
 release: "1"
 description: "a small build tool with a focus on speed"
 sources:
   - "https://github.com/ninja-build/ninja/archive/refs/tags/v$version.tar.gz"
 sha256sum:
-  - "821bdff48a3f683bc4bb3b6f0b5fe7b2d647cf65d52aeb63328c91a6c6df285a"
+  - "974d6b2f4eeefa25625d34da3cb36bdcebe7fbce40f4c16ac0835fd1c0cbae17"
 build_depends:
   - "python"
 replaces:
