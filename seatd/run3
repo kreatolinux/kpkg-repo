@@ -1,11 +1,11 @@
 name: "seatd"
-version: "0.9.0"
+version: "0.9.2"
 release: "1"
 description: "Seat daemon."
 sources:
  - "https://git.sr.ht/~kennylevinsen/seatd/archive/${version}.tar.gz"
 sha256sum:
- - "4276d1380c67e30a63c289b35f7bf955e126e6daf3596cd5aa6080670aa1214c"
+ - "2811654fc87b3b1877f62e69cbf1e761c7072146f127860d9b8fe1ca27607d0e"
 build_depends:
  - "meson"
 
