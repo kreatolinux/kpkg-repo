@@ -1,11 +1,11 @@
 name: "sbc"
-version: "2.0"
+version: "2.2"
 release: "1"
 description: "Bluetooth low-complexity, subband codec (SBC) library"
 sources:
  - "https://www.kernel.org/pub/linux/bluetooth/sbc-${version}.tar.xz"
 sha256sum:
- - "8f12368e1dbbf55e14536520473cfb338c84b392939cc9b64298360fd4a07992"
+ - "a1ada76ef35e5af9c2fbd063754dc9e37a8d989417c6eb1ecebb089b1383ae9e"
 build_depends:
  - "gmake"
 
