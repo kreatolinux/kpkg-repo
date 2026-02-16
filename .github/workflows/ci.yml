@@ -1,10 +1,8 @@
 name: CI
 
-# Controls when the workflow will run
 on:
   schedule:
     - cron: '0 0 * * WED'
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
     inputs:
       package:
@@ -50,22 +48,27 @@ on:
     branches: [ master ]
 
 jobs:
-  # This workflow contains a single job called "build"
   init:
     runs-on: ubuntu-latest
     container: ghcr.io/kreatolinux/builder
     outputs:
-      matrix: ${{ steps.compute-matrix.outputs.matrix }}
+      phase1_matrix: ${{ steps.compute-matrix.outputs.phase1_matrix }}
+      phase2_matrix: ${{ steps.compute-matrix.outputs.phase2_matrix }}
+      phase3_matrix: ${{ steps.compute-matrix.outputs.phase3_matrix }}
+      phase4_matrix: ${{ steps.compute-matrix.outputs.phase4_matrix }}
+      phase5_matrix: ${{ steps.compute-matrix.outputs.phase5_matrix }}
       push: ${{ steps.compute-matrix.outputs.push }}
       should_build: ${{ steps.compute-matrix.outputs.should_build }}
-      needs_sums: ${{ steps.check-sums.outputs.needs_sums }}
       runfiles: ${{ steps.check-sums.outputs.runfiles }}
+      image: ${{ steps.compute-matrix.outputs.image }}
+      image_sha: ${{ steps.compute-matrix.outputs.image_sha }}
+      force_build: ${{ steps.compute-matrix.outputs.force_build }}
+      llvm: ${{ steps.compute-matrix.outputs.llvm }}
+      enable_upterm_ssh: ${{ steps.compute-matrix.outputs.enable_upterm_ssh }}
+      disable_force_install_all: ${{ steps.compute-matrix.outputs.disable_force_install_all }}
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v6
         with:
-          # Ensure we track the branch head (not the event SHA) so we pick up
-          # the commit pushed by the update-sums job in this same workflow run.
           ref: ${{ github.head_ref || github.ref_name }}
           fetch-depth: 0
      
@@ -82,6 +85,13 @@ jobs:
           EVENT_NAME="${{ github.event_name }}"
           SHOULD_BUILD="true"
 
+          echo "image=${{ github.event.inputs.image || 'builder-repo' }}" >> $GITHUB_OUTPUT
+          echo "image_sha=${{ github.event.inputs.image_sha || '' }}" >> $GITHUB_OUTPUT
+          echo "force_build=${{ github.event.inputs.force_build || 'false' }}" >> $GITHUB_OUTPUT
+          echo "llvm=${{ github.event.inputs.llvm || 'false' }}" >> $GITHUB_OUTPUT
+          echo "enable_upterm_ssh=${{ github.event.inputs.enable_upterm_ssh || 'false' }}" >> $GITHUB_OUTPUT
+          echo "disable_force_install_all=${{ github.event.inputs.disable_force_install_all || 'false' }}" >> $GITHUB_OUTPUT
+
           if [ -n "${PACKAGE_INPUT:-}" ]; then
             PUSH="false"
             MATRIX='{"include":['
@@ -91,24 +101,42 @@ jobs:
               SEP=",";
             done
             MATRIX="$MATRIX]}"
-            echo "matrix=$MATRIX" >> $GITHUB_OUTPUT
+            echo "phase1_matrix=$MATRIX" >> $GITHUB_OUTPUT
+            echo "phase2_matrix=" >> $GITHUB_OUTPUT
+            echo "phase3_matrix=" >> $GITHUB_OUTPUT
+            echo "phase4_matrix=" >> $GITHUB_OUTPUT
+            echo "phase5_matrix=" >> $GITHUB_OUTPUT
             echo "push=$PUSH" >> $GITHUB_OUTPUT
             echo "should_build=$SHOULD_BUILD" >> $GITHUB_OUTPUT
             exit 0
           fi
 
-          # Build the default full matrix by scanning for */run files (BusyBox find compatible)
           ALL_RUNS=$(find "$GITHUB_WORKSPACE" -mindepth 2 -maxdepth 2 -type f -name run | sed "s#^$GITHUB_WORKSPACE/##" | sort || true)
           ALL_PACKAGES=$(echo "$ALL_RUNS" | awk -F/ '{print $1}' | sort -u | awk 'NF')
-          MAX_MATRIX=250
-          PACKAGES=$(echo "$ALL_PACKAGES" | head -n "$MAX_MATRIX")
-          MATRIX='{"include":['
-          SEP=""
-          for pkg in $PACKAGES; do
-            MATRIX="$MATRIX$SEP{\"packages\":\"$pkg\"}"
-            SEP=",";
+          MAX_PER_PHASE=250
+
+          TOTAL_PACKAGES=$(echo "$ALL_PACKAGES" | wc -l | tr -d ' ')
+          echo "Total packages: $TOTAL_PACKAGES"
+
+          PHASE_COUNT=5
+          for i in $(seq 1 $PHASE_COUNT); do
+            START=$(((i - 1) * MAX_PER_PHASE + 1))
+            END=$((i * MAX_PER_PHASE))
+            PHASE_PKGS=$(echo "$ALL_PACKAGES" | sed -n "${START},${END}p")
+            
+            if [ -n "$PHASE_PKGS" ]; then
+              MATRIX='{"include":['
+              SEP=""
+              for pkg in $PHASE_PKGS; do
+                MATRIX="$MATRIX$SEP{\"packages\":\"$pkg\"}"
+                SEP=",";
+              done
+              MATRIX="$MATRIX]}"
+              echo "phase${i}_matrix=$MATRIX" >> $GITHUB_OUTPUT
+            else
+              echo "phase${i}_matrix=" >> $GITHUB_OUTPUT
+            fi
           done
-          MATRIX="$MATRIX]}"
 
           if [ "$EVENT_NAME" = "pull_request" ]; then
             PUSH="false"
@@ -140,13 +168,19 @@ jobs:
 
           if [ "$EVENT_NAME" = "pull_request" ]; then
             if [ "$RUN_PKG_COUNT" = "1" ]; then
-              MATRIX="{\"include\":[{\"packages\":\"$SINGLE_RUN_PKG\"}]}"
+              for i in $(seq 2 $PHASE_COUNT); do
+                echo "phase${i}_matrix=" >> $GITHUB_OUTPUT
+              done
+              echo "phase1_matrix={\"include\":[{\"packages\":\"$SINGLE_RUN_PKG\"}]}" >> $GITHUB_OUTPUT
             else
               SHOULD_BUILD="false"
             fi
           elif [ "$EVENT_NAME" = "push" ] && [ "${{ github.ref }}" = "refs/heads/master" ]; then
             if [ "$RUN_PKG_COUNT" = "1" ] && [ "$TOTAL_CHANGED_COUNT" = "1" ]; then
-              MATRIX="{\"include\":[{\"packages\":\"$SINGLE_RUN_PKG\"}]}"
+              for i in $(seq 2 $PHASE_COUNT); do
+                echo "phase${i}_matrix=" >> $GITHUB_OUTPUT
+              done
+              echo "phase1_matrix={\"include\":[{\"packages\":\"$SINGLE_RUN_PKG\"}]}" >> $GITHUB_OUTPUT
             else
               SHOULD_BUILD="false"
             fi
@@ -154,7 +188,6 @@ jobs:
             : # keep defaults
           fi
 
-          echo "matrix=$MATRIX" >> $GITHUB_OUTPUT
           echo "push=$PUSH" >> $GITHUB_OUTPUT
           echo "should_build=$SHOULD_BUILD" >> $GITHUB_OUTPUT
 
@@ -162,11 +195,9 @@ jobs:
         id: check-sums
         run: |
           set -euo pipefail
-          # Detect if any VERSION was bumped without corresponding sums update in changed run files
           BASE_SHA="${{ github.event.pull_request.base.sha }}"
           HEAD_SHA="${{ github.event.pull_request.head.sha }}"
           if [ "${{ github.event_name }}" != "pull_request" ]; then
-            echo "needs_sums=false" >> $GITHUB_OUTPUT
             echo "runfiles=" >> $GITHUB_OUTPUT
             exit 0
           fi
@@ -182,331 +213,118 @@ jobs:
               fi
             fi
           done
-          echo "needs_sums=${need}" >> $GITHUB_OUTPUT
-          # multi-line output with target runfiles (may be empty)
           echo "runfiles<<EOF" >> $GITHUB_OUTPUT
           printf "%s\n" "$RUNFILES_NEED" | awk 'NF' >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-  build:
-    if: always() && !cancelled() && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
-    needs: [init, update-sums]
-    runs-on: ubuntu-latest
-    container:
-      image: ${{ github.event_name == 'workflow_dispatch' && (github.event.inputs.image_sha != '' && format('ghcr.io/kreatolinux/{0}@{1}', github.event.inputs.image, github.event.inputs.image_sha) || format('ghcr.io/kreatolinux/{0}:latest', github.event.inputs.image)) || 'ghcr.io/kreatolinux/builder-repo:latest' }} #-gnu # builder-gnu doesn't work yet, see TODO in kpkg/modules/isolation
-      options: --privileged -v /:/opt/host
-    strategy:
-      fail-fast: false
-      matrix:  ${{fromJson(needs.init.outputs.matrix)}}
-    permissions:
-      contents: write
-    steps:
-
-      - name: Remove useless directories
-        run: |        
-            for i in /opt/host/$AGENT_TOOLSDIRECTORY /opt/host/opt/google/chrome /opt/host/opt/microsoft/msedge /opt/host/opt/microsoft/powershell /opt/host/opt/pipx /opt/host/usr/lib/mono /opt/host/usr/local/julia* /opt/host/usr/local/lib/android /opt/host/usr/local/lib/node_modules /opt/host/usr/local/share/chromium /opt/host/usr/local/share/powershell /opt/host/usr/share/dotnet /opt/host/usr/share/swift; do
-              rm -rf $i || true
-            done
-        env:
-          AGENT_TOOLSDIRECTORY: ${{ runner.tool_cache }}
-
-           
-
-      - name: Get latest workflow run
-        id: get-run-id
-        run: |
-          LATEST_RUN_ID=$(curl -s -H "Authorization: Bearer ${{ secrets.GH_PAT }}" \
-            "https://api.github.com/repos/kreatolinux/src/actions/workflows/build.yml/runs?status=success&per_page=1" \
-            | sed -n 's/.*"id": \([0-9]*\).*/\1/p' | head -1)
-          echo "run_id=$LATEST_RUN_ID" >> $GITHUB_OUTPUT
-
-      - uses: actions/download-artifact@v6
-        with:
-          name: kpkg-amd64-linux-debug
-          path: /tmp/kpkg-bin
-          github-token: ${{ secrets.GH_PAT }} # token with actions:read permissions on target repo
-          repository: kreatolinux/src
-          run-id: ${{ steps.get-run-id.outputs.run_id }}
-
-      - uses: actions/download-artifact@v6
-        with:
-          name: chkupd-amd64-linux-debug
-          path: /tmp/chkupd-bin
-          github-token: ${{ secrets.GH_PAT }} # token with actions:read permissions on target repo
-          repository: kreatolinux/src
-          run-id: ${{ steps.get-run-id.outputs.run_id }}
-
-      - uses: actions/checkout@v6
-        with:
-          # Check out the branch head so the build includes the commit created
-          # by the update-sums job in this workflow run.
-          ref: ${{ github.head_ref || github.ref_name }}
-          fetch-depth: 0
-
-
-      - name: Run chkupd
-        run: |
-          chmod +x /tmp/chkupd-bin/chkupd
-          for package in ${{ matrix.packages }}; do
-            if [ -f "$GITHUB_WORKSPACE/$package/run" ]; then
-              echo "Running chkupd on $package"
-              /tmp/chkupd-bin/chkupd check --package="$package" --repo "$GITHUB_WORKSPACE" --backend repology || true
-            fi
-          done
-
-      - name: Evaluate usefulness
-        id: useless-check
-        env:
-          FORCE_BUILD: ${{ github.event.inputs.force_build }}
-        run: |
-          set -euo pipefail
-          LOCALE=en_US
-          mkdir -p /usr/lib/locale
-          localedef -i $LOCALE -c -f UTF-8 $LOCALE
-          echo "export LANG=$LOCALE.UTF-8" >> /etc/profile
-          # Avoid set -u failures if LD_LIBRARY_PATH is unset inside /etc/profile
-          export LD_LIBRARY_PATH="${LD_LIBRARY_PATH-}"
-          . /etc/profile
-          export LC_CTYPE=en_US.UTF-8
-          export LC_ALL=en_US.UTF-8
-
-          chmod +x /tmp/kpkg-bin/kpkg
-          mkdir -p /etc/kpkg/repos/main
-          if command -v mountpoint >/dev/null 2>&1 && mountpoint -q /etc/kpkg/repos/main; then
-            :
-          else
-            mount --bind "$GITHUB_WORKSPACE" /etc/kpkg/repos/main
-          fi
-
-          /tmp/kpkg-bin/kpkg clean --binaries=true --environment=true
-
-          IS_USELESS="true"
-          for package in ${{ matrix.packages }}; do
-            /tmp/kpkg-bin/kpkg install "$package" -y --downloadOnly || IS_USELESS="false"
-          done
-
-          if [ "$FORCE_BUILD" = "true" ]; then
-            IS_USELESS="false"
-            for package in ${{ matrix.packages }}; do
-              /tmp/kpkg-bin/kpkg clean --binaries --packages "$package"
-            done
-          fi
-
-          if [ "$IS_USELESS" = "true" ]; then
-            mkdir -p /var/cache/kpkg/archives
-            touch /var/cache/kpkg/archives/IS_USELESS
-          fi
-
-          echo "is_useless=$IS_USELESS" >> $GITHUB_OUTPUT
-
-
-      - name: Build packages
-        if: steps.useless-check.outputs.is_useless != 'true'
-        run: |
-          LOCALE=en_US
-          mkdir -p /usr/lib/locale
-          localedef -i $LOCALE -c -f UTF-8 $LOCALE
-          echo "export LANG=$LOCALE.UTF-8" >> /etc/profile          
-          
-          # Avoid set -u failures if LD_LIBRARY_PATH is unset inside /etc/profile
-          export LD_LIBRARY_PATH="${LD_LIBRARY_PATH-}"
-          . /etc/profile
-          
-          export LC_CTYPE=en_US.UTF-8
-          export LC_ALL=en_US.UTF-8
-
-          chmod +x /tmp/kpkg-bin/kpkg
-          mkdir -p /etc/kpkg/repos/main
-          if command -v mountpoint >/dev/null 2>&1 && mountpoint -q /etc/kpkg/repos/main; then
-            :
-          else
-            mount --bind "$GITHUB_WORKSPACE" /etc/kpkg/repos/main
-          fi
-
-
-          #kpkg upgrade --yes || true
-
-          /tmp/kpkg-bin/kpkg clean --binaries=true --environment=true
-
-          # Enable LLVM if requested
-          if [ "${{ github.event.inputs.llvm }}" = "true" ]; then
-            /tmp/kpkg-bin/kpkg install llvm -y
-            /tmp/kpkg-bin/kpkg set config.Options.cc clang
-            sed -i 's/gcc/clang/' /etc/kreato-release # TODO: we shouldn't need to do this, kpkg should add it to sandbox just thru looking at config
-          fi
-          
-          git config --system --add safe.directory '*'
-
-          # Parse dependencies from kpkg build --no output and install them
-          for package in ${{ matrix.packages }}; do
-                # Run kpkg build with --no to get the package list
-                PACKAGES=$(KPKG_ENABLE_DEBUG=0 /tmp/kpkg-bin/kpkg get depends.$package.build 2>&1 || true)
-                  
-                echo "PACKAGES: $PACKAGES"
-
-                if [ -n "$PACKAGES" ]; then
-                   echo '$PACKAGES exist'
-                    for dep in $PACKAGES; do
-                        echo "trying to install $dep"
-                        /tmp/kpkg-bin/kpkg install "$dep" -y || true
-                        echo "$dep is installed, continuing"
-                    done
-                fi
-                
-                # Check if bootstrap is needed
-                RUNFILE="/etc/kpkg/repos/main/$package/run"
-                if [ -f "$RUNFILE" ] && grep -q "BOOTSTRAP_DEPENDS" "$RUNFILE"; then
-                    echo "Bootstrapping $package"
-                    FORCE_INSTALL_ALL_FLAG=""
-                    if [ "${{ github.event.inputs.disable_force_install_all }}" != "true" ]; then
-                        FORCE_INSTALL_ALL_FLAG="--forceInstallAll=true"
-                    fi
-                    /tmp/kpkg-bin/kpkg build "$package" --bootstrap --yes --ignorePostInstall $FORCE_INSTALL_ALL_FLAG
-
-                    echo "Bootstrapping $package complete, now removing it from cache"
-                    /tmp/kpkg-bin/kpkg clean --binaries --packages "$package"
-
-                    KPKG_EXTRA_ARGS="--useCacheIfAvailable=false"
-                fi
-          done
-          
-          FORCE_INSTALL_ALL_FLAG=""
-          if [ "${{ github.event.inputs.disable_force_install_all }}" != "true" ]; then
-              FORCE_INSTALL_ALL_FLAG="--forceInstallAll=true"
-          fi
-          /tmp/kpkg-bin/kpkg build ${{ matrix.packages }} --yes --ignorePostInstall $FORCE_INSTALL_ALL_FLAG
-          #echo RANDOM_ID=$(cat /dev/urandom | tr -dc '[:alpha:]' | fold -w ${1:-20} | head -n 1) >> $GITHUB_ENV
-          cd "$GITHUB_WORKSPACE"
-          git pull
-          git status
-
-      - name: Commit chkupd changes
-        run: |
-          git config --global --add safe.directory "$GITHUB_WORKSPACE" || true
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
-          
-          cd "$GITHUB_WORKSPACE"
-          committed_any=false
-          for package in ${{ matrix.packages }}; do
-            # commit only if this package has changes
-            if git status --porcelain | grep -q run; then
-              version=$(/tmp/kpkg-bin/kpkg info "$package" 2>/dev/null | awk '/^package version:/ {print $3; exit}')
-              if [ -z "$version" ]; then
-                version="unknown"
-              fi
-              echo "Pulling for latest changes..."
-              git pull origin master
-              echo "Committing updates for $package (version=${version:-unknown})"
-              git add "$package"
-              git commit -m "${package}: update to ${version:-unknown}"
-              committed_any=true
-            fi
-          done
-
-          if [ "$committed_any" = "true" ]; then
-            git push
-          else
-            echo "No package changes detected"
-          fi
-
-      - name: Install MinIO Client
-        if: (needs.init.outputs.push == 'true' || (github.event_name == 'pull_request' && github.event.pull_request.user.login == 'renovate[bot]' && startsWith(github.head_ref || '', 'renovate/')) || github.event_name == 'workflow_dispatch') && steps.useless-check.outputs.is_useless != 'true'
-        run: |
-          curl -O https://dl.min.io/client/mc/release/linux-amd64/mc
-          chmod +x mc
-          mv mc /bin/
-          mc config host rm minio || true
-          
-      - name: Configure MinIO Client
-        if: (needs.init.outputs.push == 'true' || (github.event_name == 'pull_request' && github.event.pull_request.user.login == 'renovate[bot]' && startsWith(github.head_ref || '', 'renovate/')) || github.event_name == 'workflow_dispatch') && steps.useless-check.outputs.is_useless != 'true'
-        run: "mc alias set minio ${{ secrets.AWS_ENDPOINT }} ${{ secrets.AWS_KEY_ID }} ${{ secrets.AWS_SECRET_ACCESS_KEY }} --api s3v4"
-
-
-      - name: Upload packages through MinIO
-        if: (needs.init.outputs.push == 'true' || (github.event_name == 'pull_request' && github.event.pull_request.user.login == 'renovate[bot]' && startsWith(github.head_ref || '', 'renovate/')) || github.event_name == 'workflow_dispatch') && steps.useless-check.outputs.is_useless != 'true'
-        run: |
-          upload_with_retry() {
-            local retries=3
-            local cooldown=5
-            local attempt=1
-
-            while [ $attempt -le $retries ]; do
-              echo "Upload attempt $attempt of $retries..."
-
-              if [ -d "/var/cache/kpkg/archives" ]; then
-                echo "Listing archives directory contents:"
-                ls -la /var/cache/kpkg/archives/
-                echo "Copying archives..."
-                if mc cp --recursive /var/cache/kpkg/archives/* minio/${{ secrets.AWS_BUCKET }}/archives/; then
-                  echo "Archives upload successful on attempt $attempt"
-                else
-                  echo "Archives upload failed on attempt $attempt"
-                  if [ $attempt -eq $retries ]; then
-                    return 1
-                  fi
-                fi
-              else
-                echo "Archives directory does not exist, skipping..."
-              fi
-
-              if [ -d "/var/cache/kpkg/sources" ]; then
-                echo "Listing sources directory contents:"
-                ls -la /var/cache/kpkg/sources/
-                echo "Copying sources..."
-                if mc cp --recursive /var/cache/kpkg/sources/* minio/${{ secrets.AWS_BUCKET }}/sources/; then
-                  echo "Sources upload successful on attempt $attempt"
-                else
-                  echo "Sources upload failed on attempt $attempt"
-                  if [ $attempt -eq $retries ]; then
-                    return 1
-                  fi
-                fi
-              else
-                echo "Sources directory does not exist, skipping..."
-              fi
-
-              # If we got here, upload was successful
-              return 0
-
-              # Cooldown before retry
-              echo "Waiting $cooldown seconds before retry..."
-              sleep $cooldown
-              attempt=$((attempt + 1))
-            done
-          }
-
-          upload_with_retry
-
-
-      - name: Install dependencies for upterm session
-        if: failure() && github.event_name == 'workflow_dispatch' && github.event.inputs.enable_upterm_ssh == 'true'
-        run: |
-          if ! kpkg install tmux -y; then
-            kpkg build tmux -y
-          fi
-
-          rm -f /bin/sh
-          ln -s /bin/bash /bin/sh # Regression, see https://github.com/owenthereal/action-upterm/issues/20
-
-      - name: Setup upterm session
-        if: failure() && github.event_name == 'workflow_dispatch' && github.event.inputs.enable_upterm_ssh == 'true'
-        uses: owenthereal/action-upterm@v1
-        with:
-          limit-access-to-actor: true
-          limit-access-to-users: kreatoo
-          wait-timeout-minutes: 60
-
-      #- uses: actions/upload-artifact@v4
-      #  with:
-      #    name: packages-${{ env.RANDOM_ID }}
-      #    path: /var/cache/kpkg/archives/arch
-      #    retention-days: 2
-
   update-sums:
-    if: github.event_name != 'pull_request' || needs.init.outputs.runfiles != ''
-    needs: init
+    if: needs.init.outputs.runfiles != ''
+    needs: [init]
     uses: ./.github/workflows/update-sums.yml
     with:
       runfiles: ${{ needs.init.outputs.runfiles }}
-      
+
+  build_phase1:
+    if: always() && !cancelled() && needs.init.outputs.phase1_matrix != '' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
+    needs: [init, update-sums]
+    uses: ./.github/workflows/ci-build.yml
+    with:
+      matrix: ${{ needs.init.outputs.phase1_matrix }}
+      push: ${{ needs.init.outputs.push }}
+      phase_name: "Phase 1"
+      image: ${{ needs.init.outputs.image }}
+      image_sha: ${{ needs.init.outputs.image_sha }}
+      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      llvm: ${{ needs.init.outputs.llvm == 'true' }}
+      enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
+      disable_force_install_all: ${{ needs.init.outputs.disable_force_install_all == 'true' }}
+    secrets:
+      GH_PAT: ${{ secrets.GH_PAT }}
+      AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
+      AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+
+  build_phase2:
+    if: always() && !cancelled() && needs.init.outputs.phase2_matrix != '' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
+    needs: [init, update-sums]
+    uses: ./.github/workflows/ci-build.yml
+    with:
+      matrix: ${{ needs.init.outputs.phase2_matrix }}
+      push: ${{ needs.init.outputs.push }}
+      phase_name: "Phase 2"
+      image: ${{ needs.init.outputs.image }}
+      image_sha: ${{ needs.init.outputs.image_sha }}
+      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      llvm: ${{ needs.init.outputs.llvm == 'true' }}
+      enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
+      disable_force_install_all: ${{ needs.init.outputs.disable_force_install_all == 'true' }}
+    secrets:
+      GH_PAT: ${{ secrets.GH_PAT }}
+      AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
+      AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+
+  build_phase3:
+    if: always() && !cancelled() && needs.init.outputs.phase3_matrix != '' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
+    needs: [init, update-sums]
+    uses: ./.github/workflows/ci-build.yml
+    with:
+      matrix: ${{ needs.init.outputs.phase3_matrix }}
+      push: ${{ needs.init.outputs.push }}
+      phase_name: "Phase 3"
+      image: ${{ needs.init.outputs.image }}
+      image_sha: ${{ needs.init.outputs.image_sha }}
+      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      llvm: ${{ needs.init.outputs.llvm == 'true' }}
+      enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
+      disable_force_install_all: ${{ needs.init.outputs.disable_force_install_all == 'true' }}
+    secrets:
+      GH_PAT: ${{ secrets.GH_PAT }}
+      AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
+      AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+
+  build_phase4:
+    if: always() && !cancelled() && needs.init.outputs.phase4_matrix != '' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
+    needs: [init, update-sums]
+    uses: ./.github/workflows/ci-build.yml
+    with:
+      matrix: ${{ needs.init.outputs.phase4_matrix }}
+      push: ${{ needs.init.outputs.push }}
+      phase_name: "Phase 4"
+      image: ${{ needs.init.outputs.image }}
+      image_sha: ${{ needs.init.outputs.image_sha }}
+      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      llvm: ${{ needs.init.outputs.llvm == 'true' }}
+      enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
+      disable_force_install_all: ${{ needs.init.outputs.disable_force_install_all == 'true' }}
+    secrets:
+      GH_PAT: ${{ secrets.GH_PAT }}
+      AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
+      AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+
+  build_phase5:
+    if: always() && !cancelled() && needs.init.outputs.phase5_matrix != '' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
+    needs: [init, update-sums]
+    uses: ./.github/workflows/ci-build.yml
+    with:
+      matrix: ${{ needs.init.outputs.phase5_matrix }}
+      push: ${{ needs.init.outputs.push }}
+      phase_name: "Phase 5"
+      image: ${{ needs.init.outputs.image }}
+      image_sha: ${{ needs.init.outputs.image_sha }}
+      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      llvm: ${{ needs.init.outputs.llvm == 'true' }}
+      enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
+      disable_force_install_all: ${{ needs.init.outputs.disable_force_install_all == 'true' }}
+    secrets:
+      GH_PAT: ${{ secrets.GH_PAT }}
+      AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
+      AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
