@@ -10,8 +10,7 @@ build_depends:
  - "gmake"
 
 build {
-# Work around GCC 15 compatibility issue with gnulib's nodiscard attribute
- env CFLAGS="${CFLAGS} -Wno-attributes -D_GL_ATTRIBUTE_NODISCARD="
+ env CFLAGS="${CFLAGS} -std=gnu17 -Wno-attributes -D_GL_ATTRIBUTE_NODISCARD="
  macro build
 }
 
