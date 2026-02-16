@@ -1,11 +1,11 @@
 name: "libbytesize"
-version: "2.9"
+version: "2.12"
 release: "1"
 description: "libbytesize"
 sources:
  - "https://github.com/storaged-project/libbytesize/releases/download/${version}/libbytesize-${version}.tar.gz"
 sha256sum:
- - "bd0ea11ece2c2423382a7c4534679050e72a8ee91b4fdea3a7cc85199846d0c3"
+ - "8356bac2cafd2f31f39bf1ad373cef8448cab08b817aeaee5c526d54e81c3c5a"
 depends:
  - "python"
 build_depends:
