@@ -14,7 +14,7 @@ build {
 }
 
 package {
- macro package
+ exec "make DESTDIR=$ROOT install"
 }
 
 postinstall {
