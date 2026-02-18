@@ -30,7 +30,8 @@ actual_build() {
         --disable-nls              \
         --enable-shared            \
         --disable-werror           \
-        --enable-64-bit-bfd
+        --enable-64-bit-bfd        \
+        --disable-gprofng
 
     make -j$(nproc)
 }

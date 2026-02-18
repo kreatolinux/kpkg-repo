@@ -10,7 +10,7 @@ DESCRIPTION="Extended crypt library"
 common_build() {
     prefix="/usr"
 
-    export CFLAGS="$CFLAGS -Wno-error=unterminated-string-initialization"
+    export CFLAGS="$CFLAGS -Wno-error=unterminated-string-initialization -Wno-error=discarded-qualifiers"
 
     if [ "$1" != "$(uname -m)-linux-gnu" ]; then
 	    prefix="$prefix/$1"

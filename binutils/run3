@@ -27,7 +27,7 @@ func actual_build {
 
   print "$target"
   print "$sysroot"
-  exec "../configure --prefix=/usr $target $sysroot --enable-gnu-as --enable-gnu-ld --enable-gold --build=$(../config.guess) --disable-nls --enable-shared --disable-werror --enable-64-bit-bfd"
+  exec "../configure --prefix=/usr $target $sysroot --enable-gnu-as --enable-gnu-ld --enable-gold --build=$(../config.guess) --disable-nls --enable-shared --disable-werror --enable-64-bit-bfd --disable-gprofng"
 
   exec "make -j$(nproc)"
 }

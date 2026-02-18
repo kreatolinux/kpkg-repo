@@ -12,7 +12,7 @@ build_depends:
 func common_build {
   local prefix = "/usr"
 
-  env CFLAGS="$CFLAGS -Wno-error=unterminated-string-initialization"
+  env CFLAGS="$CFLAGS -Wno-error=unterminated-string-initialization -Wno-error=discarded-qualifiers"
 
   if "$1" != "${exec("uname -m").output()}-linux-gnu" {
     local prefix = "$prefix/$1"
