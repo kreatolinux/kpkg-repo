@@ -1,11 +1,11 @@
 name: "iptables"
-version: "1.8.11"
+version: "1.8.12"
 release: "1"
 description: "Userspace program to configure the Linux packet filtering ruleset"
 sources:
  - "https://www.netfilter.org/projects/iptables/files/iptables-${version}.tar.xz"
 b2sum:
- - "82daca3940e253f6fda7cf5b3332488c31391ff66c0112c0cae2645ab61918f81e6028ea2b1e1385f21e4c5ff8cd64cba31072a2417a2ab696fe1c6b5464cea1"
+ - "5516aadcf413efde272b09d1747e78e19f1d9e5481cdfdfe2360ca5f16926bb17535f58e4014a3616c59da83f41b39fc71e591c916bc309c7ca31701785a9e7e"
 build_depends:
  - "gmake"
 
