@@ -1,5 +1,5 @@
 name: "ca-certificates"
-version: "20260203"
+version: "20260212"
 release: "1"
 description: "Common CA certificates"
 sources:
