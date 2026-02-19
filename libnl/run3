@@ -1,5 +1,5 @@
 name: "libnl"
-version: "3.8.0"
+version: "3.12.0"
 release: "1"
 description: "A collection of libraries providing APIs to netlink protocol Linux kernel interfaces"
 sources:
