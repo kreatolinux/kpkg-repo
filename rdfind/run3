@@ -1,11 +1,11 @@
 name: "rdfind"
-version: "1.7.0"
+version: "1.8.0"
 release: "1"
 description: "find duplicate files utility"
 sources:
  - "https://github.com/pauldreik/rdfind/archive/refs/tags/releases/${version}.tar.gz"
 sha256sum:
- - "bd17dbd9c6c9fc0c0b016b3e77ecf5cd718eee428172c767f429ba30405816d8"
+ - "6651603138cb91872d3e1628af5b89992f1937a86201645e8387fa42f98bc206"
 depends:
  - "libnettle"
 build_depends:
