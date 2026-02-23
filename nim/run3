@@ -1,11 +1,11 @@
 name: "nim"
-version: "2.2.6"
+version: "2.2.8"
 release: "3"
 description: "The Nim programming language"
 sources:
  - "https://nim-lang.org/download/nim-${version}.tar.xz"
 sha256sum:
- - "657b0e3d5def788148d2a87fa6123fa755b2d92cad31ef60fd261e451785528b"
+ - "114191afa083c5059dcbe5ce88dbe4f42542cff04e2c3017668ee438bc0b8cfc"
 
 build {
  exec "sh build.sh"
