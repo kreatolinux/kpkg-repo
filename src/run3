@@ -37,7 +37,7 @@ package_kpkg {
 }
 
 func build_jumpstart {
-  exec "nimble install cligen fusion -y"
+  exec "nimble install cligen fusion regex -y"
   exec "nim c -d:release --threads:on -o=\"out/jumpstart\" \"jumpstart/jumpstart.nim\""
   exec "nim c -d:release --threads:on -o=\"out/jumpctl\" \"jumpstart/jumpctl.nim\""
 }

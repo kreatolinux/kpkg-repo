@@ -29,7 +29,7 @@ package_kpkg() {
 }
 
 build_jumpstart() {
-        nimble install cligen fusion -y
+        nimble install cligen fusion regex -y
         nim c -d:release --threads:on -o="out/jumpstart" "jumpstart/jumpstart.nim"
         nim c -d:release --threads:on -o="out/jumpctl" "jumpstart/jumpctl.nim"
 }
