@@ -41,7 +41,7 @@ func common_build {
     local extraArgs = "--libdir=/usr/lib --libexecdir=/usr/lib --with-local-prefix=/usr/${target} --with-sysroot=/usr/${target} --with-build-sysroot=/usr/${target} --with-native-system-header-dir=/include --program-prefix=${target}-"
   }
 
-  exec "../configure ${extraArgs} --enable-languages=c,c++ --enable-default-pie --enable-default-ssp --prefix=\"${prefix}\" --host=\"${arch}-linux-gnu\" --build=\"${arch}-linux-gnu\" --target=\"${target}\" --disable-fixincludes --disable-multilib --without-headers --disable-nls --enable-initfini-array --with-system-zlib"
+  exec "../configure ${extraArgs} --enable-languages=c,c++ --enable-default-pie --enable-default-ssp --prefix=\"${prefix}\" --host=\"${arch}-linux-gnu\" --build=\"${arch}-linux-gnu\" --target=\"${target}\" --disable-fixincludes --disable-multilib --without-headers --disable-nls --enable-initfini-array --with-system-zlib --disable-werror"
 
   exec "make MAKEINFO=true -j${exec("nproc").output()}"
 }

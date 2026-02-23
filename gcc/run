@@ -46,7 +46,8 @@ common_build() {
 	--without-headers                              \
         --disable-nls                                  \
         --enable-initfini-array                        \
-        --with-system-zlib        
+        --with-system-zlib                             \
+        --disable-werror
 
 	make MAKEINFO=true -j$(nproc)
 }
