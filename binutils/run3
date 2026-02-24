@@ -1,11 +1,11 @@
 name: "binutils"
-version: "2.45.1"
+version: "2.46.0"
 release: "3"
 description: "GNU Binutils"
 sources:
   - "https://ftp.gnu.org/gnu/binutils/binutils-$version.tar.xz"
 sha256sum:
-  - "5fe101e6fe9d18fdec95962d81ed670fdee5f37e3f48f0bef87bddf862513aa5"
+  - "d75a94f4d73e7a4086f7513e67e439e8fcdcbb726ffe63f4661744e6256b2cf2"
 depends:
   - "flex"
   - "perl"
