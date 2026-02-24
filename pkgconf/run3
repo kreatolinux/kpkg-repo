@@ -6,15 +6,13 @@ sources:
   - "https://distfiles.dereferenced.org/pkgconf/pkgconf-$version.tar.xz"
 sha256sum:
   - "cd05c9589b9f86ecf044c10a2269822bc9eb001eced2582cfffd658b0a50c243"
-build_depends:
-  - "meson"
 
 build {
-  macro build
+  macro build --configure
 }
 
 package {
-  macro package 
+  macro package --configure
   if ${exec("test -d $ROOT/usr/bin")}.exit() != 0 {
     exec "mkdir -p $ROOT/usr/bin"
   }
