@@ -1,11 +1,11 @@
 name: "xkeyboard-config"
-version: "2.46"
+version: "2.47"
 release: "1"
 description: "XKB data description files"
 sources:
  - "https://www.x.org/archive//individual/data/xkeyboard-config/xkeyboard-config-${version}.tar.xz"
 sha256sum:
- - "10c58218fb60d08fb1f7b30304deb3ba47613195aa8a08a81f1972775ccc3640"
+ - "e59984416a72d58b46a52bfec1b1361aa7d84354628227ee2783626c7a6db6b6"
 build_depends:
  - "meson"
 
