@@ -1,11 +1,11 @@
 name: "vulkan-headers"
-version: "1.3.301"
+version: "1.4.344"
 release: "1"
 description: "Vulkan headers"
 sources:
  - "https://github.com/KhronosGroup/Vulkan-Headers/archive/refs/tags/v${version}.tar.gz"
 sha256sum:
- - "6c02949bed7f3984e1d12263bdce52a1c99e54a1abcdae90d00527c2890c1cc5"
+ - "88b86b441eed931fb4cba595aff46fbb14177d72274c1554411d6bbd2117e86f"
 depends:
  - "cmake"
  - "ninja"
