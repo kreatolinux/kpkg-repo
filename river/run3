@@ -1,0 +1,26 @@
+name: "river"
+version: "0.3.12"
+release: "1"
+description: "Dynamic tiling Wayland compositor"
+sources:
+  - "https://codeberg.org/river/river/releases/download/v${version}/river-${version}.tar.gz"
+sha256sum:
+  - "06376cc7b38eb2307030f7ec0954db119d83c55a5226abe4c363c2dbec6f40c3"
+depends:
+  - "wlroots"
+  - "wayland"
+  - "wayland-protocols"
+  - "libxkbcommon"
+  - "libevdev"
+  - "pixman"
+build_depends:
+  - "zig"
+  - "pkg-config"
+
+build {
+  exec "zig build -Doptimize=ReleaseSafe -Dcpu=baseline --prefix $ROOT/usr"
+}
+
+package {
+  exec "zig build -Doptimize=ReleaseSafe -Dcpu=baseline --prefix $ROOT/usr install"
+}

@@ -1,0 +1,24 @@
+name: "dwl"
+version: "0.7"
+release: "1"
+description: "dwm for Wayland - dynamic tiling Wayland compositor"
+sources:
+  - "https://codeberg.org/dwl/dwl/releases/download/v${version}/dwl-v${version}.tar.gz"
+sha256sum:
+  - "16e1412385f5fecaea997f734cb290f2bc412929da5b523c7c5180c6bd9402ea"
+depends:
+  - "wlroots"
+  - "wayland-protocols"
+  - "libinput"
+  - "libxkbcommon"
+  - "wayland"
+build_depends:
+  - "wayland"
+
+build {
+  exec "make"
+}
+
+package {
+  exec "make PREFIX=/usr DESTDIR=$ROOT install"
+}

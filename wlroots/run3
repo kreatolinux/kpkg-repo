@@ -1,11 +1,11 @@
 name: "wlroots"
-version: "0.16.2"
-release: "2"
+version: "0.19.2"
+release: "1"
 description: "Modules for building a Wayland compositor"
 sources:
- - "https://gitlab.freedesktop.org/wlroots/wlroots/-/archive/${version}/wlroots-${version}.tar.gz"
+   - "https://gitlab.freedesktop.org/wlroots/wlroots/-/archive/${version}/wlroots-${version}.tar.gz"
 sha256sum:
- - "f502959db8bc029e32f10a837b37257bb8c5ed269bceddf9492f0bb381bebf76"
+   - "f0530ecaa8739d15f97bd1e1edddb77e281d57e42d4263fccb67157f71730d17"
 depends:
  - "wayland"
  - "wayland-protocols"
