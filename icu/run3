@@ -1,5 +1,5 @@
 name: "icu"
-version: "78.2"
+version: "78.3"
 release: "1"
 description: "Unicode stuff"
 sources:
