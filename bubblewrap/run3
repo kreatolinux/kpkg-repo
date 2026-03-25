@@ -1,5 +1,5 @@
 name: "bubblewrap"
-version: "0.11.0"
+version: "0.11.1"
 release: "2"
 description: "Low-level unprivileged sandboxing tool used by Flatpak and similar projects"
 sources:
