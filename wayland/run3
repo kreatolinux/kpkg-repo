@@ -1,11 +1,11 @@
 name: "wayland"
-version: "1.24.0"
+version: "1.25.0"
 release: "1"
 description: "Wayland is a project to define a protocol for a compositor to talk to its clients as well as a library implementation of the protocol."
 sources:
  - "https://gitlab.freedesktop.org/wayland/wayland/-/archive/${version}/wayland-${version}.tar.gz"
 sha256sum:
- - "7800858844751fc7113d7df3678dc6b58b26a056176a65c49a059763045bffd5"
+ - "95413723f6cd0462770eda207a1c78d142d0a1bba9b0572a4ed1da6a9b27059c"
 depends:
  - "expat"
  - "libxml2"
