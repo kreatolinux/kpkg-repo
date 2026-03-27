@@ -20,7 +20,7 @@ build {
 package {
   macro package --cmake
   exec "mkdir -p $ROOT/usr/lib/ccache"
-  for i in [gcc, clang, cc, g++, c++, clang++] {
-    exec "ln -s /usr/bin/ccache $ROOT/usr/lib/ccache/$i"
+  for i in ["gcc", "clang", "cc", "g++", "c++", "clang++"] {
+    exec "ln -sf /usr/bin/ccache $ROOT/usr/lib/ccache/$i"
   }
 }
