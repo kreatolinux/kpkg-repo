@@ -189,7 +189,7 @@ jobs:
           git config --system --add safe.directory '*'
 
           for package in ${{ matrix.packages }}; do
-                PACKAGES=$(KPKG_ENABLE_DEBUG=0 /tmp/kpkg-bin/kpkg get depends.$package.build 2>&1 || true)
+                PACKAGES=$(KPKG_ENABLE_DEBUG=0 /tmp/kpkg-bin/kpkg repl -a 'get --all depends.$package.build' 2>&1 || true)
                   
                 echo "PACKAGES: $PACKAGES"
 
