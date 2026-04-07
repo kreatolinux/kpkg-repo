@@ -1,11 +1,11 @@
 name: "meson"
-version: "1.6.1"
-release: "1"
+version: "1.10.2"
+release: "1-3.14.3"
 description: "Next generation build system"
 sources:
  - "https://github.com/mesonbuild/meson/releases/download/${version}/meson-${version}.tar.gz"
 b2sum:
- - "7ccdb3bf3f701fc787fabf91413db8301a8658b89e08c1d712711bd35845dc2468211e4b666cf46ad68ad9462e62b12b62d60c3767a2804f9b695b4390bb8235"
+ - "0c6966640988985f8c0af165cb89e0302b0d5e2d506a4c24639971b854dd7e2fe2ea4e4f52be65e0a1524a2c9a4ed71d13093f4881612c82e885ab34d5c46a7a"
 depends:
  - "python"
  - "samurai"
