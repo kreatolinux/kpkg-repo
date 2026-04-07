@@ -1,11 +1,11 @@
 name: "pciutils"
-version: "3.14.0"
+version: "3.15.0"
 release: "1"
 description: "pciutils designed to be handle pci activites"
 sources:
  - "https://github.com/pciutils/pciutils/archive/refs/tags/v${version}.tar.gz"
 sha256sum:
- - "9f99bb89876510435fbfc47bbc8653bc57e736a21915ec0404e0610460756cb8"
+ - "06f467642057599acf396bc17340452fac3308f1e08be19e0c32587e42d7017b"
 build_depends:
  - "gmake"
 
