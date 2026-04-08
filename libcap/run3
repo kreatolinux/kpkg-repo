@@ -1,11 +1,11 @@
 name: "libcap"
-version: "2.77"
+version: "2.78"
 release: "1"
 description: "ninja-compatible build tool written in C"
 sources:
  - "https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/libcap-${version}.tar.xz"
 sha256sum:
- - "897bc18b44afc26c70e78cead3dbb31e154acc24bee085a5a09079a88dbf6f52"
+ - "0d621e562fd932ccf67b9660fb018e468a683d7b827541df27813228c996bb11"
 build_depends:
  - "gmake"
  - "bash"
