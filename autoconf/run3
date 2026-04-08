@@ -1,5 +1,5 @@
 name: "autoconf"
-version: "2.72"
+version: "2.73"
 release: "1"
 description: "GNU Autoconf"
 sources:
