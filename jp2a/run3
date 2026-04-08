@@ -1,11 +1,11 @@
 name: "jp2a"
-version: "1.2.0"
+version: "1.3.3"
 release: "1"
 description: "Converts jpg images to ASCII"
 sources:
  - "https://github.com/Talinx/jp2a/releases/download/v${version}/jp2a-${version}.tar.gz"
 sha256sum:
- - "11b158aa416c2d64c6d02085b404af01c69468164544389a328d0ae1f8ab3b49"
+ - "733a4dfc847ab9b020b26f7b90dbe3ff1dce7489a91bfc06fe8fd38764e9e246"
 depends:
  - "libjpeg-turbo"
  - "libpng"
