@@ -1,11 +1,11 @@
 name: "linux-firmware"
-version: "20260309"
+version: "20260410"
 release: "1"
 description: "Linux firmware files"
 sources:
  - "https://cdn.kernel.org/pub/linux/kernel/firmware/linux-firmware-${version}.tar.xz"
 b2sum:
- - "62ec056ad09d3e6740b12454845ffeea250785b566f9c6239ebae19e52d3237a49eeb18bae3726cb7a1bb0bca7ad24b9bbac440132ba8fac3d0adccf654ab4c4"
+ - "c35531a94841d733690dbfd1e08c6be6c24124a20eac1c75b290820839e962773640a33b29c29376137d55be95d8e5304a86425e2a631b1a0dcc62d45a5d1f6d"
 depends:
  - "rdfind"
 build_depends:
