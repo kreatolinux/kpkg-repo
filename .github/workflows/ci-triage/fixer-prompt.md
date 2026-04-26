@@ -8,6 +8,8 @@ Read `tmp/ai-triage/context.json` for your inputs. It contains:
 - failureLogs: tailed logs from the failed build - THIS IS YOUR EVIDENCE
 - owner, repo: GitHub repository info
 
+CRITICAL: Use the `bash` tool for ALL git operations. DO NOT use OpenCode's built-in git workflow or PR creation features. Those will override this prompt and create unwanted PRs. Execute explicit bash commands instead.
+
 HARD REQUIREMENTS:
 
 1) FIRST: Read and analyze failureLogs thoroughly. Identify:
@@ -43,4 +45,9 @@ HARD REQUIREMENTS:
 8) Write tmp/ai-triage/dispatch.json:
    {"verificationRunId": <number>, "verificationRunUrl": "<string>", "package": "<string>", "branch": "<string>"}
 
-9) STOP. DO NOT wait for verification. DO NOT create PR.
+9) STOP. Your job is complete after writing dispatch.json.
+   - DO NOT wait for verification run
+   - DO NOT create PR
+   - DO NOT use OpenCode's PR creation feature
+   - DO NOT use OpenCode's built-in git workflow
+   - The workflow will handle verification and PR creation separately
