@@ -1,0 +1,223 @@
+name: AI CI Triage
+
+on:
+  workflow_dispatch:
+    inputs:
+      run:
+        description: "Optional failed CI run ID or run URL"
+        required: false
+        default: ""
+      tail_lines:
+        description: "How many log lines to include in AI context"
+        required: false
+        default: "200"
+      package:
+        description: "Optional package override to triage/verify"
+        required: false
+        default: ""
+      max_attempts:
+        description: "Maximum fix/verify attempts before giving up"
+        required: false
+        default: "4"
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Run OpenCode triage
+        uses: anomalyco/opencode/github@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BAILIAN_CODING_PLAN_API_KEY: ${{ secrets.BAILIAN_CODING_PLAN_API_KEY }}
+        with:
+          model: alibaba-coding-plan/glm-5
+          use_github_token: true
+          prompt: |
+            You are running manual CI triage for this repository.
+
+            Hard requirements:
+            1) Read AGENTS.md first and follow repo conventions.
+            2) Resolve target failed run from workflow file ci.yml:
+               - Use workflow_dispatch input "run" as explicit run ID/URL when provided.
+               - Otherwise use the latest failed ci.yml run.
+            3) Determine target package:
+               - If workflow_dispatch input "package" is non-empty, use it as the package override.
+               - Otherwise infer package from failed logs.
+            4) Build evidence-rich context: target run URL/ID, SHA, branch/event, failed job/phase, package, and tailed logs.
+               - Use only the last ${{ github.event.inputs.tail_lines || '200' }} lines as primary log context.
+            5) Use branch format ai-triage/<package>-<runid>.
+            6) Run up to ${{ github.event.inputs.max_attempts || '4' }} fix attempts:
+               - Apply minimal relevant fixes only.
+               - Commit and push changes.
+               - Trigger ci.yml via workflow_dispatch for only that package.
+               - Wait for verification completion and record verification run ID/URL/conclusion.
+               - On failure, refresh context from verification logs and retry.
+            7) DO NOT create or update any PR in this step.
+            8) Always write machine-readable output to tmp/ai-triage/result.json with this shape:
+               {
+                 "targetRunId": number,
+                 "targetRunUrl": string,
+                 "package": string,
+                 "branch": string,
+                 "verified": boolean,
+                 "verificationRunId": number|null,
+                 "verificationRunUrl": string,
+                 "attempts": [{"attempt": number, "note": string, "verificationRunId": number|null, "verificationRunUrl": string, "verificationConclusion": string}],
+                 "summary": string
+               }
+            9) Also write human-readable report to tmp/ai-triage/report.md with evidence and attempt history.
+            10) Be explicit and factual. If you cannot verify success, set "verified": false.
+
+      - name: Validate OpenCode output contract
+        id: result
+        run: |
+          set -euo pipefail
+          if [ ! -f tmp/ai-triage/result.json ]; then
+            echo "Missing tmp/ai-triage/result.json"
+            exit 1
+          fi
+
+          node <<'NODE'
+          const fs = require('fs')
+          const out = process.env.GITHUB_OUTPUT
+          const resultPath = 'tmp/ai-triage/result.json'
+          const raw = fs.readFileSync(resultPath, 'utf8')
+          const data = JSON.parse(raw)
+
+          const isNonEmpty = (v) => typeof v === 'string' && v.trim().length > 0
+          const must = (cond, msg) => {
+            if (!cond) throw new Error(msg)
+          }
+
+          must(Number.isFinite(Number(data.targetRunId)), 'targetRunId must be a number')
+          must(isNonEmpty(data.package), 'package must be a non-empty string')
+          must(isNonEmpty(data.branch), 'branch must be a non-empty string')
+          must(String(data.branch).startsWith('ai-triage/'), 'branch must start with ai-triage/')
+          must(typeof data.verified === 'boolean', 'verified must be boolean')
+          must(Array.isArray(data.attempts), 'attempts must be an array')
+
+          if (data.verified) {
+            must(Number.isFinite(Number(data.verificationRunId)), 'verificationRunId must be set when verified=true')
+            must(isNonEmpty(data.verificationRunUrl), 'verificationRunUrl must be set when verified=true')
+          }
+
+          const outputs = {
+            verified: String(data.verified),
+            branch: String(data.branch || ''),
+            package: String(data.package || ''),
+            target_run_id: String(data.targetRunId || ''),
+            target_run_url: String(data.targetRunUrl || ''),
+            verification_run_id: String(data.verificationRunId || ''),
+            verification_run_url: String(data.verificationRunUrl || ''),
+          }
+
+          for (const [k, v] of Object.entries(outputs)) {
+            fs.appendFileSync(out, `${k}=${v}\n`)
+          }
+          NODE
+
+      - name: Cross-check verification run status
+        if: steps.result.outputs.verified == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          EXPECTED_BRANCH: ${{ steps.result.outputs.branch }}
+        run: |
+          set -euo pipefail
+          RUN_ID="${{ steps.result.outputs.verification_run_id }}"
+          BRANCH="${{ steps.result.outputs.branch }}"
+          if [ -z "$RUN_ID" ]; then
+            echo "Verified result is missing verification run ID"
+            exit 1
+          fi
+
+          gh api "repos/${{ github.repository }}/actions/runs/${RUN_ID}" > tmp/ai-triage/verification-run.json
+          gh api "repos/${{ github.repository }}/branches/${BRANCH}" > tmp/ai-triage/verification-branch.json
+
+          node <<'NODE'
+          const fs = require('fs')
+          const run = JSON.parse(fs.readFileSync('tmp/ai-triage/verification-run.json', 'utf8'))
+          const branch = JSON.parse(fs.readFileSync('tmp/ai-triage/verification-branch.json', 'utf8'))
+          const expectedBranch = process.env.EXPECTED_BRANCH
+          const must = (cond, msg) => {
+            if (!cond) throw new Error(msg)
+          }
+
+          must(run.conclusion === 'success', `verification run conclusion must be success, got ${run.conclusion}`)
+          must(run.event === 'workflow_dispatch', `verification run event must be workflow_dispatch, got ${run.event}`)
+          must(String(run.path || '').includes('.github/workflows/ci.yml'), `verification run must be from ci.yml, got ${run.path}`)
+          must(run.head_branch === expectedBranch, `verification run branch mismatch: expected ${expectedBranch}, got ${run.head_branch}`)
+          must(run.head_sha === branch.commit.sha, `verification run sha mismatch: expected branch head ${branch.commit.sha}, got ${run.head_sha}`)
+          NODE
+      - name: Block unexpected PR before verification
+        if: always() && steps.result.outputs.branch != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          BRANCH="${{ steps.result.outputs.branch }}"
+          VERIFIED="${{ steps.result.outputs.verified }}"
+          EXISTING=$(gh pr list --head "$BRANCH" --base master --json url --jq '.[0].url // ""' || true)
+
+          if [ "$VERIFIED" != "true" ] && [ -n "$EXISTING" ]; then
+            echo "PR was created before verification succeeded: $EXISTING"
+            exit 1
+          fi
+
+      - name: Create PR (workflow-gated)
+        if: steps.result.outputs.verified == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          BRANCH="${{ steps.result.outputs.branch }}"
+          PACKAGE="${{ steps.result.outputs.package }}"
+          TARGET_RUN_URL="${{ steps.result.outputs.target_run_url }}"
+          VERIFY_URL="${{ steps.result.outputs.verification_run_url }}"
+
+          PR_URL=$(gh pr list --head "$BRANCH" --base master --json url --jq '.[0].url // ""' || true)
+          if [ -z "$PR_URL" ]; then
+            PR_URL=$(gh pr create \
+              --base master \
+              --head "$BRANCH" \
+              --title "${PACKAGE}: AI triage fix for CI failure" \
+              --body "## Summary
+- AI triage fix for failed ci.yml run: ${TARGET_RUN_URL}
+- Package: ${PACKAGE}
+- Verification run: ${VERIFY_URL}")
+          fi
+
+          echo "PR_URL=$PR_URL" >> "$GITHUB_ENV"
+
+      - name: Upload triage report artifact
+        if: always() && hashFiles('tmp/ai-triage/result.json') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-triage-report
+          path: |
+            tmp/ai-triage/result.json
+            tmp/ai-triage/report.md
+            tmp/ai-triage/verification-run.json
+            tmp/ai-triage/verification-branch.json
+
+      - name: Publish workflow summary
+        if: always()
+        run: |
+          set -euo pipefail
+          if [ -f tmp/ai-triage/report.md ]; then
+            cat tmp/ai-triage/report.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+          if [ -n "${PR_URL:-}" ]; then
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "PR created: ${PR_URL}" >> "$GITHUB_STEP_SUMMARY"
+          fi
