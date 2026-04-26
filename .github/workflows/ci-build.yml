@@ -259,7 +259,7 @@ jobs:
       - name: Install MinIO Client
         if: (inputs.push == 'true' || (github.event_name == 'pull_request' && github.event.pull_request.user.login == 'renovate[bot]' && startsWith(github.head_ref || '', 'renovate/')) || github.event_name == 'workflow_dispatch') && steps.useless-check.outputs.is_useless != 'true'
         run: |
-          curl -O https://dl.min.io/client/mc/release/linux-amd64/mc
+          curl -LO https://dl.min.io/client/mc/release/linux-amd64/mc
           chmod +x mc
           mv mc /bin/
           mc config host rm minio || true
