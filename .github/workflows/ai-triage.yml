@@ -187,14 +187,14 @@ jobs:
 
           PR_URL=$(gh pr list --head "$BRANCH" --base master --json url --jq '.[0].url // ""' || true)
           if [ -z "$PR_URL" ]; then
+            BODY_FILE=$(mktemp)
+            printf '## Summary\n- AI triage fix for failed ci.yml run: %s\n- Package: %s\n- Verification run: %s\n' "$TARGET_RUN_URL" "$PACKAGE" "$VERIFY_URL" > "$BODY_FILE"
             PR_URL=$(gh pr create \
               --base master \
               --head "$BRANCH" \
               --title "${PACKAGE}: AI triage fix for CI failure" \
-              --body "## Summary
-- AI triage fix for failed ci.yml run: ${TARGET_RUN_URL}
-- Package: ${PACKAGE}
-- Verification run: ${VERIFY_URL}")
+              --body-file "$BODY_FILE")
+            rm -f "$BODY_FILE"
           fi
 
           echo "PR_URL=$PR_URL" >> "$GITHUB_ENV"
