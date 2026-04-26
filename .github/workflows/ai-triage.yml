@@ -31,6 +31,34 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Resolve target failed run
+        id: resolve
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          RUN_INPUT="${{ inputs.run }}"
+          if [ -n "$RUN_INPUT" ]; then
+            if [[ "$RUN_INPUT" =~ ^[0-9]+$ ]]; then
+              RUN_ID="$RUN_INPUT"
+            elif [[ "$RUN_INPUT" =~ /actions/runs/([0-9]+) ]]; then
+              RUN_ID="${BASH_REMATCH[1]}"
+            else
+              echo "Invalid run input format"
+              exit 1
+            fi
+            RUN_URL="https://github.com/${{ github.repository }}/actions/runs/$RUN_ID"
+          else
+            LATEST=$(gh api "repos/${{ github.repository }}/actions/workflows/ci.yml/runs?status=failure&per_page=1" --jq '.workflow_runs[0]')
+            RUN_ID=$(echo "$LATEST" | jq -r '.id')
+            RUN_URL=$(echo "$LATEST" | jq -r '.html_url')
+            if [ -z "$RUN_ID" ] || [ "$RUN_ID" = "null" ]; then
+              echo "No failed ci.yml runs found"
+              exit 1
+            fi
+          fi
+          echo "run_id=$RUN_ID" >> "$GITHUB_OUTPUT"
+          echo "run_url=$RUN_URL" >> "$GITHUB_OUTPUT"
+
       - name: Parse package list and infer if needed
         id: parse
         env:
@@ -61,34 +89,6 @@ jobs:
           
           PACKAGES=$(echo "$PKG" | tr ',' '\n' | jq -R -s -c 'split("\n") | map(select(length > 0))')
           echo "packages=$PACKAGES" >> "$GITHUB_OUTPUT"
-
-      - name: Resolve target failed run
-        id: resolve
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          RUN_INPUT="${{ inputs.run }}"
-          if [ -n "$RUN_INPUT" ]; then
-            if [[ "$RUN_INPUT" =~ ^[0-9]+$ ]]; then
-              RUN_ID="$RUN_INPUT"
-            elif [[ "$RUN_INPUT" =~ /actions/runs/([0-9]+) ]]; then
-              RUN_ID="${BASH_REMATCH[1]}"
-            else
-              echo "Invalid run input format"
-              exit 1
-            fi
-            RUN_URL="https://github.com/${{ github.repository }}/actions/runs/$RUN_ID"
-          else
-            LATEST=$(gh api "repos/${{ github.repository }}/actions/workflows/ci.yml/runs?status=failure&per_page=1" --jq '.workflow_runs[0]')
-            RUN_ID=$(echo "$LATEST" | jq -r '.id')
-            RUN_URL=$(echo "$LATEST" | jq -r '.html_url')
-            if [ -z "$RUN_ID" ] || [ "$RUN_ID" = "null" ]; then
-              echo "No failed ci.yml runs found"
-              exit 1
-            fi
-          fi
-          echo "run_id=$RUN_ID" >> "$GITHUB_OUTPUT"
-          echo "run_url=$RUN_URL" >> "$GITHUB_OUTPUT"
 
       - name: Read prompts
         id: prompts
@@ -161,6 +161,7 @@ jobs:
       dispatch_json: ${{ steps.output.outputs.dispatch }}
       package: ${{ steps.context.outputs.package }}
       branch: ${{ steps.context.outputs.branch }}
+      safe_pkg: ${{ steps.context.outputs.safe_pkg }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -239,8 +240,133 @@ jobs:
           name: triage-dispatch-${{ steps.context.outputs.safe_pkg }}
           path: tmp/ai-triage/dispatch.json
 
-  verify:
+  poll:
     needs: [prepare, fix]
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    permissions:
+      actions: read
+    strategy:
+      max-parallel: 1
+      fail-fast: false
+      matrix:
+        package: ${{ fromJson(needs.prepare.outputs.packages) }}
+    outputs:
+      poll_result: ${{ steps.poll.outputs.result }}
+    steps:
+      - name: Derive safe package name
+        id: safe
+        run: |
+          SAFE_PKG=$(echo "${{ matrix.package }}" | tr -cd 'a-zA-Z0-9._-')
+          echo "safe_pkg=$SAFE_PKG" >> "$GITHUB_OUTPUT"
+
+      - name: Download dispatch
+        uses: actions/download-artifact@v4
+        with:
+          name: triage-dispatch-${{ steps.safe.outputs.safe_pkg }}
+          path: tmp/ai-triage
+        continue-on-error: true
+
+      - name: Check dispatch exists
+        id: check
+        run: |
+          if [ ! -f tmp/ai-triage/dispatch.json ]; then
+            echo "No dispatch.json found"
+            jq -n '{status: "error", conclusion: "no_dispatch", error: "Fixer did not produce dispatch.json"}' > tmp/ai-triage/poll-result.json
+            echo "result=no_dispatch" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          
+          VERIFY_RUN_ID=$(jq -r '.verificationRunId // empty' tmp/ai-triage/dispatch.json)
+          if [ -z "$VERIFY_RUN_ID" ] || [ "$VERIFY_RUN_ID" = "null" ]; then
+            echo "dispatch.json missing verificationRunId"
+            jq -n '{status: "error", conclusion: "invalid_dispatch", error: "dispatch.json missing verificationRunId"}' > tmp/ai-triage/poll-result.json
+            echo "result=invalid_dispatch" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          
+          echo "verify_run_id=$VERIFY_RUN_ID" >> "$GITHUB_OUTPUT"
+
+      - name: Poll verification run
+        if: steps.check.outputs.verify_run_id != ''
+        id: poll
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERIFY_RUN_ID="${{ steps.check.outputs.verify_run_id }}"
+          PACKAGE="${{ matrix.package }}"
+          BRANCH="${{ needs.fix.outputs.branch }}"
+          OWNER="${{ github.repository_owner }}"
+          REPO="${{ github.event.repository.name }}"
+          
+          echo "Polling run $VERIFY_RUN_ID every 180 seconds..."
+          
+          ELAPSED=0
+          MAX_SECONDS=10800  # 180 minutes
+          
+          while true; do
+            RUN_DATA=$(gh api "repos/${OWNER}/${REPO}/actions/runs/${VERIFY_RUN_ID}")
+            STATUS=$(echo "$RUN_DATA" | jq -r '.status')
+            CONCLUSION=$(echo "$RUN_DATA" | jq -r '.conclusion // "running"')
+            
+            echo "[$(date)] Status: $STATUS, Conclusion: $CONCLUSION (elapsed: ${ELAPSED}s)"
+            
+            if [ "$STATUS" = "completed" ]; then
+              echo "Run completed with conclusion: $CONCLUSION"
+              
+              LOGS=""
+              if [ "$CONCLUSION" = "failure" ]; then
+                echo "Fetching failure logs..."
+                JOBS=$(gh api "repos/${OWNER}/${REPO}/actions/runs/${VERIFY_RUN_ID}/jobs?per_page=100")
+                FAILED_JOB_ID=$(echo "$JOBS" | jq -r '[.jobs[] | select(.conclusion == "failure")][0].id // empty')
+                
+                if [ -n "$FAILED_JOB_ID" ] && [ "$FAILED_JOB_ID" != "null" ]; then
+                  gh api "repos/${OWNER}/${REPO}/actions/jobs/${FAILED_JOB_ID}/logs" > /tmp/verify-logs.txt || true
+                  LOGS=$(tail -n 200 /tmp/verify-logs.txt 2>/dev/null || echo "")
+                fi
+              fi
+              
+              RUN_URL="https://github.com/${OWNER}/${REPO}/actions/runs/${VERIFY_RUN_ID}"
+              
+              jq -n \
+                --arg status "$STATUS" \
+                --arg conclusion "$CONCLUSION" \
+                --argjson runId "$VERIFY_RUN_ID" \
+                --arg runUrl "$RUN_URL" \
+                --arg pkg "$PACKAGE" \
+                --arg branch "$BRANCH" \
+                --arg logs "$LOGS" \
+                '{status: $status, conclusion: $conclusion, verificationRunId: $runId, verificationRunUrl: $runUrl, package: $pkg, branch: $branch, logs: $logs}' \
+                > tmp/ai-triage/poll-result.json
+              
+              RESULT=$(cat tmp/ai-triage/poll-result.json | jq -c .)
+              echo "result=$RESULT" >> "$GITHUB_OUTPUT"
+              break
+            fi
+            
+            if [ "$ELAPSED" -ge "$MAX_SECONDS" ]; then
+              echo "Timeout after ${ELAPSED} seconds"
+              jq -n \
+                --argjson runId "$VERIFY_RUN_ID" \
+                --arg pkg "$PACKAGE" \
+                '{status: "timeout", conclusion: "timeout", verificationRunId: $runId, package: $pkg, error: "Polling timed out after 180 minutes"}' \
+                > tmp/ai-triage/poll-result.json
+              echo "result=timeout" >> "$GITHUB_OUTPUT"
+              break
+            fi
+            
+            sleep 180
+            ELAPSED=$((ELAPSED + 180))
+          done
+
+      - name: Upload poll result artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: triage-poll-${{ steps.safe.outputs.safe_pkg }}
+          path: tmp/ai-triage/poll-result.json
+
+  verify:
+    needs: [prepare, fix, poll]
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -262,20 +388,34 @@ jobs:
           SAFE_PKG=$(echo "${{ matrix.package }}" | tr -cd 'a-zA-Z0-9._-')
           echo "safe_pkg=$SAFE_PKG" >> "$GITHUB_OUTPUT"
 
-      - name: Download dispatch
+      - name: Download poll result
         uses: actions/download-artifact@v4
         with:
-          name: triage-dispatch-${{ steps.safe.outputs.safe_pkg }}
+          name: triage-poll-${{ steps.safe.outputs.safe_pkg }}
           path: tmp/ai-triage
-        continue-on-error: true
 
-      - name: Download context
-        uses: actions/download-artifact@v4
-        with:
-          name: triage-context
-          path: tmp/ai-triage
+      - name: Check poll result
+        id: check
+        run: |
+          if [ ! -f tmp/ai-triage/poll-result.json ]; then
+            echo "No poll-result.json found"
+            jq -n '{verified: false, error: "No poll result"}' > tmp/ai-triage/result.json
+            echo "skip_ai=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          
+          STATUS=$(jq -r '.status' tmp/ai-triage/poll-result.json)
+          if [ "$STATUS" = "error" ] || [ "$STATUS" = "timeout" ]; then
+            echo "Poll failed or timed out"
+            jq '.verified = false' tmp/ai-triage/poll-result.json > tmp/ai-triage/result.json
+            echo "skip_ai=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          
+          echo "skip_ai=false" >> "$GITHUB_OUTPUT"
 
       - name: Run verifier
+        if: steps.check.outputs.skip_ai != 'true'
         uses: anomalyco/opencode/github@latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
