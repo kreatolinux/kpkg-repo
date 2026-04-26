@@ -208,8 +208,6 @@ jobs:
             '.package = $pkg | .branch = $branch' \
             tmp/ai-triage/context-base.json > tmp/ai-triage/context.json
           
-          git checkout -B "$BRANCH"
-          
           echo "package=$PACKAGE" >> "$GITHUB_OUTPUT"
           echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
           echo "safe_pkg=$SAFE_PKG" >> "$GITHUB_OUTPUT"
