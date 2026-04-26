@@ -15,10 +15,6 @@ on:
         description: "Comma-separated list of packages to triage (empty = infer from logs)"
         required: false
         default: ""
-      max_attempts:
-        description: "Maximum fix/verify attempts per package before giving up"
-        required: false
-        default: "3"
 
 jobs:
   prepare:
@@ -27,17 +23,44 @@ jobs:
       packages: ${{ steps.parse.outputs.packages }}
       target_run_id: ${{ steps.resolve.outputs.run_id }}
       target_run_url: ${{ steps.resolve.outputs.run_url }}
+      fixer_prompt: ${{ steps.prompts.outputs.fixer }}
+      verifier_prompt: ${{ steps.prompts.outputs.verifier }}
     steps:
-      - name: Parse package list
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Parse package list and infer if needed
         id: parse
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAIL_LINES: ${{ inputs.tail_lines }}
         run: |
           PKG="${{ inputs.package }}"
+          RUN_ID="${{ steps.resolve.outputs.run_id }}"
+          TAIL="${TAIL_LINES:-200}"
+          
           if [ -z "$PKG" ]; then
-            echo 'packages=[""]' >> "$GITHUB_OUTPUT"
-          else
-            PACKAGES=$(echo "$PKG" | tr ',' '\n' | jq -R -s -c 'split("\n") | map(select(length > 0))')
-            echo "packages=$PACKAGES" >> "$GITHUB_OUTPUT"
+            gh api "repos/${{ github.repository }}/actions/runs/${RUN_ID}/jobs?per_page=100" > /tmp/run-jobs.json
+            FAILED_JOB_ID=$(jq '[.jobs[] | select(.conclusion == "failure")][0].id // empty' /tmp/run-jobs.json)
+            
+            if [ -n "$FAILED_JOB_ID" ] && [ "$FAILED_JOB_ID" != "null" ]; then
+              gh api "repos/${{ github.repository }}/actions/jobs/${FAILED_JOB_ID}/logs" > /tmp/raw-logs.txt || true
+              PKG=$(grep -oE 'kpkg build [a-zA-Z0-9._-]+' /tmp/raw-logs.txt | head -1 | awk '{print $3}' || echo "")
+              if [ -z "$PKG" ]; then
+                PKG=$(grep -oE 'Building [a-zA-Z0-9._-]+' /tmp/raw-logs.txt | head -1 | awk '{print $2}' || echo "")
+              fi
+            fi
+            
+            if [ -z "$PKG" ]; then
+              echo "Could not infer package from logs"
+              exit 1
+            fi
           fi
+          
+          PACKAGES=$(echo "$PKG" | tr ',' '\n' | jq -R -s -c 'split("\n") | map(select(length > 0))')
+          echo "packages=$PACKAGES" >> "$GITHUB_OUTPUT"
 
       - name: Resolve target failed run
         id: resolve
@@ -67,19 +90,77 @@ jobs:
           echo "run_id=$RUN_ID" >> "$GITHUB_OUTPUT"
           echo "run_url=$RUN_URL" >> "$GITHUB_OUTPUT"
 
-  triage:
+      - name: Read prompts
+        id: prompts
+        run: |
+          FIXER=$(cat .github/workflows/ci-triage/fixer-prompt.md)
+          VERIFIER=$(cat .github/workflows/ci-triage/verifier-prompt.md)
+          
+          FIXER_ESCAPED=$(echo "$FIXER" | jq -Rs .)
+          VERIFIER_ESCAPED=$(echo "$VERIFIER" | jq -Rs .)
+          
+          echo "fixer=$FIXER_ESCAPED" >> "$GITHUB_OUTPUT"
+          echo "verifier=$VERIFIER_ESCAPED" >> "$GITHUB_OUTPUT"
+
+      - name: Prepare context base
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAIL_LINES: ${{ inputs.tail_lines }}
+        run: |
+          mkdir -p tmp/ai-triage
+          
+          RUN_ID="${{ steps.resolve.outputs.run_id }}"
+          RUN_URL="${{ steps.resolve.outputs.run_url }}"
+          TAIL="${TAIL_LINES:-200}"
+          
+          gh api "repos/${{ github.repository }}/actions/runs/${RUN_ID}/jobs?per_page=100" > tmp/ai-triage/run-jobs.json
+          
+          FAILED_JOB_ID=$(jq '[.jobs[] | select(.conclusion == "failure")][0].id // empty' tmp/ai-triage/run-jobs.json)
+          
+          if [ -z "$FAILED_JOB_ID" ] || [ "$FAILED_JOB_ID" = "null" ]; then
+            echo "No failed jobs found"
+            exit 1
+          fi
+          
+          gh api "repos/${{ github.repository }}/actions/jobs/${FAILED_JOB_ID}/logs" > tmp/ai-triage/raw-logs.txt || true
+          
+          jq -n \
+            --arg runId "$RUN_ID" \
+            --arg runUrl "$RUN_URL" \
+            --arg logs "$(tail -n "$TAIL" tmp/ai-triage/raw-logs.txt 2>/dev/null || echo '')" \
+            --arg owner "${{ github.repository_owner }}" \
+            --arg repo "${{ github.event.repository.name }}" \
+            --arg tail "$TAIL" \
+            '{
+              targetRunId: ($runId | tonumber),
+              targetRunUrl: $runUrl,
+              failureLogs: $logs,
+              owner: $owner,
+              repo: $repo,
+              tailLines: ($tail | tonumber)
+            }' > tmp/ai-triage/context-base.json
+
+      - name: Upload context artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: triage-context
+          path: tmp/ai-triage/
+
+  fix:
     needs: prepare
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      pull-requests: write
       actions: write
     strategy:
       max-parallel: 1
       fail-fast: false
       matrix:
         package: ${{ fromJson(needs.prepare.outputs.packages) }}
-
+    outputs:
+      dispatch_json: ${{ steps.output.outputs.dispatch }}
+      package: ${{ steps.context.outputs.package }}
+      branch: ${{ steps.context.outputs.branch }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -92,32 +173,18 @@ jobs:
           git config --global user.email 'hi@krea.to'
           git config --global user.name 'AI Triage'
 
-      - name: Prepare initial context
+      - name: Download context
+        uses: actions/download-artifact@v4
+        with:
+          name: triage-context
+          path: tmp/ai-triage
+
+      - name: Prepare context for package
         id: context
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TAIL_LINES: ${{ inputs.tail_lines }}
         run: |
-          set -euo pipefail
-          mkdir -p tmp/ai-triage
-          
+          PACKAGE="${{ matrix.package }}"
           RUN_ID="${{ needs.prepare.outputs.target_run_id }}"
           RUN_URL="${{ needs.prepare.outputs.target_run_url }}"
-          PACKAGE="${{ matrix.package }}"
-          TAIL="${TAIL_LINES:-200}"
-          
-          gh api "repos/${{ github.repository }}/actions/runs/${RUN_ID}/jobs?per_page=100" > tmp/ai-triage/run-jobs.json
-          
-          FAILED_JOBS=$(jq '[.jobs[] | select(.conclusion == "failure")]' tmp/ai-triage/run-jobs.json)
-          FAILED_JOB_ID=$(echo "$FAILED_JOBS" | jq -r '.[0].id // empty')
-          
-          if [ -z "$FAILED_JOB_ID" ]; then
-            echo "No failed jobs found in run $RUN_ID"
-            exit 1
-          fi
-          
-          gh api "repos/${{ github.repository }}/actions/jobs/${FAILED_JOB_ID}/logs" > tmp/ai-triage/raw-logs.txt || true
-          LOGS=$(tail -n "$TAIL" tmp/ai-triage/raw-logs.txt 2>/dev/null || echo "")
           
           if [ -z "$PACKAGE" ]; then
             PACKAGE=$(grep -oE 'kpkg build [a-zA-Z0-9._-]+' tmp/ai-triage/raw-logs.txt | head -1 | awk '{print $3}' || echo "")
@@ -127,231 +194,203 @@ jobs:
           fi
           
           if [ -z "$PACKAGE" ]; then
-            echo "Could not infer package from logs"
+            echo "Could not infer package"
             exit 1
           fi
           
           SAFE_PKG=$(echo "$PACKAGE" | tr -cd 'a-zA-Z0-9._-')
           BRANCH="ai-triage/${SAFE_PKG}-${RUN_ID}"
           
-          jq -n \
-            --arg runId "$RUN_ID" \
-            --arg runUrl "$RUN_URL" \
+          jq \
             --arg pkg "$PACKAGE" \
             --arg branch "$BRANCH" \
-            --arg logs "$LOGS" \
-            --argjson attempt 1 \
-            --arg owner "${{ github.repository_owner }}" \
-            --arg repo "${{ github.event.repository.name }}" \
-            '{
-              targetRunId: ($runId | tonumber),
-              targetRunUrl: $runUrl,
-              package: $pkg,
-              branch: $branch,
-              attempt: $attempt,
-              failureLogs: $logs,
-              owner: $owner,
-              repo: $repo
-            }' > tmp/ai-triage/context.json
+            '.package = $pkg | .branch = $branch' \
+            tmp/ai-triage/context-base.json > tmp/ai-triage/context.json
+          
+          git checkout -B "$BRANCH"
           
           echo "package=$PACKAGE" >> "$GITHUB_OUTPUT"
           echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
           echo "safe_pkg=$SAFE_PKG" >> "$GITHUB_OUTPUT"
 
-      - name: Attempt loop
-        id: loop
+      - name: Run fixer
+        uses: anomalyco/opencode/github@latest
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ALIBABA_CODING_PLAN_API_KEY: ${{ secrets.ALIBABA_CODING_PLAN_API_KEY }}
-          MAX_ATTEMPTS: ${{ inputs.max_attempts }}
-        run: |
-          set -euo pipefail
-          MAX="${MAX_ATTEMPTS:-3}"
-          SUCCESS=false
-          SUCCESS_ATTEMPT=""
-          
-          for ATTEMPT in $(seq 1 "$MAX"); do
-            echo "=== Attempt $ATTEMPT/$MAX ==="
-            
-            jq --argjson attempt "$ATTEMPT" '.attempt = $attempt' tmp/ai-triage/context.json > tmp/ai-triage/context-tmp.json
-            mv tmp/ai-triage/context-tmp.json tmp/ai-triage/context.json
-            
-            rm -f tmp/ai-triage/dispatch.json tmp/ai-triage/result.json
-            
-            BRANCH=$(jq -r '.branch' tmp/ai-triage/context.json)
-            git checkout -B "$BRANCH" || git checkout "$BRANCH"
-            
-            echo "--- Running Fixer Agent (attempt $ATTEMPT) ---"
-            
-            opencode run \
-              --model alibaba-coding-plan/glm-5 \
-              --dangerously-skip-permissions \
-              --prompt-file .github/workflows/ci-triage/fixer-prompt.md || true
-            
-            if [ ! -f tmp/ai-triage/dispatch.json ]; then
-              echo "Fixer did not produce dispatch.json, skipping attempt"
-              continue
-            fi
-            
-            VERIFY_RUN_ID=$(jq -r '.verificationRunId' tmp/ai-triage/dispatch.json)
-            VERIFY_RUN_URL=$(jq -r '.verificationRunUrl' tmp/ai-triage/dispatch.json)
-            
-            if [ -z "$VERIFY_RUN_ID" ] || [ "$VERIFY_RUN_ID" = "null" ]; then
-              echo "dispatch.json missing valid verificationRunId"
-              continue
-            fi
-            
-            echo "Verification run dispatched: $VERIFY_RUN_ID"
-            echo "URL: $VERIFY_RUN_URL"
-            
-            echo "--- Running Verifier Agent (polling run $VERIFY_RUN_ID) ---"
-            
-            opencode run \
-              --model alibaba-coding-plan/glm-5 \
-              --dangerously-skip-permissions \
-              --prompt-file .github/workflows/ci-triage/verifier-prompt.md || true
-            
-            if [ ! -f tmp/ai-triage/result.json ]; then
-              echo "Verifier did not produce result.json"
-              VERIFIED=false
-              FAILURE_LOGS=""
-            else
-              VERIFIED=$(jq -r '.verified' tmp/ai-triage/result.json)
-              FAILURE_LOGS=$(jq -r '.failureLogs // empty' tmp/ai-triage/result.json)
-            fi
-            
-            echo "Verification result: verified=$VERIFIED"
-            
-            if [ "$VERIFIED" = "true" ]; then
-              SUCCESS=true
-              SUCCESS_ATTEMPT="$ATTEMPT"
-              echo "=== SUCCESS at attempt $ATTEMPT ==="
-              break
-            fi
-            
-            if [ "$ATTEMPT" -lt "$MAX" ] && [ -n "$FAILURE_LOGS" ]; then
-              echo "Preparing retry with new failure logs..."
-              jq --arg logs "$FAILURE_LOGS" --argjson attempt "$((ATTEMPT + 1))" \
-                '.failureLogs = $logs | .attempt = $attempt' \
-                tmp/ai-triage/context.json > tmp/ai-triage/context-tmp.json
-              mv tmp/ai-triage/context-tmp.json tmp/ai-triage/context.json
-            fi
-          done
-          
-          echo "success=$SUCCESS" >> "$GITHUB_OUTPUT"
-          echo "success_attempt=$SUCCESS_ATTEMPT" >> "$GITHUB_OUTPUT"
-          echo "verified=$VERIFIED" >> "$GITHUB_ENV"
+        with:
+          model: alibaba-coding-plan/glm-5
+          use_github_token: true
+          prompt: ${{ fromJson(needs.prepare.outputs.fixer_prompt) }}
 
-      - name: Cross-check verification run
-        if: steps.loop.outputs.success == 'true'
+      - name: Read dispatch output
+        id: output
+        run: |
+          if [ -f tmp/ai-triage/dispatch.json ]; then
+            DISPATCH=$(cat tmp/ai-triage/dispatch.json | jq -c .)
+            echo "dispatch=$DISPATCH" >> "$GITHUB_OUTPUT"
+          else
+            echo "dispatch={}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Upload dispatch artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: triage-dispatch-${{ steps.context.outputs.safe_pkg }}
+          path: tmp/ai-triage/dispatch.json
+
+  verify:
+    needs: [prepare, fix]
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+    strategy:
+      max-parallel: 1
+      fail-fast: false
+      matrix:
+        package: ${{ fromJson(needs.prepare.outputs.packages) }}
+    outputs:
+      verified: ${{ steps.output.outputs.verified }}
+      result_json: ${{ steps.output.outputs.result }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Derive safe package name
+        id: safe
+        run: |
+          SAFE_PKG=$(echo "${{ matrix.package }}" | tr -cd 'a-zA-Z0-9._-')
+          echo "safe_pkg=$SAFE_PKG" >> "$GITHUB_OUTPUT"
+
+      - name: Download dispatch
+        uses: actions/download-artifact@v4
+        with:
+          name: triage-dispatch-${{ steps.safe.outputs.safe_pkg }}
+          path: tmp/ai-triage
+        continue-on-error: true
+
+      - name: Download context
+        uses: actions/download-artifact@v4
+        with:
+          name: triage-context
+          path: tmp/ai-triage
+
+      - name: Run verifier
+        uses: anomalyco/opencode/github@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ALIBABA_CODING_PLAN_API_KEY: ${{ secrets.ALIBABA_CODING_PLAN_API_KEY }}
+        with:
+          model: alibaba-coding-plan/glm-5
+          use_github_token: true
+          prompt: ${{ fromJson(needs.prepare.outputs.verifier_prompt) }}
+
+      - name: Read result output
+        id: output
+        run: |
+          if [ -f tmp/ai-triage/result.json ]; then
+            VERIFIED=$(jq -r '.verified // false' tmp/ai-triage/result.json)
+            RESULT=$(cat tmp/ai-triage/result.json | jq -c .)
+            echo "verified=$VERIFIED" >> "$GITHUB_OUTPUT"
+            echo "result=$RESULT" >> "$GITHUB_OUTPUT"
+          else
+            echo "verified=false" >> "$GITHUB_OUTPUT"
+            echo "result={}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Upload result artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: triage-result-${{ steps.safe.outputs.safe_pkg }}
+          path: tmp/ai-triage/result.json
+
+  pr:
+    needs: [prepare, fix, verify]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    strategy:
+      max-parallel: 1
+      fail-fast: false
+      matrix:
+        package: ${{ fromJson(needs.prepare.outputs.packages) }}
+    if: ${{ needs.verify.outputs.result_json != '{}' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Derive safe package name
+        id: safe
+        run: |
+          SAFE_PKG=$(echo "${{ matrix.package }}" | tr -cd 'a-zA-Z0-9._-')
+          echo "safe_pkg=$SAFE_PKG" >> "$GITHUB_OUTPUT"
+
+      - name: Download result
+        uses: actions/download-artifact@v4
+        with:
+          name: triage-result-${{ steps.safe.outputs.safe_pkg }}
+          path: tmp/ai-triage
+
+      - name: Check verified
+        id: check
+        run: |
+          if [ -f tmp/ai-triage/result.json ]; then
+            VERIFIED=$(jq -r '.verified // false' tmp/ai-triage/result.json)
+            echo "verified=$VERIFIED" >> "$GITHUB_OUTPUT"
+          else
+            echo "verified=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Cross-check verification
+        if: steps.check.outputs.verified == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          set -euo pipefail
           RUN_ID=$(jq -r '.verificationRunId' tmp/ai-triage/result.json)
-          BRANCH="${{ steps.context.outputs.branch }}"
+          PACKAGE="${{ matrix.package }}"
+          RUN_ID_NUM="${{ needs.prepare.outputs.target_run_id }}"
+          SAFE_PKG="${{ steps.safe.outputs.safe_pkg }}"
+          BRANCH="ai-triage/${SAFE_PKG}-${RUN_ID_NUM}"
           
-          gh api "repos/${{ github.repository }}/actions/runs/${RUN_ID}" > tmp/ai-triage/verify-check.json
-          gh api "repos/${{ github.repository }}/branches/${BRANCH}" > tmp/ai-triage/branch-check.json
+          RUN_DATA=$(gh api "repos/${{ github.repository }}/actions/runs/${RUN_ID}")
+          BRANCH_DATA=$(gh api "repos/${{ github.repository }}/branches/${BRANCH}")
           
-          CONCLUSION=$(jq -r '.conclusion' tmp/ai-triage/verify-check.json)
-          EVENT=$(jq -r '.event' tmp/ai-triage/verify-check.json)
-          WF_PATH=$(jq -r '.path' tmp/ai-triage/verify-check.json)
-          RUN_BRANCH=$(jq -r '.head_branch' tmp/ai-triage/verify-check.json)
-          RUN_SHA=$(jq -r '.head_sha' tmp/ai-triage/verify-check.json)
-          BRANCH_SHA=$(jq -r '.commit.sha' tmp/ai-triage/branch-check.json)
+          CONCLUSION=$(echo "$RUN_DATA" | jq -r '.conclusion')
+          EVENT=$(echo "$RUN_DATA" | jq -r '.event')
+          WF_PATH=$(echo "$RUN_DATA" | jq -r '.path')
+          RUN_BRANCH=$(echo "$RUN_DATA" | jq -r '.head_branch')
+          RUN_SHA=$(echo "$RUN_DATA" | jq -r '.head_sha')
+          BRANCH_SHA=$(echo "$BRANCH_DATA" | jq -r '.commit.sha')
           
-          if [ "$CONCLUSION" != "success" ]; then
-            echo "Verification run conclusion: $CONCLUSION (expected success)"
-            exit 1
-          fi
-          if [ "$EVENT" != "workflow_dispatch" ]; then
-            echo "Verification run event: $EVENT (expected workflow_dispatch)"
-            exit 1
-          fi
-          if [[ "$WF_PATH" != *".github/workflows/ci.yml"* ]]; then
-            echo "Verification run workflow: $WF_PATH (expected ci.yml)"
-            exit 1
-          fi
-          if [ "$RUN_BRANCH" != "$BRANCH" ]; then
-            echo "Verification run branch: $RUN_BRANCH (expected $BRANCH)"
-            exit 1
-          fi
-          if [ "$RUN_SHA" != "$BRANCH_SHA" ]; then
-            echo "Verification run SHA mismatch"
-            exit 1
-          fi
-          
-          echo "Cross-check passed"
+          [ "$CONCLUSION" = "success" ] || exit 1
+          [ "$EVENT" = "workflow_dispatch" ] || exit 1
+          [[ "$WF_PATH" == *ci.yml* ]] || exit 1
+          [ "$RUN_BRANCH" = "$BRANCH" ] || exit 1
+          [ "$RUN_SHA" = "$BRANCH_SHA" ] || exit 1
 
       - name: Create PR
-        if: steps.loop.outputs.success == 'true'
+        if: steps.check.outputs.verified == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          set -euo pipefail
-          BRANCH="${{ steps.context.outputs.branch }}"
-          PACKAGE="${{ steps.context.outputs.package }}"
+          PACKAGE="${{ matrix.package }}"
+          RUN_ID_NUM="${{ needs.prepare.outputs.target_run_id }}"
+          SAFE_PKG="${{ steps.safe.outputs.safe_pkg }}"
+          BRANCH="ai-triage/${SAFE_PKG}-${RUN_ID_NUM}"
           TARGET_URL="${{ needs.prepare.outputs.target_run_url }}"
           VERIFY_URL=$(jq -r '.verificationRunUrl' tmp/ai-triage/result.json)
-          SUCCESS_ATTEMPT="${{ steps.loop.outputs.success_attempt }}"
           
           EXISTING=$(gh pr list --head "$BRANCH" --base master --json url --jq '.[0].url // ""' || true)
           
-          if [ -n "$EXISTING" ]; then
-            PR_URL="$EXISTING"
-          else
+          if [ -z "$EXISTING" ]; then
             BODY_FILE=$(mktemp)
-            printf '## Summary\n- AI triage fix for failed ci.yml run: %s\n- Package: %s\n- Verification run: %s\n- Success at attempt: %s\n' \
-              "$TARGET_URL" "$PACKAGE" "$VERIFY_URL" "$SUCCESS_ATTEMPT" > "$BODY_FILE"
-            PR_URL=$(gh pr create \
+            printf '## Summary\n- AI triage fix for failed ci.yml run: %s\n- Package: %s\n- Verification run: %s\n' \
+              "$TARGET_URL" "$PACKAGE" "$VERIFY_URL" > "$BODY_FILE"
+            gh pr create \
               --base master \
               --head "$BRANCH" \
               --title "${PACKAGE}: AI triage fix for CI failure" \
-              --body-file "$BODY_FILE")
+              --body-file "$BODY_FILE"
             rm -f "$BODY_FILE"
           fi
-          
-          echo "PR_URL=$PR_URL" >> "$GITHUB_ENV"
-
-      - name: Report failure
-        if: steps.loop.outputs.success != 'true'
-        run: |
-          echo "=== TRIAGE FAILED ==="
-          echo "Package: ${{ steps.context.outputs.package }}"
-          echo "Max attempts: ${{ inputs.max_attempts }}"
-          if [ -f tmp/ai-triage/result.json ]; then
-            echo "Summary: $(jq -r '.summary // "No summary"' tmp/ai-triage/result.json)"
-          else
-            echo "No result.json produced"
-          fi
-          echo "No PR created."
-
-      - name: Upload artifacts
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: ai-triage-${{ steps.context.outputs.safe_pkg }}
-          path: tmp/ai-triage/
-
-      - name: Publish summary
-        if: always()
-        run: |
-          {
-            echo "## AI Triage Summary"
-            echo "**Package:** ${{ steps.context.outputs.package }}"
-            echo "**Branch:** ${{ steps.context.outputs.branch }}"
-            echo "**Success:** ${{ steps.loop.outputs.success }}"
-            if [ -n "${{ steps.loop.outputs.success_attempt }}" ]; then
-              echo "**Success at attempt:** ${{ steps.loop.outputs.success_attempt }}"
-            fi
-            if [ -n "${PR_URL:-}" ]; then
-              echo ""
-              echo "**PR created:** ${PR_URL}"
-            fi
-            if [ -f tmp/ai-triage/result.json ]; then
-              echo ""
-              echo "### Verifier Summary"
-              echo "$(jq -r '.summary // empty' tmp/ai-triage/result.json)"
-            fi
-          } >> "$GITHUB_STEP_SUMMARY"
