@@ -39,7 +39,7 @@ jobs:
         uses: anomalyco/opencode/github@latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BAILIAN_CODING_PLAN_API_KEY: ${{ secrets.BAILIAN_CODING_PLAN_API_KEY }}
+          ALIBABA_CODING_PLAN_API_KEY: ${{ secrets.ALIBABA_CODING_PLAN_API_KEY }}
         with:
           model: alibaba-coding-plan/glm-5
           use_github_token: true
