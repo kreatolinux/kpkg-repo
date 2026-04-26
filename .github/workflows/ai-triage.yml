@@ -379,6 +379,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Configure git
+        run: |
+          git config --global user.email 'hi@krea.to'
+          git config --global user.name 'AI Triage'
 
       - name: Derive safe package name
         id: safe
