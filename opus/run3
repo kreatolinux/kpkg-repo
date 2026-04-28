@@ -1,11 +1,11 @@
 name: "opus"
-version: "1.4"
+version: "1.6.1"
 release: "1"
 description: "Lossy audio compression format"
 sources:
  - "https://downloads.xiph.org/releases/opus/opus-${version}.tar.gz"
 sha256sum:
- - "c9b32b4253be5ae63d1ff16eea06b94b5f0f2951b7a02aceef58e3a3ce49c51f"
+ - "6ffcb593207be92584df15b32466ed64bbec99109f007c82205f0194572411a1"
 build_depends:
  - "gmake"
 
