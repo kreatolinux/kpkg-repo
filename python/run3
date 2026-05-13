@@ -1,11 +1,11 @@
 name: python
-version: 3.14.4
+version: 3.14.5
 release: 4
 description: "General-Purpose Programming language"
 sources:
   - "https://www.python.org/ftp/python/${version}/Python-${version}.tar.xz"
 sha256sum:
-  - "d923c51303e38e249136fc1bdf3568d56ecb03214efdef48516176d3d7faaef8"
+  - "7e32597b99e5d9a39abed35de4693fa169df3e5850d4c334337ffd6a19a36db6"
 
 build {
   macro build --enable-shared --with-system-expat
