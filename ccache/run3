@@ -1,11 +1,11 @@
 name: ccache
-version: 4.13.5
+version: 4.13.6
 release: 2
 description: "ccache - a fast compiler cache"
 sources:
   - "https://github.com/ccache/ccache/archive/refs/tags/v$version.tar.gz"
 sha256sum:
-  - 99478c1b55b9c097baceef4cc559931bd2aff8dd43920df1a8cbb7445f23d1f1
+  - b0688da07593d481ed1901ec39739a770469090c8feff32522256d48077aaf9b
 depends:
   - cmake
   - gcc
