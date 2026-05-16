@@ -1,11 +1,11 @@
 name: "lvm2"
-version: "2.03.40"
+version: "2.03.41"
 release: "1"
 description: "Logical Volume Manager"
 sources:
  - "https://mirrors.kernel.org/sourceware/lvm2/LVM2.${version}.tgz"
 sha256sum:
- - "60c9bb5c0a109f20267bb40ba50c00c84a110fc14c129f21afb5566929bf5645"
+ - "d58011b845df8ec13816ca13ea6c39d4cb3d038cd2d7d387acdf5681ad7d6637"
 depends:
  - "libaio"
  - "util-linux"
