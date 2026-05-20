@@ -1,11 +1,11 @@
 name: "rsync"
-version: "3.4.2"
+version: "3.4.3"
 release: "1"
 description: "Open source utility that provides fast incremental file transfer"
 sources:
  - "https://download.samba.org/pub/rsync/src/rsync-${version}.tar.gz"
 sha256sum:
- - "ff10aa2c151cd4b2dbbe6135126dbc854046113d2dfb49572a348233267eb315"
+ - "c72e63ca3021cbc80ba86ec30102773f4c5631fbc492b52e773b3958f82a53d3"
 build_depends:
  - "gmake"
 
