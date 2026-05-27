@@ -1,11 +1,11 @@
 name: "xorriso"
-version: "1.5.8.pl01"
+version: "1.5.8.pl02"
 release: "1"
 description: "GNU xorriso"
 sources:
  - "https://www.gnu.org/software/xorriso/xorriso-${version}.tar.gz"
 sha256sum:
- - "0381798b7bb4f162578b4f31fe30bfe53608b5077075967f8df2facfab4c90f9"
+ - "b1455ecafbf0692ddafe1d71002a96f2ce2d77f4deae602678261ce033f97bc8"
 depends:
  - "readline"
 build_depends:
