@@ -1,11 +1,11 @@
 name: "kbd"
-version: "2.9.0"
+version: "2.10.0"
 release: "1"
 description: "Linux keyboard tools"
 sources:
  - "https://git.kernel.org/pub/scm/linux/kernel/git/legion/kbd.git/snapshot/kbd-${version}.tar.gz"
 sha256sum:
- - "fa493b5b6a6f749c674bce4f01ae9c478976654f2c2821cb0a66c7436e3669b2"
+ - "96f8b60f9136e9e0b9261b9e63b8b4b456a2f817901e90349453387a5aa1d41c"
 build_depends:
  - "autoconf"
  - "automake"
