@@ -25,7 +25,7 @@ build {
     exec "wget https://go.dev/dl/go$version.linux-$ARCH.tar.gz"
     exec "mkdir go-bin"
     exec "tar -xvf go$version.linux-$ARCH.tar.gz -C go-bin"
-    env PATH="$PATH:$PWD/go-bin/go/bin"
+    env GOROOT_BOOTSTRAP="$PWD/go-bin/go"
     cd "-"
   }
   cd "src"
