@@ -5,7 +5,7 @@ description: "libpciaccess"
 sources:
  - "https://x.org/releases/individual/lib/libpciaccess-${version}.tar.gz"
 sha256sum:
- - "SKIP"
+ - "fe26ec788732b4ef60b550f2d3fa51c605d27f646e18ecec878f061807a3526e"
 build_depends:
  - "gmake"
 no_chkupd: true
