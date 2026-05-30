@@ -23,14 +23,8 @@ build_depends:
   - "gmake"
 
 build {
-
-  exec "if ! command -v systemctl > /dev/null; then"
-  exec "extraArgs=\"--disable-systemd\""
-  exec "fi"
-
-  # Some of these are taken from BLFS
-  macro build $extraArgs --sysconfdir=/etc  --localstatedir=/var  --with-pammodulesdir=/usr/lib/security  --enable-fhs  --without-acl-support  --without-ad-dc  --without-ldap  --without-ads  --prefix=/usr
-  exec "make"
+  exec "./configure --sysconfdir=/etc --localstatedir=/var --with-pammodulesdir=/usr/lib/security --enable-fhs --without-acl-support --without-ad-dc --without-ldap --without-ads --prefix=/usr"
+  exec "make -j$(nproc)"
 }
 
 package {
