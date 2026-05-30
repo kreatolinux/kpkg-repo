@@ -222,10 +222,75 @@ jobs:
           if [ "${{ inputs.disable_force_install_all }}" != "true" ]; then
               FORCE_INSTALL_ALL_FLAG="--forceInstallAll=true"
           fi
-          /tmp/kpkg-bin/kpkg build ${{ matrix.packages }} --yes --ignorePostInstall $FORCE_INSTALL_ALL_FLAG
+          mkdir -p /tmp/failures /tmp/build-logs
+          for package in ${{ matrix.packages }}; do
+            version=$(/tmp/kpkg-bin/kpkg info "$package" 2>/dev/null | sed -n 's/^package version: //p' || echo "unknown")
+            echo "=== $package ($version) ==="
+            if /tmp/kpkg-bin/kpkg build "$package" --yes --ignorePostInstall $FORCE_INSTALL_ALL_FLAG 2>&1 |
+                 tee /tmp/build-logs/$package.log; then
+              echo "✅ $package built" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "❌ $package failed" >> $GITHUB_STEP_SUMMARY
+              echo "$package" > /tmp/failures/$package.name
+              echo "$version" > /tmp/failures/$package.version
+              date -u +%Y-%m-%d > /tmp/failures/$package.date
+              tail -200 /tmp/build-logs/$package.log > /tmp/failures/$package.log
+            fi
+          done
           cd "$GITHUB_WORKSPACE"
           git pull
           git status
+
+      - name: Create failure issues
+        uses: actions/github-script@v9
+        if: hashFiles('/tmp/failures/*.name') != ''
+        with:
+          script: |
+            const fs = require('fs'), path = require('path');
+            const dir = '/tmp/failures';
+            const failures = fs.readdirSync(dir)
+              .filter(f => f.endsWith('.name'))
+              .map(f => ({
+                package: fs.readFileSync(path.join(dir, f), 'utf8').trim(),
+                version: fs.readFileSync(path.join(dir, f.replace('.name', '.version')), 'utf8').trim(),
+                date: fs.readFileSync(path.join(dir, f.replace('.name', '.date')), 'utf8').trim(),
+                log: fs.readFileSync(path.join(dir, f.replace('.name', '.log')), 'utf8').trim()
+              }));
+
+            const { data: existing } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner, repo: context.repo.repo,
+              labels: 'ci-failure', state: 'open'
+            });
+
+            let created = 0, skipped = 0;
+            for (const f of failures) {
+              const title = `${f.package}: failure to upgrade to ${f.version}`;
+              if (existing.some(i => i.title === title)) {
+                skipped++;
+                continue;
+              }
+              await github.rest.issues.create({
+                owner: context.repo.owner, repo: context.repo.repo,
+                title,
+                labels: ['ci-failure'],
+                body:
+              `## CI Failure
+              * Package: ${f.package}
+              * Version: ${f.version}
+              * Date: ${f.date}
+              * Job Link: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}
+
+              ## Log
+
+              \`\`\`
+              ${f.log.split('\n').slice(-200).join('\n')}
+              \`\`\``
+              });
+              created++;
+            }
+            core.summary.addHeading('CI Failure Issues', 2);
+            core.summary.addRaw(`Created: ${created}, Skipped (already open): ${skipped}`);
+            await core.summary.write();
 
       - name: Commit chkupd changes
         run: |
