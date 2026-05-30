@@ -13,7 +13,7 @@ build_depends:
  - "python-setuptools"
 
 build {
- exec "make build"
+ exec "make build-py"
 }
 
 package {

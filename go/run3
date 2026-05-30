@@ -16,18 +16,11 @@ build_depends:
 build {
   if ${exec("command -v go")}.exit() != 0 {
     print "go: go not found to bootstrap, downloading binary to bootstrap..."
-    # We get the architecture by hand since
-    # kpkg doesn't currently offer any variable to do this.
-    exec "ARCH=\"\""
-    exec "case $(uname -m)"
-    exec "in"
-    exec "\"x86_64\")"
-    exec "ARCH=\"amd64\""
-    exec ";;"
-    exec "*)"
-    exec "ARCH=\"$(uname -m)\""
-    exec ";;"
-    exec "esac"
+    if ${exec("uname -m").output()} == "x86_64" {
+      env ARCH="amd64"
+    } else {
+      env ARCH="${exec("uname -m").output()}"
+    }
     cd ".."
     exec "wget https://go.dev/dl/go$version.linux-$ARCH.tar.gz"
     exec "mkdir go-bin"

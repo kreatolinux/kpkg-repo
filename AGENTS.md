@@ -72,6 +72,10 @@ package { macro package --configure; }
 - `grub-efi -> grub/`
 - Various compat symlinks (webkitgtk3/4, ca-certificates variants)
 
+## Skills
+
+- `.github/skills/ci-triage-fixer/SKILL.md` — CI triage & fixer skill: analyze GH Actions run URLs, dispatch subagents to gather failed build logs, report findings, and fix `*/run3` files.
+
 ## Useful Commands
 
 - Checksum update: `scripts/update-sums.mjs` (for run3 files)

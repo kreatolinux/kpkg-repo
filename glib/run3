@@ -21,7 +21,7 @@ bootstrap_depends:
 build {
  local INTROSPECTION = "enabled"
  if "${KPKG_BOOTSTRAP}" == "1" {
-   local INTROSPECTION = "disabled"
+   global INTROSPECTION = "disabled"
  }
 
  print "debug: introspection is $INTROSPECTION"

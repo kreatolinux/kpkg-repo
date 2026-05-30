@@ -1,5 +1,5 @@
 name: "libpciaccess"
-version: "0.18.1"
+version: "0.13.5"
 release: "1"
 description: "libpciaccess"
 sources:
@@ -8,6 +8,7 @@ sha256sum:
  - "SKIP"
 build_depends:
  - "gmake"
+no_chkupd: true
 
 build {
  macro build 

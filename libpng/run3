@@ -7,7 +7,8 @@ sources:
 sha256sum:
  - "b20cee717e11416d2f96ccc7d184f63730ca8cb2f03bfd0c4ed77fbc909c0bff"
 build_depends:
- - "gmake"
+  - "gmake"
+  - "cmake"
 
 build {
  macro build --disable-static

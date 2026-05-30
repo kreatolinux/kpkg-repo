@@ -14,6 +14,8 @@ build_depends:
   - "ninja"
   - "python-setuptools"
   - "python-packaging"
+bootstrap_depends:
+  - "python"
 
 build {
   exec "meson setup  --prefix=/usr  -D tests=false  build"
