@@ -9,15 +9,14 @@ b2sum:
 depends:
  - "python"
 build_depends:
- - "gmake"
  - "python-setuptools"
 
 build {
- exec "make build-py"
+ exec "python setup.py build"
 }
 
 package {
- macro package
+ exec "python setup.py install --root=$ROOT --prefix=/usr"
 }
 
 
