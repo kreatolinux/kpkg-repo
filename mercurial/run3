@@ -9,7 +9,8 @@ b2sum:
 depends:
  - "python"
 build_depends:
- - "python-setuptools"
+  - "python-setuptools"
+  - "python-setuptools-scm"
 
 build {
  exec "python setup.py build"

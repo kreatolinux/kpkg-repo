@@ -1,0 +1,15 @@
+name: "python-setuptools-scm"
+version: "10.0.5"
+release: "1"
+description: "Package to manage versions by scm tags via setuptools"
+sources:
+  - "https://github.com/pypa/setuptools-scm/archive/refs/tags/v${version}.tar.gz"
+sha256sum:
+  - "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed"
+depends:
+  - "python"
+  - "python-setuptools"
+
+package {
+  exec "pip install . --prefix=/usr --root=\"$ROOT\""
+}
