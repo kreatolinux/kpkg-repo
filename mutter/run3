@@ -1,11 +1,11 @@
 name: "mutter"
-version: "45.1"
+version: "50.2"
 release: "1"
 description: "Wayland compositor for GNOME"
 sources:
   - "https://gitlab.gnome.org/GNOME/mutter/-/archive/$version/mutter-$version.tar.gz"
 sha256sum:
-  - "0194248c30a28ab8e0b659193a330fcc8de09d8f8eaeb255f5408d12322ee981"
+  - "ff9176edeeeee233f0c6cbf207698b3dbfe40dc22d4cdef5a1238c036f8d62c8"
 depends:
   - "libx11"
   - "libei"
