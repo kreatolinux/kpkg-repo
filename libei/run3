@@ -1,11 +1,11 @@
 name: "libei"
-version: "1.2.0"
+version: "1.6.0"
 release: "2"
 description: "Library for Emulated Input"
 sources:
  - "https://gitlab.freedesktop.org/libinput/libei/-/archive/${version}/libei-${version}.tar.gz"
 sha256sum:
- - "680f85d49968dd96dff6e4b97340669d4e04a8b6248fbe223cdf192e8fc9e3e8"
+ - "81b4b967f0e5938492434a04f7ea2e6c6d96d3e6c44700bc691821f82281e602"
 depends:
  - "elogind"
  - "libxkbcommon"
