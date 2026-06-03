@@ -1,11 +1,11 @@
 name: "gnome-settings-daemon"
-version: "45.0"
+version: "50.1"
 release: "1"
 description: "gnome-settings-daemon"
 sources:
   - "https://gitlab.gnome.org/GNOME/gnome-settings-daemon/-/archive/$version/gnome-settings-daemon-$version.tar.gz"
 sha256sum:
-  - "1953a54fa177ffc2e4708ea0df070859a672832198c67995ed68faa8f83b3d87"
+  - "13fd935144a92335e2c4572081803ba20c06a2908d098b2cfa88ec0fca7b3794"
 depends:
   - "alsa-lib"
   - "networkmanager"
