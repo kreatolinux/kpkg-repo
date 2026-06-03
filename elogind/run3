@@ -1,12 +1,12 @@
 name: "elogind"
-version: "252.9"
+version: "257.15"
 release: "1"
 description: "systemd-logind, extracted to be a standalone daemon"
 sources:
  - "https://github.com/elogind/elogind/archive/refs/tags/v${version}.tar.gz"
  - "realpath.patch"
 sha256sum:
- - "7af8caa8225a406e77fb99c9f33dba5e1f0a94f0e1277c9d91dcfc016f116d85"
+ - "20e3d968e016c9f6e1292ec325b6331ac2d1306e95a332fb3265838c811e4bf5"
  - "feb8948704e98971a936eb69701d14c31b1be3017b9746d81f8ed739ed4189fc"
 depends:
  - "dbus"
