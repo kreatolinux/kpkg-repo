@@ -1,11 +1,11 @@
 name: "gnome-terminal"
-version: "3.52.2"
+version: "3.60.0"
 release: "1"
 description: "GNOME Terminal"
 sources:
   - "https://gitlab.gnome.org/GNOME/gnome-terminal/-/archive/$version/gnome-terminal-$version.tar.gz"
 sha256sum:
-  - "e4dbb694fcf5f15b6675c5dd9463d200bddf49e4ae42d0b3fbe87aef5829c930"
+  - "6c006523d2c21282fd62c64fc44f63546aaa216e66eb439b8129af68db11df7c"
 depends:
   - "vte"
   - "util-linux"
