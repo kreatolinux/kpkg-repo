@@ -1,11 +1,11 @@
 name: "swayfx"
-version: "0.3.2"
+version: "0.5.3"
 release: "1"
 description: "Fork of sway with eye candy features"
 sources:
  - "https://github.com/WillPower3309/swayfx/archive/refs/tags/${version}.tar.gz"
 sha256sum:
- - "05b5cdc2d25e9f05817556d7053c02f8b89c9ef629405fcba5b4d240d4fd0545"
+ - "e6345e198f128520cf422b458ac8ad9759c3a6c8f633d7b722655309f8a14b9e"
 depends:
  - "pcre"
  - "wlroots"
