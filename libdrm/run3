@@ -1,11 +1,11 @@
 name: "libdrm"
-version: "2.4.129"
+version: "2.4.134"
 release: "1"
 description: "libdrm"
 sources:
  - "https://dri.freedesktop.org/libdrm/libdrm-${version}.tar.xz"
 sha256sum:
- - "5978183f978d697e26a50ba066174964efb0ab97caa1ecaa1b861fbe5ddf77dc"
+ - "ac5e74d157830eb8bee44c6a6bf3ad49774ef0dd2a72bdad74a8f20308b52a95"
 depends:
  - "libpciaccess"
 build_depends:
