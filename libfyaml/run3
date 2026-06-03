@@ -1,11 +1,11 @@
 name: "libfyaml"
-version: "0.9"
+version: "0.9.6"
 release: "1"
 description: "Fully feature complete YAML parser and emitter"
 sources:
  - "https://github.com/pantoniou/libfyaml/releases/download/v${version}/libfyaml-${version}.tar.gz"
 sha256sum:
- - "7731edc5dfcc345d5c5c9f6ce597133991a689dabede393cd77bae89b327cd6d"
+ - "a59cc3331e2eb903ec36933ad52a45888041cac31e44f553a00511131242c483"
 depends:
  - "libyaml"
 build_depends:
