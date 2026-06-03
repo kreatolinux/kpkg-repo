@@ -1,11 +1,11 @@
 name: "libnotify"
-version: "0.8.7"
+version: "0.8.8"
 release: "1"
 description: "Notification library"
 sources:
  - "https://gitlab.gnome.org/GNOME/libnotify/-/archive/${version}/libnotify-${version}.tar.gz"
 sha256sum:
- - "b041ab7e4eb8cd16eafa6ae853274120ee3210aa6913614d9e774e6c45839723"
+ - "aa0f94ed3dcc45ce169f4987d2c3275f7ece17523bb7ffe41596c053606a1a00"
 depends:
  - "gdk-pixbuf"
  - "gobject-introspection"
