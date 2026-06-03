@@ -1,11 +1,11 @@
 name: "nautilus"
-version: "46.2"
+version: "50.2.2"
 release: "1"
 description: "File manager of GNOME"
 sources:
  - "https://gitlab.gnome.org/GNOME/nautilus/-/archive/${version}/nautilus-${version}.tar.gz"
 sha256sum:
- - "4f32a4bd04928ca7db0ab040755e4433d2efc6be37d1e46938d390233b8c6ce8"
+ - "689382c91590b371f697d846a14c0bf9b4708556346be4113d250b35a76ff411"
 depends:
  - "bubblewrap"
  - "dconf"
