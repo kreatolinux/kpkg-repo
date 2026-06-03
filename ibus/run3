@@ -1,11 +1,11 @@
 name: "ibus"
-version: "1.5.28"
+version: "1.5.34"
 release: "1"
 description: "ibus"
 sources:
   - "https://github.com/ibus/ibus/releases/download/$version/ibus-$version.tar.gz"
 sha256sum:
-  - "6c9ff3a7576c3d61264f386030f47ee467eb7298c8104367002986e008765667"
+  - "12a72210ce5250f8a66df562a75e034e67b2bce74c4df2983dc86d1154894943"
 depends:
   - "dconf"
   - "gobject-introspection"
