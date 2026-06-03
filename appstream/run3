@@ -1,11 +1,11 @@
 name: "appstream"
-version: "1.1.1"
+version: "1.1.2"
 release: "1"
 description: "Tools and libraries to work with AppStream metadata"
 sources:
  - "https://github.com/ximion/appstream/archive/refs/tags/v${version}.tar.gz"
 sha256sum:
- - "1615468b8d1e5edb9a9081f81841c8a22439c64bee5f02b008b3b8d5a5204c91"
+ - "564ec87b16e9e4ee81fb021e612250fd27f3a3ecd31c209a5dd1ff59def3022d"
 depends:
  - "glib"
  - "itstool"
