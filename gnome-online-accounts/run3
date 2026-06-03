@@ -1,11 +1,11 @@
 name: "gnome-online-accounts"
-version: "3.56.2"
+version: "3.58.1"
 release: "2"
 description: "The GNOME online account manager"
 sources:
  - "https://gitlab.gnome.org/GNOME/gnome-online-accounts/-/archive/${version}/gnome-online-accounts-${version}.tar.gz"
 sha256sum:
- - "5f0fa722b7a551298c7ff67f4e7ebb1a4cdcc8ca88a6a7ee630c513203760af5"
+ - "4ef2c9a3f875d4134cb8322495fd099136bae7935b850dd513155851454f0525"
 depends:
  - "json-glib"
  - "rest"
