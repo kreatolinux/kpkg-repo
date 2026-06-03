@@ -1,11 +1,11 @@
 name: "hwdata"
-version: "0.402"
+version: "0.408"
 release: "1"
 description: "hwdata contains various hardware identification and configuration data, such as the pci.ids and usb.ids databases."
 sources:
  - "https://github.com/vcrhonek/hwdata/archive/refs/tags/v${version}.tar.gz"
 sha256sum:
- - "e390fe2f5f5ef7ed9ccbe62eb7cd40d4ee2b57389e7869c0dc96433c81812e7a"
+ - "ac7c34efc5941d5cbf739a8f7f6c84b1c2edea493fd3fca10906ef64d7afd690"
 build_depends:
  - "gmake"
 
