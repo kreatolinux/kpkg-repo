@@ -1,11 +1,11 @@
 name: "flatpak"
-version: "1.14.5"
+version: "1.16.6"
 release: "2"
 description: "Linux application sandboxing and distribution framework"
 sources:
  - "https://github.com/flatpak/flatpak/releases/download/${version}/flatpak-${version}.tar.xz"
 sha256sum:
- - "5b70c64ce7ac134e1ea08011256e423ae5c54f277297441583f77d013f27ffac"
+ - "1e63e7f3fe44b602f34d92a6fe46fd8a3bc6be9460c03c2681e57976c658eec3"
 depends:
  - "appstream"
  - "libseccomp"
