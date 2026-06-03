@@ -1,11 +1,11 @@
 name: "vte"
-version: "0.76.2"
+version: "0.84.0"
 release: "1"
 description: "Visual Terminal Emulator widget"
 sources:
  - "https://gitlab.gnome.org/GNOME/vte/-/archive/${version}/vte-${version}.tar.gz"
 sha256sum:
- - "70a38449fda947e5cb7b4cecbe8a7a77586c799168bfb22162708c94084f21ae"
+ - "a7f3a0ea17554ca643729c3502d3bfc76b20b53c97e81ddf6e099b16486df7e2"
 depends:
  - "gtk3"
  - "pcre"
