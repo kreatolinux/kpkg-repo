@@ -1,11 +1,11 @@
 name: "gnome-desktop"
-version: "44.0"
+version: "44.5"
 release: "1"
 description: "Libraries for GNOME desktop"
 sources:
  - "https://download.gnome.org/sources/gnome-desktop/44/gnome-desktop-${version}.tar.xz"
 sha256sum:
- - "42c773745d84ba14bc1cf1c4c6f4606148803a5cd337941c63964795f3c59d42"
+ - "20e0995a6e3a03e8c1026c5a27bc3f45e69ffcc392ad743dcab6107a541d232f"
 depends:
  - "gsettings-desktop-schemas"
  - "gtk3"
