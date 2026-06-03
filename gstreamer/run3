@@ -1,11 +1,11 @@
 name: "gstreamer"
-version: "1.26.9"
+version: "1.28.3"
 release: "1"
 description: "gstreamer"
 sources:
  - "https://gstreamer.freedesktop.org/src/gstreamer/gstreamer-${version}.tar.xz"
 sha256sum:
- - "8ee8772e468102ebe86d414d8c4c7440dd91d9f3e9396952ff23aecde80670c8"
+ - "5e84ecb942e136944eb9812f19cff7bcf05a85637482a32da55b892914c397d1"
 depends:
  - "glib"
 build_depends:
