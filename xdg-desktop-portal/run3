@@ -1,11 +1,11 @@
 name: "xdg-desktop-portal"
-version: "1.18.2"
+version: "1.20.4"
 release: "1"
 description: "A portal frontend service for Flatpak and possibly other desktop containment frameworks"
 sources:
  - "https://github.com/flatpak/xdg-desktop-portal/releases/download/${version}/xdg-desktop-portal-${version}.tar.xz"
 sha256sum:
- - "dfac239c5476aafd117a9a10131a2f0b142f72106c52fc03859938e00545f440"
+ - "9528eb3b060b88ac82f294fbdc6af5f4d3adfa42575f2cd816cab3d3e0a7a68c"
 depends:
  - "glib"
  - "flatpak"
