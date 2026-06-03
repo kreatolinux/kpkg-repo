@@ -1,11 +1,11 @@
 name: "fish"
-version: "3.7.1"
+version: "4.7.1"
 release: "1"
 description: "The user-friendly command line shell."
 sources:
   - "https://github.com/fish-shell/fish-shell/releases/download/$version/fish-$version.tar.xz"
 sha256sum:
-  - "614c9f5643cd0799df391395fa6bbc3649427bb839722ce3b114d3bbc1a3b250"
+  - "6f4d5b438a6338e3f5dcda19a28261e2ece7a9b7ff97686685e6abdc31dbb7df"
 depends:
   - "cmake"
   - "ncurses"
