@@ -1,11 +1,11 @@
 name: "ostree"
-version: "2025.6"
+version: "2026.1"
 release: "2"
 description: "Operating system and container binary deployment and upgrades"
 sources:
   - "https://github.com/ostreedev/ostree/releases/download/v$version/libostree-$version.tar.xz"
 sha256sum:
-  - "6750627df600f28c8ef2c7f443a9d72aef7061a342cde234162ebdf850a7e575"
+  - "8e77c285dd6fa5ec5fb063130390977be727fe11107335ed8778a40385069e95"
 depends:
   - "xz-utils"
   - "fuse"
