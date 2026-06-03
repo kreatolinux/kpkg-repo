@@ -223,6 +223,7 @@ jobs:
               FORCE_INSTALL_ALL_FLAG="--forceInstallAll=true"
           fi
           mkdir -p /tmp/failures /tmp/build-logs
+          build_failed=false
           for package in ${{ matrix.packages }}; do
             version=$(/tmp/kpkg-bin/kpkg info "$package" 2>/dev/null | sed -n 's/^package version: //p' || echo "unknown")
             echo "=== $package ($version) ==="
@@ -230,6 +231,7 @@ jobs:
                  tee /tmp/build-logs/$package.log; then
               echo "✅ $package built" >> $GITHUB_STEP_SUMMARY
             else
+              build_failed=true
               echo "❌ $package failed" >> $GITHUB_STEP_SUMMARY
               echo "$package" > /tmp/failures/$package.name
               echo "$version" > /tmp/failures/$package.version
@@ -237,6 +239,9 @@ jobs:
               tail -200 /tmp/build-logs/$package.log > /tmp/failures/$package.log
             fi
           done
+          if [ "$build_failed" = "true" ]; then
+            exit 1
+          fi
           cd "$GITHUB_WORKSPACE"
           git pull
           git status
