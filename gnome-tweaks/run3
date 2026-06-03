@@ -1,11 +1,11 @@
 name: "gnome-tweaks"
-version: "45.0"
+version: "49.0"
 release: "1"
 description: "GNOME Tweaks app"
 sources:
  - "https://github.com/GNOME/gnome-tweaks/archive/refs/tags/${version}.tar.gz"
 sha256sum:
- - "8bfa7dc1b4d4a7988269fd9424414cd1a630f4f6c7634c653efc32c6226c47c2"
+ - "a9ca755f5bc1540c8970f02dfcaf7782e2efb31314ae19e8d6667dde2548d1a5"
 depends:
  - "pygobject"
  - "python"
