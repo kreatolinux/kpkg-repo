@@ -159,6 +159,7 @@ jobs:
       - name: Build packages
         if: steps.useless-check.outputs.is_useless != 'true'
         run: |
+          set -eo pipefail
           LOCALE=en_US
           mkdir -p /usr/lib/locale
           localedef -i $LOCALE -c -f UTF-8 $LOCALE
