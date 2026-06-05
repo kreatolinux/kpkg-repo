@@ -7,6 +7,7 @@ sources:
 sha256sum:
  - "63fe2dc148ba0ceae89922ef838f7e5c946272c2e78b7c59fab4b79d3ce2b896"
 depends:
+ - "openssl"
  - "nghttp2"
  - "zlib"
  - "nghttp2"
@@ -22,5 +23,4 @@ build {
 package {
  macro package --configure
 }
-
 
