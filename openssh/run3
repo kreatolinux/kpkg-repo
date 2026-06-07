@@ -1,6 +1,6 @@
 name: "openssh"
 version: "9.9p1"
-release: "2"
+release: "3"
 description: "ssh tools"
 sources:
  - "https://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-${version}.tar.gz"
@@ -12,6 +12,11 @@ depends:
 build_depends:
  - "gmake"
 
+prepare {
+ exec "perl -0pi -e 's/\n\t\t\t30\*\)\n\t\t\t\t# OpenSSL 3;/\n\t\t\t30*|40*)\n\t\t\t\t# OpenSSL 3;/' configure configure.ac"
+ exec "grep -q '30[*]|40[*]' configure"
+}
+
 build {
  macro build --without-zlib-version-check
 }
@@ -19,5 +24,3 @@ build {
 package {
  macro package
 }
-
-
