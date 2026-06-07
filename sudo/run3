@@ -1,16 +1,22 @@
 name: "sudo"
 version: "1_9_15p4"
-release: "2"
+release: "3"
 description: "Utility to execute a command as another user"
 sources:
   - "https://github.com/sudo-project/sudo/archive/refs/tags/SUDO_$version.tar.gz"
+  - "483.patch"
 sha256sum:
   - "bd3b5348209e3cb2941e4e83f6bb3fd4da065c943a2bb6620a3778264ec0631a"
+  - "d3146b50637be83c3aafa2f378dc2c4fab94fff41d894a39a77fc95c0523a73d"
 depends:
   - "linux-pam"
   - "shadow"
 build_depends:
   - "gmake"
+
+prepare {
+  exec "patch -p1 < ../483.patch"
+}
 
 build {
   env CFLAGS="$CFLAGS -Wno-error=incompatible-pointer-types"
@@ -40,4 +46,3 @@ session   include     system-session
 """
   exec "chmod 644 $ROOT/etc/pam.d/sudo"
 }
-
