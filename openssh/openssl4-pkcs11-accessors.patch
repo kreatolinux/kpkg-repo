@@ -1,5 +1,5 @@
---- /var/folders/q6/c869d13s0v36hrh8b5_6zq9m0000gn/T/opencode/openssh-pkcs11/ssh-pkcs11.c	2024-09-20 01:20:48
-+++ /var/folders/q6/c869d13s0v36hrh8b5_6zq9m0000gn/T/opencode/openssh-pkcs11/ssh-pkcs11.c.new	2026-06-09 20:32:21
+--- ssh-pkcs11.c.orig	2026-06-10 03:30:10
++++ ssh-pkcs11.c	2026-06-10 03:30:10
 @@ -786,8 +786,8 @@
  		ossl_error("d2i_ASN1_OCTET_STRING failed");
  		goto fail;
