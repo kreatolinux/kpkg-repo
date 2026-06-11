@@ -1,5 +1,5 @@
 name: python
-version: 3.14.5
+version: 3.14.6
 release: 5
 description: "General-Purpose Programming language"
 sources:
@@ -7,7 +7,7 @@ sources:
   - "https://github.com/python/cpython/commit/3364e7e62fa24d0e19133fb0f90b1c24ef1110c5.patch"
   - "https://raw.githubusercontent.com/python/cpython/7cdbb779a82d600d6cf01508214c2bbde111e1f6/Modules/_ssl_data_40.h"
 sha256sum:
-  - "7e32597b99e5d9a39abed35de4693fa169df3e5850d4c334337ffd6a19a36db6"
+  - "143b1dddefaec3bd2e21e3b839b34a2b7fb9842272883c576420d605e9f30c63"
   - "15d2886dbca59ceec2f2ec8f7eea3d37fa899fad58d8c2228e9628ea3a318487"
   - "fb6a22bb6a03931a887b4947c6687af6a109d0e76645a87349664cae7aa5845e"
 
