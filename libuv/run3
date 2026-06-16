@@ -9,7 +9,9 @@ sha256sum:
 depends:
  - "libtool"
 build_depends:
- - "automake"
+  - "automake"
+  - "autoconf"
+  - "libtool"
 
 build {
  exec "sh autogen.sh"

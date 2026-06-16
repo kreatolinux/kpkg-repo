@@ -10,6 +10,7 @@ depends:
  - "xorgproto"
 build_depends:
  - "gmake"
+ - "meson"
 
 build {
  macro build 

@@ -1,11 +1,11 @@
 name: "wget"
-version: "1.21.4"
-release: "2"
+version: "1.25.0"
+release: "1"
 description: "Network utility to retrieve files from the Web"
 sources:
  - "https://ftp.gnu.org/gnu/wget/wget-${version}.tar.gz"
 sha256sum:
- - "81542f5cefb8faacc39bbbc6c82ded80e3e4a88505ae72ea51df27525bcde04c"
+  - "766e48423e79359ea31e41db9e5c289675947a7fcf2efdcedb726ac9d0da3784"
 depends:
  - "openssl"
 build_depends:

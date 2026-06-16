@@ -8,7 +8,7 @@ sources:
   - "settings.config"
 sha256sum:
   - "7a8879167b89c4bae077d6f39c4f2130769f05dbdad2aad914adab9afb7d7f9a"
-  - "62cda75cb56faa94551e14200f4dff00e27ea30189d5399c3ce863ef2ba2b4b3"
+  - "3bce0e7bff1af5b48951ba2f10f1f45c3a68440be1d16087638db962a177de99"
   - "04f33434bb1b16b2a38e3a36d6ce59e0bf032db6954d4a71d07d8f3f5ab37e4c"
 depends:
   - "kmod"

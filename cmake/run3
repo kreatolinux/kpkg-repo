@@ -1,17 +1,16 @@
 name: "cmake"
-version: "3.27.7"
+version: "3.31.12"
 release: "1"
 description: "CMake package contains a modern toolset used for generating Makefiles."
 sources:
-  - "https://cmake.org/files/v3.27/cmake-$version.tar.gz"
+  - "https://cmake.org/files/v3.31/cmake-$version.tar.gz"
 sha256sum:
-  - "08f71a106036bf051f692760ef9558c0577c42ac39e96ba097e7662bd4158d8e"
+  - "5f3fd5a54dfa65602bdbed64f981a72673cc19f2d304cc2955cf0dfa0cfd8272"
 depends:
   - "expat"
   - "libuv"
   - "rhash"
   - "libarchive"
-  - "libuv"
   - "libxml2"
   - "curl"
   - "jsoncpp"
