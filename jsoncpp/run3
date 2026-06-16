@@ -1,11 +1,11 @@
 name: "jsoncpp"
-version: "1.9.7"
+version: "1.9.8"
 release: "1"
 description: "A C++ library for interacting with JSON"
 sources:
  - "https://github.com/open-source-parsers/jsoncpp/archive/refs/tags/${version}.tar.gz"
 sha256sum:
- - "830bf352d822d8558e9d0eb19d640d2e38536b4b6699c30a4488da09d5b1df18"
+ - "51828cf3574281d2b79ec2a1c56a9e4c20cc1103711321ea96384cffb8d2d904"
 build_depends:
  - "meson"
 
