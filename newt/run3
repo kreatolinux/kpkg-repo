@@ -11,7 +11,8 @@ depends:
  - "slang"
  - "popt"
 build_depends:
- - "gmake"
+  - "gmake"
+  - "slang"
 
 build {
  macro build 
