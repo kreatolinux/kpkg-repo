@@ -1,11 +1,11 @@
 name: "libffi"
-version: "3.5.2"
+version: "3.6.0"
 release: "1"
 description: "A portable foreign-function interface library."
 sources:
  - "https://github.com/libffi/libffi/releases/download/v${version}/libffi-${version}.tar.gz"
 sha256sum:
- - "f3a3082a23b37c293a4fcd1053147b371f2ff91fa7ea1b2a52e335676bac82dc"
+ - "31ff1fe32deaebfbb388727f32677bb254bf2a41382c51464c0b1837c9ee9828"
 build_depends:
  - "gmake"
 
