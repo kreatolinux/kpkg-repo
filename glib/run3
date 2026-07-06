@@ -19,14 +19,11 @@ bootstrap_depends:
  - "python-packaging"
 
 build {
- local INTROSPECTION = "enabled"
  if "${KPKG_BOOTSTRAP}" == "1" {
-   global INTROSPECTION = "disabled"
+   macro build -Dintrospection=disabled
+ } else {
+   macro build -Dintrospection=enabled
  }
-
- print "debug: introspection is $INTROSPECTION"
-
- macro build -Dintrospection=$INTROSPECTION
 }
 
 package {

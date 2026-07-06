@@ -14,7 +14,7 @@ build_depends:
  - "gmake"
 
 build {
- macro build --disable-static --with-history --with-python=/usr/bin/python3
+  macro build --configure --disable-static --with-history --with-python=/usr/bin/python3
 }
 
 package {
