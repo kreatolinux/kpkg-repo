@@ -1,11 +1,11 @@
 name: "pkgconf"
-version: "2.9.98"
+version: "2.9.99"
 release: "1"
 description: "pkgconf is a program which helps to configure compiler and linker flags for development frameworks."
 sources:
   - "https://distfiles.dereferenced.org/pkgconf/pkgconf-$version.tar.xz"
 sha256sum:
-  - "6ab5ce0daeaade02d0c8b9683b0ee3975a57a47b847acdee73f56d3b7bc98b99"
+  - "0074c64e2dba9860b8d78b9bd25a8fd0108136591e8d12b40c30a8fe2fc12abb"
 
 build {
   macro build --configure
