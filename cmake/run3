@@ -20,7 +20,7 @@ build_depends:
 build {
   exec "sed -i '19i #include <cstdint>' Utilities/cmcppdap/include/dap/network.h"
   exec "sed -i '/\"lib64\"/s/64//' Modules/GNUInstallDirs.cmake"
-  exec "./bootstrap --prefix=/usr         --mandir=/share/man   --docdir=/share/doc/cmake-$version"
+  exec "./bootstrap --prefix=/usr         --mandir=/share/man   --docdir=/share/doc/cmake-$version   --system-curl"
   exec "make -j$(nproc)"
 }
 
