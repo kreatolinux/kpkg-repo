@@ -1,11 +1,11 @@
 name: "attr"
-version: "2.5.2"
+version: "2.6.0"
 release: "1"
 description: "attr library"
 sources:
  - "https://download.savannah.gnu.org/releases/attr/attr-${version}.tar.gz"
 sha256sum:
- - "39bf67452fa41d0948c2197601053f48b3d78a029389734332a6309a680c6c87"
+ - "d42fa374513180bb48cb11a46696f488240e5124ff1e6ad88b0abff706985612"
 build_depends:
  - "gmake"
 
