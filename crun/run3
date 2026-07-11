@@ -18,7 +18,6 @@ build {
 }
 
 package {
- meson package
+ macro package --configure
 }
-
 
