@@ -1,6 +1,6 @@
 name: "openssh"
 version: "9.9p1"
-release: "4"
+release: "5"
 description: "ssh tools"
 sources:
  - "https://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-${version}.tar.gz"
@@ -8,7 +8,7 @@ sources:
  - "openssl4-pkcs11-accessors.patch"
 sha256sum:
  - "b343fbcdbff87f15b1986e6e15d6d4fc9a7d36066be6b7fb507087ba8f966c02"
- - "22b6a645d7c8e6493c5496a1e5bf0afd8c518edd8e90e3bd53c3ff6360e02df6"
+ - "ae05015fbda7db807f88dec944e021acc42bc0294efc5d96c294787ea83e4f2f"
  - "7346a297b32e0a77a3e6dbfbabc1e811baad712b123df6c205ca77f3b29b4051"
 depends:
  - "shadow"
