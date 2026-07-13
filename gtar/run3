@@ -10,12 +10,11 @@ build_depends:
  - "gmake"
 
 build {
- macro build 
+ macro build --configure
 }
 
 package {
  macro package
  exec "rm -rf \"$ROOT/usr/share/info/dir\""
 }
-
 

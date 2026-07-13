@@ -15,11 +15,10 @@ build_depends:
   - "slang"
 
 build {
- macro build 
+ macro build --configure
 }
 
 package {
  macro package
 }
-
 
