@@ -1,8 +1,6 @@
 otelcol.auth.basic "grafana_cloud" {
-  client_auth {
-    username = sys.env("OTEL_USERNAME")
-    password = sys.env("OTEL_PASSWORD")
-  }
+  username = sys.env("OTEL_USERNAME")
+  password = sys.env("OTEL_PASSWORD")
 }
 
 otelcol.receiver.otlp "kpkg" {
