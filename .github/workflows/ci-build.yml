@@ -132,10 +132,12 @@ jobs:
               exit 0
             fi
             if ! kill -0 "$ALLOY_PID" 2>/dev/null; then
+              grep -Ei 'error|fatal|failed' /tmp/alloy.log || true
               exit 1
             fi
             sleep 1
           done
+          grep -Ei 'error|fatal|failed' /tmp/alloy.log || true
           exit 1
 
       - name: Run chkupd
