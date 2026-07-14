@@ -173,11 +173,11 @@ jobs:
             mount --bind "$GITHUB_WORKSPACE" /etc/kpkg/repos/main
           fi
 
-          /tmp/kpkg-bin/kpkg set config.Telemetry.enabled true
-          /tmp/kpkg-bin/kpkg set config.Telemetry.endpoint http://127.0.0.1:4318
-          /tmp/kpkg-bin/kpkg set config.Telemetry.tls false
-          /tmp/kpkg-bin/kpkg set config.Telemetry.authType none
-          /tmp/kpkg-bin/kpkg set config.Telemetry.failurePolicy continue
+          /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.enabled true"
+          /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.endpoint http://127.0.0.1:4318"
+          /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.tls false"
+          /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.authType none"
+          /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.failurePolicy continue"
           /tmp/kpkg-bin/kpkg clean --binaries=true --environment=true
 
           IS_USELESS="true"
@@ -223,16 +223,16 @@ jobs:
             mount --bind "$GITHUB_WORKSPACE" /etc/kpkg/repos/main
           fi
 
-          /tmp/kpkg-bin/kpkg set config.Telemetry.enabled true
-          /tmp/kpkg-bin/kpkg set config.Telemetry.endpoint http://127.0.0.1:4318
-          /tmp/kpkg-bin/kpkg set config.Telemetry.tls false
-          /tmp/kpkg-bin/kpkg set config.Telemetry.authType none
-          /tmp/kpkg-bin/kpkg set config.Telemetry.failurePolicy continue
+          /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.enabled true"
+          /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.endpoint http://127.0.0.1:4318"
+          /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.tls false"
+          /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.authType none"
+          /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.failurePolicy continue"
           /tmp/kpkg-bin/kpkg clean --binaries=true --environment=true
 
           if [ "${{ inputs.llvm }}" = "true" ]; then
             /tmp/kpkg-bin/kpkg install llvm -y
-            /tmp/kpkg-bin/kpkg set config.Options.cc clang
+            /tmp/kpkg-bin/kpkg repl -a "set config.Options.cc clang"
             sed -i 's/gcc/clang/' /etc/kreato-release
           fi
           
@@ -355,11 +355,11 @@ jobs:
           
           cd "$GITHUB_WORKSPACE"
           committed_any=false
-          /tmp/kpkg-bin/kpkg set config.Telemetry.enabled true
-          /tmp/kpkg-bin/kpkg set config.Telemetry.endpoint http://127.0.0.1:4318
-          /tmp/kpkg-bin/kpkg set config.Telemetry.tls false
-          /tmp/kpkg-bin/kpkg set config.Telemetry.authType none
-          /tmp/kpkg-bin/kpkg set config.Telemetry.failurePolicy continue
+          /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.enabled true"
+          /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.endpoint http://127.0.0.1:4318"
+          /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.tls false"
+          /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.authType none"
+          /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.failurePolicy continue"
           for package in ${{ matrix.packages }}; do
             if git status --porcelain | grep -q run; then
               version=$(/tmp/kpkg-bin/kpkg info "$package" 2>/dev/null | awk '/^package version:/ {print $3; exit}')
@@ -451,11 +451,11 @@ jobs:
       - name: Install dependencies for upterm session
         if: failure() && github.event_name == 'workflow_dispatch' && inputs.enable_upterm_ssh == true
         run: |
-          kpkg set config.Telemetry.enabled true
-          kpkg set config.Telemetry.endpoint http://127.0.0.1:4318
-          kpkg set config.Telemetry.tls false
-          kpkg set config.Telemetry.authType none
-          kpkg set config.Telemetry.failurePolicy continue
+          kpkg repl -a "set config.Telemetry.enabled true"
+          kpkg repl -a "set config.Telemetry.endpoint http://127.0.0.1:4318"
+          kpkg repl -a "set config.Telemetry.tls false"
+          kpkg repl -a "set config.Telemetry.authType none"
+          kpkg repl -a "set config.Telemetry.failurePolicy continue"
           if ! kpkg install tmux -y; then
             kpkg build tmux -y
           fi
