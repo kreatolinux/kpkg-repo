@@ -1,0 +1,23 @@
+otelcol.auth.basic "grafana_cloud" {
+  client_auth {
+    username = sys.env("OTEL_USERNAME")
+    password = sys.env("OTEL_PASSWORD")
+  }
+}
+
+otelcol.receiver.otlp "kpkg" {
+  http {
+    endpoint = "127.0.0.1:4318"
+  }
+
+  output {
+    traces = [otelcol.exporter.otlphttp.grafana_cloud.input]
+  }
+}
+
+otelcol.exporter.otlphttp "grafana_cloud" {
+  client {
+    endpoint = sys.env("OTEL_ENDPOINT")
+    auth     = otelcol.auth.basic.grafana_cloud.handler
+  }
+}
