@@ -244,6 +244,9 @@ jobs:
       AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+      OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
+      OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}
+      OTEL_PASSWORD: ${{ secrets.OTEL_PASSWORD }}
 
   build_phase2:
     if: always() && !cancelled() && needs.init.outputs.phase2_matrix != '' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
@@ -265,6 +268,9 @@ jobs:
       AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+      OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
+      OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}
+      OTEL_PASSWORD: ${{ secrets.OTEL_PASSWORD }}
 
   build_phase3:
     if: always() && !cancelled() && needs.init.outputs.phase3_matrix != '' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
@@ -286,6 +292,9 @@ jobs:
       AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+      OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
+      OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}
+      OTEL_PASSWORD: ${{ secrets.OTEL_PASSWORD }}
 
   build_phase4:
     if: always() && !cancelled() && needs.init.outputs.phase4_matrix != '' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
@@ -307,6 +316,9 @@ jobs:
       AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+      OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
+      OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}
+      OTEL_PASSWORD: ${{ secrets.OTEL_PASSWORD }}
 
   build_phase5:
     if: always() && !cancelled() && needs.init.outputs.phase5_matrix != '' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
@@ -328,3 +340,6 @@ jobs:
       AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+      OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
+      OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}
+      OTEL_PASSWORD: ${{ secrets.OTEL_PASSWORD }}

@@ -295,7 +295,7 @@ jobs:
 
       - name: Create failure issues
         uses: actions/github-script@v9
-        if: hashFiles('/tmp/failures/*.name') != ''
+        if: always() && hashFiles('/tmp/failures/*.name') != ''
         with:
           script: |
             const fs = require('fs'), path = require('path');
