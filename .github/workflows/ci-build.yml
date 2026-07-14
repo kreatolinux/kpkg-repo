@@ -124,6 +124,7 @@ jobs:
             "https://github.com/grafana/alloy/releases/download/$ALLOY_VERSION/SHA256SUMS"
           (cd "$ALLOY_DIR" && grep ' alloy-linux-amd64.zip$' SHA256SUMS | sha256sum --check)
           unzip -q "$ALLOY_DIR/alloy.zip" -d "$ALLOY_DIR"
+          chmod +x "$ALLOY_DIR/alloy-linux-amd64"
           "$ALLOY_DIR/alloy-linux-amd64" run "$GITHUB_WORKSPACE/.github/alloy/kpkg-telemetry.alloy" > /tmp/alloy.log 2>&1 &
           ALLOY_PID=$!
           for _ in $(seq 1 30); do
