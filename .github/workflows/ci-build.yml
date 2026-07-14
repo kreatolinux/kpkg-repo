@@ -47,6 +47,12 @@ on:
         required: true
       AWS_BUCKET:
         required: true
+      OTEL_ENDPOINT:
+        required: true
+      OTEL_USERNAME:
+        required: true
+      OTEL_PASSWORD:
+        required: true
 
 jobs:
   build:
@@ -100,6 +106,35 @@ jobs:
           ref: ${{ github.head_ref || github.ref_name }}
           fetch-depth: 0
 
+      - name: Install and start Grafana Alloy
+        env:
+          OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
+          OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}
+          OTEL_PASSWORD: ${{ secrets.OTEL_PASSWORD }}
+        run: |
+          set -euo pipefail
+          ALLOY_VERSION=v1.11.2
+          ALLOY_DIR=$(mktemp -d)
+          curl --fail --silent --show-error --location --retry 3 \
+            --output "$ALLOY_DIR/alloy.zip" \
+            "https://github.com/grafana/alloy/releases/download/$ALLOY_VERSION/alloy-linux-amd64.zip"
+          curl --fail --silent --show-error --location --retry 3 \
+            --output "$ALLOY_DIR/SHA256SUMS" \
+            "https://github.com/grafana/alloy/releases/download/$ALLOY_VERSION/SHA256SUMS"
+          (cd "$ALLOY_DIR" && grep ' alloy-linux-amd64.zip$' SHA256SUMS | sha256sum --check)
+          unzip -q "$ALLOY_DIR/alloy.zip" -d "$ALLOY_DIR"
+          "$ALLOY_DIR/alloy-linux-amd64" run "$GITHUB_WORKSPACE/.github/alloy/kpkg-telemetry.alloy" > /tmp/alloy.log 2>&1 &
+          ALLOY_PID=$!
+          for _ in $(seq 1 30); do
+            if curl --silent --output /dev/null --connect-timeout 1 http://127.0.0.1:4318/; then
+              exit 0
+            fi
+            if ! kill -0 "$ALLOY_PID" 2>/dev/null; then
+              exit 1
+            fi
+            sleep 1
+          done
+          exit 1
 
       - name: Run chkupd
         run: |
@@ -134,6 +169,11 @@ jobs:
             mount --bind "$GITHUB_WORKSPACE" /etc/kpkg/repos/main
           fi
 
+          /tmp/kpkg-bin/kpkg set config.Telemetry.enabled true
+          /tmp/kpkg-bin/kpkg set config.Telemetry.endpoint http://127.0.0.1:4318
+          /tmp/kpkg-bin/kpkg set config.Telemetry.tls false
+          /tmp/kpkg-bin/kpkg set config.Telemetry.authType none
+          /tmp/kpkg-bin/kpkg set config.Telemetry.failurePolicy continue
           /tmp/kpkg-bin/kpkg clean --binaries=true --environment=true
 
           IS_USELESS="true"
@@ -179,6 +219,11 @@ jobs:
             mount --bind "$GITHUB_WORKSPACE" /etc/kpkg/repos/main
           fi
 
+          /tmp/kpkg-bin/kpkg set config.Telemetry.enabled true
+          /tmp/kpkg-bin/kpkg set config.Telemetry.endpoint http://127.0.0.1:4318
+          /tmp/kpkg-bin/kpkg set config.Telemetry.tls false
+          /tmp/kpkg-bin/kpkg set config.Telemetry.authType none
+          /tmp/kpkg-bin/kpkg set config.Telemetry.failurePolicy continue
           /tmp/kpkg-bin/kpkg clean --binaries=true --environment=true
 
           if [ "${{ inputs.llvm }}" = "true" ]; then
