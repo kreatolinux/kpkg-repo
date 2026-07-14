@@ -117,13 +117,13 @@ jobs:
           ALLOY_VERSION=v1.11.2
           ALLOY_DIR=$(mktemp -d)
           curl --fail --silent --show-error --location --retry 3 \
-            --output "$ALLOY_DIR/alloy.zip" \
+            --output "$ALLOY_DIR/alloy-linux-amd64.zip" \
             "https://github.com/grafana/alloy/releases/download/$ALLOY_VERSION/alloy-linux-amd64.zip"
           curl --fail --silent --show-error --location --retry 3 \
             --output "$ALLOY_DIR/SHA256SUMS" \
             "https://github.com/grafana/alloy/releases/download/$ALLOY_VERSION/SHA256SUMS"
           (cd "$ALLOY_DIR" && grep ' alloy-linux-amd64.zip$' SHA256SUMS | sha256sum -c)
-          unzip -q "$ALLOY_DIR/alloy.zip" -d "$ALLOY_DIR"
+          unzip -q "$ALLOY_DIR/alloy-linux-amd64.zip" -d "$ALLOY_DIR"
           chmod +x "$ALLOY_DIR/alloy-linux-amd64"
           "$ALLOY_DIR/alloy-linux-amd64" run "$GITHUB_WORKSPACE/.github/alloy/kpkg-telemetry.alloy" > /tmp/alloy.log 2>&1 &
           ALLOY_PID=$!
