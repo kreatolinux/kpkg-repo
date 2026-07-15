@@ -1,11 +1,11 @@
 name: "gnupg"
-version: "2.5.20"
+version: "2.5.21"
 release: "1"
 description: "GNU Privacy Guard"
 sources:
  - "https://gnupg.org/ftp/gcrypt/gnupg/gnupg-${version}.tar.bz2"
 sha256sum:
- - "6461266e99c308419a379abe6c356d54c214136c4589bd65951091138989ffc6"
+ - "e3af2c8caa46a66a9329fa7c6880af260451914d819595beabc2c26597b31352"
 depends:
  - "libgpg-error"
  - "libgcrypt"
