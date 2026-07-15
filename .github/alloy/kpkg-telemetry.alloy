@@ -10,6 +10,7 @@ otelcol.receiver.otlp "kpkg" {
 
   output {
     traces = [otelcol.exporter.otlphttp.grafana_cloud.input]
+    logs   = [otelcol.exporter.loki.grafana_cloud.input]
   }
 }
 
@@ -17,5 +18,20 @@ otelcol.exporter.otlphttp "grafana_cloud" {
   client {
     endpoint = sys.env("OTEL_ENDPOINT")
     auth     = otelcol.auth.basic.grafana_cloud.handler
+  }
+}
+
+otelcol.exporter.loki "grafana_cloud" {
+  forward_to = [loki.write.grafana_cloud.receiver]
+}
+
+loki.write "grafana_cloud" {
+  endpoint {
+    url = sys.env("LOKI_ENDPOINT")
+
+    basic_auth {
+      username = sys.env("LOKI_USERNAME")
+      password = sys.env("LOKI_PASSWORD")
+    }
   }
 }

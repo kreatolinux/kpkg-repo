@@ -53,6 +53,12 @@ on:
         required: true
       OTEL_PASSWORD:
         required: true
+      LOKI_ENDPOINT:
+        required: true
+      LOKI_USERNAME:
+        required: true
+      LOKI_PASSWORD:
+        required: true
 
 jobs:
   build:
@@ -112,6 +118,9 @@ jobs:
           OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
           OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}
           OTEL_PASSWORD: ${{ secrets.OTEL_PASSWORD }}
+          LOKI_ENDPOINT: ${{ secrets.LOKI_ENDPOINT }}
+          LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
+          LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
         run: |
           set -euo pipefail
           ALLOY_VERSION=v1.11.2
