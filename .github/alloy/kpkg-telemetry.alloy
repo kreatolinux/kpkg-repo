@@ -10,7 +10,25 @@ otelcol.receiver.otlp "kpkg" {
 
   output {
     traces = [otelcol.exporter.otlphttp.grafana_cloud.input]
-    logs   = [otelcol.exporter.loki.grafana_cloud.input]
+    logs   = [otelcol.processor.attributes.loki_labels.input]
+  }
+}
+
+otelcol.processor.attributes "loki_labels" {
+  action {
+    key    = "loki.resource.labels"
+    action = "insert"
+    value  = "service.name"
+  }
+
+  action {
+    key    = "loki.attribute.labels"
+    action = "insert"
+    value  = "span_name,status,package_name,run3_stage"
+  }
+
+  output {
+    logs = [otelcol.exporter.loki.grafana_cloud.input]
   }
 }
 
