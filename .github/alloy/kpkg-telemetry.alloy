@@ -17,6 +17,16 @@ otelcol.receiver.otlp "kpkg" {
 otelcol.processor.attributes "loki_labels" {
   action {
     key    = "loki.resource.labels"
+    action = "delete"
+  }
+
+  action {
+    key    = "loki.attribute.labels"
+    action = "delete"
+  }
+
+  action {
+    key    = "loki.resource.labels"
     action = "insert"
     value  = "service.name"
   }

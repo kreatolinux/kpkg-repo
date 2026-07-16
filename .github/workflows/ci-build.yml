@@ -112,6 +112,9 @@ jobs:
           ref: ${{ github.head_ref || github.ref_name }}
           fetch-depth: 0
 
+      - name: Verify telemetry label policy
+        run: sh .github/alloy/test-kpkg-telemetry.sh
+
       - name: Install and start Grafana Alloy
         if: always()
         env:
