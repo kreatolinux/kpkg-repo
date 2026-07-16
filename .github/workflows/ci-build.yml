@@ -308,6 +308,11 @@ jobs:
           git pull
           git status
 
+      - name: Report Alloy forwarding errors
+        if: always()
+        run: |
+          grep -Ei 'error|fatal|failed' /tmp/alloy.log || true
+
       - name: Create failure issues
         uses: actions/github-script@v9
         if: always() && hashFiles('/tmp/failures/*.name') != ''
