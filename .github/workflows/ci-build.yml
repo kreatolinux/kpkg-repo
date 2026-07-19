@@ -190,6 +190,7 @@ jobs:
           /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.tls false"
           /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.authType none"
           /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.failurePolicy continue"
+          /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.buildId $GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT-${{ matrix.packages }}"
           /tmp/kpkg-bin/kpkg clean --binaries=true --environment=true
 
           IS_USELESS="true"
@@ -240,6 +241,7 @@ jobs:
           /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.tls false"
           /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.authType none"
           /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.failurePolicy continue"
+          /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.buildId $GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT-${{ matrix.packages }}"
           /tmp/kpkg-bin/kpkg clean --binaries=true --environment=true
 
           if [ "${{ inputs.llvm }}" = "true" ]; then
@@ -377,6 +379,7 @@ jobs:
           /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.tls false"
           /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.authType none"
           /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.failurePolicy continue"
+          /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.buildId $GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT-${{ matrix.packages }}"
           for package in ${{ matrix.packages }}; do
             if git status --porcelain | grep -q run; then
               version=$(/tmp/kpkg-bin/kpkg info "$package" 2>/dev/null | awk '/^package version:/ {print $3; exit}')
@@ -473,6 +476,7 @@ jobs:
           kpkg repl -a "set config.Telemetry.tls false"
           kpkg repl -a "set config.Telemetry.authType none"
           kpkg repl -a "set config.Telemetry.failurePolicy continue"
+          kpkg repl -a "set config.Telemetry.buildId $GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT-${{ matrix.packages }}"
           if ! kpkg install tmux -y; then
             kpkg build tmux -y
           fi
