@@ -1,11 +1,11 @@
 name: "libtool"
-version: "2.5.4"
+version: "2.6.2"
 release: "1"
 description: "The GNU Portable Library Tool"
 sources:
   - "https://ftp.gnu.org/gnu/libtool/libtool-$version.tar.gz"
 sha256sum:
-  - "da8ebb2ce4dcf46b90098daf962cffa68f4b4f62ea60f798d0ef12929ede6adf"
+  - "24adb3aa9ae035c70faba344af57d73215eb89281045af6c7ccd307751f8b0bf"
 depends:
   - "m4"
 build_depends:
