@@ -211,7 +211,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          model: opencode-zen/deepseek-v4-flash-free
+          model: opencode/deepseek-v4-flash-free
           use_github_token: true
           prompt: ${{ fromJson(needs.prepare.outputs.fixer_prompt) }}
 
