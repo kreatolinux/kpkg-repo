@@ -210,9 +210,8 @@ jobs:
         uses: anomalyco/opencode/github@latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ALIBABA_CODING_PLAN_API_KEY: ${{ secrets.ALIBABA_CODING_PLAN_API_KEY }}
         with:
-          model: alibaba-coding-plan/glm-5
+          model: opencode-zen/deepseek-v4-flash-free
           use_github_token: true
           prompt: ${{ fromJson(needs.prepare.outputs.fixer_prompt) }}
 
