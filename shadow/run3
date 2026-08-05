@@ -1,5 +1,5 @@
 name: "shadow"
-version: "4.19.4"
+version: "4.20.0"
 release: "3"
 description: "Shadow utils"
 sources:
