@@ -1,11 +1,11 @@
 name: "libpsl"
-version: "0.23.0"
+version: "0.23.1"
 release: "1"
 description: "libpsl"
 sources:
  - "https://github.com/rockdaboot/libpsl/releases/download/${version}/libpsl-${version}.tar.gz"
 sha256sum:
- - "f39b9631b3d369a21259ea4654f8875c0ec6995ce9551c0eb5d423e4c011f911"
+ - "8fbb03054556498ba9c4cc48fcaa36a4483748c6504a65bdb9ba348f555b0e56"
 depends:
  - "libidn2"
  - "libunistring"
