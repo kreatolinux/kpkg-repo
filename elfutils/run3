@@ -1,11 +1,11 @@
 name: "elfutils"
-version: "0.195"
+version: "0.196"
 release: "1"
 description: "elfutils"
 sources:
  - "https://sourceware.org/elfutils/ftp/${version}/elfutils-${version}.tar.bz2"
 sha256sum:
- - "37629fdf7f1f3dc2818e138fca2b8094177d6c2d0f701d3bb650a561218dc026"
+ - "fd5cc6b77ad6773cac93cb3f415f9318ac3b3455eecf801f6b4a742c4f6c7209"
 depends:
  - "zlib"
 build_depends:
