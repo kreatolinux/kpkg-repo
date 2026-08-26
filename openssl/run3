@@ -1,11 +1,11 @@
 name: openssl
-version: 4.0.1
+version: 4.0.2
 release: 1
 description: "TLS library"
 sources:
   - "https://www.openssl.org/source/openssl-${version}.tar.gz"
 sha256sum:
-  - "2db3f3a0d6ea4b59e1f094ace2c8cd536dffb87cdc39084c5afa1e6f7f37dd09"
+  - "736b467530f916737b7031310ccb21d8218c6229e61e8e160cd1d3458cd543a8"
 
 build {
   local extraArgs = ""
