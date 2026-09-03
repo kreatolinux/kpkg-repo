@@ -12,6 +12,7 @@ build_depends:
  - "gmake"
 
 build {
+ env CPPFLAGS="-DOPENSSL_NO_SSL3_METHOD"
  macro build --with-ssl=openssl
 }
 

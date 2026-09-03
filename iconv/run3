@@ -10,6 +10,7 @@ build_depends:
  - "gmake"
 
 build {
+ env CFLAGS="$CFLAGS -std=gnu17"
  macro build --configure
 }
 

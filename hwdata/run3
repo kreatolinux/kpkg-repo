@@ -11,7 +11,7 @@ build_depends:
 
 build {
  macro build 
- #exec "sed -i 's/-T//g' -i Makefile"
+ exec "sed -i 's/-T//g' -i Makefile"
 }
 
 package {
