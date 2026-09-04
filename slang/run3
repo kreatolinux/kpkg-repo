@@ -10,7 +10,7 @@ build_depends:
   - "gmake"
 
 build {
-  macro build --prefix=/usr --sysconfdir=/etc --build=$(uname -m) --host=$(uname -m) --target=$(uname -m)
+  macro build --sysconfdir=/etc
   exec "make"
 }
 
