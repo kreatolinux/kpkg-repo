@@ -198,16 +198,13 @@ jobs:
           # / libssl.so.4 from the repo's openssl package into LD_LIBRARY_PATH
           # so the downloaded kpkg binary and any mirror archive linked against
           # openssl 4 keep running even though the image only ships
-          # libcrypto.so.3, then opportunistically sync the rootfs in one
-          # transaction (upgrades stop being effective once newer release
-          # bumps land on the mirror).
+          # libcrypto.so.3. Temporary stopgap: remove once the builder
+          # images are rebuilt against openssl 4.
           mkdir -p /opt/kpkg-libs
           curl -sfL https://mirror.krea.to/archives/system/x86_64-linux-gnu-jumpstart-openssl/openssl-4.0.2-1.kpkg \
             | tar -C /opt/kpkg-libs -xz usr/lib/libcrypto.so.4 usr/lib/libssl.so.4 2>/dev/null || true
           export LD_LIBRARY_PATH="/opt/kpkg-libs/usr/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
           echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH" >> $GITHUB_ENV
-          /tmp/kpkg-bin/kpkg upgrade -y || true
-
           IS_USELESS="true"
           for package in ${{ matrix.packages }}; do
             /tmp/kpkg-bin/kpkg install "$package" -y --downloadOnly || IS_USELESS="false"
@@ -264,16 +261,13 @@ jobs:
           # / libssl.so.4 from the repo's openssl package into LD_LIBRARY_PATH
           # so the downloaded kpkg binary and any mirror archive linked against
           # openssl 4 keep running even though the image only ships
-          # libcrypto.so.3, then opportunistically sync the rootfs in one
-          # transaction (upgrades stop being effective once newer release
-          # bumps land on the mirror).
+          # libcrypto.so.3. Temporary stopgap: remove once the builder
+          # images are rebuilt against openssl 4.
           mkdir -p /opt/kpkg-libs
           curl -sfL https://mirror.krea.to/archives/system/x86_64-linux-gnu-jumpstart-openssl/openssl-4.0.2-1.kpkg \
             | tar -C /opt/kpkg-libs -xz usr/lib/libcrypto.so.4 usr/lib/libssl.so.4 2>/dev/null || true
           export LD_LIBRARY_PATH="/opt/kpkg-libs/usr/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
           echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH" >> $GITHUB_ENV
-          /tmp/kpkg-bin/kpkg upgrade -y || true
-
           if [ "${{ inputs.llvm }}" = "true" ]; then
             /tmp/kpkg-bin/kpkg install llvm -y
             /tmp/kpkg-bin/kpkg repl -a "set config.Options.cc clang"
