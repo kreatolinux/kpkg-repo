@@ -1,6 +1,6 @@
 name: "libevdev"
 version: "1.13.6"
-release: "1"
+release: "2"
 description: "Common functions for Xorg input drivers"
 sources:
  - "https://www.freedesktop.org/software/libevdev/libevdev-${version}.tar.xz"
@@ -8,6 +8,7 @@ sha256sum:
  - "73f215eccbd8233f414737ac06bca2687e67c44b97d2d7576091aa9718551110"
 build_depends:
  - "gmake"
+ - "meson"
 
 build {
  macro build 

@@ -1,6 +1,6 @@
 name: "slang"
 version: "2.3.3"
-release: "1"
+release: "2"
 description: "slang"
 sources:
   - "https://www.jedsoft.org/releases/slang/slang-$version.tar.bz2"
@@ -10,7 +10,7 @@ build_depends:
   - "gmake"
 
 build {
-  macro build "--prefix=/usr" "--sysconfdir=/etc" "--build=$(uname -m)" "--host=$(uname -m)" "--target=$(uname -m)"
+  macro build --prefix=/usr --sysconfdir=/etc --build=$(uname -m) --host=$(uname -m) --target=$(uname -m)
   exec "make"
 }
 
