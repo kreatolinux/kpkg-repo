@@ -1,6 +1,6 @@
 name: python
 version: 3.14.7
-release: 5
+release: 6
 description: "General-Purpose Programming language"
 sources:
   - "https://www.python.org/ftp/python/${version}/Python-${version}.tar.xz"
@@ -10,6 +10,15 @@ sha256sum:
   - "3b48dac8fb59f62eaa67ac83c1eb12bda1b7a08406dd286e252c11a66be27f81"
   - "15d2886dbca59ceec2f2ec8f7eea3d37fa899fad58d8c2228e9628ea3a318487"
   - "fb6a22bb6a03931a887b4947c6687af6a109d0e76645a87349664cae7aa5845e"
+depends:
+  - "openssl"
+  - "zlib"
+  - "libxcrypt"
+  - "expat"
+  - "bzip2"
+  - "libffi"
+build_depends:
+  - "gmake"
 
 prepare {
   exec "patch -p1 < ../3364e7e62fa24d0e19133fb0f90b1c24ef1110c5.patch"

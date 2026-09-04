@@ -1,6 +1,6 @@
 name: "squashfs-tools"
 version: "4.7.5"
-release: "1"
+release: "2"
 description: "Tools for managing SquashFS"
 sources:
   - "https://github.com/plougher/squashfs-tools/archive/refs/tags/$version.tar.gz"
@@ -8,16 +8,14 @@ sha256sum:
   - "547b7b7f4d2e44bf91b6fc554664850c69563701deab9fd9cd7e21f694c88ea6"
 build_depends:
   - "gmake"
+  - "gsed"
 
 build {
   cd "squashfs-tools"
-  exec "make INSTALL_MANPAGES_DIR=\"\""
+  exec "make INSTALL_MANPAGES_DIR=\"\" LZO_SUPPORT=0 LZ4_SUPPORT=0 XZ_SUPPORT=0 ZSTD_SUPPORT=0"
 }
 
 package {
-  exec "rm -f ../generate-manpages/install-manpages.sh"
-  exec "touch ../generate-manpages/install-manpages.sh"
-  exec "chmod +x ../generate-manpages/install-manpages.sh"
-  exec "make INSTALL_MANPAGES_DIR=\"\" INSTALL_PREFIX=$ROOT/usr DESTDIR=$ROOT install"
+  exec "make INSTALL_MANPAGES_DIR=\"\" INSTALL_PREFIX=$ROOT/usr DESTDIR=$ROOT install LZO_SUPPORT=0 LZ4_SUPPORT=0 XZ_SUPPORT=0 ZSTD_SUPPORT=0"
 }
 

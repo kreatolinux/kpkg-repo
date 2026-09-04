@@ -193,6 +193,18 @@ jobs:
           /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.buildId $GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT-${{ matrix.packages }}"
           /tmp/kpkg-bin/kpkg clean --binaries=true --environment=true
 
+          # The runner rootfs predates the openssl 4 transition (image bakes
+          # were broken by the corrupted meson release). Extract libcrypto.so.4
+          # / libssl.so.4 from the repo's openssl package into LD_LIBRARY_PATH
+          # so the downloaded kpkg binary and any mirror archive linked against
+          # openssl 4 keep running even though the image only ships
+          # libcrypto.so.3. Temporary stopgap: remove once the builder
+          # images are rebuilt against openssl 4.
+          mkdir -p /opt/kpkg-libs
+          curl -sfL https://mirror.krea.to/archives/system/x86_64-linux-gnu-jumpstart-openssl/openssl-4.0.2-1.kpkg \
+            | tar -C /opt/kpkg-libs -xz usr/lib/libcrypto.so.4 usr/lib/libssl.so.4 2>/dev/null || true
+          export LD_LIBRARY_PATH="/opt/kpkg-libs/usr/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+          echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH" >> $GITHUB_ENV
           IS_USELESS="true"
           for package in ${{ matrix.packages }}; do
             /tmp/kpkg-bin/kpkg install "$package" -y --downloadOnly || IS_USELESS="false"
@@ -244,6 +256,18 @@ jobs:
           /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.buildId $GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT-${{ matrix.packages }}"
           /tmp/kpkg-bin/kpkg clean --binaries=true --environment=true
 
+          # The runner rootfs predates the openssl 4 transition (image bakes
+          # were broken by the corrupted meson release). Extract libcrypto.so.4
+          # / libssl.so.4 from the repo's openssl package into LD_LIBRARY_PATH
+          # so the downloaded kpkg binary and any mirror archive linked against
+          # openssl 4 keep running even though the image only ships
+          # libcrypto.so.3. Temporary stopgap: remove once the builder
+          # images are rebuilt against openssl 4.
+          mkdir -p /opt/kpkg-libs
+          curl -sfL https://mirror.krea.to/archives/system/x86_64-linux-gnu-jumpstart-openssl/openssl-4.0.2-1.kpkg \
+            | tar -C /opt/kpkg-libs -xz usr/lib/libcrypto.so.4 usr/lib/libssl.so.4 2>/dev/null || true
+          export LD_LIBRARY_PATH="/opt/kpkg-libs/usr/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+          echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH" >> $GITHUB_ENV
           if [ "${{ inputs.llvm }}" = "true" ]; then
             /tmp/kpkg-bin/kpkg install llvm -y
             /tmp/kpkg-bin/kpkg repl -a "set config.Options.cc clang"
@@ -253,7 +277,7 @@ jobs:
           git config --system --add safe.directory '*'
 
           for package in ${{ matrix.packages }}; do
-                PACKAGES=$(KPKG_ENABLE_DEBUG=0 /tmp/kpkg-bin/kpkg repl -a "get --all depends.$package.build" 2>&1 || true)
+                PACKAGES=$(KPKG_ENABLE_DEBUG=0 /tmp/kpkg-bin/kpkg repl -a "get --all depends.$package.build" 2>/dev/null || true)
                   
                 echo "PACKAGES: $PACKAGES"
 
