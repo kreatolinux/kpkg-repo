@@ -34,8 +34,8 @@ jobs:
         id: resolve
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUN_INPUT: ${{ inputs.run }}
         run: |
-          RUN_INPUT="${{ inputs.run }}"
           if [ -n "$RUN_INPUT" ]; then
             if [[ "$RUN_INPUT" =~ ^[0-9]+$ ]]; then
               RUN_ID="$RUN_INPUT"
