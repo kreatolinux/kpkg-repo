@@ -11,6 +11,7 @@ depends:
  - "gobject-introspection"
 build_depends:
  - "gmake"
+ - "glib"
 
 build {
  macro build --disable-valadoc

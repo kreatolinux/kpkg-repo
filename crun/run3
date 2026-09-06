@@ -10,8 +10,10 @@ depends:
  - "libseccomp"
  - "libcap"
  - "yajl"
+ - "json-c"
 build_depends:
  - "gmake"
+ - "json-c"
 
 build {
  macro build --disable-systemd 
