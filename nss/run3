@@ -18,6 +18,7 @@ depends:
 build_depends:
   - "python"
   - "gmake"
+  - "nspr"
 depends_ca_certificates_mozilla:
   - "ca-certificates-utils"
 
