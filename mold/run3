@@ -19,6 +19,6 @@ build {
 }
 
 package {
-  exec "cmake --install build"
+  exec "cmake --install ."
 }
 
