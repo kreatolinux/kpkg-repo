@@ -62,7 +62,7 @@ on:
 
 jobs:
   build:
-    runs-on: blacksmith-16vcpu-ubuntu-2404
+    runs-on: ubuntu-latest # blacksmith-16vcpu-ubuntu-2404
     container:
       image: ${{ inputs.image_sha != '' && format('ghcr.io/kreatolinux/{0}@{1}', inputs.image, inputs.image_sha) || format('ghcr.io/kreatolinux/{0}:latest', inputs.image) }}
       options: --privileged -v /:/opt/host
