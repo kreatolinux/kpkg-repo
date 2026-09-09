@@ -90,10 +90,14 @@ jobs:
           # has served stale entries (even expired runs). Fetch unfiltered
           # runs, which are consistently newest-first, and pick the newest
           # successful one client-side instead.
+          # jq is not installed in the builder container; parse the
+          # pretty-printed JSON with awk instead: runs are newest-first,
+          # so print the id of the first run with a successful conclusion.
           for i in 1 2 3 4 5; do
             LATEST_RUN_ID=$(curl -s --fail -H "Authorization: Bearer ${{ secrets.GH_PAT }}" \
               "https://api.github.com/repos/kreatolinux/src/actions/workflows/build.yml/runs?per_page=20" \
-              | jq -r '[.workflow_runs[] | select(.conclusion == "success")][0].id // empty') && [ -n "$LATEST_RUN_ID" ] && break
+              | awk '/"id":/ { match($0, /[0-9]+/); lastid=substr($0, RSTART, RLENGTH) }
+                     /"conclusion": "success"/ { print lastid; exit }') && [ -n "$LATEST_RUN_ID" ] && break
             echo "lookup attempt $i failed, retrying..."
             sleep 5
           done
