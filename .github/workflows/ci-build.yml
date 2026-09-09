@@ -86,9 +86,21 @@ jobs:
       - name: Get latest workflow run
         id: get-run-id
         run: |
-          LATEST_RUN_ID=$(curl -s -H "Authorization: Bearer ${{ secrets.GH_PAT }}" \
-            "https://api.github.com/repos/kreatolinux/src/actions/workflows/build.yml/runs?status=success&per_page=1" \
-            | sed -n 's/.*"id": \([0-9]*\).*/\1/p' | head -1)
+          # The filtered "status=success" listing is not reliably ordered and
+          # has served stale entries (even expired runs). Fetch unfiltered
+          # runs, which are consistently newest-first, and pick the newest
+          # successful one client-side instead.
+          for i in 1 2 3 4 5; do
+            LATEST_RUN_ID=$(curl -s --fail -H "Authorization: Bearer ${{ secrets.GH_PAT }}" \
+              "https://api.github.com/repos/kreatolinux/src/actions/workflows/build.yml/runs?per_page=20" \
+              | jq -r '[.workflow_runs[] | select(.conclusion == "success")][0].id // empty') && [ -n "$LATEST_RUN_ID" ] && break
+            echo "lookup attempt $i failed, retrying..."
+            sleep 5
+          done
+          if [ -z "$LATEST_RUN_ID" ]; then
+            echo "could not resolve a successful kpkg artifact run" >&2
+            exit 1
+          fi
           echo "run_id=$LATEST_RUN_ID" >> $GITHUB_OUTPUT
 
       - uses: actions/download-artifact@v8

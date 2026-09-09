@@ -1,11 +1,11 @@
 name: "llvm"
-version: "21.1.2"
+version: "22.1.8"
 release: "1"
 description: "The LLVM Project is a collection of modular and reusable compiler and toolchain technologies."
 sources:
   - "https://github.com/llvm/llvm-project/releases/download/llvmorg-$version/llvm-project-$version.src.tar.xz"
 b2sum:
-  - "1b5684586297ad637c6da0976854b24d746679e9d125a19e321dc28fa7f83949cc431f4b630e4976496660389e7abac09962c21e45b88dff7d0900ee1bda51d7"
+  - "092204f62e0f0364a041c737eb2c25fd073cb5689663d6ccd5a9e4e1743d6d80822360d59b64bff7b4d7872a68a79e899bf2f75f384e55c7d313a79243576f03"
 no_chkupd: true
 build_depends:
   - "cmake"
