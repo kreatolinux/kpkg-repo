@@ -34,6 +34,10 @@ build {
 package {
   macro package
   exec "ln -s python3 $ROOT/usr/bin/python"
+  # make install's ensurepip runs with --altinstall and only provides pip3,
+  # but runfiles across the repo invoke bare 'pip'. Provide it here so the
+  # python-setuptools -> python-pip build order works on a fresh root.
+  exec "ln -s pip3 $ROOT/usr/bin/pip"
   exec "find $ROOT -type f -name '*.pyc' -delete"
   exec "find $ROOT -type d -name '__pycache__' | xargs rm -rf"
 }
