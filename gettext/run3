@@ -13,7 +13,13 @@ build_depends:
  - "gmake"
 
 build {
- macro build
+ exec "./configure --prefix=/usr"
+ # Build libtextstyle first: gettext-tools copies textstyle.h and friends
+ # out of libtextstyle/lib during its build, and on a bootstrap root the
+ # top-level ordering did not reliably produce them before gettext-tools
+ # compiled (textstyle.h: No such file or directory).
+ exec "make -C libtextstyle"
+ exec "make"
 }
 
 package {
