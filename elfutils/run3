@@ -4,8 +4,10 @@ release: "1"
 description: "elfutils"
 sources:
  - "https://sourceware.org/elfutils/ftp/${version}/elfutils-${version}.tar.bz2"
+ - "elfutils-aarch64-uio.patch"
 sha256sum:
  - "fd5cc6b77ad6773cac93cb3f415f9318ac3b3455eecf801f6b4a742c4f6c7209"
+ - "67a196206a0134f8e264794557ca962cdcf74e852e9f7e20daa2a96fd7821c94"
 depends:
  - "zlib"
 build_depends:
@@ -13,6 +15,10 @@ build_depends:
 
 build {
  env CFLAGS="$CFLAGS -Wno-error=discarded-qualifiers"
+ # elfutils 0.196 includes <linux/uio.h> on aarch64, which redefines
+ # struct iovec against glibc's. sys/uio.h provides the same definitions
+ # on every libc. Only compiled on aarch64, so amd64 never saw this.
+ exec "patch -p1 < ../elfutils-aarch64-uio.patch || exit 1"
  macro build --disable-debuginfod --disable-libdebuginfod
 }
 
