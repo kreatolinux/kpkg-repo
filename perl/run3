@@ -18,7 +18,5 @@ build {
 
 package {
   exec "make DESTDIR=$ROOT install"
-  cd "$ROOT"
-  exec "tree"
 }
 
