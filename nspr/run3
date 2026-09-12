@@ -13,7 +13,8 @@ build {
 
   cd "nspr"
 
-  if "${exec("uname -m").output()}" == "x86_64" {
+  local arch = "${exec("uname -m").output()}"
+  if "$arch" == "x86_64" || "$arch" == "aarch64" {
     local extraArgs = "--enable-64bit"
   }
 

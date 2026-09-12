@@ -5,10 +5,12 @@ description: "The Linux kernel and headers"
 sources:
   - "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$version.tar.xz"
   - "kernel-x86_64-fedora.config"
+  - "kernel-aarch64-fedora.config"
   - "settings.config"
 sha256sum:
   - "7a8879167b89c4bae077d6f39c4f2130769f05dbdad2aad914adab9afb7d7f9a"
   - "62cda75cb56faa94551e14200f4dff00e27ea30189d5399c3ce863ef2ba2b4b3"
+  - "bcdc913ecf40cfc1ba021c83a45f6c00c7d970f78341b097c2ea857d8fea208d"
   - "04f33434bb1b16b2a38e3a36d6ce59e0bf032db6954d4a71d07d8f3f5ab37e4c"
 depends:
   - "kmod"
@@ -20,7 +22,12 @@ build_depends:
 
 prepare {
   exec "make mrproper"
-  exec "./scripts/kconfig/merge_config.sh -m ../kernel-x86_64-fedora.config ../settings.config || exit 1"
+  local arch = "${exec("uname -m").output()}"
+  if "$arch" == "aarch64" || "$arch" == "arm64" {
+    exec "./scripts/kconfig/merge_config.sh -m ../kernel-aarch64-fedora.config ../settings.config || exit 1"
+  } else {
+    exec "./scripts/kconfig/merge_config.sh -m ../kernel-x86_64-fedora.config ../settings.config || exit 1"
+  }
   exec "make olddefconfig"
 }
 
@@ -71,7 +78,12 @@ package {
   exec "ln -s $MODPATH $ROOT/usr/lib/modules/$version/source"
   exec "install -Dt $MODPATH -m644 .config Makefile Module.symvers System.map localversion.* version vmlinux"
   exec "install -Dt $MODPATH/kernel -m644 kernel/Makefile"
-  exec "install -Dt $MODPATH/arch/x86 -m644 arch/x86/Makefile"
+  local arch = "${exec("uname -m").output()}"
+  if "$arch" == "aarch64" || "$arch" == "arm64" {
+    exec "install -Dt $MODPATH/arch/arm64 -m644 arch/arm64/Makefile"
+  } else {
+    exec "install -Dt $MODPATH/arch/x86 -m644 arch/x86/Makefile"
+  }
   exec "cp -t $MODPATH -a scripts"
 
   # required when STACK_VALIDATION is enabled
@@ -85,8 +97,13 @@ package {
   exec "find $MODPATH -type f -name '*.o' -printf 'Removing %P\\n' -delete"
 
   exec "cp -t $MODPATH -a include"
-  exec "cp -t $MODPATH/arch/x86 -a arch/x86/include"
-  exec "install -Dt $MODPATH/arch/x86/kernel -m644 arch/x86/kernel/asm-offsets.s"
+  if "$arch" == "aarch64" || "$arch" == "arm64" {
+    exec "cp -t $MODPATH/arch/arm64 -a arch/arm64/include"
+    exec "install -Dt $MODPATH/arch/arm64/kernel -m644 arch/arm64/kernel/asm-offsets.s"
+  } else {
+    exec "cp -t $MODPATH/arch/x86 -a arch/x86/include"
+    exec "install -Dt $MODPATH/arch/x86/kernel -m644 arch/x86/kernel/asm-offsets.s"
+  }
 
   exec "install -Dt $MODPATH/drivers/md -m644 drivers/md/*.h"
   exec "install -Dt $MODPATH/net/mac80211 -m644 net/mac80211/*.h"

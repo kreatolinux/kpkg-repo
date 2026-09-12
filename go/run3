@@ -16,10 +16,16 @@ build_depends:
 build {
   if ${exec("command -v go")}.exit() != 0 {
     print "go: go not found to bootstrap, downloading binary to bootstrap..."
-    if ${exec("uname -m").output()} == "x86_64" {
+    local arch = "${exec("uname -m").output()}"
+    # Go release tarballs use Go's arch names, which differ from uname -m
+    if "$arch" == "x86_64" || "$arch" == "amd64" {
       env ARCH="amd64"
     } else {
-      env ARCH="${exec("uname -m").output()}"
+      if "$arch" == "aarch64" || "$arch" == "arm64" {
+        env ARCH="arm64"
+      } else {
+        env ARCH="$arch"
+      }
     }
     cd ".."
     exec "wget https://go.dev/dl/go$version.linux-$ARCH.tar.gz"

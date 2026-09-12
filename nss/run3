@@ -41,7 +41,10 @@ build {
   exec "sh ../bundle.sh || exit 1"
 
   cd "nss"
-  if ${exec("uname -m").output()} == "x86_64" {
+  # NSS builds 32-bit by default unless USE_64 is set; both supported
+  # architectures are 64-bit
+  local arch = "${exec("uname -m").output()}"
+  if "$arch" == "x86_64" || "$arch" == "aarch64" {
     env USE_64="1"
   } else {
     env USE_64="0"
