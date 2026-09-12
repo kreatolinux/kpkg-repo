@@ -6,9 +6,6 @@ sources:
  - "https://ftp.gnu.org/gnu/make/make-${version}.tar.gz"
 sha256sum:
  - "e05fdde47c5f7ca45cb697e973894ff4f5d79e13b750ed57d7b66d8defc78e19"
-build_depends:
- - "gmake"
-
 build {
  macro build --without-guile
 }
