@@ -8,7 +8,7 @@ sources:
   - "https://raw.githubusercontent.com/python/cpython/7cdbb779a82d600d6cf01508214c2bbde111e1f6/Modules/_ssl_data_40.h"
 sha256sum:
   - "3b48dac8fb59f62eaa67ac83c1eb12bda1b7a08406dd286e252c11a66be27f81"
-  - "15d2886dbca59ceec2f2ec8f7eea3d37fa899fad58d8c2228e9628ea3a318487"
+  - "10971dedd230cdd6dca96d51f37fbbd618ebfff2ffc9c0a83ec489d432c282eb"
   - "fb6a22bb6a03931a887b4947c6687af6a109d0e76645a87349664cae7aa5845e"
 depends:
   - "openssl"
