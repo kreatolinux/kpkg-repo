@@ -40,7 +40,7 @@ package {
   # actually landed, and rewrite the script shebangs: ensurepip writes the
   # build-tree interpreter path, which is invalid after the package is
   # installed elsewhere.
-  exec "$ROOT/usr/bin/python3.14 -m ensurepip --root=$ROOT --default-pip"
+  exec "LD_LIBRARY_PATH=$ROOT/usr/lib $ROOT/usr/bin/python3.14 -m ensurepip --root=$ROOT --default-pip"
   exec "test -f $ROOT/usr/lib/python3.14/site-packages/pip/__main__.py"
   exec "sed -i '1c#!/usr/bin/python3.14' $ROOT/usr/bin/pip $ROOT/usr/bin/pip3 $ROOT/usr/bin/pip3.14"
   exec "find $ROOT -type f -name '*.pyc' -delete"
