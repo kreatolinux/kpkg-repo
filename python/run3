@@ -34,10 +34,15 @@ build {
 package {
   macro package
   exec "ln -s python3 $ROOT/usr/bin/python"
-  # make install's ensurepip runs with --altinstall and only provides pip3,
-  # but runfiles across the repo invoke bare 'pip'. Provide it here so the
-  # python-setuptools -> python-pip build order works on a fresh root.
-  exec "ln -s pip3 $ROOT/usr/bin/pip"
+  # make install runs ensurepip with errors ignored, and on a bootstrap root
+  # it has been observed to leave no pip behind at all (no site-packages/pip,
+  # no pip3 script). Run it explicitly against the DESTDIR, verify the module
+  # actually landed, and rewrite the script shebangs: ensurepip writes the
+  # build-tree interpreter path, which is invalid after the package is
+  # installed elsewhere.
+  exec "$ROOT/usr/bin/python3.14 -m ensurepip --root=$ROOT --default-pip"
+  exec "test -f $ROOT/usr/lib/python3.14/site-packages/pip/__main__.py"
+  exec "sed -i '1c#!/usr/bin/python3.14' $ROOT/usr/bin/pip $ROOT/usr/bin/pip3 $ROOT/usr/bin/pip3.14"
   exec "find $ROOT -type f -name '*.pyc' -delete"
   exec "find $ROOT -type d -name '__pycache__' | xargs rm -rf"
 }
