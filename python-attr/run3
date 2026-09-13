@@ -12,7 +12,7 @@ build_depends:
  - "python-setuptools"
 
 package {
- exec "pip install . --prefix=/usr --root=\"$ROOT\""
+ exec "python3 -m pip install . --prefix=/usr --root=\"$ROOT\""
 }
 
 

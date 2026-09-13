@@ -10,12 +10,10 @@ depends:
  - "python"
 
 package {
- # python's make install can silently skip ensurepip, leaving no pip on a
- # freshly built root. Fall back exactly like the python-pip runfile does.
- if ${exec("command -v pip").exit()} != 0 {
-   exec "python3 -m ensurepip"
- }
- exec "pip install . --prefix=/usr --root=\"$ROOT\""
+ # python3 -m pip instead of the pip script: make install's ensurepip runs
+ # with --altinstall semantics and may not create script entry points on a
+ # freshly built root, but the module is always present.
+ exec "python3 -m pip install . --prefix=/usr --root=\"$ROOT\""
 }
 
 
