@@ -42,7 +42,8 @@ package {
   # installed elsewhere.
   exec "LD_LIBRARY_PATH=$ROOT/usr/lib $ROOT/usr/bin/python3.14 -m ensurepip --root=$ROOT --default-pip"
   exec "test -f $ROOT/usr/lib/python3.14/site-packages/pip/__main__.py"
-  exec "sed -i '1c#!/usr/bin/python3.14' $ROOT/usr/bin/pip $ROOT/usr/bin/pip3 $ROOT/usr/bin/pip3.14"
+  exec "sed -i '1c#!/usr/bin/python3.14' $ROOT/usr/bin/pip3 $ROOT/usr/bin/pip3.14"
+  exec "ln -sfn pip3 $ROOT/usr/bin/pip"
   exec "find $ROOT -type f -name '*.pyc' -delete"
   exec "find $ROOT -type d -name '__pycache__' | xargs rm -rf"
 }
