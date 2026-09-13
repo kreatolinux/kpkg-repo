@@ -16,6 +16,10 @@ build_depends:
 
 build {
 # Taken from Kiss Linux repo, License here https://github.com/kisslinux/repo/blob/master/LICENSE
+# OpenSSL 4 removed the ENGINE API from the library but still ships the
+# engine.h declarations, and curl enables its ENGINE code on the header
+# check alone -> undefined ENGINE_* symbols at link time. Disable it.
+ env CPPFLAGS="-DOPENSSL_NO_ENGINE"
  macro build --configure --disable-manual --disable-ldap --disable-ares --without-librtmp --without-libpsl --without-libidn2 --without-brotli --without-zstd --with-openssl --with-nghttp2 --with-ca-path=/etc/ssl/certs
 
 }
