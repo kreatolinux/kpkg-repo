@@ -4,11 +4,11 @@ release: 6
 description: "General-Purpose Programming language"
 sources:
   - "https://www.python.org/ftp/python/${version}/Python-${version}.tar.xz"
-  - "https://github.com/python/cpython/commit/3364e7e62fa24d0e19133fb0f90b1c24ef1110c5.patch"
+  - "openssl-4.0.patch"
   - "https://raw.githubusercontent.com/python/cpython/7cdbb779a82d600d6cf01508214c2bbde111e1f6/Modules/_ssl_data_40.h"
 sha256sum:
   - "3b48dac8fb59f62eaa67ac83c1eb12bda1b7a08406dd286e252c11a66be27f81"
-  - "10971dedd230cdd6dca96d51f37fbbd618ebfff2ffc9c0a83ec489d432c282eb"
+  - "15d2886dbca59ceec2f2ec8f7eea3d37fa899fad58d8c2228e9628ea3a318487"
   - "fb6a22bb6a03931a887b4947c6687af6a109d0e76645a87349664cae7aa5845e"
 depends:
   - "openssl"
@@ -21,7 +21,7 @@ build_depends:
   - "gmake"
 
 prepare {
-  exec "patch -p1 < ../3364e7e62fa24d0e19133fb0f90b1c24ef1110c5.patch"
+  exec "patch -p1 < ../openssl-4.0.patch"
   exec "cp ../_ssl_data_40.h Modules/_ssl_data_40.h"
   exec "perl -0pi -e 's/#if \\(OPENSSL_VERSION_NUMBER >= 0x30401000L\\)\n#include \\x22_ssl_data_35.h\\x22/#if (OPENSSL_VERSION_NUMBER >= 0x40000000L)\n#  include \\x22_ssl_data_40.h\\x22\n#elif (OPENSSL_VERSION_NUMBER >= 0x30401000L)\n#  include \\x22_ssl_data_35.h\\x22/' Modules/_ssl.c"
   exec "grep -q '_ssl_data_40.h' Modules/_ssl.c"
