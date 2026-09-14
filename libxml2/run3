@@ -14,7 +14,10 @@ build_depends:
  - "meson"
 
 build {
- macro build --meson
+ # Pin libdir: meson picks lib64 when /usr/lib64 exists on the build host
+ # (gcc creates it), which is not in the ld search path of the bootstrap
+ # root - binaries like msgfmt then fail with 'libxml2.so.16 not found'.
+ macro build --meson --libdir=/usr/lib
 }
 
 package {
