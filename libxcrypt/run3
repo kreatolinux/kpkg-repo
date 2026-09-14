@@ -32,7 +32,11 @@ func common_build {
     env CFLAGS="$CFLAGS -Wno-error=pedantic"
   }
 
-  macro build $extraArgs --disable-obsolete-api --prefix=$prefix
+  # Ship the libcrypt.so.1 glibc-ABI soname: shadow and anything else
+  # built on a foreign bootstrap root links libcrypt.so.1, and without it
+  # the installed binaries die with 'libcrypt.so.1: cannot open shared
+  # object file' inside the rootfs.
+  macro build $extraArgs --enable-obsolete-api=yes --prefix=$prefix
   exec "make"
 }
 
