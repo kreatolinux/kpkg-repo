@@ -1,0 +1,16 @@
+name: "lz4"
+version: "1.10.0"
+release: "1"
+description: "Extremely Fast Compression algorithm"
+sources:
+  - "https://github.com/lz4/lz4/releases/download/v${version}/lz4-${version}.tar.gz"
+sha256sum:
+  - "537512904744b35e232912055ccf8ec66d768639ff3abe5788d90d792ec5f48b"
+
+build {
+  exec "make -j${exec('nproc').output()} PREFIX=/usr"
+}
+
+package {
+  exec "make install PREFIX=/usr DESTDIR=$ROOT"
+}

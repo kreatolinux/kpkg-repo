@@ -1,0 +1,18 @@
+name: "acl"
+version: "2.3.2"
+release: "1"
+description: "POSIX access control lists"
+sources:
+  - "https://download-mirror.savannah.gnu.org/releases/acl/acl-${version}.tar.xz"
+sha256sum:
+  - "97203a72cae99ab89a067fe2210c1cbf052bc492b479eca7d226d9830883b0bd"
+depends:
+  - "attr"
+
+build {
+ macro build --prefix=/usr
+}
+
+package {
+ macro package
+}
