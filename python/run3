@@ -4,7 +4,7 @@ release: 6
 description: "General-Purpose Programming language"
 sources:
   - "https://www.python.org/ftp/python/${version}/Python-${version}.tar.xz"
-  - "https://github.com/python/cpython/commit/3364e7e62fa24d0e19133fb0f90b1c24ef1110c5.patch"
+  - "openssl-4.0.patch"
   - "https://raw.githubusercontent.com/python/cpython/7cdbb779a82d600d6cf01508214c2bbde111e1f6/Modules/_ssl_data_40.h"
 sha256sum:
   - "3b48dac8fb59f62eaa67ac83c1eb12bda1b7a08406dd286e252c11a66be27f81"
@@ -21,7 +21,7 @@ build_depends:
   - "gmake"
 
 prepare {
-  exec "patch -p1 < ../3364e7e62fa24d0e19133fb0f90b1c24ef1110c5.patch"
+  exec "patch -p1 < ../openssl-4.0.patch"
   exec "cp ../_ssl_data_40.h Modules/_ssl_data_40.h"
   exec "perl -0pi -e 's/#if \\(OPENSSL_VERSION_NUMBER >= 0x30401000L\\)\n#include \\x22_ssl_data_35.h\\x22/#if (OPENSSL_VERSION_NUMBER >= 0x40000000L)\n#  include \\x22_ssl_data_40.h\\x22\n#elif (OPENSSL_VERSION_NUMBER >= 0x30401000L)\n#  include \\x22_ssl_data_35.h\\x22/' Modules/_ssl.c"
   exec "grep -q '_ssl_data_40.h' Modules/_ssl.c"
@@ -34,6 +34,18 @@ build {
 package {
   macro package
   exec "ln -s python3 $ROOT/usr/bin/python"
+  # make install runs ensurepip with errors ignored, and on a bootstrap root
+  # it has been observed to leave no pip behind at all (no site-packages/pip,
+  # no pip3 script). Run it explicitly against the DESTDIR, verify the module
+  # actually landed, and rewrite the script shebangs: ensurepip writes the
+  # build-tree interpreter path, which is invalid after the package is
+  # installed elsewhere.
+  # The DESTDIR python's own prefix already points into $ROOT, so a plain
+  # ensurepip lands in $ROOT/usr. Passing --root=$ROOT here double-roots it.
+  exec "LD_LIBRARY_PATH=$ROOT/usr/lib $ROOT/usr/bin/python3.14 -m ensurepip --default-pip"
+  exec "test -f $ROOT/usr/lib/python3.14/site-packages/pip/__main__.py"
+  exec "sed -i '1c#!/usr/bin/python3.14' $ROOT/usr/bin/pip3 $ROOT/usr/bin/pip3.14"
+  exec "ln -sfn pip3 $ROOT/usr/bin/pip"
   exec "find $ROOT -type f -name '*.pyc' -delete"
   exec "find $ROOT -type d -name '__pycache__' | xargs rm -rf"
 }

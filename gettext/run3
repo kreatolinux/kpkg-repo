@@ -13,7 +13,18 @@ build_depends:
  - "gmake"
 
 build {
- macro build
+ exec "./configure --prefix=/usr"
+ # Build libtextstyle first, then copy its headers into gettext-tools/src
+ # ourselves. gettext-tools normally fetches them via a BUILT_SOURCES rule
+ # that re-invokes make inside libtextstyle, and on a bootstrap root that
+ # rule does not produce the files before gettext-tools/src compiles
+ # (textstyle.h: No such file or directory). The copy below is exactly
+ # what install-nobase_includeHEADERS does.
+ exec "make -C libtextstyle"
+ exec "mkdir -p gettext-tools/src/textstyle"
+ exec "cp libtextstyle/lib/textstyle.h gettext-tools/src/"
+ exec "cp libtextstyle/lib/textstyle/*.h gettext-tools/src/textstyle/"
+ exec "make"
 }
 
 package {

@@ -98,6 +98,9 @@ package {
 
 postinstall {
   exec "mkdir -p /usr/lib/locale"
-  exec "localedef -i C -f UTF-8 C"
+  # localedef compiles against the charmaps of the system it runs on. On a
+  # bootstrap root (foreign base, target rootfs elsewhere) those are absent;
+  # glibc >= 2.35 ships a built-in C.UTF-8 so this is best-effort.
+  exec "localedef -i C -f UTF-8 C || true"
 }
 

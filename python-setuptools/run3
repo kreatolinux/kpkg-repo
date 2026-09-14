@@ -10,7 +10,10 @@ depends:
  - "python"
 
 package {
- exec "pip install . --prefix=/usr --root=\"$ROOT\""
+ # python3 -m pip instead of the pip script: make install's ensurepip runs
+ # with --altinstall semantics and may not create script entry points on a
+ # freshly built root, but the module is always present.
+ exec "python3 -m pip install . --prefix=/usr --root=\"$ROOT\""
 }
 
 

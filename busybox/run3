@@ -27,7 +27,9 @@ prepare {
   cd "busybox-$version/coreutils"
 
   # Got the patch from http://lists.busybox.net/pipermail/busybox/2016-June/084276.html
-  exec "patch -p1 < ../../ln-relative-symlinks.patch"
+  # The patch headers carry no directory prefix, so pass the target file
+  # explicitly instead of relying on -p1 to locate it.
+  exec "patch ln.c < ../../ln-relative-symlinks.patch"
 
   cd ".."
 
