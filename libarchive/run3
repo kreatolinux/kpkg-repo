@@ -13,6 +13,8 @@ depends:
   - "xz-utils"
   - "zlib"
   - "libzstd"
+  - "acl"
+  - "lz4"
   - "linux-headers"
 build_depends:
   - "gmake"
