@@ -1,6 +1,6 @@
 name: "gettext"
 version: "0.22.5"
-release: "1"
+release: "2"
 description: "Gettext contains utilities for localization."
 sources:
  - "https://ftp.gnu.org/gnu/gettext/gettext-${version}.tar.xz"
@@ -8,6 +8,7 @@ sha256sum:
  - "fe10c37353213d78a5b83d48af231e005c4da84db5ce88037d88355938259640"
 depends:
  - "attr"
+ - "acl"
  - "libxml2"
 build_depends:
  - "gmake"

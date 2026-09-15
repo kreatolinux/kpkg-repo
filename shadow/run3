@@ -1,6 +1,6 @@
 name: "shadow"
 version: "4.20.2"
-release: "3"
+release: "4"
 description: "Shadow utils"
 sources:
  - "https://github.com/shadow-maint/shadow/releases/download/4.16.0/shadow-4.16.0.tar.xz"
@@ -8,6 +8,7 @@ sha256sum:
  - "b78e3921a95d53282a38e90628880624736bf6235e36eea50c50835f59a3530b"
 depends:
  - "libxcrypt"
+ - "acl"
  - "linux-pam"
  - "libbsd"
 build_depends:

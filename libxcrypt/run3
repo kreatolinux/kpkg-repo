@@ -18,7 +18,7 @@ func common_build {
   # compilers (e.g. the foreign distro's gcc during bootstrap) reject the
   # -Wno-error flag itself and refuse to build.
   local gccmajor = "${exec("gcc -dumpversion").output()}"
-  if "$gccmajor" =~ e"^1[5-9]$|^[2-9][0-9]$" {
+  if "$gccmajor" =~ e"1[5-9].*|[2-9][0-9].*" {
     env CFLAGS="$CFLAGS -Wno-error=unterminated-string-initialization"
   }
 

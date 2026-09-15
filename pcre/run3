@@ -1,6 +1,6 @@
 name: "pcre2"
 version: "10.47"
-release: "1"
+release: "2"
 description: "Perl Compatible Regular Expression libraries"
 sources:
  - "https://github.com/PCRE2Project/pcre2/releases/download/pcre2-${version}/pcre2-${version}.tar.gz"

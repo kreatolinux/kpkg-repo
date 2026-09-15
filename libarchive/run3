@@ -1,6 +1,6 @@
 name: "libarchive"
 version: "3.8.7"
-release: "4"
+release: "5"
 description: "Multi-format archive and compression library"
 sources:
   - "https://github.com/libarchive/libarchive/releases/download/v$version/libarchive-$version.tar.xz"
