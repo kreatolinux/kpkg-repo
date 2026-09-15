@@ -25,6 +25,7 @@ package {
 }
 
 postinstall {
+ exec "ln -sf libcrypt.so.2 /usr/lib/libcrypt.so.1"
  exec "pwconv"
 }
 
