@@ -1,6 +1,6 @@
 name: "libxcrypt"
 version: "4.4.36"
-release: "1"
+release: "2"
 description: "Extended crypt library"
 sources:
   - "https://github.com/besser82/libxcrypt/releases/download/v$version/libxcrypt-$version.tar.xz"
