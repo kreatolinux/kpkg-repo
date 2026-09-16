@@ -62,9 +62,10 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest # blacksmith-16vcpu-ubuntu-2404
+    timeout-minutes: 350
+    runs-on: ${{ matrix.arch == 'arm64' && 'ubuntu-24.04-arm' || 'ubuntu-latest' }}
     container:
-      image: ${{ inputs.image_sha != '' && format('ghcr.io/kreatolinux/{0}@{1}', inputs.image, inputs.image_sha) || format('ghcr.io/kreatolinux/{0}:latest', inputs.image) }}
+      image: ${{ matrix.arch == 'arm64' && 'ghcr.io/kreatolinux/builder:aarch64@sha256:b5ab14b2d58314ac1a0f8da2447ef1f81b06f8d800efd6550dfe3f4983000202' || (inputs.image_sha != '' && format('ghcr.io/kreatolinux/{0}@{1}', inputs.image, inputs.image_sha) || format('ghcr.io/kreatolinux/{0}:latest', inputs.image)) }}
       options: --privileged -v /:/opt/host
     strategy:
       fail-fast: false
@@ -84,6 +85,7 @@ jobs:
             
 
       - name: Get latest workflow run
+        if: ${{ matrix.arch != 'arm64' }}
         id: get-run-id
         run: |
           # The filtered "status=success" listing is not reliably ordered and
@@ -108,6 +110,7 @@ jobs:
           echo "run_id=$LATEST_RUN_ID" >> $GITHUB_OUTPUT
 
       - uses: actions/download-artifact@v8
+        if: ${{ matrix.arch != 'arm64' }}
         with:
           name: kpkg-amd64-linux-debug
           path: /tmp/kpkg-bin
@@ -116,6 +119,7 @@ jobs:
           run-id: ${{ steps.get-run-id.outputs.run_id }}
 
       - uses: actions/download-artifact@v8
+        if: ${{ matrix.arch != 'arm64' }}
         with:
           name: chkupd-amd64-linux-debug
           path: /tmp/chkupd-bin
@@ -127,6 +131,17 @@ jobs:
         with:
           ref: ${{ github.head_ref || github.ref_name }}
           fetch-depth: 0
+
+      - name: Architecture setup
+        run: |
+          ARCH="${{ matrix.arch || 'x86_64' }}"
+          echo "ARCH=$ARCH" >> $GITHUB_ENV
+          if [ "$ARCH" = "arm64" ]; then
+            # The aarch64 builder image ships a working, sandbox-capable kpkg.
+            echo "KPKG_BIN=/usr/bin/kpkg" >> $GITHUB_ENV
+          else
+            echo "KPKG_BIN="${KPKG_BIN}"" >> $GITHUB_ENV
+          fi
 
       - name: Verify telemetry label policy
         run: sh .github/alloy/test-kpkg-telemetry.sh
@@ -169,6 +184,7 @@ jobs:
           exit 1
 
       - name: Run chkupd
+        if: ${{ matrix.arch != 'arm64' }}
         run: |
           chmod +x /tmp/chkupd-bin/chkupd
           for package in ${{ matrix.packages }}; do
@@ -186,14 +202,14 @@ jobs:
           set -euo pipefail
           LOCALE=en_US
           mkdir -p /usr/lib/locale
-          localedef -i $LOCALE -c -f UTF-8 $LOCALE
+          localedef -i $LOCALE -c -f UTF-8 $LOCALE || true
           echo "export LANG=$LOCALE.UTF-8" >> /etc/profile
           export LD_LIBRARY_PATH="${LD_LIBRARY_PATH-}"
           . /etc/profile
           export LC_CTYPE=en_US.UTF-8
           export LC_ALL=en_US.UTF-8
 
-          chmod +x /tmp/kpkg-bin/kpkg
+          chmod +x "${KPKG_BIN}" 2>/dev/null || true
           mkdir -p /etc/kpkg/repos/main
           if command -v mountpoint >/dev/null 2>&1 && mountpoint -q /etc/kpkg/repos/main; then
             :
@@ -201,13 +217,13 @@ jobs:
             mount --bind "$GITHUB_WORKSPACE" /etc/kpkg/repos/main
           fi
 
-          /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.enabled true"
-          /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.endpoint http://127.0.0.1:4318"
-          /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.tls false"
-          /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.authType none"
-          /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.failurePolicy continue"
-          /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.buildId $GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT-${{ matrix.packages }}"
-          /tmp/kpkg-bin/kpkg clean --binaries=true --environment=true
+          "${KPKG_BIN}" repl -a "set config.Telemetry.enabled true"
+          "${KPKG_BIN}" repl -a "set config.Telemetry.endpoint http://127.0.0.1:4318"
+          "${KPKG_BIN}" repl -a "set config.Telemetry.tls false"
+          "${KPKG_BIN}" repl -a "set config.Telemetry.authType none"
+          "${KPKG_BIN}" repl -a "set config.Telemetry.failurePolicy continue"
+          "${KPKG_BIN}" repl -a "set config.Telemetry.buildId $GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT-${{ matrix.packages }}"
+          "${KPKG_BIN}" clean --binaries=true --environment=true
 
           # The runner rootfs predates the openssl 4 transition (image bakes
           # were broken by the corrupted meson release). Extract libcrypto.so.4
@@ -216,20 +232,24 @@ jobs:
           # openssl 4 keep running even though the image only ships
           # libcrypto.so.3. Temporary stopgap: remove once the builder
           # images are rebuilt against openssl 4.
-          mkdir -p /opt/kpkg-libs
-          curl -sfL https://mirror.krea.to/archives/system/x86_64-linux-gnu-jumpstart-openssl/openssl-4.0.2-1.kpkg \
-            | tar -C /opt/kpkg-libs -xz usr/lib/libcrypto.so.4 usr/lib/libssl.so.4 2>/dev/null || true
-          export LD_LIBRARY_PATH="/opt/kpkg-libs/usr/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
-          echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH" >> $GITHUB_ENV
+          if [ "$ARCH" != "arm64" ]; then
+            # The amd64 runner rootfs predates the openssl 4 transition; the
+            # aarch64 builder image is self-contained and needs none of this.
+            mkdir -p /opt/kpkg-libs
+            curl -sfL https://mirror.krea.to/archives/system/x86_64-linux-gnu-jumpstart-openssl/openssl-4.0.2-1.kpkg \
+              | tar -C /opt/kpkg-libs -xz usr/lib/libcrypto.so.4 usr/lib/libssl.so.4 2>/dev/null || true
+            export LD_LIBRARY_PATH="/opt/kpkg-libs/usr/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+            echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH" >> $GITHUB_ENV
+          fi
           IS_USELESS="true"
           for package in ${{ matrix.packages }}; do
-            /tmp/kpkg-bin/kpkg install "$package" -y --downloadOnly || IS_USELESS="false"
+            "${KPKG_BIN}" install "$package" -y --downloadOnly || IS_USELESS="false"
           done
 
           if [ "$FORCE_BUILD" = "true" ]; then
             IS_USELESS="false"
             for package in ${{ matrix.packages }}; do
-              /tmp/kpkg-bin/kpkg clean --binaries --packages "$package"
+              "${KPKG_BIN}" clean --binaries --packages "$package"
             done
           fi
 
@@ -247,7 +267,7 @@ jobs:
           set -eo pipefail
           LOCALE=en_US
           mkdir -p /usr/lib/locale
-          localedef -i $LOCALE -c -f UTF-8 $LOCALE
+          localedef -i $LOCALE -c -f UTF-8 $LOCALE || true
           echo "export LANG=$LOCALE.UTF-8" >> /etc/profile          
           
           export LD_LIBRARY_PATH="${LD_LIBRARY_PATH-}"
@@ -256,7 +276,7 @@ jobs:
           export LC_CTYPE=en_US.UTF-8
           export LC_ALL=en_US.UTF-8
 
-          chmod +x /tmp/kpkg-bin/kpkg
+          chmod +x "${KPKG_BIN}" 2>/dev/null || true
           mkdir -p /etc/kpkg/repos/main
           if command -v mountpoint >/dev/null 2>&1 && mountpoint -q /etc/kpkg/repos/main; then
             :
@@ -264,13 +284,13 @@ jobs:
             mount --bind "$GITHUB_WORKSPACE" /etc/kpkg/repos/main
           fi
 
-          /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.enabled true"
-          /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.endpoint http://127.0.0.1:4318"
-          /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.tls false"
-          /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.authType none"
-          /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.failurePolicy continue"
-          /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.buildId $GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT-${{ matrix.packages }}"
-          /tmp/kpkg-bin/kpkg clean --binaries=true --environment=true
+          "${KPKG_BIN}" repl -a "set config.Telemetry.enabled true"
+          "${KPKG_BIN}" repl -a "set config.Telemetry.endpoint http://127.0.0.1:4318"
+          "${KPKG_BIN}" repl -a "set config.Telemetry.tls false"
+          "${KPKG_BIN}" repl -a "set config.Telemetry.authType none"
+          "${KPKG_BIN}" repl -a "set config.Telemetry.failurePolicy continue"
+          "${KPKG_BIN}" repl -a "set config.Telemetry.buildId $GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT-${{ matrix.packages }}"
+          "${KPKG_BIN}" clean --binaries=true --environment=true
 
           # The runner rootfs predates the openssl 4 transition (image bakes
           # were broken by the corrupted meson release). Extract libcrypto.so.4
@@ -279,21 +299,25 @@ jobs:
           # openssl 4 keep running even though the image only ships
           # libcrypto.so.3. Temporary stopgap: remove once the builder
           # images are rebuilt against openssl 4.
-          mkdir -p /opt/kpkg-libs
-          curl -sfL https://mirror.krea.to/archives/system/x86_64-linux-gnu-jumpstart-openssl/openssl-4.0.2-1.kpkg \
-            | tar -C /opt/kpkg-libs -xz usr/lib/libcrypto.so.4 usr/lib/libssl.so.4 2>/dev/null || true
-          export LD_LIBRARY_PATH="/opt/kpkg-libs/usr/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
-          echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH" >> $GITHUB_ENV
+          if [ "$ARCH" != "arm64" ]; then
+            # The amd64 runner rootfs predates the openssl 4 transition; the
+            # aarch64 builder image is self-contained and needs none of this.
+            mkdir -p /opt/kpkg-libs
+            curl -sfL https://mirror.krea.to/archives/system/x86_64-linux-gnu-jumpstart-openssl/openssl-4.0.2-1.kpkg \
+              | tar -C /opt/kpkg-libs -xz usr/lib/libcrypto.so.4 usr/lib/libssl.so.4 2>/dev/null || true
+            export LD_LIBRARY_PATH="/opt/kpkg-libs/usr/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+            echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH" >> $GITHUB_ENV
+          fi
           if [ "${{ inputs.llvm }}" = "true" ]; then
-            /tmp/kpkg-bin/kpkg install llvm -y
-            /tmp/kpkg-bin/kpkg repl -a "set config.Options.cc clang"
+            "${KPKG_BIN}" install llvm -y
+            "${KPKG_BIN}" repl -a "set config.Options.cc clang"
             sed -i 's/gcc/clang/' /etc/kreato-release
           fi
           
           git config --system --add safe.directory '*'
 
           for package in ${{ matrix.packages }}; do
-                PACKAGES=$(KPKG_ENABLE_DEBUG=0 /tmp/kpkg-bin/kpkg repl -a "get --all depends.$package.build" 2>/dev/null || true)
+                PACKAGES=$(KPKG_ENABLE_DEBUG=0 "${KPKG_BIN}" repl -a "get --all depends.$package.build" 2>/dev/null || true)
                   
                 echo "PACKAGES: $PACKAGES"
 
@@ -301,7 +325,7 @@ jobs:
                    echo '$PACKAGES exist'
                     for dep in $PACKAGES; do
                         echo "trying to install $dep"
-                        /tmp/kpkg-bin/kpkg install "$dep" -y || true
+                        "${KPKG_BIN}" install "$dep" -y || true
                         echo "$dep is installed, continuing"
                     done
                 fi
@@ -313,10 +337,10 @@ jobs:
                     if [ "${{ inputs.disable_force_install_all }}" != "true" ]; then
                         FORCE_INSTALL_ALL_FLAG="--forceInstallAll=true"
                     fi
-                    /tmp/kpkg-bin/kpkg build "$package" --bootstrap --yes --ignorePostInstall $FORCE_INSTALL_ALL_FLAG
+                    "${KPKG_BIN}" build "$package" --bootstrap --yes --ignorePostInstall $FORCE_INSTALL_ALL_FLAG
 
                     echo "Bootstrapping $package complete, now removing it from cache"
-                    /tmp/kpkg-bin/kpkg clean --binaries --packages "$package"
+                    "${KPKG_BIN}" clean --binaries --packages "$package"
 
                     KPKG_EXTRA_ARGS="--useCacheIfAvailable=false"
                 fi
@@ -329,9 +353,9 @@ jobs:
           mkdir -p /tmp/failures /tmp/build-logs
           build_failed=false
           for package in ${{ matrix.packages }}; do
-            version=$(/tmp/kpkg-bin/kpkg info "$package" 2>/dev/null | sed -n 's/^package version: //p' || echo "unknown")
+            version=$("${KPKG_BIN}" info "$package" 2>/dev/null | sed -n 's/^package version: //p' || echo "unknown")
             echo "=== $package ($version) ==="
-            if /tmp/kpkg-bin/kpkg build "$package" --yes --ignorePostInstall $FORCE_INSTALL_ALL_FLAG 2>&1 |
+            if "${KPKG_BIN}" build "$package" --yes --ignorePostInstall $FORCE_INSTALL_ALL_FLAG 2>&1 |
                  tee /tmp/build-logs/$package.log; then
               echo "✅ $package built" >> $GITHUB_STEP_SUMMARY
             else
@@ -414,15 +438,15 @@ jobs:
           
           cd "$GITHUB_WORKSPACE"
           committed_any=false
-          /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.enabled true"
-          /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.endpoint http://127.0.0.1:4318"
-          /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.tls false"
-          /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.authType none"
-          /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.failurePolicy continue"
-          /tmp/kpkg-bin/kpkg repl -a "set config.Telemetry.buildId $GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT-${{ matrix.packages }}"
+          "${KPKG_BIN}" repl -a "set config.Telemetry.enabled true"
+          "${KPKG_BIN}" repl -a "set config.Telemetry.endpoint http://127.0.0.1:4318"
+          "${KPKG_BIN}" repl -a "set config.Telemetry.tls false"
+          "${KPKG_BIN}" repl -a "set config.Telemetry.authType none"
+          "${KPKG_BIN}" repl -a "set config.Telemetry.failurePolicy continue"
+          "${KPKG_BIN}" repl -a "set config.Telemetry.buildId $GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT-${{ matrix.packages }}"
           for package in ${{ matrix.packages }}; do
             if git status --porcelain | grep -q run; then
-              version=$(/tmp/kpkg-bin/kpkg info "$package" 2>/dev/null | awk '/^package version:/ {print $3; exit}')
+              version=$("${KPKG_BIN}" info "$package" 2>/dev/null | awk '/^package version:/ {print $3; exit}')
               if [ -z "$version" ]; then
                 version="unknown"
               fi
@@ -444,7 +468,8 @@ jobs:
       - name: Install MinIO Client
         if: (inputs.push == 'true' || (github.event_name == 'pull_request' && github.event.pull_request.user.login == 'renovate[bot]' && startsWith(github.head_ref || '', 'renovate/')) || github.event_name == 'workflow_dispatch') && steps.useless-check.outputs.is_useless != 'true'
         run: |
-          curl -LO https://dl.min.io/client/mc/release/linux-amd64/mc
+          MC_ARCH=$([ "$ARCH" = "arm64" ] && echo arm64 || echo amd64)
+          curl -LO "https://dl.min.io/client/mc/release/linux-${MC_ARCH}/mc"
           chmod +x mc
           mv mc /bin/
           mc config host rm minio || true
