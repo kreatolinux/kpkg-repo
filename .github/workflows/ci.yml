@@ -19,7 +19,7 @@ on:
           - arm64
           - both
       arm64_packages:
-        description: 'Override the arm64 package list (base batch; gcc/big batches are fixed)'
+        description: 'Optional package list override for non-x86_64 runs (defaults to the whole repo)'
         required: false
         default: ''
       image:
@@ -73,9 +73,6 @@ jobs:
       push: ${{ steps.compute-matrix.outputs.push }}
       should_build: ${{ steps.compute-matrix.outputs.should_build }}
       arch: ${{ steps.compute-matrix.outputs.arch }}
-      arm64_base_matrix: ${{ steps.compute-matrix.outputs.arm64_base_matrix }}
-      arm64_gcc_matrix: ${{ steps.compute-matrix.outputs.arm64_gcc_matrix }}
-      arm64_big_matrix: ${{ steps.compute-matrix.outputs.arm64_big_matrix }}
       runfiles: ${{ steps.check-sums.outputs.runfiles }}
       image: ${{ steps.compute-matrix.outputs.image }}
       image_sha: ${{ steps.compute-matrix.outputs.image_sha }}
@@ -132,12 +129,28 @@ jobs:
 
           ALL_RUNS=$(find "$GITHUB_WORKSPACE" -mindepth 2 -maxdepth 2 -type f -name run | sed "s#^$GITHUB_WORKSPACE/##" | sort || true)
           ALL_PACKAGES=$(echo "$ALL_RUNS" | awk -F/ '{print $1}' | sort -u | awk 'NF')
+          # Optional override: restrict the run to specific packages (e.g. a
+          # custom arm64 batch) instead of the whole repository.
+          if [ -n "${{ github.event.inputs.arm64_packages }}" ] && [ "$ARCH" != "x86_64" ]; then
+            ALL_PACKAGES=$(echo "${{ github.event.inputs.arm64_packages }}" | tr ' ' '\n' | awk 'NF' | sort -u)
+          fi
           MAX_PER_PHASE=250
 
           TOTAL_PACKAGES=$(echo "$ALL_PACKAGES" | wc -l | tr -d ' ')
           echo "Total packages: $TOTAL_PACKAGES"
 
           PHASE_COUNT=5
+          # When building for arm64 (or both), fan every package out with an
+          # arch tag so each matrix entry lands on the right runner/image.
+          phase_entry() {
+            local pkg="$1"
+            case "$ARCH" in
+              arm64) printf '{\"packages\":\"%s\",\"arch\":\"arm64\"}\n' "$pkg" ;;
+              both)  printf '{\"packages\":\"%s\"}\n{\"packages\":\"%s\",\"arch\":\"arm64\"}\n' "$pkg" "$pkg" ;;
+              *)     printf '{\"packages\":\"%s\"}\n' "$pkg" ;;
+            esac
+          }
+
           for i in $(seq 1 $PHASE_COUNT); do
             START=$(((i - 1) * MAX_PER_PHASE + 1))
             END=$((i * MAX_PER_PHASE))
@@ -147,8 +160,10 @@ jobs:
               MATRIX='{"include":['
               SEP=""
               for pkg in $PHASE_PKGS; do
-                MATRIX="$MATRIX$SEP{\"packages\":\"$pkg\"}"
-                SEP=",";
+                for ENTRY in $(phase_entry "$pkg"); do
+                  MATRIX="$MATRIX$SEP$ENTRY"
+                  SEP=","
+                done
               done
               MATRIX="$MATRIX]}"
               echo "phase${i}_matrix=$MATRIX" >> $GITHUB_OUTPUT
@@ -207,22 +222,6 @@ jobs:
             : # keep defaults
           fi
 
-          # arm64 matrix: three sequential batches so the mirror has base
-          # binaries before gcc builds, and gcc before nim/python.
-          if [ "$ARCH" != "x86_64" ]; then
-            ARM64_BASE="${{ github.event.inputs.arm64_packages }}"
-            if [ -z "$ARM64_BASE" ]; then
-              ARM64_BASE="kreato-fs-essentials openssl glibc busybox jumpstart libxcrypt shadow gmake gtar git ca-certificates gettext pkgconf p11-kit libtasn curl nghttp2 samurai meson ninja cmake elfutils kmod perl file gawk texinfo flex"
-            fi
-            echo "arm64_base_matrix={\"include\":[{\"packages\":\"$ARM64_BASE\",\"arch\":\"arm64\"}]}" >> $GITHUB_OUTPUT
-            echo "arm64_gcc_matrix={\"include\":[{\"packages\":\"gcc\",\"arch\":\"arm64\"}]}" >> $GITHUB_OUTPUT
-            echo "arm64_big_matrix={\"include\":[{\"packages\":\"python python-pip nim\",\"arch\":\"arm64\"}]}" >> $GITHUB_OUTPUT
-          else
-            echo "arm64_base_matrix=" >> $GITHUB_OUTPUT
-            echo "arm64_gcc_matrix=" >> $GITHUB_OUTPUT
-            echo "arm64_big_matrix=" >> $GITHUB_OUTPUT
-          fi
-
           echo "push=$PUSH" >> $GITHUB_OUTPUT
           echo "should_build=$SHOULD_BUILD" >> $GITHUB_OUTPUT
 
@@ -260,7 +259,7 @@ jobs:
       runfiles: ${{ needs.init.outputs.runfiles }}
 
   build_phase1:
-    if: always() && !cancelled() && needs.init.outputs.phase1_matrix != '' && needs.init.outputs.arch != 'arm64' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
+    if: always() && !cancelled() && needs.init.outputs.phase1_matrix != '' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
     needs: [init, update-sums]
     uses: ./.github/workflows/ci-build.yml
     with:
@@ -287,7 +286,7 @@ jobs:
       LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
 
   build_phase2:
-    if: always() && !cancelled() && needs.init.outputs.phase2_matrix != '' && needs.init.outputs.arch != 'arm64' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
+    if: always() && !cancelled() && needs.init.outputs.phase2_matrix != '' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
     needs: [init, update-sums]
     uses: ./.github/workflows/ci-build.yml
     with:
@@ -314,7 +313,7 @@ jobs:
       LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
 
   build_phase3:
-    if: always() && !cancelled() && needs.init.outputs.phase3_matrix != '' && needs.init.outputs.arch != 'arm64' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
+    if: always() && !cancelled() && needs.init.outputs.phase3_matrix != '' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
     needs: [init, update-sums]
     uses: ./.github/workflows/ci-build.yml
     with:
@@ -341,7 +340,7 @@ jobs:
       LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
 
   build_phase4:
-    if: always() && !cancelled() && needs.init.outputs.phase4_matrix != '' && needs.init.outputs.arch != 'arm64' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
+    if: always() && !cancelled() && needs.init.outputs.phase4_matrix != '' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
     needs: [init, update-sums]
     uses: ./.github/workflows/ci-build.yml
     with:
@@ -368,7 +367,7 @@ jobs:
       LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
 
   build_phase5:
-    if: always() && !cancelled() && needs.init.outputs.phase5_matrix != '' && needs.init.outputs.arch != 'arm64' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
+    if: always() && !cancelled() && needs.init.outputs.phase5_matrix != '' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
     needs: [init, update-sums]
     uses: ./.github/workflows/ci-build.yml
     with:
@@ -381,75 +380,6 @@ jobs:
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
       disable_force_install_all: ${{ needs.init.outputs.disable_force_install_all == 'true' }}
-    secrets:
-      GH_PAT: ${{ secrets.GH_PAT }}
-      AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
-      AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
-      OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
-      OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}
-      OTEL_PASSWORD: ${{ secrets.OTEL_PASSWORD }}
-      LOKI_ENDPOINT: ${{ secrets.LOKI_ENDPOINT }}
-      LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
-      LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
-
-  build-arm64-base:
-    if: always() && !cancelled() && needs.init.outputs.arm64_base_matrix != '' && (github.event_name == 'workflow_dispatch' || github.event_name == 'schedule')
-    needs: [init, update-sums]
-    uses: ./.github/workflows/ci-build.yml
-    with:
-      matrix: ${{ needs.init.outputs.arm64_base_matrix }}
-      push: 'true'
-      phase_name: "arm64 base"
-      force_build: true
-      disable_force_install_all: true
-    secrets:
-      GH_PAT: ${{ secrets.GH_PAT }}
-      AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
-      AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
-      OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
-      OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}
-      OTEL_PASSWORD: ${{ secrets.OTEL_PASSWORD }}
-      LOKI_ENDPOINT: ${{ secrets.LOKI_ENDPOINT }}
-      LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
-      LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
-
-  build-arm64-gcc:
-    if: always() && !cancelled() && needs.init.outputs.arm64_gcc_matrix != '' && needs.build-arm64-base.result == 'success' && (github.event_name == 'workflow_dispatch' || github.event_name == 'schedule')
-    needs: [init, build-arm64-base]
-    uses: ./.github/workflows/ci-build.yml
-    with:
-      matrix: ${{ needs.init.outputs.arm64_gcc_matrix }}
-      push: 'true'
-      phase_name: "arm64 gcc"
-      force_build: true
-      disable_force_install_all: true
-    secrets:
-      GH_PAT: ${{ secrets.GH_PAT }}
-      AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
-      AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
-      OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
-      OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}
-      OTEL_PASSWORD: ${{ secrets.OTEL_PASSWORD }}
-      LOKI_ENDPOINT: ${{ secrets.LOKI_ENDPOINT }}
-      LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
-      LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
-
-  build-arm64-big:
-    if: always() && !cancelled() && needs.init.outputs.arm64_big_matrix != '' && needs.build-arm64-gcc.result == 'success' && (github.event_name == 'workflow_dispatch' || github.event_name == 'schedule')
-    needs: [init, build-arm64-gcc]
-    uses: ./.github/workflows/ci-build.yml
-    with:
-      matrix: ${{ needs.init.outputs.arm64_big_matrix }}
-      push: 'true'
-      phase_name: "arm64 big"
-      force_build: true
-      disable_force_install_all: true
     secrets:
       GH_PAT: ${{ secrets.GH_PAT }}
       AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
