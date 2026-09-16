@@ -147,7 +147,7 @@ jobs:
         run: sh .github/alloy/test-kpkg-telemetry.sh
 
       - name: Install and start Grafana Alloy
-        if: always()
+        if: always() && matrix.arch != 'arm64' 
         env:
           OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
           OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}
@@ -375,7 +375,7 @@ jobs:
           git status
 
       - name: Report Alloy forwarding errors
-        if: always()
+        if: always() && matrix.arch != 'arm64' 
         run: |
           grep -Ei 'error|fatal|failed' /tmp/alloy.log || true
 
