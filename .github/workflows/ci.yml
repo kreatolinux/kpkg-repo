@@ -102,9 +102,9 @@ jobs:
           phase_entry() {
             local pkg="$1"
             case "$ARCH" in
-              arm64) printf '{\"packages\":\"%s\",\"arch\":\"arm64\"}\n' "$pkg" ;;
-              both)  printf '{\"packages\":\"%s\"}\n{\"packages\":\"%s\",\"arch\":\"arm64\"}\n' "$pkg" "$pkg" ;;
-              *)     printf '{\"packages\":\"%s\"}\n' "$pkg" ;;
+              arm64) printf '{"packages":"%s","arch":"arm64"}\n' "$pkg" ;;
+              both)  printf '{"packages":"%s"}\n{"packages":"%s","arch":"arm64"}\n' "$pkg" "$pkg" ;;
+              *)     printf '{"packages":"%s"}\n' "$pkg" ;;
             esac
           }
           echo "image=${{ github.event.inputs.image || 'builder-repo' }}" >> $GITHUB_OUTPUT
