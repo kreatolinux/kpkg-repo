@@ -18,10 +18,6 @@ on:
           - x86_64
           - arm64
           - both
-      arm64_packages:
-        description: 'Optional package list override for non-x86_64 runs (defaults to the whole repo)'
-        required: false
-        default: ''
       image:
         description: 'Container image to use'
         required: false
@@ -101,6 +97,16 @@ jobs:
 
           ARCH="${{ github.event.inputs.arch || 'x86_64' }}"
           echo "arch=$ARCH" >> $GITHUB_OUTPUT
+
+          # Emit per-arch matrix entries for one package.
+          phase_entry() {
+            local pkg="$1"
+            case "$ARCH" in
+              arm64) printf '{\"packages\":\"%s\",\"arch\":\"arm64\"}\n' "$pkg" ;;
+              both)  printf '{\"packages\":\"%s\"}\n{\"packages\":\"%s\",\"arch\":\"arm64\"}\n' "$pkg" "$pkg" ;;
+              *)     printf '{\"packages\":\"%s\"}\n' "$pkg" ;;
+            esac
+          }
           echo "image=${{ github.event.inputs.image || 'builder-repo' }}" >> $GITHUB_OUTPUT
           echo "image_sha=${{ github.event.inputs.image_sha || '' }}" >> $GITHUB_OUTPUT
           echo "force_build=${{ github.event.inputs.force_build || 'false' }}" >> $GITHUB_OUTPUT
@@ -109,12 +115,16 @@ jobs:
           echo "disable_force_install_all=${{ github.event.inputs.disable_force_install_all || 'false' }}" >> $GITHUB_OUTPUT
 
           if [ -n "${PACKAGE_INPUT:-}" ]; then
-            PUSH="false"
+            # Keep push enabled for arm64/both: the aarch64 mirror is being
+            # populated, so explicit package builds should publish archives.
+            if [ "$ARCH" != "x86_64" ]; then PUSH="true"; else PUSH="false"; fi
             MATRIX='{"include":['
             SEP=""
             for pkg in $PACKAGE_INPUT; do
-              MATRIX="$MATRIX$SEP{\"packages\":\"$pkg\"}"
-              SEP=",";
+              for ENTRY in $(phase_entry "$pkg"); do
+                MATRIX="$MATRIX$SEP$ENTRY"
+                SEP=","
+              done
             done
             MATRIX="$MATRIX]}"
             echo "phase1_matrix=$MATRIX" >> $GITHUB_OUTPUT
@@ -129,28 +139,12 @@ jobs:
 
           ALL_RUNS=$(find "$GITHUB_WORKSPACE" -mindepth 2 -maxdepth 2 -type f -name run | sed "s#^$GITHUB_WORKSPACE/##" | sort || true)
           ALL_PACKAGES=$(echo "$ALL_RUNS" | awk -F/ '{print $1}' | sort -u | awk 'NF')
-          # Optional override: restrict the run to specific packages (e.g. a
-          # custom arm64 batch) instead of the whole repository.
-          if [ -n "${{ github.event.inputs.arm64_packages }}" ] && [ "$ARCH" != "x86_64" ]; then
-            ALL_PACKAGES=$(echo "${{ github.event.inputs.arm64_packages }}" | tr ' ' '\n' | awk 'NF' | sort -u)
-          fi
           MAX_PER_PHASE=250
 
           TOTAL_PACKAGES=$(echo "$ALL_PACKAGES" | wc -l | tr -d ' ')
           echo "Total packages: $TOTAL_PACKAGES"
 
           PHASE_COUNT=5
-          # When building for arm64 (or both), fan every package out with an
-          # arch tag so each matrix entry lands on the right runner/image.
-          phase_entry() {
-            local pkg="$1"
-            case "$ARCH" in
-              arm64) printf '{\"packages\":\"%s\",\"arch\":\"arm64\"}\n' "$pkg" ;;
-              both)  printf '{\"packages\":\"%s\"}\n{\"packages\":\"%s\",\"arch\":\"arm64\"}\n' "$pkg" "$pkg" ;;
-              *)     printf '{\"packages\":\"%s\"}\n' "$pkg" ;;
-            esac
-          }
-
           for i in $(seq 1 $PHASE_COUNT); do
             START=$(((i - 1) * MAX_PER_PHASE + 1))
             END=$((i * MAX_PER_PHASE))
