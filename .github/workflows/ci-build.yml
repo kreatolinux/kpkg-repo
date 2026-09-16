@@ -465,73 +465,29 @@ jobs:
             echo "No package changes detected"
           fi
 
-      - name: Install MinIO Client
+      - name: Upload packages to object storage
         if: (inputs.push == 'true' || (github.event_name == 'pull_request' && github.event.pull_request.user.login == 'renovate[bot]' && startsWith(github.head_ref || '', 'renovate/')) || github.event_name == 'workflow_dispatch') && steps.useless-check.outputs.is_useless != 'true'
+        env:
+          AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
+          AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
         run: |
-          MC_ARCH=$([ "$ARCH" = "arm64" ] && echo arm64 || echo amd64)
-          curl -LO "https://dl.min.io/client/mc/release/linux-${MC_ARCH}/mc"
-          chmod +x mc
-          mv mc /bin/
-          mc config host rm minio || true
-          
-      - name: Configure MinIO Client
-        if: (inputs.push == 'true' || (github.event_name == 'pull_request' && github.event.pull_request.user.login == 'renovate[bot]' && startsWith(github.head_ref || '', 'renovate/')) || github.event_name == 'workflow_dispatch') && steps.useless-check.outputs.is_useless != 'true'
-        run: "mc alias set minio ${{ secrets.AWS_ENDPOINT }} ${{ secrets.AWS_KEY_ID }} ${{ secrets.AWS_SECRET_ACCESS_KEY }} --api s3v4"
-
-
-      - name: Upload packages through MinIO
-        if: (inputs.push == 'true' || (github.event_name == 'pull_request' && github.event.pull_request.user.login == 'renovate[bot]' && startsWith(github.head_ref || '', 'renovate/')) || github.event_name == 'workflow_dispatch') && steps.useless-check.outputs.is_useless != 'true'
-        run: |
-          upload_with_retry() {
-            local retries=3
-            local cooldown=5
-            local attempt=1
-
-            while [ $attempt -le $retries ]; do
-              echo "Upload attempt $attempt of $retries..."
-
-              if [ -d "/var/cache/kpkg/archives" ]; then
-                echo "Listing archives directory contents:"
-                ls -la /var/cache/kpkg/archives/
-                echo "Copying archives..."
-                if mc cp --recursive /var/cache/kpkg/archives/* minio/${{ secrets.AWS_BUCKET }}/archives/; then
-                  echo "Archives upload successful on attempt $attempt"
-                else
-                  echo "Archives upload failed on attempt $attempt"
-                  if [ $attempt -eq $retries ]; then
-                    return 1
-                  fi
-                fi
-              else
-                echo "Archives directory does not exist, skipping..."
-              fi
-
-              if [ -d "/var/cache/kpkg/sources" ]; then
-                echo "Listing sources directory contents:"
-                ls -la /var/cache/kpkg/sources/
-                echo "Copying sources..."
-                if mc cp --recursive /var/cache/kpkg/sources/* minio/${{ secrets.AWS_BUCKET }}/sources/; then
-                  echo "Sources upload successful on attempt $attempt"
-                else
-                  echo "Sources upload failed on attempt $attempt"
-                  if [ $attempt -eq $retries ]; then
-                    return 1
-                  fi
-                fi
-              else
-                echo "Sources directory does not exist, skipping..."
-              fi
-
-              return 0
-
-              echo "Waiting $cooldown seconds before retry..."
-              sleep $cooldown
-              attempt=$((attempt + 1))
+          set -eu
+          uploader=.github/scripts/s3-put.sh
+          chmod +x "$uploader"
+          upload_dir() {
+            src="$1"
+            [ -d "$src" ] || return 0
+            base="${src##*/}"
+            for f in $(find "$src" -type f); do
+              rel="${f#"$src"/}"
+              echo "uploading $base/$rel"
+              "$uploader" "$AWS_ENDPOINT" "$AWS_BUCKET" "$f" "$base/$rel"
             done
           }
-
-          upload_with_retry
-
+          upload_dir /var/cache/kpkg/archives
+          upload_dir /var/cache/kpkg/sources
 
       - name: Install dependencies for upterm session
         if: failure() && github.event_name == 'workflow_dispatch' && inputs.enable_upterm_ssh == true
