@@ -2,14 +2,14 @@
 # Minimal AWS SigV4 single-PUT uploader for S3-compatible object stores.
 # Uses only curl + openssl, so it works in any builder image.
 # usage: s3-put.sh <endpoint> <bucket> <local-file> <remote-key>
-# env:   AWS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION (default us-east-1)
+# env:   AWS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION (default s3)
 set -eu
 
 ENDPOINT="$1"
 BUCKET="$2"
 FILE="$3"
 KEY="$4"
-REGION="${AWS_REGION:-us-east-1}"
+REGION="${AWS_REGION:-s3}"
 
 HOST=$(printf '%s' "$ENDPOINT" | sed -e 's#^https\?://##' -e 's#/$##')
 PAYLOAD_HASH=$(sha256sum "$FILE" | awk '{print $1}')
