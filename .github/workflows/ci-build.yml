@@ -465,29 +465,59 @@ jobs:
             echo "No package changes detected"
           fi
 
-      - name: Upload packages to object storage
+      - name: Install MinIO Client
         if: (inputs.push == 'true' || (github.event_name == 'pull_request' && github.event.pull_request.user.login == 'renovate[bot]' && startsWith(github.head_ref || '', 'renovate/')) || github.event_name == 'workflow_dispatch') && steps.useless-check.outputs.is_useless != 'true'
-        env:
-          AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
-          AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
         run: |
-          set -eu
-          uploader=.github/scripts/s3-put.sh
-          chmod +x "$uploader"
-          upload_dir() {
-            src="$1"
-            [ -d "$src" ] || return 0
-            base="${src##*/}"
-            for f in $(find "$src" -type f); do
-              rel="${f#"$src"/}"
-              echo "uploading $base/$rel"
-              "$uploader" "$AWS_ENDPOINT" "$AWS_BUCKET" "$f" "$base/$rel"
+          MC_ARCH=$([ "$ARCH" = "arm64" ] && echo arm64 || echo amd64)
+          MC_VERSION=RELEASE.2025-08-13T08-35-41Z
+          curl -fL -o mc "https://github.com/minio/mc/releases/download/${MC_VERSION}/mc.linux-${MC_ARCH}.${MC_VERSION}"
+          chmod +x mc
+          mv mc /bin/
+          mc config host rm minio || true
+
+      - name: Configure MinIO Client
+        if: (inputs.push == 'true' || (github.event_name == 'pull_request' && github.event.pull_request.user.login == 'renovate[bot]' && startsWith(github.head_ref || '', 'renovate/')) || github.event_name == 'workflow_dispatch') && steps.useless-check.outputs.is_useless != 'true'
+        run: "mc alias set minio ${{ secrets.AWS_ENDPOINT }} ${{ secrets.AWS_KEY_ID }} ${{ secrets.AWS_SECRET_ACCESS_KEY }} --api s3v4"
+
+      - name: Upload packages through MinIO
+        if: (inputs.push == 'true' || (github.event_name == 'pull_request' && github.event.pull_request.user.login == 'renovate[bot]' && startsWith(github.head_ref || '', 'renovate/')) || github.event_name == 'workflow_dispatch') && steps.useless-check.outputs.is_useless != 'true'
+        run: |
+          upload_with_retry() {
+            local retries=3
+            local cooldown=5
+            local attempt=1
+
+            while [ $attempt -le $retries ]; do
+              echo "Upload attempt $attempt of $retries..."
+              archives_ok=true
+              sources_ok=true
+
+              if [ -d "/var/cache/kpkg/archives" ]; then
+                echo "Copying archives..."
+                mc cp --recursive /var/cache/kpkg/archives/* minio/${{ secrets.AWS_BUCKET }}/archives/ || archives_ok=false
+              fi
+
+              if [ -d "/var/cache/kpkg/sources" ]; then
+                echo "Copying sources..."
+                mc cp --recursive /var/cache/kpkg/sources/* minio/${{ secrets.AWS_BUCKET }}/sources/ || sources_ok=false
+              fi
+
+              if [ "$archives_ok" = true ] && [ "$sources_ok" = true ]; then
+                echo "Package upload successful on attempt $attempt"
+                return 0
+              fi
+
+              if [ $attempt -eq $retries ]; then
+                return 1
+              fi
+              echo "Upload failed; waiting $cooldown seconds before retry..."
+              sleep $cooldown
+              attempt=$((attempt + 1))
             done
           }
-          upload_dir /var/cache/kpkg/archives
-          upload_dir /var/cache/kpkg/sources
+
+          upload_with_retry
+
 
       - name: Install dependencies for upterm session
         if: failure() && github.event_name == 'workflow_dispatch' && inputs.enable_upterm_ssh == true
