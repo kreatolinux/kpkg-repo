@@ -44,9 +44,23 @@ SIGNATURE=$(printf '%s' "$STRING_TO_SIGN" | openssl dgst -sha256 -mac HMAC -maco
 
 AUTH="AWS4-HMAC-SHA256 Credential=$AWS_KEY_ID/$SCOPE, SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=$SIGNATURE"
 
-curl -sf -X PUT \
+HTTP=$(curl -sS -X PUT \
   -H "Authorization: $AUTH" \
   -H "x-amz-date: $AMZ_DATE" \
   -H "x-amz-content-sha256: $PAYLOAD_HASH" \
   --data-binary @"$FILE" \
-  "$ENDPOINT/$BUCKET/$KEY"
+  -o "$FILE.s3resp" \
+  -w '%{http_code}' \
+  "$ENDPOINT/$BUCKET/$KEY") || HTTP="curl-error"
+case "$HTTP" in
+  200|201|204)
+    rm -f "$FILE.s3resp"
+    exit 0
+    ;;
+  *)
+    echo "S3 PUT failed: HTTP $HTTP for $BUCKET/$KEY"
+    cat "$FILE.s3resp" 2>/dev/null || true
+    rm -f "$FILE.s3resp"
+    exit 1
+    ;;
+esac
