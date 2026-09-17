@@ -65,7 +65,7 @@ jobs:
     timeout-minutes: 350
     runs-on: ${{ matrix.arch == 'arm64' && 'ubuntu-24.04-arm' || 'ubuntu-latest' }}
     container:
-      image: ${{ matrix.arch == 'arm64' && 'ghcr.io/kreatolinux/builder:aarch64@sha256:421aad7943487e80c8c7f0b977071f238667ee26c7e29d6c6dfbe7d51006aa0d' || (inputs.image_sha != '' && format('ghcr.io/kreatolinux/{0}@{1}', inputs.image, inputs.image_sha) || format('ghcr.io/kreatolinux/{0}:latest', inputs.image)) }}
+      image: ${{ matrix.arch == 'arm64' && 'ghcr.io/kreatolinux/builder:aarch64@sha256:09a4d3e97095147b6e0b5f66924bcee7bdb91df5dbea8a9e7ff0a67292d80b73' || (inputs.image_sha != '' && format('ghcr.io/kreatolinux/{0}@{1}', inputs.image, inputs.image_sha) || format('ghcr.io/kreatolinux/{0}:latest', inputs.image)) }}
       options: --privileged -v /:/opt/host
     strategy:
       fail-fast: false
