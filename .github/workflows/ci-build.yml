@@ -121,8 +121,8 @@ jobs:
       - uses: actions/download-artifact@v8
         if: ${{ matrix.arch != 'arm64' }}
         with:
-          name: chkupd-amd64-linux-debug
-          path: /tmp/chkupd-bin
+          name: krep-amd64-linux-debug
+          path: /tmp/krep-bin
           github-token: ${{ secrets.GH_PAT }}
           repository: kreatolinux/src
           run-id: ${{ steps.get-run-id.outputs.run_id }}
@@ -183,14 +183,14 @@ jobs:
           grep -Ei 'error|fatal|failed' /tmp/alloy.log || true
           exit 1
 
-      - name: Run chkupd
+      - name: Update package versions with krep
         if: ${{ matrix.arch != 'arm64' }}
         run: |
-          chmod +x /tmp/chkupd-bin/chkupd
+          chmod +x /tmp/krep-bin/krep
           for package in ${{ matrix.packages }}; do
-            if [ -f "$GITHUB_WORKSPACE/$package/run" ]; then
-              echo "Running chkupd on $package"
-              /tmp/chkupd-bin/chkupd check --package="$package" --repo "$GITHUB_WORKSPACE" --backend repology || true
+            if [ -f "$GITHUB_WORKSPACE/$package/run3" ] || [ -f "$GITHUB_WORKSPACE/$package/run" ]; then
+              echo "Running krep update on $package"
+              /tmp/krep-bin/krep update --package="$package" --repo "$GITHUB_WORKSPACE" --backend repology || true
             fi
           done
 
@@ -430,7 +430,7 @@ jobs:
             core.summary.addRaw(`Created: ${created}, Skipped (already open): ${skipped}`);
             await core.summary.write();
 
-      - name: Commit chkupd changes
+      - name: Commit krep updates
         run: |
           git config --global --add safe.directory "$GITHUB_WORKSPACE" || true
           git config --global user.email "github-actions[bot]@users.noreply.github.com"

@@ -59,7 +59,7 @@ package { macro package --configure; }
 ## CI
 
 - 5 phases, ~250 packages each
-- Pulls latest kpkg/chkupd binaries from kreatolinux/src workflow
+- Pulls latest kpkg/krep binaries from kreatolinux/src workflow
 - Mounts repo to `/etc/kpkg/repos/main`
 - Builds with `kpkg build <pkg> --yes`
 - Pushes to S3 (MinIO) on master merges
