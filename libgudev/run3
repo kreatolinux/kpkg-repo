@@ -1,6 +1,6 @@
 name: "libgudev"
 version: "238"
-release: "1"
+release: "2"
 description: "GObject bindings for eudev"
 sources:
  - "https://download.gnome.org/sources/libgudev/${version}/libgudev-${version}.tar.xz"
@@ -14,7 +14,7 @@ build_depends:
  - "meson"
 
 build {
- macro build 
+ macro build --libdir=/usr/lib
 }
 
 package {

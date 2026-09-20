@@ -1,6 +1,6 @@
 name: "gjs"
 version: "1.88.0"
-release: "1"
+release: "2"
 description: "Javascript bindings for GNOME"
 sources:
  - "https://gitlab.gnome.org/GNOME/gjs/-/archive/${version}/gjs-${version}.tar.gz"
@@ -8,7 +8,7 @@ sha256sum:
  - "2235ba7858a9f29b6a5941d99511c79620fb9033a4077d7ac678a22a9dac8eb8"
 depends:
  - "glib"
- - "js115"
+ - "mozjs140"
  - "libffi"
  - "cairo"
  - "dbus"
@@ -17,6 +17,7 @@ depends:
  - "dconf"
 build_depends:
  - "meson"
+ - "ninja"
 
 build {
  macro build --wrap-mode=nofallback

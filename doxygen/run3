@@ -1,0 +1,25 @@
+name: "doxygen"
+version: "1.18.0"
+release: "2"
+description: "Documentation generator for source code"
+sources:
+ - "https://github.com/doxygen/doxygen/releases/download/Release_1_18_0/doxygen-${version}.src.tar.gz"
+sha256sum:
+ - "a1deed70a6785bbec95a2b2a9e419dc7f7b223a9d74a8644ae611c8e2dcdd354"
+depends:
+ - "python"
+ - "sqlite"
+build_depends:
+ - "cmake"
+ - "ninja"
+ - "flex"
+ - "bison"
+
+build {
+ exec "cmake -B build -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_SHARED_LIBS=OFF -Dbuild_doc=OFF -Dbuild_wizard=OFF -Duse_sys_sqlite3=ON"
+ exec "cmake --build build -j${exec("nproc").output()}"
+}
+
+package {
+ macro package --cmake
+}

@@ -1,6 +1,6 @@
 name: tracker3
 version: 3.5.3
-release: 1
+release: 2
 description: "An efficient search engine and triplestore for desktop, embedded and mobile"
 sources:
   - "https://gitlab.gnome.org/GNOME/tracker/-/archive/$version/tracker-$version.tar.gz"
@@ -16,6 +16,8 @@ depends:
   - libseccomp
 build_depends:
   - meson
+  - ninja
+  - git
   - vala
   - gobject-introspection
   - pygobject
@@ -26,6 +28,9 @@ build {
   }
   exec "rm -rf subprojects/gvdb"
   exec "git clone https://gitlab.gnome.org/GNOME/gvdb.git subprojects/gvdb"
+  cd "subprojects/gvdb"
+  exec "git checkout 0854af0fdb6d527a8d1999835ac2c5059976c210"
+  cd "../.."
   exec "meson setup $extraArgs  --prefix=/usr  --buildtype=release  -Dman=false  -Ddocs=false  build"
   exec "ninja -C build"
 }

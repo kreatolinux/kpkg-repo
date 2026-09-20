@@ -1,6 +1,6 @@
 name: "libxfont2"
 version: "2.0.7"
-release: "1"
+release: "2"
 description: "X11 font rasterisation library"
 sources:
  - "https://www.x.org/releases/individual/lib/libXfont2-${version}.tar.xz"
@@ -10,12 +10,15 @@ depends:
  - "libfontenc"
  - "freetype"
  - "xorgproto"
+ - "libpng"
+ - "bzip2"
 build_depends:
  - "xtrans"
  - "gmake"
 
 build {
- macro build --sysconfdir=/etc --disable-static
+ exec "LIBS=\"-lpng16 -lbz2\" ./configure --prefix=/usr --sysconfdir=/etc --disable-static"
+ exec "make -j${exec("nproc").output()}"
 }
 
 package {

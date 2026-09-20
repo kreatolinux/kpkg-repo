@@ -1,6 +1,6 @@
 name: "libnvme"
 version: "1.16.2"
-release: "1"
+release: "2"
 description: "libnvme"
 sources:
  - "https://github.com/linux-nvme/libnvme/archive/refs/tags/v${version}.tar.gz"
@@ -12,7 +12,7 @@ build_depends:
  - "meson"
 
 build {
- macro build -Dlibdbus=auto
+ macro build --libdir=/usr/lib -Dlibdbus=auto -Dtests=false
 }
 
 package {

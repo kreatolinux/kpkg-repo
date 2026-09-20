@@ -1,6 +1,6 @@
 name: "telepathy-glib"
 version: "0.24.2"
-release: "1"
+release: "2"
 description: "glib bindings for telepathy"
 sources:
  - "https://telepathy.freedesktop.org/releases/telepathy-glib/telepathy-glib-${version}.tar.gz"
@@ -13,6 +13,10 @@ build_depends:
  - "gobject-introspection"
  - "diffutils"
  - "gmake"
+
+prepare {
+ exec "sed -i 's/g_ptr_array_new_full (i, tp_value_array_free)/g_ptr_array_new_full (i, (GDestroyNotify) tp_value_array_free)/' telepathy-glib/protocol.c"
+}
 
 build {
  macro build --configure

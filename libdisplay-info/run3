@@ -1,0 +1,21 @@
+name: "libdisplay-info"
+version: "0.2.0"
+release: "2"
+description: "EDID and DisplayID library"
+sources:
+  - "https://gitlab.freedesktop.org/emersion/libdisplay-info/-/archive/$version/libdisplay-info-$version.tar.gz"
+sha256sum:
+  - "f7331fcaf5527251b84c8fb84238d06cd2f458422ce950c80e86c72927aa8c2b"
+build_depends:
+  - "meson"
+  - "ninja"
+  - "python"
+  - "hwdata"
+
+build {
+  macro build --libdir=/usr/lib
+}
+
+package {
+  macro package
+}

@@ -1,6 +1,6 @@
 name: "gnome-settings-daemon"
 version: "50.1"
-release: "1"
+release: "2"
 description: "gnome-settings-daemon"
 sources:
   - "https://gitlab.gnome.org/GNOME/gnome-settings-daemon/-/archive/$version/gnome-settings-daemon-$version.tar.gz"
@@ -26,6 +26,8 @@ depends:
   - "gnome-session"
 build_depends:
   - "meson"
+  - "ninja"
+  - "git"
 
 build {
 

@@ -1,6 +1,6 @@
 name: "rust"
 version: "1.98.1"
-release: "1"
+release: "2"
 description: "Memory-safe programming language that doesn't use garbage collection"
 sources:
   - "https://static.rust-lang.org/dist/rustc-$version-src.tar.gz"
@@ -14,11 +14,10 @@ build_depends:
   - "curl"
 
 build {
-  macro build --set install.prefix="/usr" --set llvm.link-shared=true --llvm-config=/usr/bin/llvm-config
-  exec "./x.py build"
+  exec "./configure --prefix=/usr --llvm-config=/usr/bin/llvm-config --enable-llvm-link-shared --enable-extended --tools=cargo --disable-docs --set build.build-stage=1 --set build.install-stage=1 --set build.compiler-docs=false --set rust.llvm-bitcode-linker=false --set rust.lld=false --set rust.lto=off --set rust.debuginfo-level=0 --set rust.debuginfo-level-rustc=0 --set rust.debuginfo-level-std=0 --set rust.debuginfo-level-tools=0 --set rust.strip=true --set llvm.download-ci-llvm=false"
+  exec "./x.py build --stage 1 compiler library/std src/tools/cargo"
 }
 
 package {
-  exec "DESTDIR=\"$ROOT\" ./x.py install"
+  exec "DESTDIR=\"$ROOT\" ./x.py install --stage 1 compiler/rustc library/std cargo"
 }
-

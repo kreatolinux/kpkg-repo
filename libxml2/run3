@@ -1,6 +1,6 @@
 name: "libxml2"
 version: "2.15.4"
-release: "2"
+release: "3"
 description: "Libraries and utilities for parsing XML files"
 sources:
  - "https://download.gnome.org/sources/libxml2/${version.split('.')[0:2].join('.')}/libxml2-${version}.tar.xz"
@@ -12,12 +12,14 @@ depends:
 build_depends:
  - "pkgconf"
  - "meson"
+ - "ninja"
+ - "doxygen"
 
 build {
  # Pin libdir: meson picks lib64 when /usr/lib64 exists on the build host
  # (gcc creates it), which is not in the ld search path of the bootstrap
  # root - binaries like msgfmt then fail with 'libxml2.so.16 not found'.
- macro build --meson --libdir=/usr/lib -Dpython=enabled
+ macro build --meson --libdir=/usr/lib -Dpython=enabled -Ddocs=disabled
 }
 
 package {

@@ -1,11 +1,14 @@
 name: "mutter"
 version: "50.2"
-release: "1"
+release: "2"
 description: "Wayland compositor for GNOME"
+extract: false
 sources:
   - "https://gitlab.gnome.org/GNOME/mutter/-/archive/$version/mutter-$version.tar.gz"
+  - "https://gitlab.gnome.org/GNOME/gvdb/-/archive/b54bc5da25127ef416858a3ad92e57159ff565b3/gvdb-b54bc5da25127ef416858a3ad92e57159ff565b3.tar.gz"
 sha256sum:
   - "ff9176edeeeee233f0c6cbf207698b3dbfe40dc22d4cdef5a1238c036f8d62c8"
+  - "ecc3ec39db8c301dce9bb24d8dcbab3360e42f6ce723a772f2f4acd53ad0a5a4"
 depends:
   - "libx11"
   - "libei"
@@ -33,18 +36,43 @@ depends:
   - "libinput"
   - "wayland"
   - "wayland-protocols"
+  - "glycin"
+  - "libdisplay-info"
+  - "gtk4"
+  - "pango"
+  - "glib"
+  - "cairo"
+  - "pixman"
+  - "gsettings-desktop-schemas"
+  - "atk"
+  - "colord"
+  - "lcms2"
+  - "libdrm"
+  - "mesa"
+  - "elogind"
+  - "eudev"
+  - "libgudev"
+  - "libwacom"
+  - "gnome-desktop"
+  - "libcanberra"
+  - "xkeyboard-config"
 build_depends:
   - "meson"
+  - "ninja"
+  - "pkgconf"
+  - "python"
+  - "gettext"
   - "gobject-introspection"
-  - "gtk3"
+
+prepare {
+  exec "tar -xf mutter-$version.tar.gz"
+  exec "tar -xf gvdb-b54bc5da25127ef416858a3ad92e57159ff565b3.tar.gz"
+  cd "mutter-$version"
+  exec "mv ../gvdb-b54bc5da25127ef416858a3ad92e57159ff565b3 subprojects/gvdb"
+}
 
 build {
-
-  if ${exec("kpkg info xwayland")}.exit() != 0 {
-    local extraArgs = "-Dxwayland=false"
-  }
-
-  exec "meson setup  --prefix=/usr  --buildtype=release  -Dtests=false  -Dprofiler=false  $extraArgs build"
+  exec "meson setup --prefix=/usr --buildtype=release --wrap-mode=nodownload -Dtests=false -Dprofiler=false build"
   exec "ninja -C build"
 }
 

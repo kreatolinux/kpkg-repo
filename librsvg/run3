@@ -1,6 +1,6 @@
 name: "librsvg"
 version: "2.61.3"
-release: "1"
+release: "2"
 description: "SVG rendering library"
 sources:
  - "https://gitlab.gnome.org/GNOME/librsvg/-/archive/${version}/librsvg-${version}.tar.gz"
@@ -23,8 +23,7 @@ build_depends:
  - "cargo-c"
 
 build {
- macro build --libdir=/usr/lib -Ddefault_library=shared -Dvala=enabled -Dintrospection=enabled -Ddocs=disabled
- macro build --libexecdir=/usr/lib -Ddefault_library=shared -Dvala=enabled -Dintrospection=enabled -Ddocs=disabled
+ macro build --libdir=/usr/lib --libexecdir=/usr/lib -Ddefault_library=shared -Dvala=enabled -Dintrospection=enabled -Ddocs=disabled
 }
 
 package {

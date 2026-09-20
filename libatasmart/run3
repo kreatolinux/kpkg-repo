@@ -1,6 +1,6 @@
 name: "libatasmart"
 version: "0.19"
-release: "1"
+release: "2"
 description: "disk library"
 sources:
  - "https://0pointer.de/public/libatasmart-${version}.tar.xz"
@@ -10,6 +10,12 @@ depends:
  - "eudev"
 build_depends:
  - "gmake"
+ - "autoconf"
+
+prepare {
+ exec "cp /usr/share/autoconf/build-aux/config.sub build-aux/config.sub"
+ exec "cp /usr/share/autoconf/build-aux/config.guess build-aux/config.guess"
+}
 
 build {
  macro build --configure --build=$KPKG_TARGET

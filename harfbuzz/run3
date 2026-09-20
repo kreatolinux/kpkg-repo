@@ -1,6 +1,6 @@
 name: "harfbuzz"
 version: "14.2.1"
-release: "3"
+release: "4"
 description: "FriBidi is an implementation of Unicode Bidirectional Algorithm"
 sources:
  - "https://github.com/harfbuzz/harfbuzz/releases/download/${version}/harfbuzz-${version}.tar.xz"
@@ -16,7 +16,7 @@ build_depends:
  - "ninja"
 
 build {
- macro build
+ macro build --libdir=/usr/lib -Dtests=disabled
 }
 
 package {

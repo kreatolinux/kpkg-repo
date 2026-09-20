@@ -1,15 +1,16 @@
 name: "libadwaita"
-version: "1.4.2"
+version: "1.8.8"
 release: "1"
 description: "GNOME ui stuff"
 sources:
- - "https://gitlab.gnome.org/GNOME/libadwaita/-/archive/${version}/libadwaita-${version}.tar.gz"
+ - "https://download.gnome.org/sources/libadwaita/1.8/libadwaita-${version}.tar.xz"
 sha256sum:
- - "47ce895ce87c0a66a1e700b6d778520c14339cfc88af7bd30f6b401d782214f1"
+ - "9e64939959a071cb660090c0e1b380c51ca29e3cfb57f3f23ea42a9922eb6f41"
 depends:
  - "gtk4"
 build_depends:
  - "meson"
+ - "ninja"
  - "vala"
  - "sassc"
 

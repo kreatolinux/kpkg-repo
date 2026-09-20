@@ -1,6 +1,6 @@
 name: "freetype"
 version: "2.14.3"
-release: "2"
+release: "3"
 description: "FriBidi is an implementation of Unicode Bidirectional Algorithm"
 sources:
   - "https://download-mirror.savannah.gnu.org/releases/freetype/freetype-$version.tar.gz"
@@ -13,7 +13,7 @@ build_depends:
   - "meson"
 
 build {
-  exec "meson  --prefix=/usr  -Dharfbuzz=disabled  -Dbzip2=disabled  . output"
+  exec "meson  --prefix=/usr --libdir=/usr/lib -Dharfbuzz=disabled  -Dbzip2=disabled  . output"
   exec "ninja -C output"
 }
 

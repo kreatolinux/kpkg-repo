@@ -1,6 +1,6 @@
 name: "libinput"
 version: "1.31.0"
-release: "1"
+release: "2"
 description: "Library that handles input devices"
 sources:
   - "https://gitlab.freedesktop.org/libinput/libinput/-/archive/$version/libinput-$version.tar.gz"
@@ -21,6 +21,6 @@ build {
 }
 
 package {
-  exec "DESTDIR=\"$ROOT\" ninja -C build install"
+  exec "DESTDIR=\"$ROOT\" ninja install"
 }
 

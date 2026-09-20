@@ -1,6 +1,6 @@
 name: "libblockdev"
 version: "3.0.4"
-release: "2"
+release: "4"
 description: "libblockdev"
 sources:
  - "https://github.com/storaged-project/libblockdev/releases/download/${version}-1/libblockdev-${version}.tar.gz"
@@ -19,6 +19,10 @@ depends:
  - "libnvme"
 build_depends:
  - "gmake"
+
+prepare {
+ exec "sed -i 's|temp_file=$(mktemp --tmpdir XXXXX.c)|temp_file=$(mktemp /tmp/tmp.XXXXXX); mv $temp_file ${temp_file}.c; temp_file=${temp_file}.c|g' configure"
+}
 
 build {
 # from BLFS

@@ -1,11 +1,16 @@
 name: "gnome-shell"
 version: "50.2"
-release: "1"
+release: "2"
 description: "The GNOME shell"
+extract: false
 sources:
   - "https://gitlab.gnome.org/GNOME/gnome-shell/-/archive/$version/gnome-shell-$version.tar.gz"
+  - "https://gitlab.gnome.org/GNOME/libgnome-volume-control/-/archive/0a4eda0cdc2deb352bebc70ec697c42af46094e4/libgnome-volume-control-0a4eda0cdc2deb352bebc70ec697c42af46094e4.tar.gz"
+  - "https://gitlab.gnome.org/GNOME/libshew/-/archive/d16afc40412b565d2bbecf80335f54a19a978009/libshew-d16afc40412b565d2bbecf80335f54a19a978009.tar.gz"
 sha256sum:
   - "e299dee498c46611319fdb4517f550d9c01693aca7af1b049740cc8803b4512a"
+  - "39b3fb067d2e96a83a0750dc5e43d168febd79d01352560e06d4d3579d49926e"
+  - "b460997ad73744df06117200205a0168b91dfef50e7076013a14110abb245a93"
 depends:
   - "dconf"
   - "gnome-autoar"
@@ -30,23 +35,25 @@ depends:
   - "sassc"
   - "startup-notification"
   - "pipewire"
+  - "pulseaudio"
+  - "at-spi2-core"
+  - "json-glib"
 build_depends:
   - "meson"
+  - "ninja"
+  - "gobject-introspection"
+
+prepare {
+  exec "tar -xf gnome-shell-$version.tar.gz"
+  exec "tar -xf libgnome-volume-control-0a4eda0cdc2deb352bebc70ec697c42af46094e4.tar.gz"
+  exec "tar -xf libshew-d16afc40412b565d2bbecf80335f54a19a978009.tar.gz"
+  cd "gnome-shell-$version"
+  exec "mv ../libgnome-volume-control-0a4eda0cdc2deb352bebc70ec697c42af46094e4 subprojects/gvc"
+  exec "mv ../libshew-d16afc40412b565d2bbecf80335f54a19a978009 subprojects/libshew"
+}
 
 build {
-
-  if ${exec("command -v systemctl")}.exit() != 0 {
-    # Credits to https://www.linuxfromscratch.org/blfs/view/svn/gnome/gnome-shell.html
-    local extraArgs = "-Dsystemd=false"
-  }
-
-  exec "rm -r subprojects/gvc"
-  exec "git clone https://gitlab.gnome.org/GNOME/libgnome-volume-control subprojects/gvc"
-  cd "subprojects/gvc"
-  exec "git checkout 000046e88714de77db320b0711af3baacb2813a2"
-  cd "../.."
-
-  exec "meson setup  --prefix=/usr  --buildtype=release  -Dtests=false  -Dman=false  -Dgtk_doc=false  $extraArgs build"
+  exec "meson setup --prefix=/usr --buildtype=release --wrap-mode=nodownload -Dtests=false -Dman=false -Dgtk_doc=false -Dsystemd=false build"
   exec "ninja -C build"
 }
 

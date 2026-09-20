@@ -1,0 +1,45 @@
+name: "mozjs140"
+version: "140.3.0"
+release: "1"
+description: "SpiderMonkey JavaScript and WebAssembly Engine"
+sources:
+ - "https://archive.mozilla.org/pub/firefox/releases/${version}esr/source/firefox-${version}esr.source.tar.xz"
+ - "https://src.fedoraproject.org/rpms/mozjs140/raw/49492baa47bc1d7b7d5bc738c4c81b4661302f27/f/9aa8b4b051dd539e0fbd5e08040870b3c712a846.patch"
+sha256sum:
+ - "efc6eb3c93756311bd2f9db3796c0bbee6e3f182975d857284168b3dec672316"
+ - "a327a41f4a7e0ea4f7897e0d09f219eb32aabc097052910a6c480b7cff1f0d3d"
+depends:
+ - "icu"
+ - "nspr"
+ - "zlib"
+ - "readline"
+ - "libffi"
+build_depends:
+ - "rust"
+ - "python"
+ - "llvm"
+ - "cbindgen"
+ - "pkgconf"
+ - "gmake"
+ - "perl"
+ - "m4"
+ - "which"
+ - "libarchive"
+no_chkupd: true
+
+prepare {
+ exec "bsdtar -xf firefox-${version}esr.source.tar.xz"
+ cd "firefox-$version"
+ exec "patch -p1 < ../9aa8b4b051dd539e0fbd5e08040870b3c712a846.patch"
+}
+
+build {
+ exec "mkdir obj"
+ cd "obj"
+ exec "CC=clang CXX=clang++ sh ../js/src/configure --prefix=/usr --libdir=/usr/lib --enable-release --disable-debug --enable-shared-js --disable-jemalloc --disable-strip --with-intl-api --with-system-icu --with-system-nspr --with-system-zlib --enable-ctypes --with-system-ffi --enable-readline"
+ exec "make -j${exec("nproc").output()}"
+}
+
+package {
+ exec "make DESTDIR=$ROOT install"
+}

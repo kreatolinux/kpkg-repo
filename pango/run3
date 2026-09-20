@@ -1,11 +1,11 @@
 name: "pango"
-version: "1.50.14"
+version: "1.56.4"
 release: "1"
 description: "Text (i.e. glyph) layout engine library"
 sources:
- - "https://download.gnome.org/sources/pango/1.50/pango-${version}.tar.xz"
+ - "https://download.gnome.org/sources/pango/1.56/pango-${version}.tar.xz"
 sha256sum:
- - "1d67f205bfc318c27a29cfdfb6828568df566795df0cb51d2189cde7f2d581e8"
+ - "17065e2fcc5f5a5bdbffc884c956bfc7c451a96e8c4fb2f8ad837c6413cb5a01"
 depends:
  - "glib"
  - "cairo"
@@ -14,6 +14,8 @@ depends:
  - "harfbuzz"
 build_depends:
  - "meson"
+ - "ninja"
+ - "gobject-introspection"
 
 build {
  macro build -Dgtk_doc=false -Dxft=disabled

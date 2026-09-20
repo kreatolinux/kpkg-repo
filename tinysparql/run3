@@ -1,0 +1,30 @@
+name: "tinysparql"
+version: "3.8.2"
+release: "1"
+description: "SPARQL database and triple store"
+sources:
+ - "https://download.gnome.org/sources/tinysparql/3.8/tinysparql-${version}.tar.xz"
+sha256sum:
+ - "bb8643386c8edc591a03205d4a0eda661dcdd2094473bffb9bbdb94e93589cb2"
+depends:
+ - "glib"
+ - "libxml2"
+ - "sqlite"
+ - "dbus"
+ - "json-glib"
+ - "libsoup"
+ - "icu"
+build_depends:
+ - "meson"
+ - "ninja"
+ - "gobject-introspection"
+ - "vala"
+ - "python"
+
+build {
+ macro build -Ddocs=false -Dman=false -Dtests=false -Davahi=disabled -Dstemmer=disabled -Dunicode_support=icu -Dsystemd_user_services=false
+}
+
+package {
+ macro package
+}

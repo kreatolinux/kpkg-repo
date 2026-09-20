@@ -1,0 +1,22 @@
+name: "blueprint-compiler"
+version: "0.19.0"
+release: "1"
+description: "Markup language and compiler for GTK user interfaces"
+sources:
+ - "https://download.gnome.org/sources/blueprint-compiler/0.19/blueprint-compiler-${version}.tar.xz"
+sha256sum:
+ - "22868d1d2a5e2bd78b901d51dda1f227f3471000e83596a49d57c5f88905f71a"
+depends:
+ - "python"
+ - "pygobject"
+build_depends:
+ - "meson"
+ - "ninja"
+
+build {
+ macro build -Ddocs=false
+}
+
+package {
+ macro package
+}

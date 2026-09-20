@@ -1,6 +1,6 @@
 name: "kmod"
 version: "34.2"
-release: "5"
+release: "6"
 description: "Contains utilities for loading kernel modules"
 sources:
   - "https://www.kernel.org/pub/linux/utils/kernel/kmod/kmod-$version.tar.xz"
@@ -15,7 +15,7 @@ build_depends:
   - "meson"
 
 build {
-  macro build -Dmanpages=false
+  macro build --libdir=/usr/lib -Dmanpages=false
 }
 
 package {
