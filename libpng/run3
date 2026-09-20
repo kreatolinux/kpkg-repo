@@ -11,7 +11,7 @@ build_depends:
   - "cmake"
 
 build {
- macro build --disable-static
+ macro build
 }
 
 package {

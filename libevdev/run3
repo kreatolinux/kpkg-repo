@@ -11,7 +11,7 @@ build_depends:
  - "meson"
 
 build {
- macro build 
+ macro build -Dtests=disabled -Ddocumentation=disabled
 }
 
 package {

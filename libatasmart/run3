@@ -12,7 +12,7 @@ build_depends:
  - "gmake"
 
 build {
- macro build --configure
+ macro build --configure --build=$KPKG_TARGET
 }
 
 package {

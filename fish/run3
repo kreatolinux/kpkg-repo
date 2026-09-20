@@ -13,6 +13,7 @@ depends:
   - "gettext"
 build_depends:
   - "gmake"
+  - "rust"
 
 build {
   exec "cmake -S . -B build  -DCMAKE_INSTALL_PREFIX=/usr  -DCMAKE_INSTALL_SYSCONFDIR=/etc  -DCMAKE_BUILD_TYPE=Release  -DBUILD_DOCS=False  -Wno-dev"
@@ -20,7 +21,7 @@ build {
 }
 
 package {
-  exec "cmake --install build"
+  exec "DESTDIR=$ROOT cmake --install build"
 }
 
 postinstall {

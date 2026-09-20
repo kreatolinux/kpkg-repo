@@ -20,11 +20,7 @@ build {
 package {
   exec "make DESTDIR=$ROOT install"
   exec "mkdir \"$ROOT/bin/\""
-  exec "printf '"
-  #!/bin/sh
-  append "/etc/passwd" "dhcpcd:x:981:981:dhcpcd privilege separation:/:/usr/bin/nologin"
-  append "/etc/group" "dhcpcd:x:981:"
-  exec "' > \"$ROOT/bin/install-dhcpcd-groups\""
+  exec "printf '#!/bin/sh\\necho \"dhcpcd:x:981:981:dhcpcd privilege separation:/:/usr/bin/nologin\" >> /etc/passwd\\necho \"dhcpcd:x:981:\" >> /etc/group\\n' > \"$ROOT/bin/install-dhcpcd-groups\""
   exec "chmod +x \"$ROOT/bin/install-dhcpcd-groups\""
   print "dhcpcd: please run install-dhcpcd-groups to install groups"
 }

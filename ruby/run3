@@ -1,15 +1,23 @@
 name: "ruby"
-version: "3.2.2"
+version: "3.2.11"
 release: "1"
 description: "The Ruby language"
 sources:
  - "https://cache.ruby-lang.org/pub/ruby/3.2/ruby-${version}.tar.xz"
+ - "https://github.com/ruby/openssl/archive/refs/tags/v4.0.2.tar.gz"
 sha256sum:
- - "4b352d0f7ec384e332e3e44cdbfdcd5ff2d594af3c8296b5636c710975149e23"
+ - "c13aec0c206725d5d356acbae6e5fd8bffd92dc325aec14fd5dd7795d4b763d2"
+ - "605b4d9109cf55ab64c5a4eba7b06d1df65b267777a732f392147591fe45efbb"
 depends:
  - "libyaml"
 build_depends:
  - "gmake"
+
+prepare {
+ cd "ruby-$version"
+ exec "rm -rf ext/openssl"
+ exec "cp -a ../openssl-4.0.2/ext/openssl ext/openssl"
+}
 
 build {
  macro build --enable-shared --without-baseruby --without-valgrind

@@ -10,11 +10,11 @@ build_depends:
  - "gmake"
 
 build {
- exec "make MANDOC=\"\" CFLAGS=-Wno-error=enum-int-mismatch"
+ exec "make MANDOC=\"\" LIBDIR=/usr/lib CFLAGS=-Wno-error=enum-int-mismatch"
 }
 
 package {
- macro package
+ exec "make DESTDIR=\"$ROOT\" LIBDIR=/usr/lib install"
 }
 
 

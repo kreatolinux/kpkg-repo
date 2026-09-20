@@ -19,6 +19,7 @@ depends:
 build_depends:
  - "meson"
  - "python-setuptools"
+ - "glib"
 
 build {
  macro build 

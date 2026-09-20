@@ -22,7 +22,7 @@ bootstrap_depends:
   - "python-packaging"
 
 build {
-  exec "meson setup  --prefix=/usr  -D tests=false  build"
+  exec "meson setup --prefix=/usr --libdir=/usr/lib --wrap-mode=nofallback -D tests=false build"
   exec "ninja -C build"
 }
 

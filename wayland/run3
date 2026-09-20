@@ -13,7 +13,7 @@ build_depends:
  - "meson"
 
 build {
- macro build -Ddocumentation=false
+ macro build --libdir=/usr/lib -Ddocumentation=false
 }
 
 package {

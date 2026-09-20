@@ -16,7 +16,7 @@ build {
 }
 
 package {
- macro package
+ exec "make -f Makefile.sharedlibrary DESTDIR=\"$ROOT\" INSTALL_PREFIX=/usr install"
 }
 
 

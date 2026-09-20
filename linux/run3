@@ -57,6 +57,7 @@ package_aarch64_linux_gnu_linux_headers {
 }
 
 build {
+  env KCFLAGS="-Wno-error=unused-but-set-variable"
   exec "make -j${exec('nproc').output()}"
 }
 

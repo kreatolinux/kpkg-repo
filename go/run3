@@ -42,11 +42,11 @@ build {
 }
 
 package {
-  exec "mkdir -p \"$ROOT\"/bin"
+  exec "mkdir -p \"$ROOT\"/usr/bin"
   exec "mkdir -p \"$ROOT\"/usr/local/go"
   exec "cp -r . \"$ROOT\"/usr/local/go"
-  exec "ln -s /usr/local/go/bin/go \"$ROOT/bin/go\""
-  exec "ln -s /usr/local/go/bin/gofmt \"$ROOT/bin/gofmt\""
+  exec "ln -s /usr/local/go/bin/go \"$ROOT/usr/bin/go\""
+  exec "ln -s /usr/local/go/bin/gofmt \"$ROOT/usr/bin/gofmt\""
   exec "mkdir -p /opt/kpkg/srcdir/go"
 }
 

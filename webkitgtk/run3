@@ -41,6 +41,7 @@ build_depends:
   - "gst-plugins-bad"
   - "gobject-introspection"
   - "wayland-protocols"
+  - "libnettle"
 
 func build_webkitgtk4 {
   # Got flags from BLFS

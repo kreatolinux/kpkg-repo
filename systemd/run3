@@ -24,9 +24,6 @@ replaces:
   - "eudev"
 
 prepare {
-  exec "tar -xvf v$version.tar.gz"
-  cd "systemd-stable-$version"
-
   # Force set relative_source_path as realpath on busybox doesn't support
   # arguments used there.
   exec "sed -ie '/relative_source_path = /{n;N;N;d}' meson.build"

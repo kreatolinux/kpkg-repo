@@ -10,6 +10,7 @@ depends:
  - "gst-plugins-base"
 build_depends:
  - "meson"
+ - "glib"
 
 build {
  # -Dgpl flag taken from BLFS

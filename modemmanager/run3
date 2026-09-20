@@ -15,6 +15,7 @@ build_depends:
  - "gobject-introspection"
  - "vala"
  - "gmake"
+ - "glib"
 
 build {
 

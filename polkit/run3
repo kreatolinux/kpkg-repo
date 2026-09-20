@@ -27,7 +27,7 @@ build {
 }
 
 package {
- macro package
+ exec "DESTDIR=\"$ROOT\" ninja -C build install"
 }
 
 postinstall {

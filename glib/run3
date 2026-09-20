@@ -20,9 +20,9 @@ bootstrap_depends:
 
 build {
  if "${KPKG_BOOTSTRAP}" == "1" {
-   macro build -Dintrospection=disabled
+   macro build --libdir=/usr/lib -Dintrospection=disabled
  } else {
-   macro build -Dintrospection=enabled
+   macro build --libdir=/usr/lib -Dintrospection=enabled
  }
 }
 

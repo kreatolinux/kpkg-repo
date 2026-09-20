@@ -9,6 +9,10 @@ sha256sum:
 build_depends:
  - "gmake"
 
+prepare {
+ exec "sed -i 's/if (strchr(cast_const_char ud, POST_CHAR)) \*strchr(cast_const_char ud, POST_CHAR) = 0;/if (strchr((char *)ud, POST_CHAR)) *strchr((char *)ud, POST_CHAR) = 0;/' ftp.c"
+}
+
 build {
  macro build --disable-javascript
 }

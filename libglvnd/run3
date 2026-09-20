@@ -10,7 +10,7 @@ build_depends:
  - "meson"
 
 build {
- macro build 
+ macro build --libdir=/usr/lib
 }
 
 package {

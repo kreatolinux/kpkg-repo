@@ -10,7 +10,7 @@ build_depends:
  - "gmake"
 
 build {
- macro build --configure
+ macro build --configure --libdir=/usr/lib
 }
 
 package {

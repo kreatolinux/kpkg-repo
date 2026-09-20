@@ -12,7 +12,7 @@ build_depends:
  - "gmake"
 
 build {
- macro build --with-included-unistring
+ macro build --configure --with-included-unistring
 }
 
 package {

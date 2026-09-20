@@ -12,6 +12,7 @@ depends:
 build_depends:
   - "meson"
   - "ninja"
+  - "perl"
 
 build {
   exec "sed -i -r 's:\"(/system):\"/org/gnome\\1:g' schemas/*.in"

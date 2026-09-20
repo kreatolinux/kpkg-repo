@@ -1,11 +1,11 @@
 name: "python-setuptools-scm"
-version: "10.0.5"
+version: "10.3.3"
 release: "1"
 description: "Package to manage versions by scm tags via setuptools"
 sources:
-  - "https://github.com/pypa/setuptools-scm/archive/refs/tags/v${version}.tar.gz"
+  - "https://github.com/pypa/setuptools-scm/archive/refs/tags/setuptools-scm-v${version}.tar.gz"
 sha256sum:
-  - "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed"
+  - "2e39568960b517b100c0199657cbb89beed2917932c047e7d71653629f8ec0cd"
 depends:
   - "python"
   - "python-setuptools"

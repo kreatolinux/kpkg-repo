@@ -12,12 +12,16 @@ build_depends:
   - "perl"
   - "gmake"
 
+prepare {
+  exec "sed -i 's/error=discarded-qualifiers/no-error=discarded-qualifiers/' src/configure"
+}
+
 build {
 
   cd "src"
 
   # Got flags from BLFS
-  macro build --prefix=/usr             --sysconfdir=/etc         --localstatedir=/var/lib  --runstatedir=/run        --with-system-et          --with-system-ss          --with-system-verto=no    --enable-dns-for-realm
+  macro build --prefix=/usr             --sysconfdir=/etc         --localstatedir=/var/lib  --runstatedir=/run        --with-system-et          --with-system-ss          --with-system-verto=no    --enable-dns-for-realm    --disable-pkinit
   exec "make"
 }
 

@@ -9,6 +9,7 @@ sha256sum:
 depends:
  - "libxext"
  - "libxfixes"
+ - "libxau"
 build_depends:
  - "xorgproto"
  - "gmake"

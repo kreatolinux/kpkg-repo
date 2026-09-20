@@ -10,7 +10,7 @@ build_depends:
  - "gmake"
 
 build {
- macro build --disable-static
+ macro build --configure --disable-static
 }
 
 package {
