@@ -1,13 +1,15 @@
 name: "mozjs140"
 version: "140.3.0"
-release: "1"
+release: "2"
 description: "SpiderMonkey JavaScript and WebAssembly Engine"
 sources:
  - "https://archive.mozilla.org/pub/firefox/releases/${version}esr/source/firefox-${version}esr.source.tar.xz"
  - "https://src.fedoraproject.org/rpms/mozjs140/raw/49492baa47bc1d7b7d5bc738c4c81b4661302f27/f/9aa8b4b051dd539e0fbd5e08040870b3c712a846.patch"
+ - "https://github.com/mozilla-firefox/firefox/commit/d497aa4f770ca02f6083e93b94996a8fe32c2ff4.patch"
 sha256sum:
  - "efc6eb3c93756311bd2f9db3796c0bbee6e3f182975d857284168b3dec672316"
  - "a327a41f4a7e0ea4f7897e0d09f219eb32aabc097052910a6c480b7cff1f0d3d"
+ - "02f85d18a1c734b8f3354184c7a35c486a772705f651f9d6ddf20ba5cdaf3621"
 depends:
  - "icu"
  - "nspr"
@@ -28,9 +30,8 @@ build_depends:
 no_chkupd: true
 
 prepare {
- exec "bsdtar -xf firefox-${version}esr.source.tar.xz"
- cd "firefox-$version"
  exec "patch -p1 < ../9aa8b4b051dd539e0fbd5e08040870b3c712a846.patch"
+ exec "patch -p1 < ../d497aa4f770ca02f6083e93b94996a8fe32c2ff4.patch"
 }
 
 build {
