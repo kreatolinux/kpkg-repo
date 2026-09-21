@@ -3,7 +3,7 @@ version: "50.3"
 release: "3"
 description: "File manager of GNOME"
 sources:
- - "https://download.gnome.org/sources/nautilus/50/nautilus-${version}.tar.xz"
+ - "https://download.gnome.org/sources/nautilus/${version.split('.')[0]}/nautilus-${version}.tar.xz"
 sha256sum:
  - "63773baf0ddec7b4875fc2c22040378562ea1e6812fe0a2e29c9c8d5c72807f8"
 depends:

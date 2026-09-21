@@ -3,7 +3,7 @@ version: "3.58.0"
 release: "1"
 description: "Python bindings for gobject-introspection"
 sources:
- - "https://download.gnome.org/sources/pygobject/3.58/pygobject-${version}.tar.gz"
+ - "https://download.gnome.org/sources/pygobject/${version.split('.')[0:2].join('.')}/pygobject-${version}.tar.gz"
 sha256sum:
  - "45068697de3ffe46840ca369705f23118b34db4f7deb63f6eff079a6734ddcca"
 depends:

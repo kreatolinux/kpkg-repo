@@ -3,7 +3,7 @@ version: "1.58.1"
 release: "2"
 description: "networkmanager"
 sources:
-  - "https://gitlab.freedesktop.org/api/v4/projects/411/packages/generic/NetworkManager/1.58.1/NetworkManager-1.58.1.tar.xz"
+  - "https://gitlab.freedesktop.org/api/v4/projects/411/packages/generic/NetworkManager/${version}/NetworkManager-${version}.tar.xz"
 sha256sum:
   - "262864cfd198123d3e5dbe91937441b97ee9059d6d712e1a5bfbb1c54668d14d"
 depends:
@@ -28,7 +28,10 @@ build_depends:
 build {
 
   # Thanks for BLFS for the args https://www.linuxfromscratch.org/blfs/view/svn/basicnet/networkmanager.html
-  local extraArgs = "-Dsystemd_journal=false -Dsystemdsystemunitdir=no -Dsystemdsystemgeneratordir=no -Dsession_tracking=elogind -Dsuspend_resume=elogind"
+  local extraArgs = ""
+  if ${exec("command -v systemctl")}.exit() != 0 {
+    global extraArgs = "-Dsystemd_journal=false -Dsystemdsystemunitdir=no -Dsystemdsystemgeneratordir=no -Dsession_tracking=elogind -Dsuspend_resume=elogind"
+  }
 
   exec "meson setup --prefix=/usr --libdir=/usr/lib --default-library=shared --buildtype=release --wrap-mode=nodownload -Dnmtui=true -Ddocs=false -Dman=false -Dtests=no -Dintrospection=true -Dcrypto=gnutls -Dqt=false -Dppp=false -Dlibaudit=no -Dselinux=false -Dlibpsl=true -Dclat=false -Dnbft=false -Debpf=false -Dovs=false -Dmodem_manager=false $extraArgs build"
   exec "ninja -C build"

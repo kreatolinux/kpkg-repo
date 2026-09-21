@@ -3,7 +3,7 @@ version: "1.18.0"
 release: "2"
 description: "Documentation generator for source code"
 sources:
- - "https://github.com/doxygen/doxygen/releases/download/Release_1_18_0/doxygen-${version}.src.tar.gz"
+ - "https://github.com/doxygen/doxygen/releases/download/Release_${version.replace('.', '_')}/doxygen-${version}.src.tar.gz"
 sha256sum:
  - "a1deed70a6785bbec95a2b2a9e419dc7f7b223a9d74a8644ae611c8e2dcdd354"
 depends:

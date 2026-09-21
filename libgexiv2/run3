@@ -3,7 +3,7 @@ version: "0.16.0"
 release: "2"
 description: "GObject wrapper around the Exiv2 photo metadata library"
 sources:
- - "https://download.gnome.org/sources/gexiv2/0.16/gexiv2-${version}.tar.xz"
+ - "https://download.gnome.org/sources/gexiv2/${version.split('.')[0:2].join('.')}/gexiv2-${version}.tar.xz"
 sha256sum:
  - "d96f895f24539f966f577b2bb2489ae84f8232970a8d0c064e4a007474a77bbb"
 depends:

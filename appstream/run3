@@ -30,7 +30,12 @@ build {
  exec "grep -v \"subdir('docs/')\" meson.build > meson.build.new"
  exec "mv meson.build.new meson.build"
 
- macro build --libdir=/usr/lib --default-library=shared --wrap-mode=nodownload -Dsystemd=false -Dstemming=false -Dqt=false -Dcompose=false -Dbash-completion=false -Dgir=true -Dvapi=false -Ddocs=false -Dapidocs=false -Dinstall-docs=false -Dman=false
+ local systemdSupport = "false"
+ if ${exec("command -v systemctl")}.exit() == 0 {
+  global systemdSupport = "true"
+ }
+
+ macro build --libdir=/usr/lib --default-library=shared --wrap-mode=nodownload -Dsystemd=$systemdSupport -Dstemming=false -Dqt=false -Dcompose=false -Dbash-completion=false -Dgir=true -Dvapi=false -Ddocs=false -Dapidocs=false -Dinstall-docs=false -Dman=false
 }
 
 package {

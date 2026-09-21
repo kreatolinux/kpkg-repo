@@ -39,12 +39,18 @@ prepare {
   cd "gnome-settings-daemon-$version"
   exec "rm -rf subprojects/gvc"
   exec "mv ../libgnome-volume-control-7a621180b46421e356b33972e3446775a504139c subprojects/gvc"
-  exec "sed -e 's/libsystemd/libelogind/' -i plugins/power/test.py"
   exec "patch -Np1 -i ../busybox-ln.patch"
 }
 
 build {
-  exec "meson setup --prefix=/usr --libdir=lib --buildtype=release --wrap-mode=nodownload -Dsystemd=false -Delogind=true -Dsystemd-units=true -Dsmartcard=false -Dcups=false -Dwwan=false build"
+  local systemd = "true"
+  local elogind = "false"
+  if ${exec("command -v systemctl")}.exit() != 0 {
+    exec "sed -e 's/libsystemd/libelogind/' -i plugins/power/test.py"
+    global systemd = "false"
+    global elogind = "true"
+  }
+  exec "meson setup --prefix=/usr --libdir=lib --buildtype=release --wrap-mode=nodownload -Dsystemd=$systemd -Delogind=$elogind -Dsystemd-units=true -Dsmartcard=false -Dcups=false -Dwwan=false build"
   exec "ninja -C build"
 }
 

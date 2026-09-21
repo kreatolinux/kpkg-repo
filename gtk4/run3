@@ -3,7 +3,7 @@ version: "4.20.4"
 release: "2"
 description: "gtk4"
 sources:
- - "https://download.gnome.org/sources/gtk/4.20/gtk-${version}.tar.xz"
+ - "https://download.gnome.org/sources/gtk/${version.split('.')[0:2].join('.')}/gtk-${version}.tar.xz"
 sha256sum:
  - "a21f825bd44afc4dd99ba4eea8ff57c8f2e51085cb402a68ed4cbb35299826a4"
 depends:

@@ -55,7 +55,12 @@ prepare {
 }
 
 build {
-  exec "meson setup --prefix=/usr --libdir=lib --buildtype=release --wrap-mode=nodownload -Dtests=false -Dman=false -Dgtk_doc=false -Dsystemd=false build"
+  local extraArgs = ""
+  if ${exec("command -v systemctl")}.exit() != 0 {
+    global extraArgs = "-Dsystemd=false"
+  }
+
+  exec "meson setup --prefix=/usr --libdir=lib --buildtype=release --wrap-mode=nodownload -Dtests=false -Dman=false -Dgtk_doc=false $extraArgs build"
   exec "ninja -C build"
 }
 

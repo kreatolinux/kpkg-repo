@@ -3,7 +3,7 @@ version: "4.1.0"
 release: "3"
 description: "A library for displaying certificates and crypto UI"
 sources:
- - "https://download.gnome.org/sources/gcr/4.1/gcr-${version}.tar.xz"
+ - "https://download.gnome.org/sources/gcr/${version.split('.')[0:2].join('.')}/gcr-${version}.tar.xz"
 sha256sum:
  - "9ceaad29284ba919b9216e2888c18ec67240c2c93b3a4856bc5488bbc1f3a383"
 depends:

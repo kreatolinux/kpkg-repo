@@ -3,7 +3,7 @@ version: "50.3"
 release: "2"
 description: "GNOME Display Manager"
 sources:
- - "https://download.gnome.org/sources/gdm/50/gdm-${version}.tar.xz"
+ - "https://download.gnome.org/sources/gdm/${version.split('.')[0]}/gdm-${version}.tar.xz"
 sha256sum:
  - "adac0710b8b797108ea40ea4573bd1a5e6d9b24e0a7990a994216e8dffe2d15e"
 depends:
@@ -18,9 +18,13 @@ build_depends:
  - "meson"
 
 build {
- # Adapt the LFS PAM profile to the repository's elogind provider.
- exec "sed -e 's@systemd@elogind@' -e '/elogind/isession  required       pam_loginuid.so' -i data/pam-lfs/gdm-launch-environment.pam"
- exec "meson setup build --prefix=/usr --libdir=/usr/lib --buildtype=release --wrap-mode=nodownload -Dlogind-provider=elogind -Dsystemd-journal=false -Dsystemdsystemunitdir=no -Dsystemduserunitdir=no -Dgdm-xsession=true -Drun-dir=/run/gdm -Ddefault-pam-config=lfs -Ddbus-sys=/usr/share/dbus-1/system.d -Ddefault-path=/usr/bin:/usr/local/bin:/usr/local/sbin:/bin"
+ local extraArgs = ""
+ if ${exec("command -v systemctl")}.exit() != 0 {
+  global extraArgs = "-Dlogind-provider=elogind -Dsystemd-journal=false -Dsystemdsystemunitdir=no -Dsystemduserunitdir=no"
+  # Adapt the LFS PAM profile to the repository's elogind provider.
+  exec "sed -e 's@systemd@elogind@' -e '/elogind/isession  required       pam_loginuid.so' -i data/pam-lfs/gdm-launch-environment.pam"
+ }
+ exec "meson setup build --prefix=/usr --libdir=/usr/lib --buildtype=release --wrap-mode=nodownload $extraArgs -Dgdm-xsession=true -Drun-dir=/run/gdm -Ddefault-pam-config=lfs -Ddbus-sys=/usr/share/dbus-1/system.d -Ddefault-path=/usr/bin:/usr/local/bin:/usr/local/sbin:/bin"
  exec "ninja -C build"
 }
 

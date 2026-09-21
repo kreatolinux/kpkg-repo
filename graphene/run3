@@ -3,7 +3,7 @@ version: "1.10.8"
 release: "2"
 description: "graphene"
 sources:
- - "https://download.gnome.org/sources/graphene/1.10/graphene-${version}.tar.xz"
+ - "https://download.gnome.org/sources/graphene/${version.split('.')[0:2].join('.')}/graphene-${version}.tar.xz"
 sha256sum:
  - "a37bb0e78a419dcbeaa9c7027bcff52f5ec2367c25ec859da31dfde2928f279a"
 depends:

@@ -3,7 +3,7 @@ version: "0.84.1"
 release: "2"
 description: "Visual Terminal Emulator widget"
 sources:
- - "https://download.gnome.org/sources/vte/0.84/vte-${version}.tar.xz"
+ - "https://download.gnome.org/sources/vte/${version.split('.')[0:2].join('.')}/vte-${version}.tar.xz"
 sha256sum:
  - "aca1caa8478aebcdbb1d67897fb3511eb7601debae6810e16a15b6fa25f31ac8"
 depends:

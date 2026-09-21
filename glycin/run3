@@ -3,7 +3,7 @@ version: "2.0.8"
 release: "2"
 description: "Sandboxed image decoding library"
 sources:
- - "https://download.gnome.org/sources/glycin/2.0/glycin-${version}.tar.xz"
+ - "https://download.gnome.org/sources/glycin/${version.split('.')[0:2].join('.')}/glycin-${version}.tar.xz"
 sha256sum:
  - "6b9aef4f626bf969dfd04b563b83d521271a30c3d6df6a6a8463fd55490891df"
 depends:

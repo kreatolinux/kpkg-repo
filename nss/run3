@@ -3,7 +3,7 @@ version: "3.129"
 release: "4"
 description: "network stuff"
 sources:
-  - "https://archive.mozilla.org/pub/security/nss/releases/NSS_3_129_RTM/src/nss-$version.tar.gz"
+  - "https://archive.mozilla.org/pub/security/nss/releases/NSS_${version.replace('.', '_')}_RTM/src/nss-$version.tar.gz"
   - "bundle.sh"
   - "certdata2pem.py"
 sha256sum:
@@ -57,10 +57,10 @@ build {
 package {
   cd ".."
   exec "mkdir -p \"$ROOT/usr/lib/pkgconfig\" \"$ROOT/usr/bin\" \"$ROOT/usr/include/nss\""
-  exec "sed nss/pkg/pkg-config/nss.pc.in -e \"s,%prefix%,/usr,g\" -e \"s,%exec_prefix%,/usr,g\" -e \"s,%libdir%,/usr/lib,g\" -e \"s,%includedir%,/usr/include/nss,g\" -e \"s,%NSPR_VERSION%,4.38.2,g\" -e \"s,%NSS_VERSION%,$version,g\" | install -Dm644 /dev/stdin \"$ROOT/usr/lib/pkgconfig/nss.pc\""
+  exec "pkg-config --modversion nspr | xargs -I@ sed nss/pkg/pkg-config/nss.pc.in -e \"s,%prefix%,/usr,g\" -e \"s,%exec_prefix%,/usr,g\" -e \"s,%libdir%,/usr/lib,g\" -e \"s,%includedir%,/usr/include/nss,g\" -e \"s,%NSPR_VERSION%,@,g\" -e \"s,%NSS_VERSION%,$version,g\" | install -Dm644 /dev/stdin \"$ROOT/usr/lib/pkgconfig/nss.pc\""
   exec "ln -sf nss.pc \"$ROOT/usr/lib/pkgconfig/mozilla-nss.pc\""
   exec "install -Dt \"$ROOT/usr/lib\" dist/Linux*.OBJ/lib/*.so"
-  exec "sed nss/pkg/pkg-config/nss-config.in -e \"s,@prefix@,/usr,g\" -e \"s,@exec_prefix@,/usr,g\" -e \"s,@libdir@,/usr/lib,g\" -e \"s,@includedir@,/usr/include/nss,g\" -e \"s,@MOD_MAJOR_VERSION@,3,g\" -e \"s,@MOD_MINOR_VERSION@,129,g\" -e \"s,@MOD_PATCH_VERSION@,0,g\" | install -D /dev/stdin \"$ROOT/usr/bin/nss-config\""
+  exec "sed nss/pkg/pkg-config/nss-config.in -e \"s,@prefix@,/usr,g\" -e \"s,@exec_prefix@,/usr,g\" -e \"s,@libdir@,/usr/lib,g\" -e \"s,@includedir@,/usr/include/nss,g\" -e \"s,@MOD_MAJOR_VERSION@,${version.split('.')[0]},g\" -e \"s,@MOD_MINOR_VERSION@,${version.split('.')[1]},g\" -e \"s,@MOD_PATCH_VERSION@,0,g\" | install -D /dev/stdin \"$ROOT/usr/bin/nss-config\""
   exec "install -Dt \"$ROOT/usr/bin\" dist/Linux*.OBJ/bin/certutil dist/Linux*.OBJ/bin/cmsutil dist/Linux*.OBJ/bin/crlutil dist/Linux*.OBJ/bin/modutil dist/Linux*.OBJ/bin/pk12util dist/Linux*.OBJ/bin/shlibsign dist/Linux*.OBJ/bin/signtool dist/Linux*.OBJ/bin/signver dist/Linux*.OBJ/bin/ssltap dist/Linux*.OBJ/bin/symkeyutil"
   exec "install -Dt \"$ROOT/usr/include/nss\" -m644 dist/public/nss/*.h"
   exec "ln -sf pkcs11/p11-kit-trust.so \"$ROOT/usr/lib/p11-kit-trust.so\""

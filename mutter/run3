@@ -75,7 +75,12 @@ prepare {
 }
 
 build {
-  exec "meson setup --prefix=/usr --libdir=lib --buildtype=release --wrap-mode=nodownload -Dtests=disabled -Dcogl_tests=false -Dclutter_tests=false -Dmutter_tests=false -Dinstalled_tests=false -Dprofiler=false -Ddocs=false -Dbash_completion=false build"
+  local extraArgs = ""
+  if ${exec("kpkg info xwayland")}.exit() != 0 {
+    global extraArgs = "-Dxwayland=false"
+  }
+
+  exec "meson setup --prefix=/usr --libdir=lib --buildtype=release --wrap-mode=nodownload -Dtests=disabled -Dcogl_tests=false -Dclutter_tests=false -Dmutter_tests=false -Dinstalled_tests=false -Dprofiler=false -Ddocs=false -Dbash_completion=false $extraArgs build"
   exec "ninja -C build"
 }
 

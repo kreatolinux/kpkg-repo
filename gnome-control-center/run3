@@ -4,7 +4,7 @@ release: "3"
 description: "GNOME Control Center"
 extract: false
 sources:
-  - "https://download.gnome.org/sources/gnome-control-center/50/gnome-control-center-$version.tar.xz"
+  - "https://download.gnome.org/sources/gnome-control-center/${version.split('.')[0]}/gnome-control-center-$version.tar.xz"
   - "https://raw.githubusercontent.com/kreatolinux/assets/master/klinux_pixmap.png"
   - "https://gitlab.gnome.org/GNOME/tecla/-/archive/47.0/tecla-47.0.tar.gz"
   - "https://gitlab.gnome.org/GNOME/libgxdp/-/archive/1fe6de799f39b3126e8d0db66fa4f16c10fd9bd6/libgxdp-1fe6de799f39b3126e8d0db66fa4f16c10fd9bd6.tar.gz"

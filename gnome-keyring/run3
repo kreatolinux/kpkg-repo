@@ -3,7 +3,7 @@ version: "50.0"
 release: "2"
 description: "A daemon that keeps passwords and other secrets for users"
 sources:
-  - "https://download.gnome.org/sources/gnome-keyring/50/gnome-keyring-$version.tar.xz"
+  - "https://download.gnome.org/sources/gnome-keyring/${version.split('.')[0]}/gnome-keyring-$version.tar.xz"
 sha256sum:
   - "cbd72062c53c9702bc2c4733991ad5f051ca682882b30905a2829bcf1a8ecc7c"
 depends:

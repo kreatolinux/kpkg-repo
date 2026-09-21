@@ -29,7 +29,9 @@ package {
   exec "install -v -m644 dbus/fi.w1.wpa_supplicant1.service  $ROOT/usr/share/dbus-1/system-services/"
   exec "install -v -d -m755 $ROOT/etc/dbus-1/system.d"
   exec "install -v -m644 dbus/dbus-wpa_supplicant.conf  $ROOT/etc/dbus-1/system.d/wpa_supplicant.conf"
-  exec "mkdir -p $ROOT/usr/lib/systemd/system"
-  exec "install -v -m644 systemd/*.service $ROOT/usr/lib/systemd/system/"
+  if ${exec("command -v systemctl")}.exit() == 0 {
+    exec "mkdir -p $ROOT/usr/lib/systemd/system"
+    exec "install -v -m644 systemd/*.service $ROOT/usr/lib/systemd/system/"
+  }
 }
 

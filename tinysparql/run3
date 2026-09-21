@@ -3,7 +3,7 @@ version: "3.8.2"
 release: "2"
 description: "SPARQL database and triple store"
 sources:
- - "https://download.gnome.org/sources/tinysparql/3.8/tinysparql-${version}.tar.xz"
+ - "https://download.gnome.org/sources/tinysparql/${version.split('.')[0:2].join('.')}/tinysparql-${version}.tar.xz"
 sha256sum:
  - "bb8643386c8edc591a03205d4a0eda661dcdd2094473bffb9bbdb94e93589cb2"
 depends:

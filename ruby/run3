@@ -3,7 +3,7 @@ version: "3.2.11"
 release: "1"
 description: "The Ruby language"
 sources:
- - "https://cache.ruby-lang.org/pub/ruby/3.2/ruby-${version}.tar.xz"
+ - "https://cache.ruby-lang.org/pub/ruby/${version.split('.')[0:2].join('.')}/ruby-${version}.tar.xz"
  - "https://github.com/ruby/openssl/archive/refs/tags/v4.0.2.tar.gz"
 sha256sum:
  - "c13aec0c206725d5d356acbae6e5fd8bffd92dc325aec14fd5dd7795d4b763d2"

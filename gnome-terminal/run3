@@ -21,8 +21,12 @@ opt_depends:
   - "nautilus: For nautilus integration"
 
 build {
+  local nautilusEnabled = "false"
+  if ${exec("kpkg info nautilus")}.exit() == 0 {
+    global nautilusEnabled = "true"
+  }
 
-  exec "meson setup --prefix=/usr --libdir=/usr/lib --buildtype=release --wrap-mode=nodownload -Ddocs=false -Dnautilus_extension=false build"
+  exec "meson setup --prefix=/usr --libdir=/usr/lib --buildtype=release --wrap-mode=nodownload -Ddocs=false -Dnautilus_extension=$nautilusEnabled build"
   exec "ninja -C build"
 }
 

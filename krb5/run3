@@ -3,7 +3,7 @@ version: "1.22.2"
 release: "1"
 description: "kerberos"
 sources:
-  - "https://kerberos.org/dist/krb5/1.22/krb5-$version.tar.gz"
+  - "https://kerberos.org/dist/krb5/${version.split('.')[0:2].join('.')}/krb5-$version.tar.gz"
 sha256sum:
   - "3243ffbc8ea4d4ac22ddc7dd2a1dc54c57874c40648b60ff97009763554eaf13"
 depends:

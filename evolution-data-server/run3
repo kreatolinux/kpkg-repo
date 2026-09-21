@@ -3,7 +3,7 @@ version: "3.60.2"
 release: "1"
 description: "Evolution data and calendar service libraries"
 sources:
-  - "https://download.gnome.org/sources/evolution-data-server/3.60/evolution-data-server-$version.tar.xz"
+  - "https://download.gnome.org/sources/evolution-data-server/${version.split('.')[0:2].join('.')}/evolution-data-server-$version.tar.xz"
 sha256sum:
   - "2084dbdac396371b365d504c1ff45866ba8dca2f1252e5da1d3d9c33abdc1286"
 depends:
@@ -13,7 +13,6 @@ depends:
   - "sqlite"
   - "libgweather"
   - "gtk3"
-  - "gtk4"
   - "libcanberra"
   - "gnome-online-accounts"
   - "webkitgtk3"
@@ -24,9 +23,21 @@ build_depends:
   - "vala"
 opt_depends:
   - "webkitgtk4: for GTK4 built-in OAuth2 authentication"
+  - "gtk4: for GTK4 support"
 
 build {
-  exec "cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DLIB_SUFFIX= -DLIB_INSTALL_DIR=/usr/lib -DWITH_SYSTEMDUSERUNITDIR=no -DWITH_KRB5=OFF -DWITH_OPENLDAP=OFF -DWITH_LIBDB=OFF -DENABLE_VALA_BINDINGS=ON -DENABLE_INTROSPECTION=ON -DENABLE_GTK=ON -DENABLE_GTK4=ON -DENABLE_OAUTH2_WEBKITGTK=ON -DENABLE_OAUTH2_WEBKITGTK4=OFF -DENABLE_TESTS=OFF -DENABLE_INSTALLED_TESTS=OFF -DENABLE_EXAMPLES=OFF -DENABLE_GTK_DOC=OFF -DENABLE_GI_DOCGEN=OFF -DSYSCONF_INSTALL_DIR=/etc"
+  local extraArgs = ""
+  if ${exec("command -v systemctl")}.exit() != 0 {
+    global extraArgs = "$extraArgs -DWITH_SYSTEMDUSERUNITDIR=no"
+  }
+  if ${exec("kpkg info webkitgtk4")}.exit() != 0 {
+    global extraArgs = "$extraArgs -DENABLE_OAUTH2_WEBKITGTK4=OFF"
+  }
+  if ${exec("kpkg info gtk4")}.exit() != 0 {
+    global extraArgs = "$extraArgs -DENABLE_GTK4=OFF"
+  }
+
+  exec "cmake -B build $extraArgs -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DLIB_SUFFIX= -DLIB_INSTALL_DIR=/usr/lib -DWITH_KRB5=OFF -DWITH_OPENLDAP=OFF -DWITH_LIBDB=OFF -DENABLE_VALA_BINDINGS=ON -DENABLE_INTROSPECTION=ON -DENABLE_GTK=ON -DENABLE_OAUTH2_WEBKITGTK=ON -DENABLE_TESTS=OFF -DENABLE_INSTALLED_TESTS=OFF -DENABLE_EXAMPLES=OFF -DENABLE_GTK_DOC=OFF -DENABLE_GI_DOCGEN=OFF -DSYSCONF_INSTALL_DIR=/etc"
   exec "ninja -C build -j$(nproc)"
 }
 
