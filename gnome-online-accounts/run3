@@ -1,6 +1,6 @@
 name: "gnome-online-accounts"
 version: "3.58.1"
-release: "2"
+release: "4"
 description: "The GNOME online account manager"
 sources:
  - "https://gitlab.gnome.org/GNOME/gnome-online-accounts/-/archive/${version}/gnome-online-accounts-${version}.tar.gz"
@@ -16,7 +16,7 @@ build_depends:
  - "webkitgtk3"
 
 build {
- macro build -Dkerberos=false
+ macro build --libdir=/usr/lib --wrap-mode=nodownload -Dkerberos=false -Ddocumentation=false -Dman=false
 }
 
 package {

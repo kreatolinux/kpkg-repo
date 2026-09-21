@@ -1,6 +1,6 @@
 name: "glycin"
 version: "2.0.8"
-release: "1"
+release: "2"
 description: "Sandboxed image decoding library"
 sources:
  - "https://download.gnome.org/sources/glycin/2.0/glycin-${version}.tar.xz"
@@ -20,7 +20,7 @@ build_depends:
  - "pkgconf"
 
 build {
- macro build -Dglycin-loaders=false -Dglycin-thumbnailer=false -Dlibglycin=true -Dlibglycin-gtk4=true -Dintrospection=false -Dvapi=false -Dtests=false -Dlto=false
+ macro build --libdir=/usr/lib --wrap-mode=nodownload -Dglycin-loaders=false -Dglycin-thumbnailer=false -Dlibglycin=true -Dlibglycin-gtk4=true -Dintrospection=false -Dvapi=false -Dtests=false -Dlto=false
 }
 
 package {

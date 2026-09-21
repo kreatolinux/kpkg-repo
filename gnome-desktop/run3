@@ -1,6 +1,6 @@
 name: "gnome-desktop"
 version: "44.5"
-release: "1"
+release: "2"
 description: "Libraries for GNOME desktop"
 sources:
  - "https://download.gnome.org/sources/gnome-desktop/44/gnome-desktop-${version}.tar.xz"
@@ -22,7 +22,7 @@ build_depends:
  - "glib"
 
 build {
- macro build 
+ macro build --libdir=/usr/lib --wrap-mode=nodownload
 }
 
 package {

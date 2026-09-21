@@ -1,11 +1,11 @@
 name: "pygobject"
-version: "3.44.1"
-release: "2"
+version: "3.58.0"
+release: "1"
 description: "Python bindings for gobject-introspection"
 sources:
- - "https://gitlab.gnome.org/GNOME/pygobject/-/archive/${version}/pygobject-${version}.tar.gz"
+ - "https://download.gnome.org/sources/pygobject/3.58/pygobject-${version}.tar.gz"
 sha256sum:
- - "f2c3f85161c32791a60c2f2b54fdb89e38f1acde0f6a8f0be4e0e36f73f144ad"
+ - "45068697de3ffe46840ca369705f23118b34db4f7deb63f6eff079a6734ddcca"
 depends:
  - "python"
  - "pycairo"
@@ -15,7 +15,7 @@ build_depends:
  - "python-setuptools"
 
 build {
- macro build 
+ macro build --libdir=/usr/lib -Dtests=false --wrap-mode=nodownload
 
 }
 

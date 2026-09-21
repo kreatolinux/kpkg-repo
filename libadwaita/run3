@@ -1,6 +1,6 @@
 name: "libadwaita"
 version: "1.8.8"
-release: "1"
+release: "2"
 description: "GNOME ui stuff"
 sources:
  - "https://download.gnome.org/sources/libadwaita/1.8/libadwaita-${version}.tar.xz"
@@ -8,6 +8,7 @@ sha256sum:
  - "9e64939959a071cb660090c0e1b380c51ca29e3cfb57f3f23ea42a9922eb6f41"
 depends:
  - "gtk4"
+ - "appstream"
 build_depends:
  - "meson"
  - "ninja"
@@ -15,7 +16,7 @@ build_depends:
  - "sassc"
 
 build {
- macro build -Dgtk_doc=false
+ macro build --libdir=/usr/lib --default-library=shared --wrap-mode=nodownload -Ddocumentation=false -Dintrospection=enabled -Dvapi=true -Dtests=false -Dexamples=false
 }
 
 package {

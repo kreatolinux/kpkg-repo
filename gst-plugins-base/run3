@@ -1,11 +1,11 @@
 name: "gst-plugins-base"
-version: "1.22.5"
-release: "1"
+version: "1.28.7"
+release: "2"
 description: "gst-plugins-base"
 sources:
  - "https://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-${version}.tar.xz"
 sha256sum:
- - "edd4338b45c26a9af28c0d35aab964a024c3884ba6f520d8428df04212c8c93a"
+ - "ed6e5410f496d171818763af2265e7977154bc7f9b827e98acf8c5bed21dd5a7"
 depends:
  - "alsa-lib"
  - "gdk-pixbuf"
@@ -23,10 +23,11 @@ depends:
  - "libx11"
 build_depends:
  - "meson"
+ - "ninja"
  - "gobject-introspection"
 
 build {
- macro build --wrap-mode=nodownload
+ macro build --libdir=/usr/lib --default-library=shared --wrap-mode=nodownload -Dintrospection=enabled -Dtests=disabled -Dexamples=disabled -Ddoc=disabled -Dqt5=disabled
 }
 
 package {

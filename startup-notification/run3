@@ -1,6 +1,6 @@
 name: "startup-notification"
 version: "0.12"
-release: "1"
+release: "2"
 description: "startup-notification"
 sources:
  - "https://www.freedesktop.org/software/startup-notification/releases/startup-notification-${version}.tar.gz"
@@ -12,9 +12,15 @@ depends:
  - "xcb-util"
 build_depends:
  - "gmake"
+ - "autoconf"
+
+prepare {
+ exec "cp /usr/share/autoconf/build-aux/config.sub config.sub"
+ exec "cp /usr/share/autoconf/build-aux/config.guess config.guess"
+}
 
 build {
- macro build --configure
+ macro build --configure --build=$KPKG_TARGET --libdir=/usr/lib
 }
 
 package {

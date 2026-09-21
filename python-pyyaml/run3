@@ -1,0 +1,16 @@
+name: "python-pyyaml"
+version: "6.0.3"
+release: "1"
+description: "YAML parser and emitter for Python"
+sources:
+ - "https://files.pythonhosted.org/packages/05/8e/961c0007c59b8dd7729d542c61a4d537767a59645b82a0b521206e1e25c2/pyyaml-${version}.tar.gz"
+sha256sum:
+ - "d76623373421df22fb4cf8817020cbb7ef15c725b9d5e45f17e189bfc384190f"
+depends:
+ - "python"
+build_depends:
+ - "python-setuptools"
+
+package {
+ exec "python3 -m pip install --no-build-isolation . --prefix=/usr --root=\"$ROOT\""
+}

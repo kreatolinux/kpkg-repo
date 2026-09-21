@@ -1,6 +1,6 @@
 name: "appstream"
 version: "1.1.2"
-release: "1"
+release: "2"
 description: "Tools and libraries to work with AppStream metadata"
 sources:
  - "https://github.com/ximion/appstream/archive/refs/tags/v${version}.tar.gz"
@@ -18,6 +18,7 @@ depends:
  - "gperf"
 build_depends:
  - "meson"
+ - "ninja"
 opt_depends:
  - "systemd: For systemd support"
 
@@ -29,12 +30,7 @@ build {
  exec "grep -v \"subdir('docs/')\" meson.build > meson.build.new"
  exec "mv meson.build.new meson.build"
 
- local systemdSupport = "false"
- if ${exec("command -v systemctl")}.exit() == 0 {
- global systemdSupport = "true"
-}
-
- macro build
+ macro build --libdir=/usr/lib --default-library=shared --wrap-mode=nodownload -Dsystemd=false -Dstemming=false -Dqt=false -Dcompose=false -Dbash-completion=false -Dgir=true -Dvapi=false -Ddocs=false -Dapidocs=false -Dinstall-docs=false -Dman=false
 }
 
 package {

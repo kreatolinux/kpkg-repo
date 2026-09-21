@@ -1,43 +1,36 @@
 name: "gdm"
-version: "44.1"
-release: "1"
+version: "50.3"
+release: "2"
 description: "GNOME Display Manager"
 sources:
-  - "https://gitlab.gnome.org/GNOME/gdm/-/archive/$version/gdm-$version.tar.gz"
+ - "https://download.gnome.org/sources/gdm/50/gdm-${version}.tar.xz"
 sha256sum:
-  - "fd50fb023ee2aa5118bbeba8f6b9ffe93c54d68be8da189e5f835a7d8f900357"
+ - "adac0710b8b797108ea40ea4573bd1a5e6d9b24e0a7990a994216e8dffe2d15e"
 depends:
-  - "accountsservice"
-  - "dconf"
-  - "dbus"
-  - "libcanberra"
-  - "linux-pam"
-  - "gnome-session"
-  - "elogind"
+ - "accountsservice"
+ - "dconf"
+ - "dbus"
+ - "libcanberra"
+ - "linux-pam"
+ - "gnome-session"
+ - "elogind"
 build_depends:
-  - "meson"
+ - "meson"
 
 build {
-
-  # Thanks to BLFS
-  if ${exec("command -v systemctl")}.exit() != 0 {
-    local extraArgs = "-Dsystemd-journal=false -Dsystemdsystemunitdir=/tmp -Dsystemduserunitdir=/tmp"
-    exec "sed -i -r '/(^| )systemd_dep/d' meson.build"
-    exec "sed -e 's@systemd@elogind@'                                 -e '/elogind/isession  required       pam_loginuid.so'  -i data/pam-lfs/gdm-launch-environment.pam"
-  }
-
-  exec "meson setup $extraArgs       --prefix=/usr                --buildtype=release          -Dgdm-xsession=true          -Drun-dir=/run/gdm           -Ddefault-pam-config=lfs     -Ddbus-sys=\"/usr/share/dbus-1/system.d\"  -Ddefault-path=\"/usr/bin:/usr/local/bin:/usr/local/sbin:/bin\"  build"
-  exec "ninja -C build"
+ # Adapt the LFS PAM profile to the repository's elogind provider.
+ exec "sed -e 's@systemd@elogind@' -e '/elogind/isession  required       pam_loginuid.so' -i data/pam-lfs/gdm-launch-environment.pam"
+ exec "meson setup build --prefix=/usr --libdir=/usr/lib --buildtype=release --wrap-mode=nodownload -Dlogind-provider=elogind -Dsystemd-journal=false -Dsystemdsystemunitdir=no -Dsystemduserunitdir=no -Dgdm-xsession=true -Drun-dir=/run/gdm -Ddefault-pam-config=lfs -Ddbus-sys=/usr/share/dbus-1/system.d -Ddefault-path=/usr/bin:/usr/local/bin:/usr/local/sbin:/bin"
+ exec "ninja -C build"
 }
 
 package {
-  exec "DESTDIR=\"$ROOT\" ninja -C build install"
+ exec "DESTDIR=$ROOT ninja -C build install"
 }
 
 postinstall {
-  # from blfs
-  exec "groupadd -g 21 gdm"
-  exec "useradd -c \"GDM Daemon Owner\" -d /var/lib/gdm -u 21  -g gdm -s /bin/false gdm"
-  exec "passwd -ql gdm"
+ # From BLFS.
+ exec "groupadd -g 21 gdm"
+ exec "useradd -c 'GDM Daemon Owner' -d /var/lib/gdm -u 21 -g gdm -s /bin/false gdm"
+ exec "passwd -ql gdm"
 }
-

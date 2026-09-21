@@ -1,6 +1,6 @@
 name: "libgweather"
 version: "4.6.0"
-release: "1"
+release: "2"
 description: "libgweather"
 sources:
  - "https://gitlab.gnome.org/GNOME/libgweather/-/archive/${version}/libgweather-${version}.tar.gz"
@@ -11,6 +11,7 @@ depends:
  - "glib"
  - "libsoup"
  - "json-glib"
+ - "gweather-locations"
 build_depends:
  - "meson"
  - "vala"
@@ -18,7 +19,7 @@ build_depends:
  - "gobject-introspection"
 
 build {
- macro build -Dintrospection=true -Dgtk_doc=false -Denable_vala=true
+ macro build --libdir=/usr/lib --wrap-mode=nodownload -Dintrospection=true -Dgtk_doc=false -Denable_vala=true
 }
 
 package {

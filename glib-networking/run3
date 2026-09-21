@@ -1,6 +1,6 @@
 name: "glib-networking"
 version: "2.80.1"
-release: "1"
+release: "2"
 description: "Network extensions for GLib"
 sources:
  - "https://download.gnome.org/sources/glib-networking/2.80/glib-networking-${version}.tar.xz"
@@ -13,9 +13,10 @@ depends:
  - "ca-certificates"
 build_depends:
  - "meson"
+ - "ninja"
 
 build {
- macro build -Dlibproxy=disabled 
+ macro build --libdir=/usr/lib --default-library=shared --wrap-mode=nodownload -Dlibproxy=disabled -Dgnutls=enabled -Dinstalled_tests=false
 }
 
 package {

@@ -1,11 +1,11 @@
 name: "networkmanager"
-version: "1.45.1"
-release: "1"
+version: "1.58.1"
+release: "2"
 description: "networkmanager"
 sources:
-  - "https://download.gnome.org/sources/NetworkManager/1.45/NetworkManager-$version.tar.xz"
+  - "https://gitlab.freedesktop.org/api/v4/projects/411/packages/generic/NetworkManager/1.58.1/NetworkManager-1.58.1.tar.xz"
 sha256sum:
-  - "6757f95317853dc2782c44ed8939249574677518b3a1f7d112aad961f20adc43"
+  - "262864cfd198123d3e5dbe91937441b97ee9059d6d712e1a5bfbb1c54668d14d"
 depends:
   - "jansson"
   - "libndp"
@@ -20,6 +20,7 @@ depends:
   - "wpa_supplicant"
 build_depends:
   - "meson"
+  - "ninja"
   - "gobject-introspection"
   - "libxslt"
   - "python-setuptools"
@@ -27,11 +28,9 @@ build_depends:
 build {
 
   # Thanks for BLFS for the args https://www.linuxfromscratch.org/blfs/view/svn/basicnet/networkmanager.html
-  if ${exec("command -v systemctl")}.exit() != 0 {
-    local extraArgs = "-Dsystemd_journal=false -Dsystemdsystemunitdir=no -Dsession_tracking=elogind"
-  }
+  local extraArgs = "-Dsystemd_journal=false -Dsystemdsystemunitdir=no -Dsystemdsystemgeneratordir=no -Dsession_tracking=elogind -Dsuspend_resume=elogind"
 
-  exec "meson setup  --prefix=/usr  --buildtype=release  -Dnmtui=true  -Ddocs=false  -Dcrypto=gnutls  -Dqt=false  -Dppp=false  -Dlibaudit=no  -Dselinux=false  -Dlibpsl=false  -Dovs=false  -Dmodem_manager=false  $extraArgs build"
+  exec "meson setup --prefix=/usr --libdir=/usr/lib --default-library=shared --buildtype=release --wrap-mode=nodownload -Dnmtui=true -Ddocs=false -Dman=false -Dtests=no -Dintrospection=true -Dcrypto=gnutls -Dqt=false -Dppp=false -Dlibaudit=no -Dselinux=false -Dlibpsl=true -Dclat=false -Dnbft=false -Debpf=false -Dovs=false -Dmodem_manager=false $extraArgs build"
   exec "ninja -C build"
 }
 

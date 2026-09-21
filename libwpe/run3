@@ -1,6 +1,6 @@
 name: "libwpe"
 version: "1.16.3"
-release: "1"
+release: "2"
 description: "libwpe"
 sources:
  - "https://wpewebkit.org/releases/libwpe-${version}.tar.xz"
@@ -11,9 +11,10 @@ depends:
  - "mesa"
 build_depends:
  - "meson"
+ - "ninja"
 
 build {
- macro build 
+ macro build --libdir=/usr/lib --default-library=shared --wrap-mode=nodownload -Dbuild-docs=false
 }
 
 package {

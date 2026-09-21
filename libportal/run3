@@ -1,11 +1,11 @@
 name: "libportal"
-version: "0.7.1"
-release: "1"
+version: "0.11.0"
+release: "2"
 description: "libportal"
 sources:
  - "https://github.com/flatpak/libportal/releases/download/${version}/libportal-${version}.tar.xz"
 sha256sum:
- - "297b90b263fad22190a26b8c7e8ea938fe6b18fb936265e588927179920d3805"
+ - "abb9e452a1c372133bd3eb8f0bb30d07b2d0a8fb02001c4155cf287555db4040"
 depends:
  - "gtk3"
  - "gtk4"
@@ -16,7 +16,7 @@ build_depends:
  - "gjs"
 
 build {
- macro build -Ddocs=false
+ macro build --libdir=/usr/lib --wrap-mode=nodownload -Ddocs=false -Dtests=false -Dportal-tests=false -Dbackend-gtk3=enabled -Dbackend-gtk4=enabled -Dbackend-qt5=disabled -Dbackend-qt6=disabled
 }
 
 package {

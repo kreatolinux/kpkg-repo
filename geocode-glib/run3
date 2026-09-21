@@ -1,6 +1,6 @@
 name: "geocode-glib"
 version: "3.26.4"
-release: "1"
+release: "2"
 description: "geocode-glib"
 sources:
  - "https://github.com/GNOME/geocode-glib/archive/refs/tags/${version}.tar.gz"
@@ -14,7 +14,7 @@ build_depends:
  - "meson"
 
 build {
- macro build -Denable-gtk-doc=false -Dsoup2=false
+ macro build --libdir=/usr/lib --wrap-mode=nodownload -Denable-gtk-doc=false -Dsoup2=false
 }
 
 package {

@@ -1,6 +1,6 @@
 name: "gsound"
 version: "1.0.3"
-release: "1"
+release: "2"
 description: "A small library for playing system sounds"
 sources:
  - "https://gitlab.gnome.org/GNOME/gsound/-/archive/${version}/gsound-${version}.tar.gz"
@@ -14,7 +14,7 @@ build_depends:
  - "gobject-introspection"
 
 build {
- macro build 
+ macro build --libdir=/usr/lib --wrap-mode=nodownload
 }
 
 package {

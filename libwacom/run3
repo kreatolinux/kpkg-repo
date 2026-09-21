@@ -1,6 +1,6 @@
 name: "libwacom"
 version: "2.17.0"
-release: "1"
+release: "2"
 description: "Library for Wacom tablets"
 sources:
  - "https://github.com/linuxwacom/libwacom/releases/download/libwacom-${version}/libwacom-${version}.tar.xz"
@@ -14,11 +14,11 @@ build_depends:
  - "meson"
 
 build {
- macro build -Dtests=disabled
+ macro build -Dlibdir=lib -Dtests=disabled -Ddocumentation=disabled --wrap-mode=nodownload
 }
 
 package {
- macro package
+ macro package -Dlibdir=lib
 }
 
 

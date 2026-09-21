@@ -1,0 +1,18 @@
+name: "python-pycparser"
+version: "3.0"
+release: "1"
+description: "C parser written in Python"
+sources:
+ - "https://files.pythonhosted.org/packages/0c/c3/44f3fbbfa403ea2a7c779186dc20772604442dde72947e7d01069cbe98e3/pycparser-${version}-py3-none-any.whl"
+sha256sum:
+ - "b727414169a36b7d524c1c3e31839a521725078d7b2ff038656844266160a992"
+depends:
+ - "python"
+
+prepare {
+ exec ":"
+}
+
+package {
+ exec "python3 -m pip install pycparser-$version-py3-none-any.whl --prefix=/usr --root=\"$ROOT\""
+}

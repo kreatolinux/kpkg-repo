@@ -1,6 +1,6 @@
 name: "atk"
 version: "2.58.2"
-release: "2"
+release: "3"
 description: "Base DBus XML interfaces for accessibility, the accessibility registry daemon, and atspi library"
 sources:
  - "https://download.gnome.org/sources/at-spi2-core/2.58/at-spi2-core-${version}.tar.xz"
@@ -16,10 +16,11 @@ depends:
 build_depends:
  - "pkgconf"
  - "meson"
+ - "ninja"
  - "python-setuptools"
 
 build {
- macro build -Dintrospection=enabled
+ macro build --libdir=/usr/lib --default-library=shared --wrap-mode=nodownload -Dintrospection=enabled -Ddocs=false
 }
 
 package {

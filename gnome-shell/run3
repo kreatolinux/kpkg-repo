@@ -1,22 +1,23 @@
 name: "gnome-shell"
-version: "50.2"
-release: "2"
+version: "50.5"
+release: "4"
 description: "The GNOME shell"
 extract: false
 sources:
   - "https://gitlab.gnome.org/GNOME/gnome-shell/-/archive/$version/gnome-shell-$version.tar.gz"
   - "https://gitlab.gnome.org/GNOME/libgnome-volume-control/-/archive/0a4eda0cdc2deb352bebc70ec697c42af46094e4/libgnome-volume-control-0a4eda0cdc2deb352bebc70ec697c42af46094e4.tar.gz"
   - "https://gitlab.gnome.org/GNOME/libshew/-/archive/d16afc40412b565d2bbecf80335f54a19a978009/libshew-d16afc40412b565d2bbecf80335f54a19a978009.tar.gz"
+  - "glib-2.86-flag-enum.patch"
 sha256sum:
-  - "e299dee498c46611319fdb4517f550d9c01693aca7af1b049740cc8803b4512a"
+  - "2ed87dd188ff0bcd7c0ffb22827883fc44ee678c010ff066cbe025667369b4c1"
   - "39b3fb067d2e96a83a0750dc5e43d168febd79d01352560e06d4d3579d49926e"
   - "b460997ad73744df06117200205a0168b91dfef50e7076013a14110abb245a93"
+  - "fb5160d73e06a0ba099bf428a7b29f6bf795d54ad2bf970b78c380130b73e851"
 depends:
   - "dconf"
   - "gnome-autoar"
   - "elogind"
   - "adwaita-icon-theme"
-  - "dconf"
   - "gdm"
   - "gnome-backgrounds"
   - "gnome-control-center"
@@ -48,12 +49,13 @@ prepare {
   exec "tar -xf libgnome-volume-control-0a4eda0cdc2deb352bebc70ec697c42af46094e4.tar.gz"
   exec "tar -xf libshew-d16afc40412b565d2bbecf80335f54a19a978009.tar.gz"
   cd "gnome-shell-$version"
+  exec "patch -p1 < ../glib-2.86-flag-enum.patch"
   exec "mv ../libgnome-volume-control-0a4eda0cdc2deb352bebc70ec697c42af46094e4 subprojects/gvc"
   exec "mv ../libshew-d16afc40412b565d2bbecf80335f54a19a978009 subprojects/libshew"
 }
 
 build {
-  exec "meson setup --prefix=/usr --buildtype=release --wrap-mode=nodownload -Dtests=false -Dman=false -Dgtk_doc=false -Dsystemd=false build"
+  exec "meson setup --prefix=/usr --libdir=lib --buildtype=release --wrap-mode=nodownload -Dtests=false -Dman=false -Dgtk_doc=false -Dsystemd=false build"
   exec "ninja -C build"
 }
 

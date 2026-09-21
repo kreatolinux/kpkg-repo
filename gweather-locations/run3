@@ -1,0 +1,22 @@
+name: "gweather-locations"
+version: "2026.2"
+release: "1"
+description: "Locations database for libgweather"
+sources:
+ - "https://gitlab.gnome.org/GNOME/gweather-locations/-/archive/${version}/gweather-locations-${version}.tar.gz"
+sha256sum:
+ - "b1c30d19279e8603ac1405f033ad4cd49d84e30828facfb73b77064aff088e15"
+depends:
+ - "glib"
+build_depends:
+ - "meson"
+ - "pygobject"
+ - "gettext"
+
+build {
+ macro build --libdir=/usr/lib --wrap-mode=nodownload
+}
+
+package {
+ macro package
+}

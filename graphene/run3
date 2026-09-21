@@ -1,6 +1,6 @@
 name: "graphene"
 version: "1.10.8"
-release: "1"
+release: "2"
 description: "graphene"
 sources:
  - "https://download.gnome.org/sources/graphene/1.10/graphene-${version}.tar.xz"
@@ -10,10 +10,11 @@ depends:
  - "glib"
 build_depends:
  - "meson"
+ - "ninja"
  - "gobject-introspection"
 
 build {
- macro build 
+ macro build --libdir=/usr/lib --default-library=shared --wrap-mode=nodownload -Dintrospection=enabled -Dgtk_doc=false -Dtests=false -Dinstalled_tests=false
 }
 
 package {

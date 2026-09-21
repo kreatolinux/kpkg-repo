@@ -1,6 +1,6 @@
 name: "polkit"
 version: "124"
-release: "1"
+release: "2"
 description: "A toolkit for defining and handling authorizations"
 sources:
  - "https://gitlab.freedesktop.org/polkit/polkit/-/archive/${version}/polkit-${version}.tar.gz"
@@ -16,6 +16,7 @@ depends:
  - "duktape"
 build_depends:
  - "meson"
+ - "ninja"
 
 build {
 
@@ -23,7 +24,7 @@ build {
  local extraArgs = "-Dsession_tracking=libsystemd-login"
 }
 
- macro build ${extraArgs}
+ macro build --libdir=/usr/lib ${extraArgs}
 }
 
 package {
@@ -33,9 +34,7 @@ package {
 postinstall {
 # From BLFS
  exec "groupadd -fg 27 polkitd || true"
- if ${exec("id -u polkitd")}.exit() != 0 {
- exec "useradd -c \"PolicyKit Daemon Owner\" -d /etc/polkit-1 -u 27 -g polkitd -s /bin/false polkitd"
-}
+ exec "id -u polkitd >/dev/null 2>&1 || useradd -c \"PolicyKit Daemon Owner\" -d /etc/polkit-1 -u 27 -g polkitd -s /bin/false polkitd"
 }
 
 

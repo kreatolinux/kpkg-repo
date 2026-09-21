@@ -1,6 +1,6 @@
 name: "libei"
 version: "1.6.0"
-release: "2"
+release: "3"
 description: "Library for Emulated Input"
 sources:
  - "https://gitlab.freedesktop.org/libinput/libei/-/archive/${version}/libei-${version}.tar.gz"
@@ -17,11 +17,11 @@ build_depends:
  - "meson"
 
 build {
- macro build 
+ macro build -Dlibdir=lib -Dsd-bus-provider=libelogind -Dtests=disabled -Ddocumentation= --wrap-mode=nodownload
 }
 
 package {
- macro package
+ macro package -Dlibdir=lib
 }
 
 postinstall {

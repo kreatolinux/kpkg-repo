@@ -1,6 +1,6 @@
 name: "colord-gtk"
 version: "0.3.1"
-release: "1"
+release: "2"
 description: "GTK stuff for colord"
 sources:
  - "https://www.freedesktop.org/software/colord/releases/colord-gtk-${version}.tar.xz"
@@ -16,11 +16,11 @@ build_depends:
  - "gobject-introspection"
 
 build {
- macro build -Dgtk4=true -Dvapi=true -Ddocs=false -Dman=false
+ macro build -Dlibdir=lib -Dgtk4=true -Dvapi=false -Dtests=false -Ddocs=false -Dman=false --wrap-mode=nodownload
 }
 
 package {
- macro package
+ macro package -Dlibdir=lib
 }
 
 

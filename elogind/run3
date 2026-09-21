@@ -1,6 +1,6 @@
 name: "elogind"
 version: "257.15"
-release: "1"
+release: "2"
 description: "systemd-logind, extracted to be a standalone daemon"
 sources:
  - "https://github.com/elogind/elogind/archive/refs/tags/v${version}.tar.gz"
@@ -15,6 +15,7 @@ depends:
  - "eudev"
 build_depends:
  - "meson"
+ - "ninja"
 replaces:
  - "systemd"
 
@@ -25,7 +26,7 @@ prepare {
 }
 
 build {
- macro build -Dman=false -Dtests=false -Ddbuspolicydir=/etc/dbus-1/system.d
+ macro build --libdir=/usr/lib -Dman=false -Dtests=false -Ddbuspolicydir=/etc/dbus-1/system.d
 }
 
 package {

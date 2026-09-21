@@ -1,0 +1,20 @@
+name: "simdutf"
+version: "9.2.0"
+release: "1"
+description: "Fast Unicode validation and transcoding library"
+sources:
+ - "https://github.com/simdutf/simdutf/archive/refs/tags/v${version}.tar.gz"
+sha256sum:
+ - "b4b4f397065bb8f2ba2386feb40e58e27654c71c6f7521d9cbd32a16142bd040"
+build_depends:
+ - "cmake"
+ - "ninja"
+
+build {
+ exec "cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=lib -DBUILD_SHARED_LIBS=ON -DSIMDUTF_TESTS=OFF -DSIMDUTF_TOOLS=OFF -DSIMDUTF_BENCHMARKS=OFF"
+ exec "ninja -C build"
+}
+
+package {
+ exec "DESTDIR=$ROOT ninja -C build install"
+}

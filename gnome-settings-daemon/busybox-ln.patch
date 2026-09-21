@@ -1,0 +1,8 @@
+--- a/plugins/meson-add-wants.sh
++++ b/plugins/meson-add-wants.sh
+@@ -24,4 +24,4 @@ case "$target" in
+         ;;
+ esac
+ 
+-ln -vfs --relative "$unitpath" "$dir"
++ln -vfs "../$unit" "$dir"

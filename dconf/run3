@@ -1,6 +1,6 @@
 name: "dconf"
 version: "0.40.0"
-release: "1"
+release: "2"
 description: "A simple key/value storage system that is heavily optimised for reading"
 sources:
  - "https://gitlab.gnome.org/GNOME/dconf/-/archive/${version}/dconf-${version}.tar.gz"
@@ -12,10 +12,11 @@ depends:
  - "vala"
 build_depends:
  - "meson"
+ - "ninja"
  - "python-setuptools"
 
 build {
- macro build -Dbash_completion=false -Dman=false
+ macro build --libdir=/usr/lib --default-library=shared --wrap-mode=nodownload -Dbash_completion=false -Dman=false -Dgtk_doc=false -Dvapi=true -Dsystemduserunitdir=/usr/lib/systemd/user
 }
 
 package {

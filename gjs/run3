@@ -1,11 +1,13 @@
 name: "gjs"
 version: "1.88.0"
-release: "2"
+release: "4"
 description: "Javascript bindings for GNOME"
 sources:
  - "https://gitlab.gnome.org/GNOME/gjs/-/archive/${version}/gjs-${version}.tar.gz"
+ - "https://gitlab.gnome.org/GNOME/gobject-introspection-tests/-/archive/67432ee4ebf74349cb3c848f73945b21a767e276/gobject-introspection-tests-67432ee4ebf74349cb3c848f73945b21a767e276.tar.gz"
 sha256sum:
  - "2235ba7858a9f29b6a5941d99511c79620fb9033a4077d7ac678a22a9dac8eb8"
+ - "d26c538b948a89be59616c7698f2e815d2d5bf723f3c0596f07d987b9cfb4823"
 depends:
  - "glib"
  - "mozjs140"
@@ -19,8 +21,14 @@ build_depends:
  - "meson"
  - "ninja"
 
+prepare {
+ exec "rmdir gjs-$version/subprojects/gobject-introspection-tests"
+ exec "mv gobject-introspection-tests-67432ee4ebf74349cb3c848f73945b21a767e276 gjs-$version/subprojects/gobject-introspection-tests"
+ cd "gjs-$version"
+}
+
 build {
- macro build --wrap-mode=nofallback
+ macro build --libdir=/usr/lib --wrap-mode=nofallback -Dskip_gtk_tests=true -Dinstalled_tests=false
 }
 
 package {

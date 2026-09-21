@@ -1,17 +1,18 @@
 name: "vte"
-version: "0.84.0"
-release: "1"
+version: "0.84.1"
+release: "2"
 description: "Visual Terminal Emulator widget"
 sources:
- - "https://gitlab.gnome.org/GNOME/vte/-/archive/${version}/vte-${version}.tar.gz"
+ - "https://download.gnome.org/sources/vte/0.84/vte-${version}.tar.xz"
 sha256sum:
- - "a7f3a0ea17554ca643729c3502d3bfc76b20b53c97e81ddf6e099b16486df7e2"
+ - "aca1caa8478aebcdbb1d67897fb3511eb7601debae6810e16a15b6fa25f31ac8"
 depends:
  - "gtk3"
  - "pcre"
  - "fribidi"
  - "gtk4"
  - "gnutls"
+ - "simdutf"
 build_depends:
  - "meson"
  - "gobject-introspection"
@@ -23,7 +24,7 @@ build {
   env extraArgs="-D_systemd=false"
  }
 
- macro build ${extraArgs} -Ddocs=false -Dgtk4=true
+ macro build ${extraArgs} --libdir=/usr/lib --wrap-mode=nodownload -Ddocs=false -Dgtk4=true
 }
 
 package {

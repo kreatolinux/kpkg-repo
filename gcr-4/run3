@@ -1,6 +1,6 @@
 name: "gcr-4"
 version: "4.1.0"
-release: "1"
+release: "3"
 description: "A library for displaying certificates and crypto UI"
 sources:
  - "https://download.gnome.org/sources/gcr/4.1/gcr-${version}.tar.xz"
@@ -20,11 +20,11 @@ build_depends:
  - "gobject-introspection"
 
 build {
- macro build -Dgtk_doc=false
+ macro build -Dlibdir=lib -Dgtk_doc=false --wrap-mode=nodownload
 }
 
 package {
- macro package
+ macro package -Dlibdir=lib
 }
 
 

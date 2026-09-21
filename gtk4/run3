@@ -1,6 +1,6 @@
 name: "gtk4"
 version: "4.20.4"
-release: "1"
+release: "2"
 description: "gtk4"
 sources:
  - "https://download.gnome.org/sources/gtk/4.20/gtk-${version}.tar.xz"
@@ -25,7 +25,6 @@ depends:
  - "graphene"
  - "adwaita-icon-theme"
  - "iso-codes"
- - "libxkbcommon"
  - "wayland"
  - "wayland-protocols"
 build_depends:
@@ -34,13 +33,11 @@ build_depends:
  - "gobject-introspection"
 
 prepare {
- exec "tar -xvf gtk-${version}.tar.xz"
- cd "gtk-${version}"
  exec "sed -i 's/can_use_objcopy_for_resources = true/can_use_objcopy_for_resources = false/g' meson.build"
 }
 
 build {
- macro build -Dx11-backend=true -Dmedia-gstreamer=disabled -Dintrospection=enabled -Dvulkan=disabled -Dbuild-demos=false -Dbuild-tests=false -Dbuild-testsuite=false -Dbuild-examples=false
+ macro build --libdir=/usr/lib --default-library=shared --wrap-mode=nodownload -Dx11-backend=true -Dmedia-gstreamer=disabled -Dintrospection=enabled -Dvulkan=disabled -Dbuild-demos=false -Dbuild-tests=false -Dbuild-testsuite=false -Dbuild-examples=false
 }
 
 package {

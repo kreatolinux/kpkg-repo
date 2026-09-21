@@ -1,6 +1,6 @@
 name: "json-glib"
 version: "1.10.8"
-release: "1"
+release: "2"
 description: "A full JSON parser and generator using GLib and GObject, and integrates JSON with GLib data types"
 sources:
  - "https://download.gnome.org/sources/json-glib/1.10/json-glib-${version}.tar.xz"
@@ -14,7 +14,7 @@ build_depends:
  - "gobject-introspection"
 
 build {
- macro build -Dman=false
+ macro build --libdir=/usr/lib -Dman=false -Dtests=false
 }
 
 package {

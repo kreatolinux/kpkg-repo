@@ -1,6 +1,6 @@
 name: "libxfixes"
 version: "6.0.2"
-release: "1"
+release: "2"
 description: "libxfixes"
 sources:
  - "https://www.x.org/releases/individual/lib/libXfixes-${version}.tar.gz"
@@ -10,10 +10,11 @@ depends:
  - "libx11"
 build_depends:
  - "xorgproto"
- - "gmake"
+ - "meson"
+ - "ninja"
 
 build {
- macro build --sysconfdir=/etc --disable-static
+ macro build --libdir=/usr/lib --default-library=shared
 }
 
 package {

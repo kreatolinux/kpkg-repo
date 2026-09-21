@@ -1,6 +1,6 @@
 name: "gcr-3"
 version: "3.41.2"
-release: "1"
+release: "2"
 description: "gcr-3"
 sources:
  - "https://gitlab.gnome.org/GNOME/gcr/-/archive/${version}/gcr-${version}.tar.gz"
@@ -15,12 +15,13 @@ depends:
  - "gtk3"
 build_depends:
  - "meson"
+ - "ninja"
  - "vala"
  - "libxslt"
  - "gobject-introspection"
 
 build {
- macro build -Dgtk_doc=false
+ macro build --libdir=/usr/lib --default-library=shared --wrap-mode=nodownload -Dgtk_doc=false -Dintrospection=true -Dsystemd=disabled
 }
 
 package {

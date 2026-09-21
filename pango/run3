@@ -1,6 +1,6 @@
 name: "pango"
 version: "1.56.4"
-release: "1"
+release: "3"
 description: "Text (i.e. glyph) layout engine library"
 sources:
  - "https://download.gnome.org/sources/pango/1.56/pango-${version}.tar.xz"
@@ -18,7 +18,7 @@ build_depends:
  - "gobject-introspection"
 
 build {
- macro build -Dgtk_doc=false -Dxft=disabled
+ macro build --libdir=/usr/lib --default-library=shared --wrap-mode=nodownload -Dintrospection=enabled -Ddocumentation=false -Dman-pages=false -Dxft=disabled -Dbuild-testsuite=false -Dbuild-examples=false
 }
 
 package {

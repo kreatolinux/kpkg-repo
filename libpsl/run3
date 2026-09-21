@@ -1,6 +1,6 @@
 name: "libpsl"
 version: "0.23.3"
-release: "1"
+release: "2"
 description: "libpsl"
 sources:
  - "https://github.com/rockdaboot/libpsl/releases/download/${version}/libpsl-${version}.tar.gz"
@@ -11,9 +11,10 @@ depends:
  - "libunistring"
 build_depends:
  - "meson"
+ - "ninja"
 
 build {
- macro build 
+ macro build --libdir=/usr/lib --default-library=shared --wrap-mode=nodownload
 }
 
 package {

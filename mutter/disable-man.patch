@@ -1,0 +1,10 @@
+--- a/meson.build
++++ b/meson.build
+@@ -720,7 +720,6 @@ if have_devkit
+   subdir('mdk')
+ endif
+ subdir('po')
+-subdir('doc/man')
+ if have_documentation
+   subdir('doc/reference')
+ endif

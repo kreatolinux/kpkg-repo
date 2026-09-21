@@ -1,6 +1,6 @@
 name: "tinysparql"
 version: "3.8.2"
-release: "1"
+release: "2"
 description: "SPARQL database and triple store"
 sources:
  - "https://download.gnome.org/sources/tinysparql/3.8/tinysparql-${version}.tar.xz"
@@ -22,7 +22,7 @@ build_depends:
  - "python"
 
 build {
- macro build -Ddocs=false -Dman=false -Dtests=false -Davahi=disabled -Dstemmer=disabled -Dunicode_support=icu -Dsystemd_user_services=false
+ macro build --libdir=/usr/lib --wrap-mode=nodownload -Ddocs=false -Dman=false -Dtests=false -Davahi=disabled -Dstemmer=disabled -Dunicode_support=icu -Dsystemd_user_services=false
 }
 
 package {

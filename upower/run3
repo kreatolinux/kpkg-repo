@@ -1,11 +1,11 @@
 name: "upower"
-version: "1.91.2"
-release: "1"
+version: "1.91.4"
+release: "2"
 description: "Power management support for DeviceKit"
 sources:
  - "https://gitlab.freedesktop.org/upower/upower/-/archive/v${version}/upower-v${version}.tar.gz"
 sha256sum:
- - "cd9a3a3f5e0aa21eac131253228757bbdc90ecd39768f46c325754e32daa3083"
+ - "447dc57365821a8566ace9c9c6c3028c86708f1688c5dadb4dfe9f6b6b117b18"
 depends:
  - "libgudev"
  - "eudev"
@@ -14,7 +14,7 @@ build_depends:
  - "meson"
 
 build {
- macro build -Dgtk-doc=false -Dman=false -Dintrospection=enabled -Dsystemdsystemunitdir=/usr/lib/systemd/system -Dudevrulesdir=/usr/lib/udev/rules.d
+ macro build --libdir=/usr/lib --wrap-mode=nodownload -Dgtk-doc=false -Dman=false -Dintrospection=enabled -Dsystemdsystemunitdir=/usr/lib/systemd/system -Dudevrulesdir=/usr/lib/udev/rules.d -Dudevhwdbdir=/usr/lib/udev/hwdb.d -Dinstalled_tests=false -Didevice=disabled
 }
 
 package {

@@ -1,20 +1,21 @@
 name: "adwaita-icon-theme"
-version: "49.0"
-release: "1"
+version: "50.0"
+release: "2"
 description: "adwaita-icon-theme"
 sources:
- - "https://download.gnome.org/sources/adwaita-icon-theme/${version.split('.')[0:2].join('.')}/adwaita-icon-theme-${version}.tar.xz"
+ - "https://download.gnome.org/sources/adwaita-icon-theme/50/adwaita-icon-theme-${version}.tar.xz"
 sha256sum:
- - "65166461d1b278aa942f59aa8d0fccf1108d71c65f372c6266e172449791755c"
+ - "fac6e0401fca714780561a081b8f7e27c3bc1db34ebda4da175081f26b24d460"
 depends:
  - "librsvg"
  - "gtk3"
  - "hicolor-icon-theme"
 build_depends:
  - "meson"
+ - "ninja"
 
 build {
- macro build
+ macro build --wrap-mode=nodownload
 }
 
 package {

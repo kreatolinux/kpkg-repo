@@ -1,6 +1,6 @@
 name: "xorg-xkbcomp"
 version: "1.5.0"
-release: "1"
+release: "2"
 description: "X11 client-side library"
 sources:
  - "https://www.x.org/archive/individual/app/xkbcomp-${version}.tar.xz"
@@ -9,10 +9,13 @@ sha256sum:
 depends:
  - "libxkbfile"
 build_depends:
- - "xorg-util-macros"
+ - "meson"
+ - "ninja"
+ - "bison"
+ - "xorgproto"
 
 build {
- macro build --disable-static
+ macro build --libdir=/usr/lib
 }
 
 package {

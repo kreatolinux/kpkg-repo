@@ -1,11 +1,11 @@
 name: "libxkbcommon"
-version: "1.7.0"
-release: "2"
+version: "1.13.2"
+release: "1"
 description: "Keyboard compiler and support library"
 sources:
-  - "https://xkbcommon.org/download/libxkbcommon-$version.tar.xz"
+  - "https://github.com/xkbcommon/libxkbcommon/archive/refs/tags/xkbcommon-$version.tar.gz"
 sha256sum:
-  - "65782f0a10a4b455af9c6baab7040e2f537520caa2ec2092805cdfd36863b247"
+  - "acc4d5f7c3cbba5f9f8d08d8bdbeede84ecede46792f47929aa9321873385528"
 depends:
   - "wayland"
   - "wayland-protocols"
@@ -14,16 +14,13 @@ depends:
   - "xkeyboard-config"
 build_depends:
   - "meson"
+  - "ninja"
+  - "bison"
 
 build {
-  exec "mkdir build"
-  cd "build"
-  exec "meson --prefix=/usr  --buildtype=release    -Denable-x11=true     -Dxkb-config-root=/usr/share/X11/xkb  -Dx-locale-root=/usr/share/X11/locale  -Denable-docs=false"
-  exec ".."
-  exec "ninja"
+  macro build --libdir=/usr/lib --default-library=shared -Denable-x11=true -Dxkb-config-root=/usr/share/X11/xkb -Dx-locale-root=/usr/share/X11/locale -Denable-docs=false
 }
 
 package {
-  exec "DESTDIR=\"$ROOT\" ninja -C build install"
+  macro package
 }
-

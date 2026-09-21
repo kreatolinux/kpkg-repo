@@ -1,6 +1,6 @@
 name: "libxmlb"
 version: "0.3.24"
-release: "1"
+release: "2"
 description: "A library to help create and query binary XML blobs"
 sources:
  - "https://github.com/hughsie/libxmlb/releases/download/${version}/libxmlb-${version}.tar.xz"
@@ -14,7 +14,7 @@ build_depends:
  - "ninja"
 
 build {
- macro build -Dgtkdoc=false
+ macro build --libdir=/usr/lib --default-library=shared --wrap-mode=nodownload -Dgtkdoc=false -Dintrospection=true -Dtests=false -Dstemmer=false
 }
 
 package {

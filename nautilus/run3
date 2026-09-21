@@ -1,11 +1,11 @@
 name: "nautilus"
-version: "50.2.2"
-release: "2"
+version: "50.3"
+release: "3"
 description: "File manager of GNOME"
 sources:
- - "https://gitlab.gnome.org/GNOME/nautilus/-/archive/${version}/nautilus-${version}.tar.gz"
+ - "https://download.gnome.org/sources/nautilus/50/nautilus-${version}.tar.xz"
 sha256sum:
- - "689382c91590b371f697d846a14c0bf9b4708556346be4113d250b35a76ff411"
+ - "63773baf0ddec7b4875fc2c22040378562ea1e6812fe0a2e29c9c8d5c72807f8"
 depends:
  - "bubblewrap"
  - "dconf"
@@ -29,7 +29,7 @@ build_depends:
  - "blueprint-compiler"
 
 build {
- macro build -Dcloudproviders=false -Dselinux=disabled -Dtests=none
+ macro build --libdir=/usr/lib --wrap-mode=nodownload -Dcloudproviders=disabled -Dselinux=disabled -Dtests=none
 }
 
 package {

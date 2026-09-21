@@ -1,6 +1,6 @@
 name: "libdrm"
 version: "2.4.134"
-release: "1"
+release: "2"
 description: "libdrm"
 sources:
  - "https://dri.freedesktop.org/libdrm/libdrm-${version}.tar.xz"
@@ -10,9 +10,10 @@ depends:
  - "libpciaccess"
 build_depends:
  - "meson"
+ - "ninja"
 
 build {
- macro build 
+ macro build --libdir=/usr/lib --default-library=shared -Dtests=false
 }
 
 package {

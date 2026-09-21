@@ -1,11 +1,16 @@
 name: "gnome-settings-daemon"
 version: "50.1"
-release: "2"
-description: "gnome-settings-daemon"
+release: "5"
+description: "GNOME settings daemon"
+extract: false
 sources:
   - "https://gitlab.gnome.org/GNOME/gnome-settings-daemon/-/archive/$version/gnome-settings-daemon-$version.tar.gz"
+  - "https://gitlab.gnome.org/GNOME/libgnome-volume-control/-/archive/7a621180b46421e356b33972e3446775a504139c/libgnome-volume-control-7a621180b46421e356b33972e3446775a504139c.tar.gz"
+  - "busybox-ln.patch"
 sha256sum:
   - "13fd935144a92335e2c4572081803ba20c06a2908d098b2cfa88ec0fca7b3794"
+  - "0bd8bb754ce3fb82b29c83e2186b2a84517be772acdba28d15eb928a44cadec3"
+  - "be1ceda2d7e2747bfd2d5c0b5dc5b7144a69bfba63618cff39299bb00cb7edc1"
 depends:
   - "alsa-lib"
   - "networkmanager"
@@ -27,28 +32,22 @@ depends:
 build_depends:
   - "meson"
   - "ninja"
-  - "git"
+
+prepare {
+  exec "tar -xf gnome-settings-daemon-$version.tar.gz"
+  exec "tar -xf libgnome-volume-control-7a621180b46421e356b33972e3446775a504139c.tar.gz"
+  cd "gnome-settings-daemon-$version"
+  exec "rm -rf subprojects/gvc"
+  exec "mv ../libgnome-volume-control-7a621180b46421e356b33972e3446775a504139c subprojects/gvc"
+  exec "sed -e 's/libsystemd/libelogind/' -i plugins/power/test.py"
+  exec "patch -Np1 -i ../busybox-ln.patch"
+}
 
 build {
-
-  exec "rm -r subprojects/gvc"
-  exec "git clone https://gitlab.gnome.org/GNOME/libgnome-volume-control subprojects/gvc"
-  cd "subprojects/gvc"
-  exec "git checkout 7a621180b46421e356b33972e3446775a504139c"
-  cd "../.."
-
-  local systemd = "true"
-  if ${exec("command -v systemctl")}.exit() != 0 {
-    # Credits to https://www.linuxfromscratch.org/blfs/view/svn/gnome/gnome-settings-daemon.html for these
-    exec "sed -e 's/libsystemd/libelogind/'  -i plugins/power/test.py"
-    local systemd = "false"
-  }
-
-  exec "meson setup  --prefix=/usr  --buildtype=release  -Dsystemd=$systemd  -Dsmartcard=false  -Dcups=false  -Dwwan=false  build"
+  exec "meson setup --prefix=/usr --libdir=lib --buildtype=release --wrap-mode=nodownload -Dsystemd=false -Delogind=true -Dsystemd-units=true -Dsmartcard=false -Dcups=false -Dwwan=false build"
   exec "ninja -C build"
 }
 
 package {
   exec "DESTDIR=\"$ROOT\" ninja -C build install"
 }
-

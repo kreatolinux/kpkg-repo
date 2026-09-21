@@ -1,6 +1,6 @@
 name: "pulseaudio"
 version: "16.99.1"
-release: "1"
+release: "2"
 description: "Sound system"
 sources:
   - "https://www.freedesktop.org/software/pulseaudio/releases/pulseaudio-$version.tar.xz"
@@ -16,18 +16,12 @@ depends:
   - "glib"
 build_depends:
   - "meson"
+  - "ninja"
 opt_depends:
   - "bluez: for Bluetooth support"
 
 build {
-
-  exec "if command -v bluetoothctl > /dev/null; then"
-  exec "bluez5=\"enabled\""
-  exec "else"
-  exec "bluez5=\"disabled\""
-  exec "fi"
-
-  exec "meson setup  --prefix=/usr  --buildtype=release  -Dman=false  -Ddoxygen=false  -Dtests=false  -Ddatabase=gdbm      -Dbluez5=$bluez5  build"
+  exec "meson setup --prefix=/usr --libdir=/usr/lib --buildtype=release -Dman=false -Ddoxygen=false -Dtests=false -Ddatabase=gdbm -Dbluez5=disabled build"
   exec "ninja -C build"
 }
 

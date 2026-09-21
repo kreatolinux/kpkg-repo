@@ -1,11 +1,11 @@
 name: "gtk3"
-version: "3.24.38"
-release: "1"
+version: "3.24.43"
+release: "2"
 description: "gtk3"
 sources:
  - "https://download.gnome.org/sources/gtk+/3.24/gtk+-${version}.tar.xz"
 sha256sum:
- - "ce11decf018b25bdd8505544a4f87242854ec88be054d9ade5f3a20444dd8ee7"
+ - "7e04f0648515034b806b74ae5d774d87cffb1a2a96c468cb5be476d51bf2f3c7"
 depends:
  - "atk"
  - "libx11"
@@ -23,9 +23,10 @@ depends:
  - "wayland-protocols"
 build_depends:
  - "meson"
+ - "ninja"
 
 build {
- macro build -Dman=false -Dx11_backend=true -Ddemos=false -Dtests=false
+ macro build --libdir=/usr/lib --default-library=shared --wrap-mode=nodownload -Dman=false -Dx11_backend=true -Dwayland_backend=true -Ddemos=false -Dexamples=false -Dtests=false -Dinstalled_tests=false
 }
 
 package {

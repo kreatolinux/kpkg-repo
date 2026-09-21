@@ -1,11 +1,11 @@
 name: "libsoup"
-version: "3.4.4"
-release: "1"
+version: "3.6.6"
+release: "2"
 description: "libsoup"
 sources:
- - "https://download.gnome.org/sources/libsoup/3.4/libsoup-${version}.tar.xz"
+ - "https://download.gnome.org/sources/libsoup/3.6/libsoup-${version}.tar.xz"
 sha256sum:
- - "291c67725f36ed90ea43efff25064b69c5a2d1981488477c05c481a3b4b0c5aa"
+ - "51ed0ae06f9d5a40f401ff459e2e5f652f9a510b7730e1359ee66d14d4872740"
 depends:
  - "glib"
  - "glib-networking"
@@ -17,10 +17,10 @@ depends:
  - "libpsl"
 build_depends:
  - "meson"
+ - "ninja"
 
 build {
-# Got options from https://www.linuxfromscratch.org/blfs/view/svn/basicnet/libsoup3.html
- macro build -Dvapi=enabled -Dgssapi=disabled -Dsysprof=disabled --wrap-mode=nofallback
+ macro build --libdir=/usr/lib --default-library=shared --wrap-mode=nodownload -Dvapi=enabled -Dgssapi=disabled -Dntlm=disabled -Dbrotli=disabled -Dsysprof=disabled -Ddocs=disabled -Dtests=false -Dautobahn=disabled -Dpkcs11_tests=disabled
 }
 
 package {

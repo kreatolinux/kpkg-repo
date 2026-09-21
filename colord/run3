@@ -1,6 +1,6 @@
 name: "colord"
 version: "1.4.8"
-release: "2"
+release: "4"
 description: "A system service that makes it easy to manage, install and generate color profiles"
 sources:
  - "https://www.freedesktop.org/software/colord/releases/colord-${version}.tar.xz"
@@ -22,18 +22,11 @@ build_depends:
  - "gobject-introspection"
 
 build {
-
- # Check if systemd exists so we can enable/disable systemd support accordingly.
- local systemd = "true"
- if ${exec("command -v systemctl")}.exit() != 0 {
-   global systemd = "false"
- }
-
- macro build
+ macro build -Dlibdir=lib -Dsystemd=false -Dbash_completion=false -Dtests=false -Dinstalled_tests=false -Ddocs=false -Dman=false --wrap-mode=nodownload
 }
 
 package {
- macro package
+ macro package -Dlibdir=lib
 }
 
 

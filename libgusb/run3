@@ -1,6 +1,6 @@
 name: "libgusb"
 version: "0.4.9"
-release: "2"
+release: "3"
 description: "GObject bindings for libusb"
 sources:
  - "https://github.com/hughsie/libgusb/releases/download/${version}/libgusb-${version}.tar.xz"
@@ -15,11 +15,11 @@ build_depends:
  - "vala"
 
 build {
- macro build -Ddocs=false
+ macro build -Dlibdir=lib -Ddocs=false -Dtests=false -Dumockdev=disabled --wrap-mode=nodownload
 }
 
 package {
- macro package
+ macro package -Dlibdir=lib
 }
 
 

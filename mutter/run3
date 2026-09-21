@@ -1,14 +1,16 @@
 name: "mutter"
-version: "50.2"
-release: "2"
+version: "50.5"
+release: "5"
 description: "Wayland compositor for GNOME"
 extract: false
 sources:
   - "https://gitlab.gnome.org/GNOME/mutter/-/archive/$version/mutter-$version.tar.gz"
   - "https://gitlab.gnome.org/GNOME/gvdb/-/archive/b54bc5da25127ef416858a3ad92e57159ff565b3/gvdb-b54bc5da25127ef416858a3ad92e57159ff565b3.tar.gz"
+  - "disable-man.patch"
 sha256sum:
-  - "ff9176edeeeee233f0c6cbf207698b3dbfe40dc22d4cdef5a1238c036f8d62c8"
+  - "05659bf7a3485a1e4e1e833ac4ad3377e3ee484a4e737e758a713c170850fce3"
   - "ecc3ec39db8c301dce9bb24d8dcbab3360e42f6ce723a772f2f4acd53ad0a5a4"
+  - "eadc37ef96af8e4e1235eae380a06cb9e75729f275158a0c42e3d143dd1158f8"
 depends:
   - "libx11"
   - "libei"
@@ -69,10 +71,11 @@ prepare {
   exec "tar -xf gvdb-b54bc5da25127ef416858a3ad92e57159ff565b3.tar.gz"
   cd "mutter-$version"
   exec "mv ../gvdb-b54bc5da25127ef416858a3ad92e57159ff565b3 subprojects/gvdb"
+  exec "patch -Np1 -i ../disable-man.patch"
 }
 
 build {
-  exec "meson setup --prefix=/usr --buildtype=release --wrap-mode=nodownload -Dtests=false -Dprofiler=false build"
+  exec "meson setup --prefix=/usr --libdir=lib --buildtype=release --wrap-mode=nodownload -Dtests=disabled -Dcogl_tests=false -Dclutter_tests=false -Dmutter_tests=false -Dinstalled_tests=false -Dprofiler=false -Ddocs=false -Dbash_completion=false build"
   exec "ninja -C build"
 }
 

@@ -1,6 +1,6 @@
 name: "libinput"
 version: "1.31.0"
-release: "2"
+release: "3"
 description: "Library that handles input devices"
 sources:
   - "https://gitlab.freedesktop.org/libinput/libinput/-/archive/$version/libinput-$version.tar.gz"
@@ -16,7 +16,7 @@ build_depends:
 build {
   exec "mkdir build"
   cd "build"
-  exec "meson --prefix=/usr  --buildtype=release    -Ddebug-gui=false      -Dtests=false          -Dlibwacom=false       .."
+  exec "meson --prefix=/usr --libdir=lib --wrap-mode=nodownload --buildtype=release    -Ddebug-gui=false      -Dtests=false          -Dlibwacom=false -Dlua-plugins=disabled -Ddocumentation=false -Dinstall-tests=false       .."
   exec "ninja"
 }
 

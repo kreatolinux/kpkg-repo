@@ -1,11 +1,11 @@
 name: "rest"
-version: "0.9.1"
-release: "1"
-description: "rest"
+version: "0.10.2"
+release: "2"
+description: "RESTful web API query library"
 sources:
- - "https://download.gnome.org/sources/rest/0.9/rest-${version}.tar.xz"
+ - "https://gitlab.gnome.org/GNOME/librest/-/archive/${version}/librest-${version}.tar.gz"
 sha256sum:
- - "9266a5c10ece383e193dfb7ffb07b509cc1f51521ab8dad76af96ed14212c2e3"
+ - "adef677ecdbe16f94906f59f07519938a82a207b8c019e37f2d68463f94a464d"
 depends:
  - "gobject-introspection"
  - "json-glib"
@@ -15,11 +15,9 @@ build_depends:
  - "meson"
 
 build {
- macro build -Dgtk_doc=false -Dexamples=false
+ macro build --libdir=/usr/lib --wrap-mode=nodownload -Dgtk_doc=false -Dexamples=false -Dtests=false
 }
 
 package {
  macro package
 }
-
-

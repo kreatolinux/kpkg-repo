@@ -1,6 +1,6 @@
 name: "webkitgtk"
 version: "2.52.4"
-release: "1"
+release: "2"
 description: "webkit"
 sources:
   - "https://webkitgtk.org/releases/webkitgtk-$version.tar.xz"
@@ -45,14 +45,14 @@ build_depends:
 
 func build_webkitgtk4 {
   # Got flags from BLFS
-  exec "cmake -B build -DCMAKE_BUILD_TYPE=Release   -DCMAKE_INSTALL_PREFIX=/usr  -DCMAKE_SKIP_RPATH=ON        -DPORT=GTK                   -DLIB_INSTALL_DIR=/usr/lib   -DUSE_LIBHYPHEN=OFF          -DENABLE_GAMEPAD=OFF         -DENABLE_MINIBROWSER=ON      -DENABLE_SPELLCHECK=OFF      -DENABLE_DOCUMENTATION=OFF   -DUSE_AVIF=OFF               -DUSE_WOFF2=OFF              -DUSE_GTK4=ON                -DUSE_GSTREAMER_TRANSCODER=NO  -DUSE_JPEGXL=OFF             -DUSE_WPE_RENDERER=ON        -DENABLE_JOURNALD_LOG=OFF    -DENABLE_BUBBLEWRAP_SANDBOX=ON  -Wno-dev -G Ninja"
-  exec "ninja -C build"
+  exec "cmake -B build -DCMAKE_BUILD_TYPE=Release   -DCMAKE_INSTALL_PREFIX=/usr  -DCMAKE_SKIP_RPATH=ON        -DPORT=GTK                   -DLIB_INSTALL_DIR=/usr/lib   -DUSE_LIBHYPHEN=OFF          -DENABLE_GAMEPAD=OFF         -DENABLE_MINIBROWSER=OFF      -DENABLE_SPELLCHECK=OFF      -DENABLE_SPEECH_SYNTHESIS=OFF      -DUSE_LIBBACKTRACE=OFF      -DUSE_SYSTEM_SYSPROF_CAPTURE=NO      -DENABLE_DOCUMENTATION=OFF   -DUSE_AVIF=OFF               -DUSE_WOFF2=OFF              -DUSE_GTK4=ON                -DUSE_GSTREAMER_TRANSCODER=NO  -DUSE_JPEGXL=OFF             -DUSE_WPE_RENDERER=ON        -DENABLE_JOURNALD_LOG=OFF    -DENABLE_BUBBLEWRAP_SANDBOX=ON  -Wno-dev -G Ninja"
+  exec "ninja -C build -j1"
 }
 
 func build_webkitgtk3 {
   # Got flags from BLFS
-  exec "cmake -B build -DCMAKE_BUILD_TYPE=Release   -DCMAKE_INSTALL_PREFIX=/usr  -DCMAKE_SKIP_RPATH=ON        -DPORT=GTK                   -DLIB_INSTALL_DIR=/usr/lib   -DUSE_LIBHYPHEN=OFF          -DENABLE_GAMEPAD=OFF         -DENABLE_MINIBROWSER=ON      -DENABLE_SPELLCHECK=OFF      -DENABLE_DOCUMENTATION=OFF   -DUSE_GSTREAMER_TRANSCODER=NO  -DUSE_AVIF=OFF               -DUSE_WOFF2=OFF              -DUSE_GTK4=OFF               -DUSE_JPEGXL=OFF             -DUSE_WPE_RENDERER=ON        -DENABLE_JOURNALD_LOG=OFF    -DENABLE_BUBBLEWRAP_SANDBOX=ON  -Wno-dev -G Ninja"
-  exec "ninja -C build"
+  exec "cmake -B build -DCMAKE_BUILD_TYPE=Release   -DCMAKE_INSTALL_PREFIX=/usr  -DCMAKE_SKIP_RPATH=ON        -DPORT=GTK                   -DLIB_INSTALL_DIR=/usr/lib   -DUSE_LIBHYPHEN=OFF          -DENABLE_GAMEPAD=OFF         -DENABLE_MINIBROWSER=OFF      -DENABLE_SPELLCHECK=OFF      -DENABLE_SPEECH_SYNTHESIS=OFF      -DUSE_LIBBACKTRACE=OFF      -DUSE_SYSTEM_SYSPROF_CAPTURE=NO      -DENABLE_DOCUMENTATION=OFF   -DUSE_GSTREAMER_TRANSCODER=NO  -DUSE_AVIF=OFF               -DUSE_WOFF2=OFF              -DUSE_GTK4=OFF               -DUSE_JPEGXL=OFF             -DUSE_WPE_RENDERER=ON        -DENABLE_JOURNALD_LOG=OFF    -DENABLE_BUBBLEWRAP_SANDBOX=ON  -Wno-dev -G Ninja"
+  exec "ninja -C build -j1"
 }
 
 package {

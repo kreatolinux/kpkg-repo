@@ -1,6 +1,6 @@
 name: "libepoxy"
 version: "1.5.10"
-release: "2"
+release: "3"
 description: "Epoxy is a library for handling OpenGL function pointer management for you."
 sources:
  - "https://github.com/anholt/libepoxy/archive/refs/tags/1.5.10.tar.gz"
@@ -12,9 +12,10 @@ depends:
  - "mesa"
 build_depends:
  - "meson"
+ - "ninja"
 
 build {
- macro build -Dx11=true -Dtests=false
+ macro build --libdir=/usr/lib --default-library=shared --wrap-mode=nodownload -Dx11=true -Dtests=false
 }
 
 package {

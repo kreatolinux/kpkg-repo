@@ -1,6 +1,6 @@
 name: "unifdef"
 version: "2.12"
-release: "1"
+release: "2"
 description: "unifdef"
 sources:
  - "https://dotat.at/prog/unifdef/unifdef-${version}.tar.gz"
@@ -15,7 +15,7 @@ build {
 }
 
 package {
- macro package
+ exec "make prefix=/usr DESTDIR=$ROOT install"
 }
 
 

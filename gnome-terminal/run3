@@ -1,6 +1,6 @@
 name: "gnome-terminal"
 version: "3.60.0"
-release: "1"
+release: "2"
 description: "GNOME Terminal"
 sources:
   - "https://gitlab.gnome.org/GNOME/gnome-terminal/-/archive/$version/gnome-terminal-$version.tar.gz"
@@ -22,12 +22,7 @@ opt_depends:
 
 build {
 
-  local nautilusEnabled = "false"
-  if ${exec("kpkg info nautilus")}.exit() == 0 {
-    local nautilusEnabled = "true"
-  }
-
-  exec "meson setup  --prefix=/usr  --buildtype=release  -Ddocs=false  -Dnautilus_extension=$nautilusEnabled  build"
+  exec "meson setup --prefix=/usr --libdir=/usr/lib --buildtype=release --wrap-mode=nodownload -Ddocs=false -Dnautilus_extension=false build"
   exec "ninja -C build"
 }
 

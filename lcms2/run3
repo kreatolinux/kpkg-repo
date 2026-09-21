@@ -1,18 +1,18 @@
 name: "lcms2"
-version: "2.15"
-release: "1"
+version: "2.19.1"
+release: "2"
 description: "A free, open source, CMM engine"
 sources:
  - "https://github.com/mm2/Little-CMS/releases/download/lcms${version}/lcms2-${version}.tar.gz"
 sha256sum:
- - "b20cbcbd0f503433be2a4e81462106fa61050a35074dc24a4e356792d971ab39"
+ - "bfc54f7bab59fbc921012014a8032e4cba4abd46db47d46b76416a8c0b2815c8"
 depends:
  - "libjpeg-turbo"
 build_depends:
  - "meson"
 
 build {
- macro build -Djpeg=enabled
+ macro build --libdir=/usr/lib --wrap-mode=nodownload -Djpeg=enabled -Dtests=disabled
 }
 
 package {

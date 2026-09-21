@@ -1,6 +1,6 @@
 name: "accountsservice"
 version: "23.13.9"
-release: "1"
+release: "4"
 description: "accountsservice"
 sources:
  - "https://www.freedesktop.org/software/accountsservice/accountsservice-${version}.tar.xz"
@@ -12,16 +12,15 @@ depends:
  - "elogind"
 build_depends:
  - "meson"
+ - "ninja"
  - "vala"
 
-build {
- if ${exec("command -v systemctl")}.exit() != 0 {
- local extraArgs = "-Delogind=true -Dsystemdsystemunitdir=no"
+prepare {
+ exec "sed -i \"/subdir('tests')/d\" meson.build"
 }
 
-# Thanks to BLFS (again)
- exec "mv tests/dbusmock{,-tests}"
- macro build -Dadmin_group=wheel ${extraArgs}
+build {
+ macro build --libdir=/usr/lib -Dadmin_group=wheel -Delogind=true -Dsystemdsystemunitdir=no
 }
 
 package {

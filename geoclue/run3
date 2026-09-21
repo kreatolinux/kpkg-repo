@@ -1,6 +1,6 @@
 name: "geoclue"
 version: "2.8.1"
-release: "2"
+release: "3"
 description: "A D-Bus geoinformation service"
 sources:
  - "https://gitlab.freedesktop.org/geoclue/geoclue/-/archive/${version}/geoclue-${version}.tar.gz"
@@ -15,11 +15,11 @@ build_depends:
  - "meson"
 
 build {
- macro build --sysconfdir=/etc -Dmodem-gps-source=false -D3g-source=false -Dcdma-source=false -Dgtk-doc=false -Dnmea-source=false
+ macro build --sysconfdir=/etc -Dlibdir=lib --wrap-mode=nodownload -Dmodem-gps-source=false -D3g-source=false -Dcdma-source=false -Dgtk-doc=false -Dnmea-source=false
 }
 
 package {
- macro package
+ macro package -Dlibdir=lib
 }
 
 

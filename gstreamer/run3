@@ -1,20 +1,21 @@
 name: "gstreamer"
-version: "1.28.6"
-release: "1"
+version: "1.28.7"
+release: "2"
 description: "gstreamer"
 sources:
  - "https://gstreamer.freedesktop.org/src/gstreamer/gstreamer-${version}.tar.xz"
 sha256sum:
- - "62b6b9f0ad3147a6dd6420ac64a91180b14e990695bddd353b96041611d052ca"
+ - "787329b2c5758e228a71d926a6dcf960bceaacca3cadd63874ba665dfcda013e"
 depends:
  - "glib"
 build_depends:
  - "meson"
+ - "ninja"
  - "gobject-introspection"
  - "python-setuptools"
 
 build {
- macro build
+ macro build --libdir=/usr/lib --default-library=shared --wrap-mode=nodownload -Dintrospection=enabled -Dtests=disabled -Dbenchmarks=disabled -Dexamples=disabled -Ddoc=disabled
 }
 
 package {

@@ -1,6 +1,6 @@
 name: "libnotify"
 version: "0.8.8"
-release: "1"
+release: "2"
 description: "Notification library"
 sources:
  - "https://gitlab.gnome.org/GNOME/libnotify/-/archive/${version}/libnotify-${version}.tar.gz"
@@ -11,9 +11,10 @@ depends:
  - "gobject-introspection"
 build_depends:
  - "meson"
+ - "ninja"
 
 build {
- macro build -Dtests=false -Dman=false -Dgtk_doc=false
+ macro build --libdir=/usr/lib --default-library=shared --wrap-mode=nodownload -Dtests=false -Dintrospection=enabled -Dman=false -Dgtk_doc=false -Ddocbook_docs=disabled
 }
 
 package {

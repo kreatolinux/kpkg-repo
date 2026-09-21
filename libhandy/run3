@@ -1,6 +1,6 @@
 name: "libhandy"
 version: "1.8.3"
-release: "1"
+release: "2"
 description: "Building blocks for modern adaptive GNOME apps"
 sources:
  - "https://gitlab.gnome.org/GNOME/libhandy/-/archive/${version}/libhandy-${version}.tar.gz"
@@ -15,7 +15,7 @@ build_depends:
  - "gobject-introspection"
 
 build {
- macro build 
+ macro build --libdir=/usr/lib --wrap-mode=nodownload -Dtests=false -Dexamples=false
 }
 
 package {

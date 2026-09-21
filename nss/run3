@@ -1,13 +1,13 @@
 name: "nss"
-version: "3.96.1"
-release: "1"
+version: "3.129"
+release: "4"
 description: "network stuff"
 sources:
-  - "https://archive.mozilla.org/pub/security/nss/releases/NSS_3_96_1_RTM/src/nss-$version.tar.gz"
+  - "https://archive.mozilla.org/pub/security/nss/releases/NSS_3_129_RTM/src/nss-$version.tar.gz"
   - "bundle.sh"
   - "certdata2pem.py"
 sha256sum:
-  - "c51e89f6fbb06163f4302e368eeb672d748b52d583948bdb15ef1b069237a496"
+  - "38baa3b0a18a3f674843473b549753c96419a0151abd1e7a9b214ce0493d0785"
   - "SKIP"
   - "SKIP"
 depends:
@@ -56,36 +56,15 @@ build {
 
 package {
   cd ".."
-  local DIST = ${exec("basename dist/Linux*.OBJ").output()}
-  local nsprver = ${exec("pkg-config --modversion nspr").output()}
-  local libdir = "/usr/lib"
-  local includedir = "/usr/include/nss"
-  local vmajor = ${exec("awk '/#define.*NSS_VMAJOR/ {print $3}' nss/lib/nss/nss.h").output()}
-  local vminor = ${exec("awk '/#define.*NSS_VMINOR/ {print $3}' nss/lib/nss/nss.h").output()}
-  local vpatch = ${exec("awk '/#define.*NSS_VPATCH/ {print $3}' nss/lib/nss/nss.h").output()}
-
-  exec "sed nss/pkg/pkg-config/nss.pc.in -e \"s,%prefix%,/usr,g\" -e \"s,%exec_prefix%,\\${prefix},g\" -e \"s,%libdir%,$libdir,g\" -e \"s,%includedir%,$includedir,g\" -e \"s,%NSPR_VERSION%,$nsprver,g\" -e \"s,%NSS_VERSION%,$version,g\" | install -Dm644 /dev/stdin \"$ROOT$libdir/pkgconfig/nss.pc\""
-
-  exec "ln -s nss.pc \"$ROOT$libdir/pkgconfig/mozilla-nss.pc\""
-
-  exec "install -Dt \"$ROOT$libdir\" dist/$DIST/lib/*.so"
-
-  exec "sed nss/pkg/pkg-config/nss-config.in -e \"s,@prefix@,/usr,g\" -e \"s,@exec_prefix@,/usr,g\" -e \"s,@libdir@,$libdir,g\" -e \"s,@includedir@,$includedir,g\" -e \"s,@MOD_MAJOR_VERSION@,$vmajor,g\" -e \"s,@MOD_MINOR_VERSION@,$vminor,g\" -e \"s,@MOD_PATCH_VERSION@,$vpatch,g\" | install -D /dev/stdin \"$ROOT/usr/bin/nss-config\""
-
-cd "dist/$DIST/bin"
-  for util in "${exec("ls -1 *util 2>/dev/null").output()}" {
-    exec "install -Dt \"$ROOT/usr/bin\" \"$util\""
-  }
-  for i in ["shlibsign", "signtool", "signver", "ssltap"] {
-    exec "install -Dt \"$ROOT/usr/bin\" \"$i\""
-  }
-  cd "-"
-
-  exec "install -Dt \"$ROOT$includedir\" -m644 dist/public/nss/*.h"
-
-  # Replace built-in trust with p11-kit connection
-  exec "ln -s pkcs11/p11-kit-trust.so \"$ROOT$libdir/p11-kit-trust.so\""
-  exec "ln -sf p11-kit-trust.so \"$ROOT$libdir/libnssckbi.so\""
+  exec "mkdir -p \"$ROOT/usr/lib/pkgconfig\" \"$ROOT/usr/bin\" \"$ROOT/usr/include/nss\""
+  exec "sed nss/pkg/pkg-config/nss.pc.in -e \"s,%prefix%,/usr,g\" -e \"s,%exec_prefix%,/usr,g\" -e \"s,%libdir%,/usr/lib,g\" -e \"s,%includedir%,/usr/include/nss,g\" -e \"s,%NSPR_VERSION%,4.38.2,g\" -e \"s,%NSS_VERSION%,$version,g\" | install -Dm644 /dev/stdin \"$ROOT/usr/lib/pkgconfig/nss.pc\""
+  exec "ln -sf nss.pc \"$ROOT/usr/lib/pkgconfig/mozilla-nss.pc\""
+  exec "install -Dt \"$ROOT/usr/lib\" dist/Linux*.OBJ/lib/*.so"
+  exec "sed nss/pkg/pkg-config/nss-config.in -e \"s,@prefix@,/usr,g\" -e \"s,@exec_prefix@,/usr,g\" -e \"s,@libdir@,/usr/lib,g\" -e \"s,@includedir@,/usr/include/nss,g\" -e \"s,@MOD_MAJOR_VERSION@,3,g\" -e \"s,@MOD_MINOR_VERSION@,129,g\" -e \"s,@MOD_PATCH_VERSION@,0,g\" | install -D /dev/stdin \"$ROOT/usr/bin/nss-config\""
+  exec "install -Dt \"$ROOT/usr/bin\" dist/Linux*.OBJ/bin/certutil dist/Linux*.OBJ/bin/cmsutil dist/Linux*.OBJ/bin/crlutil dist/Linux*.OBJ/bin/modutil dist/Linux*.OBJ/bin/pk12util dist/Linux*.OBJ/bin/shlibsign dist/Linux*.OBJ/bin/signtool dist/Linux*.OBJ/bin/signver dist/Linux*.OBJ/bin/ssltap dist/Linux*.OBJ/bin/symkeyutil"
+  exec "install -Dt \"$ROOT/usr/include/nss\" -m644 dist/public/nss/*.h"
+  exec "ln -sf pkcs11/p11-kit-trust.so \"$ROOT/usr/lib/p11-kit-trust.so\""
+  exec "ln -sf p11-kit-trust.so \"$ROOT/usr/lib/libnssckbi.so\""
 }
 
 package_ca_certificates_mozilla {

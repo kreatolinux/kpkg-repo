@@ -1,11 +1,11 @@
 name: "libblockdev"
-version: "3.0.4"
-release: "4"
+version: "3.5.0"
+release: "1"
 description: "libblockdev"
 sources:
- - "https://github.com/storaged-project/libblockdev/releases/download/${version}-1/libblockdev-${version}.tar.gz"
+ - "https://github.com/storaged-project/libblockdev/releases/download/${version}/libblockdev-${version}.tar.gz"
 sha256sum:
- - "49841ff92db0ab032931e6f2b5eab63e5969b0ddc14b067b60e46a6eb6c60e47"
+ - "bccd30e6b5d11504de60d9889ff6a2a25b07a4ec8f04070f2387e168301b3e3a"
 depends:
  - "glib"
  - "keyutils"
@@ -17,6 +17,10 @@ depends:
  - "libbytesize"
  - "gobject-introspection"
  - "libnvme"
+ - "kmod"
+ - "libyaml"
+ - "json-glib"
+ - "libatasmart"
 build_depends:
  - "gmake"
 
@@ -26,7 +30,7 @@ prepare {
 
 build {
 # from BLFS
- macro build --sysconfdir=/etc --with-python3 --without-escrow --without-gtk-doc --without-lvm_dbus --without-nvdimm --without-tools
+ macro build --sysconfdir=/etc --with-python3 --without-escrow --without-gtk-doc --without-lvm_dbus --without-nvdimm --without-tools --without-smartmontools --disable-tests
 }
 
 package {

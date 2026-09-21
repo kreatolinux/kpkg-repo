@@ -1,6 +1,6 @@
 name: "gnome-autoar"
 version: "0.4.5"
-release: "1"
+release: "2"
 description: "gnome-autoar"
 sources:
  - "https://download.gnome.org/sources/gnome-autoar/0.4/gnome-autoar-${version}.tar.xz"
@@ -14,7 +14,7 @@ build_depends:
  - "vala"
 
 build {
- macro build -Dvapi=true
+ macro build --libdir=/usr/lib --wrap-mode=nodownload -Dvapi=true
 }
 
 package {

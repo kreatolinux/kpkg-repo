@@ -1,11 +1,11 @@
 name: "udisks"
-version: "2.11.1"
+version: "2.11.2"
 release: "1"
 description: "udisks"
 sources:
  - "https://github.com/storaged-project/udisks/releases/download/udisks-${version}/udisks-${version}.tar.bz2"
 sha256sum:
- - "e88c52bae02fa13414604bbef42c6bb91c2e24177ee0057ed55c6bd7451bcb6d"
+ - "18630a8aad806bea0bc626ce97e71e50ec82c742956ac1c834a4275f8f22207b"
 depends:
  - "libatasmart"
  - "libblockdev"
@@ -16,6 +16,7 @@ depends:
 build_depends:
  - "gobject-introspection"
  - "gmake"
+ - "pkgconf"
 
 build {
 # from BLFS
