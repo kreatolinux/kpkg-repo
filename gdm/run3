@@ -1,6 +1,6 @@
 name: "gdm"
 version: "50.3"
-release: "2"
+release: "5"
 description: "GNOME Display Manager"
 sources:
  - "https://download.gnome.org/sources/gdm/${version.split('.')[0]}/gdm-${version}.tar.xz"
@@ -18,9 +18,8 @@ build_depends:
  - "meson"
 
 build {
- local extraArgs = ""
+ local extraArgs = "-Dlogind-provider=elogind -Dsystemd-journal=false -Dsystemdsystemunitdir=no -Dsystemduserunitdir=no"
  if ${exec("command -v systemctl")}.exit() != 0 {
-  global extraArgs = "-Dlogind-provider=elogind -Dsystemd-journal=false -Dsystemdsystemunitdir=no -Dsystemduserunitdir=no"
   # Adapt the LFS PAM profile to the repository's elogind provider.
   exec "sed -e 's@systemd@elogind@' -e '/elogind/isession  required       pam_loginuid.so' -i data/pam-lfs/gdm-launch-environment.pam"
  }

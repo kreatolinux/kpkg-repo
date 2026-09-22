@@ -1,6 +1,6 @@
 name: "xorg-server"
 version: "21.1.23"
-release: "1"
+release: "2"
 description: "Open source display server for the X Window System"
 sources:
  - "https://www.x.org/releases/individual/xserver/xorg-server-${version}.tar.gz"
@@ -20,6 +20,7 @@ depends:
  - "libpciaccess"
  - "libxcvt"
  - "libxfont2"
+ - "xtrans"
  - "libxshmfence"
  - "libnettle"
  - "pixman"

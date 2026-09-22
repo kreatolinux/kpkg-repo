@@ -1,9 +1,9 @@
 name: "cmake"
 version: "3.31.12"
-release: "1"
+release: "2"
 description: "CMake package contains a modern toolset used for generating Makefiles."
 sources:
-  - "https://cmake.org/files/v3.31/cmake-$version.tar.gz"
+  - "https://cmake.org/files/v${version.split('.')[0:2].join('.')}/cmake-$version.tar.gz"
 sha256sum:
   - "5f3fd5a54dfa65602bdbed64f981a72673cc19f2d304cc2955cf0dfa0cfd8272"
 depends:
@@ -16,11 +16,17 @@ depends:
   - "jsoncpp"
 build_depends:
   - "gmake"
+bootstrap_depends:
+  - "gmake"
 
 build {
   exec "sed -i '19i #include <cstdint>' Utilities/cmcppdap/include/dap/network.h"
   exec "sed -i '/\"lib64\"/s/64//' Modules/GNUInstallDirs.cmake"
-  exec "./bootstrap --prefix=/usr         --mandir=/share/man   --docdir=/share/doc/cmake-$version   --system-curl"
+  if "${KPKG_BOOTSTRAP}" == "1" {
+    exec "./bootstrap --prefix=/usr --mandir=/share/man --docdir=/share/doc/cmake-$version --no-system-libs -- -DCMAKE_USE_OPENSSL=OFF"
+  } else {
+    exec "./bootstrap --prefix=/usr --mandir=/share/man --docdir=/share/doc/cmake-$version --system-curl"
+  }
   exec "make -j$(nproc)"
 }
 

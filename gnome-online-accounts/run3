@@ -1,6 +1,6 @@
 name: "gnome-online-accounts"
 version: "3.58.1"
-release: "4"
+release: "5"
 description: "The GNOME online account manager"
 sources:
  - "https://gitlab.gnome.org/GNOME/gnome-online-accounts/-/archive/${version}/gnome-online-accounts-${version}.tar.gz"
@@ -9,6 +9,7 @@ sha256sum:
 depends:
  - "json-glib"
  - "rest"
+ - "libadwaita"
 build_depends:
  - "meson"
  - "vala"

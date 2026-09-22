@@ -1,0 +1,18 @@
+name: "python-wheel"
+version: "0.45.1"
+release: "2"
+description: "A built-package format for Python"
+sources:
+ - "https://files.pythonhosted.org/packages/8a/98/2d9906746cdc6a6ef809ae6338005b3f21bb568bea3165cfc6a243fdc25c/wheel-${version}.tar.gz"
+sha256sum:
+ - "661e1abd9198507b1409a20c02106d9670b2576e916d58f520316666abca6729"
+depends:
+ - "python"
+ - "python-packaging"
+build_depends:
+ - "python-setuptools"
+ - "python-flit-core"
+
+package {
+ exec "python3 -m pip install --no-build-isolation . --prefix=/usr --root=\"$ROOT\""
+}

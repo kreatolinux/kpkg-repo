@@ -1,6 +1,6 @@
 name: "gnome-shell"
 version: "50.5"
-release: "4"
+release: "5"
 description: "The GNOME shell"
 extract: false
 sources:
@@ -55,10 +55,7 @@ prepare {
 }
 
 build {
-  local extraArgs = ""
-  if ${exec("command -v systemctl")}.exit() != 0 {
-    global extraArgs = "-Dsystemd=false"
-  }
+  local extraArgs = "-Dsystemd=false"
 
   exec "meson setup --prefix=/usr --libdir=lib --buildtype=release --wrap-mode=nodownload -Dtests=false -Dman=false -Dgtk_doc=false $extraArgs build"
   exec "ninja -C build"

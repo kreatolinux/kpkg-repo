@@ -1,6 +1,6 @@
 name: "libwebp"
 version: "1.6.0"
-release: "2"
+release: "3"
 description: "libwebp"
 sources:
  - "https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-${version}.tar.gz"
@@ -12,6 +12,7 @@ depends:
  - "libtiff"
 build_depends:
  - "gmake"
+ - "cmake"
 
 build {
 

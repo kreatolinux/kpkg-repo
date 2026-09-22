@@ -1,6 +1,6 @@
 name: "kmod"
 version: "34.2"
-release: "6"
+release: "7"
 description: "Contains utilities for loading kernel modules"
 sources:
   - "https://www.kernel.org/pub/linux/utils/kernel/kmod/kmod-$version.tar.xz"

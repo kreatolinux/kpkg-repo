@@ -1,6 +1,6 @@
 name: "accountsservice"
 version: "23.13.9"
-release: "4"
+release: "6"
 description: "accountsservice"
 sources:
  - "https://www.freedesktop.org/software/accountsservice/accountsservice-${version}.tar.xz"
@@ -11,6 +11,7 @@ depends:
  - "polkit"
  - "elogind"
 build_depends:
+ - "cmake"
  - "meson"
  - "ninja"
  - "vala"
@@ -20,10 +21,7 @@ prepare {
 }
 
 build {
- local extraArgs = ""
- if ${exec("command -v systemctl")}.exit() != 0 {
-  global extraArgs = "-Delogind=true -Dsystemdsystemunitdir=no"
- }
+ local extraArgs = "-Delogind=true -Dsystemdsystemunitdir=no"
  macro build --libdir=/usr/lib -Dadmin_group=wheel ${extraArgs}
 }
 

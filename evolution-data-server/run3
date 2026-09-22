@@ -1,6 +1,6 @@
 name: "evolution-data-server"
 version: "3.60.2"
-release: "1"
+release: "2"
 description: "Evolution data and calendar service libraries"
 sources:
   - "https://download.gnome.org/sources/evolution-data-server/${version.split('.')[0:2].join('.')}/evolution-data-server-$version.tar.xz"
@@ -26,12 +26,9 @@ opt_depends:
   - "gtk4: for GTK4 support"
 
 build {
-  local extraArgs = ""
+  local extraArgs = "-DENABLE_OAUTH2_WEBKITGTK4=OFF"
   if ${exec("command -v systemctl")}.exit() != 0 {
     global extraArgs = "$extraArgs -DWITH_SYSTEMDUSERUNITDIR=no"
-  }
-  if ${exec("kpkg info webkitgtk4")}.exit() != 0 {
-    global extraArgs = "$extraArgs -DENABLE_OAUTH2_WEBKITGTK4=OFF"
   }
   if ${exec("kpkg info gtk4")}.exit() != 0 {
     global extraArgs = "$extraArgs -DENABLE_GTK4=OFF"

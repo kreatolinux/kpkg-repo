@@ -1,0 +1,7 @@
+name: "getty-tty4.service"
+description: "This service starts up TTY4."
+type: "simple"
+
+service {
+  exec "getty 115200,38400,9600 tty4 linux"
+}

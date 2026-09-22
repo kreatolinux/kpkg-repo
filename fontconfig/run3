@@ -1,6 +1,6 @@
 name: "fontconfig"
 version: "2.15.0"
-release: "1"
+release: "2"
 description: "fontconfig"
 sources:
  - "https://www.freedesktop.org/software/fontconfig/release/fontconfig-${version}.tar.gz"
@@ -13,9 +13,10 @@ depends:
  - "pkgconf"
 build_depends:
  - "gmake"
+ - "meson"
 
 build {
- macro build
+ macro build --libdir=/usr/lib
 }
 
 package {

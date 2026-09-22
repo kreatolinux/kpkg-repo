@@ -1,0 +1,14 @@
+name: "python-flit-core"
+version: "3.12.0"
+release: "1"
+description: "PEP 517 build backend for Python packages"
+sources:
+ - "https://files.pythonhosted.org/packages/69/59/b6fc2188dfc7ea4f936cd12b49d707f66a1cb7a1d2c16172963534db741b/flit_core-${version}.tar.gz"
+sha256sum:
+ - "18f63100d6f94385c6ed57a72073443e1a71a4acb4339491615d0f16d6ff01b2"
+depends:
+ - "python"
+
+package {
+ exec "python3 -m pip install --no-build-isolation . --prefix=/usr --root=\"$ROOT\""
+}

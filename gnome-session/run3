@@ -1,6 +1,6 @@
 name: "gnome-session"
 version: "50.1"
-release: "3"
+release: "4"
 description: "The GNOME session manager"
 sources:
  - "https://gitlab.gnome.org/GNOME/gnome-session/-/archive/${version}/gnome-session-${version}.tar.gz"
@@ -25,7 +25,7 @@ build {
 
  if ${exec("command -v systemctl")}.exit() != 0 {
 # Credits to https://www.linuxfromscratch.org/blfs/view/svn/gnome/gnome-session.html
- local extraArgs = "-Dsystemd_journal=false -Dsystemduserunitdir=/usr/lib/systemd/user"
+ local extraArgs = "-Dsystemduserunitdir=/usr/lib/systemd/user"
 }
 
  macro build ${extraArgs} --libdir=/usr/lib --wrap-mode=nodownload -Ddocbook=false -Dman=false

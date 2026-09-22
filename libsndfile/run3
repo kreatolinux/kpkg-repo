@@ -1,6 +1,6 @@
 name: "libsndfile"
 version: "1.2.2"
-release: "1"
+release: "2"
 description: "A C library for reading and writing sound files containing sampled audio data"
 sources:
  - "https://github.com/libsndfile/libsndfile/releases/download/${version}/libsndfile-${version}.tar.xz"
@@ -15,6 +15,7 @@ depends:
  - "lame"
 build_depends:
  - "gmake"
+ - "cmake"
 
 build {
  macro build 
