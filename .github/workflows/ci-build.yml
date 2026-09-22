@@ -338,6 +338,9 @@ jobs:
             "${KPKG_BIN}" repl -a "set config.Options.cc clang"
             sed -i 's/gcc/clang/' /etc/kreato-release
           fi
+
+          # Temporary: Install libacl as x86_64 container currently doesn't have it
+          "${KPKG_BIN}" build acl -y
           
           git config --system --add safe.directory '*'
 
