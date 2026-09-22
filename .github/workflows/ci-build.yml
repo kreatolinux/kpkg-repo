@@ -148,18 +148,17 @@ jobs:
           if [ ! -f /usr/bin/bwrap.orig ] && command -v bwrap >/dev/null 2>&1; then
             BWRAP_PATH=$(command -v bwrap)
             cp "$BWRAP_PATH" /usr/bin/bwrap.orig
-            cat << 'EOF' > /usr/local/bin/bwrap
-#!/bin/sh
-for arg in "$@"; do
-  if [ -d "$arg/usr/lib" ]; then
-    chmod 755 "$arg" "$arg/usr" "$arg/usr/lib" "$arg/usr/bin" 2>/dev/null || true
-    mkdir -p "$arg/usr/lib/locale" 2>/dev/null || true
-  fi
-done
-chmod 755 /var/cache/kpkg/env /var/cache/kpkg/env/usr /var/cache/kpkg/env/usr/lib /var/cache/kpkg/env/usr/bin 2>/dev/null || true
-mkdir -p /var/cache/kpkg/env/usr/lib/locale 2>/dev/null || true
-exec /usr/bin/bwrap.orig "$@"
-EOF
+            printf '%s\n' \
+              '#!/bin/sh' \
+              'for arg in "$@"; do' \
+              '  if [ -d "$arg/usr/lib" ]; then' \
+              '    chmod 755 "$arg" "$arg/usr" "$arg/usr/lib" "$arg/usr/bin" 2>/dev/null || true' \
+              '    mkdir -p "$arg/usr/lib/locale" 2>/dev/null || true' \
+              '  fi' \
+              'done' \
+              'chmod 755 /var/cache/kpkg/env /var/cache/kpkg/env/usr /var/cache/kpkg/env/usr/lib /var/cache/kpkg/env/usr/bin 2>/dev/null || true' \
+              'mkdir -p /var/cache/kpkg/env/usr/lib/locale 2>/dev/null || true' \
+              'exec /usr/bin/bwrap.orig "$@"' > /usr/local/bin/bwrap
             chmod +x /usr/local/bin/bwrap
           fi
 
