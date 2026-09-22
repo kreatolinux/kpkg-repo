@@ -186,11 +186,17 @@ jobs:
       - name: Update package versions with krep
         if: ${{ matrix.arch != 'arm64' }}
         run: |
-          chmod +x /tmp/krep-bin/krep
+          KREP_BIN=$(find /tmp/krep-bin -type f -name krep -print -quit)
+          if [ -z "$KREP_BIN" ]; then
+            echo "krep artifact did not contain a krep executable" >&2
+            find /tmp/krep-bin -maxdepth 4 -type f -print >&2 || true
+            exit 1
+          fi
+          chmod +x "$KREP_BIN"
           for package in ${{ matrix.packages }}; do
             if [ -f "$GITHUB_WORKSPACE/$package/run3" ] || [ -f "$GITHUB_WORKSPACE/$package/run" ]; then
               echo "Running krep update on $package"
-              /tmp/krep-bin/krep update --package="$package" --repo "$GITHUB_WORKSPACE" --backend repology || true
+              "$KREP_BIN" update --package="$package" --repo "$GITHUB_WORKSPACE" --backend repology || true
             fi
           done
 
@@ -316,22 +322,30 @@ jobs:
           
           git config --system --add safe.directory '*'
 
+          KPKG_EXTRA_ARGS=""
           for package in ${{ matrix.packages }}; do
+                # Keep kpkg diagnostics out of the dependency list so words
+                # such as "error:" cannot be passed to kpkg install.
                 PACKAGES=$(KPKG_ENABLE_DEBUG=0 "${KPKG_BIN}" repl -a "get --all depends.$package.build" 2>/dev/null || true)
-                  
+
                 echo "PACKAGES: $PACKAGES"
 
                 if [ -n "$PACKAGES" ]; then
-                   echo '$PACKAGES exist'
+                    echo "Resolved build dependencies for $package"
                     for dep in $PACKAGES; do
                         echo "trying to install $dep"
                         "${KPKG_BIN}" install "$dep" -y || true
                         echo "$dep is installed, continuing"
                     done
                 fi
-                
-                RUNFILE="/etc/kpkg/repos/main/$package/run"
-                if [ -f "$RUNFILE" ] && grep -q "BOOTSTRAP_DEPENDS" "$RUNFILE"; then
+
+                RUNFILE=""
+                if [ -f "/etc/kpkg/repos/main/$package/run3" ]; then
+                    RUNFILE="/etc/kpkg/repos/main/$package/run3"
+                elif [ -f "/etc/kpkg/repos/main/$package/run" ]; then
+                    RUNFILE="/etc/kpkg/repos/main/$package/run"
+                fi
+                if [ -n "$RUNFILE" ] && grep -Eq "BOOTSTRAP_DEPENDS|bootstrap_depends[[:space:]]*:" "$RUNFILE"; then
                     echo "Bootstrapping $package"
                     FORCE_INSTALL_ALL_FLAG=""
                     if [ "${{ inputs.disable_force_install_all }}" != "true" ]; then
@@ -355,7 +369,7 @@ jobs:
           for package in ${{ matrix.packages }}; do
             version=$("${KPKG_BIN}" info "$package" 2>/dev/null | sed -n 's/^package version: //p' || echo "unknown")
             echo "=== $package ($version) ==="
-            if "${KPKG_BIN}" build "$package" --yes --ignorePostInstall $FORCE_INSTALL_ALL_FLAG 2>&1 |
+            if "${KPKG_BIN}" build "$package" --yes --ignorePostInstall $FORCE_INSTALL_ALL_FLAG $KPKG_EXTRA_ARGS 2>&1 |
                  tee /tmp/build-logs/$package.log; then
               echo "✅ $package built" >> $GITHUB_STEP_SUMMARY
             else
