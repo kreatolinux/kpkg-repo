@@ -63,7 +63,7 @@ on:
 jobs:
   build:
     timeout-minutes: 350
-    runs-on: ${{ matrix.arch == 'arm64' && 'ubuntu-24.04-arm' || 'ubuntu-latest' }}
+    runs-on: ${{ matrix.arch == 'arm64' && 'ubuntu-26.04-arm' || 'ubuntu-latest' }}
     container:
       image: ${{ matrix.arch == 'arm64' && 'ghcr.io/kreatolinux/builder:aarch64@sha256:2cb17ff81c5defeb687d7be382416dde451c3471dfab22a2c7726cb2c1254835' || (inputs.image_sha != '' && format('ghcr.io/kreatolinux/{0}@{1}', inputs.image, inputs.image_sha) || format('ghcr.io/kreatolinux/{0}:latest', inputs.image)) }}
       options: --privileged -v /:/opt/host
@@ -85,7 +85,6 @@ jobs:
             
 
       - name: Get latest workflow run
-        if: ${{ matrix.arch != 'arm64' }}
         id: get-run-id
         run: |
           # The filtered "status=success" listing is not reliably ordered and
@@ -110,9 +109,8 @@ jobs:
           echo "run_id=$LATEST_RUN_ID" >> $GITHUB_OUTPUT
 
       - uses: actions/download-artifact@v8
-        if: ${{ matrix.arch != 'arm64' }}
         with:
-          name: kpkg-amd64-linux-debug
+          name: ${{ matrix.arch == 'arm64' && 'kpkg-arm64-linux-debug' || 'kpkg-amd64-linux-debug' }}
           path: /tmp/kpkg-bin
           github-token: ${{ secrets.GH_PAT }}
           repository: kreatolinux/src
@@ -136,12 +134,13 @@ jobs:
         run: |
           ARCH="${{ matrix.arch || 'x86_64' }}"
           echo "ARCH=$ARCH" >> $GITHUB_ENV
-          if [ "$ARCH" = "arm64" ]; then
-            # The aarch64 builder image ships a working, sandbox-capable kpkg.
-            echo "KPKG_BIN=/usr/bin/kpkg" >> $GITHUB_ENV
-          else
-            echo "KPKG_BIN="${KPKG_BIN}"" >> $GITHUB_ENV
+          KPKG_BIN=$(find /tmp/kpkg-bin -type f -name kpkg -print -quit)
+          if [ -z "$KPKG_BIN" ]; then
+            echo "kpkg artifact did not contain a kpkg executable" >&2
+            find /tmp/kpkg-bin -maxdepth 4 -type f -print >&2 || true
+            exit 1
           fi
+          echo "KPKG_BIN=$KPKG_BIN" >> $GITHUB_ENV
 
       - name: Verify telemetry label policy
         run: sh .github/alloy/test-kpkg-telemetry.sh
