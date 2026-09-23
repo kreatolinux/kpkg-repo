@@ -142,26 +142,6 @@ jobs:
           fi
           echo "KPKG_BIN=$KPKG_BIN" >> $GITHUB_ENV
 
-          # Temporary workaround for bwrap sandbox /usr/lib permissions:
-          # Ensure target env directories are writable (0755) and /usr/lib/locale exists
-          # before bwrap drops DAC capabilities during postinstall.
-          if [ ! -f /usr/bin/bwrap.orig ] && command -v bwrap >/dev/null 2>&1; then
-            BWRAP_PATH=$(command -v bwrap)
-            cp "$BWRAP_PATH" /usr/bin/bwrap.orig
-            printf '%s\n' \
-              '#!/bin/sh' \
-              'for arg in "$@"; do' \
-              '  if [ -d "$arg/usr/lib" ]; then' \
-              '    chmod 755 "$arg" "$arg/usr" "$arg/usr/lib" "$arg/usr/bin" 2>/dev/null || true' \
-              '    mkdir -p "$arg/usr/lib/locale" 2>/dev/null || true' \
-              '  fi' \
-              'done' \
-              'chmod 755 /var/cache/kpkg/env /var/cache/kpkg/env/usr /var/cache/kpkg/env/usr/lib /var/cache/kpkg/env/usr/bin 2>/dev/null || true' \
-              'mkdir -p /var/cache/kpkg/env/usr/lib/locale 2>/dev/null || true' \
-              'exec /usr/bin/bwrap.orig "$@"' > /usr/local/bin/bwrap
-            chmod +x /usr/local/bin/bwrap
-          fi
-
       - name: Verify telemetry label policy
         run: sh .github/alloy/test-kpkg-telemetry.sh
 
@@ -250,22 +230,6 @@ jobs:
           "${KPKG_BIN}" repl -a "set config.Telemetry.buildId $GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT-${{ matrix.packages }}"
           "${KPKG_BIN}" clean --binaries=true --environment=true
 
-          # The runner rootfs predates the openssl 4 transition (image bakes
-          # were broken by the corrupted meson release). Extract libcrypto.so.4
-          # / libssl.so.4 from the repo's openssl package into LD_LIBRARY_PATH
-          # so the downloaded kpkg binary and any mirror archive linked against
-          # openssl 4 keep running even though the image only ships
-          # libcrypto.so.3. Temporary stopgap: remove once the builder
-          # images are rebuilt against openssl 4.
-          if [ "$ARCH" != "arm64" ]; then
-            # The amd64 runner rootfs predates the openssl 4 transition; the
-            # aarch64 builder image is self-contained and needs none of this.
-            mkdir -p /opt/kpkg-libs
-            curl -sfL https://mirror.krea.to/archives/system/x86_64-linux-gnu-jumpstart-openssl/openssl-4.0.2-1.kpkg \
-              | tar -C /opt/kpkg-libs -xz usr/lib/libcrypto.so.4 usr/lib/libssl.so.4 2>/dev/null || true
-            export LD_LIBRARY_PATH="/opt/kpkg-libs/usr/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
-            echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH" >> $GITHUB_ENV
-          fi
           IS_USELESS="true"
           for package in ${{ matrix.packages }}; do
             "${KPKG_BIN}" install "$package" -y --downloadOnly || IS_USELESS="false"
@@ -317,31 +281,12 @@ jobs:
           "${KPKG_BIN}" repl -a "set config.Telemetry.buildId $GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT-${{ matrix.packages }}"
           "${KPKG_BIN}" clean --binaries=true --environment=true
 
-          # The runner rootfs predates the openssl 4 transition (image bakes
-          # were broken by the corrupted meson release). Extract libcrypto.so.4
-          # / libssl.so.4 from the repo's openssl package into LD_LIBRARY_PATH
-          # so the downloaded kpkg binary and any mirror archive linked against
-          # openssl 4 keep running even though the image only ships
-          # libcrypto.so.3. Temporary stopgap: remove once the builder
-          # images are rebuilt against openssl 4.
-          if [ "$ARCH" != "arm64" ]; then
-            # The amd64 runner rootfs predates the openssl 4 transition; the
-            # aarch64 builder image is self-contained and needs none of this.
-            mkdir -p /opt/kpkg-libs
-            curl -sfL https://mirror.krea.to/archives/system/x86_64-linux-gnu-jumpstart-openssl/openssl-4.0.2-1.kpkg \
-              | tar -C /opt/kpkg-libs -xz usr/lib/libcrypto.so.4 usr/lib/libssl.so.4 2>/dev/null || true
-            export LD_LIBRARY_PATH="/opt/kpkg-libs/usr/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
-            echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH" >> $GITHUB_ENV
-          fi
           if [ "${{ inputs.llvm }}" = "true" ]; then
             "${KPKG_BIN}" install llvm -y
             "${KPKG_BIN}" repl -a "set config.Options.cc clang"
             sed -i 's/gcc/clang/' /etc/kreato-release
           fi
 
-          # Temporary: Install libacl as x86_64 container currently doesn't have it
-          "${KPKG_BIN}" build acl -y
-          
           git config --system --add safe.directory '*'
 
           KPKG_EXTRA_ARGS=""
