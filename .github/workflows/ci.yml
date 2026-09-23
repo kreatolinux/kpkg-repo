@@ -12,7 +12,7 @@ on:
       arch:
         description: 'Architecture to build for'
         required: false
-        default: 'x86_64'
+        default: 'both'
         type: choice
         options:
           - x86_64
@@ -66,6 +66,11 @@ jobs:
       phase3_matrix: ${{ steps.compute-matrix.outputs.phase3_matrix }}
       phase4_matrix: ${{ steps.compute-matrix.outputs.phase4_matrix }}
       phase5_matrix: ${{ steps.compute-matrix.outputs.phase5_matrix }}
+      phase6_matrix: ${{ steps.compute-matrix.outputs.phase6_matrix }}
+      phase7_matrix: ${{ steps.compute-matrix.outputs.phase7_matrix }}
+      phase8_matrix: ${{ steps.compute-matrix.outputs.phase8_matrix }}
+      phase9_matrix: ${{ steps.compute-matrix.outputs.phase9_matrix }}
+      phase10_matrix: ${{ steps.compute-matrix.outputs.phase10_matrix }}
       push: ${{ steps.compute-matrix.outputs.push }}
       should_build: ${{ steps.compute-matrix.outputs.should_build }}
       arch: ${{ steps.compute-matrix.outputs.arch }}
@@ -95,7 +100,7 @@ jobs:
           EVENT_NAME="${{ github.event_name }}"
           SHOULD_BUILD="true"
 
-          ARCH="${{ github.event.inputs.arch || 'x86_64' }}"
+          ARCH="${{ github.event.inputs.arch || 'both' }}"
           echo "arch=$ARCH" >> $GITHUB_OUTPUT
 
           # Emit per-arch matrix entries for one package.
@@ -114,24 +119,44 @@ jobs:
           echo "enable_upterm_ssh=${{ github.event.inputs.enable_upterm_ssh || 'false' }}" >> $GITHUB_OUTPUT
           echo "disable_force_install_all=${{ github.event.inputs.disable_force_install_all || 'false' }}" >> $GITHUB_OUTPUT
 
-          if [ -n "${PACKAGE_INPUT:-}" ]; then
-            # Keep push enabled for arm64/both: the aarch64 mirror is being
-            # populated, so explicit package builds should publish archives.
-            if [ "$ARCH" != "x86_64" ]; then PUSH="true"; else PUSH="false"; fi
-            MATRIX='{"include":['
-            SEP=""
-            for pkg in $PACKAGE_INPUT; do
-              for ENTRY in $(phase_entry "$pkg"); do
-                MATRIX="$MATRIX$SEP$ENTRY"
-                SEP=","
-              done
+          # Limit each matrix to 250 jobs, including both architectures.
+          MAX_PER_PHASE=250
+          if [ "$ARCH" = "both" ]; then MAX_PER_PHASE=125; fi
+          PHASE_COUNT=10
+
+          emit_phases() {
+            local packages="$1"
+            local total i start end phase_pkgs matrix sep pkg entry
+            total=$(printf '%s\n' "$packages" | awk 'NF' | wc -l | tr -d ' ')
+            if [ "$total" -gt "$((MAX_PER_PHASE * PHASE_COUNT))" ]; then
+              echo "Too many packages ($total); add more build phases before continuing." >&2
+              exit 1
+            fi
+            for i in $(seq 1 $PHASE_COUNT); do
+              start=$(((i - 1) * MAX_PER_PHASE + 1))
+              end=$((i * MAX_PER_PHASE))
+              phase_pkgs=$(printf '%s\n' "$packages" | awk 'NF' | sed -n "${start},${end}p")
+              matrix=""
+              if [ -n "$phase_pkgs" ]; then
+                matrix='{"include":['
+                sep=""
+                for pkg in $phase_pkgs; do
+                  for entry in $(phase_entry "$pkg"); do
+                    matrix="$matrix$sep$entry"
+                    sep=","
+                  done
+                done
+                matrix="$matrix]}"
+              fi
+              echo "phase${i}_matrix=$matrix" >> $GITHUB_OUTPUT
             done
-            MATRIX="$MATRIX]}"
-            echo "phase1_matrix=$MATRIX" >> $GITHUB_OUTPUT
-            echo "phase2_matrix=" >> $GITHUB_OUTPUT
-            echo "phase3_matrix=" >> $GITHUB_OUTPUT
-            echo "phase4_matrix=" >> $GITHUB_OUTPUT
-            echo "phase5_matrix=" >> $GITHUB_OUTPUT
+          }
+
+          if [ -n "${PACKAGE_INPUT:-}" ]; then
+            # Keep push enabled for arm64/both while populating the mirror.
+            if [ "$ARCH" != "x86_64" ]; then PUSH="true"; else PUSH="false"; fi
+            PACKAGES=$(printf '%s\n' $PACKAGE_INPUT | sort -u)
+            emit_phases "$PACKAGES"
             echo "push=$PUSH" >> $GITHUB_OUTPUT
             echo "should_build=$SHOULD_BUILD" >> $GITHUB_OUTPUT
             exit 0
@@ -139,32 +164,7 @@ jobs:
 
           ALL_RUNS=$(find "$GITHUB_WORKSPACE" -mindepth 2 -maxdepth 2 -type f -name run | sed "s#^$GITHUB_WORKSPACE/##" | sort || true)
           ALL_PACKAGES=$(echo "$ALL_RUNS" | awk -F/ '{print $1}' | sort -u | awk 'NF')
-          MAX_PER_PHASE=250
-
-          TOTAL_PACKAGES=$(echo "$ALL_PACKAGES" | wc -l | tr -d ' ')
-          echo "Total packages: $TOTAL_PACKAGES"
-
-          PHASE_COUNT=5
-          for i in $(seq 1 $PHASE_COUNT); do
-            START=$(((i - 1) * MAX_PER_PHASE + 1))
-            END=$((i * MAX_PER_PHASE))
-            PHASE_PKGS=$(echo "$ALL_PACKAGES" | sed -n "${START},${END}p")
-            
-            if [ -n "$PHASE_PKGS" ]; then
-              MATRIX='{"include":['
-              SEP=""
-              for pkg in $PHASE_PKGS; do
-                for ENTRY in $(phase_entry "$pkg"); do
-                  MATRIX="$MATRIX$SEP$ENTRY"
-                  SEP=","
-                done
-              done
-              MATRIX="$MATRIX]}"
-              echo "phase${i}_matrix=$MATRIX" >> $GITHUB_OUTPUT
-            else
-              echo "phase${i}_matrix=" >> $GITHUB_OUTPUT
-            fi
-          done
+          emit_phases "$ALL_PACKAGES"
 
           if [ "$EVENT_NAME" = "pull_request" ]; then
             PUSH="false"
@@ -196,19 +196,13 @@ jobs:
 
           if [ "$EVENT_NAME" = "pull_request" ]; then
             if [ "$RUN_PKG_COUNT" = "1" ]; then
-              for i in $(seq 2 $PHASE_COUNT); do
-                echo "phase${i}_matrix=" >> $GITHUB_OUTPUT
-              done
-              echo "phase1_matrix={\"include\":[{\"packages\":\"$SINGLE_RUN_PKG\"}]}" >> $GITHUB_OUTPUT
+              emit_phases "$SINGLE_RUN_PKG"
             else
               SHOULD_BUILD="false"
             fi
           elif [ "$EVENT_NAME" = "push" ] && [ "${{ github.ref }}" = "refs/heads/master" ]; then
             if [ "$RUN_PKG_COUNT" = "1" ] && [ "$TOTAL_CHANGED_COUNT" = "1" ]; then
-              for i in $(seq 2 $PHASE_COUNT); do
-                echo "phase${i}_matrix=" >> $GITHUB_OUTPUT
-              done
-              echo "phase1_matrix={\"include\":[{\"packages\":\"$SINGLE_RUN_PKG\"}]}" >> $GITHUB_OUTPUT
+              emit_phases "$SINGLE_RUN_PKG"
             else
               SHOULD_BUILD="false"
             fi
@@ -368,6 +362,141 @@ jobs:
       matrix: ${{ needs.init.outputs.phase5_matrix }}
       push: ${{ needs.init.outputs.push }}
       phase_name: "Phase 5"
+      image: ${{ needs.init.outputs.image }}
+      image_sha: ${{ needs.init.outputs.image_sha }}
+      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      llvm: ${{ needs.init.outputs.llvm == 'true' }}
+      enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
+      disable_force_install_all: ${{ needs.init.outputs.disable_force_install_all == 'true' }}
+    secrets:
+      GH_PAT: ${{ secrets.GH_PAT }}
+      AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
+      AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+      OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
+      OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}
+      OTEL_PASSWORD: ${{ secrets.OTEL_PASSWORD }}
+      LOKI_ENDPOINT: ${{ secrets.LOKI_ENDPOINT }}
+      LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
+      LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
+
+  build_phase6:
+    if: always() && !cancelled() && needs.init.outputs.phase6_matrix != '' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
+    needs: [init, update-sums]
+    uses: ./.github/workflows/ci-build.yml
+    with:
+      matrix: ${{ needs.init.outputs.phase6_matrix }}
+      push: ${{ needs.init.outputs.push }}
+      phase_name: "Phase 6"
+      image: ${{ needs.init.outputs.image }}
+      image_sha: ${{ needs.init.outputs.image_sha }}
+      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      llvm: ${{ needs.init.outputs.llvm == 'true' }}
+      enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
+      disable_force_install_all: ${{ needs.init.outputs.disable_force_install_all == 'true' }}
+    secrets:
+      GH_PAT: ${{ secrets.GH_PAT }}
+      AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
+      AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+      OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
+      OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}
+      OTEL_PASSWORD: ${{ secrets.OTEL_PASSWORD }}
+      LOKI_ENDPOINT: ${{ secrets.LOKI_ENDPOINT }}
+      LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
+      LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
+
+  build_phase7:
+    if: always() && !cancelled() && needs.init.outputs.phase7_matrix != '' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
+    needs: [init, update-sums]
+    uses: ./.github/workflows/ci-build.yml
+    with:
+      matrix: ${{ needs.init.outputs.phase7_matrix }}
+      push: ${{ needs.init.outputs.push }}
+      phase_name: "Phase 7"
+      image: ${{ needs.init.outputs.image }}
+      image_sha: ${{ needs.init.outputs.image_sha }}
+      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      llvm: ${{ needs.init.outputs.llvm == 'true' }}
+      enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
+      disable_force_install_all: ${{ needs.init.outputs.disable_force_install_all == 'true' }}
+    secrets:
+      GH_PAT: ${{ secrets.GH_PAT }}
+      AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
+      AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+      OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
+      OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}
+      OTEL_PASSWORD: ${{ secrets.OTEL_PASSWORD }}
+      LOKI_ENDPOINT: ${{ secrets.LOKI_ENDPOINT }}
+      LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
+      LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
+
+  build_phase8:
+    if: always() && !cancelled() && needs.init.outputs.phase8_matrix != '' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
+    needs: [init, update-sums]
+    uses: ./.github/workflows/ci-build.yml
+    with:
+      matrix: ${{ needs.init.outputs.phase8_matrix }}
+      push: ${{ needs.init.outputs.push }}
+      phase_name: "Phase 8"
+      image: ${{ needs.init.outputs.image }}
+      image_sha: ${{ needs.init.outputs.image_sha }}
+      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      llvm: ${{ needs.init.outputs.llvm == 'true' }}
+      enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
+      disable_force_install_all: ${{ needs.init.outputs.disable_force_install_all == 'true' }}
+    secrets:
+      GH_PAT: ${{ secrets.GH_PAT }}
+      AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
+      AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+      OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
+      OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}
+      OTEL_PASSWORD: ${{ secrets.OTEL_PASSWORD }}
+      LOKI_ENDPOINT: ${{ secrets.LOKI_ENDPOINT }}
+      LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
+      LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
+
+  build_phase9:
+    if: always() && !cancelled() && needs.init.outputs.phase9_matrix != '' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
+    needs: [init, update-sums]
+    uses: ./.github/workflows/ci-build.yml
+    with:
+      matrix: ${{ needs.init.outputs.phase9_matrix }}
+      push: ${{ needs.init.outputs.push }}
+      phase_name: "Phase 9"
+      image: ${{ needs.init.outputs.image }}
+      image_sha: ${{ needs.init.outputs.image_sha }}
+      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      llvm: ${{ needs.init.outputs.llvm == 'true' }}
+      enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
+      disable_force_install_all: ${{ needs.init.outputs.disable_force_install_all == 'true' }}
+    secrets:
+      GH_PAT: ${{ secrets.GH_PAT }}
+      AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
+      AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+      OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
+      OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}
+      OTEL_PASSWORD: ${{ secrets.OTEL_PASSWORD }}
+      LOKI_ENDPOINT: ${{ secrets.LOKI_ENDPOINT }}
+      LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
+      LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
+
+  build_phase10:
+    if: always() && !cancelled() && needs.init.outputs.phase10_matrix != '' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
+    needs: [init, update-sums]
+    uses: ./.github/workflows/ci-build.yml
+    with:
+      matrix: ${{ needs.init.outputs.phase10_matrix }}
+      push: ${{ needs.init.outputs.push }}
+      phase_name: "Phase 10"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.force_build == 'true' }}
