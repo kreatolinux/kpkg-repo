@@ -1,6 +1,6 @@
 name: "go"
 version: "1.26.3"
-release: "2"
+release: "3"
 description: "Go is a statically typed, compiled programming language designed at Google"
 sources:
   - "https://go.dev/dl/go$version.src.tar.gz"
@@ -42,6 +42,7 @@ build {
 }
 
 package {
+  cd ".."
   exec "mkdir -p \"$ROOT\"/usr/bin"
   exec "mkdir -p \"$ROOT\"/usr/local/go"
   exec "cp -r . \"$ROOT\"/usr/local/go"

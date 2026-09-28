@@ -1,6 +1,6 @@
 name: "libxau"
 version: "1.0.12"
-release: "1"
+release: "2"
 description: "X11 authentication library"
 sources:
  - "https://www.x.org/releases/individual/lib/libXau-${version}.tar.xz"

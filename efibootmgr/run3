@@ -1,6 +1,6 @@
 name: "efibootmgr"
 version: "18"
-release: "1"
+release: "2"
 description: "efibootmgr provides tools and libraries to manipulate EFI variables"
 sources:
   - "https://github.com/rhboot/efibootmgr/archive/$version/efibootmgr-$version.tar.gz"
@@ -11,6 +11,9 @@ depends:
   - "popt"
 build_depends:
   - "gmake"
+  - "pkgconf"
+  - "efivar"
+  - "popt"
 
 build {
   exec "sed -e '/-Werror/d' -i Make.defaults"

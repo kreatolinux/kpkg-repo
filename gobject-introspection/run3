@@ -1,6 +1,6 @@
 name: "gobject-introspection"
 version: "1.86.0"
-release: "4"
+release: "5"
 description: "Introspection system for GObject-based libraries"
 sources:
   - "https://gitlab.gnome.org/GNOME/gobject-introspection/-/archive/$version/gobject-introspection-$version.tar.gz"
@@ -14,13 +14,6 @@ build_depends:
   - "ninja"
   - "python-setuptools"
   - "python-packaging"
-bootstrap_depends:
-  - "python"
-  - "meson"
-  - "ninja"
-  - "python-setuptools"
-  - "python-packaging"
-
 build {
   exec "meson setup --prefix=/usr --libdir=/usr/lib --wrap-mode=nofallback -D tests=false build"
   exec "ninja -C build"

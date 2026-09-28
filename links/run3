@@ -1,6 +1,6 @@
 name: "links"
 version: "2.30"
-release: "1"
+release: "2"
 description: "A text WWW browser, similar to Lynx"
 sources:
  - "http://links.twibright.com/download/links-${version}.tar.bz2"
@@ -10,7 +10,7 @@ build_depends:
  - "gmake"
 
 prepare {
- exec "sed -i 's/if (strchr(cast_const_char ud, POST_CHAR)) \*strchr(cast_const_char ud, POST_CHAR) = 0;/if (strchr((char *)ud, POST_CHAR)) *strchr((char *)ud, POST_CHAR) = 0;/' ftp.c"
+ exec "sed -i 's/cast_const_char ud/(char *)ud/g' ftp.c"
 }
 
 build {
