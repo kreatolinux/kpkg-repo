@@ -1,6 +1,6 @@
 name: "efivar"
 version: "39"
-release: "1"
+release: "2"
 description: "efivar provides tools and libraries to manipulate EFI variables"
 sources:
  - "https://github.com/rhboot/efivar/archive/refs/tags/${version}.tar.gz"
