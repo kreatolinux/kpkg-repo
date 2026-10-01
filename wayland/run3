@@ -1,6 +1,6 @@
 name: "wayland"
 version: "1.26.0"
-release: "1"
+release: "2"
 description: "Wayland is a project to define a protocol for a compositor to talk to its clients as well as a library implementation of the protocol."
 sources:
  - "https://gitlab.freedesktop.org/wayland/wayland/-/archive/${version}/wayland-${version}.tar.gz"

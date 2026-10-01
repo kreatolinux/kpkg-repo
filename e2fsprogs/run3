@@ -1,16 +1,19 @@
 name: "e2fsprogs"
 version: "1.47.4"
-release: "2"
+release: "3"
 description: "Provides the filesystem utilities for use with the ext2,ext3 and ext4 filesystem"
 sources:
  - "https://mirrors.edge.kernel.org/pub/linux/kernel/people/tytso/e2fsprogs/v${version}/e2fsprogs-${version}.tar.gz"
 sha256sum:
  - "da274408bebbfd13a5a2fc3cfc66e3ffff17c48534673aa67f88d49b99123b96"
+depends:
+ - "util-linux"
 build_depends:
  - "gmake"
+ - "util-linux"
 
 build {
- macro build --enable-elf-shlibs --with-root-prefix=""
+ macro build --enable-elf-shlibs --with-root-prefix="" --disable-libblkid --disable-libuuid
 }
 
 package {

@@ -1,6 +1,6 @@
 name: "libxft"
 version: "2.3.9"
-release: "1"
+release: "2"
 description: "X11 client-side font rendering library"
 sources:
  - "https://www.x.org/releases/individual/lib/libXft-${version}.tar.xz"
@@ -14,14 +14,15 @@ depends:
  - "freetype"
 build_depends:
  - "xtrans"
+ - "meson"
  - "gmake"
 
 build {
- macro build --disable-static
+ macro build --meson --default-library=shared
 }
 
 package {
- macro package
+ macro package --meson
 }
 
 

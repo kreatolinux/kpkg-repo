@@ -1,6 +1,6 @@
 name: "fish"
 version: "4.7.1"
-release: "1"
+release: "2"
 description: "The user-friendly command line shell."
 sources:
   - "https://github.com/fish-shell/fish-shell/releases/download/$version/fish-$version.tar.xz"
@@ -16,7 +16,7 @@ build_depends:
   - "rust"
 
 build {
-  exec "cmake -S . -B build  -DCMAKE_INSTALL_PREFIX=/usr  -DCMAKE_INSTALL_SYSCONFDIR=/etc  -DCMAKE_BUILD_TYPE=Release  -DBUILD_DOCS=False  -Wno-dev"
+  exec "cmake -S . -B build  -DCMAKE_INSTALL_PREFIX=/usr  -DCMAKE_INSTALL_SYSCONFDIR=/etc  -DCMAKE_BUILD_TYPE=Release  -DWITH_DOCS=OFF  -Wno-dev"
   exec "cmake --build build"
 }
 

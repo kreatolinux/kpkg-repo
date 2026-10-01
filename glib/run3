@@ -1,6 +1,6 @@
 name: "glib"
 version: "2.86.3"
-release: "2"
+release: "3"
 description: "Low-level core library that forms the basis for projects such as GTK+ and GNOME"
 sources:
  - "https://download.gnome.org/sources/glib/${version.split('.')[0:2].join('.')}/glib-${version}.tar.xz"

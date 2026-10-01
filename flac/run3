@@ -1,6 +1,6 @@
 name: "flac"
 version: "1.5.0"
-release: "2"
+release: "3"
 description: "Free Lossless Audio Codec"
 sources:
  - "https://ftp.osuosl.org/pub/xiph/releases/flac/flac-${version}.tar.xz"
@@ -12,7 +12,7 @@ build_depends:
  - "cmake"
 
 build {
- macro build -DBUILD_DOCS=0
+ macro build -DBUILD_DOCS=0 -DCMAKE_POSITION_INDEPENDENT_CODE=ON
 }
 
 package {

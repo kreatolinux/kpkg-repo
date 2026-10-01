@@ -1,5 +1,9 @@
 name: CI
 
+concurrency:
+  group: ci-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name != 'workflow_dispatch' }}
+
 on:
   schedule:
     - cron: '0 0 * * WED'
@@ -275,7 +279,7 @@ jobs:
 
   build_phase2:
     if: always() && !cancelled() && needs.init.outputs.phase2_matrix != '' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
-    needs: [init, update-sums]
+    needs: [init, update-sums, build_phase1]
     uses: ./.github/workflows/ci-build.yml
     with:
       matrix: ${{ needs.init.outputs.phase2_matrix }}
@@ -302,7 +306,7 @@ jobs:
 
   build_phase3:
     if: always() && !cancelled() && needs.init.outputs.phase3_matrix != '' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
-    needs: [init, update-sums]
+    needs: [init, update-sums, build_phase2]
     uses: ./.github/workflows/ci-build.yml
     with:
       matrix: ${{ needs.init.outputs.phase3_matrix }}
@@ -329,7 +333,7 @@ jobs:
 
   build_phase4:
     if: always() && !cancelled() && needs.init.outputs.phase4_matrix != '' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
-    needs: [init, update-sums]
+    needs: [init, update-sums, build_phase3]
     uses: ./.github/workflows/ci-build.yml
     with:
       matrix: ${{ needs.init.outputs.phase4_matrix }}
@@ -356,7 +360,7 @@ jobs:
 
   build_phase5:
     if: always() && !cancelled() && needs.init.outputs.phase5_matrix != '' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
-    needs: [init, update-sums]
+    needs: [init, update-sums, build_phase4]
     uses: ./.github/workflows/ci-build.yml
     with:
       matrix: ${{ needs.init.outputs.phase5_matrix }}
@@ -383,7 +387,7 @@ jobs:
 
   build_phase6:
     if: always() && !cancelled() && needs.init.outputs.phase6_matrix != '' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
-    needs: [init, update-sums]
+    needs: [init, update-sums, build_phase5]
     uses: ./.github/workflows/ci-build.yml
     with:
       matrix: ${{ needs.init.outputs.phase6_matrix }}
@@ -410,7 +414,7 @@ jobs:
 
   build_phase7:
     if: always() && !cancelled() && needs.init.outputs.phase7_matrix != '' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
-    needs: [init, update-sums]
+    needs: [init, update-sums, build_phase6]
     uses: ./.github/workflows/ci-build.yml
     with:
       matrix: ${{ needs.init.outputs.phase7_matrix }}
@@ -437,7 +441,7 @@ jobs:
 
   build_phase8:
     if: always() && !cancelled() && needs.init.outputs.phase8_matrix != '' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
-    needs: [init, update-sums]
+    needs: [init, update-sums, build_phase7]
     uses: ./.github/workflows/ci-build.yml
     with:
       matrix: ${{ needs.init.outputs.phase8_matrix }}
@@ -464,7 +468,7 @@ jobs:
 
   build_phase9:
     if: always() && !cancelled() && needs.init.outputs.phase9_matrix != '' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
-    needs: [init, update-sums]
+    needs: [init, update-sums, build_phase8]
     uses: ./.github/workflows/ci-build.yml
     with:
       matrix: ${{ needs.init.outputs.phase9_matrix }}
@@ -491,7 +495,7 @@ jobs:
 
   build_phase10:
     if: always() && !cancelled() && needs.init.outputs.phase10_matrix != '' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
-    needs: [init, update-sums]
+    needs: [init, update-sums, build_phase9]
     uses: ./.github/workflows/ci-build.yml
     with:
       matrix: ${{ needs.init.outputs.phase10_matrix }}

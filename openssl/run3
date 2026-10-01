@@ -1,6 +1,6 @@
 name: openssl
 version: 4.0.2
-release: 1
+release: 2
 description: "TLS library"
 sources:
   - "https://www.openssl.org/source/openssl-${version}.tar.gz"

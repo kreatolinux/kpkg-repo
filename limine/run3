@@ -1,6 +1,6 @@
 name: "limine"
 version: "8.0.14"
-release: "1"
+release: "2"
 description: "Modern, advanced, portable, multiprotocol bootloader."
 sources:
  - "https://github.com/limine-bootloader/limine/releases/download/v${version}/limine-${version}.tar.xz"
@@ -13,7 +13,11 @@ build_depends:
  - "gmake"
 
 build {
- macro build --enable-bios --enable-uefi-x86-64
+ if "$KPKG_ARCH" == "aarch64" || "$KPKG_ARCH" == "arm64" {
+   macro build --enable-uefi-aarch64
+ } else {
+   macro build --enable-bios --enable-uefi-x86-64
+ }
 }
 
 package {

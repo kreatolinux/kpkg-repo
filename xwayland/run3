@@ -1,6 +1,6 @@
 name: "xwayland"
 version: "24.1.12"
-release: "1"
+release: "2"
 description: "Run X11 applications in Wayland"
 sources:
  - "https://www.x.org/releases/individual/xserver/xwayland-${version}.tar.xz"
@@ -23,6 +23,7 @@ depends:
  - "libxshmfence"
 build_depends:
  - "meson"
+ - "wayland-protocols"
 
 build {
  macro build 

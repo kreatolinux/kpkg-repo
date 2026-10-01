@@ -1,6 +1,6 @@
 name: "booster"
 version: "0.12"
-release: "1"
+release: "2"
 description: "fast and secure initramfs generator"
 sources:
  - "https://github.com/anatol/booster/archive/refs/tags/${version}.tar.gz"
@@ -17,6 +17,7 @@ build {
 }
 
 package {
+ cd "$SRCDIR"
 # Taken from https://github.com/anatol/booster/blob/master/packaging/arch/PKGBUILD
  exec "env install -Dp -m755 generator/generator \"$ROOT/usr/bin/booster\""
  exec "env install -Dp -m755 init/init \"$ROOT/usr/lib/booster/init\""

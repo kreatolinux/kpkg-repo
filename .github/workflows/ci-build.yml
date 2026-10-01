@@ -69,6 +69,7 @@ jobs:
       options: --privileged -v /:/opt/host
     strategy:
       fail-fast: false
+      max-parallel: 16
       matrix: ${{ fromJson(inputs.matrix) }}
     permissions:
       contents: write
@@ -146,7 +147,8 @@ jobs:
         run: sh .github/alloy/test-kpkg-telemetry.sh
 
       - name: Install and start Grafana Alloy
-        if: always() && matrix.arch != 'arm64' 
+        if: ${{ !cancelled() && matrix.arch != 'arm64' }}
+        continue-on-error: true
         env:
           OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
           OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}

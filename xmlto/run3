@@ -1,6 +1,6 @@
 name: "xmlto"
 version: "0.0.29"
-release: "1"
+release: "2"
 description: "Convert xml to many other formats"
 sources:
  - "https://releases.pagure.org/xmlto/xmlto-${version}.tar.gz"
@@ -17,11 +17,12 @@ build_depends:
 build {
  env CFLAGS="$CFLAGS -Wno-implicit-int"
  env LINKS="/usr/bin/links"
- macro build
+ exec "./configure --prefix=/usr"
+ exec "make"
 }
 
 package {
- macro package
+ exec "make DESTDIR=$ROOT install"
 }
 
 

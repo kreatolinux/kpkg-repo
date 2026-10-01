@@ -1,6 +1,6 @@
 name: "freeglut"
 version: "3.4.0"
-release: "1"
+release: "2"
 description: "freeglut"
 sources:
   - "https://netix.dl.sourceforge.net/project/freeglut/freeglut/$version/freeglut-$version.tar.gz"
@@ -15,7 +15,7 @@ build_depends:
   - "gmake"
 
 build {
-  exec "cmake  -DCMAKE_INSTALL_PREFIX=/usr  -DCMAKE_BUILD_TYPE=Release  -DFREEGLUT_BUILD_DEMOS=OFF   -DFREEGLUT_BUILD_STATIC_LIBS=OFF   -B build"
+  exec "cmake  -DCMAKE_INSTALL_PREFIX=/usr  -DCMAKE_BUILD_TYPE=Release  -DCMAKE_C_STANDARD=17  -DFREEGLUT_BUILD_DEMOS=OFF   -DFREEGLUT_BUILD_STATIC_LIBS=OFF   -B build"
   exec "make -C build"
 }
 

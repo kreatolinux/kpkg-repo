@@ -1,6 +1,6 @@
 name: python
 version: 3.14.7
-release: 6
+release: 7
 description: "General-Purpose Programming language"
 sources:
   - "https://www.python.org/ftp/python/${version}/Python-${version}.tar.xz"

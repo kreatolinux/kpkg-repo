@@ -1,6 +1,6 @@
 name: "fuse"
 version: "3.14.1"
-release: "1"
+release: "2"
 description: "Filesystem in Userspace"
 sources:
   - "https://github.com/libfuse/libfuse/releases/download/fuse-$version/fuse-$version.tar.xz"
@@ -13,7 +13,7 @@ build_depends:
   - "meson"
 
 build {
-  exec "meson -Dudevrulesdir=/usr/lib/udev/rules.d/ --prefix=/usr build/"
+  exec "meson -Dudevrulesdir=/usr/lib/udev/rules.d/ -Duseroot=false --prefix=/usr build/"
   exec "ninja -C build/"
 }
 

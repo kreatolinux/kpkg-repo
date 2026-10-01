@@ -1,6 +1,6 @@
 name: "util-linux"
 version: "2.41.3"
-release: "1"
+release: "2"
 description: "Linux Utilities"
 sources:
  - "https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.41/util-linux-${version}.tar.xz"
@@ -14,7 +14,7 @@ build {
 }
 
 package {
- exec "make DESTDIR=$ROOT install"
+ exec "make DESTDIR=$ROOT chgrp=true install"
 }
 
 postinstall {

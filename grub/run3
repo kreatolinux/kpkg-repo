@@ -1,6 +1,6 @@
 name: "grub"
 version: "2.14"
-release: "2"
+release: "3"
 description: "The GNU Grub Bootloader"
 sources:
   - "https://ftp.gnu.org/gnu/grub/grub-$version.tar.xz"
@@ -16,8 +16,6 @@ depends_grub_efi:
   - "efibootmgr"
 
 prepare {
-  exec "bsdtar -xf grub-$version.tar.xz"
-  cd "grub-$version"
   write "grub-core/extra_deps.lst" "depends bli part_gpt"
 }
 

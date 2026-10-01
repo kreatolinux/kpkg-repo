@@ -1,6 +1,6 @@
 name: js115
 version: 115.6.0
-release: 1
+release: 2
 description: "Spidermonkey JavaScript and WebAssembly Engine"
 sources:
  - "https://archive.mozilla.org/pub/firefox/releases/${version}esr/source/firefox-${version}esr.source.tar.xz"
@@ -22,8 +22,6 @@ build_depends:
 no_chkupd: true
 
 prepare {
-  exec "bsdtar -xf firefox-${version}esr.source.tar.xz"
-  cd "firefox-$version"
   exec "git apply ../D190288.1705253813.diff"
 }
 

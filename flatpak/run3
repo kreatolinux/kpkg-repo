@@ -1,6 +1,6 @@
 name: "flatpak"
 version: "1.16.6"
-release: "2"
+release: "3"
 description: "Linux application sandboxing and distribution framework"
 sources:
  - "https://github.com/flatpak/flatpak/releases/download/${version}/flatpak-${version}.tar.xz"
@@ -23,14 +23,15 @@ depends:
  - "gpgme"
 build_depends:
  - "gmake"
+ - "meson"
 no_chkupd: true
 
 build {
- macro build --with-system-bus-proxy --with-system-bubblewrap --disable-documentation
+ macro build --meson -Dsystem_dbus_proxy=xdg-dbus-proxy -Dsystem_bubblewrap=bwrap -Ddocbook_docs=disabled -Dgtkdoc=disabled
 }
 
 package {
- macro package
+ macro package --meson
 }
 
 

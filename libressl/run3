@@ -1,6 +1,6 @@
 name: "libressl"
 version: "4.0.1"
-release: "1"
+release: "2"
 description: "TLS library"
 sources:
  - "https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-${version}.tar.gz"
@@ -11,7 +11,7 @@ build_depends:
   - "cmake"
 
 build {
- macro build
+ macro build -DCMAKE_INSTALL_PREFIX=/usr/lib/libressl -DOPENSSLDIR=/etc/libressl
 }
 
 package {

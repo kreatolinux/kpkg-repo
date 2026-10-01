@@ -1,6 +1,6 @@
 name: "systemd"
 version: "260.2"
-release: "4"
+release: "5"
 description: "The systemd System and Service Manager"
 sources:
   - "https://github.com/systemd/systemd/archive/refs/tags/v$version.tar.gz"
@@ -24,11 +24,7 @@ replaces:
   - "eudev"
 
 prepare {
-  # Force set relative_source_path as realpath on busybox doesn't support
-  # arguments used there.
-  exec "sed -ie '/relative_source_path = /{n;N;N;d}' meson.build"
-  exec "sed -i \"/^relative_source_path = run_command/c\\relative_source_path = '..'\" meson.build"
-
+  # BusyBox ln uses -r instead of --relative.
   exec "sed -i \"s/--relative/-r/g\" meson.build"
 
   write "../ln" "#!/bin/sh"
