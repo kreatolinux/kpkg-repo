@@ -31,13 +31,16 @@ jobs:
         run: |
           set -euo pipefail
           test -n "$GH_TOKEN"
+          response=$(mktemp)
           for attempt in 1 2 3 4 5; do
-            run_id=$(curl --fail --silent --show-error \
-              -H "Authorization: Bearer $GH_TOKEN" \
-              "https://api.github.com/repos/kreatolinux/src/actions/workflows/build.yml/runs?per_page=20" \
-              | awk '/"id":/ { match($0, /[0-9]+/); id=substr($0, RSTART, RLENGTH) }
-                     /"conclusion": "success"/ { print id; exit }')
-            [ -n "$run_id" ] && break
+            if curl --fail --silent --show-error \
+                -H "Authorization: Bearer $GH_TOKEN" \
+                "https://api.github.com/repos/kreatolinux/src/actions/workflows/build.yml/runs?per_page=20" \
+                --output "$response"; then
+              run_id=$(awk '/"id":/ { match($0, /[0-9]+/); id=substr($0, RSTART, RLENGTH) }
+                             /"conclusion": "success"/ { print id; exit }' "$response")
+              [ -n "$run_id" ] && break
+            fi
             sleep 5
           done
           test -n "${run_id:-}"
