@@ -250,15 +250,15 @@ jobs:
           "${KPKG_BIN}" repl -a "set config.Telemetry.buildId $GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT-${{ matrix.packages }}"
           "${KPKG_BIN}" clean --binaries=true --environment=true
 
-          IS_USELESS="true"
-          for package in ${{ matrix.packages }}; do
-            "${KPKG_BIN}" install "$package" -y --downloadOnly || IS_USELESS="false"
-          done
-
           if [ "$FORCE_BUILD" = "true" ]; then
             IS_USELESS="false"
             for package in ${{ matrix.packages }}; do
               "${KPKG_BIN}" clean --binaries --packages "$package"
+            done
+          else
+            IS_USELESS="true"
+            for package in ${{ matrix.packages }}; do
+              "${KPKG_BIN}" install "$package" -y --downloadOnly || IS_USELESS="false"
             done
           fi
 
@@ -317,7 +317,7 @@ jobs:
               case " ${{ matrix.packages }} " in
                 *" $dep "*) continue ;;
               esac
-              if [ "${{ github.event_name }}" = pull_request ]; then
+              if [ "${{ github.event_name }}" = pull_request ] || [ "${{ inputs.pr_validation }}" = true ]; then
                 "${KPKG_BIN}" install "$dep" -y || true
               else
                 "${KPKG_BIN}" install "$dep" -y
@@ -328,8 +328,15 @@ jobs:
           mkdir -p /tmp/failures /tmp/build-logs
           COMPONENT="${{ matrix.packages }}"
           LOG_NAME=$(printf '%s' "$COMPONENT" | tr ' ' '-')
+          FORCE_INSTALL_ALL=""
+          if [ "${{ inputs.force_build }}" = true ] && \
+              { [ "${{ inputs.pr_validation }}" = true ] || [ "${{ github.event_name }}" = pull_request ]; }; then
+            # PR jobs cannot share unpublished dependency archives. Rebuild the
+            # local closure instead of fetching it from the binary repository.
+            FORCE_INSTALL_ALL="--forceInstallAll"
+          fi
           if "${KPKG_BIN}" build $COMPONENT --yes --ignorePostInstall \
-               --useCacheIfAvailable=false 2>&1 | tee "/tmp/build-logs/$LOG_NAME.log"; then
+               --useCacheIfAvailable=false $FORCE_INSTALL_ALL 2>&1 | tee "/tmp/build-logs/$LOG_NAME.log"; then
             echo "✅ $COMPONENT built" >> "$GITHUB_STEP_SUMMARY"
           else
             echo "❌ $COMPONENT failed" >> "$GITHUB_STEP_SUMMARY"

@@ -1,6 +1,6 @@
 name: "gtar"
 version: "1.34"
-release: "2"
+release: "3"
 description: "GNU tar"
 sources:
  - "https://ftp.gnu.org/gnu/tar/tar-${version}.tar.gz"
@@ -12,6 +12,8 @@ build_depends:
  - "gmake"
 
 build {
+ # ACL 2.4 exports these names; rename tar's private wrappers (upstream 08c3fc2e).
+ exec "sed -i -e 's/acl_get_file_at/tar_acl_get_file_at/g' -e 's/acl_set_file_at/tar_acl_set_file_at/g' -e 's/acl_delete_def_file_at/tar_acl_delete_def_file_at/g' src/xattrs.c"
  macro build --configure
 }
 
