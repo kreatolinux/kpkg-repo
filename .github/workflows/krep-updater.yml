@@ -32,9 +32,10 @@ jobs:
           set -euo pipefail
           test -n "$GH_TOKEN"
           python3 - <<'PY' > /tmp/source-run-id
-          import json, os, urllib.parse, urllib.request
+          import json, os, urllib.error, urllib.parse, urllib.request
 
           token = os.environ["GH_TOKEN"]
+          minimum_sha = "0809aec87064a55b79b6f20a231c16dceb50ecfc"
           headers = {
               "Accept": "application/vnd.github+json",
               "Authorization": f"Bearer {token}",
@@ -50,6 +51,17 @@ jobs:
           with urllib.request.urlopen(urllib.request.Request(runs_url, headers=headers)) as response:
               runs = json.load(response)["workflow_runs"]
           for run in runs:
+              compare_url = (
+                  "https://api.github.com/repos/kreatolinux/src/compare/"
+                  f"{minimum_sha}...{run['head_sha']}"
+              )
+              try:
+                  with urllib.request.urlopen(urllib.request.Request(compare_url, headers=headers)) as response:
+                      relation = json.load(response)["status"]
+              except urllib.error.HTTPError:
+                  continue
+              if relation not in ("identical", "ahead"):
+                  continue
               artifacts_url = run["artifacts_url"] + "?per_page=100"
               with urllib.request.urlopen(urllib.request.Request(artifacts_url, headers=headers)) as response:
                   artifacts = json.load(response)["artifacts"]
@@ -58,7 +70,9 @@ jobs:
                   print(run["id"])
                   break
           else:
-              raise SystemExit("no successful master krep artifact is available")
+              raise SystemExit(
+                  "no successful master krep artifact containing wildcard failure isolation is available"
+              )
           PY
           echo "run_id=$(cat /tmp/source-run-id)" >> "$GITHUB_OUTPUT"
 
