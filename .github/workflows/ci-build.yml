@@ -147,7 +147,8 @@ jobs:
         run: sh .github/alloy/test-kpkg-telemetry.sh
 
       - name: Install and start Grafana Alloy
-        if: ${{ !cancelled() && matrix.arch != 'arm64' }}
+        id: alloy
+        if: ${{ success() && matrix.arch != 'arm64' }}
         continue-on-error: true
         env:
           OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
@@ -158,6 +159,7 @@ jobs:
           LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
         run: |
           set -euo pipefail
+          echo "ready=false" >> "$GITHUB_OUTPUT"
           ALLOY_VERSION=v1.11.2
           ALLOY_DIR=$(mktemp -d)
           curl --fail --silent --show-error --location --retry 3 \
@@ -173,6 +175,7 @@ jobs:
           ALLOY_PID=$!
           for _ in $(seq 1 30); do
             if curl --silent --output /dev/null --connect-timeout 1 http://127.0.0.1:4318/; then
+              echo "ready=true" >> "$GITHUB_OUTPUT"
               exit 0
             fi
             if ! kill -0 "$ALLOY_PID" 2>/dev/null; then
@@ -224,7 +227,7 @@ jobs:
             mount --bind "$GITHUB_WORKSPACE" /etc/kpkg/repos/main
           fi
 
-          "${KPKG_BIN}" repl -a "set config.Telemetry.enabled true"
+          "${KPKG_BIN}" repl -a "set config.Telemetry.enabled ${{ steps.alloy.outputs.ready == 'true' }}"
           "${KPKG_BIN}" repl -a "set config.Telemetry.endpoint http://127.0.0.1:4318"
           "${KPKG_BIN}" repl -a "set config.Telemetry.tls false"
           "${KPKG_BIN}" repl -a "set config.Telemetry.authType none"
@@ -275,7 +278,7 @@ jobs:
             mount --bind "$GITHUB_WORKSPACE" /etc/kpkg/repos/main
           fi
 
-          "${KPKG_BIN}" repl -a "set config.Telemetry.enabled true"
+          "${KPKG_BIN}" repl -a "set config.Telemetry.enabled ${{ steps.alloy.outputs.ready == 'true' }}"
           "${KPKG_BIN}" repl -a "set config.Telemetry.endpoint http://127.0.0.1:4318"
           "${KPKG_BIN}" repl -a "set config.Telemetry.tls false"
           "${KPKG_BIN}" repl -a "set config.Telemetry.authType none"
@@ -421,7 +424,7 @@ jobs:
           
           cd "$GITHUB_WORKSPACE"
           committed_any=false
-          "${KPKG_BIN}" repl -a "set config.Telemetry.enabled true"
+          "${KPKG_BIN}" repl -a "set config.Telemetry.enabled ${{ steps.alloy.outputs.ready == 'true' }}"
           "${KPKG_BIN}" repl -a "set config.Telemetry.endpoint http://127.0.0.1:4318"
           "${KPKG_BIN}" repl -a "set config.Telemetry.tls false"
           "${KPKG_BIN}" repl -a "set config.Telemetry.authType none"
@@ -505,7 +508,7 @@ jobs:
       - name: Install dependencies for upterm session
         if: failure() && github.event_name == 'workflow_dispatch' && inputs.enable_upterm_ssh == true
         run: |
-          kpkg repl -a "set config.Telemetry.enabled true"
+          kpkg repl -a "set config.Telemetry.enabled ${{ steps.alloy.outputs.ready == 'true' }}"
           kpkg repl -a "set config.Telemetry.endpoint http://127.0.0.1:4318"
           kpkg repl -a "set config.Telemetry.tls false"
           kpkg repl -a "set config.Telemetry.authType none"
