@@ -159,9 +159,9 @@ jobs:
             exit 0
           fi
           missing=""
-          IFS=',' read -ra dependencies <<< "${{ matrix.dependencies }}"
-          for dependency in "${dependencies[@]}"; do
-            [ -n "$dependency" ] || continue
+          # Component IDs are hex strings; split their comma-separated list
+          # without Bash arrays or here-strings (container run steps use sh).
+          for dependency in $(printf '%s' "${{ matrix.dependencies }}" | tr ',' ' '); do
             marker="minio/${{ secrets.AWS_BUCKET }}/ci-status/${{ github.run_id }}/${{ github.run_attempt }}/${{ matrix.arch }}/$dependency"
             if ! mc stat "$marker" >/dev/null 2>&1; then
               blocked=true
