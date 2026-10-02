@@ -18,25 +18,19 @@ on:
         required: false
         default: 'both'
         type: choice
-        options:
-          - x86_64
-          - arm64
-          - both
+        options: [x86_64, arm64, both]
       image:
         description: 'Container image to use'
         required: false
         default: 'builder-repo'
         type: choice
-        options:
-          - builder-repo
-          - builder-systemd
-          - builder
+        options: [builder-repo, builder-systemd, builder]
       image_sha:
-        description: 'Optional: Specific SHA256 digest for the docker image (e.g., sha256:abc123...)'
+        description: 'Optional SHA256 digest for the container image'
         required: false
         default: ''
       force_build:
-        description: 'Force build even if no changes detected'
+        description: 'Force build even if a package archive exists'
         required: false
         default: false
         type: boolean
@@ -50,198 +44,183 @@ on:
         required: false
         default: false
         type: boolean
-      disable_force_install_all:
-        description: 'Disable forceInstallAll flag during build'
-        required: false
-        default: false
-        type: boolean
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   init:
     runs-on: ubuntu-latest
     container: ghcr.io/kreatolinux/builder
     outputs:
-      phase1_matrix: ${{ steps.compute-matrix.outputs.phase1_matrix }}
-      phase2_matrix: ${{ steps.compute-matrix.outputs.phase2_matrix }}
-      phase3_matrix: ${{ steps.compute-matrix.outputs.phase3_matrix }}
-      phase4_matrix: ${{ steps.compute-matrix.outputs.phase4_matrix }}
-      phase5_matrix: ${{ steps.compute-matrix.outputs.phase5_matrix }}
-      phase6_matrix: ${{ steps.compute-matrix.outputs.phase6_matrix }}
-      phase7_matrix: ${{ steps.compute-matrix.outputs.phase7_matrix }}
-      phase8_matrix: ${{ steps.compute-matrix.outputs.phase8_matrix }}
-      phase9_matrix: ${{ steps.compute-matrix.outputs.phase9_matrix }}
-      phase10_matrix: ${{ steps.compute-matrix.outputs.phase10_matrix }}
+      level1_matrix: ${{ steps.compute-matrix.outputs.level1_matrix }}
+      level2_matrix: ${{ steps.compute-matrix.outputs.level2_matrix }}
+      level3_matrix: ${{ steps.compute-matrix.outputs.level3_matrix }}
+      level4_matrix: ${{ steps.compute-matrix.outputs.level4_matrix }}
+      level5_matrix: ${{ steps.compute-matrix.outputs.level5_matrix }}
+      level6_matrix: ${{ steps.compute-matrix.outputs.level6_matrix }}
+      level7_matrix: ${{ steps.compute-matrix.outputs.level7_matrix }}
+      level8_matrix: ${{ steps.compute-matrix.outputs.level8_matrix }}
+      level9_matrix: ${{ steps.compute-matrix.outputs.level9_matrix }}
+      level10_matrix: ${{ steps.compute-matrix.outputs.level10_matrix }}
+      level11_matrix: ${{ steps.compute-matrix.outputs.level11_matrix }}
+      level12_matrix: ${{ steps.compute-matrix.outputs.level12_matrix }}
+      level13_matrix: ${{ steps.compute-matrix.outputs.level13_matrix }}
+      level14_matrix: ${{ steps.compute-matrix.outputs.level14_matrix }}
+      level15_matrix: ${{ steps.compute-matrix.outputs.level15_matrix }}
+      level16_matrix: ${{ steps.compute-matrix.outputs.level16_matrix }}
+      level17_matrix: ${{ steps.compute-matrix.outputs.level17_matrix }}
+      level18_matrix: ${{ steps.compute-matrix.outputs.level18_matrix }}
+      level19_matrix: ${{ steps.compute-matrix.outputs.level19_matrix }}
+      level20_matrix: ${{ steps.compute-matrix.outputs.level20_matrix }}
+      level21_matrix: ${{ steps.compute-matrix.outputs.level21_matrix }}
+      level22_matrix: ${{ steps.compute-matrix.outputs.level22_matrix }}
+      level23_matrix: ${{ steps.compute-matrix.outputs.level23_matrix }}
+      level24_matrix: ${{ steps.compute-matrix.outputs.level24_matrix }}
+      level25_matrix: ${{ steps.compute-matrix.outputs.level25_matrix }}
+      level26_matrix: ${{ steps.compute-matrix.outputs.level26_matrix }}
+      level27_matrix: ${{ steps.compute-matrix.outputs.level27_matrix }}
+      level28_matrix: ${{ steps.compute-matrix.outputs.level28_matrix }}
+      level29_matrix: ${{ steps.compute-matrix.outputs.level29_matrix }}
+      level30_matrix: ${{ steps.compute-matrix.outputs.level30_matrix }}
+      level31_matrix: ${{ steps.compute-matrix.outputs.level31_matrix }}
+      level32_matrix: ${{ steps.compute-matrix.outputs.level32_matrix }}
       push: ${{ steps.compute-matrix.outputs.push }}
       should_build: ${{ steps.compute-matrix.outputs.should_build }}
-      arch: ${{ steps.compute-matrix.outputs.arch }}
       runfiles: ${{ steps.check-sums.outputs.runfiles }}
       image: ${{ steps.compute-matrix.outputs.image }}
       image_sha: ${{ steps.compute-matrix.outputs.image_sha }}
       force_build: ${{ steps.compute-matrix.outputs.force_build }}
       llvm: ${{ steps.compute-matrix.outputs.llvm }}
       enable_upterm_ssh: ${{ steps.compute-matrix.outputs.enable_upterm_ssh }}
-      disable_force_install_all: ${{ steps.compute-matrix.outputs.disable_force_install_all }}
     steps:
       - uses: actions/checkout@v6
         with:
           ref: ${{ github.head_ref || github.ref_name }}
           fetch-depth: 0
-     
 
-      - name: Compute matrix and flags
+      - name: Find latest successful kpkg build
+        id: get-run-id
+        run: |
+          set -euo pipefail
+          for i in 1 2 3 4 5; do
+            LATEST_RUN_ID=$(curl -s --fail -H "Authorization: Bearer ${{ secrets.GH_PAT }}"               "https://api.github.com/repos/kreatolinux/src/actions/workflows/build.yml/runs?per_page=20"               | awk '/"id":/ { match($0, /[0-9]+/); lastid=substr($0, RSTART, RLENGTH) }
+                     /"conclusion": "success"/ { print lastid; exit }') && [ -n "$LATEST_RUN_ID" ] && break
+            sleep 5
+          done
+          test -n "${LATEST_RUN_ID:-}"
+          echo "run_id=$LATEST_RUN_ID" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/download-artifact@v8
+        with:
+          name: kpkg-amd64-linux-debug
+          path: /tmp/kpkg-bin
+          github-token: ${{ secrets.GH_PAT }}
+          repository: kreatolinux/src
+          run-id: ${{ steps.get-run-id.outputs.run_id }}
+
+      - name: Compute dependency levels and flags
         id: compute-matrix
         env:
           PACKAGE_INPUT: ${{ github.event.inputs.package }}
         run: |
-          set -ex
+          set -euo pipefail
           cd "$GITHUB_WORKSPACE"
           git config --global --add safe.directory "$GITHUB_WORKSPACE" || true
-          PUSH="true"
-          EVENT_NAME="${{ github.event_name }}"
-          SHOULD_BUILD="true"
-
           ARCH="${{ github.event.inputs.arch || 'both' }}"
-          echo "arch=$ARCH" >> $GITHUB_OUTPUT
+          PUSH=true
+          SHOULD_BUILD=true
+          PACKAGES=""
 
-          # Emit per-arch matrix entries for one package.
-          phase_entry() {
-            local pkg="$1"
-            case "$ARCH" in
-              arm64) printf '{"packages":"%s","arch":"arm64"}\n' "$pkg" ;;
-              both)  printf '{"packages":"%s"}\n{"packages":"%s","arch":"arm64"}\n' "$pkg" "$pkg" ;;
-              *)     printf '{"packages":"%s"}\n' "$pkg" ;;
-            esac
-          }
-          echo "image=${{ github.event.inputs.image || 'builder-repo' }}" >> $GITHUB_OUTPUT
-          echo "image_sha=${{ github.event.inputs.image_sha || '' }}" >> $GITHUB_OUTPUT
-          echo "force_build=${{ github.event.inputs.force_build || 'false' }}" >> $GITHUB_OUTPUT
-          echo "llvm=${{ github.event.inputs.llvm || 'false' }}" >> $GITHUB_OUTPUT
-          echo "enable_upterm_ssh=${{ github.event.inputs.enable_upterm_ssh || 'false' }}" >> $GITHUB_OUTPUT
-          echo "disable_force_install_all=${{ github.event.inputs.disable_force_install_all || 'false' }}" >> $GITHUB_OUTPUT
+          echo "image=${{ github.event.inputs.image || 'builder-repo' }}" >> "$GITHUB_OUTPUT"
+          echo "image_sha=${{ github.event.inputs.image_sha || '' }}" >> "$GITHUB_OUTPUT"
+          echo "force_build=${{ github.event.inputs.force_build || 'false' }}" >> "$GITHUB_OUTPUT"
+          echo "llvm=${{ github.event.inputs.llvm || 'false' }}" >> "$GITHUB_OUTPUT"
+          echo "enable_upterm_ssh=${{ github.event.inputs.enable_upterm_ssh || 'false' }}" >> "$GITHUB_OUTPUT"
 
-          # Limit each matrix to 250 jobs, including both architectures.
-          MAX_PER_PHASE=250
-          if [ "$ARCH" = "both" ]; then MAX_PER_PHASE=125; fi
-          PHASE_COUNT=10
-
-          emit_phases() {
-            local packages="$1"
-            local total i start end phase_pkgs matrix sep pkg entry
-            total=$(printf '%s\n' "$packages" | awk 'NF' | wc -l | tr -d ' ')
-            if [ "$total" -gt "$((MAX_PER_PHASE * PHASE_COUNT))" ]; then
-              echo "Too many packages ($total); add more build phases before continuing." >&2
-              exit 1
-            fi
-            for i in $(seq 1 $PHASE_COUNT); do
-              start=$(((i - 1) * MAX_PER_PHASE + 1))
-              end=$((i * MAX_PER_PHASE))
-              phase_pkgs=$(printf '%s\n' "$packages" | awk 'NF' | sed -n "${start},${end}p")
-              matrix=""
-              if [ -n "$phase_pkgs" ]; then
-                matrix='{"include":['
-                sep=""
-                for pkg in $phase_pkgs; do
-                  for entry in $(phase_entry "$pkg"); do
-                    matrix="$matrix$sep$entry"
-                    sep=","
-                  done
-                done
-                matrix="$matrix]}"
-              fi
-              echo "phase${i}_matrix=$matrix" >> $GITHUB_OUTPUT
-            done
+          all_packages() {
+            for path in "$GITHUB_WORKSPACE"/*; do
+              [ -d "$path" ] || continue
+              if [ -f "$path/run3" ] || [ -f "$path/run" ]; then basename "$path"; fi
+            done | sort -u
           }
 
           if [ -n "${PACKAGE_INPUT:-}" ]; then
-            # Keep push enabled for arm64/both while populating the mirror.
-            if [ "$ARCH" != "x86_64" ]; then PUSH="true"; else PUSH="false"; fi
             PACKAGES=$(printf '%s\n' $PACKAGE_INPUT | sort -u)
-            emit_phases "$PACKAGES"
-            echo "push=$PUSH" >> $GITHUB_OUTPUT
-            echo "should_build=$SHOULD_BUILD" >> $GITHUB_OUTPUT
-            exit 0
+            if [ "$ARCH" = x86_64 ]; then PUSH=false; fi
+          elif [ "${{ github.event_name }}" = schedule ] || [ "${{ github.event_name }}" = workflow_dispatch ]; then
+            PACKAGES=$(all_packages)
+          else
+            if [ "${{ github.event_name }}" = pull_request ]; then
+              PUSH=false
+              BASE_SHA="${{ github.event.pull_request.base.sha }}"
+              HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+              git fetch --no-tags --depth=1 origin "$BASE_SHA" "$HEAD_SHA" || true
+              CHANGED_FILES=$(git diff --name-only "$BASE_SHA" "$HEAD_SHA" || true)
+            else
+              BEFORE_SHA="${{ github.event.before }}"
+              if git cat-file -e "$BEFORE_SHA^{commit}" 2>/dev/null; then
+                CHANGED_FILES=$(git diff --name-only "$BEFORE_SHA" "${{ github.sha }}" || true)
+              else
+                CHANGED_FILES=$(git show --name-only --pretty=format: "${{ github.sha }}" | tail -n +2 || true)
+              fi
+            fi
+            CHANGED_RUNFILES=$(printf '%s\n' "$CHANGED_FILES" | grep -E '^[^/]+/run3?$' || true)
+            RUN_PKG_COUNT=$(printf '%s\n' "$CHANGED_RUNFILES" | awk -F/ 'NF {print $1}' | sort -u | wc -l | tr -d ' ')
+            TOTAL_CHANGED_COUNT=$(printf '%s\n' "$CHANGED_FILES" | awk 'NF' | wc -l | tr -d ' ')
+            if [ "$RUN_PKG_COUNT" = 1 ] && { [ "${{ github.event_name }}" = pull_request ] || [ "$TOTAL_CHANGED_COUNT" = 1 ]; }; then
+              PACKAGES=$(printf '%s\n' "$CHANGED_RUNFILES" | head -n1 | cut -d/ -f1)
+            else
+              SHOULD_BUILD=false
+            fi
           fi
 
-          ALL_RUNS=$(find "$GITHUB_WORKSPACE" -mindepth 2 -maxdepth 2 -type f -name run | sed "s#^$GITHUB_WORKSPACE/##" | sort || true)
-          ALL_PACKAGES=$(echo "$ALL_RUNS" | awk -F/ '{print $1}' | sort -u | awk 'NF')
-          emit_phases "$ALL_PACKAGES"
+          KPKG_BIN=$(find /tmp/kpkg-bin -type f -name kpkg -print -quit)
+          test -n "$KPKG_BIN"
+          chmod +x "$KPKG_BIN"
+          rm -rf /etc/kpkg/repos/main
+          mkdir -p /etc/kpkg/repos
+          ln -s "$GITHUB_WORKSPACE" /etc/kpkg/repos/main
 
-          if [ "$EVENT_NAME" = "pull_request" ]; then
-            PUSH="false"
-            BASE_SHA="${{ github.event.pull_request.base.sha }}"
-            HEAD_SHA="${{ github.event.pull_request.head.sha }}"
-            git fetch --no-tags --depth=1 origin "$BASE_SHA" "$HEAD_SHA" || true
-            CHANGED_FILES=$(git diff --name-only "$BASE_SHA" "$HEAD_SHA" || true)
-            CHANGED_RUNFILES=$(git diff --name-only "$BASE_SHA" "$HEAD_SHA" -- '*/run' || true)
-          elif [ "$EVENT_NAME" = "push" ]; then
-            BEFORE_SHA="${{ github.event.before }}"
-            if git cat-file -e "$BEFORE_SHA^{commit}" 2>/dev/null; then
-              CHANGED_FILES=$(git diff --name-only "$BEFORE_SHA" "${{ github.sha }}" || true)
-              CHANGED_RUNFILES=$(git diff --name-only "$BEFORE_SHA" "${{ github.sha }}" -- '*/run' || true)
+          if [ "$SHOULD_BUILD" = true ] && [ -n "$PACKAGES" ]; then
+            ROOTS=$(printf '%s\n' "$PACKAGES" | paste -sd, -)
+            if [ "${{ github.event_name }}" = pull_request ]; then
+              # PR jobs cannot publish dependency artifacts for later levels.
+              # Keep selected roots in one level; kpkg resolves their closure locally.
+              python3 -c 'import json,sys; roots=sorted(set(sys.argv[1].split(","))); print(json.dumps({"schema_version":1,"roots":roots,"nodes":[{"name":name,"repo":"main"} for name in roots],"edges":[]},separators=(",",":")))' "$ROOTS" > /tmp/topology.json
             else
-              CHANGED_FILES=$(git show --name-only --pretty=format: "${{ github.sha }}" | tail -n +2 || true)
-              CHANGED_RUNFILES=$(git diff-tree --no-commit-id --name-only -r "${{ github.sha }}" -- '*/run' || true)
+              KPKG_ENABLE_DEBUG=0 "$KPKG_BIN" repl -a "get --all depends.$ROOTS.build.json" > /tmp/topology.json
             fi
           else
-            CHANGED_FILES=""
-            CHANGED_RUNFILES=""
+            printf '%s\n' '{"schema_version":1,"roots":[],"nodes":[],"edges":[]}' > /tmp/topology.json
           fi
-
-          RUNFILES_FROM_FILES=$(echo "$CHANGED_FILES" | awk 'NF' | sed 's#^\./##' | grep -E '^[^/]+/run$' || true)
-          RUNFILES_FROM_PATHSPEC=$(echo "$CHANGED_RUNFILES" | awk 'NF' | sed 's#^\./##' | grep -E '^[^/]+/run$' || true)
-          RUNFILES=$(printf "%s\n%s\n" "$RUNFILES_FROM_FILES" "$RUNFILES_FROM_PATHSPEC" | sort -u)
-          RUN_PKG_COUNT=$(echo "$RUNFILES" | awk -F/ '{print $1}' | sort -u | awk 'NF' | wc -l | tr -d ' ')
-          TOTAL_CHANGED_COUNT=$(echo "$CHANGED_FILES" | awk 'NF' | wc -l | tr -d ' ')
-          SINGLE_RUN_PKG=$(echo "$RUNFILES" | head -n1 | cut -d/ -f1)
-
-          if [ "$EVENT_NAME" = "pull_request" ]; then
-            if [ "$RUN_PKG_COUNT" = "1" ]; then
-              emit_phases "$SINGLE_RUN_PKG"
-            else
-              SHOULD_BUILD="false"
-            fi
-          elif [ "$EVENT_NAME" = "push" ] && [ "${{ github.ref }}" = "refs/heads/master" ]; then
-            if [ "$RUN_PKG_COUNT" = "1" ] && [ "$TOTAL_CHANGED_COUNT" = "1" ]; then
-              emit_phases "$SINGLE_RUN_PKG"
-            else
-              SHOULD_BUILD="false"
-            fi
-          elif [ "$EVENT_NAME" = "schedule" ]; then
-            : # keep defaults
-          fi
-
-          echo "push=$PUSH" >> $GITHUB_OUTPUT
-          echo "should_build=$SHOULD_BUILD" >> $GITHUB_OUTPUT
+          python3 .github/scripts/ci-topology.py /tmp/topology.json             --arch "$ARCH" --max-levels 32 --github-output "$GITHUB_OUTPUT"             --plan-json /tmp/ci-topology-plan.json
+          echo "push=$PUSH" >> "$GITHUB_OUTPUT"
+          echo "should_build=$SHOULD_BUILD" >> "$GITHUB_OUTPUT"
 
       - name: Check if sums need updating
         id: check-sums
         run: |
           set -euo pipefail
-          BASE_SHA="${{ github.event.pull_request.base.sha }}"
-          HEAD_SHA="${{ github.event.pull_request.head.sha }}"
-          if [ "${{ github.event_name }}" != "pull_request" ]; then
-            echo "runfiles=" >> $GITHUB_OUTPUT
+          if [ "${{ github.event_name }}" != pull_request ]; then
+            echo "runfiles=" >> "$GITHUB_OUTPUT"
             exit 0
           fi
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          HEAD_SHA="${{ github.event.pull_request.head.sha }}"
           git fetch --no-tags --depth=1 origin "$BASE_SHA" "$HEAD_SHA" || true
           CHANGED_RUNFILES=$(git diff --name-only "$BASE_SHA" "$HEAD_SHA" -- '*/run' || true)
-          need=false
           RUNFILES_NEED=""
           for f in $CHANGED_RUNFILES; do
-            if git diff -U0 "$BASE_SHA" "$HEAD_SHA" -- "$f" | grep -E '^\+VERSION=' >/dev/null; then
-              if ! git diff -U0 "$BASE_SHA" "$HEAD_SHA" -- "$f" | grep -E '^(\+SHA256SUM=|\+SHA512SUM=|\+B2SUM=)' >/dev/null; then
-                need=true
-                RUNFILES_NEED="${RUNFILES_NEED}"$'\n'"$f"
-              fi
+            if git diff -U0 "$BASE_SHA" "$HEAD_SHA" -- "$f" | grep -E '^\+VERSION=' >/dev/null &&
+               ! git diff -U0 "$BASE_SHA" "$HEAD_SHA" -- "$f" | grep -E '^(\+SHA256SUM=|\+SHA512SUM=|\+B2SUM=)' >/dev/null; then
+              RUNFILES_NEED="${RUNFILES_NEED}"$'\n'"$f"
             fi
           done
-          echo "runfiles<<EOF" >> $GITHUB_OUTPUT
-          printf "%s\n" "$RUNFILES_NEED" | awk 'NF' >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          echo "runfiles<<EOF" >> "$GITHUB_OUTPUT"
+          printf '%s\n' "$RUNFILES_NEED" | awk 'NF' >> "$GITHUB_OUTPUT"
+          echo EOF >> "$GITHUB_OUTPUT"
 
   update-sums:
     if: needs.init.outputs.runfiles != ''
@@ -250,20 +229,23 @@ jobs:
     with:
       runfiles: ${{ needs.init.outputs.runfiles }}
 
-  build_phase1:
-    if: always() && !cancelled() && needs.init.outputs.phase1_matrix != '' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
+  build_level1:
+    if: >-
+      always() && !cancelled() &&
+      needs.init.outputs.level1_matrix != '' &&
+      (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
+      (needs.update-sums.result == 'success' || needs.update-sums.result == 'skipped')
     needs: [init, update-sums]
     uses: ./.github/workflows/ci-build.yml
     with:
-      matrix: ${{ needs.init.outputs.phase1_matrix }}
+      matrix: ${{ needs.init.outputs.level1_matrix }}
       push: ${{ needs.init.outputs.push }}
-      phase_name: "Phase 1"
+      phase_name: "Dependency level 1"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
-      disable_force_install_all: ${{ needs.init.outputs.disable_force_install_all == 'true' }}
     secrets:
       GH_PAT: ${{ secrets.GH_PAT }}
       AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
@@ -277,20 +259,23 @@ jobs:
       LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
       LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
 
-  build_phase2:
-    if: always() && !cancelled() && needs.init.outputs.phase2_matrix != '' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
-    needs: [init, update-sums, build_phase1]
+  build_level2:
+    if: >-
+      always() && !cancelled() &&
+      needs.init.outputs.level2_matrix != '' &&
+      (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
+      needs.build_level1.result == 'success'
+    needs: [init, update-sums, build_level1]
     uses: ./.github/workflows/ci-build.yml
     with:
-      matrix: ${{ needs.init.outputs.phase2_matrix }}
+      matrix: ${{ needs.init.outputs.level2_matrix }}
       push: ${{ needs.init.outputs.push }}
-      phase_name: "Phase 2"
+      phase_name: "Dependency level 2"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
-      disable_force_install_all: ${{ needs.init.outputs.disable_force_install_all == 'true' }}
     secrets:
       GH_PAT: ${{ secrets.GH_PAT }}
       AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
@@ -304,20 +289,23 @@ jobs:
       LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
       LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
 
-  build_phase3:
-    if: always() && !cancelled() && needs.init.outputs.phase3_matrix != '' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
-    needs: [init, update-sums, build_phase2]
+  build_level3:
+    if: >-
+      always() && !cancelled() &&
+      needs.init.outputs.level3_matrix != '' &&
+      (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
+      needs.build_level2.result == 'success'
+    needs: [init, update-sums, build_level2]
     uses: ./.github/workflows/ci-build.yml
     with:
-      matrix: ${{ needs.init.outputs.phase3_matrix }}
+      matrix: ${{ needs.init.outputs.level3_matrix }}
       push: ${{ needs.init.outputs.push }}
-      phase_name: "Phase 3"
+      phase_name: "Dependency level 3"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
-      disable_force_install_all: ${{ needs.init.outputs.disable_force_install_all == 'true' }}
     secrets:
       GH_PAT: ${{ secrets.GH_PAT }}
       AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
@@ -331,20 +319,23 @@ jobs:
       LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
       LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
 
-  build_phase4:
-    if: always() && !cancelled() && needs.init.outputs.phase4_matrix != '' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
-    needs: [init, update-sums, build_phase3]
+  build_level4:
+    if: >-
+      always() && !cancelled() &&
+      needs.init.outputs.level4_matrix != '' &&
+      (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
+      needs.build_level3.result == 'success'
+    needs: [init, update-sums, build_level3]
     uses: ./.github/workflows/ci-build.yml
     with:
-      matrix: ${{ needs.init.outputs.phase4_matrix }}
+      matrix: ${{ needs.init.outputs.level4_matrix }}
       push: ${{ needs.init.outputs.push }}
-      phase_name: "Phase 4"
+      phase_name: "Dependency level 4"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
-      disable_force_install_all: ${{ needs.init.outputs.disable_force_install_all == 'true' }}
     secrets:
       GH_PAT: ${{ secrets.GH_PAT }}
       AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
@@ -358,20 +349,23 @@ jobs:
       LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
       LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
 
-  build_phase5:
-    if: always() && !cancelled() && needs.init.outputs.phase5_matrix != '' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
-    needs: [init, update-sums, build_phase4]
+  build_level5:
+    if: >-
+      always() && !cancelled() &&
+      needs.init.outputs.level5_matrix != '' &&
+      (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
+      needs.build_level4.result == 'success'
+    needs: [init, update-sums, build_level4]
     uses: ./.github/workflows/ci-build.yml
     with:
-      matrix: ${{ needs.init.outputs.phase5_matrix }}
+      matrix: ${{ needs.init.outputs.level5_matrix }}
       push: ${{ needs.init.outputs.push }}
-      phase_name: "Phase 5"
+      phase_name: "Dependency level 5"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
-      disable_force_install_all: ${{ needs.init.outputs.disable_force_install_all == 'true' }}
     secrets:
       GH_PAT: ${{ secrets.GH_PAT }}
       AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
@@ -385,20 +379,23 @@ jobs:
       LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
       LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
 
-  build_phase6:
-    if: always() && !cancelled() && needs.init.outputs.phase6_matrix != '' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
-    needs: [init, update-sums, build_phase5]
+  build_level6:
+    if: >-
+      always() && !cancelled() &&
+      needs.init.outputs.level6_matrix != '' &&
+      (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
+      needs.build_level5.result == 'success'
+    needs: [init, update-sums, build_level5]
     uses: ./.github/workflows/ci-build.yml
     with:
-      matrix: ${{ needs.init.outputs.phase6_matrix }}
+      matrix: ${{ needs.init.outputs.level6_matrix }}
       push: ${{ needs.init.outputs.push }}
-      phase_name: "Phase 6"
+      phase_name: "Dependency level 6"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
-      disable_force_install_all: ${{ needs.init.outputs.disable_force_install_all == 'true' }}
     secrets:
       GH_PAT: ${{ secrets.GH_PAT }}
       AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
@@ -412,20 +409,23 @@ jobs:
       LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
       LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
 
-  build_phase7:
-    if: always() && !cancelled() && needs.init.outputs.phase7_matrix != '' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
-    needs: [init, update-sums, build_phase6]
+  build_level7:
+    if: >-
+      always() && !cancelled() &&
+      needs.init.outputs.level7_matrix != '' &&
+      (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
+      needs.build_level6.result == 'success'
+    needs: [init, update-sums, build_level6]
     uses: ./.github/workflows/ci-build.yml
     with:
-      matrix: ${{ needs.init.outputs.phase7_matrix }}
+      matrix: ${{ needs.init.outputs.level7_matrix }}
       push: ${{ needs.init.outputs.push }}
-      phase_name: "Phase 7"
+      phase_name: "Dependency level 7"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
-      disable_force_install_all: ${{ needs.init.outputs.disable_force_install_all == 'true' }}
     secrets:
       GH_PAT: ${{ secrets.GH_PAT }}
       AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
@@ -439,20 +439,23 @@ jobs:
       LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
       LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
 
-  build_phase8:
-    if: always() && !cancelled() && needs.init.outputs.phase8_matrix != '' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
-    needs: [init, update-sums, build_phase7]
+  build_level8:
+    if: >-
+      always() && !cancelled() &&
+      needs.init.outputs.level8_matrix != '' &&
+      (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
+      needs.build_level7.result == 'success'
+    needs: [init, update-sums, build_level7]
     uses: ./.github/workflows/ci-build.yml
     with:
-      matrix: ${{ needs.init.outputs.phase8_matrix }}
+      matrix: ${{ needs.init.outputs.level8_matrix }}
       push: ${{ needs.init.outputs.push }}
-      phase_name: "Phase 8"
+      phase_name: "Dependency level 8"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
-      disable_force_install_all: ${{ needs.init.outputs.disable_force_install_all == 'true' }}
     secrets:
       GH_PAT: ${{ secrets.GH_PAT }}
       AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
@@ -466,20 +469,23 @@ jobs:
       LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
       LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
 
-  build_phase9:
-    if: always() && !cancelled() && needs.init.outputs.phase9_matrix != '' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
-    needs: [init, update-sums, build_phase8]
+  build_level9:
+    if: >-
+      always() && !cancelled() &&
+      needs.init.outputs.level9_matrix != '' &&
+      (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
+      needs.build_level8.result == 'success'
+    needs: [init, update-sums, build_level8]
     uses: ./.github/workflows/ci-build.yml
     with:
-      matrix: ${{ needs.init.outputs.phase9_matrix }}
+      matrix: ${{ needs.init.outputs.level9_matrix }}
       push: ${{ needs.init.outputs.push }}
-      phase_name: "Phase 9"
+      phase_name: "Dependency level 9"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
-      disable_force_install_all: ${{ needs.init.outputs.disable_force_install_all == 'true' }}
     secrets:
       GH_PAT: ${{ secrets.GH_PAT }}
       AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
@@ -493,20 +499,683 @@ jobs:
       LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
       LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
 
-  build_phase10:
-    if: always() && !cancelled() && needs.init.outputs.phase10_matrix != '' && (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch')
-    needs: [init, update-sums, build_phase9]
+  build_level10:
+    if: >-
+      always() && !cancelled() &&
+      needs.init.outputs.level10_matrix != '' &&
+      (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
+      needs.build_level9.result == 'success'
+    needs: [init, update-sums, build_level9]
     uses: ./.github/workflows/ci-build.yml
     with:
-      matrix: ${{ needs.init.outputs.phase10_matrix }}
+      matrix: ${{ needs.init.outputs.level10_matrix }}
       push: ${{ needs.init.outputs.push }}
-      phase_name: "Phase 10"
+      phase_name: "Dependency level 10"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
-      disable_force_install_all: ${{ needs.init.outputs.disable_force_install_all == 'true' }}
+    secrets:
+      GH_PAT: ${{ secrets.GH_PAT }}
+      AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
+      AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+      OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
+      OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}
+      OTEL_PASSWORD: ${{ secrets.OTEL_PASSWORD }}
+      LOKI_ENDPOINT: ${{ secrets.LOKI_ENDPOINT }}
+      LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
+      LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
+
+  build_level11:
+    if: >-
+      always() && !cancelled() &&
+      needs.init.outputs.level11_matrix != '' &&
+      (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
+      needs.build_level10.result == 'success'
+    needs: [init, update-sums, build_level10]
+    uses: ./.github/workflows/ci-build.yml
+    with:
+      matrix: ${{ needs.init.outputs.level11_matrix }}
+      push: ${{ needs.init.outputs.push }}
+      phase_name: "Dependency level 11"
+      image: ${{ needs.init.outputs.image }}
+      image_sha: ${{ needs.init.outputs.image_sha }}
+      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      llvm: ${{ needs.init.outputs.llvm == 'true' }}
+      enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
+    secrets:
+      GH_PAT: ${{ secrets.GH_PAT }}
+      AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
+      AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+      OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
+      OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}
+      OTEL_PASSWORD: ${{ secrets.OTEL_PASSWORD }}
+      LOKI_ENDPOINT: ${{ secrets.LOKI_ENDPOINT }}
+      LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
+      LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
+
+  build_level12:
+    if: >-
+      always() && !cancelled() &&
+      needs.init.outputs.level12_matrix != '' &&
+      (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
+      needs.build_level11.result == 'success'
+    needs: [init, update-sums, build_level11]
+    uses: ./.github/workflows/ci-build.yml
+    with:
+      matrix: ${{ needs.init.outputs.level12_matrix }}
+      push: ${{ needs.init.outputs.push }}
+      phase_name: "Dependency level 12"
+      image: ${{ needs.init.outputs.image }}
+      image_sha: ${{ needs.init.outputs.image_sha }}
+      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      llvm: ${{ needs.init.outputs.llvm == 'true' }}
+      enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
+    secrets:
+      GH_PAT: ${{ secrets.GH_PAT }}
+      AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
+      AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+      OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
+      OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}
+      OTEL_PASSWORD: ${{ secrets.OTEL_PASSWORD }}
+      LOKI_ENDPOINT: ${{ secrets.LOKI_ENDPOINT }}
+      LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
+      LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
+
+  build_level13:
+    if: >-
+      always() && !cancelled() &&
+      needs.init.outputs.level13_matrix != '' &&
+      (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
+      needs.build_level12.result == 'success'
+    needs: [init, update-sums, build_level12]
+    uses: ./.github/workflows/ci-build.yml
+    with:
+      matrix: ${{ needs.init.outputs.level13_matrix }}
+      push: ${{ needs.init.outputs.push }}
+      phase_name: "Dependency level 13"
+      image: ${{ needs.init.outputs.image }}
+      image_sha: ${{ needs.init.outputs.image_sha }}
+      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      llvm: ${{ needs.init.outputs.llvm == 'true' }}
+      enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
+    secrets:
+      GH_PAT: ${{ secrets.GH_PAT }}
+      AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
+      AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+      OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
+      OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}
+      OTEL_PASSWORD: ${{ secrets.OTEL_PASSWORD }}
+      LOKI_ENDPOINT: ${{ secrets.LOKI_ENDPOINT }}
+      LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
+      LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
+
+  build_level14:
+    if: >-
+      always() && !cancelled() &&
+      needs.init.outputs.level14_matrix != '' &&
+      (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
+      needs.build_level13.result == 'success'
+    needs: [init, update-sums, build_level13]
+    uses: ./.github/workflows/ci-build.yml
+    with:
+      matrix: ${{ needs.init.outputs.level14_matrix }}
+      push: ${{ needs.init.outputs.push }}
+      phase_name: "Dependency level 14"
+      image: ${{ needs.init.outputs.image }}
+      image_sha: ${{ needs.init.outputs.image_sha }}
+      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      llvm: ${{ needs.init.outputs.llvm == 'true' }}
+      enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
+    secrets:
+      GH_PAT: ${{ secrets.GH_PAT }}
+      AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
+      AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+      OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
+      OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}
+      OTEL_PASSWORD: ${{ secrets.OTEL_PASSWORD }}
+      LOKI_ENDPOINT: ${{ secrets.LOKI_ENDPOINT }}
+      LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
+      LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
+
+  build_level15:
+    if: >-
+      always() && !cancelled() &&
+      needs.init.outputs.level15_matrix != '' &&
+      (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
+      needs.build_level14.result == 'success'
+    needs: [init, update-sums, build_level14]
+    uses: ./.github/workflows/ci-build.yml
+    with:
+      matrix: ${{ needs.init.outputs.level15_matrix }}
+      push: ${{ needs.init.outputs.push }}
+      phase_name: "Dependency level 15"
+      image: ${{ needs.init.outputs.image }}
+      image_sha: ${{ needs.init.outputs.image_sha }}
+      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      llvm: ${{ needs.init.outputs.llvm == 'true' }}
+      enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
+    secrets:
+      GH_PAT: ${{ secrets.GH_PAT }}
+      AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
+      AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+      OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
+      OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}
+      OTEL_PASSWORD: ${{ secrets.OTEL_PASSWORD }}
+      LOKI_ENDPOINT: ${{ secrets.LOKI_ENDPOINT }}
+      LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
+      LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
+
+  build_level16:
+    if: >-
+      always() && !cancelled() &&
+      needs.init.outputs.level16_matrix != '' &&
+      (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
+      needs.build_level15.result == 'success'
+    needs: [init, update-sums, build_level15]
+    uses: ./.github/workflows/ci-build.yml
+    with:
+      matrix: ${{ needs.init.outputs.level16_matrix }}
+      push: ${{ needs.init.outputs.push }}
+      phase_name: "Dependency level 16"
+      image: ${{ needs.init.outputs.image }}
+      image_sha: ${{ needs.init.outputs.image_sha }}
+      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      llvm: ${{ needs.init.outputs.llvm == 'true' }}
+      enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
+    secrets:
+      GH_PAT: ${{ secrets.GH_PAT }}
+      AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
+      AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+      OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
+      OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}
+      OTEL_PASSWORD: ${{ secrets.OTEL_PASSWORD }}
+      LOKI_ENDPOINT: ${{ secrets.LOKI_ENDPOINT }}
+      LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
+      LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
+
+  build_level17:
+    if: >-
+      always() && !cancelled() &&
+      needs.init.outputs.level17_matrix != '' &&
+      (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
+      needs.build_level16.result == 'success'
+    needs: [init, update-sums, build_level16]
+    uses: ./.github/workflows/ci-build.yml
+    with:
+      matrix: ${{ needs.init.outputs.level17_matrix }}
+      push: ${{ needs.init.outputs.push }}
+      phase_name: "Dependency level 17"
+      image: ${{ needs.init.outputs.image }}
+      image_sha: ${{ needs.init.outputs.image_sha }}
+      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      llvm: ${{ needs.init.outputs.llvm == 'true' }}
+      enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
+    secrets:
+      GH_PAT: ${{ secrets.GH_PAT }}
+      AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
+      AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+      OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
+      OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}
+      OTEL_PASSWORD: ${{ secrets.OTEL_PASSWORD }}
+      LOKI_ENDPOINT: ${{ secrets.LOKI_ENDPOINT }}
+      LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
+      LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
+
+  build_level18:
+    if: >-
+      always() && !cancelled() &&
+      needs.init.outputs.level18_matrix != '' &&
+      (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
+      needs.build_level17.result == 'success'
+    needs: [init, update-sums, build_level17]
+    uses: ./.github/workflows/ci-build.yml
+    with:
+      matrix: ${{ needs.init.outputs.level18_matrix }}
+      push: ${{ needs.init.outputs.push }}
+      phase_name: "Dependency level 18"
+      image: ${{ needs.init.outputs.image }}
+      image_sha: ${{ needs.init.outputs.image_sha }}
+      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      llvm: ${{ needs.init.outputs.llvm == 'true' }}
+      enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
+    secrets:
+      GH_PAT: ${{ secrets.GH_PAT }}
+      AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
+      AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+      OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
+      OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}
+      OTEL_PASSWORD: ${{ secrets.OTEL_PASSWORD }}
+      LOKI_ENDPOINT: ${{ secrets.LOKI_ENDPOINT }}
+      LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
+      LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
+
+  build_level19:
+    if: >-
+      always() && !cancelled() &&
+      needs.init.outputs.level19_matrix != '' &&
+      (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
+      needs.build_level18.result == 'success'
+    needs: [init, update-sums, build_level18]
+    uses: ./.github/workflows/ci-build.yml
+    with:
+      matrix: ${{ needs.init.outputs.level19_matrix }}
+      push: ${{ needs.init.outputs.push }}
+      phase_name: "Dependency level 19"
+      image: ${{ needs.init.outputs.image }}
+      image_sha: ${{ needs.init.outputs.image_sha }}
+      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      llvm: ${{ needs.init.outputs.llvm == 'true' }}
+      enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
+    secrets:
+      GH_PAT: ${{ secrets.GH_PAT }}
+      AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
+      AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+      OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
+      OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}
+      OTEL_PASSWORD: ${{ secrets.OTEL_PASSWORD }}
+      LOKI_ENDPOINT: ${{ secrets.LOKI_ENDPOINT }}
+      LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
+      LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
+
+  build_level20:
+    if: >-
+      always() && !cancelled() &&
+      needs.init.outputs.level20_matrix != '' &&
+      (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
+      needs.build_level19.result == 'success'
+    needs: [init, update-sums, build_level19]
+    uses: ./.github/workflows/ci-build.yml
+    with:
+      matrix: ${{ needs.init.outputs.level20_matrix }}
+      push: ${{ needs.init.outputs.push }}
+      phase_name: "Dependency level 20"
+      image: ${{ needs.init.outputs.image }}
+      image_sha: ${{ needs.init.outputs.image_sha }}
+      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      llvm: ${{ needs.init.outputs.llvm == 'true' }}
+      enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
+    secrets:
+      GH_PAT: ${{ secrets.GH_PAT }}
+      AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
+      AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+      OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
+      OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}
+      OTEL_PASSWORD: ${{ secrets.OTEL_PASSWORD }}
+      LOKI_ENDPOINT: ${{ secrets.LOKI_ENDPOINT }}
+      LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
+      LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
+
+  build_level21:
+    if: >-
+      always() && !cancelled() &&
+      needs.init.outputs.level21_matrix != '' &&
+      (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
+      needs.build_level20.result == 'success'
+    needs: [init, update-sums, build_level20]
+    uses: ./.github/workflows/ci-build.yml
+    with:
+      matrix: ${{ needs.init.outputs.level21_matrix }}
+      push: ${{ needs.init.outputs.push }}
+      phase_name: "Dependency level 21"
+      image: ${{ needs.init.outputs.image }}
+      image_sha: ${{ needs.init.outputs.image_sha }}
+      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      llvm: ${{ needs.init.outputs.llvm == 'true' }}
+      enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
+    secrets:
+      GH_PAT: ${{ secrets.GH_PAT }}
+      AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
+      AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+      OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
+      OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}
+      OTEL_PASSWORD: ${{ secrets.OTEL_PASSWORD }}
+      LOKI_ENDPOINT: ${{ secrets.LOKI_ENDPOINT }}
+      LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
+      LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
+
+  build_level22:
+    if: >-
+      always() && !cancelled() &&
+      needs.init.outputs.level22_matrix != '' &&
+      (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
+      needs.build_level21.result == 'success'
+    needs: [init, update-sums, build_level21]
+    uses: ./.github/workflows/ci-build.yml
+    with:
+      matrix: ${{ needs.init.outputs.level22_matrix }}
+      push: ${{ needs.init.outputs.push }}
+      phase_name: "Dependency level 22"
+      image: ${{ needs.init.outputs.image }}
+      image_sha: ${{ needs.init.outputs.image_sha }}
+      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      llvm: ${{ needs.init.outputs.llvm == 'true' }}
+      enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
+    secrets:
+      GH_PAT: ${{ secrets.GH_PAT }}
+      AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
+      AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+      OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
+      OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}
+      OTEL_PASSWORD: ${{ secrets.OTEL_PASSWORD }}
+      LOKI_ENDPOINT: ${{ secrets.LOKI_ENDPOINT }}
+      LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
+      LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
+
+  build_level23:
+    if: >-
+      always() && !cancelled() &&
+      needs.init.outputs.level23_matrix != '' &&
+      (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
+      needs.build_level22.result == 'success'
+    needs: [init, update-sums, build_level22]
+    uses: ./.github/workflows/ci-build.yml
+    with:
+      matrix: ${{ needs.init.outputs.level23_matrix }}
+      push: ${{ needs.init.outputs.push }}
+      phase_name: "Dependency level 23"
+      image: ${{ needs.init.outputs.image }}
+      image_sha: ${{ needs.init.outputs.image_sha }}
+      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      llvm: ${{ needs.init.outputs.llvm == 'true' }}
+      enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
+    secrets:
+      GH_PAT: ${{ secrets.GH_PAT }}
+      AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
+      AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+      OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
+      OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}
+      OTEL_PASSWORD: ${{ secrets.OTEL_PASSWORD }}
+      LOKI_ENDPOINT: ${{ secrets.LOKI_ENDPOINT }}
+      LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
+      LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
+
+  build_level24:
+    if: >-
+      always() && !cancelled() &&
+      needs.init.outputs.level24_matrix != '' &&
+      (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
+      needs.build_level23.result == 'success'
+    needs: [init, update-sums, build_level23]
+    uses: ./.github/workflows/ci-build.yml
+    with:
+      matrix: ${{ needs.init.outputs.level24_matrix }}
+      push: ${{ needs.init.outputs.push }}
+      phase_name: "Dependency level 24"
+      image: ${{ needs.init.outputs.image }}
+      image_sha: ${{ needs.init.outputs.image_sha }}
+      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      llvm: ${{ needs.init.outputs.llvm == 'true' }}
+      enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
+    secrets:
+      GH_PAT: ${{ secrets.GH_PAT }}
+      AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
+      AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+      OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
+      OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}
+      OTEL_PASSWORD: ${{ secrets.OTEL_PASSWORD }}
+      LOKI_ENDPOINT: ${{ secrets.LOKI_ENDPOINT }}
+      LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
+      LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
+
+  build_level25:
+    if: >-
+      always() && !cancelled() &&
+      needs.init.outputs.level25_matrix != '' &&
+      (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
+      needs.build_level24.result == 'success'
+    needs: [init, update-sums, build_level24]
+    uses: ./.github/workflows/ci-build.yml
+    with:
+      matrix: ${{ needs.init.outputs.level25_matrix }}
+      push: ${{ needs.init.outputs.push }}
+      phase_name: "Dependency level 25"
+      image: ${{ needs.init.outputs.image }}
+      image_sha: ${{ needs.init.outputs.image_sha }}
+      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      llvm: ${{ needs.init.outputs.llvm == 'true' }}
+      enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
+    secrets:
+      GH_PAT: ${{ secrets.GH_PAT }}
+      AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
+      AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+      OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
+      OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}
+      OTEL_PASSWORD: ${{ secrets.OTEL_PASSWORD }}
+      LOKI_ENDPOINT: ${{ secrets.LOKI_ENDPOINT }}
+      LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
+      LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
+
+  build_level26:
+    if: >-
+      always() && !cancelled() &&
+      needs.init.outputs.level26_matrix != '' &&
+      (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
+      needs.build_level25.result == 'success'
+    needs: [init, update-sums, build_level25]
+    uses: ./.github/workflows/ci-build.yml
+    with:
+      matrix: ${{ needs.init.outputs.level26_matrix }}
+      push: ${{ needs.init.outputs.push }}
+      phase_name: "Dependency level 26"
+      image: ${{ needs.init.outputs.image }}
+      image_sha: ${{ needs.init.outputs.image_sha }}
+      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      llvm: ${{ needs.init.outputs.llvm == 'true' }}
+      enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
+    secrets:
+      GH_PAT: ${{ secrets.GH_PAT }}
+      AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
+      AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+      OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
+      OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}
+      OTEL_PASSWORD: ${{ secrets.OTEL_PASSWORD }}
+      LOKI_ENDPOINT: ${{ secrets.LOKI_ENDPOINT }}
+      LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
+      LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
+
+  build_level27:
+    if: >-
+      always() && !cancelled() &&
+      needs.init.outputs.level27_matrix != '' &&
+      (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
+      needs.build_level26.result == 'success'
+    needs: [init, update-sums, build_level26]
+    uses: ./.github/workflows/ci-build.yml
+    with:
+      matrix: ${{ needs.init.outputs.level27_matrix }}
+      push: ${{ needs.init.outputs.push }}
+      phase_name: "Dependency level 27"
+      image: ${{ needs.init.outputs.image }}
+      image_sha: ${{ needs.init.outputs.image_sha }}
+      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      llvm: ${{ needs.init.outputs.llvm == 'true' }}
+      enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
+    secrets:
+      GH_PAT: ${{ secrets.GH_PAT }}
+      AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
+      AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+      OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
+      OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}
+      OTEL_PASSWORD: ${{ secrets.OTEL_PASSWORD }}
+      LOKI_ENDPOINT: ${{ secrets.LOKI_ENDPOINT }}
+      LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
+      LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
+
+  build_level28:
+    if: >-
+      always() && !cancelled() &&
+      needs.init.outputs.level28_matrix != '' &&
+      (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
+      needs.build_level27.result == 'success'
+    needs: [init, update-sums, build_level27]
+    uses: ./.github/workflows/ci-build.yml
+    with:
+      matrix: ${{ needs.init.outputs.level28_matrix }}
+      push: ${{ needs.init.outputs.push }}
+      phase_name: "Dependency level 28"
+      image: ${{ needs.init.outputs.image }}
+      image_sha: ${{ needs.init.outputs.image_sha }}
+      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      llvm: ${{ needs.init.outputs.llvm == 'true' }}
+      enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
+    secrets:
+      GH_PAT: ${{ secrets.GH_PAT }}
+      AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
+      AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+      OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
+      OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}
+      OTEL_PASSWORD: ${{ secrets.OTEL_PASSWORD }}
+      LOKI_ENDPOINT: ${{ secrets.LOKI_ENDPOINT }}
+      LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
+      LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
+
+  build_level29:
+    if: >-
+      always() && !cancelled() &&
+      needs.init.outputs.level29_matrix != '' &&
+      (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
+      needs.build_level28.result == 'success'
+    needs: [init, update-sums, build_level28]
+    uses: ./.github/workflows/ci-build.yml
+    with:
+      matrix: ${{ needs.init.outputs.level29_matrix }}
+      push: ${{ needs.init.outputs.push }}
+      phase_name: "Dependency level 29"
+      image: ${{ needs.init.outputs.image }}
+      image_sha: ${{ needs.init.outputs.image_sha }}
+      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      llvm: ${{ needs.init.outputs.llvm == 'true' }}
+      enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
+    secrets:
+      GH_PAT: ${{ secrets.GH_PAT }}
+      AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
+      AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+      OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
+      OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}
+      OTEL_PASSWORD: ${{ secrets.OTEL_PASSWORD }}
+      LOKI_ENDPOINT: ${{ secrets.LOKI_ENDPOINT }}
+      LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
+      LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
+
+  build_level30:
+    if: >-
+      always() && !cancelled() &&
+      needs.init.outputs.level30_matrix != '' &&
+      (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
+      needs.build_level29.result == 'success'
+    needs: [init, update-sums, build_level29]
+    uses: ./.github/workflows/ci-build.yml
+    with:
+      matrix: ${{ needs.init.outputs.level30_matrix }}
+      push: ${{ needs.init.outputs.push }}
+      phase_name: "Dependency level 30"
+      image: ${{ needs.init.outputs.image }}
+      image_sha: ${{ needs.init.outputs.image_sha }}
+      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      llvm: ${{ needs.init.outputs.llvm == 'true' }}
+      enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
+    secrets:
+      GH_PAT: ${{ secrets.GH_PAT }}
+      AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
+      AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+      OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
+      OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}
+      OTEL_PASSWORD: ${{ secrets.OTEL_PASSWORD }}
+      LOKI_ENDPOINT: ${{ secrets.LOKI_ENDPOINT }}
+      LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
+      LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
+
+  build_level31:
+    if: >-
+      always() && !cancelled() &&
+      needs.init.outputs.level31_matrix != '' &&
+      (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
+      needs.build_level30.result == 'success'
+    needs: [init, update-sums, build_level30]
+    uses: ./.github/workflows/ci-build.yml
+    with:
+      matrix: ${{ needs.init.outputs.level31_matrix }}
+      push: ${{ needs.init.outputs.push }}
+      phase_name: "Dependency level 31"
+      image: ${{ needs.init.outputs.image }}
+      image_sha: ${{ needs.init.outputs.image_sha }}
+      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      llvm: ${{ needs.init.outputs.llvm == 'true' }}
+      enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
+    secrets:
+      GH_PAT: ${{ secrets.GH_PAT }}
+      AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
+      AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+      OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
+      OTEL_USERNAME: ${{ secrets.OTEL_USERNAME }}
+      OTEL_PASSWORD: ${{ secrets.OTEL_PASSWORD }}
+      LOKI_ENDPOINT: ${{ secrets.LOKI_ENDPOINT }}
+      LOKI_USERNAME: ${{ secrets.LOKI_USERNAME }}
+      LOKI_PASSWORD: ${{ secrets.LOKI_PASSWORD }}
+
+  build_level32:
+    if: >-
+      always() && !cancelled() &&
+      needs.init.outputs.level32_matrix != '' &&
+      (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
+      needs.build_level31.result == 'success'
+    needs: [init, update-sums, build_level31]
+    uses: ./.github/workflows/ci-build.yml
+    with:
+      matrix: ${{ needs.init.outputs.level32_matrix }}
+      push: ${{ needs.init.outputs.push }}
+      phase_name: "Dependency level 32"
+      image: ${{ needs.init.outputs.image }}
+      image_sha: ${{ needs.init.outputs.image_sha }}
+      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      llvm: ${{ needs.init.outputs.llvm == 'true' }}
+      enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
       GH_PAT: ${{ secrets.GH_PAT }}
       AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}

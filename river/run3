@@ -15,7 +15,7 @@ depends:
   - "pixman"
 build_depends:
   - "zig"
-  - "pkg-config"
+  - "pkgconf"
 
 build {
   exec "zig build -Doptimize=ReleaseSafe -Dcpu=baseline --prefix $ROOT/usr"
