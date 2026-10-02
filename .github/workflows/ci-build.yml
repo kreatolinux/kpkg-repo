@@ -9,6 +9,14 @@ on:
       push:
         required: true
         type: string
+      pr_validation:
+        required: false
+        type: boolean
+        default: false
+      source_ref:
+        required: false
+        type: string
+        default: ''
       phase_name:
         required: true
         type: string
@@ -68,7 +76,7 @@ jobs:
       max-parallel: 16
       matrix: ${{ fromJson(inputs.matrix) }}
     permissions:
-      contents: write
+      contents: read
     steps:
 
       - name: Remove useless directories
@@ -115,8 +123,9 @@ jobs:
 
       - uses: actions/checkout@v6
         with:
-          ref: ${{ github.head_ref || github.ref_name }}
+          ref: ${{ inputs.source_ref != '' && inputs.source_ref || github.head_ref || github.ref_name }}
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Architecture setup
         run: |
@@ -131,6 +140,7 @@ jobs:
           echo "KPKG_BIN=$KPKG_BIN" >> $GITHUB_ENV
 
       - name: Install MinIO client
+        if: ${{ !inputs.pr_validation && github.event_name != 'pull_request' }}
         run: |
           MC_ARCH=$([ "${{ matrix.arch }}" = "arm64" ] && echo arm64 || echo amd64)
           MC_VERSION=RELEASE.2025-08-13T08-35-41Z
@@ -144,6 +154,10 @@ jobs:
         run: |
           set -euo pipefail
           blocked=false
+          if [ "${{ inputs.pr_validation }}" = true ] || [ "${{ github.event_name }}" = pull_request ]; then
+            echo "blocked=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
           missing=""
           IFS=',' read -ra dependencies <<< "${{ matrix.dependencies }}"
           for dependency in "${dependencies[@]}"; do
@@ -165,7 +179,7 @@ jobs:
 
       - name: Install and start Grafana Alloy
         id: alloy
-        if: ${{ success() && steps.dependency-gate.outputs.blocked != 'true' && matrix.arch != 'arm64' }}
+        if: ${{ success() && !inputs.pr_validation && github.event_name != 'pull_request' && steps.dependency-gate.outputs.blocked != 'true' && matrix.arch != 'arm64' }}
         continue-on-error: true
         env:
           OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
@@ -333,7 +347,7 @@ jobs:
 
       - name: Create failure issues
         uses: actions/github-script@v9
-        if: always() && steps.dependency-gate.outputs.blocked != 'true' && hashFiles('/tmp/failures/*.name') != ''
+        if: always() && !inputs.pr_validation && github.event_name != 'pull_request' && steps.dependency-gate.outputs.blocked != 'true' && hashFiles('/tmp/failures/*.name') != ''
         with:
           script: |
             const fs = require('fs'), path = require('path');
@@ -383,7 +397,7 @@ jobs:
             await core.summary.write();
 
       - name: Upload packages through MinIO
-        if: steps.dependency-gate.outputs.blocked != 'true' && (inputs.push == 'true' || (github.event_name == 'pull_request' && github.event.pull_request.user.login == 'renovate[bot]' && startsWith(github.head_ref || '', 'renovate/')) || github.event_name == 'workflow_dispatch') && steps.useless-check.outputs.is_useless != 'true'
+        if: inputs.push == 'true' && !inputs.pr_validation && github.event_name != 'pull_request' && steps.dependency-gate.outputs.blocked != 'true' && steps.useless-check.outputs.is_useless != 'true'
         run: |
           upload_with_retry() {
             local retries=3
@@ -423,7 +437,7 @@ jobs:
 
 
       - name: Publish dependency success marker
-        if: success() && steps.dependency-gate.outputs.blocked != 'true'
+        if: success() && inputs.push == 'true' && !inputs.pr_validation && github.event_name != 'pull_request' && steps.dependency-gate.outputs.blocked != 'true'
         run: |
           marker=$(mktemp)
           printf '%s\n' "${{ matrix.packages }}" > "$marker"

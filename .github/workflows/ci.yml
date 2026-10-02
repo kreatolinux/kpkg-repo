@@ -9,6 +9,10 @@ on:
     - cron: '0 0 * * WED'
   workflow_dispatch:
     inputs:
+      pr_number:
+        description: 'Build only packages changed by this PR; never publish'
+        required: false
+        default: ''
       package:
         description: 'Space-separated list of packages to build'
         required: false
@@ -87,6 +91,8 @@ jobs:
       level31_matrix: ${{ steps.compute-matrix.outputs.level31_matrix }}
       level32_matrix: ${{ steps.compute-matrix.outputs.level32_matrix }}
       push: ${{ steps.compute-matrix.outputs.push }}
+      pr_validation: ${{ steps.compute-matrix.outputs.pr_validation }}
+      source_ref: ${{ steps.compute-matrix.outputs.source_ref }}
       should_build: ${{ steps.compute-matrix.outputs.should_build }}
       runfiles: ${{ steps.check-sums.outputs.runfiles }}
       image: ${{ steps.compute-matrix.outputs.image }}
@@ -123,13 +129,16 @@ jobs:
       - name: Compute dependency levels and flags
         id: compute-matrix
         env:
-          PACKAGE_INPUT: ${{ github.event.inputs.package }}
+          PACKAGE_INPUT: ${{ inputs.package }}
+          PR_NUMBER: ${{ inputs.pr_number }}
         run: |
           set -euo pipefail
           cd "$GITHUB_WORKSPACE"
           git config --global --add safe.directory "$GITHUB_WORKSPACE" || true
           ARCH="${{ github.event.inputs.arch || 'both' }}"
           PUSH=true
+          PR_VALIDATION=false
+          SOURCE_REF=""
           SHOULD_BUILD=true
           PACKAGES=""
 
@@ -146,7 +155,25 @@ jobs:
             done | sort -u
           }
 
-          if [ -n "${PACKAGE_INPUT:-}" ]; then
+          if [ -n "${PR_NUMBER:-}" ]; then
+            case "$PR_NUMBER" in (*[!0-9]*|'') echo "invalid PR number: $PR_NUMBER" >&2; exit 1;; esac
+            PUSH=false
+            PR_VALIDATION=true
+            PR_JSON=$(curl --fail --silent --show-error \
+              -H "Authorization: Bearer ${{ github.token }}" \
+              -H "Accept: application/vnd.github+json" \
+              "${{ github.api_url }}/repos/${{ github.repository }}/pulls/$PR_NUMBER")
+            SHAS=$(printf '%s' "$PR_JSON" | python3 -c 'import json,sys; p=json.load(sys.stdin); print(p["base"]["sha"], p["head"]["sha"])')
+            BASE_SHA=${SHAS%% *}
+            HEAD_SHA=${SHAS##* }
+            SOURCE_REF=$HEAD_SHA
+            git fetch --no-tags origin "$BASE_SHA" "$HEAD_SHA"
+            CHANGED_FILES=$(git diff --name-only "$BASE_SHA" "$HEAD_SHA")
+            PACKAGES=$(printf '%s\n' "$CHANGED_FILES" | awk -F/ 'NF > 1 {print $1}' | sort -u | while read -r package; do
+              if git cat-file -e "$HEAD_SHA:$package/run3" 2>/dev/null || git cat-file -e "$HEAD_SHA:$package/run" 2>/dev/null; then printf '%s\n' "$package"; fi
+            done)
+            if [ -z "$PACKAGES" ]; then SHOULD_BUILD=false; fi
+          elif [ -n "${PACKAGE_INPUT:-}" ]; then
             PACKAGES=$(printf '%s\n' $PACKAGE_INPUT | sort -u)
             if [ "$ARCH" = x86_64 ]; then PUSH=false; fi
           elif [ "${{ github.event_name }}" = schedule ] || [ "${{ github.event_name }}" = workflow_dispatch ]; then
@@ -188,7 +215,7 @@ jobs:
 
           if [ "$SHOULD_BUILD" = true ] && [ -n "$PACKAGES" ]; then
             ROOTS=$(printf '%s\n' "$PACKAGES" | paste -sd, -)
-            if [ "${{ github.event_name }}" = pull_request ]; then
+            if [ "${{ github.event_name }}" = pull_request ] || [ "$PR_VALIDATION" = true ]; then
               # PR jobs cannot publish dependency artifacts for later levels.
               # Keep selected roots in one level; kpkg resolves their closure locally.
               python3 -c 'import json,sys; roots=sorted(set(sys.argv[1].split(","))); print(json.dumps({"schema_version":1,"roots":roots,"nodes":[{"name":name,"repo":"main"} for name in roots],"edges":[]},separators=(",",":")))' "$ROOTS" > /tmp/topology.json
@@ -200,6 +227,8 @@ jobs:
           fi
           python3 .github/scripts/ci-topology.py /tmp/topology.json             --arch "$ARCH" --max-levels 32 --github-output "$GITHUB_OUTPUT"             --plan-json /tmp/ci-topology-plan.json
           echo "push=$PUSH" >> "$GITHUB_OUTPUT"
+          echo "pr_validation=$PR_VALIDATION" >> "$GITHUB_OUTPUT"
+          echo "source_ref=$SOURCE_REF" >> "$GITHUB_OUTPUT"
           echo "should_build=$SHOULD_BUILD" >> "$GITHUB_OUTPUT"
 
       - name: Check if sums need updating
@@ -243,10 +272,12 @@ jobs:
     with:
       matrix: ${{ needs.init.outputs.level1_matrix }}
       push: ${{ needs.init.outputs.push }}
+      pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
+      source_ref: ${{ needs.init.outputs.source_ref }}
       phase_name: "Dependency level 1"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
-      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      force_build: ${{ needs.init.outputs.pr_validation == 'true' || needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -273,10 +304,12 @@ jobs:
     with:
       matrix: ${{ needs.init.outputs.level2_matrix }}
       push: ${{ needs.init.outputs.push }}
+      pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
+      source_ref: ${{ needs.init.outputs.source_ref }}
       phase_name: "Dependency level 2"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
-      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      force_build: ${{ needs.init.outputs.pr_validation == 'true' || needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -303,10 +336,12 @@ jobs:
     with:
       matrix: ${{ needs.init.outputs.level3_matrix }}
       push: ${{ needs.init.outputs.push }}
+      pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
+      source_ref: ${{ needs.init.outputs.source_ref }}
       phase_name: "Dependency level 3"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
-      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      force_build: ${{ needs.init.outputs.pr_validation == 'true' || needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -333,10 +368,12 @@ jobs:
     with:
       matrix: ${{ needs.init.outputs.level4_matrix }}
       push: ${{ needs.init.outputs.push }}
+      pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
+      source_ref: ${{ needs.init.outputs.source_ref }}
       phase_name: "Dependency level 4"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
-      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      force_build: ${{ needs.init.outputs.pr_validation == 'true' || needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -363,10 +400,12 @@ jobs:
     with:
       matrix: ${{ needs.init.outputs.level5_matrix }}
       push: ${{ needs.init.outputs.push }}
+      pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
+      source_ref: ${{ needs.init.outputs.source_ref }}
       phase_name: "Dependency level 5"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
-      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      force_build: ${{ needs.init.outputs.pr_validation == 'true' || needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -393,10 +432,12 @@ jobs:
     with:
       matrix: ${{ needs.init.outputs.level6_matrix }}
       push: ${{ needs.init.outputs.push }}
+      pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
+      source_ref: ${{ needs.init.outputs.source_ref }}
       phase_name: "Dependency level 6"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
-      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      force_build: ${{ needs.init.outputs.pr_validation == 'true' || needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -423,10 +464,12 @@ jobs:
     with:
       matrix: ${{ needs.init.outputs.level7_matrix }}
       push: ${{ needs.init.outputs.push }}
+      pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
+      source_ref: ${{ needs.init.outputs.source_ref }}
       phase_name: "Dependency level 7"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
-      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      force_build: ${{ needs.init.outputs.pr_validation == 'true' || needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -453,10 +496,12 @@ jobs:
     with:
       matrix: ${{ needs.init.outputs.level8_matrix }}
       push: ${{ needs.init.outputs.push }}
+      pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
+      source_ref: ${{ needs.init.outputs.source_ref }}
       phase_name: "Dependency level 8"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
-      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      force_build: ${{ needs.init.outputs.pr_validation == 'true' || needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -483,10 +528,12 @@ jobs:
     with:
       matrix: ${{ needs.init.outputs.level9_matrix }}
       push: ${{ needs.init.outputs.push }}
+      pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
+      source_ref: ${{ needs.init.outputs.source_ref }}
       phase_name: "Dependency level 9"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
-      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      force_build: ${{ needs.init.outputs.pr_validation == 'true' || needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -513,10 +560,12 @@ jobs:
     with:
       matrix: ${{ needs.init.outputs.level10_matrix }}
       push: ${{ needs.init.outputs.push }}
+      pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
+      source_ref: ${{ needs.init.outputs.source_ref }}
       phase_name: "Dependency level 10"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
-      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      force_build: ${{ needs.init.outputs.pr_validation == 'true' || needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -543,10 +592,12 @@ jobs:
     with:
       matrix: ${{ needs.init.outputs.level11_matrix }}
       push: ${{ needs.init.outputs.push }}
+      pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
+      source_ref: ${{ needs.init.outputs.source_ref }}
       phase_name: "Dependency level 11"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
-      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      force_build: ${{ needs.init.outputs.pr_validation == 'true' || needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -573,10 +624,12 @@ jobs:
     with:
       matrix: ${{ needs.init.outputs.level12_matrix }}
       push: ${{ needs.init.outputs.push }}
+      pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
+      source_ref: ${{ needs.init.outputs.source_ref }}
       phase_name: "Dependency level 12"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
-      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      force_build: ${{ needs.init.outputs.pr_validation == 'true' || needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -603,10 +656,12 @@ jobs:
     with:
       matrix: ${{ needs.init.outputs.level13_matrix }}
       push: ${{ needs.init.outputs.push }}
+      pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
+      source_ref: ${{ needs.init.outputs.source_ref }}
       phase_name: "Dependency level 13"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
-      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      force_build: ${{ needs.init.outputs.pr_validation == 'true' || needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -633,10 +688,12 @@ jobs:
     with:
       matrix: ${{ needs.init.outputs.level14_matrix }}
       push: ${{ needs.init.outputs.push }}
+      pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
+      source_ref: ${{ needs.init.outputs.source_ref }}
       phase_name: "Dependency level 14"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
-      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      force_build: ${{ needs.init.outputs.pr_validation == 'true' || needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -663,10 +720,12 @@ jobs:
     with:
       matrix: ${{ needs.init.outputs.level15_matrix }}
       push: ${{ needs.init.outputs.push }}
+      pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
+      source_ref: ${{ needs.init.outputs.source_ref }}
       phase_name: "Dependency level 15"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
-      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      force_build: ${{ needs.init.outputs.pr_validation == 'true' || needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -693,10 +752,12 @@ jobs:
     with:
       matrix: ${{ needs.init.outputs.level16_matrix }}
       push: ${{ needs.init.outputs.push }}
+      pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
+      source_ref: ${{ needs.init.outputs.source_ref }}
       phase_name: "Dependency level 16"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
-      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      force_build: ${{ needs.init.outputs.pr_validation == 'true' || needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -723,10 +784,12 @@ jobs:
     with:
       matrix: ${{ needs.init.outputs.level17_matrix }}
       push: ${{ needs.init.outputs.push }}
+      pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
+      source_ref: ${{ needs.init.outputs.source_ref }}
       phase_name: "Dependency level 17"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
-      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      force_build: ${{ needs.init.outputs.pr_validation == 'true' || needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -753,10 +816,12 @@ jobs:
     with:
       matrix: ${{ needs.init.outputs.level18_matrix }}
       push: ${{ needs.init.outputs.push }}
+      pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
+      source_ref: ${{ needs.init.outputs.source_ref }}
       phase_name: "Dependency level 18"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
-      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      force_build: ${{ needs.init.outputs.pr_validation == 'true' || needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -783,10 +848,12 @@ jobs:
     with:
       matrix: ${{ needs.init.outputs.level19_matrix }}
       push: ${{ needs.init.outputs.push }}
+      pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
+      source_ref: ${{ needs.init.outputs.source_ref }}
       phase_name: "Dependency level 19"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
-      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      force_build: ${{ needs.init.outputs.pr_validation == 'true' || needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -813,10 +880,12 @@ jobs:
     with:
       matrix: ${{ needs.init.outputs.level20_matrix }}
       push: ${{ needs.init.outputs.push }}
+      pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
+      source_ref: ${{ needs.init.outputs.source_ref }}
       phase_name: "Dependency level 20"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
-      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      force_build: ${{ needs.init.outputs.pr_validation == 'true' || needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -843,10 +912,12 @@ jobs:
     with:
       matrix: ${{ needs.init.outputs.level21_matrix }}
       push: ${{ needs.init.outputs.push }}
+      pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
+      source_ref: ${{ needs.init.outputs.source_ref }}
       phase_name: "Dependency level 21"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
-      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      force_build: ${{ needs.init.outputs.pr_validation == 'true' || needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -873,10 +944,12 @@ jobs:
     with:
       matrix: ${{ needs.init.outputs.level22_matrix }}
       push: ${{ needs.init.outputs.push }}
+      pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
+      source_ref: ${{ needs.init.outputs.source_ref }}
       phase_name: "Dependency level 22"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
-      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      force_build: ${{ needs.init.outputs.pr_validation == 'true' || needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -903,10 +976,12 @@ jobs:
     with:
       matrix: ${{ needs.init.outputs.level23_matrix }}
       push: ${{ needs.init.outputs.push }}
+      pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
+      source_ref: ${{ needs.init.outputs.source_ref }}
       phase_name: "Dependency level 23"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
-      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      force_build: ${{ needs.init.outputs.pr_validation == 'true' || needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -933,10 +1008,12 @@ jobs:
     with:
       matrix: ${{ needs.init.outputs.level24_matrix }}
       push: ${{ needs.init.outputs.push }}
+      pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
+      source_ref: ${{ needs.init.outputs.source_ref }}
       phase_name: "Dependency level 24"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
-      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      force_build: ${{ needs.init.outputs.pr_validation == 'true' || needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -963,10 +1040,12 @@ jobs:
     with:
       matrix: ${{ needs.init.outputs.level25_matrix }}
       push: ${{ needs.init.outputs.push }}
+      pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
+      source_ref: ${{ needs.init.outputs.source_ref }}
       phase_name: "Dependency level 25"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
-      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      force_build: ${{ needs.init.outputs.pr_validation == 'true' || needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -993,10 +1072,12 @@ jobs:
     with:
       matrix: ${{ needs.init.outputs.level26_matrix }}
       push: ${{ needs.init.outputs.push }}
+      pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
+      source_ref: ${{ needs.init.outputs.source_ref }}
       phase_name: "Dependency level 26"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
-      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      force_build: ${{ needs.init.outputs.pr_validation == 'true' || needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -1023,10 +1104,12 @@ jobs:
     with:
       matrix: ${{ needs.init.outputs.level27_matrix }}
       push: ${{ needs.init.outputs.push }}
+      pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
+      source_ref: ${{ needs.init.outputs.source_ref }}
       phase_name: "Dependency level 27"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
-      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      force_build: ${{ needs.init.outputs.pr_validation == 'true' || needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -1053,10 +1136,12 @@ jobs:
     with:
       matrix: ${{ needs.init.outputs.level28_matrix }}
       push: ${{ needs.init.outputs.push }}
+      pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
+      source_ref: ${{ needs.init.outputs.source_ref }}
       phase_name: "Dependency level 28"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
-      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      force_build: ${{ needs.init.outputs.pr_validation == 'true' || needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -1083,10 +1168,12 @@ jobs:
     with:
       matrix: ${{ needs.init.outputs.level29_matrix }}
       push: ${{ needs.init.outputs.push }}
+      pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
+      source_ref: ${{ needs.init.outputs.source_ref }}
       phase_name: "Dependency level 29"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
-      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      force_build: ${{ needs.init.outputs.pr_validation == 'true' || needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -1113,10 +1200,12 @@ jobs:
     with:
       matrix: ${{ needs.init.outputs.level30_matrix }}
       push: ${{ needs.init.outputs.push }}
+      pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
+      source_ref: ${{ needs.init.outputs.source_ref }}
       phase_name: "Dependency level 30"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
-      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      force_build: ${{ needs.init.outputs.pr_validation == 'true' || needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -1143,10 +1232,12 @@ jobs:
     with:
       matrix: ${{ needs.init.outputs.level31_matrix }}
       push: ${{ needs.init.outputs.push }}
+      pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
+      source_ref: ${{ needs.init.outputs.source_ref }}
       phase_name: "Dependency level 31"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
-      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      force_build: ${{ needs.init.outputs.pr_validation == 'true' || needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -1173,10 +1264,12 @@ jobs:
     with:
       matrix: ${{ needs.init.outputs.level32_matrix }}
       push: ${{ needs.init.outputs.push }}
+      pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
+      source_ref: ${{ needs.init.outputs.source_ref }}
       phase_name: "Dependency level 32"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
-      force_build: ${{ needs.init.outputs.force_build == 'true' }}
+      force_build: ${{ needs.init.outputs.pr_validation == 'true' || needs.init.outputs.force_build == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
