@@ -24,6 +24,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Trust checked-out repository
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
       - name: Find latest successful krep build
         id: source-run
         env:
@@ -68,12 +71,12 @@ jobs:
         id: changes
         run: |
           set -euo pipefail
-          mapfile -t changed_files < <(git status --porcelain=v1 | cut -c4-)
-          if [ "${#changed_files[@]}" -eq 0 ]; then
+          changed_files=$(git status --porcelain=v1 | cut -c4-)
+          if [ -z "$changed_files" ]; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          unexpected=$(printf '%s\n' "${changed_files[@]}" | grep -Ev '^[^/]+/run3$' || true)
+          unexpected=$(printf '%s\n' "$changed_files" | grep -Ev '^[^/]+/run3$' || true)
           if [ -n "$unexpected" ]; then
             echo "krep changed files other than package run3 recipes:" >&2
             printf '%s\n' "$unexpected" >&2
@@ -81,7 +84,8 @@ jobs:
           fi
           git diff --check
           KREP=$(find /tmp/krep-artifact -type f -name krep -print -quit)
-          for recipe in "${changed_files[@]}"; do
+          printf '%s\n' "$changed_files" | while IFS= read -r recipe; do
+            [ -n "$recipe" ] || continue
             "$KREP" lint --path="$GITHUB_WORKSPACE/$recipe"
           done
           echo "changed=true" >> "$GITHUB_OUTPUT"
