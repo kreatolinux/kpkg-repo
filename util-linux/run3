@@ -10,15 +10,17 @@ build_depends:
  - "gmake"
 
 build {
- macro build --configure
+ macro build --configure --disable-makeinstall-tty-setgid
 }
 
 package {
- exec "make DESTDIR=$ROOT chgrp=true install"
+ exec "make DESTDIR=$ROOT install"
 }
 
 postinstall {
- exec "cat /etc/group | grep tty || addgroup tty"
+ exec "getent group tty >/dev/null || addgroup tty"
+ exec "[ ! -e /usr/bin/wall ] || { chgrp tty /usr/bin/wall && chmod g+s /usr/bin/wall; }"
+ exec "[ ! -e /usr/bin/write ] || { chgrp tty /usr/bin/write && chmod g+s /usr/bin/write; }"
 }
 
 

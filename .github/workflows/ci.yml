@@ -267,7 +267,7 @@ jobs:
       always() && !cancelled() &&
       needs.init.outputs.level2_matrix != '' &&
       (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
-      needs.build_level1.result == 'success'
+      (needs.update-sums.result == 'success' || needs.update-sums.result == 'skipped')
     needs: [init, update-sums, build_level1]
     uses: ./.github/workflows/ci-build.yml
     with:
@@ -297,7 +297,7 @@ jobs:
       always() && !cancelled() &&
       needs.init.outputs.level3_matrix != '' &&
       (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
-      needs.build_level2.result == 'success'
+      (needs.update-sums.result == 'success' || needs.update-sums.result == 'skipped')
     needs: [init, update-sums, build_level2]
     uses: ./.github/workflows/ci-build.yml
     with:
@@ -327,7 +327,7 @@ jobs:
       always() && !cancelled() &&
       needs.init.outputs.level4_matrix != '' &&
       (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
-      needs.build_level3.result == 'success'
+      (needs.update-sums.result == 'success' || needs.update-sums.result == 'skipped')
     needs: [init, update-sums, build_level3]
     uses: ./.github/workflows/ci-build.yml
     with:
@@ -357,7 +357,7 @@ jobs:
       always() && !cancelled() &&
       needs.init.outputs.level5_matrix != '' &&
       (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
-      needs.build_level4.result == 'success'
+      (needs.update-sums.result == 'success' || needs.update-sums.result == 'skipped')
     needs: [init, update-sums, build_level4]
     uses: ./.github/workflows/ci-build.yml
     with:
@@ -387,7 +387,7 @@ jobs:
       always() && !cancelled() &&
       needs.init.outputs.level6_matrix != '' &&
       (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
-      needs.build_level5.result == 'success'
+      (needs.update-sums.result == 'success' || needs.update-sums.result == 'skipped')
     needs: [init, update-sums, build_level5]
     uses: ./.github/workflows/ci-build.yml
     with:
@@ -417,7 +417,7 @@ jobs:
       always() && !cancelled() &&
       needs.init.outputs.level7_matrix != '' &&
       (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
-      needs.build_level6.result == 'success'
+      (needs.update-sums.result == 'success' || needs.update-sums.result == 'skipped')
     needs: [init, update-sums, build_level6]
     uses: ./.github/workflows/ci-build.yml
     with:
@@ -447,7 +447,7 @@ jobs:
       always() && !cancelled() &&
       needs.init.outputs.level8_matrix != '' &&
       (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
-      needs.build_level7.result == 'success'
+      (needs.update-sums.result == 'success' || needs.update-sums.result == 'skipped')
     needs: [init, update-sums, build_level7]
     uses: ./.github/workflows/ci-build.yml
     with:
@@ -477,7 +477,7 @@ jobs:
       always() && !cancelled() &&
       needs.init.outputs.level9_matrix != '' &&
       (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
-      needs.build_level8.result == 'success'
+      (needs.update-sums.result == 'success' || needs.update-sums.result == 'skipped')
     needs: [init, update-sums, build_level8]
     uses: ./.github/workflows/ci-build.yml
     with:
@@ -507,7 +507,7 @@ jobs:
       always() && !cancelled() &&
       needs.init.outputs.level10_matrix != '' &&
       (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
-      needs.build_level9.result == 'success'
+      (needs.update-sums.result == 'success' || needs.update-sums.result == 'skipped')
     needs: [init, update-sums, build_level9]
     uses: ./.github/workflows/ci-build.yml
     with:
@@ -537,7 +537,7 @@ jobs:
       always() && !cancelled() &&
       needs.init.outputs.level11_matrix != '' &&
       (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
-      needs.build_level10.result == 'success'
+      (needs.update-sums.result == 'success' || needs.update-sums.result == 'skipped')
     needs: [init, update-sums, build_level10]
     uses: ./.github/workflows/ci-build.yml
     with:
@@ -567,7 +567,7 @@ jobs:
       always() && !cancelled() &&
       needs.init.outputs.level12_matrix != '' &&
       (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
-      needs.build_level11.result == 'success'
+      (needs.update-sums.result == 'success' || needs.update-sums.result == 'skipped')
     needs: [init, update-sums, build_level11]
     uses: ./.github/workflows/ci-build.yml
     with:
@@ -597,7 +597,7 @@ jobs:
       always() && !cancelled() &&
       needs.init.outputs.level13_matrix != '' &&
       (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
-      needs.build_level12.result == 'success'
+      (needs.update-sums.result == 'success' || needs.update-sums.result == 'skipped')
     needs: [init, update-sums, build_level12]
     uses: ./.github/workflows/ci-build.yml
     with:
@@ -627,7 +627,7 @@ jobs:
       always() && !cancelled() &&
       needs.init.outputs.level14_matrix != '' &&
       (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
-      needs.build_level13.result == 'success'
+      (needs.update-sums.result == 'success' || needs.update-sums.result == 'skipped')
     needs: [init, update-sums, build_level13]
     uses: ./.github/workflows/ci-build.yml
     with:
@@ -657,7 +657,7 @@ jobs:
       always() && !cancelled() &&
       needs.init.outputs.level15_matrix != '' &&
       (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
-      needs.build_level14.result == 'success'
+      (needs.update-sums.result == 'success' || needs.update-sums.result == 'skipped')
     needs: [init, update-sums, build_level14]
     uses: ./.github/workflows/ci-build.yml
     with:
@@ -687,7 +687,7 @@ jobs:
       always() && !cancelled() &&
       needs.init.outputs.level16_matrix != '' &&
       (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
-      needs.build_level15.result == 'success'
+      (needs.update-sums.result == 'success' || needs.update-sums.result == 'skipped')
     needs: [init, update-sums, build_level15]
     uses: ./.github/workflows/ci-build.yml
     with:
@@ -717,7 +717,7 @@ jobs:
       always() && !cancelled() &&
       needs.init.outputs.level17_matrix != '' &&
       (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
-      needs.build_level16.result == 'success'
+      (needs.update-sums.result == 'success' || needs.update-sums.result == 'skipped')
     needs: [init, update-sums, build_level16]
     uses: ./.github/workflows/ci-build.yml
     with:
@@ -747,7 +747,7 @@ jobs:
       always() && !cancelled() &&
       needs.init.outputs.level18_matrix != '' &&
       (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
-      needs.build_level17.result == 'success'
+      (needs.update-sums.result == 'success' || needs.update-sums.result == 'skipped')
     needs: [init, update-sums, build_level17]
     uses: ./.github/workflows/ci-build.yml
     with:
@@ -777,7 +777,7 @@ jobs:
       always() && !cancelled() &&
       needs.init.outputs.level19_matrix != '' &&
       (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
-      needs.build_level18.result == 'success'
+      (needs.update-sums.result == 'success' || needs.update-sums.result == 'skipped')
     needs: [init, update-sums, build_level18]
     uses: ./.github/workflows/ci-build.yml
     with:
@@ -807,7 +807,7 @@ jobs:
       always() && !cancelled() &&
       needs.init.outputs.level20_matrix != '' &&
       (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
-      needs.build_level19.result == 'success'
+      (needs.update-sums.result == 'success' || needs.update-sums.result == 'skipped')
     needs: [init, update-sums, build_level19]
     uses: ./.github/workflows/ci-build.yml
     with:
@@ -837,7 +837,7 @@ jobs:
       always() && !cancelled() &&
       needs.init.outputs.level21_matrix != '' &&
       (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
-      needs.build_level20.result == 'success'
+      (needs.update-sums.result == 'success' || needs.update-sums.result == 'skipped')
     needs: [init, update-sums, build_level20]
     uses: ./.github/workflows/ci-build.yml
     with:
@@ -867,7 +867,7 @@ jobs:
       always() && !cancelled() &&
       needs.init.outputs.level22_matrix != '' &&
       (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
-      needs.build_level21.result == 'success'
+      (needs.update-sums.result == 'success' || needs.update-sums.result == 'skipped')
     needs: [init, update-sums, build_level21]
     uses: ./.github/workflows/ci-build.yml
     with:
@@ -897,7 +897,7 @@ jobs:
       always() && !cancelled() &&
       needs.init.outputs.level23_matrix != '' &&
       (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
-      needs.build_level22.result == 'success'
+      (needs.update-sums.result == 'success' || needs.update-sums.result == 'skipped')
     needs: [init, update-sums, build_level22]
     uses: ./.github/workflows/ci-build.yml
     with:
@@ -927,7 +927,7 @@ jobs:
       always() && !cancelled() &&
       needs.init.outputs.level24_matrix != '' &&
       (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
-      needs.build_level23.result == 'success'
+      (needs.update-sums.result == 'success' || needs.update-sums.result == 'skipped')
     needs: [init, update-sums, build_level23]
     uses: ./.github/workflows/ci-build.yml
     with:
@@ -957,7 +957,7 @@ jobs:
       always() && !cancelled() &&
       needs.init.outputs.level25_matrix != '' &&
       (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
-      needs.build_level24.result == 'success'
+      (needs.update-sums.result == 'success' || needs.update-sums.result == 'skipped')
     needs: [init, update-sums, build_level24]
     uses: ./.github/workflows/ci-build.yml
     with:
@@ -987,7 +987,7 @@ jobs:
       always() && !cancelled() &&
       needs.init.outputs.level26_matrix != '' &&
       (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
-      needs.build_level25.result == 'success'
+      (needs.update-sums.result == 'success' || needs.update-sums.result == 'skipped')
     needs: [init, update-sums, build_level25]
     uses: ./.github/workflows/ci-build.yml
     with:
@@ -1017,7 +1017,7 @@ jobs:
       always() && !cancelled() &&
       needs.init.outputs.level27_matrix != '' &&
       (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
-      needs.build_level26.result == 'success'
+      (needs.update-sums.result == 'success' || needs.update-sums.result == 'skipped')
     needs: [init, update-sums, build_level26]
     uses: ./.github/workflows/ci-build.yml
     with:
@@ -1047,7 +1047,7 @@ jobs:
       always() && !cancelled() &&
       needs.init.outputs.level28_matrix != '' &&
       (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
-      needs.build_level27.result == 'success'
+      (needs.update-sums.result == 'success' || needs.update-sums.result == 'skipped')
     needs: [init, update-sums, build_level27]
     uses: ./.github/workflows/ci-build.yml
     with:
@@ -1077,7 +1077,7 @@ jobs:
       always() && !cancelled() &&
       needs.init.outputs.level29_matrix != '' &&
       (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
-      needs.build_level28.result == 'success'
+      (needs.update-sums.result == 'success' || needs.update-sums.result == 'skipped')
     needs: [init, update-sums, build_level28]
     uses: ./.github/workflows/ci-build.yml
     with:
@@ -1107,7 +1107,7 @@ jobs:
       always() && !cancelled() &&
       needs.init.outputs.level30_matrix != '' &&
       (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
-      needs.build_level29.result == 'success'
+      (needs.update-sums.result == 'success' || needs.update-sums.result == 'skipped')
     needs: [init, update-sums, build_level29]
     uses: ./.github/workflows/ci-build.yml
     with:
@@ -1137,7 +1137,7 @@ jobs:
       always() && !cancelled() &&
       needs.init.outputs.level31_matrix != '' &&
       (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
-      needs.build_level30.result == 'success'
+      (needs.update-sums.result == 'success' || needs.update-sums.result == 'skipped')
     needs: [init, update-sums, build_level30]
     uses: ./.github/workflows/ci-build.yml
     with:
@@ -1167,7 +1167,7 @@ jobs:
       always() && !cancelled() &&
       needs.init.outputs.level32_matrix != '' &&
       (needs.init.outputs.should_build == 'true' || github.event_name == 'workflow_dispatch') &&
-      needs.build_level31.result == 'success'
+      (needs.update-sums.result == 'success' || needs.update-sums.result == 'skipped')
     needs: [init, update-sums, build_level31]
     uses: ./.github/workflows/ci-build.yml
     with:

@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import sys
@@ -160,14 +161,28 @@ def condensation_levels(
     return levels
 
 
-def _entries(components: list[tuple[str, ...]], arch: str) -> list[dict[str, str]]:
+def _component_id(component: tuple[str, ...]) -> str:
+    return hashlib.sha256("\0".join(component).encode()).hexdigest()[:16]
+
+
+def _entries(
+    components: list[tuple[str, ...]], arch: str,
+    dependencies: dict[tuple[str, ...], tuple[tuple[str, ...], ...]],
+) -> list[dict[str, str]]:
     entries: list[dict[str, str]] = []
     for component in components:
         packages = " ".join(component)
+        entry = {
+            "packages": packages,
+            "component_id": _component_id(component),
+            "dependencies": ",".join(
+                _component_id(dependency) for dependency in dependencies[component]
+            ),
+        }
         if arch in ("x86_64", "both"):
-            entries.append({"packages": packages})
+            entries.append({**entry, "arch": "x86_64"})
         if arch in ("arm64", "both"):
-            entries.append({"packages": packages, "arch": "arm64"})
+            entries.append({**entry, "arch": "arm64"})
     if len(entries) > MATRIX_LIMIT:
         raise TopologyError(
             f"matrix has {len(entries)} entries; GitHub limit is {MATRIX_LIMIT}"
@@ -183,6 +198,21 @@ def plan_document(document: Any, arch: str = "both", max_levels: int = DEFAULT_M
         raise TopologyError("max_levels must be a positive integer")
     nodes, edges, roots = validate_document(document)
     levels = condensation_levels(nodes, edges)
+    component_for = {
+        member: component for level in levels for component in level for member in component
+    }
+    direct_dependencies: dict[tuple[str, ...], set[tuple[str, ...]]] = {
+        component: set() for level in levels for component in level
+    }
+    for dependency, dependent in edges:
+        source = component_for[dependency]
+        target = component_for[dependent]
+        if source != target:
+            direct_dependencies[target].add(source)
+    dependencies = {
+        component: tuple(sorted(values))
+        for component, values in direct_dependencies.items()
+    }
     if len(levels) > max_levels:
         raise TopologyError(
             f"topology needs {len(levels)} levels, but max_levels is {max_levels}"
@@ -191,7 +221,7 @@ def plan_document(document: Any, arch: str = "both", max_levels: int = DEFAULT_M
     component_levels: list[list[list[str]]] = []
     for index in range(max_levels):
         if index < len(levels):
-            entries = _entries(levels[index], arch)
+            entries = _entries(levels[index], arch, dependencies)
             matrices.append({"include": entries} if entries else "")
             component_levels.append([list(component) for component in levels[index]])
         else:

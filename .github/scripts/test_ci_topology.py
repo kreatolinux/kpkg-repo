@@ -41,9 +41,12 @@ class TopologyTests(unittest.TestCase):
         self.assertEqual(plan["levels"], [
             [["base"]], [["left"], ["other"], ["right"]], [["app"]], []
         ])
-        self.assertEqual(plan["matrices"][1], {"include": [
-            {"packages": "left"}, {"packages": "other"}, {"packages": "right"}
-        ]})
+        entries = plan["matrices"][1]["include"]
+        self.assertEqual([entry["packages"] for entry in entries],
+                         ["left", "other", "right"])
+        base_id = TOPOLOGY._component_id(("base",))
+        self.assertEqual([entry["dependencies"] for entry in entries],
+                         [base_id, base_id, base_id])
         self.assertEqual(plan["matrices"][3], "")
 
     def test_disconnected_nodes_are_each_emitted_once(self):
@@ -65,10 +68,12 @@ class TopologyTests(unittest.TestCase):
         self.assertEqual(plan["levels"], [
             [["cycle-a", "cycle-b"]], [["consumer"]]
         ])
-        self.assertEqual(plan["matrices"][0]["include"], [
-            {"packages": "cycle-a cycle-b"},
-            {"packages": "cycle-a cycle-b", "arch": "arm64"},
-        ])
+        entries = plan["matrices"][0]["include"]
+        self.assertEqual([entry["packages"] for entry in entries],
+                         ["cycle-a cycle-b", "cycle-a cycle-b"])
+        self.assertEqual([entry["dependencies"] for entry in entries], ["", ""])
+        self.assertEqual(entries[0]["arch"], "x86_64")
+        self.assertEqual(entries[1]["arch"], "arm64")
 
     def test_output_is_deterministic_under_reordered_input(self):
         edges = [("a", "c"), ("b", "c"), ("c", "d")]
@@ -127,7 +132,9 @@ class TopologyTests(unittest.TestCase):
             self.assertTrue(lines[0].startswith("level1_matrix="))
             self.assertEqual(lines[2], "level3_matrix=")
             matrix = json.loads(lines[0].split("=", 1)[1])
-            self.assertEqual(matrix, {"include": [{"arch": "arm64", "packages": "dep"}]})
+            self.assertEqual(matrix["include"][0]["arch"], "arm64")
+            self.assertEqual(matrix["include"][0]["packages"], "dep")
+            self.assertEqual(matrix["include"][0]["dependencies"], "")
             self.assertEqual(json.loads(saved.read_text())["roots"], ["app"])
 
 

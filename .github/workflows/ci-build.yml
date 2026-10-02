@@ -120,7 +120,7 @@ jobs:
 
       - name: Architecture setup
         run: |
-          ARCH="${{ matrix.arch || 'x86_64' }}"
+          ARCH="${{ matrix.arch }}"
           echo "ARCH=$ARCH" >> $GITHUB_ENV
           KPKG_BIN=$(find /tmp/kpkg-bin -type f -name kpkg -print -quit)
           if [ -z "$KPKG_BIN" ]; then
@@ -130,12 +130,42 @@ jobs:
           fi
           echo "KPKG_BIN=$KPKG_BIN" >> $GITHUB_ENV
 
+      - name: Install MinIO client
+        run: |
+          MC_ARCH=$([ "${{ matrix.arch }}" = "arm64" ] && echo arm64 || echo amd64)
+          MC_VERSION=RELEASE.2025-08-13T08-35-41Z
+          curl -fL -o /tmp/mc "https://github.com/minio/mc/releases/download/${MC_VERSION}/mc.linux-${MC_ARCH}.${MC_VERSION}"
+          chmod +x /tmp/mc
+          mv /tmp/mc /bin/mc
+          mc alias set minio "${{ secrets.AWS_ENDPOINT }}" "${{ secrets.AWS_KEY_ID }}" "${{ secrets.AWS_SECRET_ACCESS_KEY }}" --api s3v4
+
+      - name: Check dependency results
+        id: dependency-gate
+        run: |
+          set -euo pipefail
+          blocked=false
+          missing=""
+          IFS=',' read -ra dependencies <<< "${{ matrix.dependencies }}"
+          for dependency in "${dependencies[@]}"; do
+            [ -n "$dependency" ] || continue
+            marker="minio/${{ secrets.AWS_BUCKET }}/ci-status/${{ github.run_id }}/${{ github.run_attempt }}/${{ matrix.arch }}/$dependency"
+            if ! mc stat "$marker" >/dev/null 2>&1; then
+              blocked=true
+              missing="$missing $dependency"
+            fi
+          done
+          echo "blocked=$blocked" >> "$GITHUB_OUTPUT"
+          if [ "$blocked" = true ]; then
+            echo "⏭️ ${{ matrix.packages }} blocked by failed dependency component(s):$missing" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
       - name: Verify telemetry label policy
+        if: steps.dependency-gate.outputs.blocked != 'true'
         run: sh .github/alloy/test-kpkg-telemetry.sh
 
       - name: Install and start Grafana Alloy
         id: alloy
-        if: ${{ success() && matrix.arch != 'arm64' }}
+        if: ${{ success() && steps.dependency-gate.outputs.blocked != 'true' && matrix.arch != 'arm64' }}
         continue-on-error: true
         env:
           OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
@@ -175,6 +205,7 @@ jobs:
           exit 1
 
       - name: Evaluate usefulness
+        if: steps.dependency-gate.outputs.blocked != 'true'
         id: useless-check
         env:
           FORCE_BUILD: ${{ inputs.force_build }}
@@ -226,7 +257,7 @@ jobs:
 
 
       - name: Build packages
-        if: steps.useless-check.outputs.is_useless != 'true'
+        if: steps.dependency-gate.outputs.blocked != 'true' && steps.useless-check.outputs.is_useless != 'true'
         run: |
           set -eo pipefail
           LOCALE=en_US
@@ -296,13 +327,13 @@ jobs:
           fi
 
       - name: Report Alloy forwarding errors
-        if: always() && matrix.arch != 'arm64' 
+        if: always() && steps.dependency-gate.outputs.blocked != 'true' && matrix.arch != 'arm64'
         run: |
           grep -Ei 'error|fatal|failed' /tmp/alloy.log || true
 
       - name: Create failure issues
         uses: actions/github-script@v9
-        if: always() && hashFiles('/tmp/failures/*.name') != ''
+        if: always() && steps.dependency-gate.outputs.blocked != 'true' && hashFiles('/tmp/failures/*.name') != ''
         with:
           script: |
             const fs = require('fs'), path = require('path');
@@ -351,22 +382,8 @@ jobs:
             core.summary.addRaw(`Created: ${created}, Skipped (already open): ${skipped}`);
             await core.summary.write();
 
-      - name: Install MinIO Client
-        if: (inputs.push == 'true' || (github.event_name == 'pull_request' && github.event.pull_request.user.login == 'renovate[bot]' && startsWith(github.head_ref || '', 'renovate/')) || github.event_name == 'workflow_dispatch') && steps.useless-check.outputs.is_useless != 'true'
-        run: |
-          MC_ARCH=$([ "$ARCH" = "arm64" ] && echo arm64 || echo amd64)
-          MC_VERSION=RELEASE.2025-08-13T08-35-41Z
-          curl -fL -o mc "https://github.com/minio/mc/releases/download/${MC_VERSION}/mc.linux-${MC_ARCH}.${MC_VERSION}"
-          chmod +x mc
-          mv mc /bin/
-          mc config host rm minio || true
-
-      - name: Configure MinIO Client
-        if: (inputs.push == 'true' || (github.event_name == 'pull_request' && github.event.pull_request.user.login == 'renovate[bot]' && startsWith(github.head_ref || '', 'renovate/')) || github.event_name == 'workflow_dispatch') && steps.useless-check.outputs.is_useless != 'true'
-        run: "mc alias set minio ${{ secrets.AWS_ENDPOINT }} ${{ secrets.AWS_KEY_ID }} ${{ secrets.AWS_SECRET_ACCESS_KEY }} --api s3v4"
-
       - name: Upload packages through MinIO
-        if: (inputs.push == 'true' || (github.event_name == 'pull_request' && github.event.pull_request.user.login == 'renovate[bot]' && startsWith(github.head_ref || '', 'renovate/')) || github.event_name == 'workflow_dispatch') && steps.useless-check.outputs.is_useless != 'true'
+        if: steps.dependency-gate.outputs.blocked != 'true' && (inputs.push == 'true' || (github.event_name == 'pull_request' && github.event.pull_request.user.login == 'renovate[bot]' && startsWith(github.head_ref || '', 'renovate/')) || github.event_name == 'workflow_dispatch') && steps.useless-check.outputs.is_useless != 'true'
         run: |
           upload_with_retry() {
             local retries=3
@@ -405,8 +422,15 @@ jobs:
           upload_with_retry
 
 
+      - name: Publish dependency success marker
+        if: success() && steps.dependency-gate.outputs.blocked != 'true'
+        run: |
+          marker=$(mktemp)
+          printf '%s\n' "${{ matrix.packages }}" > "$marker"
+          mc cp "$marker" "minio/${{ secrets.AWS_BUCKET }}/ci-status/${{ github.run_id }}/${{ github.run_attempt }}/${{ matrix.arch }}/${{ matrix.component_id }}"
+
       - name: Install dependencies for upterm session
-        if: failure() && github.event_name == 'workflow_dispatch' && inputs.enable_upterm_ssh == true
+        if: failure() && steps.dependency-gate.outputs.blocked != 'true' && github.event_name == 'workflow_dispatch' && inputs.enable_upterm_ssh == true
         run: |
           kpkg repl -a "set config.Telemetry.enabled ${{ steps.alloy.outputs.ready == 'true' }}"
           kpkg repl -a "set config.Telemetry.endpoint http://127.0.0.1:4318"
@@ -422,7 +446,7 @@ jobs:
           ln -s /bin/bash /bin/sh
 
       - name: Setup upterm session
-        if: failure() && github.event_name == 'workflow_dispatch' && inputs.enable_upterm_ssh == true
+        if: failure() && steps.dependency-gate.outputs.blocked != 'true' && github.event_name == 'workflow_dispatch' && inputs.enable_upterm_ssh == true
         uses: owenthereal/action-upterm@v1
         with:
           limit-access-to-actor: true
