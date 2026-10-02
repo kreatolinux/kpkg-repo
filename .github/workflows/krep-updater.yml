@@ -58,6 +58,14 @@ jobs:
           repository: kreatolinux/src
           run-id: ${{ steps.source-run.outputs.run_id }}
 
+      - name: Apply temporary Repology registrar workaround
+        run: |
+          set -euo pipefail
+          echo "92.63.176.157 repology.org" >> /etc/hosts
+          curl --fail --silent --show-error --connect-timeout 10 --max-time 30 \
+            -A "Klinux chkupd/workflow (issuetracker: https://github.com/kreatolinux/src/issues)" \
+            https://repology.org/api/v1/project/systemd >/dev/null
+
       - name: Update all eligible recipes once
         run: |
           set -euo pipefail
