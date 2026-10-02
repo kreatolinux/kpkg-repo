@@ -24,57 +24,24 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Find latest trusted krep artifact
+      - name: Find latest successful krep build
         id: source-run
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
         run: |
           set -euo pipefail
           test -n "$GH_TOKEN"
-          python3 - <<'PY' > /tmp/source-run-id
-          import json, os, urllib.error, urllib.parse, urllib.request
-
-          token = os.environ["GH_TOKEN"]
-          minimum_sha = "0809aec87064a55b79b6f20a231c16dceb50ecfc"
-          headers = {
-              "Accept": "application/vnd.github+json",
-              "Authorization": f"Bearer {token}",
-              "X-GitHub-Api-Version": "2022-11-28",
-          }
-          query = urllib.parse.urlencode({
-              "branch": "master", "event": "push", "status": "success", "per_page": 50
-          })
-          runs_url = (
-              "https://api.github.com/repos/kreatolinux/src/actions/workflows/"
-              f"build.yml/runs?{query}"
-          )
-          with urllib.request.urlopen(urllib.request.Request(runs_url, headers=headers)) as response:
-              runs = json.load(response)["workflow_runs"]
-          for run in runs:
-              compare_url = (
-                  "https://api.github.com/repos/kreatolinux/src/compare/"
-                  f"{minimum_sha}...{run['head_sha']}"
-              )
-              try:
-                  with urllib.request.urlopen(urllib.request.Request(compare_url, headers=headers)) as response:
-                      relation = json.load(response)["status"]
-              except urllib.error.HTTPError:
-                  continue
-              if relation not in ("identical", "ahead"):
-                  continue
-              artifacts_url = run["artifacts_url"] + "?per_page=100"
-              with urllib.request.urlopen(urllib.request.Request(artifacts_url, headers=headers)) as response:
-                  artifacts = json.load(response)["artifacts"]
-              if any(item["name"] == "krep-amd64-linux-release" and not item["expired"]
-                     for item in artifacts):
-                  print(run["id"])
-                  break
-          else:
-              raise SystemExit(
-                  "no successful master krep artifact containing wildcard failure isolation is available"
-              )
-          PY
-          echo "run_id=$(cat /tmp/source-run-id)" >> "$GITHUB_OUTPUT"
+          for attempt in 1 2 3 4 5; do
+            run_id=$(curl --fail --silent --show-error \
+              -H "Authorization: Bearer $GH_TOKEN" \
+              "https://api.github.com/repos/kreatolinux/src/actions/workflows/build.yml/runs?per_page=20" \
+              | awk '/"id":/ { match($0, /[0-9]+/); id=substr($0, RSTART, RLENGTH) }
+                     /"conclusion": "success"/ { print id; exit }')
+            [ -n "$run_id" ] && break
+            sleep 5
+          done
+          test -n "${run_id:-}"
+          echo "run_id=$run_id" >> "$GITHUB_OUTPUT"
 
       - name: Download krep artifact
         uses: actions/download-artifact@v8
