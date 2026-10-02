@@ -1,11 +1,11 @@
 name: "patch"
-version: "2.7.6"
+version: "2.8"
 release: "1"
 description: "GNU patch"
 sources:
   - "https://ftp.gnu.org/gnu/patch/patch-$version.tar.gz"
 sha256sum:
-  - "8cf86e00ad3aaa6d26aca30640e86b0e3e1f395ed99f189b06d4c9f74bc58a4e"
+  - "308a4983ff324521b9b21310bfc2398ca861798f02307c79eb99bb0e0d2bf980"
 build_depends:
   - "gmake"
 

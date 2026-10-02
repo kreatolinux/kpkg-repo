@@ -1,11 +1,11 @@
 name: "pulseaudio"
-version: "16.99.1"
+version: "17.0"
 release: "2"
 description: "Sound system"
 sources:
   - "https://www.freedesktop.org/software/pulseaudio/releases/pulseaudio-$version.tar.xz"
 sha256sum:
-  - "dbb89a4c4a5f30f03b2c8c95de864ad53f7a40d4fdee29063f966cf66cfa800a"
+  - "053794d6671a3e397d849e478a80b82a63cb9d8ca296bd35b73317bb5ceb87b5"
 depends:
   - "libsndfile"
   - "libtool"

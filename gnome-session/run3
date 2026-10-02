@@ -1,11 +1,11 @@
 name: "gnome-session"
-version: "50.1"
+version: "51.0"
 release: "4"
 description: "The GNOME session manager"
 sources:
  - "https://gitlab.gnome.org/GNOME/gnome-session/-/archive/${version}/gnome-session-${version}.tar.gz"
 sha256sum:
- - "bd956ecff71c2c717b2adf22475e53cbca1781e12f73fad28c24a48f49477ff5"
+ - "e4910848a74bc569619ec24261db9e33cdddbb4845adb0e1009fbddeb1edd524"
 depends:
  - "elogind"
  - "xtrans"

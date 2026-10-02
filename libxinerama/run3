@@ -1,11 +1,11 @@
 name: "libxinerama"
-version: "1.1.5"
+version: "1.1.6"
 release: "1"
 description: "libxinerama"
 sources:
  - "https://www.x.org/releases/individual/lib/libXinerama-${version}.tar.gz"
 sha256sum:
- - "2efa855cb42dc620eff3b77700d8655695e09aaa318f791f201fa60afa72b95c"
+ - "c74ee3d05e473671bf86285e2dece345485200bb042bea1540b1e30ff3f74bae"
 depends:
  - "libxext"
 build_depends:

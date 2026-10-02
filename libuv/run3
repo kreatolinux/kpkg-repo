@@ -1,11 +1,11 @@
 name: "libuv"
-version: "1.52.1"
+version: "1.53.0"
 release: "1"
 description: "The libuv package is a multi-platform support library with a focus on asynchronous I/O."
 sources:
  - "https://dist.libuv.org/dist/v${version}/libuv-v${version}.tar.gz"
 sha256sum:
- - "66d511b9e6e334c0e62279eb234fbfb2b3110b1479c09b95b44c7afca8cff9e7"
+ - "cb0d6dd2128d5a95bd242c6cc982a24fe608fa93da57b6b4ec763b0018c53e64"
 depends:
  - "libtool"
 build_depends:

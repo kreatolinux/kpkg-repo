@@ -1,11 +1,11 @@
 name: "libx11"
-version: "1.8.12"
+version: "1.8.13"
 release: "1"
 description: "X11 client-side library"
 sources:
  - "https://www.x.org/releases/individual/lib/libX11-${version}.tar.gz"
 sha256sum:
- - "220fbcf54b6e4d8dc40076ff4ab87954358019982490b33c7802190b62d89ce1"
+ - "acf0e7cd7541110e6330ecb539441a2d53061f386ec7be6906dfde0de2598470"
 depends:
  - "libxcb"
  - "xorgproto"

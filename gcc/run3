@@ -1,11 +1,11 @@
 name: "gcc"
-version: "16.1.0"
+version: "16.2.0"
 release: "4"
 description: "The GNU C Compiler"
 sources:
   - "https://ftp.gnu.org/gnu/gcc/gcc-$version/gcc-$version.tar.xz"
 sha256sum:
-  - "50efb4d94c3397aff3b0d61a5abd748b4dd31d9d3f2ab7be05b171d36a510f79"
+  - "e6738e29597f733270731aa90600f37ffdc045079dfc27ec7e8192cc81085c3e"
 depends:
   - "isl"
   - "libzstd"

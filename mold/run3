@@ -1,11 +1,11 @@
 name: "mold"
-version: "2.41.0"
+version: "2.42.1"
 release: "1"
 description: "A Modern Linker"
 sources:
   - "https://github.com/rui314/mold/archive/refs/tags/v$version.tar.gz"
 sha256sum:
-  - "0a61abac85d818437b425df856822e9d6e9982baeae5a93bcb02fe6c0060c61a"
+  - "0580221bfdad7148ceeafd0ad3c1c7b3ca9e66b45950405230cc3f81a205c816"
 depends:
   - "cmake"
 build_depends:

@@ -1,11 +1,11 @@
 name: "blueprint-compiler"
-version: "0.19.0"
+version: "0.22.2"
 release: "1"
 description: "Markup language and compiler for GTK user interfaces"
 sources:
  - "https://download.gnome.org/sources/blueprint-compiler/${version.split('.')[0:2].join('.')}/blueprint-compiler-${version}.tar.xz"
 sha256sum:
- - "22868d1d2a5e2bd78b901d51dda1f227f3471000e83596a49d57c5f88905f71a"
+ - "231d72efbac931c235ac3e022fe94982095c20d88721d9a8dcf60152f2017e07"
 depends:
  - "python"
  - "pygobject"

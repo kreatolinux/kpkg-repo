@@ -1,11 +1,11 @@
 name: "libressl"
-version: "4.0.1"
+version: "4.3.2"
 release: "2"
 description: "TLS library"
 sources:
  - "https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-${version}.tar.gz"
 sha256sum:
- - "20294b87778c26274893863943c86358979b499d37b49977d6bf868f7b597cbd"
+ - "edf01aee24c65d69e6a9efcb9d44bcda682ff9d4f3bbbd95e794e1dfa90847b5"
 build_depends:
   - "gmake"
   - "cmake"

@@ -1,5 +1,5 @@
 name: "gnome-control-center"
-version: "50.4"
+version: "51.0"
 release: "3"
 description: "GNOME Control Center"
 extract: false
@@ -9,7 +9,7 @@ sources:
   - "https://gitlab.gnome.org/GNOME/tecla/-/archive/47.0/tecla-47.0.tar.gz"
   - "https://gitlab.gnome.org/GNOME/libgxdp/-/archive/1fe6de799f39b3126e8d0db66fa4f16c10fd9bd6/libgxdp-1fe6de799f39b3126e8d0db66fa4f16c10fd9bd6.tar.gz"
 sha256sum:
-  - "5856c73999bedf45e74f73bac3d61e2b5ec1689f8bcf1943737baeee8204fb11"
+  - "c8ca5b6a0ae44fd0d64aac5aa3b79a83c2445095b159a9d13d1c9cc172ac4fb9"
   - "6e1fc322ed757a024a39a80a8de43d184323e2e781aa21cf618fc67655e6cb28"
   - "295c3f205b4f595ddb9b6e9625bcf467075614ff2ee533fe7f4739d99b6bac65"
   - "5fd2eba5c40666663039bb0b8f3a4b256808daa045de7ef33b7ec7360e666467"

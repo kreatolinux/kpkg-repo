@@ -1,11 +1,11 @@
 name: "libmd"
-version: "1.2.0"
+version: "1.3.0"
 release: "1"
 description: "Provides message digest functions from BSD systems"
 sources:
  - "https://libbsd.freedesktop.org/releases/libmd-${version}.tar.xz"
 sha256sum:
- - "ac15ffb8430502fbaccdec66c5a82ee0eab0b0f36220df56710feadfeb13d0a0"
+ - "fc0f1eb6b6766470326f2c014693809190e67dba84274a6fbae9d4912d066706"
 build_depends:
  - "gmake"
 

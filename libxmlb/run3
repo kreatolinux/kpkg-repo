@@ -1,11 +1,11 @@
 name: "libxmlb"
-version: "0.3.24"
+version: "0.3.29"
 release: "2"
 description: "A library to help create and query binary XML blobs"
 sources:
  - "https://github.com/hughsie/libxmlb/releases/download/${version}/libxmlb-${version}.tar.xz"
 sha256sum:
- - "ded52667aac942bb1ff4d1e977e8274a9432d99033d86918feb82ade82b8e001"
+ - "448294be33bfae62f00fa66e506f1cae80237ce71b7ab6530aefa75005eeb08a"
 depends:
  - "glib"
  - "gobject-introspection"

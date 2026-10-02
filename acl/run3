@@ -1,11 +1,11 @@
 name: "acl"
-version: "2.3.2"
+version: "2.4.0"
 release: "1"
 description: "POSIX access control lists"
 sources:
   - "https://download-mirror.savannah.gnu.org/releases/acl/acl-${version}.tar.xz"
 sha256sum:
-  - "97203a72cae99ab89a067fe2210c1cbf052bc492b479eca7d226d9830883b0bd"
+  - "e661131456d2708a01c614a0f400e11d7d1bfaeb6f3e74b75bb980b72f0161a3"
 depends:
   - "attr"
 

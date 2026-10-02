@@ -1,11 +1,11 @@
 name: "foot"
-version: "1.27.0"
+version: "1.28.0"
 release: "2"
 description: "A fast, lightweight and minimalistic Wayland terminal emulator"
 sources:
   - "https://codeberg.org/dnkl/foot/archive/$version.tar.gz"
 sha256sum:
-  - "f5917cad2d7b723b99873e53d78fd10ea202923d189aed5086591fc53b70b7e3"
+  - "4296be402b5684d049534598e69db92b918f92beac9dab76b585207045f0b037"
 depends:
   - "wayland-protocols"
   - "wayland"

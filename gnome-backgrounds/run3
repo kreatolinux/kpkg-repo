@@ -1,11 +1,11 @@
 name: "gnome-backgrounds"
-version: "50.0"
+version: "51.0"
 release: "1"
 description: "Backgrounds for GNOME"
 sources:
  - "https://gitlab.gnome.org/GNOME/gnome-backgrounds/-/archive/${version}/gnome-backgrounds-${version}.tar.gz"
 sha256sum:
- - "7ff0c3fa89357d657510392662b311f7b55c66bcd858c0a237cba23c05e2a250"
+ - "3caa3954405c943f8dbd213977f13d9f65d8729ffe72613133b8b96f95f33c6d"
 build_depends:
  - "meson"
 

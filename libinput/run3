@@ -1,11 +1,11 @@
 name: "libinput"
-version: "1.31.0"
+version: "1.32.0"
 release: "3"
 description: "Library that handles input devices"
 sources:
   - "https://gitlab.freedesktop.org/libinput/libinput/-/archive/$version/libinput-$version.tar.gz"
 sha256sum:
-  - "5f95a8ce039b3b2b4560a60bbdb920518d41baa9419344e5878c94bd841d5a54"
+  - "7dd6c1ca964c86eb6810ccd6639cda634e68bdca43bf3afec39e94e942fac8d4"
 depends:
   - "libevdev"
   - "mtdev"

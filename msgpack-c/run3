@@ -1,5 +1,5 @@
 name: "msgpack-c"
-version: "7.0.0"
+version: "7.0.2"
 release: "1"
 description: "MessagePack for C"
 sources:

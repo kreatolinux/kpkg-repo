@@ -1,5 +1,5 @@
 name: "gnome-shell"
-version: "50.5"
+version: "51.0"
 release: "5"
 description: "The GNOME shell"
 extract: false
@@ -9,7 +9,7 @@ sources:
   - "https://gitlab.gnome.org/GNOME/libshew/-/archive/d16afc40412b565d2bbecf80335f54a19a978009/libshew-d16afc40412b565d2bbecf80335f54a19a978009.tar.gz"
   - "glib-2.86-flag-enum.patch"
 sha256sum:
-  - "2ed87dd188ff0bcd7c0ffb22827883fc44ee678c010ff066cbe025667369b4c1"
+  - "57d03444c1f229ee09c6f57bfe84f34f2971d5602215e8ef1ca915e356e77f24"
   - "39b3fb067d2e96a83a0750dc5e43d168febd79d01352560e06d4d3579d49926e"
   - "b460997ad73744df06117200205a0168b91dfef50e7076013a14110abb245a93"
   - "fb5160d73e06a0ba099bf428a7b29f6bf795d54ad2bf970b78c380130b73e851"

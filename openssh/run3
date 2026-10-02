@@ -1,5 +1,5 @@
 name: "openssh"
-version: "9.9p1"
+version: "10.5p1"
 release: "5"
 description: "ssh tools"
 sources:
@@ -7,7 +7,7 @@ sources:
  - "openssl4-version-check.patch"
  - "openssl4-pkcs11-accessors.patch"
 sha256sum:
- - "b343fbcdbff87f15b1986e6e15d6d4fc9a7d36066be6b7fb507087ba8f966c02"
+ - "d44d28a839ea9daf969cc69150fde59910b2b39361dad81a3bd6cbd19218db11"
  - "ae05015fbda7db807f88dec944e021acc42bc0294efc5d96c294787ea83e4f2f"
  - "7346a297b32e0a77a3e6dbfbabc1e811baad712b123df6c205ca77f3b29b4051"
 depends:

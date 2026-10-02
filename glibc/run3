@@ -1,11 +1,11 @@
 name: "glibc"
-version: "2.43"
+version: "2.44"
 release: "5"
 description: "The GNU C library"
 sources:
   - "https://ftp.gnu.org/gnu/glibc/glibc-$version.tar.xz"
 b2sum:
-  - "a764edf3d0d52809aa94cf1a8f73341159d226ecc2a595aa3c9e1d1fd4b2d4eb9a599d70bda8812b73d8ef58b39746efdd34026772e38c0f091fe071d461ea98"
+  - "f943e302ad4e44a204e4c5d85460653bec030717c2a502f16764d74bd6d87c280e126f37820b96ec726aff611a8c4e0dba95a7b4d72907adcb0aa88d304e4823"
 depends:
   - "grep"
   - "bash"

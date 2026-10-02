@@ -1,11 +1,11 @@
 name: "dhcpcd"
-version: "10.3.2"
+version: "10.5.2"
 release: "1"
 description: "DHCP client"
 sources:
   - "https://github.com/NetworkConfiguration/dhcpcd/releases/download/v$version/dhcpcd-$version.tar.xz"
 sha256sum:
-  - "b6aa46932074906a9badef1bfe142b8aff9d041c2689e1ef8b74c12e9fd942bd"
+  - "3e476657fdb6eeb38b277da3a48d0ac0113ecce5858ebdcddff2b629faed52b4"
 depends:
   - "eudev"
 build_depends:

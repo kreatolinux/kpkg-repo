@@ -1,11 +1,11 @@
 name: "gettext"
-version: "0.22.5"
+version: "1.0"
 release: "2"
 description: "Gettext contains utilities for localization."
 sources:
  - "https://ftp.gnu.org/gnu/gettext/gettext-${version}.tar.xz"
 sha256sum:
- - "fe10c37353213d78a5b83d48af231e005c4da84db5ce88037d88355938259640"
+ - "71132a3fb71e68245b8f2ac4e9e97137d3e5c02f415636eb508ae607bc01add7"
 depends:
  - "attr"
  - "acl"

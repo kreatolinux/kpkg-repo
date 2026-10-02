@@ -1,11 +1,11 @@
 name: "wireplumber"
-version: "0.5.14"
+version: "0.5.18"
 release: "1"
 description: "Session / policy manager implementation for PipeWire"
 sources:
  - "https://gitlab.freedesktop.org/pipewire/wireplumber/-/archive/${version}/wireplumber-${version}.tar.gz"
 sha256sum:
- - "e91f04cd8cec75d72b8a2aaa7e90b1ba0a5e2094b7a882fc3a29a484a48a87e9"
+ - "8c8a326a5b2a570681c1503c83f1fce0cc54ba862019815604b2bc92a7d483a1"
 depends:
  - "pipewire"
 build_depends:

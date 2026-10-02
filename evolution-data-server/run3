@@ -1,11 +1,11 @@
 name: "evolution-data-server"
-version: "3.60.2"
+version: "3.62.0"
 release: "2"
 description: "Evolution data and calendar service libraries"
 sources:
   - "https://download.gnome.org/sources/evolution-data-server/${version.split('.')[0:2].join('.')}/evolution-data-server-$version.tar.xz"
 sha256sum:
-  - "2084dbdac396371b365d504c1ff45866ba8dca2f1252e5da1d3d9c33abdc1286"
+  - "78be88e9a511f5afe7ff2e363eade84b622dd0282647fc576edb2d4ff2962cba"
 depends:
   - "libical"
   - "libsecret"
