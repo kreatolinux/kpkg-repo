@@ -1,11 +1,11 @@
 name: "conmon"
-version: "2.1.13"
+version: "2.2.1"
 release: "1"
 description: "An OCI container runtime monitor"
 sources:
  - "https://github.com/containers/conmon/archive/refs/tags/v${version}.tar.gz"
 sha256sum:
- - "350992cb2fe4a69c0caddcade67be20462b21b4078dae00750e8da1774926d60"
+ - "814fb5979a3a4b8576b1f901e606b482bebb41cb7e57926e6d5765ee786b96d3"
 depends:
  - "glib"
 build_depends:

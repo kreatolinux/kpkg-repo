@@ -1,11 +1,11 @@
 name: "groff"
-version: "1.24.1"
+version: "1.24.2"
 release: "1"
 description: "GNU implementation of the traditional Unix document formatting tools"
 sources:
  - "https://ftp.gnu.org/gnu/groff/groff-${version}.tar.gz"
 sha256sum:
- - "74e2819795b6aff431aeac983d63a9c8968eeaba2a2eba7df8ba4c7b41e7cfd8"
+ - "f9c1efd5bebbe37fc6e1063db7473ce8df1e3e0be4ff0f43ce04fce57e9c5dd9"
 depends:
  - "bison"
  - "perl"

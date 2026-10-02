@@ -1,11 +1,11 @@
 name: "webkitgtk"
-version: "2.52.4"
+version: "2.54.0"
 release: "2"
 description: "webkit"
 sources:
   - "https://webkitgtk.org/releases/webkitgtk-$version.tar.xz"
 sha256sum:
-  - "cf4076a1ca2a64788edca8c452d8ebb68d5e2965e588fe46a388a016513edce4"
+  - "846fd19ccedbae1dbfe904f26dbf2d68a800a33a50caf2ad5222c8dcb3f25682"
 depends:
   - "libxt"
   - "libdrm"

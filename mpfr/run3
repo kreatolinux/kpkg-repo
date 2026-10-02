@@ -1,11 +1,11 @@
 name: "mpfr"
-version: "4.2.1"
+version: "4.2.2"
 release: "1"
 description: "GNU mpfr"
 sources:
  - "https://ftp.gnu.org/gnu/mpfr/mpfr-${version}.tar.xz"
 sha256sum:
- - "277807353a6726978996945af13e52829e3abd7a9a5b7fb2793894e18f1fcbb2"
+ - "b67ba0383ef7e8a8563734e2e889ef5ec3c3b898a01d00fa0a6869ad81c6ce01"
 depends:
  - "gmp"
 build_depends:

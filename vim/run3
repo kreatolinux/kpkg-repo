@@ -1,11 +1,11 @@
 name: "vim"
-version: "9.1.1930"
+version: "9.2.1162"
 release: "1"
 description: "Vi Improved"
 sources:
  - "https://github.com/vim/vim/archive/refs/tags/v${version}.tar.gz"
 sha256sum:
- - "d4601a7d0ce3428834d4509bc409988cb84069835be40e58b34dfb2dd4f4eb46"
+ - "a841d9490f573cf2696e157aade3568d327fc59374b7627f374dae3a600a5e0a"
 depends:
  - "ncurses"
 build_depends:

@@ -1,5 +1,5 @@
 name: "nano"
-version: "8.7.1"
+version: "9.2"
 release: "1"
 description: "Text editor with a TUI and intuitive keybinds"
 sources:

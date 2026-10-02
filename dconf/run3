@@ -1,11 +1,11 @@
 name: "dconf"
-version: "0.40.0"
+version: "51.0"
 release: "2"
 description: "A simple key/value storage system that is heavily optimised for reading"
 sources:
  - "https://gitlab.gnome.org/GNOME/dconf/-/archive/${version}/dconf-${version}.tar.gz"
 sha256sum:
- - "c144c314a5ab1b0e2c2e5cb381658d19b9577511b62db5df3fac463028b61bca"
+ - "323e72650a6ac830f51f53a5258798c20f06afefa8f5013a9203d611fa086460"
 depends:
  - "dbus"
  - "glib"

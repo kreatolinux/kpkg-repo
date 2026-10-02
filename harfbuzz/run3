@@ -1,11 +1,11 @@
 name: "harfbuzz"
-version: "14.2.1"
+version: "14.5.1"
 release: "4"
 description: "FriBidi is an implementation of Unicode Bidirectional Algorithm"
 sources:
  - "https://github.com/harfbuzz/harfbuzz/releases/download/${version}/harfbuzz-${version}.tar.xz"
 sha256sum:
- - "a54a5d8e9380a41fbb762ce367bcbf7704792dfca0d93f1bbca86c5a57902e0e"
+ - "7e2fa4e8c7c98e8d8140671f5772542afaaa6acccfbd746506886b6d85f7f8d6"
 depends:
  - "freetype"
  - "icu"

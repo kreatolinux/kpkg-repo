@@ -1,11 +1,11 @@
 name: "mercurial"
-version: "7.2.2"
+version: "7.2.4"
 release: "2"
 description: "A free, distributed source control management tool"
 sources:
  - "https://www.mercurial-scm.org/release/mercurial-${version}.tar.gz"
 b2sum:
- - "9133fe6e825e91175bc7ea94da83612f009085068fdf6d9e045de3c6187ccf2fb2c1a039090a8a7104a086d9a973ce114d531b3fdeec82b77ba17e3c16d2633f"
+ - "3ca3ee5b11948d81111e3e11c403f0d0d92ca25eea22694e3b1708a3a59969d32606a8104f56f4b7e991a414b89326e74b5f6c711cd99f85e7061cf958929218"
 depends:
  - "python"
 build_depends:

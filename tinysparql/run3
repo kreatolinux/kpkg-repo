@@ -1,11 +1,11 @@
 name: "tinysparql"
-version: "3.8.2"
+version: "3.12.0"
 release: "2"
 description: "SPARQL database and triple store"
 sources:
  - "https://download.gnome.org/sources/tinysparql/${version.split('.')[0:2].join('.')}/tinysparql-${version}.tar.xz"
 sha256sum:
- - "bb8643386c8edc591a03205d4a0eda661dcdd2094473bffb9bbdb94e93589cb2"
+ - "40e3e3ae9811ae07a94ac7dfe8259f218679ebb1c9bc98d7ab345b2405926b57"
 depends:
  - "glib"
  - "libxml2"

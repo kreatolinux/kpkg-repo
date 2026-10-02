@@ -1,5 +1,5 @@
 name: "gpgme"
-version: "1.23.2"
+version: "2.2.0"
 release: "1"
 description: "GNU Privacy Guard Made Easy"
 sources:

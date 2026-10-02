@@ -1,11 +1,11 @@
 name: "dwl"
-version: "0.7"
+version: "0.9"
 release: "1"
 description: "dwm for Wayland - dynamic tiling Wayland compositor"
 sources:
   - "https://codeberg.org/dwl/dwl/releases/download/v${version}/dwl-v${version}.tar.gz"
 sha256sum:
-  - "16e1412385f5fecaea997f734cb290f2bc412929da5b523c7c5180c6bd9402ea"
+  - "51ed5da49942ca3272b6f2c4f1d7641b0b947a6eb1c264dce8a65b4d245596af"
 depends:
   - "wlroots"
   - "wayland-protocols"

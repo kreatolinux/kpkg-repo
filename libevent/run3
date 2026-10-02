@@ -1,11 +1,11 @@
 name: "libevent"
-version: "2.1.12"
+version: "2.1.13"
 release: "1"
 description: "Event notification library"
 sources:
  - "https://github.com/libevent/libevent/releases/download/release-${version}-stable/libevent-${version}-stable.tar.gz"
 sha256sum:
- - "92e6de1be9ec176428fd2367677e61ceffc2ee1cb119035037a27d346b0403bb"
+ - "f7e9383b8c0baa81b687e5b5eecc01beefaf1b19b64151d95ed61647fe7a315c"
 depends:
  - "openssl"
 build_depends:

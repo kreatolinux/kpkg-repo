@@ -1,11 +1,11 @@
 name: "gsettings-desktop-schemas"
-version: "50.1"
+version: "51.0"
 release: "2"
 description: "A collection of GSettings schemas for GNOME desktop settings"
 sources:
   - "https://gitlab.gnome.org/GNOME/gsettings-desktop-schemas/-/archive/$version/gsettings-desktop-schemas-$version.tar.gz"
 sha256sum:
-  - "ac9328c00ca18e5ac921bb2c13048b1ce5b43302b0c8d89d7fec22b05e22ec7a"
+  - "37b89635253528404e422a5c468fad988a27e32766907b59f17b2ffd5a0a1cfb"
 depends:
   - "cantarell-fonts"
   - "gobject-introspection"

@@ -1,11 +1,11 @@
 name: "btrfs-progs"
-version: "6.17.1"
+version: "7.1"
 release: "1"
 description: "BTRFS filesystem utilities"
 sources:
  - "https://mirrors.edge.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v${version}.tar.xz"
 sha256sum:
- - "a4be0a6ebb3c476427fb5d97b2cf027b0ccdb6b0c55ff16323320c1e8cb77658"
+ - "d1f55cc2971398c9142eaa79d203e63d586a3b4b867f956664a1d68322cd4e34"
 depends:
  - "e2fsprogs"
  - "eudev"

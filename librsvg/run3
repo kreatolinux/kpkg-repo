@@ -1,11 +1,11 @@
 name: "librsvg"
-version: "2.61.3"
+version: "2.63.2"
 release: "3"
 description: "SVG rendering library"
 sources:
  - "https://gitlab.gnome.org/GNOME/librsvg/-/archive/${version}/librsvg-${version}.tar.gz"
 sha256sum:
- - "408499a98ad9a84402e8c6de98bfa8e81889ed64ce89b7ffa4feeb95166ea036"
+ - "39fd9027fe7d78fd404dec9350f845e6215d7879b8a1c46733e01ea6143ec3a6"
 depends:
  - "cairo"
  - "freetype"

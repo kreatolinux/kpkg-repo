@@ -1,11 +1,11 @@
 name: "dbus"
-version: "1.14.10"
+version: "1.16.2"
 release: "6"
 description: "Message bus system"
 sources:
  - "https://dbus.freedesktop.org/releases/dbus/dbus-${version}.tar.xz"
 sha256sum:
- - "ba1f21d2bd9d339da2d4aa8780c09df32fea87998b73da24f49ab9df1e36a50f"
+ - "0ba2a1a4b16afe7bceb2c07e9ce99a8c2c3508e5dec290dbb643384bd6beb7e2"
 depends:
  - "expat"
 build_depends:

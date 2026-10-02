@@ -1,11 +1,11 @@
 name: "geoclue"
-version: "2.8.1"
+version: "2.8.2"
 release: "3"
 description: "A D-Bus geoinformation service"
 sources:
  - "https://gitlab.freedesktop.org/geoclue/geoclue/-/archive/${version}/geoclue-${version}.tar.gz"
 sha256sum:
- - "29dd143845ef270a06971c9edc98cdcf71aaad114cfb48dd1c803269c389a483"
+ - "5435f7d48105fe89a4259f807658281e854881267254bcd4eeac6e26c222055b"
 depends:
  - "libnotify"
  - "libsoup"

@@ -1,11 +1,11 @@
 name: "openrc"
-version: "0.63.3"
+version: "0.64.1"
 release: "1"
 description: "The OpenRC init system"
 sources:
  - "https://github.com/OpenRC/openrc/archive/refs/tags/${version}.tar.gz"
 sha256sum:
- - "f5bc2257f22ca7f0920a12698ad1e8f85a0f91a90e8e83106611514ea409b8ec"
+ - "56d6d24c7fd2ca15d1abd1fb82ce5430629a71acb2c3fa12760300243dbd0baa"
 build_depends:
  - "ninja"
  - "meson"

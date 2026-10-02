@@ -1,5 +1,5 @@
 name: "gnome-settings-daemon"
-version: "50.1"
+version: "51.0"
 release: "5"
 description: "GNOME settings daemon"
 extract: false
@@ -8,7 +8,7 @@ sources:
   - "https://gitlab.gnome.org/GNOME/libgnome-volume-control/-/archive/7a621180b46421e356b33972e3446775a504139c/libgnome-volume-control-7a621180b46421e356b33972e3446775a504139c.tar.gz"
   - "busybox-ln.patch"
 sha256sum:
-  - "13fd935144a92335e2c4572081803ba20c06a2908d098b2cfa88ec0fca7b3794"
+  - "b83aa879dac423788870891bdcf92f6c1b91946989f26f05d050b61c924f435c"
   - "0bd8bb754ce3fb82b29c83e2186b2a84517be772acdba28d15eb928a44cadec3"
   - "be1ceda2d7e2747bfd2d5c0b5dc5b7144a69bfba63618cff39299bb00cb7edc1"
 depends:

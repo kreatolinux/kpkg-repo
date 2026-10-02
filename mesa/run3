@@ -1,11 +1,11 @@
 name: "mesa"
-version: "26.1.1"
+version: "26.2.4"
 release: "4"
 description: "The 3D Graphics Library"
 sources:
  - "https://archive.mesa3d.org/mesa-${version}.tar.xz"
 sha256sum:
- - "8bd36c031cc6d0edfec04617527609454ee3a09ad53bdf983b45fc2c1e129b2e"
+ - "bce5f7fbebb934373b86c999a064d52fb5065878dc57f287f95346648ec832e9"
 depends:
  - "elfutils"
  - "libxxf86vm"

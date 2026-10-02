@@ -1,11 +1,11 @@
 name: "libpng"
-version: "1.6.53"
+version: "1.6.59"
 release: "1"
 description: "PNG library"
 sources:
  - "https://github.com/glennrp/libpng/archive/refs/tags/v${version}.tar.gz"
 sha256sum:
- - "b20cee717e11416d2f96ccc7d184f63730ca8cb2f03bfd0c4ed77fbc909c0bff"
+ - "2540302a1844ad2b2b501977abecfa850f265f97b78f065a712ab4074a89f5b5"
 build_depends:
   - "gmake"
   - "cmake"

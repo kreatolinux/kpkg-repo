@@ -1,11 +1,11 @@
 name: "xdg-dbus-proxy"
-version: "0.1.7"
+version: "0.1.9"
 release: "1"
 description: "xdg-dbus-proxy"
 sources:
  - "https://github.com/flatpak/xdg-dbus-proxy/releases/download/${version}/xdg-dbus-proxy-${version}.tar.xz"
 sha256sum:
- - "3ad3d27ba574e178acb5e4d438ba36ace25e3564f899c36f31c56f82c7adbbe7"
+ - "5450dda586ec3bb3ca709d311e845487883faa3b09cf562608d7e84f4311dced"
 depends:
  - "glib"
 build_depends:

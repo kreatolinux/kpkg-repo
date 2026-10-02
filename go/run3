@@ -1,11 +1,11 @@
 name: "go"
-version: "1.26.3"
+version: "1.27.1"
 release: "3"
 description: "Go is a statically typed, compiled programming language designed at Google"
 sources:
   - "https://go.dev/dl/go$version.src.tar.gz"
 sha256sum:
-  - "1c646875d0aa8799133184ed57cf79ff24bdefe8c8820470602a9d3d6d9192b8"
+  - "4e408abae126d916b6164627193f2c54f0e3ca1312d693b86db45f862ab238b1"
 depends:
   - "git"
 build_depends:
