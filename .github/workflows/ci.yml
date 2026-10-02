@@ -169,7 +169,10 @@ jobs:
             CHANGED_RUNFILES=$(printf '%s\n' "$CHANGED_FILES" | grep -E '^[^/]+/run3?$' || true)
             RUN_PKG_COUNT=$(printf '%s\n' "$CHANGED_RUNFILES" | awk -F/ 'NF {print $1}' | sort -u | wc -l | tr -d ' ')
             TOTAL_CHANGED_COUNT=$(printf '%s\n' "$CHANGED_FILES" | awk 'NF' | wc -l | tr -d ' ')
-            if [ "$RUN_PKG_COUNT" = 1 ] && { [ "${{ github.event_name }}" = pull_request ] || [ "$TOTAL_CHANGED_COUNT" = 1 ]; }; then
+            if printf '%s\n' "$CHANGED_FILES" | grep -Eq '^\.github/(workflows/|scripts/ci-topology\.py|scripts/test_ci_topology\.py)'; then
+              # Scheduler changes must exercise the complete generated graph.
+              PACKAGES=$(all_packages)
+            elif [ "$RUN_PKG_COUNT" = 1 ] && { [ "${{ github.event_name }}" = pull_request ] || [ "$TOTAL_CHANGED_COUNT" = 1 ]; }; then
               PACKAGES=$(printf '%s\n' "$CHANGED_RUNFILES" | head -n1 | cut -d/ -f1)
             else
               SHOULD_BUILD=false
