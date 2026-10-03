@@ -1,6 +1,6 @@
 name: "libevent"
 version: "2.1.13"
-release: "1"
+release: "2"
 description: "Event notification library"
 sources:
  - "https://github.com/libevent/libevent/releases/download/release-${version}-stable/libevent-${version}-stable.tar.gz"
@@ -13,11 +13,11 @@ build_depends:
  - "cmake"
 
 build {
- macro build 
+ macro build --configure
 }
 
 package {
- macro package
+ macro package --configure
 }
 
 

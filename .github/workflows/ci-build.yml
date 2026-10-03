@@ -414,19 +414,22 @@ jobs:
             while [ $attempt -le $retries ]; do
               echo "Upload attempt $attempt of $retries..."
               archives_ok=true
-              sources_ok=true
 
               if [ -d "/var/cache/kpkg/archives" ] && [ -n "$(ls -A /var/cache/kpkg/archives 2>/dev/null)" ]; then
                 echo "Copying archives..."
                 mc cp --recursive /var/cache/kpkg/archives/* minio/${{ secrets.AWS_BUCKET }}/archives/ || archives_ok=false
               fi
 
+              # Source-cache entries may be dangling links to extracted files.
+              # They are optional; archive publication and its marker must not
+              # fail after a successful package build because one is absent.
               if [ -d "/var/cache/kpkg/sources" ] && [ -n "$(ls -A /var/cache/kpkg/sources 2>/dev/null)" ]; then
-                echo "Copying sources..."
-                mc cp --recursive /var/cache/kpkg/sources/* minio/${{ secrets.AWS_BUCKET }}/sources/ || sources_ok=false
+                echo "Copying available sources..."
+                mc cp --recursive /var/cache/kpkg/sources/* minio/${{ secrets.AWS_BUCKET }}/sources/ || \
+                  echo "Warning: some optional source-cache objects were not uploaded"
               fi
 
-              if [ "$archives_ok" = true ] && [ "$sources_ok" = true ]; then
+              if [ "$archives_ok" = true ]; then
                 echo "Package upload successful on attempt $attempt"
                 return 0
               fi

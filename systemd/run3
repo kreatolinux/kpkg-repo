@@ -1,6 +1,6 @@
 name: "systemd"
 version: "262"
-release: "5"
+release: "6"
 description: "The systemd System and Service Manager"
 sources:
   - "https://github.com/systemd/systemd/archive/refs/tags/v$version.tar.gz"
@@ -36,7 +36,8 @@ prepare {
 
 build {
   env PATH="$(realpath ../):$PATH"
-  exec "meson setup  --prefix=/usr  -Dpamconfdir=/etc/pam.d  -Dpam=true  -Dldconfig=false  build/"
+  # ukify and its generated boot tests require the unpackaged pefile module.
+  exec "meson setup  --prefix=/usr  -Dpamconfdir=/etc/pam.d  -Dpam=true  -Dldconfig=false  -Dukify=disabled  build/"
   exec "ninja -C build/"
 }
 

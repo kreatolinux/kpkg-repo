@@ -1,6 +1,6 @@
 name: "dbus"
 version: "1.16.2"
-release: "6"
+release: "7"
 description: "Message bus system"
 sources:
  - "https://dbus.freedesktop.org/releases/dbus/dbus-${version}.tar.xz"
@@ -9,20 +9,20 @@ sha256sum:
 depends:
  - "expat"
 build_depends:
- - "python-setuptools"
- - "gmake"
+ - "meson"
+ - "pkgconf"
 
 build {
- local extraArgs = ""
+ local extraArgs = "-Dsystemd=disabled"
  if ${exec("command -v systemctl")}.exit() == 0 {
- global extraArgs = "--enable-systemd"
+ global extraArgs = "-Dsystemd=enabled"
 }
 
- macro build ${extraArgs} --configure --disable-static --runstatedir=/run --sysconfdir=/etc --enable-user-session
+ macro build --meson ${extraArgs} -Ddefault_library=shared -Druntime_dir=/run --sysconfdir=/etc -Duser_session=true
 }
 
 package {
- macro package
+ macro package --meson
 }
 
 

@@ -1,6 +1,6 @@
 name: "limine"
 version: "12.9.1"
-release: "2"
+release: "3"
 description: "Modern, advanced, portable, multiprotocol bootloader."
 sources:
  - "https://github.com/limine-bootloader/limine/releases/download/v${version}/limine-${version}.tar.xz"
@@ -11,6 +11,7 @@ depends:
  - "nasm"
 build_depends:
  - "gmake"
+ - "llvm"
 
 build {
  if "$KPKG_ARCH" == "aarch64" || "$KPKG_ARCH" == "arm64" {

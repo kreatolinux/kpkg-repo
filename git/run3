@@ -1,6 +1,6 @@
 name: "git"
 version: "2.56.0"
-release: "1"
+release: "2"
 description: "Version control tool"
 sources:
   - "https://mirrors.edge.kernel.org/pub/software/scm/git/git-$version.tar.xz"
@@ -22,8 +22,10 @@ build {
   exec "ln -sf $(which gsed) bin-shim/sed"
   env PATH="${exec('pwd').output().replace('\n', '')}/bin-shim:$PATH"
 
+  # Keep optional Rust code disabled, including on ARM builders without Cargo.
   # Write config.mak using exec to ensure it's inside the sandbox
   exec "cat > config.mak << 'EOF'
+NO_RUST=YesPlease
 NO_GETTEXT=YesPlease
 NO_SVN_TESTS=YesPlease
 NO_TCLTK=YesPlease

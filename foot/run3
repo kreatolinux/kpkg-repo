@@ -1,6 +1,6 @@
 name: "foot"
 version: "1.28.0"
-release: "2"
+release: "3"
 description: "A fast, lightweight and minimalistic Wayland terminal emulator"
 sources:
   - "https://codeberg.org/dnkl/foot/archive/$version.tar.gz"
@@ -23,7 +23,10 @@ build {
 }
 
 package {
-  exec "git config --global --add safe.directory /tmp/kpkg/srcdir/foot/subprojects/fcft"
+  # fcft queries Git while installing. Trust only the extracted subproject.
+  env GIT_CONFIG_COUNT="1"
+  env GIT_CONFIG_KEY_0="safe.directory"
+  env GIT_CONFIG_VALUE_0="$SRCDIR/subprojects/fcft"
   exec "DESTDIR=$ROOT ninja -C build/ install"
 }
 

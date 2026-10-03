@@ -1,6 +1,6 @@
 name: "rsync"
 version: "3.5.1"
-release: "1"
+release: "2"
 description: "Open source utility that provides fast incremental file transfer"
 sources:
  - "https://download.samba.org/pub/rsync/src/rsync-${version}.tar.gz"
@@ -10,7 +10,7 @@ build_depends:
  - "gmake"
 
 build {
- macro build --disable-lz4 --disable-xxhash
+ macro build --disable-lz4 --disable-xxhash --disable-idn
 }
 
 package {

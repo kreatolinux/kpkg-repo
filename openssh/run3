@@ -1,25 +1,16 @@
 name: "openssh"
 version: "10.5p1"
-release: "5"
+release: "6"
 description: "ssh tools"
 sources:
  - "https://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-${version}.tar.gz"
- - "openssl4-version-check.patch"
- - "openssl4-pkcs11-accessors.patch"
 sha256sum:
  - "d44d28a839ea9daf969cc69150fde59910b2b39361dad81a3bd6cbd19218db11"
- - "ae05015fbda7db807f88dec944e021acc42bc0294efc5d96c294787ea83e4f2f"
- - "7346a297b32e0a77a3e6dbfbabc1e811baad712b123df6c205ca77f3b29b4051"
 depends:
  - "shadow"
  - "zlib"
 build_depends:
  - "gmake"
-
-prepare {
- exec "patch -p1 < ../openssl4-version-check.patch"
- exec "patch -p1 < ../openssl4-pkcs11-accessors.patch"
-}
 
 build {
  macro build --without-zlib-version-check

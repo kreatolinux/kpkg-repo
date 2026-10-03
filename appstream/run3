@@ -1,6 +1,6 @@
 name: "appstream"
 version: "1.2.1"
-release: "2"
+release: "3"
 description: "Tools and libraries to work with AppStream metadata"
 sources:
  - "https://github.com/ximion/appstream/archive/refs/tags/v${version}.tar.gz"
@@ -19,6 +19,7 @@ depends:
 build_depends:
  - "meson"
  - "ninja"
+ - "wayland"
 opt_depends:
  - "systemd: For systemd support"
 

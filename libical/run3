@@ -1,6 +1,6 @@
 name: "libical"
 version: "4.0.5"
-release: "1"
+release: "2"
 description: "An implementation of iCalendar protocols and data formats"
 sources:
   - "https://github.com/libical/libical/releases/download/v$version/libical-$version.tar.gz"
@@ -14,7 +14,7 @@ build_depends:
   - "vala"
 
 build {
-  exec "cmake -DCMAKE_INSTALL_PREFIX=/usr  -DCMAKE_BUILD_TYPE=Release   -DSHARED_ONLY=yes             -DGOBJECT_INTROSPECTION=true  -DICAL_GLIB_VAPI=true         -DENABLE_GTK_DOC=OFF  -B build"
+  exec "cmake -DCMAKE_INSTALL_PREFIX=/usr  -DCMAKE_BUILD_TYPE=Release   -DLIBICAL_STATIC=OFF             -DLIBICAL_GOBJECT_INTROSPECTION=ON  -DLIBICAL_GLIB_VAPI=ON         -DLIBICAL_BUILD_DOCS=OFF  -B build"
   exec "cmake --build build"
 }
 

@@ -1,6 +1,6 @@
 name: "lame"
 version: "4.0"
-release: "1"
+release: "2"
 description: "A MP3 encoder"
 sources:
  - "https://netix.dl.sourceforge.net/project/lame/lame/${version}/lame-${version}.tar.gz"
@@ -13,7 +13,7 @@ build_depends:
  - "gmake"
 
 build {
- macro build --enable-shared --enable-mp3rtp
+ macro build --enable-shared --enable-mp3rtp --disable-decoder
 }
 
 package {
