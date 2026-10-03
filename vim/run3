@@ -1,6 +1,6 @@
 name: "vim"
 version: "9.2.1162"
-release: "2"
+release: "3"
 description: "Vi Improved"
 sources:
  - "https://github.com/vim/vim/archive/refs/tags/v${version}.tar.gz"
@@ -12,7 +12,10 @@ build_depends:
  - "gmake"
 
 build {
- macro build --without-local-dir
+ # The top-level wrapper uses $SRCDIR as its cd target; kpkg exports that
+ # variable as this directory, so invoking ./configure recurses forever.
+ exec "cd src && ./configure --prefix=/usr --without-local-dir"
+ exec "make"
 }
 
 package {
