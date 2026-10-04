@@ -1,11 +1,11 @@
 name: "zig"
-version: "0.16.0"
+version: "0.17.0"
 release: "1"
 description: "A general-purpose programming language and toolchain for maintaining robust, optimal and reusable software."
 sources:
   - "https://ziglang.org/download/${version}/zig-${version}.tar.xz"
 sha256sum:
-  - "43186959edc87d5c7a1be7b7d2a25efffd22ce5807c7af99067f86f99641bfdf"
+  - "b6c7f1728f043700d6529bac980800792f824256a9d2f1839b3d62beed0b8abd"
 depends:
  - "llvm"
 build_depends:

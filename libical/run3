@@ -1,11 +1,11 @@
 name: "libical"
-version: "4.0.5"
+version: "4.0.6"
 release: "2"
 description: "An implementation of iCalendar protocols and data formats"
 sources:
   - "https://github.com/libical/libical/releases/download/v$version/libical-$version.tar.gz"
 sha256sum:
-  - "cc09a3ac41d60e6144e644bd3fcf97d47106d659c4a0b8965102581401e67c9c"
+  - "2e3729cb69c282d3bb17a8d2b198af6e4bc7502fd3621c9adf573921fe9dceb0"
 depends:
   - "glib"
 build_depends:
