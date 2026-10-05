@@ -250,12 +250,45 @@ jobs:
           "${KPKG_BIN}" repl -a "set config.Telemetry.buildId $GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT-${{ matrix.packages }}"
           "${KPKG_BIN}" clean --binaries=true --environment=true
 
+          install_published_dependency() {
+            dep=$1
+            wait_count=0
+            while :; do
+              install_log=$(mktemp)
+              if "${KPKG_BIN}" install "$dep" -y 2>&1 | tee "$install_log"; then
+                rm -f "$install_log"
+                return 0
+              fi
+              if ! grep -q '404 Not Found' "$install_log" || [ "$wait_count" -ge 10 ]; then
+                rm -f "$install_log"
+                return 1
+              fi
+              rm -f "$install_log"
+              wait_count=$((wait_count + 1))
+              echo "Dependency $dep is not visible yet; retrying in 60 seconds ($wait_count/10)..."
+              sleep 60
+            done
+          }
+
           if [ "$FORCE_BUILD" = "true" ]; then
             IS_USELESS="false"
             for package in ${{ matrix.packages }}; do
               "${KPKG_BIN}" clean --binaries --packages "$package"
             done
           else
+            # Archive names can include dependency versions (for example,
+            # Meson includes Python's version). Install the already-published
+            # direct dependencies before deciding which archive is current.
+            for package in ${{ matrix.packages }}; do
+              BUILD_DEPS=$(KPKG_ENABLE_DEBUG=0 "${KPKG_BIN}" repl -a "get depends.$package.build")
+              for dep in $BUILD_DEPS; do
+                case " ${{ matrix.packages }} " in
+                  *" $dep "*) continue ;;
+                esac
+                install_published_dependency "$dep"
+              done
+            done
+
             IS_USELESS="true"
             for package in ${{ matrix.packages }}; do
               "${KPKG_BIN}" install "$package" -y --downloadOnly || IS_USELESS="false"
@@ -309,18 +342,38 @@ jobs:
 
           git config --system --add safe.directory '*'
 
+          install_published_dependency() {
+            dep=$1
+            wait_count=0
+            while :; do
+              install_log=$(mktemp)
+              if "${KPKG_BIN}" install "$dep" -y 2>&1 | tee "$install_log"; then
+                rm -f "$install_log"
+                return 0
+              fi
+              if ! grep -q '404 Not Found' "$install_log" || [ "$wait_count" -ge 10 ]; then
+                rm -f "$install_log"
+                return 1
+              fi
+              rm -f "$install_log"
+              wait_count=$((wait_count + 1))
+              echo "Dependency $dep is not visible yet; retrying in 60 seconds ($wait_count/10)..."
+              sleep 60
+            done
+          }
+
           # Dependencies were built and published by earlier topology levels.
           # Install them from the repository, but never rebuild their closure.
           for package in ${{ matrix.packages }}; do
-            PACKAGES=$(KPKG_ENABLE_DEBUG=0 "${KPKG_BIN}" repl -a "get depends.$package.build")
-            for dep in $PACKAGES; do
+            BUILD_DEPS=$(KPKG_ENABLE_DEBUG=0 "${KPKG_BIN}" repl -a "get depends.$package.build")
+            for dep in $BUILD_DEPS; do
               case " ${{ matrix.packages }} " in
                 *" $dep "*) continue ;;
               esac
               if [ "${{ github.event_name }}" = pull_request ] || [ "${{ inputs.pr_validation }}" = true ]; then
                 "${KPKG_BIN}" install "$dep" -y || true
               else
-                "${KPKG_BIN}" install "$dep" -y
+                install_published_dependency "$dep"
               fi
             done
           done

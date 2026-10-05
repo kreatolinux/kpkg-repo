@@ -1,6 +1,6 @@
 name: "xmlto"
 version: "0.0.29"
-release: "2"
+release: "3"
 description: "Convert xml to many other formats"
 sources:
  - "https://releases.pagure.org/xmlto/xmlto-${version}.tar.gz"
@@ -12,9 +12,12 @@ depends:
  - "docbook-xsl"
  - "links"
 build_depends:
+ - "autoconf"
+ - "automake"
  - "gmake"
 
 build {
+ exec "autoreconf -v -f -i"
  env CFLAGS="$CFLAGS -Wno-implicit-int"
  env LINKS="/usr/bin/links"
  exec "./configure --prefix=/usr"

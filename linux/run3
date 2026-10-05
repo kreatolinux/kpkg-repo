@@ -1,6 +1,6 @@
 name: "linux"
 version: "6.18.3"
-release: "8"
+release: "9"
 description: "The Linux kernel and headers"
 sources:
   - "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$version.tar.xz"
@@ -89,10 +89,10 @@ package {
   exec "cp -t $MODPATH -a scripts"
 
   # required when STACK_VALIDATION is enabled
-  exec "install -Dt $MODPATH/tools/objtool tools/objtool/objtool"
+  exec "if [ -x tools/objtool/objtool ]; then install -Dt $MODPATH/tools/objtool tools/objtool/objtool; fi"
 
   # required when DEBUG_INFO_BTF_MODULES is enabled
-  exec "install -Dt $MODPATH/tools/bpf/resolve_btfids tools/bpf/resolve_btfids/resolve_btfids"
+  exec "if [ -x tools/bpf/resolve_btfids/resolve_btfids ]; then install -Dt $MODPATH/tools/bpf/resolve_btfids tools/bpf/resolve_btfids/resolve_btfids; fi"
 
   exec "find . -name 'Kconfig*' -exec install -Dm644 {} $MODPATH/{} \\;"
   exec "find -L $MODPATH -type l -printf 'Removing %P\\n' -delete"

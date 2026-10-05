@@ -1,6 +1,6 @@
 name: "mozjs140"
 version: "140.3.0"
-release: "2"
+release: "3"
 description: "SpiderMonkey JavaScript and WebAssembly Engine"
 sources:
  - "https://archive.mozilla.org/pub/firefox/releases/${version}esr/source/firefox-${version}esr.source.tar.xz"
@@ -37,7 +37,7 @@ prepare {
 build {
  exec "mkdir obj"
  cd "obj"
- exec "CC=clang CXX=clang++ sh ../js/src/configure --prefix=/usr --libdir=/usr/lib --enable-release --disable-debug --enable-shared-js --disable-jemalloc --disable-strip --with-intl-api --with-system-icu --with-system-nspr --with-system-zlib --enable-ctypes --with-system-ffi --enable-readline"
+ exec "CC=clang CXX=clang++ sh ../js/src/configure --host=${KPKG_ARCH}-unknown-linux-gnu --prefix=/usr --libdir=/usr/lib --enable-release --disable-debug --enable-shared-js --disable-jemalloc --disable-strip --with-intl-api --with-system-icu --with-system-nspr --with-system-zlib --enable-ctypes --with-system-ffi --enable-readline"
  exec "make -j${exec("nproc").output()}"
 }
 

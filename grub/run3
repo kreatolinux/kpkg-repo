@@ -1,6 +1,6 @@
 name: "grub"
 version: "2.14"
-release: "3"
+release: "4"
 description: "The GNU Grub Bootloader"
 sources:
   - "https://ftp.gnu.org/gnu/grub/grub-$version.tar.xz"
@@ -14,10 +14,6 @@ build_depends:
   - "gmake"
 depends_grub_efi:
   - "efibootmgr"
-
-prepare {
-  write "grub-core/extra_deps.lst" "depends bli part_gpt"
-}
 
 func build_grub_efi {
   macro build --disable-efiemu --disable-werror --prefix=/usr --sysconfdir=/etc --with-platform=efi

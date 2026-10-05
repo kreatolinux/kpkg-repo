@@ -1,16 +1,22 @@
 name: "lame"
 version: "4.0"
-release: "2"
+release: "3"
 description: "A MP3 encoder"
 sources:
  - "https://netix.dl.sourceforge.net/project/lame/lame/${version}/lame-${version}.tar.gz"
+ - "lame-4.0-id3-utf8.patch"
 sha256sum:
  - "3df5124d5ad3a98312ffd7ba6a9b36230e4f8a3e66d3ce0f425e336c32d216eb"
+ - "d03bd24c0194078fb937a62a4f5fbe73258c115283943f3fce156d7adda216ae"
 depends:
  - "ncurses"
 build_depends:
  - "nasm"
  - "gmake"
+
+prepare {
+ exec "patch -p1 < ../lame-4.0-id3-utf8.patch"
+}
 
 build {
  macro build --enable-shared --enable-mp3rtp --disable-decoder

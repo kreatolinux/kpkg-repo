@@ -1,6 +1,6 @@
 name: "conmon"
 version: "2.2.1"
-release: "1"
+release: "2"
 description: "An OCI container runtime monitor"
 sources:
  - "https://github.com/containers/conmon/archive/refs/tags/v${version}.tar.gz"
@@ -17,7 +17,7 @@ build {
 }
 
 package {
- macro package
+ exec "make PREFIX=/usr DESTDIR=$ROOT install.bin"
 }
 
 

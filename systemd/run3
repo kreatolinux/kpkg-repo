@@ -1,6 +1,6 @@
 name: "systemd"
 version: "262"
-release: "6"
+release: "7"
 description: "The systemd System and Service Manager"
 sources:
   - "https://github.com/systemd/systemd/archive/refs/tags/v$version.tar.gz"
@@ -19,6 +19,7 @@ build_depends:
   - "samurai"
   - "python-setuptools"
   - "bash"
+  - "gnu-coreutils"
 replaces:
   - "elogind"
   - "eudev"

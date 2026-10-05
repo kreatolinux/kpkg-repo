@@ -1,6 +1,6 @@
 name: "gdk-pixbuf"
 version: "2.44.8"
-release: "5"
+release: "6"
 description: "GdkPixbuf is a library that loads image data in various formats and stores it as linear buffers in memory"
 sources:
  - "https://gitlab.gnome.org/GNOME/gdk-pixbuf/-/archive/${version}/gdk-pixbuf-${version}.tar.gz"
@@ -20,7 +20,7 @@ opt_depends:
 
 build {
  env XDG_DATA_DIRS="/usr/local/share:/usr/share"
- macro build --libdir=/usr/lib -Dman=false -Dgtk_doc=false -Dtests=false -Dinstalled_tests=false --wrap-mode=nofallback -Dbuiltin_loaders=all
+ macro build --libdir=/usr/lib -Dman=false -Dgtk_doc=false -Dtests=false -Dinstalled_tests=false -Dglycin=disabled --wrap-mode=nofallback -Dbuiltin_loaders=all
 }
 
 package {

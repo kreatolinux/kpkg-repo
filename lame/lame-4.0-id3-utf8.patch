@@ -1,0 +1,33 @@
+--- a/frontend/parse.c
++++ b/frontend/parse.c
+@@ -403,21 +403,21 @@
+
+ #ifdef ID3TAGS_EXTENDED
+ static int
+-set_id3v2tag(lame_global_flags* gfp, TextEncoding enc, int type, unsigned short const* str)
++set_id3v2tag(lame_global_flags* gfp, TextEncoding enc, int type, void const* str)
+ {
+     switch (enc)
+     {
+         case TENC_UTF8:
+             switch (type)
+             {
+-                case 'a': return id3tag_set_textinfo_utf8(gfp, "TPE1", str);
+-                case 't': return id3tag_set_textinfo_utf8(gfp, "TIT2", str);
+-                case 'l': return id3tag_set_textinfo_utf8(gfp, "TALB", str);
+-                case 'g': return id3tag_set_textinfo_utf8(gfp, "TCON", str);
+-                case 'c': return id3tag_set_comment_ucs2(gfp, 0, 0, str);
+-                case 'n': return id3tag_set_textinfo_utf8(gfp, "TRCK", str);
+-                case 'y': return id3tag_set_textinfo_utf8(gfp, "TYER", str);
+-                case 'v': return id3tag_set_fieldvalue_ucs2(gfp, str);
++                case 'a': return id3tag_set_textinfo_utf8(gfp, "TPE1", (char const *)str);
++                case 't': return id3tag_set_textinfo_utf8(gfp, "TIT2", (char const *)str);
++                case 'l': return id3tag_set_textinfo_utf8(gfp, "TALB", (char const *)str);
++                case 'g': return id3tag_set_textinfo_utf8(gfp, "TCON", (char const *)str);
++                case 'c': return id3tag_set_comment_utf8(gfp, 0, 0, (char const *)str);
++                case 'n': return id3tag_set_textinfo_utf8(gfp, "TRCK", (char const *)str);
++                case 'y': return id3tag_set_textinfo_utf8(gfp, "TYER", (char const *)str);
++                case 'v': return id3tag_set_fieldvalue(gfp, (char const *)str);
+             }
+             ;;
+         case TENC_UTF16:
