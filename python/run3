@@ -1,5 +1,5 @@
 name: python
-version: 3.14.8
+version: 3.15.0
 release: 7
 description: "General-Purpose Programming language"
 sources:
@@ -7,7 +7,7 @@ sources:
   - "openssl-4.0.patch"
   - "https://raw.githubusercontent.com/python/cpython/7cdbb779a82d600d6cf01508214c2bbde111e1f6/Modules/_ssl_data_40.h"
 sha256sum:
-  - "c2215904f02b175596dc49351585104f4bc20341e1c47378b26a2c274360ce73"
+  - "ba4bed1ba346b916890b76d9e320451420aa69f6408997d33c66482eeae3d575"
   - "15d2886dbca59ceec2f2ec8f7eea3d37fa899fad58d8c2228e9628ea3a318487"
   - "fb6a22bb6a03931a887b4947c6687af6a109d0e76645a87349664cae7aa5845e"
 depends:

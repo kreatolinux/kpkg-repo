@@ -1,11 +1,11 @@
 name: "glycin"
-version: "2.2.1"
+version: "2.2.2"
 release: "2"
 description: "Sandboxed image decoding library"
 sources:
  - "https://download.gnome.org/sources/glycin/${version.split('.')[0:2].join('.')}/glycin-${version}.tar.xz"
 sha256sum:
- - "937ae571d76c0de5e59db944d1194981360be37ee97875729781bc3816ddeafe"
+ - "3771adf026d87545adbc59694ee8b05824a2938b37999f8dd70e6cf3a5f7d31c"
 depends:
  - "glib"
  - "gtk4"
