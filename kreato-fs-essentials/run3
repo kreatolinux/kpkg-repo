@@ -1,6 +1,6 @@
 name: "kreato-fs-essentials"
 version: "0.0.2"
-release: "2"
+release: "3"
 description: "Kreato Linux filesystem essentials, seperated from src/kreastrap/overlay"
 sources:
  - "overlay/"

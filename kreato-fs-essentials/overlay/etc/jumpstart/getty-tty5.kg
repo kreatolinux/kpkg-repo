@@ -1,4 +1,4 @@
-name: "getty-tty5.service"
+name: "getty-tty5"
 description: "This service starts up TTY5."
 type: "simple"
 
