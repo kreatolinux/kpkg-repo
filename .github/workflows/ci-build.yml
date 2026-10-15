@@ -399,10 +399,12 @@ jobs:
           COMPONENT="${{ matrix.packages }}"
           LOG_NAME=$(printf '%s' "$COMPONENT" | tr ' ' '-')
           FORCE_INSTALL_ALL=""
-          if [ "$TARGET" != default ]; then
+          TARGET_ARGS=""
+          if [ -n "$TARGET" ] && [ "$TARGET" != default ]; then
             # A new target may not have dependency archives on the mirror yet.
-            # Build its complete closure from source instead of trying to use
-            # native-profile installations or unavailable target binaries.
+            # Bootstrap its rootfs and build the complete closure from source
+            # instead of using native-profile or unavailable target binaries.
+            TARGET_ARGS="--target=$TARGET --bootstrapRootfs"
             FORCE_INSTALL_ALL="--forceInstallAll"
           elif [ "${{ inputs.force_build }}" = true ] && \
               { [ "${{ inputs.pr_validation }}" = true ] || [ "${{ github.event_name }}" = pull_request ]; }; then
@@ -410,8 +412,8 @@ jobs:
             # local closure instead of fetching it from the binary repository.
             FORCE_INSTALL_ALL="--forceInstallAll"
           fi
-          if "${KPKG_BIN}" build $COMPONENT --yes --ignorePostInstall --target="$TARGET" \
-               --useCacheIfAvailable=false $FORCE_INSTALL_ALL 2>&1 | tee "/tmp/build-logs/$LOG_NAME.log"; then
+          if "${KPKG_BIN}" build $COMPONENT --yes --ignorePostInstall \
+               --useCacheIfAvailable=false $TARGET_ARGS $FORCE_INSTALL_ALL 2>&1 | tee "/tmp/build-logs/$LOG_NAME.log"; then
             echo "✅ $COMPONENT built" >> "$GITHUB_STEP_SUMMARY"
           else
             echo "❌ $COMPONENT failed" >> "$GITHUB_STEP_SUMMARY"
