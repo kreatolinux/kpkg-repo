@@ -1,6 +1,6 @@
 #!/bin/sh
 NAME="kreato-fs-essentials"
-RELEASE="3"
+RELEASE="4"
 VERSION="0.0.2"
 SOURCES="overlay/"
 EXTRACT="false"

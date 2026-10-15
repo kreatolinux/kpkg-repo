@@ -3,5 +3,6 @@ description: "This service starts up TTY1."
 type: "simple"
 
 service {
+  terminal true
   exec "getty 115200,38400,9600 tty1 linux"
 }
