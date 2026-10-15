@@ -1,11 +1,11 @@
 name: "xorg-server"
-version: "21.1.24"
+version: "21.1.25"
 release: "2"
 description: "Open source display server for the X Window System"
 sources:
  - "https://www.x.org/releases/individual/xserver/xorg-server-${version}.tar.gz"
 sha256sum:
- - "d01ccd7ba48ec9d6815aeef5fb408d0c307ab6be21d20ff0b54b11f1c2b8a075"
+ - "fdb5ec9b4ab7371745b182b68c7054ed72fc4d13e185fc369cfc45e0c3a174e7"
 depends:
  - "libdrm"
  - "libtirpc"
