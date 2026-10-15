@@ -1,6 +1,6 @@
 name: "kreato-fs-essentials"
 version: "0.0.2"
-release: "3"
+release: "4"
 description: "Kreato Linux filesystem essentials, seperated from src/kreastrap/overlay"
 sources:
  - "overlay/"
@@ -19,6 +19,13 @@ prepare {
 
 package {
  exec "cp -r etc/ $ROOT"
+ exec "mkdir -p $ROOT/etc/jumpstart/enabled"
+ exec "ln -sf ../getty-tty1.kg $ROOT/etc/jumpstart/enabled/getty-tty1.kg"
+ exec "ln -sf ../getty-tty2.kg $ROOT/etc/jumpstart/enabled/getty-tty2.kg"
+ exec "ln -sf ../getty-tty3.kg $ROOT/etc/jumpstart/enabled/getty-tty3.kg"
+ exec "ln -sf ../getty-tty4.kg $ROOT/etc/jumpstart/enabled/getty-tty4.kg"
+ exec "ln -sf ../getty-tty5.kg $ROOT/etc/jumpstart/enabled/getty-tty5.kg"
+ exec "ln -sf ../getty-tty6.kg $ROOT/etc/jumpstart/enabled/getty-tty6.kg"
 }
 
 
