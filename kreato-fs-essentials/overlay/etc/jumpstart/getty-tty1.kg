@@ -4,5 +4,5 @@ type: "simple"
 
 service {
   terminal true
-  exec "getty 115200,38400,9600 tty1 linux"
+  exec "/bin/busybox getty 115200,38400,9600 tty1 linux"
 }
