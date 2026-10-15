@@ -23,6 +23,10 @@ on:
         default: 'both'
         type: choice
         options: [x86_64, arm64, both]
+      target:
+        description: "kpkg target, or default for the container's native profile"
+        required: false
+        default: 'default'
       image:
         description: 'Container image to use'
         required: false
@@ -95,6 +99,7 @@ jobs:
       source_ref: ${{ steps.compute-matrix.outputs.source_ref }}
       should_build: ${{ steps.compute-matrix.outputs.should_build }}
       runfiles: ${{ steps.check-sums.outputs.runfiles }}
+      target: ${{ steps.compute-matrix.outputs.target }}
       image: ${{ steps.compute-matrix.outputs.image }}
       image_sha: ${{ steps.compute-matrix.outputs.image_sha }}
       force_build: ${{ steps.compute-matrix.outputs.force_build }}
@@ -131,17 +136,35 @@ jobs:
         env:
           PACKAGE_INPUT: ${{ inputs.package }}
           PR_NUMBER: ${{ inputs.pr_number }}
+          TARGET_INPUT: ${{ inputs.target }}
         run: |
           set -euo pipefail
           cd "$GITHUB_WORKSPACE"
           git config --global --add safe.directory "$GITHUB_WORKSPACE" || true
           ARCH="${{ github.event.inputs.arch || 'both' }}"
+          TARGET="${TARGET_INPUT:-default}"
+          if [ "$TARGET" != default ]; then
+            case "${TARGET%%-*}" in
+              x86_64) TARGET_ARCH=x86_64 ;;
+              aarch64|arm64) TARGET_ARCH=arm64 ;;
+              *) echo "unsupported architecture in kpkg target: $TARGET" >&2; exit 1 ;;
+            esac
+            if [ "$ARCH" = both ]; then
+              echo "a non-default kpkg target requires selecting a single CI architecture" >&2
+              exit 1
+            fi
+            if [ "$TARGET_ARCH" != "$ARCH" ]; then
+              echo "kpkg target architecture '$TARGET_ARCH' does not match CI architecture '$ARCH'" >&2
+              exit 1
+            fi
+          fi
           PUSH=true
           PR_VALIDATION=false
           SOURCE_REF=""
           SHOULD_BUILD=true
           PACKAGES=""
 
+          echo "target=$TARGET" >> "$GITHUB_OUTPUT"
           echo "image=${{ github.event.inputs.image || 'builder-repo' }}" >> "$GITHUB_OUTPUT"
           echo "image_sha=${{ github.event.inputs.image_sha || '' }}" >> "$GITHUB_OUTPUT"
           echo "force_build=${{ github.event.inputs.force_build || 'false' }}" >> "$GITHUB_OUTPUT"
@@ -289,6 +312,7 @@ jobs:
       push: ${{ needs.init.outputs.push }}
       pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
       source_ref: ${{ needs.init.outputs.source_ref }}
+      target: ${{ needs.init.outputs.target }}
       phase_name: "Dependency level 1"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
@@ -321,6 +345,7 @@ jobs:
       push: ${{ needs.init.outputs.push }}
       pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
       source_ref: ${{ needs.init.outputs.source_ref }}
+      target: ${{ needs.init.outputs.target }}
       phase_name: "Dependency level 2"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
@@ -353,6 +378,7 @@ jobs:
       push: ${{ needs.init.outputs.push }}
       pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
       source_ref: ${{ needs.init.outputs.source_ref }}
+      target: ${{ needs.init.outputs.target }}
       phase_name: "Dependency level 3"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
@@ -385,6 +411,7 @@ jobs:
       push: ${{ needs.init.outputs.push }}
       pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
       source_ref: ${{ needs.init.outputs.source_ref }}
+      target: ${{ needs.init.outputs.target }}
       phase_name: "Dependency level 4"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
@@ -417,6 +444,7 @@ jobs:
       push: ${{ needs.init.outputs.push }}
       pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
       source_ref: ${{ needs.init.outputs.source_ref }}
+      target: ${{ needs.init.outputs.target }}
       phase_name: "Dependency level 5"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
@@ -449,6 +477,7 @@ jobs:
       push: ${{ needs.init.outputs.push }}
       pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
       source_ref: ${{ needs.init.outputs.source_ref }}
+      target: ${{ needs.init.outputs.target }}
       phase_name: "Dependency level 6"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
@@ -481,6 +510,7 @@ jobs:
       push: ${{ needs.init.outputs.push }}
       pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
       source_ref: ${{ needs.init.outputs.source_ref }}
+      target: ${{ needs.init.outputs.target }}
       phase_name: "Dependency level 7"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
@@ -513,6 +543,7 @@ jobs:
       push: ${{ needs.init.outputs.push }}
       pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
       source_ref: ${{ needs.init.outputs.source_ref }}
+      target: ${{ needs.init.outputs.target }}
       phase_name: "Dependency level 8"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
@@ -545,6 +576,7 @@ jobs:
       push: ${{ needs.init.outputs.push }}
       pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
       source_ref: ${{ needs.init.outputs.source_ref }}
+      target: ${{ needs.init.outputs.target }}
       phase_name: "Dependency level 9"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
@@ -577,6 +609,7 @@ jobs:
       push: ${{ needs.init.outputs.push }}
       pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
       source_ref: ${{ needs.init.outputs.source_ref }}
+      target: ${{ needs.init.outputs.target }}
       phase_name: "Dependency level 10"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
@@ -609,6 +642,7 @@ jobs:
       push: ${{ needs.init.outputs.push }}
       pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
       source_ref: ${{ needs.init.outputs.source_ref }}
+      target: ${{ needs.init.outputs.target }}
       phase_name: "Dependency level 11"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
@@ -641,6 +675,7 @@ jobs:
       push: ${{ needs.init.outputs.push }}
       pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
       source_ref: ${{ needs.init.outputs.source_ref }}
+      target: ${{ needs.init.outputs.target }}
       phase_name: "Dependency level 12"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
@@ -673,6 +708,7 @@ jobs:
       push: ${{ needs.init.outputs.push }}
       pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
       source_ref: ${{ needs.init.outputs.source_ref }}
+      target: ${{ needs.init.outputs.target }}
       phase_name: "Dependency level 13"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
@@ -705,6 +741,7 @@ jobs:
       push: ${{ needs.init.outputs.push }}
       pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
       source_ref: ${{ needs.init.outputs.source_ref }}
+      target: ${{ needs.init.outputs.target }}
       phase_name: "Dependency level 14"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
@@ -737,6 +774,7 @@ jobs:
       push: ${{ needs.init.outputs.push }}
       pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
       source_ref: ${{ needs.init.outputs.source_ref }}
+      target: ${{ needs.init.outputs.target }}
       phase_name: "Dependency level 15"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
@@ -769,6 +807,7 @@ jobs:
       push: ${{ needs.init.outputs.push }}
       pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
       source_ref: ${{ needs.init.outputs.source_ref }}
+      target: ${{ needs.init.outputs.target }}
       phase_name: "Dependency level 16"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
@@ -801,6 +840,7 @@ jobs:
       push: ${{ needs.init.outputs.push }}
       pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
       source_ref: ${{ needs.init.outputs.source_ref }}
+      target: ${{ needs.init.outputs.target }}
       phase_name: "Dependency level 17"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
@@ -833,6 +873,7 @@ jobs:
       push: ${{ needs.init.outputs.push }}
       pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
       source_ref: ${{ needs.init.outputs.source_ref }}
+      target: ${{ needs.init.outputs.target }}
       phase_name: "Dependency level 18"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
@@ -865,6 +906,7 @@ jobs:
       push: ${{ needs.init.outputs.push }}
       pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
       source_ref: ${{ needs.init.outputs.source_ref }}
+      target: ${{ needs.init.outputs.target }}
       phase_name: "Dependency level 19"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
@@ -897,6 +939,7 @@ jobs:
       push: ${{ needs.init.outputs.push }}
       pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
       source_ref: ${{ needs.init.outputs.source_ref }}
+      target: ${{ needs.init.outputs.target }}
       phase_name: "Dependency level 20"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
@@ -929,6 +972,7 @@ jobs:
       push: ${{ needs.init.outputs.push }}
       pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
       source_ref: ${{ needs.init.outputs.source_ref }}
+      target: ${{ needs.init.outputs.target }}
       phase_name: "Dependency level 21"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
@@ -961,6 +1005,7 @@ jobs:
       push: ${{ needs.init.outputs.push }}
       pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
       source_ref: ${{ needs.init.outputs.source_ref }}
+      target: ${{ needs.init.outputs.target }}
       phase_name: "Dependency level 22"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
@@ -993,6 +1038,7 @@ jobs:
       push: ${{ needs.init.outputs.push }}
       pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
       source_ref: ${{ needs.init.outputs.source_ref }}
+      target: ${{ needs.init.outputs.target }}
       phase_name: "Dependency level 23"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
@@ -1025,6 +1071,7 @@ jobs:
       push: ${{ needs.init.outputs.push }}
       pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
       source_ref: ${{ needs.init.outputs.source_ref }}
+      target: ${{ needs.init.outputs.target }}
       phase_name: "Dependency level 24"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
@@ -1057,6 +1104,7 @@ jobs:
       push: ${{ needs.init.outputs.push }}
       pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
       source_ref: ${{ needs.init.outputs.source_ref }}
+      target: ${{ needs.init.outputs.target }}
       phase_name: "Dependency level 25"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
@@ -1089,6 +1137,7 @@ jobs:
       push: ${{ needs.init.outputs.push }}
       pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
       source_ref: ${{ needs.init.outputs.source_ref }}
+      target: ${{ needs.init.outputs.target }}
       phase_name: "Dependency level 26"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
@@ -1121,6 +1170,7 @@ jobs:
       push: ${{ needs.init.outputs.push }}
       pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
       source_ref: ${{ needs.init.outputs.source_ref }}
+      target: ${{ needs.init.outputs.target }}
       phase_name: "Dependency level 27"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
@@ -1153,6 +1203,7 @@ jobs:
       push: ${{ needs.init.outputs.push }}
       pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
       source_ref: ${{ needs.init.outputs.source_ref }}
+      target: ${{ needs.init.outputs.target }}
       phase_name: "Dependency level 28"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
@@ -1185,6 +1236,7 @@ jobs:
       push: ${{ needs.init.outputs.push }}
       pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
       source_ref: ${{ needs.init.outputs.source_ref }}
+      target: ${{ needs.init.outputs.target }}
       phase_name: "Dependency level 29"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
@@ -1217,6 +1269,7 @@ jobs:
       push: ${{ needs.init.outputs.push }}
       pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
       source_ref: ${{ needs.init.outputs.source_ref }}
+      target: ${{ needs.init.outputs.target }}
       phase_name: "Dependency level 30"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
@@ -1249,6 +1302,7 @@ jobs:
       push: ${{ needs.init.outputs.push }}
       pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
       source_ref: ${{ needs.init.outputs.source_ref }}
+      target: ${{ needs.init.outputs.target }}
       phase_name: "Dependency level 31"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
@@ -1281,6 +1335,7 @@ jobs:
       push: ${{ needs.init.outputs.push }}
       pr_validation: ${{ needs.init.outputs.pr_validation == 'true' }}
       source_ref: ${{ needs.init.outputs.source_ref }}
+      target: ${{ needs.init.outputs.target }}
       phase_name: "Dependency level 32"
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}

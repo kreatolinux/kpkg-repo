@@ -17,6 +17,10 @@ on:
         required: false
         type: string
         default: ''
+      target:
+        required: false
+        type: string
+        default: 'default'
       phase_name:
         required: true
         type: string
@@ -130,7 +134,20 @@ jobs:
       - name: Architecture setup
         run: |
           ARCH="${{ matrix.arch }}"
+          TARGET="${{ inputs.target }}"
+          if [ "$TARGET" != default ]; then
+            case "${TARGET%%-*}" in
+              x86_64) TARGET_ARCH=x86_64 ;;
+              aarch64|arm64) TARGET_ARCH=arm64 ;;
+              *) echo "unsupported architecture in kpkg target: $TARGET" >&2; exit 1 ;;
+            esac
+            if [ "$TARGET_ARCH" != "$ARCH" ]; then
+              echo "kpkg target architecture '$TARGET_ARCH' does not match CI architecture '$ARCH'" >&2
+              exit 1
+            fi
+          fi
           echo "ARCH=$ARCH" >> $GITHUB_ENV
+          echo "TARGET=$TARGET" >> $GITHUB_ENV
           KPKG_BIN=$(find /tmp/kpkg-bin -type f -name kpkg -print -quit)
           if [ -z "$KPKG_BIN" ]; then
             echo "kpkg artifact did not contain a kpkg executable" >&2
@@ -255,7 +272,7 @@ jobs:
             wait_count=0
             while :; do
               install_log=$(mktemp)
-              if "${KPKG_BIN}" install "$dep" -y 2>&1 | tee "$install_log"; then
+              if "${KPKG_BIN}" install "$dep" -y --target="$TARGET" 2>&1 | tee "$install_log"; then
                 rm -f "$install_log"
                 return 0
               fi
@@ -291,7 +308,7 @@ jobs:
 
             IS_USELESS="true"
             for package in ${{ matrix.packages }}; do
-              "${KPKG_BIN}" install "$package" -y --downloadOnly || IS_USELESS="false"
+              "${KPKG_BIN}" install "$package" -y --downloadOnly --target="$TARGET" || IS_USELESS="false"
             done
           fi
 
@@ -335,7 +352,7 @@ jobs:
           "${KPKG_BIN}" clean --binaries=true --environment=true
 
           if [ "${{ inputs.llvm }}" = "true" ]; then
-            "${KPKG_BIN}" install llvm -y
+            "${KPKG_BIN}" install llvm -y --target="$TARGET"
             "${KPKG_BIN}" repl -a "set config.Options.cc clang"
             sed -i 's/gcc/clang/' /etc/kreato-release
           fi
@@ -347,7 +364,7 @@ jobs:
             wait_count=0
             while :; do
               install_log=$(mktemp)
-              if "${KPKG_BIN}" install "$dep" -y 2>&1 | tee "$install_log"; then
+              if "${KPKG_BIN}" install "$dep" -y --target="$TARGET" 2>&1 | tee "$install_log"; then
                 rm -f "$install_log"
                 return 0
               fi
@@ -371,7 +388,7 @@ jobs:
                 *" $dep "*) continue ;;
               esac
               if [ "${{ github.event_name }}" = pull_request ] || [ "${{ inputs.pr_validation }}" = true ]; then
-                "${KPKG_BIN}" install "$dep" -y || true
+                "${KPKG_BIN}" install "$dep" -y --target="$TARGET" || true
               else
                 install_published_dependency "$dep"
               fi
@@ -388,7 +405,7 @@ jobs:
             # local closure instead of fetching it from the binary repository.
             FORCE_INSTALL_ALL="--forceInstallAll"
           fi
-          if "${KPKG_BIN}" build $COMPONENT --yes --ignorePostInstall \
+          if "${KPKG_BIN}" build $COMPONENT --yes --ignorePostInstall --target="$TARGET" \
                --useCacheIfAvailable=false $FORCE_INSTALL_ALL 2>&1 | tee "/tmp/build-logs/$LOG_NAME.log"; then
             echo "✅ $COMPONENT built" >> "$GITHUB_STEP_SUMMARY"
           else
@@ -515,8 +532,8 @@ jobs:
           kpkg repl -a "set config.Telemetry.authType none"
           kpkg repl -a "set config.Telemetry.failurePolicy continue"
           kpkg repl -a "set config.Telemetry.buildId $GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT-${{ matrix.packages }}"
-          if ! kpkg install tmux -y; then
-            kpkg build tmux -y
+          if ! kpkg install tmux -y --target="$TARGET"; then
+            kpkg build tmux -y --target="$TARGET"
           fi
 
           rm -f /bin/sh
