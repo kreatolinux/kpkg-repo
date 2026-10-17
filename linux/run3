@@ -95,8 +95,8 @@ package {
   exec "if [ -x tools/bpf/resolve_btfids/resolve_btfids ]; then install -Dt $MODPATH/tools/bpf/resolve_btfids tools/bpf/resolve_btfids/resolve_btfids; fi"
 
   exec "find . -name 'Kconfig*' -exec install -Dm644 {} $MODPATH/{} \\;"
-  exec "find -L $MODPATH -type l -printf 'Removing %P\\n' -delete"
-  exec "find $MODPATH -type f -name '*.o' -printf 'Removing %P\\n' -delete"
+  exec "find -L $MODPATH -type l -print -delete"
+  exec "find $MODPATH -type f -name '*.o' -print -delete"
 
   exec "cp -t $MODPATH -a include"
   if "$arch" == "aarch64" || "$arch" == "arm64" {

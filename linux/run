@@ -77,8 +77,8 @@ package() {
     install -Dt "$MODPATH/tools/bpf/resolve_btfids" tools/bpf/resolve_btfids/resolve_btfids
 
     find . -name 'Kconfig*' -exec install -Dm644 {} "$MODPATH/{}" \;
-    find -L "$MODPATH" -type l -printf 'Removing %P\n' -delete
-    find "$MODPATH" -type f -name '*.o' -printf 'Removing %P\n' -delete
+    find -L "$MODPATH" -type l -print -delete
+    find "$MODPATH" -type f -name '*.o' -print -delete
     
     cp -t "$MODPATH" -a include
     cp -t "$MODPATH/arch/x86" -a arch/x86/include
