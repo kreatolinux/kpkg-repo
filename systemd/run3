@@ -1,11 +1,11 @@
 name: "systemd"
-version: "262"
+version: "262.1"
 release: "7"
 description: "The systemd System and Service Manager"
 sources:
   - "https://github.com/systemd/systemd/archive/refs/tags/v$version.tar.gz"
 sha256sum:
-  - "6aa77506c0644aa67f940a48e3d3a7368601f787e4f249139516d353f107bcab"
+  - "100fc873b848b9b0297d8a705e8e2ed326256c8483d9960ee1ffe264c8a5c3e3"
 depends:
   - "linux-pam"
   - "gperf"
