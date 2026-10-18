@@ -123,8 +123,13 @@ package {
 
   exec "ln -s /usr/lib/modules/$version $ROOT/usr/src/linux"
 
-  exec "mv $ROOT/boot/vmlinuz $ROOT/boot/vmlinuz-$version"
-  exec "mv $ROOT/boot/System.map $ROOT/boot/System.map-$version"
+  # Depending on the architecture and kernel version, `make install` leaves the
+  # image as boot/vmlinuz, as boot/vmlinuz-$version, or not at all (arm64).
+  exec "ls -la $ROOT/boot"
+  exec "for f in vmlinuz System.map; do if [ -e $ROOT/boot/$f ]; then mv $ROOT/boot/$f $ROOT/boot/$f-$version; fi; done"
+  exec "if [ ! -e $ROOT/boot/vmlinuz-$version ]; then install -Dm644 $(make -s image_name) $ROOT/boot/vmlinuz-$version; fi"
+  exec "if [ ! -e $ROOT/boot/System.map-$version ]; then install -Dm644 System.map $ROOT/boot/System.map-$version; fi"
+  exec "test -s $ROOT/boot/vmlinuz-$version"
 }
 
 func postinstall_linux {
