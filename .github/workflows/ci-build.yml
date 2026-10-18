@@ -424,6 +424,13 @@ jobs:
             exit 1
           fi
 
+      - name: Fail components blocked by a failed dependency
+        if: steps.dependency-gate.outputs.blocked == 'true'
+        run: |
+          echo "❌ ${{ matrix.packages }} was not built: a dependency it needs failed or was never built" >> "$GITHUB_STEP_SUMMARY"
+          echo "${{ matrix.packages }} was not built because a dependency component did not succeed" >&2
+          exit 1
+
       - name: Report Alloy forwarding errors
         if: always() && steps.dependency-gate.outputs.blocked != 'true' && matrix.arch != 'arm64'
         run: |
