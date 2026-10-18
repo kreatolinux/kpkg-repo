@@ -1,11 +1,11 @@
 name: "nautilus"
-version: "51.0.1"
+version: "51.1"
 release: "3"
 description: "File manager of GNOME"
 sources:
  - "https://download.gnome.org/sources/nautilus/${version.split('.')[0]}/nautilus-${version}.tar.xz"
 sha256sum:
- - "a00db908fd65026cbd5dc634e12d189de8eba2b03f105d2425341768a5ee92fb"
+ - "a703bc152d18d161d9dab957e2390a36e6246bb5c24de7b15c9624fcfa2f2816"
 depends:
  - "bubblewrap"
  - "dconf"
