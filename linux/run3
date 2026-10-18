@@ -124,9 +124,10 @@ package {
   exec "ln -s /usr/lib/modules/$version $ROOT/usr/src/linux"
 
   # Depending on the architecture and kernel version, `make install` leaves the
-  # image as boot/vmlinuz, as boot/vmlinuz-$version, or not at all (arm64).
+  # image as boot/vmlinuz (x86_64) or already as boot/vmlinuz-$version (arm64).
   exec "ls -la $ROOT/boot"
-  exec "for f in vmlinuz System.map; do if [ -e $ROOT/boot/$f ]; then mv $ROOT/boot/$f $ROOT/boot/$f-$version; fi; done"
+  exec "if [ -e $ROOT/boot/vmlinuz ]; then mv $ROOT/boot/vmlinuz $ROOT/boot/vmlinuz-$version; fi"
+  exec "if [ -e $ROOT/boot/System.map ]; then mv $ROOT/boot/System.map $ROOT/boot/System.map-$version; fi"
   exec "if [ ! -e $ROOT/boot/vmlinuz-$version ]; then install -Dm644 $(make -s image_name) $ROOT/boot/vmlinuz-$version; fi"
   exec "if [ ! -e $ROOT/boot/System.map-$version ]; then install -Dm644 System.map $ROOT/boot/System.map-$version; fi"
   exec "test -s $ROOT/boot/vmlinuz-$version"
