@@ -2,8 +2,12 @@ name: "gptfdisk"
 version: "1.0.10"
 release: "1"
 description: "GPT fdisk: sgdisk, cgdisk and gdisk partitioning tools"
+# Use a URL whose basename ends in .tar.gz: kpkg picks the extractor from the
+# filename, and a SourceForge ".../download" endpoint saves as "download" with
+# no extension, so the tarball is never extracted and the build finds no
+# Makefile.
 sources:
- - "https://sourceforge.net/projects/gptfdisk/files/gptfdisk/${version}/gptfdisk-${version}.tar.gz/download"
+ - "https://downloads.sourceforge.net/project/gptfdisk/gptfdisk/${version}/gptfdisk-${version}.tar.gz"
 sha256sum:
  - "2abed61bc6d2b9ec498973c0440b8b804b7a72d7144069b5a9209b2ad693a282"
 depends:
@@ -15,10 +19,14 @@ build_depends:
 
 # gptfdisk has no configure script; it builds with a plain Makefile. The
 # "build" and "install" targets honour these variables.
+# gdisk/cgdisk are the interactive ncurses front ends; sgdisk is what the image
+# builder needs and it has no ncurses dependency, so build only that. This also
+# avoids requiring the wide-character ncurses headers.
 build {
- exec "make -j$(nproc) CXX=g++ CXXFLAGS=\"\${CXXFLAGS} -D_FILE_OFFSET_BITS=64\""
+ exec "make -j$(nproc) sgdisk CXX=g++ CXXFLAGS=\"\${CXXFLAGS} -D_FILE_OFFSET_BITS=64\""
 }
 
 package {
- exec "make install DESTDIR=$ROOT"
+ exec "mkdir -p $ROOT/usr/sbin"
+ exec "install -Dm755 sgdisk $ROOT/usr/sbin/sgdisk"
 }
