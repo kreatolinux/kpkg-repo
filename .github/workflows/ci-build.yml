@@ -328,7 +328,20 @@ jobs:
 
             IS_USELESS="true"
             for package in ${{ matrix.packages }}; do
-              "${KPKG_BIN}" install "$package" -y --downloadOnly --target="$TARGET" || IS_USELESS="false"
+              # Record the real exit status: this decides whether the build step
+              # is skipped entirely, so a wrong answer silently publishes
+              # nothing. Capturing the code separately avoids the pipeline and
+              # `||` masking that made an earlier investigation ambiguous.
+              dl_log=$(mktemp)
+              if "${KPKG_BIN}" install "$package" -y --downloadOnly --target="$TARGET" >"$dl_log" 2>&1; then
+                rc=0
+              else
+                rc=$?
+              fi
+              echo "uselessness probe: '$package' --downloadOnly exited $rc"
+              tail -n 5 "$dl_log" || true
+              rm -f "$dl_log"
+              if [ "$rc" -ne 0 ]; then IS_USELESS="false"; fi
             done
           fi
 
