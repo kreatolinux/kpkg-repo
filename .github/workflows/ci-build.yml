@@ -276,17 +276,33 @@ jobs:
             wait_count=0
             while :; do
               install_log=$(mktemp)
-              if "${KPKG_BIN}" install "$dep" -y --target="$TARGET" 2>&1 | tee "$install_log"; then
+              # Bound each attempt: a mirror that accepts the connection and
+              # then stalls leaves kpkg waiting on its own retry loop, which
+              # hung this step for hours. Timeout turns that into a retryable
+              # failure instead of a dead job.
+              if timeout 900 "${KPKG_BIN}" install "$dep" -y --target="$TARGET" 2>&1 | tee "$install_log"; then
                 rm -f "$install_log"
                 return 0
               fi
-              if ! grep -q '404 Not Found' "$install_log" || [ "$wait_count" -ge 10 ]; then
+              # Retry on any failure, not just a literal "404 Not Found": an
+              # archive that is still uploading, a transient 5xx, or a stalled
+              # transfer all resolve on a later attempt.
+              if [ "$wait_count" -ge 10 ]; then
+                echo "Dependency $dep still unavailable after $wait_count retries; continuing" >&2
+                tail -n 20 "$install_log" >&2 || true
                 rm -f "$install_log"
                 return 1
               fi
-              rm -f "$install_log"
+              if grep -qE 'not found on mirrors|does not exist|unknown package' "$install_log"; then
+                # A hard "this package is not on the mirror at all" result will
+                # not change by waiting.
+                echo "Dependency $dep is not published; not retrying" >&2
+                rm -f "$install_log"
+                return 1
+              fi
               wait_count=$((wait_count + 1))
               echo "Dependency $dep is not visible yet; retrying in 60 seconds ($wait_count/10)..."
+              rm -f "$install_log"
               sleep 60
             done
           }
@@ -368,17 +384,33 @@ jobs:
             wait_count=0
             while :; do
               install_log=$(mktemp)
-              if "${KPKG_BIN}" install "$dep" -y --target="$TARGET" 2>&1 | tee "$install_log"; then
+              # Bound each attempt: a mirror that accepts the connection and
+              # then stalls leaves kpkg waiting on its own retry loop, which
+              # hung this step for hours. Timeout turns that into a retryable
+              # failure instead of a dead job.
+              if timeout 900 "${KPKG_BIN}" install "$dep" -y --target="$TARGET" 2>&1 | tee "$install_log"; then
                 rm -f "$install_log"
                 return 0
               fi
-              if ! grep -q '404 Not Found' "$install_log" || [ "$wait_count" -ge 10 ]; then
+              # Retry on any failure, not just a literal "404 Not Found": an
+              # archive that is still uploading, a transient 5xx, or a stalled
+              # transfer all resolve on a later attempt.
+              if [ "$wait_count" -ge 10 ]; then
+                echo "Dependency $dep still unavailable after $wait_count retries; continuing" >&2
+                tail -n 20 "$install_log" >&2 || true
                 rm -f "$install_log"
                 return 1
               fi
-              rm -f "$install_log"
+              if grep -qE 'not found on mirrors|does not exist|unknown package' "$install_log"; then
+                # A hard "this package is not on the mirror at all" result will
+                # not change by waiting.
+                echo "Dependency $dep is not published; not retrying" >&2
+                rm -f "$install_log"
+                return 1
+              fi
               wait_count=$((wait_count + 1))
               echo "Dependency $dep is not visible yet; retrying in 60 seconds ($wait_count/10)..."
+              rm -f "$install_log"
               sleep 60
             done
           }
