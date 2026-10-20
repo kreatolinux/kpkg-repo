@@ -1,0 +1,25 @@
+name: "dracut"
+version: "103"
+release: "1"
+description: "Event driven initramfs infrastructure"
+sources:
+ - "https://github.com/dracut-ng/dracut-ng/archive/refs/tags/${version}.tar.gz"
+sha256sum:
+ - "5f281a523e13c81c1967ef4fd76f221ca523546857d062dcc214b33873684b0a"
+depends:
+ - "bash"
+ - "kmod"
+ - "util-linux"
+ - "e2fsprogs"
+ - "cpio"
+build_depends:
+ - "gmake"
+ - "pkgconf"
+
+build {
+ macro build --disable-documentation
+}
+
+package {
+ macro package
+}

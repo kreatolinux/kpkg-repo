@@ -1,0 +1,24 @@
+name: "gptfdisk"
+version: "1.0.10"
+release: "1"
+description: "GPT fdisk: sgdisk, cgdisk and gdisk partitioning tools"
+sources:
+ - "https://sourceforge.net/projects/gptfdisk/files/gptfdisk/${version}/gptfdisk-${version}.tar.gz/download"
+sha256sum:
+ - "2abed61bc6d2b9ec498973c0440b8b804b7a72d7144069b5a9209b2ad693a282"
+depends:
+ - "util-linux"
+ - "ncurses"
+ - "popt"
+build_depends:
+ - "gmake"
+
+# gptfdisk has no configure script; it builds with a plain Makefile. The
+# "build" and "install" targets honour these variables.
+build {
+ exec "make -j$(nproc) CXX=g++ CXXFLAGS=\"\${CXXFLAGS} -D_FILE_OFFSET_BITS=64\""
+}
+
+package {
+ exec "make install DESTDIR=$ROOT"
+}

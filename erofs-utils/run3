@@ -1,0 +1,33 @@
+name: "erofs-utils"
+version: "1.9.4"
+release: "1"
+description: "Userspace tools for the Enhanced Read-Only File System, including mkfs.erofs"
+sources:
+ - "https://github.com/erofs/erofs-utils/archive/refs/tags/v${version}.tar.gz"
+sha256sum:
+ - "7d135aa2550326a5acf20f53c518aea5a8900015ce50700044e40f818c31dd80"
+depends:
+ - "zlib"
+ - "lz4"
+ - "util-linux"
+build_depends:
+ - "autoconf"
+ - "automake"
+ - "libtool"
+ - "pkgconf"
+ - "gmake"
+
+# The release tarball is a git snapshot: it ships configure.ac and the
+# Makefile.am files but no generated configure script, so autoreconf has to
+# run first.
+prepare {
+ exec "autoreconf -fi"
+}
+
+build {
+ macro build --disable-static
+}
+
+package {
+ macro package
+}
