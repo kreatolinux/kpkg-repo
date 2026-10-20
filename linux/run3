@@ -134,6 +134,11 @@ package {
 }
 
 func postinstall_linux {
-  exec "depmod $version"
+  # $ROOT is the target rootfs. krep's rootfs staging runs hooks in
+  # passthrough mode, so this executes on the host with DESTDIR/ROOT pointing
+  # at the staged tree rather than inside a chroot. A bare `depmod $version`
+  # therefore looks at the host's /lib/modules, which has no such kernel, and
+  # the hook fails. -b bases the search on the target rootfs instead.
+  exec "depmod -b \"$ROOT\" $version"
 }
 
