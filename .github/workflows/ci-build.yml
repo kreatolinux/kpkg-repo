@@ -36,6 +36,10 @@ on:
         required: false
         type: boolean
         default: false
+      bin_cache:
+        required: false
+        type: boolean
+        default: false
       llvm:
         required: false
         type: boolean
@@ -412,8 +416,17 @@ jobs:
             # local closure instead of fetching it from the binary repository.
             FORCE_INSTALL_ALL="--forceInstallAll"
           fi
+          # bin_cache is opt-in and disabled by default. It is ignored when
+          # the workflow deliberately wants a from-source closure: PR
+          # validation and force_build jobs cannot rely on unpublished
+          # dependency archives, and a non-default target may have no
+          # archives on the mirror yet.
+          BIN_CACHE_ARGS=""
+          if [ "${{ inputs.bin_cache }}" = true ] && [ -z "$TARGET_ARGS" ] && [ -z "$FORCE_INSTALL_ALL" ]; then
+            BIN_CACHE_ARGS="--binCache"
+          fi
           if "${KPKG_BIN}" build $COMPONENT --yes --ignorePostInstall \
-               --useCacheIfAvailable=false $TARGET_ARGS $FORCE_INSTALL_ALL 2>&1 | tee "/tmp/build-logs/$LOG_NAME.log"; then
+               --useCacheIfAvailable=false $TARGET_ARGS $FORCE_INSTALL_ALL $BIN_CACHE_ARGS 2>&1 | tee "/tmp/build-logs/$LOG_NAME.log"; then
             echo "✅ $COMPONENT built" >> "$GITHUB_STEP_SUMMARY"
           else
             echo "❌ $COMPONENT failed" >> "$GITHUB_STEP_SUMMARY"

@@ -47,6 +47,11 @@ on:
         required: false
         default: false
         type: boolean
+      bin_cache:
+        description: 'Use published dependency binaries (kpkg build --binCache) instead of building the whole closure from source'
+        required: false
+        default: false
+        type: boolean
       enable_upterm_ssh:
         description: 'Enable upterm SSH session if build fails'
         required: false
@@ -104,6 +109,7 @@ jobs:
       image_sha: ${{ steps.compute-matrix.outputs.image_sha }}
       force_build: ${{ steps.compute-matrix.outputs.force_build }}
       llvm: ${{ steps.compute-matrix.outputs.llvm }}
+      bin_cache: ${{ steps.compute-matrix.outputs.bin_cache }}
       enable_upterm_ssh: ${{ steps.compute-matrix.outputs.enable_upterm_ssh }}
     steps:
       - uses: actions/checkout@v6
@@ -169,6 +175,7 @@ jobs:
           echo "image_sha=${{ github.event.inputs.image_sha || '' }}" >> "$GITHUB_OUTPUT"
           echo "force_build=${{ github.event.inputs.force_build || 'false' }}" >> "$GITHUB_OUTPUT"
           echo "llvm=${{ github.event.inputs.llvm || 'false' }}" >> "$GITHUB_OUTPUT"
+          echo "bin_cache=${{ github.event.inputs.bin_cache || 'false' }}" >> "$GITHUB_OUTPUT"
           echo "enable_upterm_ssh=${{ github.event.inputs.enable_upterm_ssh || 'false' }}" >> "$GITHUB_OUTPUT"
 
           all_packages() {
@@ -317,6 +324,7 @@ jobs:
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.pr_validation == 'true' || github.event_name == 'pull_request' || needs.init.outputs.force_build == 'true' }}
+      bin_cache: ${{ needs.init.outputs.bin_cache == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -350,6 +358,7 @@ jobs:
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.pr_validation == 'true' || github.event_name == 'pull_request' || needs.init.outputs.force_build == 'true' }}
+      bin_cache: ${{ needs.init.outputs.bin_cache == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -383,6 +392,7 @@ jobs:
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.pr_validation == 'true' || github.event_name == 'pull_request' || needs.init.outputs.force_build == 'true' }}
+      bin_cache: ${{ needs.init.outputs.bin_cache == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -416,6 +426,7 @@ jobs:
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.pr_validation == 'true' || github.event_name == 'pull_request' || needs.init.outputs.force_build == 'true' }}
+      bin_cache: ${{ needs.init.outputs.bin_cache == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -449,6 +460,7 @@ jobs:
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.pr_validation == 'true' || github.event_name == 'pull_request' || needs.init.outputs.force_build == 'true' }}
+      bin_cache: ${{ needs.init.outputs.bin_cache == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -482,6 +494,7 @@ jobs:
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.pr_validation == 'true' || github.event_name == 'pull_request' || needs.init.outputs.force_build == 'true' }}
+      bin_cache: ${{ needs.init.outputs.bin_cache == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -515,6 +528,7 @@ jobs:
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.pr_validation == 'true' || github.event_name == 'pull_request' || needs.init.outputs.force_build == 'true' }}
+      bin_cache: ${{ needs.init.outputs.bin_cache == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -548,6 +562,7 @@ jobs:
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.pr_validation == 'true' || github.event_name == 'pull_request' || needs.init.outputs.force_build == 'true' }}
+      bin_cache: ${{ needs.init.outputs.bin_cache == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -581,6 +596,7 @@ jobs:
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.pr_validation == 'true' || github.event_name == 'pull_request' || needs.init.outputs.force_build == 'true' }}
+      bin_cache: ${{ needs.init.outputs.bin_cache == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -614,6 +630,7 @@ jobs:
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.pr_validation == 'true' || github.event_name == 'pull_request' || needs.init.outputs.force_build == 'true' }}
+      bin_cache: ${{ needs.init.outputs.bin_cache == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -647,6 +664,7 @@ jobs:
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.pr_validation == 'true' || github.event_name == 'pull_request' || needs.init.outputs.force_build == 'true' }}
+      bin_cache: ${{ needs.init.outputs.bin_cache == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -680,6 +698,7 @@ jobs:
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.pr_validation == 'true' || github.event_name == 'pull_request' || needs.init.outputs.force_build == 'true' }}
+      bin_cache: ${{ needs.init.outputs.bin_cache == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -713,6 +732,7 @@ jobs:
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.pr_validation == 'true' || github.event_name == 'pull_request' || needs.init.outputs.force_build == 'true' }}
+      bin_cache: ${{ needs.init.outputs.bin_cache == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -746,6 +766,7 @@ jobs:
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.pr_validation == 'true' || github.event_name == 'pull_request' || needs.init.outputs.force_build == 'true' }}
+      bin_cache: ${{ needs.init.outputs.bin_cache == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -779,6 +800,7 @@ jobs:
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.pr_validation == 'true' || github.event_name == 'pull_request' || needs.init.outputs.force_build == 'true' }}
+      bin_cache: ${{ needs.init.outputs.bin_cache == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -812,6 +834,7 @@ jobs:
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.pr_validation == 'true' || github.event_name == 'pull_request' || needs.init.outputs.force_build == 'true' }}
+      bin_cache: ${{ needs.init.outputs.bin_cache == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -845,6 +868,7 @@ jobs:
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.pr_validation == 'true' || github.event_name == 'pull_request' || needs.init.outputs.force_build == 'true' }}
+      bin_cache: ${{ needs.init.outputs.bin_cache == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -878,6 +902,7 @@ jobs:
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.pr_validation == 'true' || github.event_name == 'pull_request' || needs.init.outputs.force_build == 'true' }}
+      bin_cache: ${{ needs.init.outputs.bin_cache == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -911,6 +936,7 @@ jobs:
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.pr_validation == 'true' || github.event_name == 'pull_request' || needs.init.outputs.force_build == 'true' }}
+      bin_cache: ${{ needs.init.outputs.bin_cache == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -944,6 +970,7 @@ jobs:
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.pr_validation == 'true' || github.event_name == 'pull_request' || needs.init.outputs.force_build == 'true' }}
+      bin_cache: ${{ needs.init.outputs.bin_cache == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -977,6 +1004,7 @@ jobs:
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.pr_validation == 'true' || github.event_name == 'pull_request' || needs.init.outputs.force_build == 'true' }}
+      bin_cache: ${{ needs.init.outputs.bin_cache == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -1010,6 +1038,7 @@ jobs:
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.pr_validation == 'true' || github.event_name == 'pull_request' || needs.init.outputs.force_build == 'true' }}
+      bin_cache: ${{ needs.init.outputs.bin_cache == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -1043,6 +1072,7 @@ jobs:
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.pr_validation == 'true' || github.event_name == 'pull_request' || needs.init.outputs.force_build == 'true' }}
+      bin_cache: ${{ needs.init.outputs.bin_cache == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -1076,6 +1106,7 @@ jobs:
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.pr_validation == 'true' || github.event_name == 'pull_request' || needs.init.outputs.force_build == 'true' }}
+      bin_cache: ${{ needs.init.outputs.bin_cache == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -1109,6 +1140,7 @@ jobs:
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.pr_validation == 'true' || github.event_name == 'pull_request' || needs.init.outputs.force_build == 'true' }}
+      bin_cache: ${{ needs.init.outputs.bin_cache == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -1142,6 +1174,7 @@ jobs:
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.pr_validation == 'true' || github.event_name == 'pull_request' || needs.init.outputs.force_build == 'true' }}
+      bin_cache: ${{ needs.init.outputs.bin_cache == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -1175,6 +1208,7 @@ jobs:
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.pr_validation == 'true' || github.event_name == 'pull_request' || needs.init.outputs.force_build == 'true' }}
+      bin_cache: ${{ needs.init.outputs.bin_cache == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -1208,6 +1242,7 @@ jobs:
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.pr_validation == 'true' || github.event_name == 'pull_request' || needs.init.outputs.force_build == 'true' }}
+      bin_cache: ${{ needs.init.outputs.bin_cache == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -1241,6 +1276,7 @@ jobs:
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.pr_validation == 'true' || github.event_name == 'pull_request' || needs.init.outputs.force_build == 'true' }}
+      bin_cache: ${{ needs.init.outputs.bin_cache == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -1274,6 +1310,7 @@ jobs:
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.pr_validation == 'true' || github.event_name == 'pull_request' || needs.init.outputs.force_build == 'true' }}
+      bin_cache: ${{ needs.init.outputs.bin_cache == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -1307,6 +1344,7 @@ jobs:
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.pr_validation == 'true' || github.event_name == 'pull_request' || needs.init.outputs.force_build == 'true' }}
+      bin_cache: ${{ needs.init.outputs.bin_cache == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
@@ -1340,6 +1378,7 @@ jobs:
       image: ${{ needs.init.outputs.image }}
       image_sha: ${{ needs.init.outputs.image_sha }}
       force_build: ${{ needs.init.outputs.pr_validation == 'true' || github.event_name == 'pull_request' || needs.init.outputs.force_build == 'true' }}
+      bin_cache: ${{ needs.init.outputs.bin_cache == 'true' }}
       llvm: ${{ needs.init.outputs.llvm == 'true' }}
       enable_upterm_ssh: ${{ needs.init.outputs.enable_upterm_ssh == 'true' }}
     secrets:
