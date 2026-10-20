@@ -1,6 +1,6 @@
 name: "booster"
 version: "0.13"
-release: "2"
+release: "3"
 description: "fast and secure initramfs generator"
 sources:
  - "https://github.com/anatol/booster/archive/refs/tags/${version}.tar.gz"
@@ -21,6 +21,11 @@ package {
 # Taken from https://github.com/anatol/booster/blob/master/packaging/arch/PKGBUILD
  exec "env install -Dp -m755 generator/generator \"$ROOT/usr/bin/booster\""
  exec "env install -Dp -m755 init/init \"$ROOT/usr/lib/booster/init\""
+ # The generator always opens /etc/booster.yaml, even with --universal, so the
+ # file must exist. The Arch package creates it empty for the same reason;
+ # without it `booster build` fails with
+ # "open /etc/booster.yaml: no such file or directory".
+ exec "mkdir -p \"$ROOT/etc\" && touch \"$ROOT/etc/booster.yaml\""
 }
 
 
