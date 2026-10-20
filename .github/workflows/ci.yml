@@ -244,8 +244,13 @@ jobs:
             if printf '%s\n' "$CHANGED_FILES" | grep -Eq '^\.github/(workflows/|scripts/ci-topology\.py|scripts/test_ci_topology\.py)'; then
               # Scheduler changes must exercise the complete generated graph.
               PACKAGES=$(all_packages)
-            elif [ "$RUN_PKG_COUNT" = 1 ] && { [ "${{ github.event_name }}" = pull_request ] || [ "$TOTAL_CHANGED_COUNT" = 1 ]; }; then
-              PACKAGES=$(printf '%s\n' "$CHANGED_RUNFILES" | head -n1 | cut -d/ -f1)
+            elif [ "$RUN_PKG_COUNT" -ge 1 ] && { [ "${{ github.event_name }}" = pull_request ] || [ "$TOTAL_CHANGED_COUNT" -ge 1 ]; }; then
+              # Build every package whose runfile changed in this commit. This
+              # previously required exactly one changed runfile, so a commit
+              # touching several recipes silently built nothing and still
+              # reported success (bubblewrap 0.13.1 was never published this
+              # way). The topology step orders multiple roots already.
+              PACKAGES=$(printf '%s\n' "$CHANGED_RUNFILES" | cut -d/ -f1 | sort -u)
             else
               SHOULD_BUILD=false
             fi
