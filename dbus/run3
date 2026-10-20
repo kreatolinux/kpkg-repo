@@ -1,6 +1,6 @@
 name: "dbus"
 version: "1.16.2"
-release: "7"
+release: "8"
 description: "Message bus system"
 sources:
  - "https://dbus.freedesktop.org/releases/dbus/dbus-${version}.tar.xz"
@@ -18,7 +18,7 @@ build {
  global extraArgs = "-Dsystemd=enabled"
 }
 
- macro build --meson ${extraArgs} -Ddefault_library=shared -Druntime_dir=/run --sysconfdir=/etc -Duser_session=true
+ macro build --meson ${extraArgs} -Druntime_dir=/run --sysconfdir=/etc -Duser_session=true --libdir=/usr/lib -Dmodular_tests=disabled
 }
 
 package {
