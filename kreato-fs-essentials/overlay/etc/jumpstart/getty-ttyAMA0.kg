@@ -1,0 +1,8 @@
+name: "getty-ttyAMA0"
+description: "Serial console getty (arm64)."
+type: "simple"
+
+service {
+  terminal true
+  exec "/bin/busybox getty 115200 ttyAMA0 vt100"
+}

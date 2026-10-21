@@ -1,6 +1,6 @@
 name: "kreato-fs-essentials"
 version: "0.0.2"
-release: "7"
+release: "8"
 description: "Kreato Linux filesystem essentials, seperated from src/kreastrap/overlay"
 sources:
  - "overlay/"
@@ -21,6 +21,14 @@ prepare {
 package {
  exec "cp -r etc/ $ROOT"
  exec "mkdir -p $ROOT/etc/jumpstart/enabled"
+ # Give the serial console a login prompt. Which device is the console
+ # depends on the architecture; enabling the wrong one just makes getty
+ # fail to open a nonexistent tty.
+ if "$KPKG_ARCH" == "aarch64" || "$KPKG_ARCH" == "arm64" {
+   exec "ln -sf ../getty-ttyAMA0.kg $ROOT/etc/jumpstart/enabled/getty-ttyAMA0.kg"
+ } else {
+   exec "ln -sf ../getty-ttyS0.kg $ROOT/etc/jumpstart/enabled/getty-ttyS0.kg"
+ }
  exec "ln -sf ../getty-tty1.kg $ROOT/etc/jumpstart/enabled/getty-tty1.kg"
  exec "ln -sf ../getty-tty2.kg $ROOT/etc/jumpstart/enabled/getty-tty2.kg"
  exec "ln -sf ../getty-tty3.kg $ROOT/etc/jumpstart/enabled/getty-tty3.kg"
