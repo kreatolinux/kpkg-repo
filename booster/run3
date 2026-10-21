@@ -1,6 +1,6 @@
 name: "booster"
 version: "0.13"
-release: "3"
+release: "4"
 description: "fast and secure initramfs generator"
 sources:
  - "https://github.com/anatol/booster/archive/refs/tags/${version}.tar.gz"
@@ -13,6 +13,13 @@ build {
  cd "init"
  exec "go build"
  cd "../generator"
+ # Booster resolves libraries against a hardcoded directory list
+ # (/usr/lib, /lib, /usr/lib64, /usr/lib/x86_64-linux-gnu) and never reads
+ # /etc/ld.so.cache, so ldconfig cannot help it. This distribution installs
+ # its runtime libraries in /lib64, which is not on that list, and image
+ # generation died with "unable to find path to library libresolv.so.2".
+ # Add /lib64 to the search path.
+ exec "sed -i 's|\"/usr/lib\", \"/lib\", \"/usr/lib64\"|\"/usr/lib\", \"/lib\", \"/lib64\", \"/usr/lib64\"|' image.go"
  exec "go build"
 }
 
