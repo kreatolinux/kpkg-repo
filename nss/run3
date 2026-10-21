@@ -1,13 +1,13 @@
 name: "nss"
-version: "3.131"
-release: "4"
+version: "3.131.1"
+release: "1"
 description: "network stuff"
 sources:
   - "https://archive.mozilla.org/pub/security/nss/releases/NSS_${version.replace('.', '_')}_RTM/src/nss-$version.tar.gz"
   - "bundle.sh"
   - "certdata2pem.py"
 sha256sum:
-  - "ca0005bc77e9255d9942103e6f9756cfe311a3df72afa99860709e386eb3c167"
+  - "b1dbc1d9e7f3f8455dfb6d58ec8f7229d8a8450c629a9e69ef2ef6081f359056"
   - "SKIP"
   - "SKIP"
 depends:
