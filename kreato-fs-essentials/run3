@@ -1,6 +1,6 @@
 name: "kreato-fs-essentials"
 version: "0.0.2"
-release: "6"
+release: "7"
 description: "Kreato Linux filesystem essentials, seperated from src/kreastrap/overlay"
 sources:
  - "overlay/"
@@ -11,6 +11,7 @@ backup:
  - "etc/passwd"
  - "etc/profile"
  - "etc/resolv.conf"
+ - "etc/shadow"
  - "etc/shells"
 
 prepare {
