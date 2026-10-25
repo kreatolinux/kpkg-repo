@@ -1,5 +1,5 @@
 name: "nss"
-version: "3.131.1"
+version: "3.132"
 release: "1"
 description: "network stuff"
 sources:
@@ -7,7 +7,7 @@ sources:
   - "bundle.sh"
   - "certdata2pem.py"
 sha256sum:
-  - "b1dbc1d9e7f3f8455dfb6d58ec8f7229d8a8450c629a9e69ef2ef6081f359056"
+  - "ee9cf4837ba801141a804321c4462ad8f452ff4314275c6d5108a6b05af227ff"
   - "SKIP"
   - "SKIP"
 depends:

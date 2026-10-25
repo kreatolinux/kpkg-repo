@@ -1,11 +1,11 @@
 name: "limine"
-version: "12.9.3"
+version: "12.9.4"
 release: "4"
 description: "Modern, advanced, portable, multiprotocol bootloader."
 sources:
  - "https://github.com/limine-bootloader/limine/releases/download/v${version}/limine-${version}.tar.xz"
 sha256sum:
- - "95f456a204ce4855a9b5bd72e2cc170080f217edf5e7edf8ded9bb9f3dd4e995"
+ - "0b576463ec818d09df5dfd27d06cf3028be54bd95b12007053cc0818c041f4c3"
 depends:
  - "efibootmgr"
  - "nasm"

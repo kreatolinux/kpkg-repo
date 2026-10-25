@@ -1,11 +1,11 @@
 name: "vulkan-loader"
-version: "1.4.365"
+version: "1.4.366"
 release: "1"
 description: "Vulkan ICD loader"
 sources:
  - "https://github.com/KhronosGroup/Vulkan-Loader/archive/refs/tags/v${version}.tar.gz"
 sha256sum:
- - "df0358f57c1936e4abd262a7327ba1f80ffb424dbbdcbcb01bb9288511f31eef"
+ - "d6ee019b105ddac28d564b3337b70b9af5489da6f5c0335c72fb3aae1eeff9c1"
 depends:
  - "cmake"
  - "ninja"

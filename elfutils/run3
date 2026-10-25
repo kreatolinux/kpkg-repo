@@ -1,12 +1,12 @@
 name: "elfutils"
-version: "0.196"
+version: "0.197"
 release: "1"
 description: "elfutils"
 sources:
  - "https://sourceware.org/elfutils/ftp/${version}/elfutils-${version}.tar.bz2"
  - "elfutils-aarch64-uio.patch"
 sha256sum:
- - "fd5cc6b77ad6773cac93cb3f415f9318ac3b3455eecf801f6b4a742c4f6c7209"
+ - "1fdf525f22dcf796d99a99ba3ea00a1f7b1ae5421bc62e8443a708920b99b904"
  - "67a196206a0134f8e264794557ca962cdcf74e852e9f7e20daa2a96fd7821c94"
 depends:
  - "zlib"
