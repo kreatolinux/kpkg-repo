@@ -1,6 +1,6 @@
 name: "grub"
 version: "2.14"
-release: "4"
+release: "5"
 description: "The GNU Grub Bootloader"
 sources:
   - "https://ftp.gnu.org/gnu/grub/grub-$version.tar.xz"
@@ -21,6 +21,15 @@ func build_grub_efi {
 }
 
 build {
+  # i386-pc must not be built with CET. GCC emits a .note.gnu.property section
+  # that shifts .text to 0x9074 where GRUB's linker script expects 0x9000, and
+  # grub-mkrescue then refuses to build any BIOS image at all:
+  #
+  #   kernel.img is miscompiled: its start address is 0x9074 instead of 0x9000
+  #
+  # This is the platform used for BIOS boots, so the breakage is not specific to
+  # live ISOs: `krep disk --bootloader=grub` inherits it.
+  env CFLAGS="$CFLAGS -fcf-protection=none"
   macro build --disable-efiemu --disable-werror --prefix=/usr --sysconfdir=/etc
   exec "make"
 }
