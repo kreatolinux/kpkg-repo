@@ -1,6 +1,6 @@
 name: "grub"
 version: "2.14"
-release: "6"
+release: "7"
 description: "The GNU Grub Bootloader"
 sources:
   - "https://ftp.gnu.org/gnu/grub/grub-$version.tar.xz"
@@ -21,20 +21,21 @@ func build_grub_efi {
 }
 
 build {
-  # binutils' -z separate-code puts .text on its own page, so kernel.img starts
-  # at 0x9074 instead of the 0x9000 the BIOS loader requires, and grub-mkrescue
-  # refuses to build any image at all:
+  # GRUB places .text at 0x9000 with $(TARGET_IMG_BASE_LDOPT),0x9000, and picks
+  # that variable by asking whether the linker accepts -Wl,--image-base: a PE
+  # option. GNU ld on ELF accepts it and ignores it -- with the warning
+  #
+  #   app: warning: this may be an error in the future
+  #
+  # -- so the kernel links with no base at all, .text lands at 0x9074, and
+  # grub-mkimage refuses the result:
   #
   #   kernel.img is miscompiled: its start address is 0x9074 instead of 0x9000
   #
-  # i386-pc is the BIOS platform, so this is not specific to live ISOs: every
-  # `krep disk --bootloader=grub` image for amd64 inherits it.
-  #
-  # -fcf-protection=none is belt and braces: a CET .note.gnu.property section
-  # would shift .text the same way. kernel.img built without it carries no such
-  # section, so it is not what caused this, but nothing should reintroduce it.
-  env TARGET_LDFLAGS="$TARGET_LDFLAGS -Wl,-z,noseparate-code"
-  env TARGET_CFLAGS="$TARGET_CFLAGS -fcf-protection=none"
+  # That breaks every BIOS image, not just live ISOs. The tarball ships a
+  # generated configure with the PE answer baked in, so correct it before
+  # running it and let GRUB use the ELF-appropriate -Wl,-Ttext.
+  exec "sed -i 's|TARGET_IMG_BASE_LDOPT=\"-Wl,--image-base\"|TARGET_IMG_BASE_LDOPT=\"-Wl,-Ttext\"|' configure"
   macro build --disable-efiemu --disable-werror --prefix=/usr --sysconfdir=/etc
   exec "make"
 }
