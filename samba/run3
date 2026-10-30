@@ -1,11 +1,11 @@
 name: "samba"
-version: "4.25.0"
+version: "4.25.1"
 release: "2"
 description: "samba"
 sources:
   - "https://download.samba.org/pub/samba/stable/samba-$version.tar.gz"
 sha256sum:
-  - "2e2cb7296833b35b8f7a7fb76045e0c57adc0c2cd03264b37df5d58e40f28437"
+  - "7f367545bca69aa96897628f82f0f04d4b66b3bcb36cb978b9bb952c4b4c428d"
 depends:
   - "gnutls"
   - "jansson"

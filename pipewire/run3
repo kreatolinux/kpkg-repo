@@ -1,11 +1,11 @@
 name: "pipewire"
-version: "1.6.9"
+version: "1.6.10"
 release: "3"
 description: "Sound server"
 sources:
   - "https://github.com/PipeWire/pipewire/archive/$version/pipewire-$version.tar.gz"
 sha256sum:
-  - "dbc3624cf71215c26a22fc98f6f71f7b8599f5f6b415eab4a5c90ca96c170c7c"
+  - "93b7c4f1e62fd9ec3a921846c6bfc64442872bb2366c2bbc3ea69a427b79a4f9"
 depends:
   - "glib"
   - "dbus"
