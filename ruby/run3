@@ -1,12 +1,12 @@
 name: "ruby"
-version: "4.0.7"
+version: "4.0.9"
 release: "1"
 description: "The Ruby language"
 sources:
  - "https://cache.ruby-lang.org/pub/ruby/${version.split('.')[0:2].join('.')}/ruby-${version}.tar.xz"
  - "https://github.com/ruby/openssl/archive/refs/tags/v4.0.2.tar.gz"
 sha256sum:
- - "47ef59413f7a4587ba6a6b78b14036eb5e36eec2ec0b90964801e88d56a3d375"
+ - "a8057adb39f51ad6dc3106237504c93dd792bb515837b4fe7817ae21ed7e51f4"
  - "605b4d9109cf55ab64c5a4eba7b06d1df65b267777a732f392147591fe45efbb"
 depends:
  - "libyaml"
