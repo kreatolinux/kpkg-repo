@@ -1,11 +1,11 @@
 name: "dracut"
-version: "103"
+version: "112"
 release: "1"
 description: "Event driven initramfs infrastructure"
 sources:
  - "https://github.com/dracut-ng/dracut-ng/archive/refs/tags/${version}.tar.gz"
 sha256sum:
- - "5f281a523e13c81c1967ef4fd76f221ca523546857d062dcc214b33873684b0a"
+ - "839d21eb4bd27bb0ee40d74c9da46df088c2e1425fcd8c3ea62b7e3a3dd28a91"
 depends:
  - "bash"
  - "kmod"
