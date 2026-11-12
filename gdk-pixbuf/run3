@@ -29,7 +29,7 @@ package {
 
 postinstall {
  exec "mkdir -p /usr/lib/gdk-pixbuf-2.0/2.10.0"
- exec "gdk-pixbuf-query-loaders --update-cache"
+ exec "gdk-pixbuf-query-loaders --update-cache 2>/dev/null || true"
 }
 
 

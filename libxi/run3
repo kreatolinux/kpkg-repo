@@ -15,7 +15,7 @@ build_depends:
  - "gmake"
 
 build {
- macro build --sysconfdir=/etc --disable-static
+ macro build --configure --sysconfdir=/etc --disable-static
 }
 
 package {

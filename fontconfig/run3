@@ -1,11 +1,11 @@
 name: "fontconfig"
-version: "2.15.0"
-release: "2"
+version: "2.17.0"
+release: "1"
 description: "fontconfig"
 sources:
- - "https://www.freedesktop.org/software/fontconfig/release/fontconfig-${version}.tar.gz"
+ - "https://gitlab.freedesktop.org/fontconfig/fontconfig/-/archive/$version/fontconfig-$version.tar.gz"
 sha256sum:
- - "f5f359d6332861bd497570848fcb42520964a9e83d5e3abe397b6b6db9bcaaf4"
+ - "741416e1cc5132f5df533a96070453c0e0fdd137de60e0adb684bb52d06f0e05"
 depends:
  - "expat"
  - "freetype"

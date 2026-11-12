@@ -11,9 +11,11 @@ depends:
 build_depends:
  - "xorgproto"
  - "gmake"
+ - "meson"
+ - "ninja"
 
 build {
- macro build --disable-static
+ macro build --configure --disable-static
 }
 
 package {

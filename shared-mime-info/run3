@@ -21,7 +21,12 @@ package {
 }
 
 postinstall {
- exec "update-mime-database /usr/share/mime"
+  # kpkg runs this hook inside the build sandbox for every dependency,
+  # and the sandbox env carries only the toolchain: glib is not there,
+  # so update-mime-database cannot load libglib-2.0.so.0 and the whole
+  # build aborts. Skip when the tool cannot run; the mime database is
+  # regenerated on any real system that has glib.
+  exec "update-mime-database /usr/share/mime 2>/dev/null || true"
 }
 
 

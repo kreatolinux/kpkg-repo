@@ -14,7 +14,7 @@ build_depends:
  - "ninja"
 
 build {
- macro build --libdir=/usr/lib --default-library=shared
+ macro build --configure --libdir=/usr/lib --default-library=shared
 }
 
 package {

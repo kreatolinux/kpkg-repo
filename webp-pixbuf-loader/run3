@@ -21,7 +21,7 @@ package {
 }
 
 postinstall {
- exec "gdk-pixbuf-query-loaders --update-cache"
+ exec "gdk-pixbuf-query-loaders --update-cache 2>/dev/null || true"
 }
 
 
