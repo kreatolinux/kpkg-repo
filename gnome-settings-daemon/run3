@@ -12,7 +12,7 @@ sha256sum:
   - "0bd8bb754ce3fb82b29c83e2186b2a84517be772acdba28d15eb928a44cadec3"
   - "be1ceda2d7e2747bfd2d5c0b5dc5b7144a69bfba63618cff39299bb00cb7edc1"
 depends:
- - "libtool"
+  - "libtool"
   - "alsa-lib"
   - "networkmanager"
   - "colord"

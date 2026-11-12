@@ -7,7 +7,7 @@ sources:
 sha256sum:
   - "ab4d9cd7f3e58060091d2b24972223d6401675f11c49b65abf4f6ef31dea22ff"
 depends:
- - "libtool"
+  - "libtool"
   - "colord"
   - "dbus"
   - "libusb"

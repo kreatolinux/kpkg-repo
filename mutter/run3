@@ -12,7 +12,7 @@ sha256sum:
   - "ecc3ec39db8c301dce9bb24d8dcbab3360e42f6ce723a772f2f4acd53ad0a5a4"
   - "eadc37ef96af8e4e1235eae380a06cb9e75729f275158a0c42e3d143dd1158f8"
 depends:
- - "libtool"
+  - "libtool"
   - "libx11"
   - "libei"
   - "libxcvt"

@@ -7,7 +7,7 @@ sources:
 sha256sum:
   - "6c006523d2c21282fd62c64fc44f63546aaa216e66eb439b8129af68db11df7c"
 depends:
- - "libtool"
+  - "libtool"
   - "vte"
   - "util-linux"
   - "jetbrains-mono"

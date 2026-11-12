@@ -14,7 +14,7 @@ sha256sum:
   - "295c3f205b4f595ddb9b6e9625bcf467075614ff2ee533fe7f4739d99b6bac65"
   - "5fd2eba5c40666663039bb0b8f3a4b256808daa045de7ef33b7ec7360e666467"
 depends:
- - "libtool"
+  - "libtool"
   - "libnma"
   - "modemmanager"
   - "cups"

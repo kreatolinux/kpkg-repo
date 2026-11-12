@@ -7,7 +7,7 @@ sources:
 sha256sum:
   - "dfe7adc5876ef0670e7eba2907799bdbb8875ce58bb4208e1a52169bd16a47ca"
 depends:
- - "libtool"
+  - "libtool"
   - "p11-kit"
   - "gcr-3"
   - "dbus"

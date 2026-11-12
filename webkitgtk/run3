@@ -7,7 +7,7 @@ sources:
 sha256sum:
   - "a76345b391bef6211fb5ab6cfab2e86b285d18cda17cbb9ade595f1252b86065"
 depends:
- - "libtool"
+  - "libtool"
   - "libxt"
   - "libdrm"
   - "libseccomp"

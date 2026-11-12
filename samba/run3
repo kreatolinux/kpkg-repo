@@ -7,7 +7,7 @@ sources:
 sha256sum:
   - "2e2cb7296833b35b8f7a7fb76045e0c57adc0c2cd03264b37df5d58e40f28437"
 depends:
- - "libtool"
+  - "libtool"
   - "gnutls"
   - "jansson"
   - "dbus"
