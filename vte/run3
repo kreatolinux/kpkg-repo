@@ -7,6 +7,7 @@ sources:
 sha256sum:
  - "aca1caa8478aebcdbb1d67897fb3511eb7601debae6810e16a15b6fa25f31ac8"
 depends:
+ - "libtool"
  - "gtk3"
  - "pcre"
  - "fribidi"
@@ -19,6 +20,9 @@ build_depends:
  - "vala"
 
 build {
+  # gdk-pixbuf resolves file types through the compiled shared MIME
+  # database, and the build sandbox only carries its XML sources.
+  exec "command -v update-mime-database >/dev/null 2>&1 && update-mime-database /usr/share/mime || true"
 
  if ${exec("command -v systemctl")}.exit() != 0 {
   env extraArgs="-D_systemd=false"

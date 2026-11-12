@@ -7,6 +7,7 @@ sources:
 sha256sum:
  - "53a6fb2b190ad37c5986caed3e98bede7c3c602399ee4f93c8fc054303d76dab"
 depends:
+ - "libtool"
  - "gcr-3"
  - "gtk4"
  - "gtk3"
@@ -18,6 +19,9 @@ build_depends:
  - "vala"
 
 build {
+  # gdk-pixbuf resolves file types through the compiled shared MIME
+  # database, and the build sandbox only carries its XML sources.
+  exec "command -v update-mime-database >/dev/null 2>&1 && update-mime-database /usr/share/mime || true"
 # got from blfs
  macro build --libdir=/usr/lib --default-library=shared --wrap-mode=nodownload -Dgtk_doc=false -Dintrospection=true -Dvapi=true -Dgcr=true -Dlibnma_gtk4=true -Dmobile_broadband_provider_info=false
 }

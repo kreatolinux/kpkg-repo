@@ -7,6 +7,7 @@ sources:
 sha256sum:
  - "adac0710b8b797108ea40ea4573bd1a5e6d9b24e0a7990a994216e8dffe2d15e"
 depends:
+ - "libtool"
  - "accountsservice"
  - "dconf"
  - "dbus"

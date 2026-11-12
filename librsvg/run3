@@ -23,6 +23,9 @@ build_depends:
  - "cargo-c"
 
 build {
+  # gdk-pixbuf resolves file types through the compiled shared MIME
+  # database, and the build sandbox only carries its XML sources.
+  exec "command -v update-mime-database >/dev/null 2>&1 && update-mime-database /usr/share/mime || true"
  macro build --libdir=/usr/lib --libexecdir=/usr/lib --default-library=shared -Dvala=enabled -Dintrospection=enabled -Ddocs=disabled -Dtests=false
 }
 
@@ -31,7 +34,7 @@ package {
 }
 
 postinstall {
- exec "gdk-pixbuf-query-loaders --update-cache"
+ exec "gdk-pixbuf-query-loaders --update-cache 2>/dev/null || true"
 }
 
 

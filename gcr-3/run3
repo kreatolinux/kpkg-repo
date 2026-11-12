@@ -7,6 +7,7 @@ sources:
 sha256sum:
  - "a7b16aa8d9384617520c0e8b3d394ae7b850c8cd886eed67e8f837bfac0d1c31"
 depends:
+ - "libtool"
  - "p11-kit"
  - "gnupg"
  - "openssh"

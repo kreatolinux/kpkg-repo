@@ -7,6 +7,7 @@ sources:
 sha256sum:
  - "abb9e452a1c372133bd3eb8f0bb30d07b2d0a8fb02001c4155cf287555db4040"
 depends:
+ - "libtool"
  - "gtk3"
  - "gtk4"
 build_depends:
@@ -16,6 +17,9 @@ build_depends:
  - "gjs"
 
 build {
+  # gdk-pixbuf resolves file types through the compiled shared MIME
+  # database, and the build sandbox only carries its XML sources.
+  exec "command -v update-mime-database >/dev/null 2>&1 && update-mime-database /usr/share/mime || true"
  macro build --libdir=/usr/lib --wrap-mode=nodownload -Ddocs=false -Dtests=false -Dportal-tests=false -Dbackend-gtk3=enabled -Dbackend-gtk4=enabled -Dbackend-qt5=disabled -Dbackend-qt6=disabled
 }
 

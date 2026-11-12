@@ -7,6 +7,7 @@ sources:
 sha256sum:
  - "ebee33c77f43bcae87406c20e051acaff08e86f8960c35b92911e243fddc7a0b"
 depends:
+ - "libtool"
  - "libcanberra"
 build_depends:
  - "meson"
@@ -14,6 +15,9 @@ build_depends:
  - "gobject-introspection"
 
 build {
+  # gdk-pixbuf resolves file types through the compiled shared MIME
+  # database, and the build sandbox only carries its XML sources.
+  exec "command -v update-mime-database >/dev/null 2>&1 && update-mime-database /usr/share/mime || true"
  macro build --libdir=/usr/lib --wrap-mode=nodownload
 }
 

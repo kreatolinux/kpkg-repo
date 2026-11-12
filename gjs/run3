@@ -9,6 +9,7 @@ sha256sum:
  - "a583792d3cd9d164f086bb1ed6a6da986ee908512b06ff1cc2f1e3ead0cbd9f5"
  - "d26c538b948a89be59616c7698f2e815d2d5bf723f3c0596f07d987b9cfb4823"
 depends:
+ - "libtool"
  - "glib"
  - "mozjs140"
  - "libffi"
@@ -28,6 +29,9 @@ prepare {
 }
 
 build {
+  # gdk-pixbuf resolves file types through the compiled shared MIME
+  # database, and the build sandbox only carries its XML sources.
+  exec "command -v update-mime-database >/dev/null 2>&1 && update-mime-database /usr/share/mime || true"
  macro build --libdir=/usr/lib --wrap-mode=nofallback -Dskip_gtk_tests=true -Dinstalled_tests=false
 }
 

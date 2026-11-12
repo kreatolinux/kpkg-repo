@@ -20,5 +20,6 @@ build {
 package {
   exec "DESTDIR=$ROOT ninja -C build/ install"
   exec "rm -rf \"$ROOT/dev\""
+  # meson installs fuse3.pc under lib64, which pkg-config does not search.
+  exec "mkdir -p \"$ROOT/usr/lib/pkgconfig\" && for f in \"$ROOT\"/usr/lib64/pkgconfig/*.pc; do [ -e \"$f\" ] && ln -sf /usr/lib64/pkgconfig/$(basename \"$f\") \"$ROOT/usr/lib/pkgconfig/\"; done || true"
 }
-

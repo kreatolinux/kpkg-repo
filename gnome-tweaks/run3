@@ -7,6 +7,7 @@ sources:
 sha256sum:
  - "a9ca755f5bc1540c8970f02dfcaf7782e2efb31314ae19e8d6667dde2548d1a5"
 depends:
+ - "libtool"
  - "pygobject"
  - "python"
  - "gnome-settings-daemon"
@@ -22,6 +23,9 @@ build_depends:
  - "meson"
 
 build {
+  # gdk-pixbuf resolves file types through the compiled shared MIME
+  # database, and the build sandbox only carries its XML sources.
+  exec "command -v update-mime-database >/dev/null 2>&1 && update-mime-database /usr/share/mime || true"
  macro build 
 }
 
@@ -31,9 +35,9 @@ package {
 
 postinstall {
  print "Installing new Schemas"
- exec "glib-compile-schemas /usr/share/glib-2.0/schemas"
+ exec "glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true"
  print "Updating icon cache..."
- exec "gtk-update-icon-cache -qtf /usr/share/icons/hicolor"
+ exec "gtk-update-icon-cache -qtf /usr/share/icons/hicolor 2>/dev/null || true"
 }
 
 

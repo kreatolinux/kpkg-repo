@@ -7,6 +7,7 @@ sources:
 sha256sum:
  - "6c20bd16c87aba15869e56444424481f632ac302989a203e8ce4dcc73dea33a5"
 depends:
+ - "libtool"
  - "libarchive"
  - "gtk3"
 build_depends:

@@ -7,6 +7,7 @@ sources:
 sha256sum:
  - "a21f825bd44afc4dd99ba4eea8ff57c8f2e51085cb402a68ed4cbb35299826a4"
 depends:
+ - "libdrm"
  - "libx11"
  - "cantarell-fonts"
  - "libxcursor"
@@ -37,6 +38,9 @@ prepare {
 }
 
 build {
+  # gdk-pixbuf resolves file types through the compiled shared MIME
+  # database, and the build sandbox only carries its XML sources.
+  exec "command -v update-mime-database >/dev/null 2>&1 && update-mime-database /usr/share/mime || true"
  macro build --libdir=/usr/lib --default-library=shared --wrap-mode=nodownload -Dx11-backend=true -Dmedia-gstreamer=disabled -Dintrospection=enabled -Dvulkan=disabled -Dbuild-demos=false -Dbuild-tests=false -Dbuild-testsuite=false -Dbuild-examples=false
 }
 

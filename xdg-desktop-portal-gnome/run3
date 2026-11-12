@@ -16,6 +16,9 @@ build_depends:
  - "meson"
 
 build {
+  # gdk-pixbuf resolves file types through the compiled shared MIME
+  # database, and the build sandbox only carries its XML sources.
+  exec "command -v update-mime-database >/dev/null 2>&1 && update-mime-database /usr/share/mime || true"
 
  if ${exec("command -v systemctl")}.exit() != 0 {
   local extraArgs = "-Dsystemduserunitdir=/opt/deleteme"

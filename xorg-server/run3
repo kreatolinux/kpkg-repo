@@ -7,6 +7,7 @@ sources:
 sha256sum:
  - "fdb5ec9b4ab7371745b182b68c7054ed72fc4d13e185fc369cfc45e0c3a174e7"
 depends:
+ - "libtool"
  - "libdrm"
  - "libtirpc"
  - "xorg-setxkbmap"

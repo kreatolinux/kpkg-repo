@@ -7,6 +7,7 @@ sources:
 sha256sum:
   - "ab4d9cd7f3e58060091d2b24972223d6401675f11c49b65abf4f6ef31dea22ff"
 depends:
+ - "libtool"
   - "colord"
   - "dbus"
   - "libusb"
@@ -18,6 +19,9 @@ build {
 
   # from BLFS, temporary
   exec "sed -i 's#@CUPS_HTMLVIEW@#firefox#' desktop/cups.desktop.in"
+  # cups 2.4.20 uses data.num_local / data.local_dests in cups_enum_dests()
+  # but _cups_getdata_t does not declare them.
+  exec "patch -Np1 -i ../cups-dest.patch"
 
   if ${exec("command -v systemctl")}.exit() != 0 {
     local extraArgs = "--disable-systemd"

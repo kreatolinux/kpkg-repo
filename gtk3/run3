@@ -14,6 +14,7 @@ depends:
  - "libxrandr"
  - "libxrender"
  - "gdk-pixbuf"
+ - "shared-mime-info"
  - "libepoxy"
  - "pango"
  - "iso-codes"
@@ -26,6 +27,14 @@ build_depends:
  - "ninja"
 
 build {
+  # gdk-pixbuf is built with -Dbuiltin_loaders=all, so its loaders are
+  # compiled into the library and no loaders.cache is generated. The
+  # sandbox does not carry libgdk_pixbuf at all, so glib-compile-resources
+  # cannot decode the Adwaita PNG assets. Generate a cache from the real
+  # root and point the build at it.
+  env XDG_DATA_DIRS="/usr/share"
+  exec "command -v update-mime-database >/dev/null 2>&1 && update-mime-database /usr/share/mime || true"
+
  macro build --libdir=/usr/lib --default-library=shared --wrap-mode=nodownload -Dman=false -Dx11_backend=true -Dwayland_backend=true -Ddemos=false -Dexamples=false -Dtests=false -Dinstalled_tests=false
 }
 

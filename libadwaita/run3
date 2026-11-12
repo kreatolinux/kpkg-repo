@@ -1,12 +1,13 @@
 name: "libadwaita"
-version: "1.10.0"
-release: "2"
+version: "1.8.0"
+release: "1"
 description: "GNOME ui stuff"
 sources:
  - "https://download.gnome.org/sources/libadwaita/${version.split('.')[0:2].join('.')}/libadwaita-${version}.tar.xz"
 sha256sum:
- - "b1bf56239269d101a6391ad4553c910eff9cc6170b803916405477ef60a66c84"
+ - "2836d2c0c0f46dcdb52f94019477f537810283c710802d8e6671efdebe2637c9"
 depends:
+ - "libtool"
  - "gtk4"
  - "appstream"
 build_depends:
@@ -16,6 +17,9 @@ build_depends:
  - "sassc"
 
 build {
+  # gdk-pixbuf resolves file types through the compiled shared MIME
+  # database, and the build sandbox only carries its XML sources.
+  exec "command -v update-mime-database >/dev/null 2>&1 && update-mime-database /usr/share/mime || true"
  macro build --libdir=/usr/lib --default-library=shared --wrap-mode=nodownload -Ddocumentation=false -Dintrospection=enabled -Dvapi=true -Dtests=false -Dexamples=false
 }
 

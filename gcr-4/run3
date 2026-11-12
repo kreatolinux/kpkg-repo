@@ -7,6 +7,7 @@ sources:
 sha256sum:
  - "c4442c15d4330f17a1f5194df08c576877af68412ab2521446a93bd5e24c931b"
 depends:
+ - "libtool"
  - "glib"
  - "gtk4"
  - "libgcrypt"

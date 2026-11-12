@@ -1,12 +1,13 @@
 name: "nautilus"
-version: "51.1"
+version: "50.2"
 release: "3"
 description: "File manager of GNOME"
 sources:
  - "https://download.gnome.org/sources/nautilus/${version.split('.')[0]}/nautilus-${version}.tar.xz"
 sha256sum:
- - "a703bc152d18d161d9dab957e2390a36e6246bb5c24de7b15c9624fcfa2f2816"
+ - "ff93b50accce9cfb34be13ad2fd4fd1ffd2bdb95334fdbb61e75d79c933f6f6d"
 depends:
+ - "libtool"
  - "bubblewrap"
  - "dconf"
  - "libgexiv2"
@@ -28,7 +29,16 @@ build_depends:
  - "gobject-introspection"
  - "blueprint-compiler"
 
+prepare {
+  # glib 2.90 added g_set_date_time(), colliding with nautilus's own
+  # static inline helper of the same name.
+  exec "sed -i 's/g_set_date_time/nautilus_set_date_time/g' src/nautilus-date-utilities.h src/nautilus-date-entry-row.c src/nautilus-date-range-dialog.c"
+}
+
 build {
+  # gdk-pixbuf resolves file types through the compiled shared MIME
+  # database, and the build sandbox only carries its XML sources.
+  exec "command -v update-mime-database >/dev/null 2>&1 && update-mime-database /usr/share/mime || true"
  macro build --libdir=/usr/lib --wrap-mode=nodownload -Dcloudproviders=disabled -Dselinux=disabled -Dtests=none
 }
 
@@ -37,7 +47,7 @@ package {
 }
 
 postinstall {
- exec "glib-compile-schemas /usr/share/glib-2.0/schemas"
+ exec "glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true"
 }
 
 

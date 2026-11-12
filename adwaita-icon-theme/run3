@@ -7,6 +7,7 @@ sources:
 sha256sum:
  - "ba561cf3c96305a47179fa5605856ad695c9238ea07f7093aebd9ba80c4e323b"
 depends:
+ - "libtool"
  - "librsvg"
  - "gtk3"
  - "hicolor-icon-theme"
@@ -15,6 +16,9 @@ build_depends:
  - "ninja"
 
 build {
+  # gdk-pixbuf resolves file types through the compiled shared MIME
+  # database, and the build sandbox only carries its XML sources.
+  exec "command -v update-mime-database >/dev/null 2>&1 && update-mime-database /usr/share/mime || true"
  macro build --wrap-mode=nodownload
 }
 

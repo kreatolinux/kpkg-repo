@@ -7,6 +7,7 @@ sources:
 sha256sum:
  - "4ef2c9a3f875d4134cb8322495fd099136bae7935b850dd513155851454f0525"
 depends:
+ - "libtool"
  - "json-glib"
  - "rest"
  - "libadwaita"
@@ -17,6 +18,9 @@ build_depends:
  - "webkitgtk3"
 
 build {
+  # gdk-pixbuf resolves file types through the compiled shared MIME
+  # database, and the build sandbox only carries its XML sources.
+  exec "command -v update-mime-database >/dev/null 2>&1 && update-mime-database /usr/share/mime || true"
  macro build --libdir=/usr/lib --wrap-mode=nodownload -Dkerberos=false -Ddocumentation=false -Dman=false
 }
 

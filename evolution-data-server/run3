@@ -7,6 +7,7 @@ sources:
 sha256sum:
   - "b75c823445d7d30bca797eee929809e8d389abbb8d471f68ae2af60972779f26"
 depends:
+ - "libtool"
   - "libical"
   - "libsecret"
   - "nss"

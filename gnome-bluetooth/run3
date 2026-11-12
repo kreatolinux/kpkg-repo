@@ -7,6 +7,7 @@ sources:
 sha256sum:
  - "76c241e8ca2c9b1035364535ca26084f89fc5c0e1829510f8909583115fcc2db"
 depends:
+ - "libtool"
  - "bluez"
  - "gtk4"
  - "libadwaita"
@@ -18,6 +19,9 @@ build_depends:
  - "gobject-introspection"
 
 build {
+  # gdk-pixbuf resolves file types through the compiled shared MIME
+  # database, and the build sandbox only carries its XML sources.
+  exec "command -v update-mime-database >/dev/null 2>&1 && update-mime-database /usr/share/mime || true"
  macro build --libdir=/usr/lib --wrap-mode=nodownload -Dgtk_doc=false
 }
 

@@ -7,6 +7,7 @@ sources:
 sha256sum:
   - "dfe7adc5876ef0670e7eba2907799bdbb8875ce58bb4208e1a52169bd16a47ca"
 depends:
+ - "libtool"
   - "p11-kit"
   - "gcr-3"
   - "dbus"
@@ -18,6 +19,9 @@ build_depends:
   - "ninja"
 
 build {
+  # gdk-pixbuf resolves file types through the compiled shared MIME
+  # database, and the build sandbox only carries its XML sources.
+  exec "command -v update-mime-database >/dev/null 2>&1 && update-mime-database /usr/share/mime || true"
   macro build --libdir=/usr/lib --default-library=shared --wrap-mode=nodownload -Dlibcap-ng=disabled -Dselinux=disabled -Dsystemd=disabled -Dpam=true -Dssh-agent=true -Ddebug-mode=false -Dmanpage=false
 }
 

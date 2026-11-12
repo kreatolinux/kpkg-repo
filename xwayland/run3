@@ -7,6 +7,7 @@ sources:
 sha256sum:
  - "4eb6b98d678299a4b96138d886345b294130695760345ef84596225a8224078a"
 depends:
+ - "libtool"
  - "xorg-xkbcomp"
  - "libnettle"
  - "libepoxy"
