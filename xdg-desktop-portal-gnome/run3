@@ -1,11 +1,11 @@
 name: "xdg-desktop-portal-gnome"
-version: "51.0"
+version: "50.0"
 release: "1"
 description: "GNOME backend for xdg-desktop-portal"
 sources:
- - "https://gitlab.gnome.org/GNOME/xdg-desktop-portal-gnome/-/archive/${version}/xdg-desktop-portal-gnome-${version}.tar.gz"
+ - "https://download.gnome.org/sources/xdg-desktop-portal-gnome/${version.split('.')[0]}/xdg-desktop-portal-gnome-${version}.tar.xz"
 sha256sum:
- - "086d2c3544ac3962e344daaf3984dbcdcbbb087e30c48640ac9e41f05489746a"
+ - "ceeef2fb68b34b3f66a3def0a332a22a70af272641fb6c50065b7a2fde3d5759"
 depends:
  - "gnome-desktop"
  - "gnome-keyring"

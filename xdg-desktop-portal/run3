@@ -14,6 +14,7 @@ depends:
  - "gdk-pixbuf"
  - "fuse"
  - "pipewire"
+ - "gst-plugins-base"
  - "json-glib"
 build_depends:
  - "meson"
@@ -23,7 +24,7 @@ opt_depends:
  - "xdg-desktop-portal-wlr: wlroots backend"
 
 build {
- macro build -Ddocbook-docs=disabled
+ macro build -Ddocumentation=disabled -Dman-pages=disabled -Dtests=disabled -Dinstalled-tests=false
 }
 
 package {

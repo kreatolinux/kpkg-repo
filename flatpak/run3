@@ -27,7 +27,7 @@ build_depends:
 no_chkupd: true
 
 build {
- macro build --meson -Dsystem_dbus_proxy=xdg-dbus-proxy -Dsystem_bubblewrap=bwrap -Ddocbook_docs=disabled -Dgtkdoc=disabled
+ macro build --meson -Dsystem_dbus_proxy=xdg-dbus-proxy -Dsystem_bubblewrap=bwrap -Ddocbook_docs=disabled -Dgtkdoc=disabled -Dtests=false
 }
 
 package {

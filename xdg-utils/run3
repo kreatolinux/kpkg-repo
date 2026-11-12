@@ -12,7 +12,8 @@ build_depends:
   - gmake
 
 build {
-  exec "./configure --prefix=/usr"
+  # xmlto lands in /usr/sbin but the generated Makefile hardcodes /usr/bin.
+  exec "./configure --prefix=/usr --with-xmlto=/usr/sbin/xmlto"
   env XML_CATALOG_FILES="/etc/xml/catalog"
   exec "make"
 }
