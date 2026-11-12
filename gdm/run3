@@ -33,8 +33,10 @@ package {
 }
 
 postinstall {
- # From BLFS.
- exec "groupadd -g 21 gdm"
- exec "useradd -c 'GDM Daemon Owner' -d /var/lib/gdm -u 21 -g gdm -s /bin/false gdm"
- exec "passwd -ql gdm"
+ # From BLFS. Idempotent: reinstalling gdm must not fail because the account
+ # already exists from a previous install.
+ exec "getent group gdm >/dev/null 2>&1 || groupadd -g 21 gdm"
+ exec "getent passwd gdm >/dev/null 2>&1 || useradd -c 'GDM Daemon Owner' -d /var/lib/gdm -u 21 -g gdm -s /bin/false gdm"
+ # BusyBox passwd has no -q; lock the account without the quiet flag.
+ exec "passwd -l gdm >/dev/null 2>&1 || true"
 }
