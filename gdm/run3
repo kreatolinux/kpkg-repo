@@ -1,6 +1,6 @@
 name: "gdm"
 version: "50.3"
-release: "5"
+release: "6"
 description: "GNOME Display Manager"
 sources:
  - "https://download.gnome.org/sources/gdm/${version.split('.')[0]}/gdm-${version}.tar.xz"
@@ -24,6 +24,10 @@ build {
   # Adapt the LFS PAM profile to the repository's elogind provider.
   exec "sed -e 's@systemd@elogind@' -e '/elogind/isession  required       pam_loginuid.so' -i data/pam-lfs/gdm-launch-environment.pam"
  }
+ # elogind does not provide sd-varlink, so HAVE_USERDB is undefined and GDM
+ # cannot allocate a dynamic greeter. Without this patch pick_username()
+ # asserts and GDM aborts. The patch uses a preallocated static account.
+ exec "patch -p1 < ../gdm-dynamic-user.patch"
  exec "meson setup build --prefix=/usr --libdir=/usr/lib --buildtype=release --wrap-mode=nodownload $extraArgs -Dgdm-xsession=true -Drun-dir=/run/gdm -Ddefault-pam-config=lfs -Ddbus-sys=/usr/share/dbus-1/system.d -Ddefault-path=/usr/bin:/usr/local/bin:/usr/local/sbin:/bin"
  exec "ninja -C build"
 }
@@ -39,4 +43,10 @@ postinstall {
  exec "getent passwd gdm >/dev/null 2>&1 || useradd -c 'GDM Daemon Owner' -d /var/lib/gdm -u 21 -g gdm -s /bin/false gdm"
  # BusyBox passwd has no -q; lock the account without the quiet flag.
  exec "passwd -l gdm >/dev/null 2>&1 || true"
+ # Static greeter account used by the patched dynamic-user store. It must be
+ # in the gdm group or pam_succeed_if rejects the greeter session.
+ exec "getent group gdm-greeter >/dev/null 2>&1 || groupadd -g 120 gdm-greeter"
+ exec "getent passwd gdm-greeter >/dev/null 2>&1 || useradd -u 120 -g 120 -G gdm -d /var/lib/gdm -s /bin/false -M gdm-greeter"
+ exec "mkdir -p /var/lib/gdm/.config/autostart /var/lib/gdm/.local/state"
+ exec "chown -R 120:120 /var/lib/gdm"
 }

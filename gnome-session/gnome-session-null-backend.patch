@@ -1,0 +1,42 @@
+--- a/gnome-session/gsm-systemd.c
++++ b/gnome-session/gsm-systemd.c
+@@ -691,6 +691,39 @@
+         if (access("/run/systemd/seats/", F_OK) < 0)
+                 return NULL;
+ 
++        /* elogind creates /run/systemd/seats/ too, but it does not provide
++         * systemd's manager API on the bus. Using the systemd backend there
++         * makes every unit operation fail. Fall back to the null backend,
++         * which is what upstream provides for non-systemd inits. */
++        {
++                g_autoptr (GDBusConnection) bus = NULL;
++                g_autoptr (GVariant) reply = NULL;
++                g_autoptr (GError) error = NULL;
++
++                bus = g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, &error);
++                if (bus == NULL)
++                        return NULL;
++
++                reply = g_dbus_connection_call_sync (bus,
++                                                     "org.freedesktop.DBus",
++                                                     "/org/freedesktop/DBus",
++                                                     "org.freedesktop.DBus",
++                                                     "NameHasOwner",
++                                                     g_variant_new ("(s)", "org.freedesktop.systemd1"),
++                                                     G_VARIANT_TYPE ("(b)"),
++                                                     G_DBUS_CALL_FLAGS_NONE,
++                                                     -1, NULL, &error);
++                if (reply == NULL)
++                        return NULL;
++
++                {
++                        gboolean has_owner = FALSE;
++                        g_variant_get (reply, "(b)", &has_owner);
++                        if (!has_owner)
++                                return NULL;
++                }
++        }
++
+         return g_object_new (GSM_TYPE_SYSTEMD, NULL);
+ }
+ 

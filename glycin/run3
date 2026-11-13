@@ -24,7 +24,7 @@ build {
   # gdk-pixbuf resolves file types through the compiled shared MIME
   # database, and the build sandbox only carries its XML sources.
   exec "command -v update-mime-database >/dev/null 2>&1 && update-mime-database /usr/share/mime || true"
- macro build --libdir=/usr/lib --wrap-mode=nodownload -Dglycin-loaders=false -Dglycin-thumbnailer=false -Dlibglycin=true -Dlibglycin-gtk4=true -Dintrospection=false -Dvapi=false -Dtests=false -Dlto=false
+ macro build --libdir=/usr/lib --wrap-mode=nodownload -Dglycin-loaders=false -Dglycin-thumbnailer=false -Dlibglycin=true -Dlibglycin-gtk4=true -Dintrospection=true -Dvapi=false -Dtests=false -Dlto=false
 }
 
 package {

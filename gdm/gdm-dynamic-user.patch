@@ -1,0 +1,32 @@
+--- a/daemon/gdm-dynamic-user-store.c
++++ b/daemon/gdm-dynamic-user-store.c
+@@ -301,6 +301,29 @@
+         g_autofree char *home = NULL;
+         DynamicUser *user;
+ 
++#ifndef HAVE_USERDB
++        /* elogind does not provide sd-varlink, so HAVE_USERDB is undefined and
++         * dynamic allocation is impossible. Use the preallocated static greeter
++         * account instead of asserting in pick_username(). */
++        {
++                struct passwd *pw = getpwnam (preferred_username);
++                if (pw == NULL) {
++                        g_set_error (error,
++                                     GDM_DYNAMIC_USER_STORE_ERROR,
++                                     GDM_DYNAMIC_USER_STORE_ERROR_NO_FREE_UID,
++                                     "Static greeter user '%s' does not exist",
++                                     preferred_username);
++                        return FALSE;
++                }
++                *ret_username = g_strdup (pw->pw_name);
++                *ret_uid = pw->pw_uid;
++                *ret_home = g_strdup (pw->pw_dir);
++                g_debug ("GdmDynUserStore: using static user '%s' (uid: %d)",
++                         pw->pw_name, pw->pw_uid);
++                return TRUE;
++        }
++#endif
++
+         username = pick_username (store, preferred_username);
+ 
+         g_debug ("GdmDynUserStore: Allocating dynamic user %s (%s)",
