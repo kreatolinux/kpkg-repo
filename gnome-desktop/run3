@@ -1,11 +1,11 @@
 name: "gnome-desktop"
-version: "44.5"
-release: "2"
+version: "51.0"
+release: "1"
 description: "Libraries for GNOME desktop"
 sources:
- - "https://download.gnome.org/sources/gnome-desktop/44/gnome-desktop-${version}.tar.xz"
+ - "https://download.gnome.org/sources/gnome-desktop/51/gnome-desktop-${version}.tar.xz"
 sha256sum:
- - "20e0995a6e3a03e8c1026c5a27bc3f45e69ffcc392ad743dcab6107a541d232f"
+ - "9ebeb9f1769d3c310caeadd921ab34c8f264b92937740518b3bc859a579a6912"
 depends:
  - "libtool"
  - "libdrm"
@@ -27,11 +27,11 @@ build {
   # gdk-pixbuf resolves file types through the compiled shared MIME
   # database, and the build sandbox only carries its XML sources.
   exec "command -v update-mime-database >/dev/null 2>&1 && update-mime-database /usr/share/mime || true"
- macro build --libdir=/usr/lib --wrap-mode=nodownload
+  # -Dqr=enabled builds libgnome-qr (GnomeQR-4.0 typelib), required by
+  # gnome-shell >= 51. The qrcodegen subproject is bundled in the tarball.
+  macro build --libdir=/usr/lib --wrap-mode=nodownload -Dqr=enabled
 }
 
 package {
  macro package
 }
-
-
