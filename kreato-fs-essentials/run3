@@ -20,6 +20,8 @@ prepare {
 
 package {
  exec "cp -r etc/ $ROOT"
+ exec "cp -r usr/ $ROOT"
+ exec "cp -r var/ $ROOT"
  exec "mkdir -p $ROOT/etc/jumpstart/enabled"
  # Give the serial console a login prompt. Which device is the console
  # depends on the architecture; enabling the wrong one just makes getty

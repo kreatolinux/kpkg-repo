@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=GNOME Shell
+Comment=Window management and compositing
+Exec=/usr/bin/gnome-shell --mode=gdm
+TryExec=/usr/bin/gnome-shell
+Type=Application
+NoDisplay=true
+X-GNOME-Provides=windowmanager

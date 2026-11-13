@@ -1,0 +1,7 @@
+# Assign virtual DRM and tty devices to seat0. 73-seat-late.rules only sets
+# ID_SEAT for ID_AUTOSEAT devices or via parent import, neither of which fires
+# for virtio-gpu or simple-framebuffer. Without ID_SEAT, elogind cannot attach
+# a tty to the seat and mutter runs headlessly instead of taking the DRM device.
+SUBSYSTEM=="drm", KERNEL=="card[0-9]*", ENV{ID_SEAT}="seat0", TAG+="seat"
+SUBSYSTEM=="graphics", KERNEL=="fb[0-9]*", ENV{ID_SEAT}="seat0", TAG+="seat"
+SUBSYSTEM=="tty", KERNEL=="tty[0-9]*", ENV{ID_SEAT}="seat0", TAG+="seat"
