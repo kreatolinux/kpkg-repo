@@ -28,6 +28,9 @@ build {
  # cannot allocate a dynamic greeter. Without this patch pick_username()
  # asserts and GDM aborts. The patch uses a preallocated static account.
  exec "patch -p1 < ../gdm-dynamic-user.patch"
+ # Kiosk=true makes gsm-session-fill.c skip load_standard_apps(), so the greeter
+ # session loads no apps at all and gnome-shell never starts.
+ exec "patch -p1 < ../gdm-kiosk.patch"
  exec "meson setup build --prefix=/usr --libdir=/usr/lib --buildtype=release --wrap-mode=nodownload $extraArgs -Dgdm-xsession=true -Drun-dir=/run/gdm -Ddefault-pam-config=lfs -Ddbus-sys=/usr/share/dbus-1/system.d -Ddefault-path=/usr/bin:/usr/local/bin:/usr/local/sbin:/bin"
  exec "ninja -C build"
 }

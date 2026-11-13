@@ -1,6 +1,6 @@
 name: "dbus"
 version: "1.16.2"
-release: "8"
+release: "9"
 description: "Message bus system"
 sources:
  - "https://dbus.freedesktop.org/releases/dbus/dbus-${version}.tar.xz"
@@ -23,6 +23,20 @@ build {
 
 package {
  macro package --meson
+
+ # dbus-daemon-launch-helper must be setuid root and owned by the messagebus
+ # group, or every system-bus service activation fails with
+ # "The permission of the setuid helper is not correct". meson installs it
+ # 0755, so set the bit here.
+ exec "chown root:messagebus $ROOT/usr/libexec/dbus-daemon-launch-helper"
+ exec "chmod 4754 $ROOT/usr/libexec/dbus-daemon-launch-helper"
 }
 
-
+postinstall {
+ # The messagebus account owns the system bus. kreato-fs-essentials creates it
+ # via sysusers, but ensure it exists before the chown above can matter.
+ exec "getent group messagebus >/dev/null 2>&1 || groupadd -g 18 messagebus"
+ exec "getent passwd messagebus >/dev/null 2>&1 || useradd -u 18 -g 18 -d /run/dbus -s /bin/false -M messagebus"
+ exec "chown root:messagebus /usr/libexec/dbus-daemon-launch-helper 2>/dev/null || true"
+ exec "chmod 4754 /usr/libexec/dbus-daemon-launch-helper 2>/dev/null || true"
+}
