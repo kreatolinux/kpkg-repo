@@ -21,6 +21,14 @@ preinstall {
  exec "if [ -d \"$ROOT/var/run\" ] && [ ! -L \"$ROOT/var/run\" ]; then mkdir -p \"$ROOT/run\" && cp -a \"$ROOT/var/run/.\" \"$ROOT/run/\" && rm -rf \"$ROOT/var/run\"; fi"
 }
 
+preupgrade {
+ # Same migration for systems upgrading from an older release.
+ # Older roots (and packages such as samba before 4.25.0-3) have /var/run as
+ # a real directory. This package replaces it with a symlink to /run, which
+ # kpkg cannot do over a directory, so migrate its contents first.
+ exec "if [ -d \"$ROOT/var/run\" ] && [ ! -L \"$ROOT/var/run\" ]; then mkdir -p \"$ROOT/run\" && cp -a \"$ROOT/var/run/.\" \"$ROOT/run/\" && rm -rf \"$ROOT/var/run\"; fi"
+}
+
 prepare {
  exec ":"
 }
