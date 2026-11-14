@@ -20,9 +20,11 @@ depends:
 build_depends:
   - "nim"
   - "gmake"
-# systemd ships the real systemctl, journalctl, systemd-* and its own units.
-conflicts:
-  - "systemd"
+# No `conflicts: systemd`: elogind declares `replaces: systemd`, so kpkg
+# treats systemd as installed on every elogind system and the conflict would
+# block exactly the systems this core is for. The real systemd package and
+# this core both ship systemctl/journalctl; kpkg's file ownership checks
+# report that overlap if both are ever installed.
 
 # busybox owns /usr/bin/{poweroff,reboot,halt} (= /usr/sbin, /sbin on Kreato).
 # "yes" ships the core's versions there instead (what the old live image did:
