@@ -4,8 +4,12 @@ release: "5"
 description: "The GNOME session manager"
 sources:
  - "https://gitlab.gnome.org/GNOME/gnome-session/-/archive/${version}/gnome-session-${version}.tar.gz"
+ - "gnome-session-null-backend.patch"
+ - "gnome-session-init-worker.sh"
 sha256sum:
  - "e4910848a74bc569619ec24261db9e33cdddbb4845adb0e1009fbddeb1edd524"
+ - "146239e662391db93a79b4bf4843ebfaa9c4c64f98f68dc48907e7b78487ce44"
+ - "029299213f7df293b4c0ebdee08b3da3ada93a18d00dd1fee8dcfd48edad2846"
 depends:
  - "elogind"
  - "xtrans"

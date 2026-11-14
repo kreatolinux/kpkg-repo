@@ -4,8 +4,12 @@ release: "6"
 description: "GNOME Display Manager"
 sources:
  - "https://download.gnome.org/sources/gdm/${version.split('.')[0]}/gdm-${version}.tar.xz"
+ - "gdm-dynamic-user.patch"
+ - "gdm-kiosk.patch"
 sha256sum:
  - "adac0710b8b797108ea40ea4573bd1a5e6d9b24e0a7990a994216e8dffe2d15e"
+ - "f385b3e6ef089b4af7e9a478dd8b10f25deac723111b1547a8db3253d6d664f1"
+ - "88f67b4322eb7252c5a30d2f266a06a5a4becc582c61cd87e4fb7bf139718970"
 depends:
  - "libtool"
  - "accountsservice"
