@@ -1,0 +1,10 @@
+[Unit]
+Description=User Database Lookup Service
+Requires=elogind-userdbd.socket
+
+[Service]
+ExecStart=/usr/libexec/elogind-userdbd
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

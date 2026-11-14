@@ -1,11 +1,15 @@
 name: "elogind"
 version: "257.16"
-release: "3"
+release: "4"
 description: "systemd-logind, extracted to be a standalone daemon"
 sources:
  - "https://github.com/elogind/elogind/archive/refs/tags/v${version}.tar.gz"
+ - "elogind-userdbd.socket"
+ - "elogind-userdbd.service"
 sha256sum:
  - "3c8146409bfb9daa77f272212c2b0bf0ae727c782ec87ece0d2d25e0e5bf5f4c"
+ - "6968857812df16103b508b7a508031ab4e29e51f6cc982569b7f66ebd49488d3"
+ - "1f6c26ad128a68206ffbd0187220eb04391722710e626e064ca96cf196ed9f16"
 depends:
  - "dbus"
  - "linux-pam"
@@ -34,6 +38,13 @@ package {
  exec "mkdir -p $ROOT/usr/lib/pkgconfig"
  exec "ln -s libelogind.pc $ROOT/usr/lib/pkgconfig/libsystemd.pc"
  exec "ln -sn elogind $ROOT/usr/include/systemd"
+
+ # elogind builds elogind-userdbd but installs no units for it. nss_elogind
+ # (nsswitch "elogind") and userdbctl reach it over this varlink socket.
+ exec "install -Dm644 ../elogind-userdbd.socket $ROOT/usr/lib/systemd/system/elogind-userdbd.socket"
+ exec "install -Dm644 ../elogind-userdbd.service $ROOT/usr/lib/systemd/system/elogind-userdbd.service"
+ exec "mkdir -p $ROOT/usr/lib/systemd/system/sockets.target.wants"
+ exec "ln -sf ../elogind-userdbd.socket $ROOT/usr/lib/systemd/system/sockets.target.wants/elogind-userdbd.socket"
 }
 
 
