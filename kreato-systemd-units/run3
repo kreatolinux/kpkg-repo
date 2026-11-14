@@ -55,8 +55,11 @@ sha256sum:
   - "f3f259d0c5d570a1149d31bf5739580ba926a201cdcf8031e0eee32d2ad89e0e"
   - "e565d6ec88462aa688ce38ca54f6ec2f404bce8756209428a3ace7fba9826715"
 extract: false
+# jumpstart-systemd-core is not a dependency: whichever of the two installs
+# last runs `systemctl preset` for these units (see both postinstalls), and
+# kpkg resolves build dependencies from the build host, where the core must
+# not be installed (it would change how dbus/gdm detect systemd).
 depends:
-  - "jumpstart-systemd-core"
   - "dbus"
   - "eudev"
   - "elogind"

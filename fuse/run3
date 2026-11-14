@@ -1,6 +1,6 @@
 name: "fuse"
 version: "3.14.1"
-release: "3"
+release: "4"
 description: "Filesystem in Userspace"
 sources:
   - "https://github.com/libfuse/libfuse/releases/download/fuse-$version/fuse-$version.tar.xz"
@@ -13,7 +13,7 @@ build_depends:
   - "meson"
 
 build {
-  exec "meson -Dudevrulesdir=/usr/lib/udev/rules.d/ -Duseroot=false --prefix=/usr build/"
+  exec "meson -Dudevrulesdir=/usr/lib/udev/rules.d/ -Duseroot=false --prefix=/usr --libdir=/usr/lib build/"
   exec "ninja -C build/"
 }
 
@@ -23,8 +23,6 @@ package {
   # fusermount3 must be setuid root for unprivileged mounts (flatpak,
   # gvfs, xdg-desktop-portal document store). meson installs it 0755.
   exec "chmod 4755 $ROOT/usr/bin/fusermount3"
-  # meson installs fuse3.pc under lib64, which pkg-config does not search.
-  exec "mkdir -p \"$ROOT/usr/lib/pkgconfig\" && for f in \"$ROOT\"/usr/lib64/pkgconfig/*.pc; do [ -e \"$f\" ] && ln -sf /usr/lib64/pkgconfig/$(basename \"$f\") \"$ROOT/usr/lib/pkgconfig/\"; done || true"
 }
 
 
