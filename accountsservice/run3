@@ -1,6 +1,6 @@
 name: "accountsservice"
 version: "23.13.9"
-release: "6"
+release: "7"
 description: "accountsservice"
 sources:
  - "https://www.freedesktop.org/software/accountsservice/accountsservice-${version}.tar.xz"
