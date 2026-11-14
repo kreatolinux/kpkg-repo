@@ -25,10 +25,11 @@ package {
  macro package --meson
 
  # dbus-daemon-launch-helper must be setuid root and owned by the messagebus
- # group, or every system-bus service activation fails with
+ # group (gid 18; the name does not resolve inside the build sandbox), or
+ # every system-bus service activation fails with
  # "The permission of the setuid helper is not correct". meson installs it
  # 0755, so set the bit here.
- exec "chown root:messagebus $ROOT/usr/libexec/dbus-daemon-launch-helper"
+ exec "chown 0:18 $ROOT/usr/libexec/dbus-daemon-launch-helper"
  exec "chmod 4754 $ROOT/usr/libexec/dbus-daemon-launch-helper"
 }
 
