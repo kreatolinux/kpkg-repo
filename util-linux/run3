@@ -1,6 +1,6 @@
 name: "util-linux"
 version: "2.41.3"
-release: "2"
+release: "3"
 description: "Linux Utilities"
 sources:
  - "https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.41/util-linux-${version}.tar.xz"
@@ -10,7 +10,10 @@ build_depends:
  - "gmake"
 
 build {
- macro build --configure --disable-makeinstall-tty-setgid
+ # shadow provides su, login, nologin, chfn and chsh (setuid, PAM-aware).
+ # Building util-linux's copies too makes two packages own the same real
+ # files, and whichever installs last wins.
+ macro build --configure --disable-makeinstall-tty-setgid --disable-su --disable-login --disable-nologin --disable-chfn-chsh
 }
 
 package {
