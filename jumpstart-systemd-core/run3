@@ -1,0 +1,101 @@
+name: "jumpstart-systemd-core"
+version: "0.1.0"
+release: "1"
+description: "systemd compatibility core for Jumpstart (systemctl, journalctl, unit files)"
+license:
+  - "GPL-3.0-or-later"
+  - "LGPL-3.0-or-later"
+# No upstream release exists (github.com/kreatolinux/jumpstart-systemd-core is
+# not public), so the source ships in this directory. Regenerate it with
+# /tmp/recipes/make-sdcore-tarball.sh, which also rewrites the sum below.
+# Layout: jumpstart-systemd-core-$version/{jumpstart-systemd-core,src-2/libs/jumpstartcore}
+# so the core's nim.cfg (--path:"$config/../src-2/libs/jumpstartcore/src") resolves.
+sources:
+  - "jumpstart-systemd-core-$version.tar.gz"
+sha256sum:
+  - "2f418edeea953243defc3d84d565dd6e7bf48fb584d9fdf653ed344ae0a5ca17"
+extract: false
+depends:
+  - "jumpstart"
+build_depends:
+  - "nim"
+  - "gmake"
+# systemd ships the real systemctl, journalctl, systemd-* and its own units.
+conflicts:
+  - "systemd"
+
+# busybox owns /usr/bin/{poweroff,reboot,halt} (= /usr/sbin, /sbin on Kreato).
+# "yes" ships the core's versions there instead (what the old live image did:
+# busybox's applets signal PID 1 with SIGUSR2/SIGUSR1, which Jumpstart does not
+# handle, and elogind calls /usr/sbin/poweroff). kpkg hands the symlinks to
+# whichever of busybox and this package was installed last.
+power_links: "yes"
+
+prepare {
+  exec "tar -oxf jumpstart-systemd-core-$version.tar.gz"
+  cd "jumpstart-systemd-core-$version/jumpstart-systemd-core"
+}
+
+build {
+  exec "make build NIMFLAGS='-d:release --threads:off --nimcache:nimcache'"
+}
+
+package {
+  # Exactly `make install`. SBINDIR=/usr/bin: /usr/sbin and /sbin are
+  # symlinks to /usr/bin on Kreato, so the package must not carry a usr/sbin
+  # directory. umask/chmod: Jumpstart rejects a core tree with any
+  # group/other-writable entry (discovery.nim checkTree).
+  exec "umask 022 && make install DESTDIR=\"$ROOT\" PREFIX=/usr SBINDIR=/usr/bin NIMFLAGS='-d:release --threads:off --nimcache:nimcache'"
+  exec "chmod -R go-w \"$ROOT/usr/lib/jumpstart\""
+  if "$power_links" != "yes" {
+    exec "rm -f \"$ROOT/usr/bin/poweroff\" \"$ROOT/usr/bin/reboot\" \"$ROOT/usr/bin/halt\""
+  }
+
+  # Enable the core: empty regular files named after the cores, mode 0644,
+  # in a real 0755 directory (jumpstart cores/lifecycle/state.nim
+  # readEnabledState). serviceHandler keeps the native .kg units running.
+  exec "install -d -m 0755 \"$ROOT/etc/jumpstart/cores/enabled\""
+  exec "touch \"$ROOT/etc/jumpstart/cores/enabled/systemd\" \"$ROOT/etc/jumpstart/cores/enabled/serviceHandler\""
+  exec "chmod 0644 \"$ROOT/etc/jumpstart/cores/enabled/systemd\" \"$ROOT/etc/jumpstart/cores/enabled/serviceHandler\""
+
+  # The manager does not apply presets by itself, and offline systemctl cannot
+  # see the core's own units, so they are enabled here with the links
+  # `systemctl enable` would make.
+  exec "install -d -m 0755 \"$ROOT/etc/systemd/system/sysinit.target.wants\" \"$ROOT/etc/systemd/system/timers.target.wants\" \"$ROOT/etc/systemd/system/multi-user.target.wants\""
+  for u in ["systemd-sysusers.service", "systemd-tmpfiles-setup.service"] {
+    exec "ln -sf /usr/lib/jumpstart/cores/systemd/share/units/$u \"$ROOT/etc/systemd/system/sysinit.target.wants/$u\""
+  }
+  exec "ln -sf /usr/lib/jumpstart/cores/systemd/share/units/systemd-tmpfiles-clean.timer \"$ROOT/etc/systemd/system/timers.target.wants/systemd-tmpfiles-clean.timer\""
+  exec "ln -sf /usr/lib/jumpstart/cores/systemd/share/units/systemd-user-sessions.service \"$ROOT/etc/systemd/system/multi-user.target.wants/systemd-user-sessions.service\""
+  # No getty@tty1: GDM's greeter runs on VT1, and kreato-fs-essentials ships
+  # native gettys for tty2-6 and the serial console.
+  exec "ln -sf /usr/lib/jumpstart/cores/systemd/share/units/graphical.target \"$ROOT/etc/systemd/system/default.target\""
+
+  # Distribution policy for units other packages ship. Read by
+  # `systemctl preset` (postinstall below) and `systemctl preset-all`.
+  # Built with echo, not `write`: Kongue's `write` stores a triple-quoted
+  # string with literal backslash-n sequences.
+  exec "install -d -m 0755 \"$ROOT/usr/lib/systemd/system-preset\" \"$ROOT/usr/lib/systemd/user-preset\""
+  exec "echo '# Kreato Linux system units (jumpstart-systemd-core)' > \"$ROOT/usr/lib/systemd/system-preset/80-kreato.preset\""
+  for u in ["dbus.service", "elogind.service", "elogind-userdbd.socket", "systemd-udevd.service", "systemd-udev-trigger.service", "polkit.service", "accounts-daemon.service", "upower.service", "NetworkManager.service", "gdm.service", "sshd.service", "dev-shm.mount", "systemd-sysusers.service", "systemd-tmpfiles-setup.service", "systemd-tmpfiles-clean.timer", "systemd-user-sessions.service"] {
+    exec "echo 'enable $u' >> \"$ROOT/usr/lib/systemd/system-preset/80-kreato.preset\""
+  }
+  exec "echo '# Kreato Linux user units (jumpstart-systemd-core)' > \"$ROOT/usr/lib/systemd/user-preset/80-kreato.preset\""
+  for u in ["pipewire.socket", "pipewire-pulse.socket", "wireplumber.service"] {
+    exec "echo 'enable $u' >> \"$ROOT/usr/lib/systemd/user-preset/80-kreato.preset\""
+  }
+  exec "chmod 0644 \"$ROOT/usr/lib/systemd/system-preset/80-kreato.preset\" \"$ROOT/usr/lib/systemd/user-preset/80-kreato.preset\""
+}
+
+postinstall {
+  # Units owned by other packages: apply the preset only to those installed.
+  # No --root: the core's `--root=/` resolves to relative paths.
+  for u in ["dbus.service", "elogind.service", "elogind-userdbd.socket", "systemd-udevd.service", "systemd-udev-trigger.service", "polkit.service", "accounts-daemon.service", "upower.service", "NetworkManager.service", "gdm.service", "sshd.service", "dev-shm.mount"] {
+    exec "if [ -e /etc/systemd/system/$u ] || [ -e /usr/lib/systemd/system/$u ]; then /usr/bin/systemctl preset $u || echo 'jumpstart-systemd-core: could not preset $u'; fi"
+  }
+  # Offline systemctl has no --global; link user units the way their [Install] does.
+  for u in ["pipewire.socket", "pipewire-pulse.socket"] {
+    exec "if [ -e /usr/lib/systemd/user/$u ]; then mkdir -p -m 0755 /etc/systemd/user/sockets.target.wants && ln -sf /usr/lib/systemd/user/$u /etc/systemd/user/sockets.target.wants/$u; fi"
+  }
+  exec "if [ -e /usr/lib/systemd/user/wireplumber.service ]; then mkdir -p -m 0755 /etc/systemd/user/pipewire.service.wants && ln -sf /usr/lib/systemd/user/wireplumber.service /etc/systemd/user/pipewire.service.wants/wireplumber.service; fi"
+}
