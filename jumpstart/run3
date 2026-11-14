@@ -1,0 +1,54 @@
+name: "jumpstart"
+version: "2.0.0"
+release: "1"
+description: "Jumpstart, the Kreato Linux init system and service manager (jumpstart, jumpctl, kongue-runner, pam_jumpstart)"
+# MIT/ISC: vendored and statically compiled in: fusion, regex, unicodedb (MIT),
+# cligen (ISC).
+license:
+  - "GPL-3.0-or-later"
+  - "LGPL-3.0-or-later"
+  - "MIT"
+  - "ISC"
+# Built from the Kreato src-2 tree (jumpstart reports v2.0.0). Replaces the old
+# `jumpstart -> src` symlink, which built the src 8.0.0 release as a split of
+# the `src` metapackage; `kpkg` itself still builds from src/run3.
+# No upstream release of src-2 exists yet, so the source ships in this
+# directory. Regenerate it with make-tarball.sh (kept next to this recipe on
+# the build host, not in the repository), which also rewrites the sum below.
+# Layout: jumpstart-$version/{nim.cfg,vendor/,src-2/}. The top-level nim.cfg
+# points Nim at the vendored cligen/fusion/regex/unicodedb (the build sandbox
+# has no ~/.nimble and must not run nimble) and keeps nimcache in the tree.
+sources:
+  - "jumpstart-$version.tar.gz"
+sha256sum:
+  - "a9b7aeec5f07dc2eb10ca3f0191ac4f99af2b60b34eb802c4ed8fa77ab6f671b"
+extract: false
+build_depends:
+  - "nim"
+  - "gmake"
+
+prepare {
+  exec "tar -oxf jumpstart-$version.tar.gz"
+  cd "jumpstart-$version/src-2"
+}
+
+build {
+  # src-2's own build: jumpstart (threads, refc), jumpctl, kongue-runner and
+  # pam_jumpstart.so, with -d:jumpstartLibDir=/usr/lib compiled in so the
+  # daemon finds /usr/lib/jumpstart/{cores,kongue-runner}.
+  exec "make jumpstart LIBDIR=/usr/lib JUMPSTART_BUILD_OS=Linux"
+}
+
+package {
+  # Exactly src-2's `make install_jumpstart`; -o jumpstart: install what the
+  # build stage produced instead of rebuilding.
+  #   /usr/bin/jumpstart, /usr/bin/jumpctl          (/bin, /sbin -> usr/bin)
+  #   /usr/lib/jumpstart/kongue-runner
+  #   /usr/lib/security/pam_jumpstart.so            (linux-pam's securedir)
+  # /sbin/init -> /bin/jumpstart is not shipped: the old recipe did not either,
+  # and `krep rootfs` (init: jumpstart) creates it in its finalizer.
+  # /usr/lib/jumpstart/cores is owned by core packages (jumpstart-systemd-core).
+  exec "umask 022 && make -o jumpstart install_jumpstart DESTDIR=\"$ROOT\" PREFIX=/usr LIBDIR=/usr/lib JUMPSTART_BUILD_OS=Linux"
+  exec "install -d -m 0755 \"$ROOT/usr/share/man/man5\""
+  exec "install -m 0644 man/jumpstart_dec.5 \"$ROOT/usr/share/man/man5/jumpstart_dec.5\""
+}
