@@ -1,6 +1,6 @@
 name: "gdm"
 version: "50.3"
-release: "6"
+release: "7"
 description: "GNOME Display Manager"
 sources:
  - "https://download.gnome.org/sources/gdm/${version.split('.')[0]}/gdm-${version}.tar.xz"
@@ -24,10 +24,11 @@ build_depends:
 
 build {
  local extraArgs = "-Dlogind-provider=elogind -Dsystemd-journal=false -Dsystemdsystemunitdir=no -Dsystemduserunitdir=no"
- if ${exec("command -v systemctl")}.exit() != 0 {
-  # Adapt the LFS PAM profile to the repository's elogind provider.
-  exec "sed -e 's@systemd@elogind@' -e '/elogind/isession  required       pam_loginuid.so' -i data/pam-lfs/gdm-launch-environment.pam"
- }
+ # Adapt the LFS PAM profile to the repository's elogind provider. This is
+ # unconditional: the build always uses -Dlogind-provider=elogind, and
+ # jumpstart-systemd-core installs a systemctl shim, so probing for systemctl
+ # would ship pam_systemd.so (which does not exist) in the greeter stack.
+ exec "sed -e 's@systemd@elogind@' -e '/elogind/isession  required       pam_loginuid.so' -i data/pam-lfs/gdm-launch-environment.pam"
  # elogind does not provide sd-varlink, so HAVE_USERDB is undefined and GDM
  # cannot allocate a dynamic greeter. Without this patch pick_username()
  # asserts and GDM aborts. The patch uses a preallocated static account.
