@@ -1,6 +1,6 @@
 name: "gsettings-desktop-schemas"
 version: "51.0"
-release: "2"
+release: "3"
 description: "A collection of GSettings schemas for GNOME desktop settings"
 sources:
   - "https://gitlab.gnome.org/GNOME/gsettings-desktop-schemas/-/archive/$version/gsettings-desktop-schemas-$version.tar.gz"
@@ -16,7 +16,7 @@ build_depends:
 
 build {
   exec "sed -i -r 's:\"(/system):\"/org/gnome\\1:g' schemas/*.in"
-  exec "meson setup  --prefix=/usr  --buildtype=release  build"
+  exec "meson setup  --prefix=/usr  --libdir=/usr/lib  --buildtype=release  build"
   exec "ninja -C build"
 }
 
