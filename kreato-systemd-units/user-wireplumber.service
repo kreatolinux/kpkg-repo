@@ -1,0 +1,18 @@
+[Unit]
+Description=Multimedia Service Session Manager
+After=pipewire.service
+BindsTo=pipewire.service
+Conflicts=pipewire-media-session.service
+ConditionUser=!root
+ConditionFileIsExecutable=/usr/bin/wireplumber
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/wireplumber
+Restart=on-failure
+Slice=session.slice
+Environment=GIO_USE_VFS=local
+
+[Install]
+WantedBy=pipewire.service
+Alias=pipewire-session-manager.service

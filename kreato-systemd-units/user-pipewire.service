@@ -1,0 +1,18 @@
+[Unit]
+Description=PipeWire Multimedia Service
+# Kreato's pipewire is built with -Dsystemd-user-service=disabled. PipeWire
+# reads LISTEN_FDS itself, so socket activation works without libsystemd.
+Requires=pipewire.socket
+After=pipewire.socket
+ConditionUser=!root
+ConditionFileIsExecutable=/usr/bin/pipewire
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/pipewire
+Restart=on-failure
+Slice=session.slice
+
+[Install]
+Also=pipewire.socket
+WantedBy=default.target

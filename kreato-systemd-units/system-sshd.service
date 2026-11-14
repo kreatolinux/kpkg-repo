@@ -1,0 +1,20 @@
+[Unit]
+Description=OpenSSH server daemon
+Documentation=man:sshd(8) man:sshd_config(5)
+After=network.target
+ConditionFileIsExecutable=/usr/sbin/sshd
+
+[Service]
+# Kreato's openssh uses sysconfdir=/usr/etc: `ssh-keygen -A` creates any
+# missing host key there. An image that ships /etc/ssh/sshd_config gets that
+# file instead, and an ed25519 key next to it.
+ExecStartPre=/usr/bin/ssh-keygen -A
+ExecStartPre=/bin/sh -c 'if [ -f /etc/ssh/sshd_config ] && [ ! -f /etc/ssh/ssh_host_ed25519_key ]; then /usr/bin/ssh-keygen -q -t ed25519 -N "" -f /etc/ssh/ssh_host_ed25519_key; fi'
+ExecStart=/bin/sh -c 'if [ -f /etc/ssh/sshd_config ]; then exec /usr/sbin/sshd -D -f /etc/ssh/sshd_config; else exec /usr/sbin/sshd -D; fi'
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target

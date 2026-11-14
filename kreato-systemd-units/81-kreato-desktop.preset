@@ -1,0 +1,12 @@
+# Kreato desktop services (kreato-systemd-units).
+enable dbus.service
+enable elogind.service
+enable systemd-udevd.service
+enable systemd-udev-trigger.service
+enable dev-shm.mount
+enable polkit.service
+enable accounts-daemon.service
+enable upower.service
+enable NetworkManager.service
+enable gdm.service
+enable sshd.service

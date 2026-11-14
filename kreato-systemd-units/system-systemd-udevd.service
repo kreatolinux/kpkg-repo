@@ -1,0 +1,21 @@
+[Unit]
+Description=Rule-based Manager for Device Events and Files (eudev)
+Documentation=man:udevd(8)
+DefaultDependencies=no
+After=systemd-sysusers.service systemd-tmpfiles-setup.service
+Before=sysinit.target
+ConditionFileIsExecutable=/usr/sbin/udevd
+
+[Service]
+# eudev's udevd stays in the foreground without --daemon and creates
+# /run/udev/control itself.
+ExecStart=/usr/sbin/udevd
+ExecReload=/usr/bin/udevadm control --reload
+Restart=always
+RestartSec=1
+KillMode=mixed
+OOMScoreAdjust=-1000
+
+[Install]
+WantedBy=sysinit.target
+Alias=udev.service

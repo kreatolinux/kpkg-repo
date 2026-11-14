@@ -1,0 +1,20 @@
+[Unit]
+Description=GNOME Display Manager
+# Kreato gdm: built against elogind, -Dsystemdsystemunitdir=no.
+# GDM takes VT1; stop a systemd getty there if one is enabled.
+# (getty@tty1 need not exist: Conflicts/After on a missing unit are no-ops.)
+Conflicts=getty@tty1.service
+After=getty@tty1.service systemd-user-sessions.service dbus.service elogind.service systemd-udev-trigger.service accounts-daemon.service polkit.service
+Wants=dbus.service elogind.service accounts-daemon.service
+ConditionFileIsExecutable=/usr/sbin/gdm
+
+[Service]
+ExecStart=/usr/sbin/gdm
+KillMode=mixed
+Restart=always
+RestartSec=1
+IgnoreSIGPIPE=no
+
+[Install]
+WantedBy=graphical.target
+Alias=display-manager.service

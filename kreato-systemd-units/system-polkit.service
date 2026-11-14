@@ -1,0 +1,18 @@
+[Unit]
+Description=Authorization Manager (polkit)
+Documentation=man:polkit(8)
+Wants=dbus.service
+After=dbus.service
+ConditionFileIsExecutable=/usr/lib/polkit-1/polkitd
+
+[Service]
+Type=dbus
+BusName=org.freedesktop.PolicyKit1
+# The polkitd account comes from the polkit package's postinstall (uid 27).
+ExecStart=/usr/lib/polkit-1/polkitd --no-debug
+User=polkitd
+Restart=on-failure
+RestartSec=1
+
+[Install]
+WantedBy=graphical.target

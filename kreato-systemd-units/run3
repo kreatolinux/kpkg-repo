@@ -1,0 +1,103 @@
+name: "kreato-systemd-units"
+version: "0.1.0"
+release: "1"
+description: "systemd units for Kreato's desktop services under jumpstart-systemd-core"
+license:
+  - "GPL-3.0-or-later"
+  - "MIT"
+# Kreato builds dbus, elogind, eudev, polkit, accountsservice, networkmanager,
+# gdm, openssh, pipewire and wireplumber without systemd integration, so none
+# of them ships a unit. This package provides them (the pipewire/wireplumber
+# user units follow upstream's), a drop-in that makes upower's own unit run
+# under the core, and presets enabling all of it. Every unit carries
+# ConditionFileIsExecutable= on its daemon, so a unit whose package is absent
+# is skipped, not failed; only the packages below are hard dependencies
+# (upower so that its unit exists when the preset is applied).
+# Sources are flat files here: kpkg stages local sources by basename, so
+# "system-X" installs as usr/lib/systemd/system/X, "user-X" as
+# usr/lib/systemd/user/X, "system-A.service.d_B.conf" as A.service.d/B.conf.
+sources:
+  - "81-kreato-desktop-user.preset"
+  - "81-kreato-desktop.preset"
+  - "system-NetworkManager.service"
+  - "system-accounts-daemon.service"
+  - "system-dbus.service"
+  - "system-dev-shm.mount"
+  - "system-elogind.service"
+  - "system-gdm.service"
+  - "system-polkit.service"
+  - "system-sshd.service"
+  - "system-systemd-udev-trigger.service"
+  - "system-systemd-udevd.service"
+  - "system-upower.service.d_10-kreato.conf"
+  - "user-pipewire-pulse.service"
+  - "user-pipewire-pulse.socket"
+  - "user-pipewire.service"
+  - "user-pipewire.socket"
+  - "user-wireplumber.service"
+sha256sum:
+  - "9d88d84f158360e65d392716c5650bc957c9c6700dfedf1889a81ff77173ac9d"
+  - "382141135fcb1a59b36ec8fe92efd9e80b5e8a9797810bad455d8d026d7dbc35"
+  - "8fa00e1562ca3d735819a02ad1aff6f7908e62533c9952d48a255d2bfc366c35"
+  - "ae2186258691b095a407d7ebe95ac74437ba2e8ed2d557dee4af13b50e235996"
+  - "8027c37dbd648af7e0646983daef3a91ae1395af6a35d771f16ca8bfaf66bd32"
+  - "b0fa3fbb67e45b52650d3e57e4949fbbd61cd31f3d958442c94de7cf1538fcc7"
+  - "aa89c50874aca85b7590755f47bb0483652817c4d6068082bae2b0d5f0b83a55"
+  - "127b0db66360ce0fce3339eb8b758e09e3d3e68e8ca91e0802670dddd3468a57"
+  - "48a951d1de1905f650e53e797d7bf11da568c4e45a5b63fc625e403c07905e2e"
+  - "7f0ad24863db13b5d4b4026498258595ed844ed0f69438d2165055c8ad45cfc3"
+  - "0770a685d5682e80b148b78fafa9bfc57f1ecd8f055e563a1c522a8a565be1d3"
+  - "c4586d82df63009cb49d9b7e2f7c8e932b537d83ccbac51394a6b8189b8b90ff"
+  - "6d68214b3499c9d74c12442f740030373fc8654f9ca82d000d6abe5805171b53"
+  - "8687e4df7d3c85571486f6aa4301ad9afa31492cdbf4f2ff4f9d556ccb4789f4"
+  - "0fa6aa8186fa8cc8f7a38921d1d89803a9c4938fcc5e4f50c04379492b581968"
+  - "df3d74884b75c213444e3d099c62e1099968d8f32d310adaecba2fd73ec8c7e2"
+  - "f3f259d0c5d570a1149d31bf5739580ba926a201cdcf8031e0eee32d2ad89e0e"
+  - "e565d6ec88462aa688ce38ca54f6ec2f404bce8756209428a3ace7fba9826715"
+extract: false
+depends:
+  - "jumpstart-systemd-core"
+  - "dbus"
+  - "eudev"
+  - "elogind"
+  - "upower"
+
+prepare {
+  exec ":"
+}
+
+package {
+  # Every directory 0755 and every file 0644, whatever the build umask and
+  # the build root's mode: jumpstart-systemd-core ignores units below a
+  # group- or world-writable directory (unitfile/trust.nim badOf).
+  exec "umask 022 && install -d -m 0755 \"$ROOT/usr\" \"$ROOT/usr/lib\" \"$ROOT/usr/lib/systemd\" \"$ROOT/usr/lib/systemd/system\" \"$ROOT/usr/lib/systemd/system/upower.service.d\" \"$ROOT/usr/lib/systemd/user\" \"$ROOT/usr/lib/systemd/system-preset\" \"$ROOT/usr/lib/systemd/user-preset\""
+  for u in ["NetworkManager.service", "accounts-daemon.service", "dbus.service", "dev-shm.mount", "elogind.service", "gdm.service", "polkit.service", "sshd.service", "systemd-udev-trigger.service", "systemd-udevd.service"] {
+    exec "install -m 0644 system-$u \"$ROOT/usr/lib/systemd/system/$u\""
+  }
+  for u in ["pipewire-pulse.service", "pipewire-pulse.socket", "pipewire.service", "pipewire.socket", "wireplumber.service"] {
+    exec "install -m 0644 user-$u \"$ROOT/usr/lib/systemd/user/$u\""
+  }
+  exec "install -m 0644 system-upower.service.d_10-kreato.conf \"$ROOT/usr/lib/systemd/system/upower.service.d/10-kreato.conf\""
+  exec "install -m 0644 81-kreato-desktop.preset \"$ROOT/usr/lib/systemd/system-preset/81-kreato-desktop.preset\""
+  exec "install -m 0644 81-kreato-desktop-user.preset \"$ROOT/usr/lib/systemd/user-preset/81-kreato-desktop.preset\""
+  exec "find \"$ROOT/usr\" -type d -exec chmod 0755 {} + && find \"$ROOT/usr\" -type f -exec chmod 0644 {} +"
+}
+
+postinstall {
+  # Until kpkg stops packaging these directories 0777 (see the report),
+  # repair them, or the core ignores every unit in them.
+  exec "chmod go-w /usr/lib/systemd /usr/lib/systemd/system /usr/lib/systemd/user /usr/lib/systemd/system-preset /usr/lib/systemd/user-preset 2>/dev/null || true"
+  # Apply 81-kreato-desktop.preset. No --root: the core's --root=/ resolves
+  # to relative paths. upower.service belongs to the upower package.
+  for u in ["dbus.service", "elogind.service", "systemd-udevd.service", "systemd-udev-trigger.service", "dev-shm.mount", "polkit.service", "accounts-daemon.service", "upower.service", "NetworkManager.service", "gdm.service", "sshd.service"] {
+    exec "umask 022; if [ -e /usr/lib/systemd/system/$u ] || [ -e /etc/systemd/system/$u ]; then /usr/bin/systemctl preset $u || echo 'kreato-systemd-units: could not preset $u'; fi"
+  }
+  # Offline systemctl has no --global: make the links `systemctl --global
+  # enable` would make for the user units ([Install] sections).
+  exec "umask 022 && install -d -m 0755 /etc/systemd/user /etc/systemd/user/sockets.target.wants /etc/systemd/user/pipewire.service.wants"
+  for u in ["pipewire.socket", "pipewire-pulse.socket"] {
+    exec "ln -sf /usr/lib/systemd/user/$u /etc/systemd/user/sockets.target.wants/$u"
+  }
+  exec "ln -sf /usr/lib/systemd/user/wireplumber.service /etc/systemd/user/pipewire.service.wants/wireplumber.service"
+  exec "ln -sf /usr/lib/systemd/user/wireplumber.service /etc/systemd/user/pipewire-session-manager.service"
+}

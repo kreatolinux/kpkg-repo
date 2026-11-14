@@ -1,0 +1,19 @@
+[Unit]
+Description=User Login Management (elogind, provides org.freedesktop.login1)
+Documentation=man:elogind(8)
+Wants=dbus.service
+After=dbus.service systemd-udevd.service systemd-udev-trigger.service systemd-user-sessions.service
+ConditionFileIsExecutable=/usr/libexec/elogind
+
+[Service]
+Type=dbus
+BusName=org.freedesktop.login1
+ExecStart=/usr/libexec/elogind
+Restart=on-failure
+RestartSec=1
+# elogind keeps its own cgroup hierarchy below the one it finds itself in.
+Delegate=yes
+
+[Install]
+WantedBy=multi-user.target
+Alias=dbus-org.freedesktop.login1.service

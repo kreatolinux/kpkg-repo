@@ -1,0 +1,4 @@
+# Kreato desktop user services (kreato-systemd-units).
+enable pipewire.socket
+enable pipewire-pulse.socket
+enable wireplumber.service

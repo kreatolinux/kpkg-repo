@@ -1,0 +1,18 @@
+[Unit]
+Description=PipeWire PulseAudio
+Requires=pipewire-pulse.socket
+Wants=pipewire.service pipewire-session-manager.service
+After=pipewire-pulse.socket pipewire.service pipewire-session-manager.service
+Conflicts=pulseaudio.service pulseaudio.socket
+ConditionUser=!root
+ConditionFileIsExecutable=/usr/bin/pipewire-pulse
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/pipewire-pulse
+Restart=on-failure
+Slice=session.slice
+
+[Install]
+Also=pipewire-pulse.socket
+WantedBy=default.target

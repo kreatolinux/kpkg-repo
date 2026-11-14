@@ -1,0 +1,12 @@
+[Unit]
+Description=PipeWire PulseAudio
+ConditionUser=!root
+
+[Socket]
+Priority=6
+ListenStream=%t/pulse/native
+SocketMode=0600
+DirectoryMode=0700
+
+[Install]
+WantedBy=sockets.target
