@@ -1,6 +1,6 @@
 name: "samba"
 version: "4.25.0"
-release: "2"
+release: "3"
 description: "samba"
 sources:
   - "https://download.samba.org/pub/samba/stable/samba-$version.tar.gz"
@@ -30,5 +30,8 @@ build {
 
 package {
   exec "make DESTDIR=$ROOT install"
+  # /var/run is kreato-fs-essentials' symlink to /run; smbd creates its pid
+  # directory there at startup.
+  exec "rm -rf $ROOT/var/run"
 }
 
