@@ -1,12 +1,12 @@
 name: "nautilus"
-version: "50.2"
-release: "4"
+version: "51.1"
+release: "1"
 description: "File manager of GNOME"
 sources:
  - "https://download.gnome.org/sources/nautilus/${version.split('.')[0]}/nautilus-${version}.tar.xz"
  - "nautilus-optional-localsearch.patch"
 sha256sum:
- - "ff93b50accce9cfb34be13ad2fd4fd1ffd2bdb95334fdbb61e75d79c933f6f6d"
+ - "a703bc152d18d161d9dab957e2390a36e6246bb5c24de7b15c9624fcfa2f2816"
  - "1c5659936c3ddf6c60fb3d8ac40f78754725b501a2959ecba9d7d911f7f2bbb7"
 depends:
  - "libtool"

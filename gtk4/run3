@@ -1,11 +1,11 @@
 name: "gtk4"
-version: "4.20.4"
-release: "2"
+version: "4.24.1"
+release: "1"
 description: "gtk4"
 sources:
  - "https://download.gnome.org/sources/gtk/${version.split('.')[0:2].join('.')}/gtk-${version}.tar.xz"
 sha256sum:
- - "a21f825bd44afc4dd99ba4eea8ff57c8f2e51085cb402a68ed4cbb35299826a4"
+ - "e98abe720e16129c8c0f50761dee0a2e9ae2478055e31018f6cf977fcf6513e9"
 depends:
  - "libdrm"
  - "libx11"
@@ -34,6 +34,10 @@ build_depends:
  - "gobject-introspection"
 
 prepare {
+ # No-op on 4.24: !9384 ("build: Remove objcopy resource build") dropped
+ # can_use_objcopy_for_resources entirely, and the objcopy path was already
+ # gated on x86_64 anyway. Kept so the step still does the right thing if the
+ # variable ever comes back.
  exec "sed -i 's/can_use_objcopy_for_resources = true/can_use_objcopy_for_resources = false/g' meson.build"
 }
 

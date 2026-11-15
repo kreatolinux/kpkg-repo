@@ -1,28 +1,38 @@
 name: "accountsservice"
-version: "23.13.9"
-release: "7"
-description: "accountsservice"
+version: "26.27.3"
+release: "1"
+description: "D-Bus interface for user account query and manipulation"
 sources:
- - "https://www.freedesktop.org/software/accountsservice/accountsservice-${version}.tar.xz"
+ - "https://gitlab.freedesktop.org/accountsservice/accountsservice/-/archive/${version}/accountsservice-${version}.tar.gz"
 sha256sum:
- - "adda4cdeae24fa0992e7df3ffff9effa7090be3ac233a3edfdf69d5a9c9b924f"
+ - "11de07bcd499c2277f78a6fc830d1437654f3397cc7bbed19c28b3818435ba38"
 depends:
  - "gobject-introspection"
  - "polkit"
  - "elogind"
+ - "json-c"
+ - "libxcrypt"
+ - "dbus"
 build_depends:
- - "cmake"
  - "meson"
  - "ninja"
  - "vala"
+ - "gettext"
 
-prepare {
- exec "sed -i \"/subdir('tests')/d\" meson.build"
-}
-
+# 26.x is meson-only and still supports elogind through -Delogind=true (it then
+# requires libelogind >= 229.4; elogind ships libelogind.pc and libsystemd.pc).
+# The systemd unit is not installed here: kreato-systemd-units ships
+# accounts-daemon.service for the jumpstart compatibility core.
+#
+# The options are written literally on the macro line on purpose: passing them
+# through a local variable after another -D value used to glue the last value
+# and the first extra flag together ("wheel-Delogind=true"), which silently
+# produced a bogus ADMIN_GROUP and dropped the elogind dependency.
+#
+# -Dtests=false replaces the old "sed out subdir('tests')" hack; the tests need
+# the mocklibc wrap, which --wrap-mode=nodownload would refuse to fetch.
 build {
- local extraArgs = "-Delogind=true -Dsystemdsystemunitdir=no"
- macro build --libdir=/usr/lib -Dadmin_group=wheel ${extraArgs}
+ macro build --libdir=/usr/lib -Dadmin_group=wheel -Delogind=true -Dsystemdsystemunitdir=no -Dtests=false --wrap-mode=nodownload
 }
 
 package {
@@ -34,5 +44,3 @@ polkit.addAdminRule(function(action, subject) {
 });
 """
 }
-
-
