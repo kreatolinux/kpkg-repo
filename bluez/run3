@@ -1,11 +1,11 @@
 name: "bluez"
-version: "5.87"
+version: "5.88"
 release: "1"
 description: "Bluetooth protocol stack for Linux"
 sources:
   - "https://mirrors.edge.kernel.org/pub/linux/bluetooth/bluez-$version.tar.gz"
 sha256sum:
-  - "8e086b38e7d269781fa78fb702fe2f38bd366d107cdc4debc1674ae9381988e4"
+  - "2babca2cd0d36368da22f76512c0ce0d8409471b0f518f5f95e2709992b5329e"
 depends:
   - "sbc"
   - "eudev"

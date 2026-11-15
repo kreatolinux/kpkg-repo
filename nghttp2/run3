@@ -1,11 +1,11 @@
 name: "nghttp2"
-version: "1.70.0"
+version: "1.71.0"
 release: "1"
 description: "An implementation of the HTTP version 2 in C"
 sources:
  - "https://github.com/nghttp2/nghttp2/releases/download/v${version}/nghttp2-${version}.tar.xz"
 sha256sum:
- - "e05cb1388eaca3830aded4ccf20044b6e1ac1a61411dcca11b0437c4285c8bc2"
+ - "c0f55121d88650e4b9227aec28cebaf664d2417ca60fe70be0f8d38829f52116"
 depends:
  - "zlib"
  - "python"

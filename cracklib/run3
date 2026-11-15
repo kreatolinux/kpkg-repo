@@ -1,11 +1,11 @@
 name: "cracklib"
-version: "2.10.3"
+version: "2.10.4"
 release: "1"
 description: "cracklib"
 sources:
  - "https://github.com/cracklib/cracklib/releases/download/v${version}/cracklib-${version}.tar.gz"
 sha256sum:
- - "877b823198eb29aa1778b16a70cad05f7b54b164b3bf7ab656fc326c393f4c85"
+ - "69db67211c5aca41bf854974d7e97fcae096d06eeac30de7ddb119570c0277af"
 build_depends:
  - "autoconf"
  - "automake"

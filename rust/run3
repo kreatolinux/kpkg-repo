@@ -1,11 +1,11 @@
 name: "rust"
-version: "1.99.1"
+version: "1.100.0"
 release: "2"
 description: "Memory-safe programming language that doesn't use garbage collection"
 sources:
   - "https://static.rust-lang.org/dist/rustc-$version-src.tar.gz"
 sha256sum:
-  - "db56bbc64db491ceda6b78a2811a6d121c639338906fd944f720289cbd02245c"
+  - "e8904548563117043c24a67c4967119b7c9ed304821988283e7681122ceec98b"
 depends:
   - "llvm"
 build_depends:

@@ -1,11 +1,11 @@
 name: "p11-kit"
-version: "0.26.5"
+version: "0.26.6"
 release: "2"
 description: "A way to load and enumerate PKCS#11 modules"
 sources:
  - "https://github.com/p11-glue/p11-kit/releases/download/${version}/p11-kit-${version}.tar.xz"
 sha256sum:
- - "f2cc09111e44bf3fea58f023180b33acea90aa82d042d6fbb623fbc5ba033bb7"
+ - "5fda95dc89964af32dbd8e01b139c166717cf96c4fee3d601bcd60bdb23d23c6"
 depends:
  - "libtasn"
  - "libffi"

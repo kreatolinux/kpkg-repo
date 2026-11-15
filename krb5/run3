@@ -1,11 +1,11 @@
 name: "krb5"
-version: "1.22.2"
+version: "1.22.3"
 release: "1"
 description: "kerberos"
 sources:
   - "https://kerberos.org/dist/krb5/${version.split('.')[0:2].join('.')}/krb5-$version.tar.gz"
 sha256sum:
-  - "3243ffbc8ea4d4ac22ddc7dd2a1dc54c57874c40648b60ff97009763554eaf13"
+  - "fe90af8441ad9fa9b064b8e53077cefb782a96f8a68276b031dc54af1789ff0b"
 depends:
   - "e2fsprogs"
 build_depends:

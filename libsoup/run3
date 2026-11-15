@@ -1,11 +1,11 @@
 name: "libsoup"
-version: "3.8.0"
+version: "3.8.1"
 release: "2"
 description: "libsoup"
 sources:
  - "https://download.gnome.org/sources/libsoup/${version.split('.')[0:2].join('.')}/libsoup-${version}.tar.xz"
 sha256sum:
- - "bbf08fa3e03a88c31a3d27a0d87cb422e9490f2d08e149211103df6d638a2238"
+ - "5013dcef9136f6f861e6529fca578af50c1f52a39219027fb5aff652d1371a04"
 depends:
  - "glib"
  - "glib-networking"

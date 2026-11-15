@@ -1,11 +1,11 @@
 name: "icu"
-version: "78.3"
+version: "79.1"
 release: "2"
 description: "Unicode stuff"
 sources:
  - "https://github.com/unicode-org/icu/releases/download/release-${version}/icu4c-${version}-sources.tgz"
 sha256sum:
- - "3a2e7a47604ba702f345878308e6fefeca612ee895cf4a5f222e7955fabfe0c0"
+ - "06fa63ecb521048f8082f12ad988f6b678d90cbd88aafce24cbc94902b191d99"
 build_depends:
  - "gmake"
 

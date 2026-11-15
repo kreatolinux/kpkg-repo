@@ -1,11 +1,11 @@
 name: "libadwaita"
-version: "1.8.0"
+version: "1.10.0"
 release: "1"
 description: "GNOME ui stuff"
 sources:
  - "https://download.gnome.org/sources/libadwaita/${version.split('.')[0:2].join('.')}/libadwaita-${version}.tar.xz"
 sha256sum:
- - "2836d2c0c0f46dcdb52f94019477f537810283c710802d8e6671efdebe2637c9"
+ - "b1bf56239269d101a6391ad4553c910eff9cc6170b803916405477ef60a66c84"
 depends:
  - "libtool"
  - "gtk4"
