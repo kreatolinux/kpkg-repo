@@ -1,6 +1,6 @@
 name: "kreato-fs-essentials"
 version: "0.0.2"
-release: "11"
+release: "12"
 description: "Kreato Linux filesystem essentials, seperated from src/kreastrap/overlay"
 sources:
  - "overlay/"
@@ -40,7 +40,7 @@ package {
  # /var/run must be the FHS symlink to /run, not a directory: elogind and
  # dbus clients look for their sockets under it.
  exec "rm -rf $ROOT/var/run"
- exec "ln -s /run $ROOT/var/run"
+ exec "mkdir -p $ROOT/var && ln -s /run $ROOT/var/run"
  exec "mkdir -p $ROOT/etc/jumpstart/enabled"
  # Give the serial console a login prompt. Which device is the console
  # depends on the architecture; enabling the wrong one just makes getty
