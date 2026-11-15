@@ -5,9 +5,8 @@ version: "8.0.0"
 # (local < upstream on either triggers an upgrade); every installed kpkg is
 # release "1" ("8.0.0-1", "8.0.0-rc2-1"), and "1" < "2", so this supersedes
 # them without the version itself having to sort higher.
-release: "2"
+release: "3"
 description: "kpkg, the Kreato Linux package manager"
-no_chkupd: true
 # MIT/ISC: vendored and statically compiled in: db_connector, lowdb, nimcrypto,
 # norm, regex, unicodedb (MIT), cligen (ISC).
 license:
@@ -25,7 +24,7 @@ license:
 sources:
   - "kpkg-$version.tar.gz"
 sha256sum:
-  - "3388c3b5e8ec81b9d9b0dda0cbcc04e9e68ee2f1e5a02e5079ba164b0651972d"
+  - "27c1280c5f8be7bd47ae3b5d7bf3b3bc4c5e1f8e4469926a7788f43473132983"
 extract: false
 # Same runtime set as the src recipe's kpkg split (depends + depends_kpkg).
 # libarchive is linked; openssl (-d:ssl) and sqlite are dlopen()ed at run time.
