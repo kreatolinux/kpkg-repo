@@ -1,6 +1,6 @@
 name: "xdg-desktop-portal-gtk"
 version: "1.15.3"
-release: "1"
+release: "2"
 description: "GTK backend for xdg-desktop-portal"
 sources:
  - "https://github.com/flatpak/xdg-desktop-portal-gtk/releases/download/${version}/xdg-desktop-portal-gtk-${version}.tar.xz"
@@ -9,7 +9,6 @@ sha256sum:
 depends:
  - "xdg-desktop-portal"
  - "gtk3"
- - "gnome-desktop"
 build_depends:
  - "meson"
  - "ninja"
@@ -18,7 +17,9 @@ build {
   # gdk-pixbuf resolves file types through the compiled shared MIME
   # database, and the build sandbox only carries its XML sources.
   exec "command -v update-mime-database >/dev/null 2>&1 && update-mime-database /usr/share/mime || true"
- macro build --meson
+ # The wallpaper portal needs gnome-desktop-3 (GTK 3), which gnome-desktop 51
+ # no longer builds; GNOME uses xdg-desktop-portal-gnome for it anyway.
+ macro build --meson -Dwallpaper=disabled
 }
 
 package {
