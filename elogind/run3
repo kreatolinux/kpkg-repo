@@ -1,17 +1,19 @@
 name: "elogind"
 version: "257.16"
-release: "5"
+release: "6"
 description: "systemd-logind, extracted to be a standalone daemon"
 sources:
  - "https://github.com/elogind/elogind/archive/refs/tags/v${version}.tar.gz"
  - "elogind-userdbd.socket"
  - "elogind-userdbd.service"
  - "elogind-session-state-check.patch"
+ - "elogind-owner-uid.patch"
 sha256sum:
  - "3c8146409bfb9daa77f272212c2b0bf0ae727c782ec87ece0d2d25e0e5bf5f4c"
  - "6968857812df16103b508b7a508031ab4e29e51f6cc982569b7f66ebd49488d3"
  - "1f6c26ad128a68206ffbd0187220eb04391722710e626e064ca96cf196ed9f16"
  - "e9fb6057a218e0462afe122e88d22577d73bcaff5a30690be028c03f5f6cd095"
+ - "adafab75f7da10b57c165aac4a065f314f2530ed2411b8f6076df1cc1e1608e5"
 depends:
  - "dbus"
  - "linux-pam"
@@ -35,6 +37,17 @@ prepare {
  # of user@UID.service, and every one of them then uses the user's display
  # session (sd_uid_get_display), as this patch makes elogind do.
  exec "patch -p1 < ../elogind-session-state-check.patch"
+ # cg_path_get_owner_uid() derives the owner from the session named by the
+ # first cgroup component, so every process of a per-user Jumpstart manager
+ # (below /jumpstart/users/UID/) has no owner: sd_pid_get_owner_uid() returns
+ # -ENODATA. polkit's logind session monitor treats that as fatal and gives up
+ # before its sd_uid_get_display() fallback, so it found no session for
+ # gnome-shell, subject.local/subject.active stayed false, and every
+ # org.freedesktop.login1.* action (Power Off, Restart) was "challenge"
+ # instead of "yes" -- GNOME's menu items did nothing. systemd answers this
+ # case from user-UID.slice, i.e. from the UID in the caller's own cgroup
+ # path; this patch does the same.
+ exec "patch -p1 < ../elogind-owner-uid.patch"
  exec "sed -i \"/relative_source_path = /c relative_source_path = '..'\" meson.build"
  exec "sed -i '/--relative-to=/,+2d' meson.build"
  exec "sed -i '/SYSTEMD_TEST_DATA=/s/%q/%s/g' meson.build"

@@ -1,8 +1,7 @@
 name: "jumpstart"
 version: "2.0.0"
-release: "2"
+release: "3"
 description: "Jumpstart, the Kreato Linux init system and service manager (jumpstart, jumpctl, kongue-runner, pam_jumpstart)"
-no_chkupd: true
 # MIT/ISC: vendored and statically compiled in: fusion, regex, unicodedb (MIT),
 # cligen (ISC).
 license:
@@ -22,7 +21,7 @@ license:
 sources:
   - "jumpstart-$version.tar.gz"
 sha256sum:
-  - "2ce902b0a2c5c2ef73a5f3811d03526ce213f91a5f68c58df221056cd4ff8409"
+  - "1ef7ebf40a1a4d24d81db1795e1f810700928f781a696a8766562863ae9cccaf"
 extract: false
 build_depends:
   - "nim"

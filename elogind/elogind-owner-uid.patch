@@ -1,0 +1,93 @@
+# elogind-owner-uid.patch -- teach elogind's cgroup owner-UID lookup about
+# Jumpstart's per-user cgroup layout.
+#
+# Root cause
+# ----------
+# elogind uses a *flat* cgroup hierarchy: cg_path_get_session() takes the FIRST
+# component of a cgroup path as the session ID. Jumpstart (PID 1) places each
+# user's per-user service manager -- and every process of that user's session --
+# below /jumpstart/users/UID/. For such a process cg_path_get_session() returns
+# "jumpstart", and cg_path_get_owner_uid() then looks for
+# /run/systemd/sessions/jumpstart, which does not exist -> -ENXIO ->
+# sd_pid_get_owner_uid() returns -ENODATA.
+#
+# Consequence (reproduced in a VM): polkit's logind session monitor
+# (polkitbackendsessionmonitor-systemd.c) tries sd_pidfd_get_session,
+# sd_pid_get_session, sd_pidfd_get_owner_uid, sd_pid_get_owner_uid and treats a
+# failure of the owner-uid call as fatal (goto out). So it never reaches its
+# sd_uid_get_display() fallback, no session is found for gnome-shell,
+# subject.local/subject.active are both false, and every
+# org.freedesktop.login1.* action (Power Off, Reboot) becomes "challenge"
+# instead of "yes" -> GNOME's Power Off/Restart menu items do nothing.
+# Measured in the VM: sd_pid_get_session(gnome-shell) = -61 (ENODATA),
+# sd_pid_get_owner_uid = -61, while sd_uid_get_display(1001) = "3" and
+# sd_uid_get_state(1001) = "active" work fine.
+#
+# Fix
+# ---
+# systemd answers this exact case from user-UID.slice, i.e. from the UID in the
+# caller's own cgroup path. Do the same: when the cgroup path is below
+# /jumpstart/users/UID/, parse UID out of the path and report it as the owner.
+#
+# The fix lives in cg_path_get_owner_uid() rather than in
+# sd_pid_get_owner_uid(), so that it covers every caller at once:
+# sd_pid_get_owner_uid(), sd_pidfd_get_owner_uid(), sd_peer_get_owner_uid(),
+# sd_bus_creds_get_owner_uid() (logind's own authorization path) and
+# sd_bus_open()'s default-bus choice.
+#
+# parse_uid() accepts a NULL ret_uid (sd-bus.c calls cg_pid_get_owner_uid(0,
+# NULL) to decide between the user and the system bus), so the UID is parsed
+# into ret_uid directly and nothing is dereferenced here.
+#
+# Non-Jumpstart paths are untouched: "/1" and "/jumpstart/cores/systemd/x"
+# still return -ENXIO, and a real session path still reads UID out of
+# /run/systemd/sessions/ID as before.
+#
+# Applies with `patch -p1` on top of elogind-session-state-check.patch.
+--- a/src/basic/cgroup-util.c
++++ b/src/basic/cgroup-util.c
+@@ -1532,6 +1532,44 @@
+         if (parse_uid(start, ret_uid) < 0)
+                 return -ENXIO;
+ #else // 0
++
++#if 1 /// Kreato: derive the owner UID from a Jumpstart per-user cgroup path
++        /* elogind uses a flat cgroup hierarchy, so the first component of a
++         * cgroup path names a session. Every process of a per-user service
++         * manager -- which Jumpstart places below /jumpstart/users/UID/, and
++         * which is every process of that user's session -- is therefore
++         * attributed to a session called "jumpstart". No such session exists
++         * (/run/systemd/sessions/jumpstart is missing), so the lookup below
++         * fails with -ENXIO and sd_pid_get_owner_uid() turns that into
++         * -ENODATA. polkit's logind session monitor treats a failure of the
++         * owner-uid call as fatal and gives up before its sd_uid_get_display()
++         * fallback, so it finds no session for gnome-shell, subject.local and
++         * subject.active both stay false, and every org.freedesktop.login1.*
++         * action (Power Off, Reboot) becomes "challenge" instead of "yes".
++         * systemd answers this case from user-UID.slice, i.e. from the UID in
++         * the caller's own cgroup path; do the same here. Answering it in this
++         * function covers sd_pid_get_owner_uid(), sd_pidfd_get_owner_uid(),
++         * sd_peer_get_owner_uid(), sd_bus_creds_get_owner_uid() and the
++         * default-bus choice of sd_bus_open() at once. */
++        {
++                const char *e, *n;
++                _cleanup_free_ char *uid_str = NULL;
++
++                e = path_startswith(path, "/jumpstart/users/");
++                if (e) {
++                        n = strchrnul(e, '/');
++                        if (n > e) {
++                                uid_str = strndup(e, n - e);
++                                if (!uid_str)
++                                        return -ENOMEM;
++                                /* parse_uid() leaves ret_uid alone when it is
++                                 * NULL (sd-bus.c calls us with ret_uid == NULL). */
++                                if (parse_uid(uid_str, ret_uid) >= 0)
++                                        return 0;
++                        }
++                }
++        }
++#endif // 1
+         r = cg_path_get_session(path, &session);
+         if (r < 0)
+                 return r;

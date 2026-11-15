@@ -1,11 +1,13 @@
 name: "polkit"
 version: "124"
-release: "2"
+release: "3"
 description: "A toolkit for defining and handling authorizations"
 sources:
  - "https://gitlab.freedesktop.org/polkit/polkit/-/archive/${version}/polkit-${version}.tar.gz"
+ - "polkit-libelogind.patch"
 sha256sum:
  - "72457d96a0538fd03a3ca96a6bf9b7faf82184d4d67c793eb759168e4fd49e20"
+ - "e90bf7cec926ebb5c4ac1440310c551f32262433d4ba154f5459f42212c15c0f"
 depends:
  - "elogind"
  - "linux-pam"
@@ -18,13 +20,27 @@ build_depends:
  - "meson"
  - "ninja"
 
-build {
-
- if ${exec("command -v systemctl")}.exit() == 0 {
- local extraArgs = "-Dsession_tracking=libsystemd-login"
+prepare {
+ # polkit 124's meson.build reads systemd_dep outside the branch that assigns
+ # it, so -Dsession_tracking=libelogind aborted with 'Unknown variable name
+ # "systemd_dep"'. Only the default ConsoleKit configured, which has no
+ # ConsoleKit daemon to talk to: polkitd resolved no session for a caller,
+ # subject.local/subject.active stayed false, and every
+ # org.freedesktop.login1.* action (Power Off, Restart) was "challenge"
+ # instead of "yes", so GNOME's menu items did nothing.
+ exec "patch -p1 < ../polkit-libelogind.patch"
 }
 
- macro build --libdir=/usr/lib ${extraArgs}
+build {
+ # elogind, not systemd, provides org.freedesktop.login1 on this system, so
+ # track sessions through libelogind. The old recipe passed
+ # -Dsession_tracking=libsystemd-login only `if command -v systemctl` found a
+ # systemctl, which it never does here (systemctl is a symlink to the systemd
+ # core's multi-call binary, installed by jumpstart-systemd-core and absent
+ # from the build sandbox), so polkit was always built with the ConsoleKit
+ # default. libsystemd-login would also work (elogind ships a libsystemd.pc
+ # shim) but libelogind is the honest choice and skips the systemd.pc lookup.
+ macro build --libdir=/usr/lib -Dsession_tracking=libelogind
 }
 
 package {
@@ -36,5 +52,3 @@ postinstall {
  exec "groupadd -fg 27 polkitd || true"
  exec "id -u polkitd >/dev/null 2>&1 || useradd -c \"PolicyKit Daemon Owner\" -d /etc/polkit-1 -u 27 -g polkitd -s /bin/false polkitd"
 }
-
-
