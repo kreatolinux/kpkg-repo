@@ -1,6 +1,6 @@
 name: "hicolor-icon-theme"
 version: "0.18"
-release: "1"
+release: "2"
 description: "hicolor-icon-theme"
 sources:
  - "https://icon-theme.freedesktop.org/releases/hicolor-icon-theme-${version}.tar.xz"
@@ -17,4 +17,6 @@ package {
  macro package
 }
 
-
+postinstall {
+ exec "gtk-update-icon-cache -qtf /usr/share/icons/hicolor 2>/dev/null || gtk4-update-icon-cache -qtf /usr/share/icons/hicolor 2>/dev/null || true"
+}

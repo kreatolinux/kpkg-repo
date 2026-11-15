@@ -1,0 +1,31 @@
+name: "libspelling"
+version: "0.4.11"
+release: "1"
+description: "Spellcheck library for GTK 4 (built without enchant)"
+sources:
+ - "https://download.gnome.org/sources/libspelling/${version.split('.')[0:2].join('.')}/libspelling-${version}.tar.xz"
+sha256sum:
+ - "52e53ec3fba0f604cfd0931e26af7f7241a0d4f0208dd5574f43b3589f6d28b2"
+depends:
+ - "glib"
+ - "gtk4"
+ - "pango"
+ - "gtksourceview5"
+build_depends:
+ - "meson"
+ - "ninja"
+ - "gobject-introspection"
+ - "vala"
+
+build {
+ # enchant is not packaged; libspelling then falls back to its built-in
+ # empty provider (no spell suggestions, everything else works).
+  # gdk-pixbuf resolves file types through the compiled shared MIME
+  # database, and the build sandbox only carries its XML sources.
+  exec "command -v update-mime-database >/dev/null 2>&1 && update-mime-database /usr/share/mime || true"
+ macro build --libdir=/usr/lib --default-library=shared --wrap-mode=nodownload -Denchant=disabled -Ddocs=false -Dsysprof=false -Dintrospection=enabled -Dvapi=true
+}
+
+package {
+ macro package
+}

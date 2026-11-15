@@ -1,6 +1,6 @@
 name: "librsvg"
 version: "2.63.3"
-release: "3"
+release: "4"
 description: "SVG rendering library"
 sources:
  - "https://gitlab.gnome.org/GNOME/librsvg/-/archive/${version}/librsvg-${version}.tar.gz"
@@ -23,10 +23,14 @@ build_depends:
  - "cargo-c"
 
 build {
+  # librsvg >= 2.59 no longer builds the GDK-Pixbuf SVG loader by default
+  # (-Dpixbuf-loader defaults to disabled). Without it gdk-pixbuf cannot
+  # decode any SVG: gnome-shell/St and GTK3 show no app or status icons.
+  #
   # gdk-pixbuf resolves file types through the compiled shared MIME
   # database, and the build sandbox only carries its XML sources.
   exec "command -v update-mime-database >/dev/null 2>&1 && update-mime-database /usr/share/mime || true"
- macro build --libdir=/usr/lib --libexecdir=/usr/lib --default-library=shared -Dvala=enabled -Dintrospection=enabled -Ddocs=disabled -Dtests=false
+ macro build --libdir=/usr/lib --libexecdir=/usr/lib --default-library=shared -Dvala=enabled -Dintrospection=enabled -Dpixbuf=enabled -Dpixbuf-loader=enabled -Ddocs=disabled -Dtests=false
 }
 
 package {
@@ -34,6 +38,7 @@ package {
 }
 
 postinstall {
+ # Registers libpixbufloader_svg.so in loaders.cache.
  exec "gdk-pixbuf-query-loaders --update-cache 2>/dev/null || true"
 }
 

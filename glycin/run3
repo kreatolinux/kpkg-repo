@@ -1,6 +1,6 @@
 name: "glycin"
 version: "2.2.3"
-release: "3"
+release: "4"
 description: "Sandboxed image decoding library"
 sources:
  - "https://download.gnome.org/sources/glycin/${version.split('.')[0:2].join('.')}/glycin-${version}.tar.xz"
@@ -13,6 +13,9 @@ depends:
  - "fontconfig"
  - "lcms2"
  - "libseccomp"
+ - "librsvg"
+ - "cairo"
+ - "bubblewrap"
 build_depends:
  - "meson"
  - "ninja"
@@ -24,7 +27,13 @@ build {
   # gdk-pixbuf resolves file types through the compiled shared MIME
   # database, and the build sandbox only carries its XML sources.
   exec "command -v update-mime-database >/dev/null 2>&1 && update-mime-database /usr/share/mime || true"
- macro build --libdir=/usr/lib --wrap-mode=nodownload -Dglycin-loaders=false -Dglycin-thumbnailer=false -Dlibglycin=true -Dlibglycin-gtk4=true -Dintrospection=true -Dvapi=false -Dtests=false -Dlto=false
+ # Build the image-rs (PNG/JPEG/GIF/WebP/TIFF/BMP/ICO/...) and SVG loaders.
+ # gnome-shell 51 loads the desktop/lock-screen background through glycin,
+ # and without any loader every wallpaper fails and the shell shows only
+ # the plain primary colour. glycin-jxl/glycin-heif need libjxl/libheif,
+ # which are not packaged yet (the stock gnome-backgrounds are .jxl).
+ # librsvg/cairo are for glycin-svg; the loaders run sandboxed in bwrap.
+ macro build --libdir=/usr/lib --wrap-mode=nodownload -Dglycin-loaders=true -Dloaders=glycin-image-rs,glycin-svg -Dglycin-thumbnailer=false -Dlibglycin=true -Dlibglycin-gtk4=true -Dintrospection=true -Dvapi=false -Dtests=false -Dlto=false
 }
 
 package {

@@ -1,0 +1,41 @@
+name: "gnome-text-editor"
+version: "51.0"
+release: "1"
+description: "Simple text editor for GNOME"
+sources:
+ - "https://download.gnome.org/sources/gnome-text-editor/${version.split('.')[0]}/gnome-text-editor-${version}.tar.xz"
+sha256sum:
+ - "2b76e6da1506346c54b36ba1a3aeedcd28f4cb7d6a8793d217f209456c92dd4c"
+depends:
+ - "glib"
+ - "gtk4"
+ - "pango"
+ - "libadwaita"
+ - "gtksourceview5"
+ - "libspelling"
+ - "gsettings-desktop-schemas"
+ - "desktop-file-utils"
+ - "hicolor-icon-theme"
+build_depends:
+ - "meson"
+ - "ninja"
+ - "itstool"
+
+build {
+ # editorconfig support needs libeditorconfig (editorconfig-core-c),
+ # which is not packaged; the editor works fine without it.
+  # gdk-pixbuf resolves file types through the compiled shared MIME
+  # database, and the build sandbox only carries its XML sources.
+  exec "command -v update-mime-database >/dev/null 2>&1 && update-mime-database /usr/share/mime || true"
+ macro build --libdir=/usr/lib --wrap-mode=nodownload -Deditorconfig=disabled -Ddevelopment=false
+}
+
+package {
+ macro package
+}
+
+postinstall {
+ exec "glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true"
+ exec "gtk4-update-icon-cache -q -t -f /usr/share/icons/hicolor 2>/dev/null || true"
+ exec "update-desktop-database -q /usr/share/applications 2>/dev/null || true"
+}

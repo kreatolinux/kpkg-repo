@@ -1,6 +1,6 @@
 name: "adwaita-icon-theme"
 version: "51.0"
-release: "2"
+release: "3"
 description: "adwaita-icon-theme"
 sources:
  - "https://download.gnome.org/sources/adwaita-icon-theme/${version.split('.')[0]}/adwaita-icon-theme-${version}.tar.xz"
@@ -26,4 +26,8 @@ package {
  macro package
 }
 
-
+postinstall {
+ # Without icon-theme.cache GTK and gnome-shell rescan the whole theme on
+ # every start.
+ exec "gtk-update-icon-cache -qtf /usr/share/icons/Adwaita 2>/dev/null || gtk4-update-icon-cache -qtf /usr/share/icons/Adwaita 2>/dev/null || true"
+}

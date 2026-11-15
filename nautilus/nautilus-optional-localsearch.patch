@@ -1,0 +1,31 @@
+diff -ru nautilus-50.2/src/nautilus-global-preferences.c b/src/nautilus-global-preferences.c
+--- a/src/nautilus-global-preferences.c	2026-05-24 02:52:46
++++ b/src/nautilus-global-preferences.c	2026-11-15 14:18:00
+@@ -109,7 +109,11 @@
+     gnome_lockdown_preferences = g_settings_new ("org.gnome.desktop.lockdown");
+     gnome_interface_preferences = g_settings_new ("org.gnome.desktop.interface");
+     gnome_privacy_preferences = g_settings_new ("org.gnome.desktop.privacy");
+-    localsearch_preferences = g_settings_new ("org.freedesktop.Tracker3.Miner.Files");
++    /* localsearch is optional: without its schema, g_settings_new() aborts. */
++    if (check_schema_available ("org.freedesktop.Tracker3.Miner.Files"))
++    {
++        localsearch_preferences = g_settings_new ("org.freedesktop.Tracker3.Miner.Files");
++    }
+ 
+     if (check_schema_available (FILE_SHARING_SCHEMA_ID) &&
+         check_schema_available (FILE_SHARING_SERVICE_SCHEMA_ID))
+diff -ru nautilus-50.2/src/nautilus-localsearch-utilities.c b/src/nautilus-localsearch-utilities.c
+--- a/src/nautilus-localsearch-utilities.c	2026-05-24 02:52:46
++++ b/src/nautilus-localsearch-utilities.c	2026-11-15 14:18:00
+@@ -225,6 +225,11 @@
+     gint idx;
+     GFile *location;
+ 
++    if (localsearch_preferences == NULL)
++    {
++        return NULL;
++    }
++
+     locations = g_settings_get_strv (localsearch_preferences, key);
+ 
+     for (idx = 0; locations[idx] != NULL; idx++)

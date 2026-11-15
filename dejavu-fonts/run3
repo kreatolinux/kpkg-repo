@@ -1,0 +1,26 @@
+name: "dejavu-fonts"
+version: "2.37"
+release: "1"
+description: "DejaVu font family, a broad-coverage fallback derived from Bitstream Vera"
+sources:
+ - "https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_2_37/dejavu-fonts-ttf-${version}.tar.bz2"
+sha256sum:
+ - "fa9ca4d13871dd122f61258a80d01751d603b4d3ee14095d65453b4e846e17d7"
+depends:
+ - "fontconfig"
+
+package {
+ exec "install -Dm644 ttf/*.ttf -t \"$ROOT/usr/share/fonts/dejavu\""
+ exec "install -Dm644 fontconfig/*.conf -t \"$ROOT/usr/share/fontconfig/conf.avail\""
+ exec "install -dm755 \"$ROOT/etc/fonts/conf.d\""
+ exec "ln -sf ../../../usr/share/fontconfig/conf.avail/20-unhint-small-dejavu-sans.conf \"$ROOT/etc/fonts/conf.d/20-unhint-small-dejavu-sans.conf\""
+ exec "ln -sf ../../../usr/share/fontconfig/conf.avail/20-unhint-small-dejavu-sans-mono.conf \"$ROOT/etc/fonts/conf.d/20-unhint-small-dejavu-sans-mono.conf\""
+ exec "ln -sf ../../../usr/share/fontconfig/conf.avail/20-unhint-small-dejavu-serif.conf \"$ROOT/etc/fonts/conf.d/20-unhint-small-dejavu-serif.conf\""
+ exec "ln -sf ../../../usr/share/fontconfig/conf.avail/57-dejavu-sans.conf \"$ROOT/etc/fonts/conf.d/57-dejavu-sans.conf\""
+ exec "ln -sf ../../../usr/share/fontconfig/conf.avail/57-dejavu-sans-mono.conf \"$ROOT/etc/fonts/conf.d/57-dejavu-sans-mono.conf\""
+ exec "ln -sf ../../../usr/share/fontconfig/conf.avail/57-dejavu-serif.conf \"$ROOT/etc/fonts/conf.d/57-dejavu-serif.conf\""
+}
+
+postinstall {
+ exec "fc-cache -f 2>/dev/null || true"
+}

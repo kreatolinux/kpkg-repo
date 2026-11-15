@@ -1,0 +1,24 @@
+name: "adwaita-fonts"
+version: "51.0"
+release: "1"
+description: "Adwaita Sans and Adwaita Mono, the default GNOME interface and monospace fonts"
+sources:
+ - "https://download.gnome.org/sources/adwaita-fonts/${version.split('.')[0]}/adwaita-fonts-${version}.tar.xz"
+sha256sum:
+ - "fa104ae2c1b96580d322f563ffe8b2dfca5296b0eca4971efd2d8011405123d2"
+depends:
+ - "fontconfig"
+build_depends:
+ - "meson"
+
+build {
+ macro build
+}
+
+package {
+ macro package
+}
+
+postinstall {
+ exec "fc-cache -f 2>/dev/null || true"
+}

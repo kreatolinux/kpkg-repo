@@ -1,0 +1,16 @@
+name: "glibc-locales"
+version: "2.44"
+release: "1"
+description: "Compiled glibc locales (C.UTF-8, en_US.UTF-8)"
+extract: false
+sources:
+ - "make-locales.sh"
+sha256sum:
+ - "4c6da88a5ba82e4fcbe701e77102975e2f847e9fd390d406686030bea61b9545"
+depends:
+ - "glibc"
+no_chkupd: true
+
+package {
+ exec "sh make-locales.sh \"$ROOT\""
+}

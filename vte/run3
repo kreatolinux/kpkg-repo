@@ -1,6 +1,6 @@
 name: "vte"
 version: "0.84.1"
-release: "2"
+release: "3"
 description: "Visual Terminal Emulator widget"
 sources:
  - "https://download.gnome.org/sources/vte/${version.split('.')[0:2].join('.')}/vte-${version}.tar.xz"
@@ -28,7 +28,9 @@ build {
   env extraArgs="-D_systemd=false"
  }
 
- macro build ${extraArgs} --libdir=/usr/lib --wrap-mode=nodownload -Ddocs=false -Dgtk4=true
+ # -Dapp=false: do not install the vte test application (two 'VTE Terminal'
+ # entries in the app grid).
+ macro build ${extraArgs} --libdir=/usr/lib --wrap-mode=nodownload -Ddocs=false -Dgtk4=true -Dapp=false
 }
 
 package {
