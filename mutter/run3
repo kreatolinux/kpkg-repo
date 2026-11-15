@@ -1,15 +1,13 @@
 name: "mutter"
 version: "51.1"
-release: "5"
+release: "6"
 description: "Wayland compositor for GNOME"
 extract: false
 sources:
-  - "https://gitlab.gnome.org/GNOME/mutter/-/archive/$version/mutter-$version.tar.gz"
-  - "https://gitlab.gnome.org/GNOME/gvdb/-/archive/b54bc5da25127ef416858a3ad92e57159ff565b3/gvdb-b54bc5da25127ef416858a3ad92e57159ff565b3.tar.gz"
+  - "https://download.gnome.org/sources/mutter/${version.split('.')[0]}/mutter-${version}.tar.xz"
   - "disable-man.patch"
 sha256sum:
-  - "e1c9c1024feaa9384bd77ebc8ea2462fce39239975bc088ee835c8c0ffeb5341"
-  - "ecc3ec39db8c301dce9bb24d8dcbab3360e42f6ce723a772f2f4acd53ad0a5a4"
+  - "0d311d87901dbcb94518fb89304febe30852ce5d8a4befa9f87e85c68eceefde"
   - "eadc37ef96af8e4e1235eae380a06cb9e75729f275158a0c42e3d143dd1158f8"
 depends:
   - "libtool"
@@ -68,10 +66,10 @@ build_depends:
   - "gobject-introspection"
 
 prepare {
-  exec "tar -xf mutter-$version.tar.gz"
-  exec "tar -xf gvdb-b54bc5da25127ef416858a3ad92e57159ff565b3.tar.gz"
+  # The download.gnome.org release tarball (meson dist) already vendors
+  # subprojects/gvdb, so no separate gvdb archive is fetched any more.
+  exec "tar -xf mutter-$version.tar.xz"
   cd "mutter-$version"
-  exec "mv ../gvdb-b54bc5da25127ef416858a3ad92e57159ff565b3 subprojects/gvdb"
   exec "patch -Np1 -i ../disable-man.patch"
 }
 

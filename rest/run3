@@ -1,11 +1,11 @@
 name: "rest"
 version: "0.10.2"
-release: "2"
+release: "3"
 description: "RESTful web API query library"
 sources:
- - "https://gitlab.gnome.org/GNOME/librest/-/archive/${version}/librest-${version}.tar.gz"
+ - "https://download.gnome.org/sources/librest/${version.split('.')[0:2].join('.')}/librest-${version}.tar.xz"
 sha256sum:
- - "adef677ecdbe16f94906f59f07519938a82a207b8c019e37f2d68463f94a464d"
+ - "7b6cb912bb3a22cfa7dcf005925dcb62883024db0c09099486e7d6851185c9b8"
 depends:
  - "gobject-introspection"
  - "json-glib"
