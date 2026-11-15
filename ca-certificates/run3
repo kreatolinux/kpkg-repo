@@ -2,6 +2,7 @@ name: "ca-certificates"
 version: "20261107"
 release: "1"
 description: "Common CA certificates"
+no_chkupd: true
 sources:
  - "update-ca-trust"
 b2sum:

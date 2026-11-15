@@ -2,6 +2,7 @@ name: "kreato-systemd-units"
 version: "0.1.0"
 release: "2"
 description: "systemd units for Kreato's desktop services under jumpstart-systemd-core"
+no_chkupd: true
 license:
   - "GPL-3.0-or-later"
   - "MIT"

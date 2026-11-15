@@ -7,6 +7,7 @@ version: "8.0.0"
 # them without the version itself having to sort higher.
 release: "2"
 description: "kpkg, the Kreato Linux package manager"
+no_chkupd: true
 # MIT/ISC: vendored and statically compiled in: db_connector, lowdb, nimcrypto,
 # norm, regex, unicodedb (MIT), cligen (ISC).
 license:

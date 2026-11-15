@@ -2,6 +2,7 @@ name: "jumpstart-systemd-core"
 version: "0.1.0"
 release: "3"
 description: "systemd compatibility core for Jumpstart (systemctl, journalctl, unit files)"
+no_chkupd: true
 license:
   - "GPL-3.0-or-later"
   - "LGPL-3.0-or-later"
