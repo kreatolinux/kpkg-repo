@@ -1,0 +1,63 @@
+name: "kpkg"
+version: "8.0.0"
+# Release 2: the mirror already carries kpkg-8.0.0-1 (the old src 8.0.0
+# release build). kpkg upgrade compares version and release as plain strings
+# (local < upstream on either triggers an upgrade); every installed kpkg is
+# release "1" ("8.0.0-1", "8.0.0-rc2-1"), and "1" < "2", so this supersedes
+# them without the version itself having to sort higher.
+release: "2"
+description: "kpkg, the Kreato Linux package manager"
+# MIT/ISC: vendored and statically compiled in: db_connector, lowdb, nimcrypto,
+# norm, regex, unicodedb (MIT), cligen (ISC).
+license:
+  - "GPL-3.0-or-later"
+  - "MIT"
+  - "ISC"
+# Built from the Kreato src-2 tree. Replaces the old `kpkg -> src` symlink,
+# which built the src 8.0.0 release (the kpkg split of the `src` metapackage).
+# No upstream release of src-2 exists yet, so the source ships in this
+# directory. Regenerate it with make-tarball.sh (kept next to this recipe on
+# the build host, not in the repository), which also rewrites the sum below.
+# Layout: kpkg-$version/{nim.cfg,SOURCE,tools/,vendor/,src-2/}. The top-level
+# nim.cfg points Nim at the vendored libraries (the build sandbox has no
+# ~/.nimble and must not run nimble) and keeps nimcache in the tree.
+sources:
+  - "kpkg-$version.tar.gz"
+sha256sum:
+  - "3388c3b5e8ec81b9d9b0dda0cbcc04e9e68ee2f1e5a02e5079ba164b0651972d"
+extract: false
+# Same runtime set as the src recipe's kpkg split (depends + depends_kpkg).
+# libarchive is linked; openssl (-d:ssl) and sqlite are dlopen()ed at run time.
+depends:
+  - "libarchive"
+  - "shadow"
+  - "openssl"
+  - "git"
+  - "bubblewrap"
+  - "sqlite"
+build_depends:
+  - "nim"
+
+prepare {
+  exec "tar -oxf kpkg-$version.tar.gz"
+  cd "kpkg-$version/src-2"
+}
+
+build {
+  # src-2's own `build.sh -p kpkg` (the flags /bin/kpkg is built with today:
+  # -d:release --deepcopy:on -d:branch=master -d:ssl --threads:on; -larchive
+  # comes from kpkg/modules/libarchive.nim). The wrapper only puts a git shim
+  # first in PATH so `kpkg --version` names the src-2 revision (../SOURCE).
+  # No -d:ver: the default "v8.0" matches the current kpkg and is what it
+  # stamps as apiVer into every package it builds.
+  exec "sh ../tools/build-kpkg.sh"
+}
+
+package {
+  # Same file list and spellings as kpkg-8.0.0-1 (bin/kpkg, not usr/bin/kpkg),
+  # so the upgrade replaces the old files in place.
+  exec "install -d -m 0755 \"$ROOT/bin\" \"$ROOT/usr/share/man/man5\" \"$ROOT/usr/share/man/man8\""
+  exec "install -m 0755 out/kpkg \"$ROOT/bin/kpkg\""
+  exec "install -m 0644 man/kpkg*.5 \"$ROOT/usr/share/man/man5/\""
+  exec "install -m 0644 man/kpkg*.8 \"$ROOT/usr/share/man/man8/\""
+}
