@@ -3,5 +3,11 @@
 session  required    pam_unix.so
 session  required    pam_loginuid.so
 -session optional    pam_elogind.so
+# Jumpstart (pam_jumpstart.so from the jumpstart package): start the user's
+# per-user service manager (`jumpstart --user`) on the first session and stop
+# it after the last one. After pam_elogind, which creates /run/user/UID; the
+# open waits until the user daemon finished starting (its user D-Bus bus is
+# up), so the session that follows finds the bus. '-' : silent if absent.
+-session optional    pam_jumpstart.so
 
 # End /etc/pam.d/system-session

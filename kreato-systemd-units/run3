@@ -1,6 +1,6 @@
 name: "kreato-systemd-units"
 version: "0.1.0"
-release: "1"
+release: "2"
 description: "systemd units for Kreato's desktop services under jumpstart-systemd-core"
 license:
   - "GPL-3.0-or-later"
@@ -9,7 +9,13 @@ license:
 # gdm, openssh, pipewire and wireplumber without systemd integration, so none
 # of them ships a unit. This package provides them (the pipewire/wireplumber
 # user units follow upstream's), a drop-in that makes upower's own unit run
-# under the core, and presets enabling all of it. Every unit carries
+# under the core, and presets enabling all of it.
+# For GNOME under the per-user Jumpstart manager it also ships the user bus
+# (user-dbus.service: Type=forking, because Kreato's dbus cannot take a
+# socket-activated listener), gnome-shell's org.gnome.Shell@.service and
+# org.gnome.Shell-disable-extensions.service (gnome-shell is built with
+# -Dsystemd=false, which skips installing them) and a drop-in that makes
+# gnome-session-restart-dbus restart the user bus instead of stopping it. Every unit carries
 # ConditionFileIsExecutable= on its daemon, so a unit whose package is absent
 # is skipped, not failed; only the packages below are hard dependencies
 # (upower so that its unit exists when the preset is applied).
@@ -30,13 +36,17 @@ sources:
   - "system-systemd-udev-trigger.service"
   - "system-systemd-udevd.service"
   - "system-upower.service.d_10-kreato.conf"
+  - "user-dbus.service"
+  - "user-gnome-session-restart-dbus.service.d_10-kreato.conf"
+  - "user-org.gnome.Shell-disable-extensions.service"
+  - "user-org.gnome.Shell@.service"
   - "user-pipewire-pulse.service"
   - "user-pipewire-pulse.socket"
   - "user-pipewire.service"
   - "user-pipewire.socket"
   - "user-wireplumber.service"
 sha256sum:
-  - "9d88d84f158360e65d392716c5650bc957c9c6700dfedf1889a81ff77173ac9d"
+  - "5a779e34870436cead111d5f0683714929daec5480ff3d3bbf521d688e46b8f6"
   - "382141135fcb1a59b36ec8fe92efd9e80b5e8a9797810bad455d8d026d7dbc35"
   - "8fa00e1562ca3d735819a02ad1aff6f7908e62533c9952d48a255d2bfc366c35"
   - "ae2186258691b095a407d7ebe95ac74437ba2e8ed2d557dee4af13b50e235996"
@@ -49,6 +59,10 @@ sha256sum:
   - "0770a685d5682e80b148b78fafa9bfc57f1ecd8f055e563a1c522a8a565be1d3"
   - "c4586d82df63009cb49d9b7e2f7c8e932b537d83ccbac51394a6b8189b8b90ff"
   - "6d68214b3499c9d74c12442f740030373fc8654f9ca82d000d6abe5805171b53"
+  - "74f8371234cc0e57321df7227815361054422227a1ea4b9183e8416d855950d1"
+  - "151623642352a63d99db61dda3d4d6d53a583ff4502c59374f28ad8973e92b63"
+  - "04250d54ae7d89e843a210c04742b24dc2768dadb8a87ced4268b41911fe0904"
+  - "b3c3bfe007b391f5f2cead54a40a4cde7252c23c09e07bb36ba826a42aedc1eb"
   - "8687e4df7d3c85571486f6aa4301ad9afa31492cdbf4f2ff4f9d556ccb4789f4"
   - "0fa6aa8186fa8cc8f7a38921d1d89803a9c4938fcc5e4f50c04379492b581968"
   - "df3d74884b75c213444e3d099c62e1099968d8f32d310adaecba2fd73ec8c7e2"
@@ -77,9 +91,11 @@ package {
   for u in ["NetworkManager.service", "accounts-daemon.service", "dbus.service", "dev-shm.mount", "elogind.service", "gdm.service", "polkit.service", "sshd.service", "systemd-udev-trigger.service", "systemd-udevd.service"] {
     exec "install -m 0644 system-$u \"$ROOT/usr/lib/systemd/system/$u\""
   }
-  for u in ["pipewire-pulse.service", "pipewire-pulse.socket", "pipewire.service", "pipewire.socket", "wireplumber.service"] {
-    exec "install -m 0644 user-$u \"$ROOT/usr/lib/systemd/user/$u\""
+  for u in ["pipewire-pulse.service", "pipewire-pulse.socket", "pipewire.service", "pipewire.socket", "wireplumber.service", "dbus.service", "org.gnome.Shell@.service", "org.gnome.Shell-disable-extensions.service"] {
+    exec "install -m 0644 \"user-$u\" \"$ROOT/usr/lib/systemd/user/$u\""
   }
+  exec "umask 022 && install -d -m 0755 \"$ROOT/usr/lib/systemd/user/gnome-session-restart-dbus.service.d\""
+  exec "install -m 0644 user-gnome-session-restart-dbus.service.d_10-kreato.conf \"$ROOT/usr/lib/systemd/user/gnome-session-restart-dbus.service.d/10-kreato.conf\""
   exec "install -m 0644 system-upower.service.d_10-kreato.conf \"$ROOT/usr/lib/systemd/system/upower.service.d/10-kreato.conf\""
   exec "install -m 0644 81-kreato-desktop.preset \"$ROOT/usr/lib/systemd/system-preset/81-kreato-desktop.preset\""
   exec "install -m 0644 81-kreato-desktop-user.preset \"$ROOT/usr/lib/systemd/user-preset/81-kreato-desktop.preset\""
@@ -98,7 +114,7 @@ postinstall {
   # Offline systemctl has no --global: make the links `systemctl --global
   # enable` would make for the user units ([Install] sections).
   exec "umask 022 && install -d -m 0755 /etc/systemd/user /etc/systemd/user/sockets.target.wants /etc/systemd/user/pipewire.service.wants"
-  for u in ["pipewire.socket", "pipewire-pulse.socket"] {
+  for u in ["pipewire.socket", "pipewire-pulse.socket", "dbus.service"] {
     exec "ln -sf /usr/lib/systemd/user/$u /etc/systemd/user/sockets.target.wants/$u"
   }
   exec "ln -sf /usr/lib/systemd/user/wireplumber.service /etc/systemd/user/pipewire.service.wants/wireplumber.service"

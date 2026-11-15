@@ -1,15 +1,13 @@
 name: "gdm"
 version: "50.3"
-release: "7"
+release: "8"
 description: "GNOME Display Manager"
 sources:
  - "https://download.gnome.org/sources/gdm/${version.split('.')[0]}/gdm-${version}.tar.xz"
  - "gdm-dynamic-user.patch"
- - "gdm-kiosk.patch"
 sha256sum:
  - "adac0710b8b797108ea40ea4573bd1a5e6d9b24e0a7990a994216e8dffe2d15e"
  - "f385b3e6ef089b4af7e9a478dd8b10f25deac723111b1547a8db3253d6d664f1"
- - "88f67b4322eb7252c5a30d2f266a06a5a4becc582c61cd87e4fb7bf139718970"
 depends:
  - "libtool"
  - "accountsservice"
@@ -23,19 +21,28 @@ build_depends:
  - "meson"
 
 build {
- local extraArgs = "-Dlogind-provider=elogind -Dsystemd-journal=false -Dsystemdsystemunitdir=no -Dsystemduserunitdir=no"
+ # The user unit directory is enabled: it installs
+ # gnome-session@gnome-login.target.d/gnome-login.session.conf, which makes the
+ # greeter's gnome-session target pull in org.gnome.Shell@gdm.service under the
+ # greeter's per-user Jumpstart manager. No systemd system unit (that comes
+ # from kreato-systemd-units).
+ local extraArgs = "-Dlogind-provider=elogind -Dsystemd-journal=false -Dsystemdsystemunitdir=no -Dsystemduserunitdir=/usr/lib/systemd/user"
  # Adapt the LFS PAM profile to the repository's elogind provider. This is
  # unconditional: the build always uses -Dlogind-provider=elogind, and
  # jumpstart-systemd-core installs a systemctl shim, so probing for systemctl
  # would ship pam_systemd.so (which does not exist) in the greeter stack.
  exec "sed -e 's@systemd@elogind@' -e '/elogind/isession  required       pam_loginuid.so' -i data/pam-lfs/gdm-launch-environment.pam"
+ # The greeter needs its own per-user Jumpstart manager (gnome-session runs
+ # gnome-session@gnome-login.target through it): pam_jumpstart after
+ # pam_elogind. gdm-password and gdm-autologin get it from system-session.
+ exec "sed -e '/pam_elogind.so/a -session optional       pam_jumpstart.so' -i data/pam-lfs/gdm-launch-environment.pam"
  # elogind does not provide sd-varlink, so HAVE_USERDB is undefined and GDM
  # cannot allocate a dynamic greeter. Without this patch pick_username()
  # asserts and GDM aborts. The patch uses a preallocated static account.
  exec "patch -p1 < ../gdm-dynamic-user.patch"
- # Kiosk=true makes gsm-session-fill.c skip load_standard_apps(), so the greeter
- # session loads no apps at all and gnome-shell never starts.
- exec "patch -p1 < ../gdm-kiosk.patch"
+ # gnome-login.session keeps upstream's Kiosk=true: under the systemd session
+ # backend the greeter's shell is org.gnome.Shell@gdm.service, not an
+ # autostart app, so the old gdm-kiosk.patch is gone.
  exec "meson setup build --prefix=/usr --libdir=/usr/lib --buildtype=release --wrap-mode=nodownload $extraArgs -Dgdm-xsession=true -Drun-dir=/run/gdm -Ddefault-pam-config=lfs -Ddbus-sys=/usr/share/dbus-1/system.d -Ddefault-path=/usr/bin:/usr/local/bin:/usr/local/sbin:/bin"
  exec "ninja -C build"
 }

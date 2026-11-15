@@ -1,6 +1,6 @@
 name: "jumpstart-systemd-core"
 version: "0.1.0"
-release: "1"
+release: "2"
 description: "systemd compatibility core for Jumpstart (systemctl, journalctl, unit files)"
 license:
   - "GPL-3.0-or-later"
@@ -13,7 +13,7 @@ license:
 sources:
   - "jumpstart-systemd-core-$version.tar.gz"
 sha256sum:
-  - "2f418edeea953243defc3d84d565dd6e7bf48fb584d9fdf653ed344ae0a5ca17"
+  - "285661bf4e9de744c4c7cd79545118641e37be24394ce33bf1c33dea3af0cf17"
 extract: false
 depends:
   - "jumpstart"
@@ -59,6 +59,15 @@ package {
   exec "install -d -m 0755 \"$ROOT/etc/jumpstart/cores/enabled\""
   exec "touch \"$ROOT/etc/jumpstart/cores/enabled/systemd\" \"$ROOT/etc/jumpstart/cores/enabled/serviceHandler\""
   exec "chmod 0644 \"$ROOT/etc/jumpstart/cores/enabled/systemd\" \"$ROOT/etc/jumpstart/cores/enabled/serviceHandler\""
+  # Every user daemon (`jumpstart --user`, started by pam_jumpstart for each
+  # login, the GDM greeter included) loads this core too: a root-owned marker
+  # in the site default enabled set of user daemons (jumpstart's Kreato
+  # extension of cores spec §9.2), used while the user has no
+  # ~/.config/jumpstart/cores/enabled of their own. The user manager then
+  # provides org.freedesktop.systemd1 on the session bus for gnome-session.
+  exec "install -d -m 0755 \"$ROOT/etc/jumpstart/users\" \"$ROOT/etc/jumpstart/users/cores\" \"$ROOT/etc/jumpstart/users/cores/enabled\""
+  exec "touch \"$ROOT/etc/jumpstart/users/cores/enabled/systemd\""
+  exec "chmod 0644 \"$ROOT/etc/jumpstart/users/cores/enabled/systemd\""
 
   # The manager does not apply presets by itself, and offline systemctl cannot
   # see the core's own units, so they are enabled here with the links

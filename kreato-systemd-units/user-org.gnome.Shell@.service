@@ -1,0 +1,38 @@
+# gnome-shell's own unit (data/org.gnome.Shell@.service.in, GNOME 51). Kreato
+# builds gnome-shell with -Dsystemd=false (meson refuses the systemd option
+# with the elogind libsystemd provider), which also skips installing this
+# file, so it ships here. Absolute paths: @bindir@ = /usr/bin.
+[Unit]
+Description=GNOME Shell
+OnFailure=org.gnome.Shell-disable-extensions.service gnome-session-shutdown.target
+OnFailureJobMode=replace-irreversibly
+CollectMode=inactive-or-failed
+RefuseManualStart=on
+RefuseManualStop=on
+ConditionFileIsExecutable=/usr/bin/gnome-shell
+
+After=gnome-session-manager.target
+
+Requisite=gnome-session-initialized.target
+PartOf=gnome-session-initialized.target
+Before=gnome-session-initialized.target
+
+AssertEnvironment=XDG_SESSION_TYPE=wayland
+
+[Service]
+Slice=session.slice
+Type=notify
+ExecStart=/usr/bin/gnome-shell --mode=%i
+# Exit code 1 means we are probably *not* dealing with an extension failure
+SuccessExitStatus=1
+
+# unset some environment variables that were set by the shell and won't work now that the shell is gone
+ExecStopPost=-/usr/bin/systemctl --user unset-environment GNOME_SETUP_DISPLAY WAYLAND_DISPLAY DISPLAY XAUTHORITY
+
+# On wayland we cannot restart
+Restart=no
+# Kill any stubborn child processes after this long
+TimeoutStopSec=5
+
+# Lower down gnome-shell's OOM score to avoid being killed by OOM-killer too early
+OOMScoreAdjust=-1000

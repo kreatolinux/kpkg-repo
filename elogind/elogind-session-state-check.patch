@@ -1,0 +1,51 @@
+--- a/src/libelogind/sd-login/sd-login.c
++++ b/src/libelogind/sd-login/sd-login.c
+@@ -38,6 +38,30 @@
+  *    machine, session does not exist         → -ENXIO
+  *    requested metadata on object is missing → -ENODATA
+  */
++
++#if 1 /// Kreato: only report sessions elogind actually knows
++/* elogind's flat cgroup hierarchy makes the first component of any cgroup
++ * path a "session": a process of a per-user service manager (Jumpstart puts
++ * them below /jumpstart/users/UID/) would be reported in a session called
++ * "jumpstart". systemd answers -ENODATA for processes outside a session
++ * scope (user@UID.service), and GDM, gnome-session, mutter and polkit then
++ * fall back to the user's display session; do the same by requiring the
++ * session's state file. */
++static int known_session_or_enxio(int r, char **session) {
++        _cleanup_free_ char *p = NULL;
++
++        if (r < 0 || !session || !*session)
++                return r;
++        p = path_join("/run/systemd/sessions", *session);
++        if (!p)
++                return -ENOMEM;
++        if (access(p, F_OK) < 0) {
++                *session = mfree(*session);
++                return -ENXIO;
++        }
++        return r;
++}
++#endif // 1
+ 
+ _public_ int sd_pid_get_session(pid_t pid, char **session) {
+         int r;
+@@ -45,7 +69,7 @@
+         assert_return(pid >= 0, -EINVAL);
+         assert_return(session, -EINVAL);
+ 
+-        r = cg_pid_get_session(pid, session);
++        r = known_session_or_enxio(cg_pid_get_session(pid, session), session);
+         return IN_SET(r, -ENXIO, -ENOMEDIUM) ? -ENODATA : r;
+ }
+ 
+@@ -363,7 +387,7 @@
+         if (r < 0)
+                 return r;
+ 
+-        return cg_pid_get_session(ucred.pid, session);
++        return known_session_or_enxio(cg_pid_get_session(ucred.pid, session), session);
+ }
+ 
+ _public_ int sd_peer_get_owner_uid(int fd, uid_t *uid) {

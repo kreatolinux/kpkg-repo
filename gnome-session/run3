@@ -1,15 +1,11 @@
 name: "gnome-session"
 version: "51.0"
-release: "5"
+release: "6"
 description: "The GNOME session manager"
 sources:
  - "https://gitlab.gnome.org/GNOME/gnome-session/-/archive/${version}/gnome-session-${version}.tar.gz"
- - "gnome-session-null-backend.patch"
- - "gnome-session-init-worker.sh"
 sha256sum:
  - "e4910848a74bc569619ec24261db9e33cdddbb4845adb0e1009fbddeb1edd524"
- - "146239e662391db93a79b4bf4843ebfaa9c4c64f98f68dc48907e7b78487ce44"
- - "029299213f7df293b4c0ebdee08b3da3ada93a18d00dd1fee8dcfd48edad2846"
 depends:
  - "elogind"
  - "xtrans"
@@ -26,27 +22,18 @@ build_depends:
  - "meson"
 
 build {
- # elogind provides logind but not systemd's D-Bus manager API. Without this
- # patch gsm_systemd_new() only checks /run/systemd/seats/ (which elogind
- # creates), selects the systemd backend, and every unit operation fails.
- exec "patch -p1 < ../gnome-session-null-backend.patch"
-
- if ${exec("command -v systemctl")}.exit() != 0 {
-# Credits to https://www.linuxfromscratch.org/blfs/view/svn/gnome/gnome-session.html
- local extraArgs = "-Dsystemduserunitdir=/usr/lib/systemd/user"
-}
-
- macro build ${extraArgs} --libdir=/usr/lib --wrap-mode=nodownload -Ddocbook=false -Dman=false
+ # Stock gnome-session (systemd session management): the leader's
+ # gnome-session-init-worker starts gnome-session@<session>.target through
+ # org.freedesktop.systemd1 on the session bus, which the per-user Jumpstart
+ # manager provides (jumpstart-systemd-core, dbus/sd1api.nim). The former
+ # null-backend patch and shell init worker are gone; logind comes from
+ # elogind (gsm-systemd.c only talks to org.freedesktop.login1).
+ # Credits to https://www.linuxfromscratch.org/blfs/view/svn/gnome/gnome-session.html
+ # The unit directory is explicit: elogind provides libsystemd.pc but no
+ # systemd.pc to take it from.
+ macro build -Dsystemduserunitdir=/usr/lib/systemd/user --libdir=/usr/lib --wrap-mode=nodownload -Ddocbook=false -Dman=false
 }
 
 package {
  macro package
-
- # Upstream factors init-system-specific startup into gnome-session-init-worker
- # so GNOME can work with inits other than systemd (see leader-main.c). The
- # stock helper starts gnome-session@<session>.target over org.freedesktop.systemd1
- # and calls g_error() -- which aborts -- when that name is absent. Replace it
- # with a shim that starts gnome-session-service directly and then signals
- # org.gnome.SessionManager.Initialized() to advance past INITIALIZATION.
- exec "install -Dm755 ../gnome-session-init-worker.sh $ROOT/usr/libexec/gnome-session-init-worker"
 }

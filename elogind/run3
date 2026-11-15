@@ -1,15 +1,17 @@
 name: "elogind"
 version: "257.16"
-release: "4"
+release: "5"
 description: "systemd-logind, extracted to be a standalone daemon"
 sources:
  - "https://github.com/elogind/elogind/archive/refs/tags/v${version}.tar.gz"
  - "elogind-userdbd.socket"
  - "elogind-userdbd.service"
+ - "elogind-session-state-check.patch"
 sha256sum:
  - "3c8146409bfb9daa77f272212c2b0bf0ae727c782ec87ece0d2d25e0e5bf5f4c"
  - "6968857812df16103b508b7a508031ab4e29e51f6cc982569b7f66ebd49488d3"
  - "1f6c26ad128a68206ffbd0187220eb04391722710e626e064ca96cf196ed9f16"
+ - "e9fb6057a218e0462afe122e88d22577d73bcaff5a30690be028c03f5f6cd095"
 depends:
  - "dbus"
  - "linux-pam"
@@ -24,6 +26,15 @@ replaces:
  - "systemd"
 
 prepare {
+ # sd_pid_get_session()/sd_peer_get_session() report a session only if elogind
+ # knows it (/run/systemd/sessions/ID exists). elogind's flat cgroup layout
+ # otherwise names the first cgroup component of any process a session: the
+ # per-user Jumpstart managers run below /jumpstart/users/UID/, so GDM,
+ # gnome-session, mutter and polkit saw a session "jumpstart" and refused the
+ # greeter ("No display available"). systemd answers -ENODATA for processes
+ # of user@UID.service, and every one of them then uses the user's display
+ # session (sd_uid_get_display), as this patch makes elogind do.
+ exec "patch -p1 < ../elogind-session-state-check.patch"
  exec "sed -i \"/relative_source_path = /c relative_source_path = '..'\" meson.build"
  exec "sed -i '/--relative-to=/,+2d' meson.build"
  exec "sed -i '/SYSTEMD_TEST_DATA=/s/%q/%s/g' meson.build"
