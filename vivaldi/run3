@@ -4,29 +4,25 @@ release: "1"
 description: "An advanced browser made with the power user in mind"
 # Vivaldi ships prebuilt Chromium binaries, not source: the .deb is repackaged.
 #
-# Arch selection happens in `prepare`, not in `sources`. kpkg substitutes
-# `sources` while parsing the runfile (runparser.parseRunfile ->
-# getListVariable -> substituteVariables), which runs before
-# initBuildEnvVars() defines KPKG_ARCH, so `${KPKG_ARCH}` in a source URL is
-# never substituted and `${exec("uname -m")}` in a header variable is empty
-# (kongue(5): "Global variables ... cannot use exec directly"). kpkg has no
-# per-arch source mechanism, so both architecture .debs are declared here --
-# kpkg verifies both SHA-256 sums and caches both -- and `prepare` extracts
-# only the one matching KPKG_ARCH. That keeps checksum verification inside
-# kpkg instead of hand-rolling it in the recipe.
+# The two .debs are `sources_arm64:` and `sources_amd64:`, so kpkg downloads
+# only the target architecture's file (--target=default means the host) and
+# verifies it against that group's own sha256sum list. `prepare` then unpacks
+# whatever .deb is present, with no architecture check of its own.
 #
 # URLs: https://downloads.vivaldi.com/stable/vivaldi-stable_<ver>-1_<arch>.deb
 # (the "-1" is Vivaldi's Debian revision; it is not part of `version`).
 # Versions/sums cross-checked against
 # https://repo.vivaldi.com/stable/deb/dists/stable/main/binary-{arm64,amd64}/Packages
-sources:
+sources_arm64:
   - "https://downloads.vivaldi.com/stable/vivaldi-stable_${version}-1_arm64.deb"
-  - "https://downloads.vivaldi.com/stable/vivaldi-stable_${version}-1_amd64.deb"
-sha256sum:
+sha256sum_arm64:
   - "f8a9cddd25a939123c6b570af5ff9aa133483fc1642423cdee28dfc1dd3022f2"
+sources_amd64:
+  - "https://downloads.vivaldi.com/stable/vivaldi-stable_${version}-1_amd64.deb"
+sha256sum_amd64:
   - "67edd2d1476397ec537cf8f2bfcd482bba47e62eb438d77eb704f9314adcd2cb"
-# Both .debs are present in the source dir; nothing to auto-extract (a .deb is
-# an `ar` archive, so kpkg's extractor would not unpack data.tar.xz anyway).
+# Nothing to auto-extract: a .deb is an `ar` archive, so kpkg's extractor would
+# not unpack data.tar.xz anyway.
 extract: false
 # Runtime libraries, mapped from `ldd /opt/vivaldi/vivaldi-bin` on arm64 to the
 # repository package that provides each soname. Upstream's Debian Depends list
@@ -99,20 +95,16 @@ build_depends:
 no_chkupd: true
 
 prepare {
-  # Pick the .deb that matches the build target. KPKG_ARCH is "aarch64" on the
-  # live ISO's arm64 build host and "x86_64" (normalised from amd64) on x86_64.
-  local debarch = "amd64"
-  if "$KPKG_ARCH" == "aarch64" || "$KPKG_ARCH" == "arm64" {
-    local debarch = "arm64"
-  }
-  print "vivaldi: KPKG_ARCH=$KPKG_ARCH, using the $debarch .deb"
+  # Only the target architecture's group was downloaded, so exactly one .deb is
+  # in the source dir and a glob names it without re-deriving the Debian arch
+  # from KPKG_ARCH (which would duplicate the selection kpkg just did).
   # A .deb is an `ar` archive holding control.tar.* and data.tar.*. Unpack it
   # and then the payload; only data.tar.xz is needed (control/ is Debian
   # packaging: apt sources, update-alternatives, apparmor, xdg-icon-resource).
   # bsdtar (libarchive, the build_depends below) reads both the ar container
   # and the xz payload, so no separate tar/xz package is needed in the sandbox.
   exec "mkdir -p deb"
-  exec "bsdtar -xf vivaldi-stable_${version}-1_${debarch}.deb -C deb"
+  exec "bsdtar -xf vivaldi-stable_*.deb -C deb"
   exec "bsdtar -xf deb/data.tar.xz"
 }
 
