@@ -24,7 +24,7 @@ license:
 sources:
   - "kpkg-$version.tar.gz"
 sha256sum:
-  - "27c1280c5f8be7bd47ae3b5d7bf3b3bc4c5e1f8e4469926a7788f43473132983"
+  - "f25cb35e46790b20bc71b85bd7bbb0886391c9ae6289ca219c9f506142288c9c"
 extract: false
 # Same runtime set as the src recipe's kpkg split (depends + depends_kpkg).
 # libarchive is linked; openssl (-d:ssl) and sqlite are dlopen()ed at run time.
