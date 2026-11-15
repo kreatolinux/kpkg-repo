@@ -1,0 +1,34 @@
+[Unit]
+Description=User folders update
+Documentation=man:xdg-user-dirs-update(1)
+# Kreato: upstream 0.20 ships this unit with WantedBy=graphical-session-pre.target
+# and no RemainAfterExit. This copy keeps that anchor but adds RemainAfterExit,
+# and is installed over upstream's file by the package stage.
+#
+# Why graphical-session-pre.target and not default.target: the target is
+# stopped at logout (gnome-session-shutdown.target has
+# Conflicts=graphical-session.target graphical-session-pre.target), so a unit
+# wanted by it runs exactly once per login. default.target is started once per
+# *user manager* instead, which is once per login only while the user does not
+# linger (jumpstart stops the manager when the last session closes); with
+# /etc/jumpstart/users/linger present it would be once per boot. It is also
+# re-activated by `jumpctl cores reload systemd` and by any core restart,
+# because the manager keeps no unit state across a reload.
+#
+# Before= is what upstream intended: the directories exist before anything in
+# the session looks for them.
+Before=graphical-session-pre.target
+
+[Service]
+Type=oneshot
+# Stay "active (exited)" for the rest of the session, so a restart of the
+# target does not re-run the tool. xdg-user-dirs-update is idempotent anyway
+# (it rewrites ~/.config/user-dirs.dirs only when something changed), but this
+# makes "once per login" explicit. No ConditionPathExists=: the tool must run
+# even when ~/.config/user-dirs.dirs already exists, because that is how it
+# recreates directories the user deleted and reassigns removed ones.
+RemainAfterExit=yes
+ExecStart=/usr/bin/xdg-user-dirs-update
+
+[Install]
+WantedBy=graphical-session-pre.target
