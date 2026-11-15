@@ -1,0 +1,31 @@
+# Kreato Linux vendor defaults: Vivaldi is the default web browser.
+#
+# Installed as /etc/xdg/mimeapps.list. glib merges this (config-dir) list on
+# top of /usr/share/applications/gnome-mimeapps.list, which gnome-session ships
+# pointing these types at org.gnome.Epiphany.desktop -- a browser the live
+# image does not install. Merging is per key, so only the types listed here
+# change and every other association gnome-session set is kept.
+#
+# A user's ~/.config/mimeapps.list (what GNOME Settings > Default Applications
+# writes) still takes precedence, so the default remains user-changeable.
+[Default Applications]
+text/html=vivaldi-stable.desktop
+application/xhtml+xml=vivaldi-stable.desktop
+application/xhtml_xml=vivaldi-stable.desktop
+application/xml=vivaldi-stable.desktop
+text/xml=vivaldi-stable.desktop
+application/rss+xml=vivaldi-stable.desktop
+application/rdf+xml=vivaldi-stable.desktop
+application/x-mimearchive=vivaldi-stable.desktop
+x-scheme-handler/http=vivaldi-stable.desktop
+x-scheme-handler/https=vivaldi-stable.desktop
+x-scheme-handler/about=vivaldi-stable.desktop
+x-scheme-handler/unknown=vivaldi-stable.desktop
+
+# Also register Vivaldi as a handler for these types, so it shows up in
+# "Open With" even when another application is the default.
+[Added Associations]
+text/html=vivaldi-stable.desktop;
+application/xhtml+xml=vivaldi-stable.desktop;
+x-scheme-handler/http=vivaldi-stable.desktop;
+x-scheme-handler/https=vivaldi-stable.desktop;

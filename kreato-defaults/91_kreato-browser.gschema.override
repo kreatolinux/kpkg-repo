@@ -1,0 +1,18 @@
+# Kreato Linux GNOME dash favourites: Vivaldi first, then Files and Text
+# Editor.
+#
+# Merged after 00_org.gnome.shell.gschema.override (gnome-shell) and after
+# 90_kreato.gschema.override (kreato-wallpapers), because override files are
+# applied in filename order. Only org.gnome.shell:favorite-apps is set here, so
+# the wallpaper keys from 90_kreato.gschema.override are untouched.
+#
+# GNOME's stock list also names org.gnome.Epiphany.desktop, org.gnome.Calendar,
+# org.gnome.Software and org.gnome.Calculator. None of those are installed in
+# the live image, so a dash built from the stock list shows missing-app
+# placeholders. This list names only what the image ships.
+#
+# The IDs must match the files in /usr/share/applications:
+# vivaldi-stable.desktop (from the vivaldi package), org.gnome.Nautilus.desktop
+# and org.gnome.TextEditor.desktop.
+[org.gnome.shell]
+favorite-apps=['vivaldi-stable.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.TextEditor.desktop']
