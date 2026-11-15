@@ -1,6 +1,6 @@
 name: "kreato-fs-essentials"
 version: "0.0.2"
-release: "12"
+release: "13"
 description: "Kreato Linux filesystem essentials, seperated from src/kreastrap/overlay"
 sources:
  - "overlay/"
@@ -35,6 +35,9 @@ prepare {
 
 package {
  exec "cp -r etc/ $ROOT"
+ # The overlay files are 0644 in the repository; shadow must not be
+ # world-readable.
+ exec "chmod 0600 $ROOT/etc/shadow"
  exec "cp -r usr/ $ROOT"
  exec "[ ! -d var ] || cp -r var/ $ROOT"
  # /var/run must be the FHS symlink to /run, not a directory: elogind and
