@@ -1,6 +1,6 @@
 name: "shadow"
 version: "4.20.3"
-release: "4"
+release: "5"
 description: "Shadow utils"
 sources:
  - "https://github.com/shadow-maint/shadow/releases/download/4.16.0/shadow-4.16.0.tar.xz"
@@ -23,6 +23,9 @@ package {
  macro package
  exec "sed -i 's/account.*/account include system-account/g' \"$ROOT/etc/pam.d/su\""
  exec "rm -f $ROOT/etc/pam.d/login"
+ # Kreato has no SELinux: shadow's PAM files reference pam_selinux, which
+ # makes every su/login log "PAM adding faulty module". Drop those lines.
+ exec "sed -i '/pam_selinux/d' $ROOT/etc/pam.d/*"
 }
 
 postinstall {
