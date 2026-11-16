@@ -9,15 +9,10 @@ license:
   - "LGPL-3.0-or-later"
   - "MIT"
   - "ISC"
-# Built from the Kreato src-2 tree (jumpstart reports v2.0.0). Replaces the old
-# `jumpstart -> src` symlink, which built the src 8.0.0 release as a split of
-# the `src` metapackage; `kpkg` itself still builds from src/run3.
-# No upstream release of src-2 exists yet, so the source ships in this
-# directory. Regenerate it with make-tarball.sh (kept next to this recipe on
-# the build host, not in the repository), which also rewrites the sum below.
-# Layout: jumpstart-$version/{nim.cfg,vendor/,src-2/}. The top-level nim.cfg
-# points Nim at the vendored cligen/fusion/regex/unicodedb (the build sandbox
-# has no ~/.nimble and must not run nimble) and keeps nimcache in the tree.
+# Built from the Kreato src-2 tree; no upstream src-2 release exists, so the
+# source ships here. make-tarball.sh (on the build host) regenerates it and the sum.
+# Layout: jumpstart-$version/{nim.cfg,vendor/,src-2/}; the top-level nim.cfg
+# points Nim at the vendored libraries (the sandbox has no ~/.nimble).
 sources:
   - "jumpstart-$version.tar.gz"
 sha256sum:
@@ -33,21 +28,12 @@ prepare {
 }
 
 build {
-  # src-2's own build: jumpstart (threads, refc), jumpctl, kongue-runner and
-  # pam_jumpstart.so, with -d:jumpstartLibDir=/usr/lib compiled in so the
-  # daemon finds /usr/lib/jumpstart/{cores,kongue-runner}.
   exec "make jumpstart LIBDIR=/usr/lib JUMPSTART_BUILD_OS=Linux"
 }
 
 package {
-  # Exactly src-2's `make install_jumpstart`; -o jumpstart: install what the
-  # build stage produced instead of rebuilding.
-  #   /usr/bin/jumpstart, /usr/bin/jumpctl          (/bin, /sbin -> usr/bin)
-  #   /usr/lib/jumpstart/kongue-runner
-  #   /usr/lib/security/pam_jumpstart.so            (linux-pam's securedir)
-  # /sbin/init -> /bin/jumpstart is not shipped: the old recipe did not either,
-  # and `krep rootfs` (init: jumpstart) creates it in its finalizer.
-  # /usr/lib/jumpstart/cores is owned by core packages (jumpstart-systemd-core).
+  # Exactly src-2's `make install_jumpstart`; -o jumpstart installs the build
+  # stage's output instead of rebuilding. /sbin/init is created by `krep rootfs`.
   exec "umask 022 && make -o jumpstart install_jumpstart DESTDIR=\"$ROOT\" PREFIX=/usr LIBDIR=/usr/lib JUMPSTART_BUILD_OS=Linux"
   exec "install -d -m 0755 \"$ROOT/usr/share/man/man5\""
   exec "install -m 0644 man/jumpstart_dec.5 \"$ROOT/usr/share/man/man5/jumpstart_dec.5\""

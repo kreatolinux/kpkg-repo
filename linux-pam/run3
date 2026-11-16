@@ -45,9 +45,7 @@ package {
   exec "meson install --destdir=$ROOT -C build"
   exec "mkdir -p $ROOT/etc/pam.d"
   exec "cp -rf ../pam.d/* $ROOT/etc/pam.d/"
-  # pam_unix verifies passwords for non-root callers (su, screen lockers)
-  # through unix_chkpwd, which must be setuid root to read /etc/shadow.
-  # meson installs it 0755.
+  # unix_chkpwd must be setuid root to read /etc/shadow; meson installs it 0755.
   exec "chmod 4755 $ROOT/usr/sbin/unix_chkpwd"
 }
 

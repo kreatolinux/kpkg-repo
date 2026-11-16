@@ -1,9 +1,7 @@
 #!/bin/sh
-# Compile the locales the desktop needs into $1/usr/lib/locale (directory
-# form, no locale-archive). glibc's C.UTF-8 is not built in: without a
-# compiled C.utf8 every program run with LANG=C.UTF-8 (the GDM/GNOME
-# default here) gets "Locale not supported by C library", and
-# gnome-terminal-server refuses to start at all.
+# Compile C.UTF-8 and en_US.UTF-8 into $1/usr/lib/locale. glibc has no built-in
+# C.UTF-8 and gnome-terminal-server refuses to start without it; en_US.UTF-8 is
+# the desktop's other locale.
 set -e
 dest="$1/usr/lib/locale"
 mkdir -p "$dest"

@@ -16,17 +16,13 @@ backup:
  - "etc/shells"
 
 preinstall {
- # Older roots (and packages such as samba before 4.25.0-3) have /var/run as
- # a real directory. This package replaces it with a symlink to /run, which
- # kpkg cannot do over a directory, so migrate its contents first.
+ # A /var/run directory left by an older package cannot be replaced by a
+ # symlink, so migrate its contents first.
  exec "if [ -d \"$ROOT/var/run\" ] && [ ! -L \"$ROOT/var/run\" ]; then mkdir -p \"$ROOT/run\" && cp -a \"$ROOT/var/run/.\" \"$ROOT/run/\" && rm -rf \"$ROOT/var/run\"; fi"
 }
 
 preupgrade {
- # Same migration for systems upgrading from an older release.
- # Older roots (and packages such as samba before 4.25.0-3) have /var/run as
- # a real directory. This package replaces it with a symlink to /run, which
- # kpkg cannot do over a directory, so migrate its contents first.
+ # Same migration on upgrade.
  exec "if [ -d \"$ROOT/var/run\" ] && [ ! -L \"$ROOT/var/run\" ]; then mkdir -p \"$ROOT/run\" && cp -a \"$ROOT/var/run/.\" \"$ROOT/run/\" && rm -rf \"$ROOT/var/run\"; fi"
 }
 
@@ -36,13 +32,11 @@ prepare {
 
 package {
  exec "cp -r etc/ $ROOT"
- # The overlay files are 0644 in the repository; shadow must not be
- # world-readable.
+ # shadow must not be world-readable.
  exec "chmod 0600 $ROOT/etc/shadow"
  exec "cp -r usr/ $ROOT"
  exec "[ ! -d var ] || cp -r var/ $ROOT"
- # /var/run must be the FHS symlink to /run, not a directory: elogind and
- # dbus clients look for their sockets under it.
+ # /var/run must be the FHS symlink to /run, not a directory.
  exec "rm -rf $ROOT/var/run"
  exec "mkdir -p $ROOT/var && ln -s /run $ROOT/var/run"
  exec "mkdir -p $ROOT/etc/jumpstart/enabled"

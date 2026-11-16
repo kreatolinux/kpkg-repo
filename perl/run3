@@ -10,12 +10,9 @@ build_depends:
   - "gmake"
 
 build {
-  # Kreato's perl has always used an unversioned layout: the shell variable
-  # this recipe tried to set never reached Configure (each exec is its own
-  # shell, and kongue used to blank unknown $NAMES), so every shipped perl and
-  # perl-* package lives in /usr/lib/perl5/{core,vendor,site}_perl. Keep that
-  # layout explicitly; switching to /usr/lib/perl5/5.44/... would break every
-  # installed perl module until all of them are rebuilt.
+  # Unversioned layout: every shipped perl and perl-* package lives in
+  # /usr/lib/perl5/{core,vendor,site}_perl, so a versioned path would break
+  # every installed module.
   # Credit: https://www.linuxfromscratch.org/lfs/view/development/chapter08/perl.html
   exec "sh Configure -des                                          -Dprefix=/usr                                 -Dvendorprefix=/usr                           -Dprivlib=/usr/lib/perl5/core_perl       -Darchlib=/usr/lib/perl5/core_perl       -Dsitelib=/usr/lib/perl5/site_perl       -Dsitearch=/usr/lib/perl5/site_perl      -Dvendorlib=/usr/lib/perl5/vendor_perl   -Dvendorarch=/usr/lib/perl5/vendor_perl  -Dman1dir=/usr/share/man/man1                 -Dman3dir=/usr/share/man/man3                 -Dpager=\"/usr/bin/less -isR\"                  -Duseshrplib                                  -Dusethreads"
   exec "make -j$(nproc --all)"

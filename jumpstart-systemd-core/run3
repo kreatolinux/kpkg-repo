@@ -6,11 +6,10 @@ no_chkupd: true
 license:
   - "GPL-3.0-or-later"
   - "LGPL-3.0-or-later"
-# No upstream release exists (github.com/kreatolinux/jumpstart-systemd-core is
-# not public), so the source ships in this directory. Regenerate it with
-# /tmp/recipes/make-sdcore-tarball.sh, which also rewrites the sum below.
-# Layout: jumpstart-systemd-core-$version/{jumpstart-systemd-core,src-2/libs/jumpstartcore}
-# so the core's nim.cfg (--path:"$config/../src-2/libs/jumpstartcore/src") resolves.
+# No upstream release exists (the repo is not public), so the source ships here;
+# make-sdcore-tarball.sh regenerates it and the sum.
+# Layout: jumpstart-systemd-core-$version/{jumpstart-systemd-core,src-2/libs/jumpstartcore},
+# which is what the core's nim.cfg --path expects.
 sources:
   - "jumpstart-systemd-core-$version.tar.gz"
 sha256sum:
@@ -21,17 +20,12 @@ depends:
 build_depends:
   - "nim"
   - "gmake"
-# No `conflicts: systemd`: elogind declares `replaces: systemd`, so kpkg
-# treats systemd as installed on every elogind system and the conflict would
-# block exactly the systems this core is for. The real systemd package and
-# this core both ship systemctl/journalctl; kpkg's file ownership checks
-# report that overlap if both are ever installed.
 
-# busybox owns /usr/bin/{poweroff,reboot,halt} (= /usr/sbin, /sbin on Kreato).
-# "yes" ships the core's versions there instead (what the old live image did:
-# busybox's applets signal PID 1 with SIGUSR2/SIGUSR1, which Jumpstart does not
-# handle, and elogind calls /usr/sbin/poweroff). kpkg hands the symlinks to
-# whichever of busybox and this package was installed last.
+# No `conflicts: systemd`: elogind declares `replaces: systemd`, so the conflict
+# would block exactly the systems this core is for. Both ship systemctl and
+# journalctl; kpkg reports that overlap if both are ever installed.
+# "yes" ships the core's poweroff/reboot/halt over busybox's applets, which
+# signal PID 1 with SIGUSR2/SIGUSR1 that Jumpstart does not handle.
 power_links: "yes"
 
 prepare {
@@ -44,49 +38,38 @@ build {
 }
 
 package {
-  # Exactly `make install`. SBINDIR=/usr/bin: /usr/sbin and /sbin are
-  # symlinks to /usr/bin on Kreato, so the package must not carry a usr/sbin
-  # directory. umask/chmod: Jumpstart rejects a core tree with any
-  # group/other-writable entry (discovery.nim checkTree).
+  # Exactly `make install`. SBINDIR=/usr/bin: /usr/sbin and /sbin are symlinks to
+  # /usr/bin. umask/chmod: Jumpstart rejects a group/other-writable core tree.
   exec "umask 022 && make install DESTDIR=\"$ROOT\" PREFIX=/usr SBINDIR=/usr/bin NIMFLAGS='-d:release --threads:off --nimcache:nimcache'"
   exec "chmod -R go-w \"$ROOT/usr/lib/jumpstart\""
   if "$power_links" != "yes" {
     exec "rm -f \"$ROOT/usr/bin/poweroff\" \"$ROOT/usr/bin/reboot\" \"$ROOT/usr/bin/halt\""
   }
 
-  # Enable the core: empty regular files named after the cores, mode 0644,
-  # in a real 0755 directory (jumpstart cores/lifecycle/state.nim
-  # readEnabledState). serviceHandler keeps the native .kg units running.
+  # Enable the core: empty 0644 files named after the cores in a 0755 directory.
   exec "install -d -m 0755 \"$ROOT/etc/jumpstart/cores/enabled\""
   exec "touch \"$ROOT/etc/jumpstart/cores/enabled/systemd\" \"$ROOT/etc/jumpstart/cores/enabled/serviceHandler\""
   exec "chmod 0644 \"$ROOT/etc/jumpstart/cores/enabled/systemd\" \"$ROOT/etc/jumpstart/cores/enabled/serviceHandler\""
-  # Every user daemon (`jumpstart --user`, started by pam_jumpstart for each
-  # login, the GDM greeter included) loads this core too: a root-owned marker
-  # in the site default enabled set of user daemons (jumpstart's Kreato
-  # extension of cores spec §9.2), used while the user has no
-  # ~/.config/jumpstart/cores/enabled of their own. The user manager then
-  # provides org.freedesktop.systemd1 on the session bus for gnome-session.
+  # Every user daemon (`jumpstart --user`) loads this core too, from the site
+  # default enabled set, while the user has no ~/.config/jumpstart/cores/enabled
+  # of their own; it provides org.freedesktop.systemd1 for gnome-session.
   exec "install -d -m 0755 \"$ROOT/etc/jumpstart/users\" \"$ROOT/etc/jumpstart/users/cores\" \"$ROOT/etc/jumpstart/users/cores/enabled\""
   exec "touch \"$ROOT/etc/jumpstart/users/cores/enabled/systemd\""
   exec "chmod 0644 \"$ROOT/etc/jumpstart/users/cores/enabled/systemd\""
 
-  # The manager does not apply presets by itself, and offline systemctl cannot
-  # see the core's own units, so they are enabled here with the links
-  # `systemctl enable` would make.
+  # The manager applies no presets and offline systemctl cannot see the core's
+  # own units, so they are linked here the way `systemctl enable` would.
   exec "install -d -m 0755 \"$ROOT/etc/systemd/system/sysinit.target.wants\" \"$ROOT/etc/systemd/system/timers.target.wants\" \"$ROOT/etc/systemd/system/multi-user.target.wants\""
   for u in ["systemd-sysusers.service", "systemd-tmpfiles-setup.service"] {
     exec "ln -sf /usr/lib/jumpstart/cores/systemd/share/units/$u \"$ROOT/etc/systemd/system/sysinit.target.wants/$u\""
   }
   exec "ln -sf /usr/lib/jumpstart/cores/systemd/share/units/systemd-tmpfiles-clean.timer \"$ROOT/etc/systemd/system/timers.target.wants/systemd-tmpfiles-clean.timer\""
   exec "ln -sf /usr/lib/jumpstart/cores/systemd/share/units/systemd-user-sessions.service \"$ROOT/etc/systemd/system/multi-user.target.wants/systemd-user-sessions.service\""
-  # No getty@tty1: GDM's greeter runs on VT1, and kreato-fs-essentials ships
-  # native gettys for tty2-6 and the serial console.
+  # No getty@tty1: GDM's greeter runs on VT1; kreato-fs-essentials ships the gettys.
   exec "ln -sf /usr/lib/jumpstart/cores/systemd/share/units/graphical.target \"$ROOT/etc/systemd/system/default.target\""
 
-  # Distribution policy for units other packages ship. Read by
-  # `systemctl preset` (postinstall below) and `systemctl preset-all`.
-  # Built with echo, not `write`: Kongue's `write` stores a triple-quoted
-  # string with literal backslash-n sequences.
+  # Distribution policy for units other packages ship; read by `systemctl preset`.
+  # Built with echo, not `write`: Kongue's `write` stores literal backslash-n.
   exec "install -d -m 0755 \"$ROOT/usr/lib/systemd/system-preset\" \"$ROOT/usr/lib/systemd/user-preset\""
   exec "echo '# Kreato Linux system units (jumpstart-systemd-core)' > \"$ROOT/usr/lib/systemd/system-preset/80-kreato.preset\""
   for u in ["dbus.service", "elogind.service", "elogind-userdbd.socket", "systemd-udevd.service", "systemd-udev-trigger.service", "polkit.service", "accounts-daemon.service", "upower.service", "NetworkManager.service", "gdm.service", "sshd.service", "dev-shm.mount", "systemd-sysusers.service", "systemd-tmpfiles-setup.service", "systemd-tmpfiles-clean.timer", "systemd-user-sessions.service"] {
@@ -105,7 +88,7 @@ postinstall {
   for u in ["dbus.service", "elogind.service", "elogind-userdbd.socket", "systemd-udevd.service", "systemd-udev-trigger.service", "polkit.service", "accounts-daemon.service", "upower.service", "NetworkManager.service", "gdm.service", "sshd.service", "dev-shm.mount"] {
     exec "if [ -e /etc/systemd/system/$u ] || [ -e /usr/lib/systemd/system/$u ]; then /usr/bin/systemctl preset $u || echo 'jumpstart-systemd-core: could not preset $u'; fi"
   }
-  # Offline systemctl has no --global; link user units the way their [Install] does.
+  # Offline systemctl has no --global: link user units as their [Install] does.
   for u in ["pipewire.socket", "pipewire-pulse.socket"] {
     exec "if [ -e /usr/lib/systemd/user/$u ]; then mkdir -p -m 0755 /etc/systemd/user/sockets.target.wants && ln -sf /usr/lib/systemd/user/$u /etc/systemd/user/sockets.target.wants/$u; fi"
   }

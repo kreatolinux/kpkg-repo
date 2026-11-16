@@ -22,10 +22,8 @@ build_depends:
  - "itstool"
 
 build {
- # editorconfig support needs libeditorconfig (editorconfig-core-c),
- # which is not packaged; the editor works fine without it.
-  # gdk-pixbuf resolves file types through the compiled shared MIME
-  # database, and the build sandbox only carries its XML sources.
+ # editorconfig support needs libeditorconfig, which is not packaged.
+  # gdk-pixbuf needs the compiled MIME database; the sandbox only has its XML sources.
   exec "command -v update-mime-database >/dev/null 2>&1 && update-mime-database /usr/share/mime || true"
  macro build --libdir=/usr/lib --wrap-mode=nodownload -Deditorconfig=disabled -Ddevelopment=false
 }

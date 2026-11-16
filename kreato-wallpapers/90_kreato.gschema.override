@@ -1,6 +1,5 @@
-# Kreato Linux default wallpaper (desktop, dark style and lock screen).
-# Sorts after 00_org.gnome.shell.gschema.override and any vendor
-# overrides from gnome-backgrounds/gsettings-desktop-schemas, so it wins.
+# Kreato Linux default wallpaper. Sorts after 00_org.gnome.shell's override, so
+# it wins.
 [org.gnome.desktop.background]
 picture-uri='file:///usr/share/backgrounds/kreato/devin-wallpaper.png'
 picture-uri-dark='file:///usr/share/backgrounds/kreato/devin-wallpaper.png'

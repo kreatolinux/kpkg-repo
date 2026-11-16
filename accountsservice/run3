@@ -19,18 +19,8 @@ build_depends:
  - "vala"
  - "gettext"
 
-# 26.x is meson-only and still supports elogind through -Delogind=true (it then
-# requires libelogind >= 229.4; elogind ships libelogind.pc and libsystemd.pc).
-# The systemd unit is not installed here: kreato-systemd-units ships
-# accounts-daemon.service for the jumpstart compatibility core.
-#
-# The options are written literally on the macro line on purpose: passing them
-# through a local variable after another -D value used to glue the last value
-# and the first extra flag together ("wheel-Delogind=true"), which silently
-# produced a bogus ADMIN_GROUP and dropped the elogind dependency.
-#
-# -Dtests=false replaces the old "sed out subdir('tests')" hack; the tests need
-# the mocklibc wrap, which --wrap-mode=nodownload would refuse to fetch.
+# 26.x is meson-only and takes -Delogind=true. The unit comes from
+# kreato-systemd-units (accounts-daemon.service).
 build {
  macro build --libdir=/usr/lib -Dadmin_group=wheel -Delogind=true -Dsystemdsystemunitdir=no -Dtests=false --wrap-mode=nodownload
 }

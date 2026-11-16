@@ -21,34 +21,22 @@ build_depends:
  - "meson"
 
 build {
- # The user unit directory is enabled: it installs
- # gnome-session@gnome-login.target.d/gnome-login.session.conf, which makes the
- # greeter's gnome-session target pull in org.gnome.Shell@gdm.service under the
- # greeter's per-user Jumpstart manager. No systemd system unit (that comes
- # from kreato-systemd-units).
- # gdm 51 reworked the PAM path options: pam-prefix now defaults to the install
- # prefix instead of sysconfdir, so the service files would go to
- # /usr/lib/pam.d and the module to /usr/lib/security (gdm 50 put the services
- # in /etc/pam.d). Pin the service dir to /etc/pam.d so they stay next to the
- # profiles linux-pam installs there; pam-mod-dir keeps its /usr/lib/security
- # default, which is where pam_gdm.so already went.
+ # Installs gnome-session@gnome-login.target.d/gnome-login.session.conf (user
+ # unit dir; the system unit comes from kreato-systemd-units).
+ # gdm 51 puts the PAM services in /usr/lib/pam.d unless -Dpam-services-dir
+ # is pinned to /etc/pam.d, next to linux-pam's profiles.
  local extraArgs = "-Dlogind-provider=elogind -Dsystemd-journal=false -Dsystemdsystemunitdir=no -Dsystemduserunitdir=/usr/lib/systemd/user -Dpam-services-dir=/etc/pam.d"
- # Adapt the LFS PAM profile to the repository's elogind provider. This is
- # unconditional: the build always uses -Dlogind-provider=elogind, and
- # jumpstart-systemd-core installs a systemctl shim, so probing for systemctl
- # would ship pam_systemd.so (which does not exist) in the greeter stack.
+ # LFS PAM profile switched to elogind: a systemctl probe would ship
+ # pam_systemd.so, which does not exist here.
  exec "sed -e 's@systemd@elogind@' -e '/elogind/isession  required       pam_loginuid.so' -i data/pam-lfs/gdm-launch-environment.pam"
- # The greeter needs its own per-user Jumpstart manager (gnome-session runs
- # gnome-session@gnome-login.target through it): pam_jumpstart after
- # pam_elogind. gdm-password and gdm-autologin get it from system-session.
+ # The greeter needs its own per-user Jumpstart manager: pam_jumpstart after
+ # pam_elogind (gdm-password and gdm-autologin get it from system-session).
  exec "sed -e '/pam_elogind.so/a -session optional       pam_jumpstart.so' -i data/pam-lfs/gdm-launch-environment.pam"
- # elogind does not provide sd-varlink, so HAVE_USERDB is undefined and GDM
- # cannot allocate a dynamic greeter. Without this patch pick_username()
- # asserts and GDM aborts. The patch uses a preallocated static account.
+ # elogind has no sd-varlink, so HAVE_USERDB is undefined: the patch uses the
+ # preallocated static greeter account instead of a dynamic one.
  exec "patch -p1 < ../gdm-dynamic-user.patch"
- # gnome-login.session keeps upstream's Kiosk=true: under the systemd session
- # backend the greeter's shell is org.gnome.Shell@gdm.service, not an
- # autostart app, so the old gdm-kiosk.patch is gone.
+ # Kiosk=true makes the greeter load no apps: its shell is
+ # org.gnome.Shell@gdm.service, not an autostart app.
  exec "meson setup build --prefix=/usr --libdir=/usr/lib --buildtype=release --wrap-mode=nodownload $extraArgs -Dgdm-xsession=true -Drun-dir=/run/gdm -Ddefault-pam-config=lfs -Ddbus-sys=/usr/share/dbus-1/system.d -Ddefault-path=/usr/bin:/usr/local/bin:/usr/local/sbin:/bin"
  exec "ninja -C build"
 }
@@ -58,14 +46,13 @@ package {
 }
 
 postinstall {
- # From BLFS. Idempotent: reinstalling gdm must not fail because the account
- # already exists from a previous install.
+ # From BLFS.
  exec "getent group gdm >/dev/null 2>&1 || groupadd -g 21 gdm"
  exec "getent passwd gdm >/dev/null 2>&1 || useradd -c 'GDM Daemon Owner' -d /var/lib/gdm -u 21 -g gdm -s /bin/false gdm"
  # BusyBox passwd has no -q; lock the account without the quiet flag.
  exec "passwd -l gdm >/dev/null 2>&1 || true"
- # Static greeter account used by the patched dynamic-user store. It must be
- # in the gdm group or pam_succeed_if rejects the greeter session.
+ # Static greeter account for the patch; it must be in the gdm group or
+ # pam_succeed_if rejects the greeter session.
  exec "getent group gdm-greeter >/dev/null 2>&1 || groupadd -g 120 gdm-greeter"
  exec "getent passwd gdm-greeter >/dev/null 2>&1 || useradd -u 120 -g 120 -G gdm -d /var/lib/gdm -s /bin/false -M gdm-greeter"
  exec "mkdir -p /var/lib/gdm/.config/autostart /var/lib/gdm/.local/state"

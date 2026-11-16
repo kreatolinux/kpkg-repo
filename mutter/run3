@@ -66,8 +66,7 @@ build_depends:
   - "gobject-introspection"
 
 prepare {
-  # The download.gnome.org release tarball (meson dist) already vendors
-  # subprojects/gvdb, so no separate gvdb archive is fetched any more.
+  # The release tarball already vendors subprojects/gvdb.
   exec "tar -xf mutter-$version.tar.xz"
   cd "mutter-$version"
   exec "patch -Np1 -i ../disable-man.patch"

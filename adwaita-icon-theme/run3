@@ -27,7 +27,6 @@ package {
 }
 
 postinstall {
- # Without icon-theme.cache GTK and gnome-shell rescan the whole theme on
- # every start.
+ # Without icon-theme.cache GTK and gnome-shell rescan the theme on every start.
  exec "gtk-update-icon-cache -qtf /usr/share/icons/Adwaita 2>/dev/null || gtk4-update-icon-cache -qtf /usr/share/icons/Adwaita 2>/dev/null || true"
 }

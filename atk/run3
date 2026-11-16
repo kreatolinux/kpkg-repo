@@ -20,10 +20,7 @@ build_depends:
  - "python-setuptools"
 
 build {
- # 2.62 flips default_bus to dbus-broker. dbus-broker is not packaged here, so
- # find_program('dbus-broker-launch') fails and the launcher is built exactly
- # as before; pin dbus-daemon so a future dbus-broker package cannot silently
- # turn libsystemd into a hard dependency of the accessibility bus.
+ # 2.62 defaults to dbus-broker, which is not packaged; pin dbus-daemon.
  macro build --libdir=/usr/lib --default-library=shared --wrap-mode=nodownload -Dintrospection=enabled -Ddocs=false -Ddefault_bus=dbus-daemon
 }
 

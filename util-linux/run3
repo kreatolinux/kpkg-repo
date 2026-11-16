@@ -10,9 +10,7 @@ build_depends:
  - "gmake"
 
 build {
- # shadow provides su, login, nologin, chfn and chsh (setuid, PAM-aware).
- # Building util-linux's copies too makes two packages own the same real
- # files, and whichever installs last wins.
+ # shadow provides su, login, nologin, chfn and chsh; do not build them here.
  macro build --configure --disable-makeinstall-tty-setgid --disable-su --disable-login --disable-nologin --disable-chfn-chsh
 }
 

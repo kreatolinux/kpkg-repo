@@ -30,8 +30,7 @@ build {
 
 package {
   exec "make DESTDIR=$ROOT install"
-  # /var/run is kreato-fs-essentials' symlink to /run; smbd creates its pid
-  # directory there at startup.
+  # /var/run is a symlink to /run; smbd creates its pid directory there.
   exec "rm -rf $ROOT/var/run"
 }
 

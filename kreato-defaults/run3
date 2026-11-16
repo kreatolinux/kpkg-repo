@@ -23,47 +23,18 @@ depends:
 no_chkupd: true
 
 package {
-  # 1. Default web browser.
-  #
-  # Installed to /etc/xdg/mimeapps.list, the system-wide (config-dir) default
-  # association list. glib merges mimeapps.list files key by key from lowest to
-  # highest precedence: <data-dir>/applications/mimeapps.list,
-  # <data-dir>/applications/<desktop>-mimeapps.list, <config-dir>/mimeapps.list,
-  # <config-dir>/<desktop>-mimeapps.list. Verified with `gio mime` in a chroot
-  # of the live rootfs: with this file in place all four browser types resolve
-  # to vivaldi-stable.desktop, including with XDG_CURRENT_DESKTOP=GNOME (which
-  # is when gnome-session's gnome-mimeapps.list is consulted), and a user's own
-  # ~/.config/mimeapps.list still wins.
-  #
-  # The config-dir file is the right slot rather than overwriting
-  # /usr/share/applications/gnome-mimeapps.list: gnome-session ships that file
-  # with ~230 entries (geolocation, help, software, mail, calendar, ...), and
-  # replacing it wholesale would drop all of them. A config-dir list is merged
-  # per key on top of gnome-session's, so only the types listed in this
-  # package change and every other association survives (verified: with this
-  # file installed, application/zip still resolves to org.gnome.Nautilus.desktop
-  # and application/json to org.gnome.TextEditor.desktop, exactly as
-  # gnome-mimeapps.list set them).
-  #
-  # A user's own ~/.config/mimeapps.list still wins over this, which is what
-  # GNOME Settings > Default Applications writes, so the user can change it.
+  # Default web browser. /etc/xdg/mimeapps.list is merged per key on top of
+  # gnome-session's gnome-mimeapps.list, so only the types listed in this
+  # package change; a user's ~/.config/mimeapps.list still wins.
   exec "install -Dm644 mimeapps.list \"$ROOT/etc/xdg/mimeapps.list\""
 
-  # 2. GNOME dash favourites.
-  #
-  # Override files in /usr/share/glib-2.0/schemas are merged in filename order
-  # and a later file wins for the keys it sets (verified with
-  # glib-compile-schemas + gsettings). "91_" sorts after kreato-wallpapers'
-  # "90_kreato.gschema.override" and after gnome-shell's own
-  # "00_org.gnome.shell.gschema.override", so favourite-apps is replaced. This
-  # file sets only org.gnome.shell:favourite-apps, so it cannot clobber the
-  # wallpaper keys that 90_kreato.gschema.override sets (also verified).
+  # GNOME dash favourites. Override files are merged in filename order, so
+  # "91_" wins over gnome-shell's "00_" and kreato-wallpapers' "90_".
   exec "install -Dm644 91_kreato-browser.gschema.override \"$ROOT/usr/share/glib-2.0/schemas/91_kreato-browser.gschema.override\""
 }
 
 postinstall {
-  # Recompile the schema cache so the override is live immediately;
-  # kreato-wallpapers' postinstall does the same for its own override.
+  # Recompile the schema cache so the override is live immediately.
   exec "glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true"
   exec "update-desktop-database /usr/share/applications 2>/dev/null || true"
 }

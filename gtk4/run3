@@ -34,10 +34,7 @@ build_depends:
  - "gobject-introspection"
 
 prepare {
- # No-op on 4.24: !9384 ("build: Remove objcopy resource build") dropped
- # can_use_objcopy_for_resources entirely, and the objcopy path was already
- # gated on x86_64 anyway. Kept so the step still does the right thing if the
- # variable ever comes back.
+ # No-op on 4.24: the variable does not exist there. Kept in case it returns.
  exec "sed -i 's/can_use_objcopy_for_resources = true/can_use_objcopy_for_resources = false/g' meson.build"
 }
 

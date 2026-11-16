@@ -17,8 +17,7 @@ build {
   # gdk-pixbuf resolves file types through the compiled shared MIME
   # database, and the build sandbox only carries its XML sources.
   exec "command -v update-mime-database >/dev/null 2>&1 && update-mime-database /usr/share/mime || true"
- # The wallpaper portal needs gnome-desktop-3 (GTK 3), which gnome-desktop 51
- # no longer builds; GNOME uses xdg-desktop-portal-gnome for it anyway.
+ # The wallpaper portal needs gnome-desktop-3, which 51 does not build.
  macro build --meson -Dwallpaper=disabled
 }
 

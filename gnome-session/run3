@@ -22,15 +22,11 @@ build_depends:
  - "meson"
 
 build {
- # Stock gnome-session (systemd session management): the leader's
- # gnome-session-init-worker starts gnome-session@<session>.target through
- # org.freedesktop.systemd1 on the session bus, which the per-user Jumpstart
- # manager provides (jumpstart-systemd-core, dbus/sd1api.nim). The former
- # null-backend patch and shell init worker are gone; logind comes from
- # elogind (gsm-systemd.c only talks to org.freedesktop.login1).
+ # Stock gnome-session: the leader's init worker starts
+ # gnome-session@<session>.target over org.freedesktop.systemd1 on the session
+ # bus, which the per-user Jumpstart manager provides. logind comes from elogind.
  # Credits to https://www.linuxfromscratch.org/blfs/view/svn/gnome/gnome-session.html
- # The unit directory is explicit: elogind provides libsystemd.pc but no
- # systemd.pc to take it from.
+ # The unit directory is explicit: elogind ships libsystemd.pc, not systemd.pc.
  macro build -Dsystemduserunitdir=/usr/lib/systemd/user --libdir=/usr/lib --wrap-mode=nodownload -Ddocbook=false -Dman=false
 }
 

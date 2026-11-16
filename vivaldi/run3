@@ -3,16 +3,9 @@ version: "8.3.4191.44"
 release: "1"
 description: "An advanced browser made with the power user in mind"
 # Vivaldi ships prebuilt Chromium binaries, not source: the .deb is repackaged.
-#
-# The two .debs are `sources_arm64:` and `sources_amd64:`, so kpkg downloads
-# only the target architecture's file (--target=default means the host) and
-# verifies it against that group's own sha256sum list. `prepare` then unpacks
-# whatever .deb is present, with no architecture check of its own.
-#
-# URLs: https://downloads.vivaldi.com/stable/vivaldi-stable_<ver>-1_<arch>.deb
-# (the "-1" is Vivaldi's Debian revision; it is not part of `version`).
-# Versions/sums cross-checked against
-# https://repo.vivaldi.com/stable/deb/dists/stable/main/binary-{arm64,amd64}/Packages
+# One source group per architecture: kpkg downloads only the target's .deb and
+# `prepare` unpacks whatever is there, since ${KPKG_ARCH} is not substituted in
+# `sources`.
 sources_arm64:
   - "https://downloads.vivaldi.com/stable/vivaldi-stable_${version}-1_arm64.deb"
 sha256sum_arm64:
@@ -21,28 +14,11 @@ sources_amd64:
   - "https://downloads.vivaldi.com/stable/vivaldi-stable_${version}-1_amd64.deb"
 sha256sum_amd64:
   - "67edd2d1476397ec537cf8f2bfcd482bba47e62eb438d77eb704f9314adcd2cb"
-# Nothing to auto-extract: a .deb is an `ar` archive, so kpkg's extractor would
-# not unpack data.tar.xz anyway.
+# Nothing to auto-extract: a .deb is an `ar` archive, not a tarball.
 extract: false
-# Runtime libraries, mapped from `ldd /opt/vivaldi/vivaldi-bin` on arm64 to the
-# repository package that provides each soname. Upstream's Debian Depends list
-# (ca-certificates, fonts-liberation, libasound2, libatk*, libcups2, libgbm1,
-# libgtk-3-0, libnspr4, libnss3, libpango*, libudev1, libvulkan1, libx11-6,
-# libxcb1, libxcomposite1, libxdamage1, libxext6, libxfixes3, libxkbcommon0,
-# libxrandr2, wget, xdg-utils) is covered below. libvulkan1 has no repository
-# counterpart installed on the image, but Vivaldi bundles its own
-# /opt/vivaldi/libvulkan.so.1 and vivaldi-bin has RUNPATH $ORIGIN/lib/:$ORIGIN/,
-# so that soname resolves from the bundle.
-#
-# libgcc_s.so.1 is also a direct DT_NEEDED of vivaldi-bin. Nothing else in this
-# list pulls it in by itself (today it only arrives via mesa -> llvm -> gcc), so
-# gcc is listed explicitly rather than relying on that chain.
-#
-# "pcre" is the pcre2 package: in this repo the directory named "pcre" holds a
-# run3 with name: "pcre2" (10.x), while the directory named "libpcre" holds the
-# old pcre 8.45. kpkg resolves a dependency by directory name (config.nim
-# findPkgRepo), so "pcre" is what provides libpcre2-8.so.0, which is the soname
-# vivaldi-bin actually needs.
+# Runtime libraries for `ldd /opt/vivaldi/vivaldi-bin`. libvulkan1 resolves from
+# the bundle (RUNPATH $ORIGIN/lib/:$ORIGIN/). "pcre" is the pcre2 package (pcre
+# 8.45 lives in libpcre); kpkg resolves dependencies by directory name.
 depends:
   - "alsa-lib"
   - "at-spi2-core"
@@ -95,42 +71,28 @@ build_depends:
 no_chkupd: true
 
 prepare {
-  # Only the target architecture's group was downloaded, so exactly one .deb is
-  # in the source dir and a glob names it without re-deriving the Debian arch
-  # from KPKG_ARCH (which would duplicate the selection kpkg just did).
-  # A .deb is an `ar` archive holding control.tar.* and data.tar.*. Unpack it
-  # and then the payload; only data.tar.xz is needed (control/ is Debian
-  # packaging: apt sources, update-alternatives, apparmor, xdg-icon-resource).
-  # bsdtar (libarchive, the build_depends below) reads both the ar container
-  # and the xz payload, so no separate tar/xz package is needed in the sandbox.
+  # Only the target architecture's .deb was downloaded, so a glob names it.
+  # Unpack the ar container, then the data.tar.xz payload; control/ is Debian
+  # packaging. bsdtar (libarchive) reads both, so no tar/xz package is needed.
   exec "mkdir -p deb"
   exec "bsdtar -xf vivaldi-stable_*.deb -C deb"
   exec "bsdtar -xf deb/data.tar.xz"
 }
 
 package {
-  # /opt/vivaldi: the browser bundle (vivaldi-bin, resources, locales, paks,
-  # libffmpeg.so, bundled libvulkan.so.1, icons).
+  # /opt/vivaldi: the browser bundle (vivaldi-bin, resources, locales, paks, icons).
   exec "mkdir -p \"$ROOT/opt\""
   exec "cp -a opt/vivaldi \"$ROOT/opt/vivaldi\""
 
-  # Drop the Debian/Ubuntu packaging bits that `cp -a` would otherwise carry
-  # into /opt/vivaldi: cron/vivaldi rewrites apt sources (no apt on Kreato) and
-  # apparmor.d/vivaldi-stable is an AppArmor profile (no AppArmor on the image).
+  # Drop the Debian bits: cron/vivaldi rewrites apt sources, apparmor.d is a profile.
   exec "rm -rf \"$ROOT/opt/vivaldi/cron\" \"$ROOT/opt/vivaldi/apparmor.d\""
 
-  # The Chromium sandbox helper must stay setuid root, or the browser falls
-  # back to the user-namespace sandbox (CONFIG_USER_NS=y on the Kreato
-  # kernel, so it still starts). Keep 4755 to match upstream and to keep the
-  # setuid sandbox available. kpkg's packager reads the mode off disk
-  # (archiveReadDiskNew/archiveWriteHeader), so this survives into the .kpkg
-  # exactly like shadow's setuid passwd/su.
+  # The Chromium sandbox helper must stay setuid root; kpkg's packager keeps the
+  # mode it reads off disk.
   exec "chmod 4755 \"$ROOT/opt/vivaldi/vivaldi-sandbox\""
   exec "chmod 0755 \"$ROOT/opt/vivaldi/vivaldi\" \"$ROOT/opt/vivaldi/vivaldi-bin\" \"$ROOT/opt/vivaldi/chrome_crashpad_handler\" \"$ROOT/opt/vivaldi/update-ffmpeg\""
 
-  # /usr/bin/vivaldi-stable is the upstream launcher symlink. The Debian
-  # postinst also registers a plain `vivaldi` alternative; provide the same
-  # name as a symlink so `vivaldi` works out of the box.
+  # /usr/bin/vivaldi-stable is the upstream launcher; also link plain `vivaldi`.
   exec "mkdir -p \"$ROOT/usr/bin\""
   exec "ln -sf /opt/vivaldi/vivaldi \"$ROOT/usr/bin/vivaldi-stable\""
   exec "ln -sf /opt/vivaldi/vivaldi \"$ROOT/usr/bin/vivaldi\""
@@ -138,26 +100,17 @@ package {
   # Desktop entry. Icon=vivaldi, so the icons below have to land in hicolor.
   exec "mkdir -p \"$ROOT/usr/share/applications\""
   exec "install -Dm644 usr/share/applications/vivaldi-stable.desktop \"$ROOT/usr/share/applications/vivaldi-stable.desktop\""
-  # AppStream metadata: the .deb still uses the legacy appdata/ directory,
-  # which current GNOME Software does not read; install it as metainfo too.
+  # AppStream metadata: install it as metainfo, not the legacy appdata/.
   exec "install -Dm644 usr/share/appdata/vivaldi.appdata.xml \"$ROOT/usr/share/metainfo/vivaldi.appdata.xml\""
 
-  # Icons. The Debian postinst runs `xdg-icon-resource install --size N` for
-  # each product_logo_N.png; install them directly instead so the package
-  # carries them. Only the sizes Vivaldi actually ships (no 22x22).
+  # Icons: install the sizes Vivaldi ships (no 22x22) directly.
   for res in [16, 24, 32, 48, 64, 128, 256] {
     exec "install -Dm644 \"opt/vivaldi/product_logo_${res}.png\" \"$ROOT/usr/share/icons/hicolor/${res}x${res}/apps/vivaldi.png\""
   }
   exec "install -Dm644 opt/vivaldi/product_logo_256.png \"$ROOT/usr/share/pixmaps/vivaldi.png\""
 
-  # Deliberately not installed:
-  #  - /etc/cron.daily/vivaldi and /etc/default/vivaldi: the cron script
-  #    rewrites apt sources (apt-config, /etc/apt/sources.list.d), which do
-  #    not exist on Kreato. (The copy of it inside /opt/vivaldi was removed
-  #    above.)
-  #  - /usr/share/xfce4/helpers/vivaldi.desktop: no Xfce.
-  #  - /usr/share/gnome-control-center/default-apps: the .deb ships none, so
-  #    the browser default is set by kreato-defaults instead.
+  # Not installed: /etc/cron.daily/vivaldi and /etc/default/vivaldi (apt sources),
+  # the Xfce helper, gnome-control-center default-apps (kreato-defaults sets it).
 }
 
 postinstall {

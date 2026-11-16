@@ -21,8 +21,7 @@ build_depends:
  - "vala"
 
 build {
-  # gdk-pixbuf resolves file types through the compiled shared MIME
-  # database, and the build sandbox only carries its XML sources.
+  # gdk-pixbuf needs the compiled MIME database; the sandbox only has its XML sources.
   exec "command -v update-mime-database >/dev/null 2>&1 && update-mime-database /usr/share/mime || true"
  macro build --libdir=/usr/lib --default-library=shared --wrap-mode=nodownload -Dintrospection=enabled -Dvapi=true -Ddocumentation=false -Dbuild-testsuite=false -Dinstall-tests=false -Dsysprof=false
 }

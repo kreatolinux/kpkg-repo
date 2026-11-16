@@ -22,24 +22,13 @@ build_depends:
 
 prepare {
  # polkit 124's meson.build reads systemd_dep outside the branch that assigns
- # it, so -Dsession_tracking=libelogind aborted with 'Unknown variable name
- # "systemd_dep"'. Only the default ConsoleKit configured, which has no
- # ConsoleKit daemon to talk to: polkitd resolved no session for a caller,
- # subject.local/subject.active stayed false, and every
- # org.freedesktop.login1.* action (Power Off, Restart) was "challenge"
- # instead of "yes", so GNOME's menu items did nothing.
+ # it, so -Dsession_tracking=libelogind aborted meson setup.
  exec "patch -p1 < ../polkit-libelogind.patch"
 }
 
 build {
- # elogind, not systemd, provides org.freedesktop.login1 on this system, so
- # track sessions through libelogind. The old recipe passed
- # -Dsession_tracking=libsystemd-login only `if command -v systemctl` found a
- # systemctl, which it never does here (systemctl is a symlink to the systemd
- # core's multi-call binary, installed by jumpstart-systemd-core and absent
- # from the build sandbox), so polkit was always built with the ConsoleKit
- # default. libsystemd-login would also work (elogind ships a libsystemd.pc
- # shim) but libelogind is the honest choice and skips the systemd.pc lookup.
+ # elogind, not systemd, provides org.freedesktop.login1 here, so track
+ # sessions through libelogind.
  macro build --libdir=/usr/lib -Dsession_tracking=libelogind
 }
 

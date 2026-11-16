@@ -7,22 +7,12 @@ license:
   - "GPL-3.0-or-later"
   - "MIT"
 # Kreato builds dbus, elogind, eudev, polkit, accountsservice, networkmanager,
-# gdm, openssh, pipewire and wireplumber without systemd integration, so none
-# of them ships a unit. This package provides them (the pipewire/wireplumber
-# user units follow upstream's), a drop-in that makes upower's own unit run
-# under the core, and presets enabling all of it.
-# For GNOME under the per-user Jumpstart manager it also ships the user bus
-# (user-dbus.service: Type=forking, because Kreato's dbus cannot take a
-# socket-activated listener), gnome-shell's org.gnome.Shell@.service and
-# org.gnome.Shell-disable-extensions.service (gnome-shell is built with
-# -Dsystemd=false, which skips installing them) and a drop-in that makes
-# gnome-session-restart-dbus restart the user bus instead of stopping it. Every unit carries
-# ConditionFileIsExecutable= on its daemon, so a unit whose package is absent
-# is skipped, not failed; only the packages below are hard dependencies
-# (upower so that its unit exists when the preset is applied).
-# Sources are flat files here: kpkg stages local sources by basename, so
-# "system-X" installs as usr/lib/systemd/system/X, "user-X" as
-# usr/lib/systemd/user/X, "system-A.service.d_B.conf" as A.service.d/B.conf.
+# gdm, openssh, pipewire and wireplumber without systemd integration, so none of
+# them ships a unit; this package provides them, upower's drop-in, the user bus,
+# gnome-shell's units (-Dsystemd=false skips them) and presets. Every unit carries
+# ConditionFileIsExecutable=, so a missing package skips it instead of failing.
+# Sources are flat files: kpkg stages local sources by basename, so "system-X"
+# installs as usr/lib/systemd/system/X, "user-X" as usr/lib/systemd/user/X.
 sources:
   - "81-kreato-desktop-user.preset"
   - "81-kreato-desktop.preset"
@@ -71,9 +61,7 @@ sha256sum:
   - "e565d6ec88462aa688ce38ca54f6ec2f404bce8756209428a3ace7fba9826715"
 extract: false
 # jumpstart-systemd-core is not a dependency: whichever of the two installs
-# last runs `systemctl preset` for these units (see both postinstalls), and
-# kpkg resolves build dependencies from the build host, where the core must
-# not be installed (it would change how dbus/gdm detect systemd).
+# last runs `systemctl preset` (see both postinstalls).
 depends:
   - "dbus"
   - "eudev"
@@ -85,9 +73,7 @@ prepare {
 }
 
 package {
-  # Every directory 0755 and every file 0644, whatever the build umask and
-  # the build root's mode: jumpstart-systemd-core ignores units below a
-  # group- or world-writable directory (unitfile/trust.nim badOf).
+  # The core ignores units below a group- or world-writable directory.
   exec "umask 022 && install -d -m 0755 \"$ROOT/usr\" \"$ROOT/usr/lib\" \"$ROOT/usr/lib/systemd\" \"$ROOT/usr/lib/systemd/system\" \"$ROOT/usr/lib/systemd/system/upower.service.d\" \"$ROOT/usr/lib/systemd/user\" \"$ROOT/usr/lib/systemd/system-preset\" \"$ROOT/usr/lib/systemd/user-preset\""
   for u in ["NetworkManager.service", "accounts-daemon.service", "dbus.service", "dev-shm.mount", "elogind.service", "gdm.service", "polkit.service", "sshd.service", "systemd-udev-trigger.service", "systemd-udevd.service"] {
     exec "install -m 0644 system-$u \"$ROOT/usr/lib/systemd/system/$u\""
@@ -104,16 +90,13 @@ package {
 }
 
 postinstall {
-  # Until kpkg stops packaging these directories 0777 (see the report),
-  # repair them, or the core ignores every unit in them.
+  # Repair directories kpkg may have created world-writable.
   exec "chmod go-w /usr/lib/systemd /usr/lib/systemd/system /usr/lib/systemd/user /usr/lib/systemd/system-preset /usr/lib/systemd/user-preset 2>/dev/null || true"
-  # Apply 81-kreato-desktop.preset. No --root: the core's --root=/ resolves
-  # to relative paths. upower.service belongs to the upower package.
+  # No --root: the core's --root=/ resolves to relative paths.
   for u in ["dbus.service", "elogind.service", "systemd-udevd.service", "systemd-udev-trigger.service", "dev-shm.mount", "polkit.service", "accounts-daemon.service", "upower.service", "NetworkManager.service", "gdm.service", "sshd.service"] {
     exec "umask 022; if [ -e /usr/lib/systemd/system/$u ] || [ -e /etc/systemd/system/$u ]; then /usr/bin/systemctl preset $u || echo 'kreato-systemd-units: could not preset $u'; fi"
   }
-  # Offline systemctl has no --global: make the links `systemctl --global
-  # enable` would make for the user units ([Install] sections).
+  # Offline systemctl has no --global: make the links it would make.
   exec "umask 022 && install -d -m 0755 /etc/systemd/user /etc/systemd/user/sockets.target.wants /etc/systemd/user/pipewire.service.wants"
   for u in ["pipewire.socket", "pipewire-pulse.socket", "dbus.service"] {
     exec "ln -sf /usr/lib/systemd/user/$u /etc/systemd/user/sockets.target.wants/$u"

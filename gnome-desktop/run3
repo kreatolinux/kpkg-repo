@@ -27,8 +27,7 @@ build {
   # gdk-pixbuf resolves file types through the compiled shared MIME
   # database, and the build sandbox only carries its XML sources.
   exec "command -v update-mime-database >/dev/null 2>&1 && update-mime-database /usr/share/mime || true"
-  # -Dqr=enabled builds libgnome-qr (GnomeQR-4.0 typelib), required by
-  # gnome-shell >= 51. The qrcodegen subproject is bundled in the tarball.
+  # -Dqr=enabled builds libgnome-qr, required by gnome-shell 51.
   macro build --libdir=/usr/lib --wrap-mode=nodownload -Dqr=enabled
 }
 

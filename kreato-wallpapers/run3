@@ -10,14 +10,13 @@ sources:
 sha256sum:
  - "d7a67fbc95696c9ce10dc3a3f8aec2f84ac481403ce77afad2b55b2344a1ed6d"
  - "7d3d49e21ad660b79ed180c0b0b95ffcd773114c41cdb6ab7c181595ded1e041"
- - "cf6b594a8b4f85ce6f78523b0ed3fe55228d310ae1e21b2dcbbb8b7866d4c340"
+ - "d1446b8b1b60e46acb3bbbeb6fef811489f9bfa9dacc1588ec40a57f2bca59e6"
 depends:
  - "gsettings-desktop-schemas"
 no_chkupd: true
 
 package {
  exec "install -Dm644 devin-wallpaper.png \"$ROOT/usr/share/backgrounds/kreato/devin-wallpaper.png\""
- # Listed in Settings > Appearance.
  exec "install -Dm644 kreato-backgrounds.xml \"$ROOT/usr/share/gnome-background-properties/kreato-backgrounds.xml\""
  # Vendor default for org.gnome.desktop.background/screensaver.
  exec "install -Dm644 90_kreato.gschema.override \"$ROOT/usr/share/glib-2.0/schemas/90_kreato.gschema.override\""

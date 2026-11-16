@@ -28,25 +28,13 @@ replaces:
  - "systemd"
 
 prepare {
- # sd_pid_get_session()/sd_peer_get_session() report a session only if elogind
- # knows it (/run/systemd/sessions/ID exists). elogind's flat cgroup layout
- # otherwise names the first cgroup component of any process a session: the
- # per-user Jumpstart managers run below /jumpstart/users/UID/, so GDM,
- # gnome-session, mutter and polkit saw a session "jumpstart" and refused the
- # greeter ("No display available"). systemd answers -ENODATA for processes
- # of user@UID.service, and every one of them then uses the user's display
- # session (sd_uid_get_display), as this patch makes elogind do.
+ # Only report sessions elogind knows (/run/systemd/sessions/ID exists): the
+ # per-user managers below /jumpstart/users/UID/ would otherwise be a session
+ # "jumpstart". systemd answers -ENODATA outside a session scope.
  exec "patch -p1 < ../elogind-session-state-check.patch"
- # cg_path_get_owner_uid() derives the owner from the session named by the
- # first cgroup component, so every process of a per-user Jumpstart manager
- # (below /jumpstart/users/UID/) has no owner: sd_pid_get_owner_uid() returns
- # -ENODATA. polkit's logind session monitor treats that as fatal and gives up
- # before its sd_uid_get_display() fallback, so it found no session for
- # gnome-shell, subject.local/subject.active stayed false, and every
- # org.freedesktop.login1.* action (Power Off, Restart) was "challenge"
- # instead of "yes" -- GNOME's menu items did nothing. systemd answers this
- # case from user-UID.slice, i.e. from the UID in the caller's own cgroup
- # path; this patch does the same.
+ # Derive the owner UID from the /jumpstart/users/UID/ path: polkit treats a
+ # missing owner UID as fatal and then refuses every org.freedesktop.login1.*
+ # action (Power Off, Restart).
  exec "patch -p1 < ../elogind-owner-uid.patch"
  exec "sed -i \"/relative_source_path = /c relative_source_path = '..'\" meson.build"
  exec "sed -i '/--relative-to=/,+2d' meson.build"
@@ -63,8 +51,8 @@ package {
  exec "ln -s libelogind.pc $ROOT/usr/lib/pkgconfig/libsystemd.pc"
  exec "ln -sn elogind $ROOT/usr/include/systemd"
 
- # elogind builds elogind-userdbd but installs no units for it. nss_elogind
- # (nsswitch "elogind") and userdbctl reach it over this varlink socket.
+ # elogind installs no units for elogind-userdbd; nss_elogind and userdbctl
+ # reach it over this varlink socket.
  exec "install -Dm644 ../elogind-userdbd.socket $ROOT/usr/lib/systemd/system/elogind-userdbd.socket"
  exec "install -Dm644 ../elogind-userdbd.service $ROOT/usr/lib/systemd/system/elogind-userdbd.service"
  exec "mkdir -p $ROOT/usr/lib/systemd/system/sockets.target.wants"

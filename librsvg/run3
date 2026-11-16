@@ -23,10 +23,8 @@ build_depends:
  - "cargo-c"
 
 build {
-  # librsvg >= 2.59 no longer builds the GDK-Pixbuf SVG loader by default
-  # (-Dpixbuf-loader defaults to disabled). Without it gdk-pixbuf cannot
-  # decode any SVG: gnome-shell/St and GTK3 show no app or status icons.
-  #
+  # -Dpixbuf-loader: without the SVG loader gdk-pixbuf decodes no SVG, so
+  # gnome-shell/St and GTK3 show no icons.
   # gdk-pixbuf resolves file types through the compiled shared MIME
   # database, and the build sandbox only carries its XML sources.
   exec "command -v update-mime-database >/dev/null 2>&1 && update-mime-database /usr/share/mime || true"
@@ -38,7 +36,7 @@ package {
 }
 
 postinstall {
- # Registers libpixbufloader_svg.so in loaders.cache.
+ # Register the SVG loader in loaders.cache.
  exec "gdk-pixbuf-query-loaders --update-cache 2>/dev/null || true"
 }
 

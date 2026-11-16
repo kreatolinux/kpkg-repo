@@ -6,7 +6,7 @@ extract: false
 sources:
  - "make-locales.sh"
 sha256sum:
- - "4c6da88a5ba82e4fcbe701e77102975e2f847e9fd390d406686030bea61b9545"
+ - "f4528192d1bc6a59966a6ad1d416ae7caae1537c78b5f87dbbbf4be55ee1f615"
 depends:
  - "glibc"
 no_chkupd: true

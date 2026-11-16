@@ -18,10 +18,8 @@ build_depends:
  - "vala"
 
 build {
- # enchant is not packaged; libspelling then falls back to its built-in
- # empty provider (no spell suggestions, everything else works).
-  # gdk-pixbuf resolves file types through the compiled shared MIME
-  # database, and the build sandbox only carries its XML sources.
+ # enchant is not packaged; libspelling falls back to its empty provider.
+  # gdk-pixbuf needs the compiled MIME database; the sandbox only has its XML sources.
   exec "command -v update-mime-database >/dev/null 2>&1 && update-mime-database /usr/share/mime || true"
  macro build --libdir=/usr/lib --default-library=shared --wrap-mode=nodownload -Denchant=disabled -Ddocs=false -Dsysprof=false -Dintrospection=enabled -Dvapi=true
 }
