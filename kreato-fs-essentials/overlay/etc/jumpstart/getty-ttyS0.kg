@@ -1,6 +1,7 @@
 name: "getty-ttyS0"
 description: "Serial console getty (x86_64)."
 type: "simple"
+restart: "always"
 
 service {
   terminal true

@@ -1,6 +1,6 @@
 name: "busybox"
 version: "1.36.1"
-release: "5"
+release: "6"
 description: "The Swiss Army Knife of Embedded Linux"
 extract: false
 sources:
@@ -50,8 +50,16 @@ package_busybox_standalone {
 
 package {
   package_busybox_standalone
+  # Jumpstart's own power commands own these three names on a jumpstart image
+  # (usr/bin/<name> -> jumpctl); the applets only signal PID 1. The sandbox
+  # release file names the requested target's init.
+  local INIT = "${exec("sed -n 's/^init=//p' /etc/kreato-release").output()}"
   for APPLET in "${exec(\"$ROOT/bin/busybox --list\").output()}" {
     if "$APPLET" =~ e"clear|egrep|fgrep|grep|strings|setfattr|xz|su|nologin|chpasswd|groups|login|tar|bzip2|bzcat|lzcat|unxz" {
+      continue
+    }
+    if "$INIT" == "jumpstart" && "$APPLET" =~ e"^(poweroff|reboot|halt|init)$" {
+      print "Not linking /bin/$APPLET: jumpstart owns it"
       continue
     }
     print "Linking /bin/busybox to /bin/$APPLET"

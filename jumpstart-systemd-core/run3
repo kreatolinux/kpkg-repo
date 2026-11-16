@@ -1,6 +1,6 @@
 name: "jumpstart-systemd-core"
 version: "0.1.0"
-release: "3"
+release: "4"
 description: "systemd compatibility core for Jumpstart (systemctl, journalctl, unit files)"
 no_chkupd: true
 license:
@@ -24,9 +24,6 @@ build_depends:
 # No `conflicts: systemd`: elogind declares `replaces: systemd`, so the conflict
 # would block exactly the systems this core is for. Both ship systemctl and
 # journalctl; kpkg reports that overlap if both are ever installed.
-# "yes" ships the core's poweroff/reboot/halt over busybox's applets, which
-# signal PID 1 with SIGUSR2/SIGUSR1 that Jumpstart does not handle.
-power_links: "yes"
 
 prepare {
   exec "tar -oxf jumpstart-systemd-core-$version.tar.gz"
@@ -42,9 +39,9 @@ package {
   # /usr/bin. umask/chmod: Jumpstart rejects a group/other-writable core tree.
   exec "umask 022 && make install DESTDIR=\"$ROOT\" PREFIX=/usr SBINDIR=/usr/bin NIMFLAGS='-d:release --threads:off --nimcache:nimcache'"
   exec "chmod -R go-w \"$ROOT/usr/lib/jumpstart\""
-  if "$power_links" != "yes" {
-    exec "rm -f \"$ROOT/usr/bin/poweroff\" \"$ROOT/usr/bin/reboot\" \"$ROOT/usr/bin/halt\""
-  }
+  # Jumpstart owns poweroff, reboot and halt (usr/bin/<name> -> jumpctl) so that
+  # they work on an image without this core too; keep its links, not ours.
+  exec "rm -f \"$ROOT/usr/bin/poweroff\" \"$ROOT/usr/bin/reboot\" \"$ROOT/usr/bin/halt\""
 
   # Enable the core: empty 0644 files named after the cores in a 0755 directory.
   exec "install -d -m 0755 \"$ROOT/etc/jumpstart/cores/enabled\""

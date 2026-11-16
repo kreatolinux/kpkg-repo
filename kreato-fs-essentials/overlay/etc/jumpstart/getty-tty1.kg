@@ -1,6 +1,7 @@
 name: "getty-tty1"
 description: "This service starts up TTY1."
 type: "simple"
+restart: "always"
 
 service {
   terminal true
