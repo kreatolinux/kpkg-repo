@@ -7,7 +7,7 @@ sources:
  - "polkit-libelogind.patch"
 sha256sum:
  - "72457d96a0538fd03a3ca96a6bf9b7faf82184d4d67c793eb759168e4fd49e20"
- - "e90bf7cec926ebb5c4ac1440310c551f32262433d4ba154f5459f42212c15c0f"
+ - "a1230e22fae044aeac64987b3cd985a8904d5f4feb82c7f8388e1d03980e6730"
 depends:
  - "elogind"
  - "linux-pam"

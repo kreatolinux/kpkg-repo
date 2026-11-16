@@ -1,9 +1,7 @@
 [Unit]
 Description=Shared Memory (/dev/shm)
-# Nothing in the boot chain creates /dev/shm: Jumpstart's serviceHandler
-# mounts proc, devtmpfs on /dev, devpts, sysfs and tmpfs /run, and
-# systemd-tmpfiles-setup runs with --exclude-prefix=/dev, so a tmpfiles line
-# cannot fix it. GLib, mutter and X all need it.
+# Nothing in the boot chain creates /dev/shm (systemd-tmpfiles-setup runs with
+# --exclude-prefix=/dev); GLib, mutter and X need it.
 DefaultDependencies=no
 Before=sysinit.target
 ConditionPathIsMountPoint=!/dev/shm

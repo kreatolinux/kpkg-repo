@@ -1,13 +1,12 @@
 --- a/daemon/gdm-dynamic-user-store.c
 +++ b/daemon/gdm-dynamic-user-store.c
-@@ -301,6 +301,29 @@
+@@ -301,6 +301,28 @@
          g_autofree char *home = NULL;
          DynamicUser *user;
  
 +#ifndef HAVE_USERDB
-+        /* elogind does not provide sd-varlink, so HAVE_USERDB is undefined and
-+         * dynamic allocation is impossible. Use the preallocated static greeter
-+         * account instead of asserting in pick_username(). */
++        /* elogind has no sd-varlink, so HAVE_USERDB is undefined: use the
++         * preallocated static greeter account instead of asserting. */
 +        {
 +                struct passwd *pw = getpwnam (preferred_username);
 +                if (pw == NULL) {

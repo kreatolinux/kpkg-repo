@@ -1,13 +1,9 @@
 # Kreato Linux vendor defaults: Vivaldi is the default web browser.
 #
-# Installed as /etc/xdg/mimeapps.list. glib merges this (config-dir) list on
-# top of /usr/share/applications/gnome-mimeapps.list, which gnome-session ships
-# pointing these types at org.gnome.Epiphany.desktop -- a browser the live
-# image does not install. Merging is per key, so only the types listed here
-# change and every other association gnome-session set is kept.
-#
-# A user's ~/.config/mimeapps.list (what GNOME Settings > Default Applications
-# writes) still takes precedence, so the default remains user-changeable.
+# Installed as /etc/xdg/mimeapps.list, which glib merges per key on top of
+# gnome-session's gnome-mimeapps.list (that one points these types at
+# Epiphany, which the image does not install). A user's ~/.config/mimeapps.list
+# still takes precedence.
 [Default Applications]
 text/html=vivaldi-stable.desktop
 application/xhtml+xml=vivaldi-stable.desktop

@@ -11,7 +11,6 @@ BusName=org.freedesktop.login1
 ExecStart=/usr/libexec/elogind
 Restart=on-failure
 RestartSec=1
-# elogind keeps its own cgroup hierarchy below the one it finds itself in.
 Delegate=yes
 
 [Install]

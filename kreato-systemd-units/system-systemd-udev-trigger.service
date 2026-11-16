@@ -10,9 +10,8 @@ ConditionFileIsExecutable=/usr/bin/udevadm
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-# This gives /dev/dri/* their udev rules and lets elogind apply the seat
-# ACLs, so GDM's greeter can open the DRM node. Without it the nodes exist
-# (devtmpfs) but stay root:root 0600 and the greeter cannot paint.
+# Without the trigger /dev/dri/* stay root:root 0600 and GDM's greeter cannot
+# open the DRM node.
 ExecStart=/usr/bin/udevadm trigger --type=subsystems --action=add
 ExecStart=/usr/bin/udevadm trigger --type=devices --action=add
 ExecStart=-/usr/bin/udevadm settle --timeout=30

@@ -7,8 +7,7 @@ Before=sysinit.target
 ConditionFileIsExecutable=/usr/sbin/udevd
 
 [Service]
-# eudev's udevd stays in the foreground without --daemon and creates
-# /run/udev/control itself.
+# eudev's udevd stays in the foreground and creates /run/udev/control itself.
 ExecStart=/usr/sbin/udevd
 ExecReload=/usr/bin/udevadm control --reload
 Restart=always

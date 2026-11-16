@@ -2,7 +2,6 @@
 Description=Network Manager
 Documentation=man:NetworkManager(8)
 # Kreato's networkmanager is built with -Dsystemdsystemunitdir=no.
-# NM's helpers (dispatcher, ...) are started through D-Bus.
 Wants=dbus.service network.target
 After=dbus.service network-pre.target
 Before=network.target

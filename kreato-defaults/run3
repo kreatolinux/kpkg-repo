@@ -9,8 +9,8 @@ sources:
   - "mimeapps.list"
   - "91_kreato-browser.gschema.override"
 sha256sum:
-  - "1c64b4f4298180e921d0185357266dfda27a90278ff0da9e81b6c4e996ef56ed"
-  - "0f71675672752efdb9343ed1e4a41e257c2d6f647f215759980ab246ea10b820"
+  - "d97f2b4bb87a7f54c2b616a6d446f758642c7256294dd4abdc50b91fe79a0084"
+  - "22d7b30dfa8d7a62d9da933c3051e77b656e4519df7efb44288d08798416256b"
 # glib-compile-schemas (postinstall) comes from glib, update-desktop-database
 # from desktop-file-utils. gnome-shell owns the org.gnome.shell schema whose
 # favourite-apps key this package overrides.

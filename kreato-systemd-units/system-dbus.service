@@ -1,20 +1,16 @@
 [Unit]
 Description=D-Bus System Message Bus
 Documentation=man:dbus-daemon(1)
-# Kreato's dbus is built with -Dsystemd=disabled: no socket activation
-# (--address=systemd: fails), no sd_notify, no --systemd-activation. This is a
-# plain service on the socket named in system.conf (/run/dbus/system_bus_socket,
-# -Druntime_dir=/run); dbus-daemon drops to the messagebus user itself.
+# Kreato's dbus is built with -Dsystemd=disabled: no socket activation, no
+# sd_notify.
 After=systemd-tmpfiles-setup.service systemd-sysusers.service
 ConditionFileIsExecutable=/usr/bin/dbus-daemon
 
 [Service]
-# Creates /etc/machine-id when it is missing; leaves an existing one alone.
 ExecStartPre=-/usr/bin/dbus-uuidgen --ensure=/etc/machine-id
 ExecStartPre=/bin/mkdir -p /run/dbus
 ExecStart=/usr/bin/dbus-daemon --system --nofork --nopidfile --syslog-only
-# Readiness: dependents are ordered After= this unit, so hold it in
-# "activating" until the bus socket exists (no Type=notify support in dbus).
+# No Type=notify in dbus: hold the unit in "activating" until the socket exists.
 ExecStartPost=/bin/sh -c 'i=0; while [ ! -S /run/dbus/system_bus_socket ] && [ $i -lt 100 ]; do i=$((i+1)); sleep 0.1; done'
 ExecReload=/usr/bin/dbus-send --print-reply --system --type=method_call --dest=org.freedesktop.DBus / org.freedesktop.DBus.ReloadConfig
 OOMScoreAdjust=-900

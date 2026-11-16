@@ -1,18 +1,11 @@
 --- a/meson.build
 +++ b/meson.build
-@@ -213,13 +213,22 @@
+@@ -213,13 +213,15 @@
  
    # systemd unit / service files
    systemd_systemdsystemunitdir = get_option('systemdsystemunitdir')
-+  # Kreato: systemd_dep is only assigned on the libsystemd-login branch below,
-+  # so reading it unconditionally here aborted `meson setup` with
-+  #   ERROR: Unknown variable "systemd_dep"
-+  # whenever session_tracking was libelogind. The only session_tracking that
-+  # then configured was the default ConsoleKit, which has no ConsoleKit daemon
-+  # to talk to: polkitd resolved no session for a caller, subject.local and
-+  # subject.active stayed false, and every org.freedesktop.login1.power-off /
-+  # .reboot action was "challenge" instead of "yes", so GNOME's Power Off and
-+  # Restart did nothing. Default the directory and let the branch override it.
++  # systemd_dep is only assigned on the libsystemd-login branch, so reading it
++  # here aborted meson setup. Default the directory; the branch overrides it.
 +  systemd_sysusers_dir = '/usr/lib/sysusers.d'
    if systemd_systemdsystemunitdir == '' and session_tracking == 'libsystemd-login'
      systemd_dep = dependency('systemd', not_found_message: 'systemd required but not found, please provide a valid systemd user unit dir or disable it')

@@ -1,5 +1,4 @@
-# gnome-shell's data/org.gnome.Shell-disable-extensions.service (GNOME 51);
-# see org.gnome.Shell@.service for why it ships here.
+# gnome-shell's own unit (GNOME 51); see org.gnome.Shell@.service.
 [Unit]
 Description=Disable GNOME Shell extensions after failure
 # Note that this unit must not conflict with anything, and must

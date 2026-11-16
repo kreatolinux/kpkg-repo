@@ -1,18 +1,14 @@
 --- a/src/libelogind/sd-login/sd-login.c
 +++ b/src/libelogind/sd-login/sd-login.c
-@@ -38,6 +38,30 @@
+@@ -38,6 +38,26 @@
   *    machine, session does not exist         → -ENXIO
   *    requested metadata on object is missing → -ENODATA
   */
 +
-+#if 1 /// Kreato: only report sessions elogind actually knows
-+/* elogind's flat cgroup hierarchy makes the first component of any cgroup
-+ * path a "session": a process of a per-user service manager (Jumpstart puts
-+ * them below /jumpstart/users/UID/) would be reported in a session called
-+ * "jumpstart". systemd answers -ENODATA for processes outside a session
-+ * scope (user@UID.service), and GDM, gnome-session, mutter and polkit then
-+ * fall back to the user's display session; do the same by requiring the
-+ * session's state file. */
++#if 1 /// only report sessions elogind actually knows
++/* Flat cgroup layout: a process of a per-user manager would be reported in a
++ * session called "jumpstart". systemd answers -ENODATA outside a session
++ * scope, so require the session state file. */
 +static int known_session_or_enxio(int r, char **session) {
 +        _cleanup_free_ char *p = NULL;
 +

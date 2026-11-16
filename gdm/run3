@@ -7,7 +7,7 @@ sources:
  - "gdm-dynamic-user.patch"
 sha256sum:
  - "390ae9e7540f71db28a3dc64319a8f687f4d88bd4d5f1ff816b7a9f2249ab4aa"
- - "f385b3e6ef089b4af7e9a478dd8b10f25deac723111b1547a8db3253d6d664f1"
+ - "978136441401ea74b2612dcb2fa174b89c3eca32180ad1319d104969c4636bbc"
 depends:
  - "libtool"
  - "accountsservice"

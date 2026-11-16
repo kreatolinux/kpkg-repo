@@ -1,7 +1,4 @@
-# gnome-shell's own unit (data/org.gnome.Shell@.service.in, GNOME 51). Kreato
-# builds gnome-shell with -Dsystemd=false (meson refuses the systemd option
-# with the elogind libsystemd provider), which also skips installing this
-# file, so it ships here. Absolute paths: @bindir@ = /usr/bin.
+# gnome-shell's own unit (GNOME 51): -Dsystemd=false skips installing it.
 [Unit]
 Description=GNOME Shell
 OnFailure=org.gnome.Shell-disable-extensions.service gnome-session-shutdown.target

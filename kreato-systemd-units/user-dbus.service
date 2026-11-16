@@ -1,13 +1,6 @@
-# User message bus for the jumpstart systemd core (Kreato).
-#
-# Kreato's dbus is built without libsystemd, so dbus-daemon cannot take its
-# listening socket from a dbus.socket unit (`--address=systemd:`). It binds
-# $XDG_RUNTIME_DIR/bus itself before it forks, so with Type=forking the unit
-# becomes active only once the bus accepts connections. The core's manager
-# then takes org.freedesktop.systemd1 on it (gnome-session, gnome-shell and
-# dbus-daemon's --systemd-activation use that name). Ordered before
-# sockets.target, like the dbus.socket it replaces, so every ordinary user
-# service finds the bus.
+# User message bus for the jumpstart systemd core. Kreato's dbus cannot be
+# socket-activated, so it binds $XDG_RUNTIME_DIR/bus itself and Type=forking
+# waits for it.
 [Unit]
 Description=D-Bus User Message Bus
 Documentation=man:dbus-daemon(1)

@@ -1,5 +1,3 @@
-# Kreato Linux user units (xdg-user-dirs).
-# Applied by `systemctl --user preset`/`preset-all`. The package's postinstall
-# also makes the link directly: the core's manager never applies presets on its
-# own, and its offline systemctl has no --global.
+# Kreato Linux user unit (xdg-user-dirs); the postinstall also makes the link
+# directly, since the core never applies presets and has no --global.
 enable xdg-user-dirs.service
