@@ -35,9 +35,6 @@ prepare {
   # nautilus aborts without the localsearch schema, so the patch makes it
   # optional.
   exec "patch -p1 < ../nautilus-optional-localsearch.patch"
-  # glib 2.90 added g_set_date_time(), colliding with nautilus's own
-  # static inline helper of the same name.
-  exec "sed -i 's/g_set_date_time/nautilus_set_date_time/g' src/nautilus-date-utilities.h src/nautilus-date-entry-row.c src/nautilus-date-range-dialog.c"
 }
 
 build {

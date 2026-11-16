@@ -1,6 +1,6 @@
 name: "docbook-xml"
 version: "4.5"
-release: "1"
+release: "2"
 description: "A widely used XML scheme for writing documentation and help"
 sources:
   - "https://www.docbook.org/xml/$version/docbook-xml-4.5.zip"
@@ -30,6 +30,13 @@ package {
   exec "xmlcatalog --noout --add \"public\"  \"-//OASIS//ENTITIES DocBook XML Additional General Entities V$version//EN\"  \"file:///usr/share/xml/docbook/xml-dtd-$version/dbgenent.mod\"  $ROOT/etc/xml/docbook"
   exec "xmlcatalog --noout --add \"rewriteSystem\"  \"http://www.oasis-open.org/docbook/xml/$version\"  \"file:///usr/share/xml/docbook/xml-dtd-$version\"  $ROOT/etc/xml/docbook"
   exec "xmlcatalog --noout --add \"rewriteURI\"  \"http://www.oasis-open.org/docbook/xml/$version\"  \"file:///usr/share/xml/docbook/xml-dtd-$version\"  $ROOT/etc/xml/docbook"
+  # Older DTD versions map onto this one. Written here, not in postinstall:
+  # /etc/xml/docbook is a packaged file and must match its recorded checksum.
+  for DTDVERSION in ["4.1.2", "4.2", "4.3", "4.4"] {
+    exec "xmlcatalog --noout --add \"public\"  \"-//OASIS//DTD DocBook XML V$DTDVERSION//EN\"  \"http://www.oasis-open.org/docbook/xml/$DTDVERSION/docbookx.dtd\"  $ROOT/etc/xml/docbook"
+    exec "xmlcatalog --noout --add \"rewriteSystem\"  \"http://www.oasis-open.org/docbook/xml/$DTDVERSION\"  \"file:///usr/share/xml/docbook/xml-dtd-$version\"  $ROOT/etc/xml/docbook"
+    exec "xmlcatalog --noout --add \"rewriteURI\"  \"http://www.oasis-open.org/docbook/xml/$DTDVERSION\"  \"file:///usr/share/xml/docbook/xml-dtd-$version\"  $ROOT/etc/xml/docbook"
+  }
 
   cd ".."
 }
@@ -46,9 +53,6 @@ postinstall {
   exec "xmlcatalog --noout --add \"delegateURI\"  \"http://www.oasis-open.org/docbook/\"  \"file:///etc/xml/docbook\"  /etc/xml/catalog"
 
   for DTDVERSION in ["4.1.2", "4.2", "4.3", "4.4"] {
-    exec "xmlcatalog --noout --add \"public\"  \"-//OASIS//DTD DocBook XML V$DTDVERSION//EN\"  \"http://www.oasis-open.org/docbook/xml/$DTDVERSION/docbookx.dtd\"  /etc/xml/docbook"
-    exec "xmlcatalog --noout --add \"rewriteSystem\"  \"http://www.oasis-open.org/docbook/xml/$DTDVERSION\"  \"file:///usr/share/xml/docbook/xml-dtd-4.5\"  /etc/xml/docbook"
-    exec "xmlcatalog --noout --add \"rewriteURI\"  \"http://www.oasis-open.org/docbook/xml/$DTDVERSION\"  \"file:///usr/share/xml/docbook/xml-dtd-4.5\"  /etc/xml/docbook"
     exec "xmlcatalog --noout --add \"delegateSystem\"  \"http://www.oasis-open.org/docbook/xml/$DTDVERSION/\"  \"file:///etc/xml/docbook\"  /etc/xml/catalog"
     exec "xmlcatalog --noout --add \"delegateURI\"  \"http://www.oasis-open.org/docbook/xml/$DTDVERSION/\"  \"file:///etc/xml/docbook\"  /etc/xml/catalog"
   }
