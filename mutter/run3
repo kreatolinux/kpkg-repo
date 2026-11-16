@@ -45,7 +45,7 @@ depends:
   - "cairo"
   - "pixman"
   - "gsettings-desktop-schemas"
-  - "atk"
+  - "at-spi2-core"
   - "colord"
   - "lcms2"
   - "libdrm"

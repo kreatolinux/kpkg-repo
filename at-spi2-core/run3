@@ -1,7 +1,9 @@
-name: "atk"
+name: "at-spi2-core"
 version: "2.62.1"
 release: "1"
 description: "Base DBus XML interfaces for accessibility, the accessibility registry daemon, and atspi library"
+replaces:
+  - "atk"
 sources:
  - "https://download.gnome.org/sources/at-spi2-core/${version.split('.')[0:2].join('.')}/at-spi2-core-${version}.tar.xz"
 sha256sum:
