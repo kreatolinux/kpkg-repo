@@ -1,6 +1,6 @@
 name: "jumpstart-systemd-core"
 version: "0.1.0"
-release: "4"
+release: "5"
 description: "systemd compatibility core for Jumpstart (systemctl, journalctl, unit files)"
 no_chkupd: true
 license:
@@ -13,7 +13,7 @@ license:
 sources:
   - "jumpstart-systemd-core-$version.tar.gz"
 sha256sum:
-  - "d081c5b184d783da35d0caee552737462f6142d0ded2271a28798926f35bb033"
+  - "c287812d10ca169f45cc968aa1b09af8dadcb2c84d185eb546c42d5f280fad5e"
 extract: false
 depends:
   - "jumpstart"
