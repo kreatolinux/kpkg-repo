@@ -1,6 +1,6 @@
 name: "kpkg"
 version: "8.0.0"
-release: "6"
+release: "7"
 description: "kpkg, the Kreato Linux package manager"
 # MIT/ISC: vendored and statically compiled in: db_connector, lowdb, nimcrypto,
 # norm, regex, unicodedb (MIT), cligen (ISC).
@@ -15,7 +15,7 @@ license:
 sources:
   - "kpkg-$version.tar.gz"
 sha256sum:
-  - "92f7571ee00f87cb77052f8660c3eae058dfc18aade5f5637ce50a3bd9a01300"
+  - "495f3437869d9072dcb2ad1d11fac8a8348986c25c1426466d0c86f5f71f5b64"
 extract: false
 # libarchive is linked; openssl (-d:ssl) and sqlite are dlopen()ed at run time.
 depends:
