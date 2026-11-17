@@ -1,0 +1,4 @@
+Welcome to Kreato Linux (live medium).
+
+Log in as "kreato" with the password "kreato"; root uses the same password.
+The system runs from a memory-backed overlay, so nothing survives a power-off.

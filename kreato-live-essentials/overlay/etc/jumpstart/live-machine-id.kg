@@ -1,0 +1,7 @@
+name: "live-machine-id"
+description: "Write a per-boot machine ID before dbus starts."
+type: "oneshot"
+
+service {
+  exec "/usr/libexec/kreato-live/native-units machine-id"
+}

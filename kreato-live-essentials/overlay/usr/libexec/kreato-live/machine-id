@@ -1,0 +1,13 @@
+#!/bin/sh
+# Write a per-boot machine id when /etc/machine-id is empty or invalid: the image
+# ships it empty, and dbus rejects an empty or non-hex id (the GDM greeter then
+# aborts). ROOT prefixes every path, staged roots too.
+set -eu
+ROOT=${ROOT:-}
+id=$(cat "$ROOT/etc/machine-id" 2>/dev/null || true)
+if [ "${#id}" -eq 32 ] && [ -z "$(printf '%s' "$id" | tr -d '0-9a-f')" ]; then
+	exit 0
+fi
+tr -d '-' < /proc/sys/kernel/random/uuid > "$ROOT/etc/machine-id.new"
+chmod 0444 "$ROOT/etc/machine-id.new"
+mv -f "$ROOT/etc/machine-id.new" "$ROOT/etc/machine-id"

@@ -1,0 +1,8 @@
+name: "live-sshd"
+description: "OpenSSH server for the live medium."
+type: "simple"
+restart: "on-failure"
+
+service {
+  exec "/usr/libexec/kreato-live/native-units sshd"
+}

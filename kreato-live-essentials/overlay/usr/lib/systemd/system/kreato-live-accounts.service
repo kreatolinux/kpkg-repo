@@ -1,0 +1,16 @@
+[Unit]
+Description=Live user and published passwords for the live medium
+# The live user has to exist before the units that look it up.
+DefaultDependencies=no
+Conflicts=shutdown.target
+Before=shutdown.target
+After=systemd-sysusers.service
+Before=sysinit.target dbus.service systemd-journald.service accounts-daemon.service gdm.service sshd.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/libexec/kreato-live/accounts
+
+[Install]
+WantedBy=sysinit.target

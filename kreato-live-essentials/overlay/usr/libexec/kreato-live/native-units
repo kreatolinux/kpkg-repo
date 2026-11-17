@@ -1,0 +1,25 @@
+#!/bin/sh
+# Entry point of the live units under the native serviceHandler core.
+# The systemd core runs these steps from its own units instead.
+set -eu
+PATH=/usr/sbin:/usr/bin:/sbin:/bin
+
+if [ -e /etc/jumpstart/cores/enabled/systemd ]; then
+	exit 0
+fi
+
+case ${1:-} in
+accounts | machine-id)
+	exec "/usr/libexec/kreato-live/$1"
+	;;
+sshd)
+	# openssh is optional: no server binary means no service.
+	[ -x /usr/sbin/sshd ] || exit 0
+	ssh-keygen -A
+	exec sshd -D
+	;;
+*)
+	echo "usage: kreato-live/native-units accounts|machine-id|sshd" >&2
+	exit 2
+	;;
+esac

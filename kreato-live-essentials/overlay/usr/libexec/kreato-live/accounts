@@ -1,0 +1,128 @@
+#!/bin/sh
+# Live-session accounts: create the live user when nothing else did, fill its
+# home from /etc/skel, and publish the live password on root and kreato while
+# those accounts are still locked. ROOT prefixes every path, staged roots too.
+set -eu
+PATH=/usr/sbin:/usr/bin:/sbin:/bin
+ROOT=${ROOT:-}
+etc=$ROOT/etc
+user=kreato
+hash='$6$kreatolive$2llJC89fKzwa3FHVGPfiXliJn5THLMaL5QepFf0tsT6LjxnUZmEsbqBn.N/Ag7qGUDO1T2xAdc96IcRxnPT.7/'
+
+warn() { echo "kreato-live-accounts: $*" >&2; }
+
+# A temporary copy is removed if the script is interrupted mid-rewrite.
+tmp=
+cleanup() { [ -z "$tmp" ] || rm -f "$tmp"; }
+trap cleanup EXIT INT TERM HUP
+
+# Rewrite a colon-separated database next to itself under its own mode and
+# ownership, then rename it over the original. `awk "$@"` gets its options and
+# program from the caller and the file as its last argument; an unprivileged run
+# against a staged tree cannot preserve ownership and keeps only the mode.
+edit_db() {
+	db=$1
+	shift
+	tmp=$db.kreato-live.$$
+	cp -p "$db" "$tmp" 2>/dev/null || {
+		cp "$db" "$tmp" || return 1
+		chmod "$(stat -c %a "$db")" "$tmp" || return 1
+	}
+	awk "$@" "$db" > "$tmp" || return 1
+	mv -f "$tmp" "$db"
+	tmp=
+}
+
+free_id() { # database column-id wanted
+	id=$3
+	while awk -F: -v i="$id" -v c="$2" '$c == i { found = 1 } END { exit !found }' "$1"; do
+		id=$((id - 1))
+		[ "$id" -gt 99 ] || break
+	done
+	printf '%s\n' "$id"
+}
+
+group_id() { # name
+	awk -F: -v n="$1" '$1 == n { print $3; exit }' "$etc/group"
+}
+
+# Appending to a line without its own newline would merge two records.
+end_with_newline() { # file
+	[ -s "$1" ] && [ -n "$(tail -c 1 "$1")" ] && printf '\n' >> "$1"
+	return 0
+}
+
+ensure_group() { # name wanted-gid
+	if group_id "$1" | grep -q .; then return 0; fi
+	end_with_newline "$etc/group"
+	printf '%s:x:%s:\n' "$1" "$(free_id "$etc/group" 3 "$2")" >> "$etc/group"
+}
+
+is_member() { # user group
+	awk -F: -v g="$2" -v u="$1" '$1 == g { n = split($4, m, ",")
+		for (i = 1; i <= n; i++) if (m[i] == u) found = 1 } END { exit !found }' "$etc/group"
+}
+
+add_member() { # user group
+	if is_member "$1" "$2"; then return 0; fi
+	edit_db "$etc/group" -F: -v g="$2" -v u="$1" \
+		'BEGIN { OFS = ":" } $1 == g { $4 = ($4 == "" ? u : $4 "," u) } { print }'
+}
+
+ensure_user() { # name uid gecos home shell primary-group
+	if awk -F: -v n="$1" '$1 == n { found = 1 } END { exit !found }' "$etc/passwd"; then
+		return 0
+	fi
+	ensure_group "$6" "$2"
+	uid=$(free_id "$etc/passwd" 3 "$2")
+	shell=$5
+	if [ ! -x "$ROOT$shell" ]; then shell=/bin/sh; fi
+	end_with_newline "$etc/passwd"
+	end_with_newline "$etc/shadow"
+	printf '%s:x:%s:%s:%s:%s:%s\n' "$1" "$uid" "$(group_id "$6")" "$3" "$4" \
+		"$shell" >> "$etc/passwd"
+	# Locked like systemd-sysusers creates it: set_live_password unlocks it.
+	printf '%s:!*:19000:0:99999:7:::\n' "$1" >> "$etc/shadow"
+}
+
+set_live_password() { # name
+	# "-" stands for an empty password field (--clearRootPassword), which is
+	# not the same as a missing shadow entry.
+	current=$(awk -F: -v n="$1" '$1 == n { print ($2 == "" ? "-" : $2); exit }' \
+		"$etc/shadow")
+	case $current in
+	'') warn "no shadow entry for $1"; return 0 ;;
+	'-') return 0 ;;
+	'!'* | '*'*) ;;
+	*) return 0 ;; # a password the session already changed
+	esac
+	edit_db "$etc/shadow" -F: -v n="$1" -v h="$hash" \
+		'BEGIN { OFS = ":" } $1 == n && ($2 ~ /^[!*]/) { $2 = h } { print }'
+}
+
+for db in passwd group shadow; do
+	if [ ! -f "$etc/$db" ]; then
+		warn "$etc/$db is missing; leaving accounts alone"
+		exit 0
+	fi
+done
+
+ensure_user "$user" 1001 "Kreato User" "/home/$user" /bin/bash "$user"
+# kreato-fs-essentials ships only root and tty, so on a rootfs without
+# systemd-sysusers these groups have to be created first.
+for entry in wheel:10 video:12 audio:11 render:993 input:994; do
+	ensure_group "${entry%%:*}" "${entry##*:}"
+	add_member "$user" "${entry%%:*}"
+done
+
+home=$ROOT/home/$user
+if [ ! -d "$home" ]; then
+	mkdir -p "$home"
+	if [ -d "$ROOT/etc/skel" ]; then cp -a "$ROOT/etc/skel/." "$home"/; fi
+	uid=$(awk -F: -v n="$user" '$1 == n { print $3; exit }' "$etc/passwd")
+	gid=$(group_id "$user")
+	chown -R "$uid:$gid" "$home" || warn "could not change the owner of /home/$user"
+	chmod 0700 "$home"
+fi
+
+for name in root "$user"; do set_live_password "$name"; done

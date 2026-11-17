@@ -1,0 +1,7 @@
+name: "live-accounts"
+description: "Create the live user and publish the live passwords."
+type: "oneshot"
+
+service {
+  exec "/usr/libexec/kreato-live/native-units accounts"
+}

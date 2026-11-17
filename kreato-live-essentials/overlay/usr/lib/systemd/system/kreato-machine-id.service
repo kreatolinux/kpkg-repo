@@ -1,0 +1,17 @@
+[Unit]
+Description=Per-boot machine ID for the live medium
+# No fstab stage and no remote mounts: start at the top of sysinit, before the
+# units that reject an empty ID.
+DefaultDependencies=no
+Conflicts=shutdown.target
+Before=shutdown.target
+After=systemd-sysusers.service
+Before=sysinit.target dbus.service systemd-journald.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/libexec/kreato-live/machine-id
+
+[Install]
+WantedBy=sysinit.target

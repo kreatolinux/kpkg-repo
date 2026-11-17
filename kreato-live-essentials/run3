@@ -1,0 +1,56 @@
+name: "kreato-live-essentials"
+version: "0.1.0"
+release: "1"
+description: "Live medium policy: host name, live user, per-boot machine ID and sshd rule"
+no_chkupd: true
+# A live medium's policy is package content, so an installed system never looks
+# like a live one and the ISO build needs no overlay of its own. kpkg stages a
+# local source directory under its basename and makes that directory the build
+# cwd, so overlay/ holds rootfs-relative paths to copy as they are.
+sources:
+  - "overlay/"
+b2sum:
+  - "SKIP"
+# A machine ID written on a live boot survives a reinstall; the shipped one is empty.
+backup:
+  - "etc/machine-id"
+depends:
+  - "kreato-fs-essentials"
+  - "jumpstart"
+
+package {
+  exec "umask 022 && cp -a etc usr \"$ROOT\""
+  # git keeps only the executable bit, so the modes this tree needs are set here.
+  exec "chmod 0444 \"$ROOT/etc/machine-id\""
+  for f in ["accounts", "machine-id", "native-units"] {
+    exec "chmod 0755 \"$ROOT/usr/libexec/kreato-live/$f\""
+  }
+  for f in ["hostname", "hosts", "motd"] {
+    exec "chmod 0644 \"$ROOT/etc/$f\""
+  }
+  for f in ["live-accounts", "live-machine-id", "live-sshd"] {
+    exec "chmod 0644 \"$ROOT/etc/jumpstart/$f.kg\""
+  }
+  exec "chmod 0644 \"$ROOT/etc/jumpstart/main.conf\" \"$ROOT/etc/ssh/sshd_config.d/20-live.conf\" \"$ROOT/usr/lib/systemd/system/kreato-live-accounts.service\" \"$ROOT/usr/lib/systemd/system/kreato-machine-id.service\""
+}
+
+postinstall {
+  # Both cores get their units linked; a core the image does not have never
+  # reads its files, and each side steps aside when the other one is active.
+  exec "umask 022 && install -d -m 0755 \"$ROOT/etc/jumpstart/enabled\" \"$ROOT/etc/systemd/system/sysinit.target.wants\""
+  for u in ["live-accounts", "live-machine-id", "live-sshd"] {
+    exec "ln -sf ../$u.kg \"$ROOT/etc/jumpstart/enabled/$u.kg\""
+  }
+  for u in ["kreato-live-accounts.service", "kreato-machine-id.service"] {
+    exec "ln -sf /usr/lib/systemd/system/$u \"$ROOT/etc/systemd/system/sysinit.target.wants/$u\""
+  }
+}
+
+postremove {
+  for u in ["live-accounts", "live-machine-id", "live-sshd"] {
+    exec "rm -f \"$ROOT/etc/jumpstart/enabled/$u.kg\""
+  }
+  for u in ["kreato-live-accounts.service", "kreato-machine-id.service"] {
+    exec "rm -f \"$ROOT/etc/systemd/system/sysinit.target.wants/$u\""
+  }
+}
