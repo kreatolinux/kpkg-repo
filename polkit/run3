@@ -46,5 +46,8 @@ u polkitd 27
 }
 
 postinstall {
- exec "$ROOT/usr/libexec/kreato-sysusers /usr/lib/sysusers.d/polkit.conf"
+  # kreato-sysusers ships with kreato-fs-essentials; the environment a build
+  # seeds does not have it and does not need the accounts, so this is a no-op
+  # there.
+  exec "if [ -x \"${ROOT:-}/usr/libexec/kreato-sysusers\" ]; then \"${ROOT:-}/usr/libexec/kreato-sysusers\" \"${ROOT:-}/usr/lib/sysusers.d/polkit.conf\"; fi"
 }

@@ -57,7 +57,10 @@ m gdm-greeter gdm
 
 postinstall {
  # gdm.conf creates the daemon account and the locked greeter account.
- exec "$ROOT/usr/libexec/kreato-sysusers /usr/lib/sysusers.d/gdm.conf"
+  # kreato-sysusers ships with kreato-fs-essentials; the environment a build
+  # seeds does not have it and does not need the accounts, so this is a no-op
+  # there.
+  exec "if [ -x \"${ROOT:-}/usr/libexec/kreato-sysusers\" ]; then \"${ROOT:-}/usr/libexec/kreato-sysusers\" \"${ROOT:-}/usr/lib/sysusers.d/gdm.conf\"; fi"
  exec "mkdir -p $ROOT/var/lib/gdm/.config/autostart $ROOT/var/lib/gdm/.local/state"
  exec "chown -R 120:120 $ROOT/var/lib/gdm"
  # The greeter runs on VT1, so no getty there.
