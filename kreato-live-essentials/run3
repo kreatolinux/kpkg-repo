@@ -1,6 +1,6 @@
 name: "kreato-live-essentials"
 version: "0.1.0"
-release: "1"
+release: "2"
 description: "Live medium policy: host name, live user, per-boot machine ID and sshd rule"
 no_chkupd: true
 # A live medium's policy is package content, so an installed system never looks

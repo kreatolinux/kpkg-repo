@@ -16,7 +16,7 @@ sshd)
 	# openssh is optional: no server binary means no service.
 	[ -x /usr/sbin/sshd ] || exit 0
 	ssh-keygen -A
-	exec sshd -D
+	exec /usr/sbin/sshd -D
 	;;
 *)
 	echo "usage: kreato-live/native-units accounts|machine-id|sshd" >&2
