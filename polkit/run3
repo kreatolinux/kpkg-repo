@@ -1,6 +1,6 @@
 name: "polkit"
 version: "124"
-release: "3"
+release: "4"
 description: "A toolkit for defining and handling authorizations"
 sources:
  - "https://gitlab.freedesktop.org/polkit/polkit/-/archive/${version}/polkit-${version}.tar.gz"
@@ -16,6 +16,7 @@ depends:
  - "expat"
  - "dbus"
  - "duktape"
+ - "kreato-fs-essentials"
 build_depends:
  - "meson"
  - "ninja"
@@ -34,10 +35,16 @@ build {
 
 package {
  exec "DESTDIR=\"$ROOT\" ninja -C build install"
+
+ # Applied by kreato-sysusers in postinstall.
+ exec "mkdir -p $ROOT/usr/lib/sysusers.d"
+ write "$ROOT/usr/lib/sysusers.d/polkit.conf" """
+# polkit daemon account.
+u polkitd 27
+"""
+ exec "chmod 0644 $ROOT/usr/lib/sysusers.d/polkit.conf"
 }
 
 postinstall {
-# From BLFS
- exec "groupadd -fg 27 polkitd || true"
- exec "id -u polkitd >/dev/null 2>&1 || useradd -c \"PolicyKit Daemon Owner\" -d /etc/polkit-1 -u 27 -g polkitd -s /bin/false polkitd"
+ exec "$ROOT/usr/libexec/kreato-sysusers /usr/lib/sysusers.d/polkit.conf"
 }

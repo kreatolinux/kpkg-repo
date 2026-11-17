@@ -1,0 +1,228 @@
+#!/bin/sh
+# Apply a sysusers.d file. systemd-sysusers does it when the image has it;
+# otherwise the same entries are written into $ROOT/etc here. ROOT prefixes
+# every path, so a staged tree works as well as a booted system.
+set -eu
+
+ROOT=${ROOT:-}
+case $ROOT in
+/) ROOT= ;;
+esac
+
+if [ $# -eq 0 ]; then
+	echo "usage: kreato-sysusers /usr/lib/sysusers.d/CONF..." >&2
+	exit 2
+fi
+
+# Same bytes as systemd-sysusers: existing lines kept, new entries appended,
+# and all four databases rewritten when anything was created. The awk program
+# reads the databases, then the sysusers.d file, and leaves the result in
+# $tmp.* files; they replace /etc only when it reports a change.
+apply() {
+	conf=$1
+	tmp=$ROOT/etc/.kreato-sysusers.$$
+	if [ ! -r "$ROOT$conf" ]; then
+		echo "kreato-sysusers: $conf: cannot read" >&2
+		return 1
+	fi
+	mkdir -p "$ROOT/etc"
+	for db in passwd group shadow gshadow; do
+		if [ -f "$ROOT/etc/$db" ]; then
+			cp -p "$ROOT/etc/$db" "$tmp.$db"
+		else
+			: > "$tmp.$db"
+			case $db in
+			shadow | gshadow) chmod 0600 "$tmp.$db" ;;
+			*) chmod 0644 "$tmp.$db" ;;
+			esac
+		fi
+	done
+	changed=
+	changed=$(awk -v root="$ROOT" -v conf="$ROOT$conf" -v tmp="$tmp" \
+		-v days="$(($(date +%s) / 86400))" '
+	function load(path, lines,   n, line) {
+		n = 0
+		while ((getline line < path) > 0)
+			if (line != "") lines[++n] = line
+		close(path)
+		return n
+	}
+
+	# Quote-aware split of one sysusers.d line.
+	function words(s, out,   n, i, c, w, q, len) {
+		n = 0; w = ""; q = ""; len = length(s)
+		for (i = 1; i <= len; i++) {
+			c = substr(s, i, 1)
+			if (q != "") {
+				if (c == q) q = ""
+				else if (c == "\\" && i < len) { i++; w = w substr(s, i, 1) }
+				else w = w c
+			} else if (c == "\"") q = c
+			else if (c == " " || c == "\t") {
+				if (w != "") { out[++n] = w; w = "" }
+			} else w = w c
+		}
+		if (w != "") out[++n] = w
+		return n
+	}
+
+	function die(msg) {
+		printf "kreato-sysusers: %s:%d: %s\n", conf, lineno, msg > "/dev/stderr"
+		exit 1
+	}
+
+	function reserved(id,   i) {
+		for (i = 1; i <= nres; i++)
+			if (id >= reslo[i] && id <= reshi[i]) return 1
+		return 0
+	}
+
+	function alloc(needname,   id) {
+		for (id = sysmax; id >= sysmin; id--)
+			if (!(id in pwid) && (!needname || !(id in grid)) && !reserved(id))
+				return id
+		return -1
+	}
+
+	function add_group(name, gid) {
+		gr[++ngr] = name ":x:" gid ":"
+		gs[++ngs] = name ":!::"
+		grname[name] = ngr
+		gsname[name] = ngs
+		grid[gid] = 1
+		grgid[ngr] = gid
+		changed = 1
+	}
+
+	function emit(path, lines, n,   i, s) {
+		s = ""
+		for (i = 1; i <= n; i++) s = s lines[i] "\n"
+		printf "%s", s > path
+		close(path)
+	}
+
+	BEGIN {
+		sysmin = 100; sysmax = 999
+		npw = load(root "/etc/passwd", pw)
+		ngr = load(root "/etc/group", gr)
+		nsh = load(root "/etc/shadow", sh)
+		ngs = load(root "/etc/gshadow", gs)
+		for (k = 1; k <= npw; k++) { split(pw[k], f, ":"); pwname[f[1]] = 1; pwid[f[3] + 0] = 1 }
+		for (k = 1; k <= ngr; k++) { split(gr[k], f, ":"); grname[f[1]] = k; grid[f[3] + 0] = 1; grgid[k] = f[3] + 0 }
+		for (k = 1; k <= ngs; k++) { split(gs[k], f, ":"); gsname[f[1]] = k }
+		while ((getline ll < (root "/etc/login.defs")) > 0) {
+			n = split(ll, f, /[ \t]+/)
+			if (f[1] == "SYS_UID_MIN") sysmin = f[2] + 0
+			else if (f[1] == "SYS_UID_MAX") sysmax = f[2] + 0
+		}
+		close(root "/etc/login.defs")
+
+		lineno = 0
+		while ((getline ll < conf) > 0) {
+			lineno++
+			if (ll ~ /^[ \t]*[#;]/ || ll ~ /^[ \t]*$/) continue
+			n = words(ll, w)
+			if (n < 2) die("needs a type and a name")
+			typ = substr(w[1], 1, 1)
+			if (typ == "r") {
+				if (n >= 3 && split(w[2], rr, "-") == 2) {
+					reslo[++nres] = rr[1] + 0
+					reshi[nres] = rr[2] + 0
+				}
+			} else if (typ == "g") {
+				ng++; gname[ng] = w[2]; gid[ng] = (n >= 3 ? w[3] : "")
+			} else if (typ == "u") {
+				nu++; uname[nu] = w[2]; uspec[nu] = (n >= 3 ? w[3] : "")
+				ugecos[nu] = (n >= 4 ? w[4] : "")
+				uhome[nu] = (n >= 5 ? w[5] : "")
+				ushell[nu] = (n >= 6 ? w[6] : "")
+			} else if (typ == "m") {
+				if (n < 3) die("m needs a user and a group")
+				nmem++; muser[nmem] = w[2]; mgroup[nmem] = w[3]
+			} else die("unknown line type " w[1])
+		}
+		close(conf)
+
+		for (k = 1; k <= ng; k++) {
+			name = gname[k]
+			if (name in grname) continue
+			id = -1
+			if (gid[k] != "" && gid[k] != "-") {
+				if (gid[k] !~ /^[0-9]+$/) die("group id " gid[k] " is not a number")
+				id = gid[k] + 0
+				if (id in grid) die("group id " id " is already in use")
+			} else if ((id = alloc(0)) < 0) die("no free group id for " name)
+			add_group(name, id)
+		}
+
+		for (k = 1; k <= nu; k++) {
+			name = uname[k]
+			if (name in pwname) continue
+			uid = -1
+			if (uspec[k] != "" && uspec[k] != "-") {
+				if (uspec[k] !~ /^[0-9]+$/) die("user id " uspec[k] " is not a number")
+				uid = uspec[k] + 0
+				if (uid in pwid) die("user id " uid " is already in use")
+			} else if ((uid = alloc(1)) < 0) die("no free user id for " name)
+			# A group of the same name gets the same id when that id is free.
+			if (name in grname) gidv = grgid[grname[name]]
+			else if (!(uid in grid)) { add_group(name, uid); gidv = uid }
+			else if ((gidv = alloc(0)) < 0) die("no free group id for " name)
+			gecos = (ugecos[k] == "-" ? "" : ugecos[k])
+			home = (uhome[k] == "" || uhome[k] == "-") ? "/" : uhome[k]
+			shell = (ushell[k] == "" || ushell[k] == "-") ? "/usr/sbin/nologin" : ushell[k]
+			pw[++npw] = name ":x:" uid ":" gidv ":" gecos ":" home ":" shell
+			sh[++nsh] = name ":!*:" days "::::::"
+			pwname[name] = 1; pwid[uid] = 1
+			changed = 1
+		}
+
+		for (k = 1; k <= nmem; k++) {
+			user = muser[k]; grp = mgroup[k]
+			if (!(user in pwname)) die("no user " user)
+			if (!(grp in grname)) die("no group " grp)
+			i = grname[grp]
+			n = split(gr[i], f, ":")
+			cnt = split(f[4], mem, ",")
+			inlist = 0
+			for (j = 1; j <= cnt; j++) if (mem[j] == user) inlist = 1
+			if (inlist) continue
+			gr[i] = f[1] ":" f[2] ":" f[3] ":" (f[4] == "" ? user : f[4] "," user)
+			if (grp in gsname) {
+				i = gsname[grp]
+				cnt = split(gs[i], f, ":")
+				gs[i] = f[1] ":" f[2] ":" (cnt > 2 ? f[3] : "") ":" \
+					(f[4] == "" ? user : f[4] "," user)
+			}
+			changed = 1
+		}
+
+		if (changed) {
+			emit(tmp ".passwd", pw, npw)
+			emit(tmp ".group", gr, ngr)
+			emit(tmp ".shadow", sh, nsh)
+			emit(tmp ".gshadow", gs, ngs)
+			print "changed"
+		}
+	}') || {
+		rm -f "$tmp".*
+		return 1
+	}
+	if [ "$changed" = changed ]; then
+		for db in passwd group shadow gshadow; do
+			mv -f "$tmp.$db" "$ROOT/etc/$db"
+		done
+	else
+		rm -f "$tmp".*
+	fi
+}
+
+for conf in "$@"; do
+	if command -v systemd-sysusers >/dev/null 2>&1; then
+		systemd-sysusers --root="${ROOT:-/}" "$ROOT$conf"
+	elif ! command -v awk >/dev/null 2>&1; then
+		echo "kreato-sysusers: $conf: no systemd-sysusers or awk, left for first boot" >&2
+	else
+		apply "$conf"
+	fi
+done

@@ -1,6 +1,6 @@
 name: "sudo"
 version: "1_9_15p4"
-release: "3"
+release: "4"
 description: "Utility to execute a command as another user"
 sources:
   - "https://github.com/sudo-project/sudo/archive/refs/tags/SUDO_$version.tar.gz"
@@ -11,6 +11,7 @@ sha256sum:
 depends:
   - "linux-pam"
   - "shadow"
+  - "kreato-fs-essentials"
 build_depends:
   - "gmake"
 
@@ -45,4 +46,9 @@ session   include     system-session
 # End /etc/pam.d/sudo
 """
   exec "chmod 644 $ROOT/etc/pam.d/sudo"
+  # kreato-fs-essentials' kreato-base.conf creates the wheel group, so this
+  # package only ships the rule.
+  exec "install -d -m 0750 $ROOT/etc/sudoers.d"
+  exec "echo '%wheel ALL=(ALL:ALL) ALL' > $ROOT/etc/sudoers.d/10-wheel"
+  exec "chmod 0440 $ROOT/etc/sudoers.d/10-wheel"
 }

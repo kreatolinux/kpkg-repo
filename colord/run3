@@ -1,6 +1,6 @@
 name: "colord"
 version: "1.4.8"
-release: "5"
+release: "6"
 description: "A system service that makes it easy to manage, install and generate color profiles"
 sources:
  - "https://www.freedesktop.org/software/colord/releases/colord-${version}.tar.xz"
@@ -16,6 +16,7 @@ depends:
  - "polkit"
  - "dbus"
  - "sqlite"
+ - "kreato-fs-essentials"
 build_depends:
  - "meson"
  - "vala"
@@ -28,6 +29,19 @@ build {
 
 package {
  macro package -Dlibdir=lib
+
+ exec "mkdir -p $ROOT/usr/lib/sysusers.d"
+ write "$ROOT/usr/lib/sysusers.d/colord.conf" """
+# colord daemon account; the group has the same id.
+u colord 122
+g colord 122
+"""
+ exec "chmod 0644 $ROOT/usr/lib/sysusers.d/colord.conf"
+}
+
+postinstall {
+ # The account the daemon runs as; the package ships it.
+ exec "$ROOT/usr/libexec/kreato-sysusers /usr/lib/sysusers.d/colord.conf"
 }
 
 

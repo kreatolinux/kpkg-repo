@@ -1,6 +1,6 @@
 name: "gdm"
 version: "51.1.1"
-release: "1"
+release: "2"
 description: "GNOME Display Manager"
 sources:
  - "https://download.gnome.org/sources/gdm/${version.split('.')[0]}/gdm-${version}.tar.xz"
@@ -17,6 +17,7 @@ depends:
  - "linux-pam"
  - "gnome-session"
  - "elogind"
+ - "kreato-fs-essentials"
 build_depends:
  - "meson"
 
@@ -43,18 +44,28 @@ build {
 
 package {
  exec "DESTDIR=$ROOT ninja -C build install"
+ # Accounts and group membership ship as a sysusers.d file.
+ exec "mkdir -p $ROOT/usr/lib/sysusers.d"
+ write "$ROOT/usr/lib/sysusers.d/gdm.conf" """
+# The gdm daemon and the account the greeter session runs as.
+u gdm 21 "GDM Daemon Owner" /var/lib/gdm /bin/false
+u gdm-greeter 120 "GDM Greeter" /var/lib/gdm /bin/false
+m gdm-greeter gdm
+"""
+ exec "chmod 0644 $ROOT/usr/lib/sysusers.d/gdm.conf"
 }
 
 postinstall {
- # From BLFS.
- exec "getent group gdm >/dev/null 2>&1 || groupadd -g 21 gdm"
- exec "getent passwd gdm >/dev/null 2>&1 || useradd -c 'GDM Daemon Owner' -d /var/lib/gdm -u 21 -g gdm -s /bin/false gdm"
- # BusyBox passwd has no -q; lock the account without the quiet flag.
- exec "passwd -l gdm >/dev/null 2>&1 || true"
- # Static greeter account for the patch; it must be in the gdm group or
- # pam_succeed_if rejects the greeter session.
- exec "getent group gdm-greeter >/dev/null 2>&1 || groupadd -g 120 gdm-greeter"
- exec "getent passwd gdm-greeter >/dev/null 2>&1 || useradd -u 120 -g 120 -G gdm -d /var/lib/gdm -s /bin/false -M gdm-greeter"
- exec "mkdir -p /var/lib/gdm/.config/autostart /var/lib/gdm/.local/state"
- exec "chown -R 120:120 /var/lib/gdm"
+ # gdm.conf creates the daemon account and the locked greeter account.
+ exec "$ROOT/usr/libexec/kreato-sysusers /usr/lib/sysusers.d/gdm.conf"
+ exec "mkdir -p $ROOT/var/lib/gdm/.config/autostart $ROOT/var/lib/gdm/.local/state"
+ exec "chown -R 120:120 $ROOT/var/lib/gdm"
+ # The greeter runs on VT1, so no getty there.
+ exec "rm -f $ROOT/etc/jumpstart/enabled/getty-tty1.kg"
+}
+
+postremove {
+ # Removing gdm gives VT1 back to the getty.
+ exec "mkdir -p $ROOT/etc/jumpstart/enabled"
+ exec "ln -sf ../getty-tty1.kg $ROOT/etc/jumpstart/enabled/getty-tty1.kg"
 }

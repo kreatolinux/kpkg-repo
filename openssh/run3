@@ -1,6 +1,6 @@
 name: "openssh"
 version: "10.6p1"
-release: "6"
+release: "7"
 description: "ssh tools"
 sources:
  - "https://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-${version}.tar.gz"
@@ -9,6 +9,7 @@ sha256sum:
 depends:
  - "shadow"
  - "zlib"
+ - "kreato-fs-essentials"
 build_depends:
  - "gmake"
 
@@ -18,4 +19,33 @@ build {
 
 package {
  macro package
+ # /etc/ssh/sshd_config.d holds the mutable drop-ins; the packaged config
+ # stays under /usr/etc and gains an Include for that directory.
+ exec "sed -i '1i Include /etc/ssh/sshd_config.d/*.conf' $ROOT/usr/etc/sshd_config"
+ exec "install -d -m 0755 $ROOT/etc/ssh/sshd_config.d"
+ exec "mkdir -p $ROOT/usr/lib/sysusers.d"
+ write "$ROOT/usr/lib/sysusers.d/openssh.conf" """
+# sshd privilege-separation account.
+u sshd 74
+"""
+ exec "chmod 0644 $ROOT/usr/lib/sysusers.d/openssh.conf"
+ # Native jumpstart unit; enabling it is left to the image.
+ exec "mkdir -p $ROOT/etc/jumpstart"
+ write "$ROOT/etc/jumpstart/sshd.kg" """
+name: "sshd"
+description: "OpenSSH server daemon."
+type: "simple"
+restart: "always"
+
+service {
+  exec_pre "/usr/bin/ssh-keygen -A"
+  exec "/usr/sbin/sshd -D"
+}
+"""
+ exec "chmod 0644 $ROOT/etc/jumpstart/sshd.kg"
+}
+
+postinstall {
+ # sshd drops privileges to this account.
+ exec "$ROOT/usr/libexec/kreato-sysusers /usr/lib/sysusers.d/openssh.conf"
 }

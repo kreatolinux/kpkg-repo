@@ -1,6 +1,6 @@
 name: "dbus"
 version: "1.16.2"
-release: "9"
+release: "10"
 description: "Message bus system"
 sources:
  - "https://dbus.freedesktop.org/releases/dbus/dbus-${version}.tar.xz"
@@ -8,6 +8,7 @@ sha256sum:
  - "0ba2a1a4b16afe7bceb2c07e9ce99a8c2c3508e5dec290dbb643384bd6beb7e2"
 depends:
  - "expat"
+ - "kreato-fs-essentials"
 build_depends:
  - "meson"
  - "pkgconf"
@@ -28,12 +29,20 @@ package {
  # group, or system-bus service activation fails. meson installs it 0755.
  exec "chown 0:18 $ROOT/usr/libexec/dbus-daemon-launch-helper"
  exec "chmod 4754 $ROOT/usr/libexec/dbus-daemon-launch-helper"
+
+ # Applied by kreato-sysusers in postinstall.
+ exec "mkdir -p $ROOT/usr/lib/sysusers.d"
+ write "$ROOT/usr/lib/sysusers.d/dbus.conf" """
+# dbus system bus account.
+u messagebus 18
+"""
+ exec "chmod 0644 $ROOT/usr/lib/sysusers.d/dbus.conf"
 }
 
 postinstall {
- # The messagebus account (gid 18) owns the system bus; create it if missing.
- exec "getent group messagebus >/dev/null 2>&1 || groupadd -g 18 messagebus"
- exec "getent passwd messagebus >/dev/null 2>&1 || useradd -u 18 -g 18 -d /run/dbus -s /bin/false -M messagebus"
- exec "chown root:messagebus /usr/libexec/dbus-daemon-launch-helper 2>/dev/null || true"
- exec "chmod 4754 /usr/libexec/dbus-daemon-launch-helper 2>/dev/null || true"
+ exec "$ROOT/usr/libexec/kreato-sysusers /usr/lib/sysusers.d/dbus.conf"
+ # gid 18 is messagebus; package() already sets these, restore them if an
+ # install dropped the setuid bit.
+ exec "chown 0:18 $ROOT/usr/libexec/dbus-daemon-launch-helper"
+ exec "chmod 4754 $ROOT/usr/libexec/dbus-daemon-launch-helper"
 }
