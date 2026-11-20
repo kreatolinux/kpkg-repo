@@ -1,9 +1,9 @@
 name: "docbook-xml"
 version: "4.5"
-release: "2"
+release: "3"
 description: "A widely used XML scheme for writing documentation and help"
 sources:
-  - "https://www.docbook.org/xml/$version/docbook-xml-4.5.zip"
+  - "https://www.oasis-open.org/docbook/xml/$version/docbook-xml-$version.zip"
 sha256sum:
   - "4e4e037a2b83c98c6c94818390d4bdd3f6e10f6ec62dd79188594e26190dc7b4"
 no_chkupd: true
