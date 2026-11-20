@@ -1,6 +1,6 @@
 name: "gtk3"
 version: "3.24.43"
-release: "2"
+release: "3"
 description: "gtk3"
 sources:
  - "https://download.gnome.org/sources/gtk+/${version.split('.')[0:2].join('.')}/gtk+-${version}.tar.xz"

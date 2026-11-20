@@ -1,6 +1,6 @@
 name: "mutter"
 version: "51.1"
-release: "6"
+release: "7"
 description: "Wayland compositor for GNOME"
 extract: false
 sources:
