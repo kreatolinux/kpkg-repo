@@ -1,6 +1,6 @@
 name: "kreato-fs-essentials"
 version: "0.0.2"
-release: "15"
+release: "16"
 description: "Kreato Linux filesystem essentials, seperated from src/kreastrap/overlay"
 no_chkupd: true
 sources:
@@ -16,14 +16,15 @@ backup:
  - "etc/shells"
 
 preinstall {
- # A /var/run directory left by an older package cannot be replaced by a
- # symlink, so migrate its contents first.
- exec "if [ -d \"$ROOT/var/run\" ] && [ ! -L \"$ROOT/var/run\" ]; then mkdir -p \"$ROOT/run\" && cp -a \"$ROOT/var/run/.\" \"$ROOT/run/\" && rm -rf \"$ROOT/var/run\"; fi"
+ # A real /var/run directory (an older layout) must go: the package ships the
+ # FHS symlink and a directory cannot be replaced by one. Its contents are
+ # runtime state (sockets, pid files), which the boot after the upgrade
+ # recreates, so nothing is copied over /run.
+ exec "if [ -d \"$ROOT/var/run\" ] && [ ! -L \"$ROOT/var/run\" ]; then rm -rf \"$ROOT/var/run\"; fi"
 }
 
 preupgrade {
- # Same migration on upgrade.
- exec "if [ -d \"$ROOT/var/run\" ] && [ ! -L \"$ROOT/var/run\" ]; then mkdir -p \"$ROOT/run\" && cp -a \"$ROOT/var/run/.\" \"$ROOT/run/\" && rm -rf \"$ROOT/var/run\"; fi"
+ exec "if [ -d \"$ROOT/var/run\" ] && [ ! -L \"$ROOT/var/run\" ]; then rm -rf \"$ROOT/var/run\"; fi"
 }
 
 prepare {
@@ -54,6 +55,9 @@ package {
 # sysusers.d at boot. The getty links also cover an upgrade, where the ones the
 # previous release shipped are gone.
 func apply_policy {
+ # etc/shadow is in backup:, and a backup file that exists on the target is
+ # kept, so an upgrade would otherwise keep the old mode.
+ exec "[ ! -e \"${ROOT:-}/etc/shadow\" ] || chmod 0600 \"${ROOT:-}/etc/shadow\""
   # kreato-sysusers ships with kreato-fs-essentials; the environment a build
   # seeds does not have it and does not need the accounts, so this is a no-op
   # there.
