@@ -1,6 +1,6 @@
 name: "elogind"
 version: "257.16"
-release: "6"
+release: "7"
 description: "systemd-logind, extracted to be a standalone daemon"
 sources:
  - "https://github.com/elogind/elogind/archive/refs/tags/v${version}.tar.gz"
@@ -59,4 +59,8 @@ package {
  exec "ln -sf ../elogind-userdbd.socket $ROOT/usr/lib/systemd/system/sockets.target.wants/elogind-userdbd.socket"
 }
 
-
+postinstall {
+  # The core applies presets to the units installed when it is set up; a
+  # package installed later enables its own units here.
+  exec "if [ -x /usr/bin/systemctl ] && [ -e /etc/jumpstart/cores/enabled/systemd ]; then /usr/bin/systemctl preset elogind.service elogind-userdbd.socket || true; fi"
+}

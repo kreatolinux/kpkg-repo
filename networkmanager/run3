@@ -1,6 +1,6 @@
 name: "networkmanager"
 version: "1.58.1"
-release: "4"
+release: "5"
 description: "networkmanager"
 sources:
   - "https://gitlab.freedesktop.org/api/v4/projects/411/packages/generic/NetworkManager/${version}/NetworkManager-${version}.tar.xz"
@@ -40,3 +40,8 @@ package {
   exec "DESTDIR=\"$ROOT\" ninja -C build install"
 }
 
+postinstall {
+  # The core applies presets to the units installed when it is set up; a
+  # package installed later enables its own units here.
+  exec "if [ -x /usr/bin/systemctl ] && [ -e /etc/jumpstart/cores/enabled/systemd ]; then /usr/bin/systemctl preset NetworkManager.service || true; fi"
+}

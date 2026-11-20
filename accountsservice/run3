@@ -1,6 +1,6 @@
 name: "accountsservice"
 version: "26.27.3"
-release: "1"
+release: "2"
 description: "D-Bus interface for user account query and manipulation"
 sources:
  - "https://gitlab.freedesktop.org/accountsservice/accountsservice/-/archive/${version}/accountsservice-${version}.tar.gz"
@@ -33,4 +33,10 @@ polkit.addAdminRule(function(action, subject) {
  return ["unix-group:wheel"];
 });
 """
+}
+
+postinstall {
+  # The core applies presets to the units installed when it is set up; a
+  # package installed later enables its own units here.
+  exec "if [ -x /usr/bin/systemctl ] && [ -e /etc/jumpstart/cores/enabled/systemd ]; then /usr/bin/systemctl preset accounts-daemon.service || true; fi"
 }

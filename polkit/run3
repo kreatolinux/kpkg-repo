@@ -1,6 +1,6 @@
 name: "polkit"
 version: "124"
-release: "4"
+release: "5"
 description: "A toolkit for defining and handling authorizations"
 sources:
  - "https://gitlab.freedesktop.org/polkit/polkit/-/archive/${version}/polkit-${version}.tar.gz"
@@ -43,6 +43,12 @@ package {
 u polkitd 27
 """
  exec "chmod 0644 $ROOT/usr/lib/sysusers.d/polkit.conf"
+}
+
+postinstall {
+  # The core applies presets to the units installed when it is set up; a
+  # package installed later enables its own units here.
+  exec "if [ -x /usr/bin/systemctl ] && [ -e /etc/jumpstart/cores/enabled/systemd ]; then /usr/bin/systemctl preset polkit.service || true; fi"
 }
 
 postinstall {

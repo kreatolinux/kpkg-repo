@@ -1,6 +1,6 @@
 name: "dbus"
 version: "1.16.2"
-release: "10"
+release: "11"
 description: "Message bus system"
 sources:
  - "https://dbus.freedesktop.org/releases/dbus/dbus-${version}.tar.xz"
@@ -14,10 +14,12 @@ build_depends:
  - "pkgconf"
 
 build {
+ # Deterministic: the user bus unit comes from kreato-systemd-units, which
+ # works under the compatibility core. Building with -Dsystemd=enabled
+ # depending on whether the build host happens to have systemctl would ship a
+ # different dbus per host and collide with that unit.
  local extraArgs = "-Dsystemd=disabled"
- if ${exec("command -v systemctl")}.exit() == 0 {
- global extraArgs = "-Dsystemd=enabled"
-}
+ global extraArgs = ""
 
  macro build --meson ${extraArgs} -Druntime_dir=/run --sysconfdir=/etc -Duser_session=true --libdir=/usr/lib -Dmodular_tests=disabled
 }
@@ -37,6 +39,12 @@ package {
 u messagebus 18
 """
  exec "chmod 0644 $ROOT/usr/lib/sysusers.d/dbus.conf"
+}
+
+postinstall {
+  # The core applies presets to the units installed when it is set up; a
+  # package installed later enables its own units here.
+  exec "if [ -x /usr/bin/systemctl ] && [ -e /etc/jumpstart/cores/enabled/systemd ]; then /usr/bin/systemctl preset dbus.service || true; fi"
 }
 
 postinstall {

@@ -1,6 +1,6 @@
 name: "openssh"
 version: "10.6p1"
-release: "7"
+release: "8"
 description: "ssh tools"
 sources:
  - "https://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-${version}.tar.gz"
@@ -43,6 +43,12 @@ service {
 }
 """
  exec "chmod 0644 $ROOT/etc/jumpstart/sshd.kg"
+}
+
+postinstall {
+  # The core applies presets to the units installed when it is set up; a
+  # package installed later enables its own units here.
+  exec "if [ -x /usr/bin/systemctl ] && [ -e /etc/jumpstart/cores/enabled/systemd ]; then /usr/bin/systemctl preset sshd.service || true; fi"
 }
 
 postinstall {

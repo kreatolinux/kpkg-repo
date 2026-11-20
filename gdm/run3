@@ -1,6 +1,6 @@
 name: "gdm"
 version: "51.1.1"
-release: "2"
+release: "3"
 description: "GNOME Display Manager"
 sources:
  - "https://download.gnome.org/sources/gdm/${version.split('.')[0]}/gdm-${version}.tar.xz"
@@ -53,6 +53,12 @@ u gdm-greeter 120 "GDM Greeter" /var/lib/gdm /bin/false
 m gdm-greeter gdm
 """
  exec "chmod 0644 $ROOT/usr/lib/sysusers.d/gdm.conf"
+}
+
+postinstall {
+  # The core applies presets to the units installed when it is set up; a
+  # package installed later enables its own units here.
+  exec "if [ -x /usr/bin/systemctl ] && [ -e /etc/jumpstart/cores/enabled/systemd ]; then /usr/bin/systemctl preset gdm.service || true; fi"
 }
 
 postinstall {
