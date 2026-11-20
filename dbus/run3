@@ -42,12 +42,6 @@ u messagebus 18
 }
 
 postinstall {
-  # The core applies presets to the units installed when it is set up; a
-  # package installed later enables its own units here.
-  exec "if [ -x /usr/bin/systemctl ] && [ -e /etc/jumpstart/cores/enabled/systemd ]; then /usr/bin/systemctl preset dbus.service || true; fi"
-}
-
-postinstall {
   # kreato-sysusers ships with kreato-fs-essentials; the environment a build
   # seeds does not have it and does not need the accounts, so this is a no-op
   # there.
@@ -56,4 +50,7 @@ postinstall {
  # install dropped the setuid bit.
  exec "chown 0:18 $ROOT/usr/libexec/dbus-daemon-launch-helper"
  exec "chmod 4754 $ROOT/usr/libexec/dbus-daemon-launch-helper"
+  # The core applies presets to the units installed when it is set up; a
+  # package installed later enables its own units here.
+  exec "if [ -x /usr/bin/systemctl ] && [ -e /etc/jumpstart/cores/enabled/systemd ]; then /usr/bin/systemctl preset dbus.service || true; fi"
 }

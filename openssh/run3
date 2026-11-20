@@ -46,15 +46,12 @@ service {
 }
 
 postinstall {
-  # The core applies presets to the units installed when it is set up; a
-  # package installed later enables its own units here.
-  exec "if [ -x /usr/bin/systemctl ] && [ -e /etc/jumpstart/cores/enabled/systemd ]; then /usr/bin/systemctl preset sshd.service || true; fi"
-}
-
-postinstall {
  # sshd drops privileges to this account.
   # kreato-sysusers ships with kreato-fs-essentials; the environment a build
   # seeds does not have it and does not need the accounts, so this is a no-op
   # there.
   exec "if [ -x \"${ROOT:-}/usr/libexec/kreato-sysusers\" ]; then \"${ROOT:-}/usr/libexec/kreato-sysusers\" \"${ROOT:-}/usr/lib/sysusers.d/openssh.conf\"; fi"
+  # The core applies presets to the units installed when it is set up; a
+  # package installed later enables its own units here.
+  exec "if [ -x /usr/bin/systemctl ] && [ -e /etc/jumpstart/cores/enabled/systemd ]; then /usr/bin/systemctl preset sshd.service || true; fi"
 }
