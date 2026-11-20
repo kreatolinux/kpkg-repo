@@ -1,6 +1,6 @@
 name: "kreato-live-essentials"
 version: "0.1.0"
-release: "2"
+release: "3"
 description: "Live medium policy: host name, live user, per-boot machine ID and sshd rule"
 no_chkupd: true
 # A live medium's policy is package content, so an installed system never looks
@@ -11,9 +11,14 @@ sources:
   - "overlay/"
 b2sum:
   - "SKIP"
-# A machine ID written on a live boot survives a reinstall; the shipped one is empty.
+# Files an installed system already has must survive: the package is for live
+# media, and a system that already has a host name or an fstab policy keeps it.
 backup:
   - "etc/machine-id"
+  - "etc/hostname"
+  - "etc/hosts"
+  - "etc/motd"
+  - "etc/jumpstart/main.conf"
 depends:
   - "kreato-fs-essentials"
   - "jumpstart"

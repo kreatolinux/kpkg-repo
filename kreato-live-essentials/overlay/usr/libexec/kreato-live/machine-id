@@ -4,6 +4,17 @@
 # aborts). ROOT prefixes every path, staged roots too.
 set -eu
 ROOT=${ROOT:-}
+
+# A persistent system keeps its machine id; only a live medium gets a new one
+# per boot.
+live=${KREATO_LIVE:-no}
+if [ -z "${KREATO_LIVE:-}" ] && [ -z "$ROOT" ] &&
+	grep -q ' / overlay ' /proc/mounts 2>/dev/null; then
+	live=yes
+fi
+if [ "$live" != yes ]; then
+	exit 0
+fi
 id=$(cat "$ROOT/etc/machine-id" 2>/dev/null || true)
 if [ "${#id}" -eq 32 ] && [ -z "$(printf '%s' "$id" | tr -d '0-9a-f')" ]; then
 	exit 0

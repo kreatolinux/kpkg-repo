@@ -1,6 +1,6 @@
 name: "kreato-fs-essentials"
 version: "0.0.2"
-release: "16"
+release: "17"
 description: "Kreato Linux filesystem essentials, seperated from src/kreastrap/overlay"
 no_chkupd: true
 sources:
@@ -63,7 +63,9 @@ func apply_policy {
   # there.
   exec "if [ -x \"${ROOT:-}/usr/libexec/kreato-sysusers\" ]; then \"${ROOT:-}/usr/libexec/kreato-sysusers\" \"${ROOT:-}/usr/lib/sysusers.d/kreato-base.conf\"; fi"
  exec "mkdir -p $ROOT/etc/jumpstart/enabled"
- exec "ln -sf ../getty-tty1.kg $ROOT/etc/jumpstart/enabled/getty-tty1.kg"
+ # A display manager on VT1 owns tty1; its package removes this link, so do not
+ # put it back on an upgrade.
+ exec "[ -e $ROOT/usr/bin/gdm ] || ln -sf ../getty-tty1.kg $ROOT/etc/jumpstart/enabled/getty-tty1.kg"
  exec "ln -sf ../getty-tty2.kg $ROOT/etc/jumpstart/enabled/getty-tty2.kg"
  exec "ln -sf ../getty-tty3.kg $ROOT/etc/jumpstart/enabled/getty-tty3.kg"
  exec "ln -sf ../getty-tty4.kg $ROOT/etc/jumpstart/enabled/getty-tty4.kg"

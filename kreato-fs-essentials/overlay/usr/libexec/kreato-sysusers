@@ -71,6 +71,12 @@ apply() {
 		exit 1
 	}
 
+	# A wanted id may already belong to another account on this system; that is
+	# a policy conflict, not a reason to abort the package transaction.
+	function decline(msg) {
+		printf "kreato-sysusers: %s:%d: %s; skipping\n", conf, lineno, msg > "/dev/stderr"
+	}
+
 	function reserved(id,   i) {
 		for (i = 1; i <= nres; i++)
 			if (id >= reslo[i] && id <= reshi[i]) return 1
@@ -150,7 +156,7 @@ apply() {
 			if (gid[k] != "" && gid[k] != "-") {
 				if (gid[k] !~ /^[0-9]+$/) die("group id " gid[k] " is not a number")
 				id = gid[k] + 0
-				if (id in grid) die("group id " id " is already in use")
+				if (id in grid) { decline("group id " id " is already in use"); continue }
 			} else if ((id = alloc(0)) < 0) die("no free group id for " name)
 			add_group(name, id)
 		}
@@ -162,7 +168,7 @@ apply() {
 			if (uspec[k] != "" && uspec[k] != "-") {
 				if (uspec[k] !~ /^[0-9]+$/) die("user id " uspec[k] " is not a number")
 				uid = uspec[k] + 0
-				if (uid in pwid) die("user id " uid " is already in use")
+				if (uid in pwid) { decline("user id " uid " is already in use"); continue }
 			} else if ((uid = alloc(1)) < 0) die("no free user id for " name)
 			# A group of the same name gets the same id when that id is free.
 			if (name in grname) gidv = grgid[grname[name]]

@@ -107,6 +107,18 @@ for db in passwd group shadow; do
 	fi
 done
 
+# Only a live medium gets these accounts: their point is to turn the published
+# "kreato" password on root into a login. Anywhere else the script must leave
+# root's password and the machine's own users alone.
+live=${KREATO_LIVE:-no}
+if [ -z "${KREATO_LIVE:-}" ] && [ -z "$ROOT" ] &&
+	grep -q ' / overlay ' /proc/mounts 2>/dev/null; then
+	live=yes
+fi
+if [ "$live" != yes ]; then
+	exit 0
+fi
+
 ensure_user "$user" 1001 "Kreato User" "/home/$user" /bin/bash "$user"
 # kreato-fs-essentials ships only root and tty, so on a rootfs without
 # systemd-sysusers these groups have to be created first.

@@ -1,6 +1,6 @@
 name: "busybox"
 version: "1.36.1"
-release: "6"
+release: "7"
 description: "The Swiss Army Knife of Embedded Linux"
 extract: false
 sources:
@@ -58,8 +58,16 @@ package {
     if "$APPLET" =~ e"clear|egrep|fgrep|grep|strings|setfattr|xz|su|nologin|chpasswd|groups|login|tar|bzip2|bzcat|lzcat|unxz" {
       continue
     }
+    # Jumpstart owns these names on a jumpstart image. Point them at its
+    # binaries instead of the applets: dropping them would delete the links an
+    # earlier busybox installed, and a system upgrading busybox before
+    # jumpstart would be left without /sbin/init.
     if "$INIT" == "jumpstart" && "$APPLET" =~ e"^(poweroff|reboot|halt|init)$" {
-      print "Not linking /bin/$APPLET: jumpstart owns it"
+      if "$APPLET" == "init" {
+        exec "ln -sf jumpstart $ROOT/bin/init"
+      } else {
+        exec "ln -sf jumpctl $ROOT/bin/$APPLET"
+      }
       continue
     }
     print "Linking /bin/busybox to /bin/$APPLET"
