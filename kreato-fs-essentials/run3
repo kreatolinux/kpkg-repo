@@ -1,6 +1,6 @@
 name: "kreato-fs-essentials"
 version: "0.0.2"
-release: "17"
+release: "18"
 description: "Kreato Linux filesystem essentials, seperated from src/kreastrap/overlay"
 no_chkupd: true
 sources:
@@ -8,6 +8,10 @@ sources:
 b2sum:
  - "SKIP"
 backup:
+ # A build container can have a real, mount-backed /var/run. Preserve it
+ # instead of trying to replace it with the FHS symlink during a reinstall;
+ # fresh roots still receive the symlink from the package phase.
+ - "var/run"
  - "etc/group"
  - "etc/passwd"
  - "etc/profile"
