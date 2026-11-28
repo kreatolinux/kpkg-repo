@@ -15,16 +15,22 @@ backup:
  - "etc/shadow"
  - "etc/shells"
 
+# A real /var/run directory (an older layout) must go: the package ships the
+# FHS symlink and a directory cannot be replaced by one. Its contents are
+# runtime state (sockets, pid files), which the boot after the upgrade
+# recreates, so nothing is copied over /run. A build container can have real
+# mounts below /var/run (for example Docker's socket); those must never be
+# deleted, or the package build fails with EBUSY on its own build host.
+func remove_old_var_run {
+ exec "root=\"$ROOT\"; case \"$root\" in /) root=\"\" ;; esac; if [ -d \"$root/var/run\" ] && [ ! -L \"$root/var/run\" ] && ! grep -Fq \" $root/var/run\" /proc/self/mountinfo; then rm -rf \"$root/var/run\"; fi"
+}
+
 preinstall {
- # A real /var/run directory (an older layout) must go: the package ships the
- # FHS symlink and a directory cannot be replaced by one. Its contents are
- # runtime state (sockets, pid files), which the boot after the upgrade
- # recreates, so nothing is copied over /run.
- exec "if [ -d \"$ROOT/var/run\" ] && [ ! -L \"$ROOT/var/run\" ]; then rm -rf \"$ROOT/var/run\"; fi"
+ remove_old_var_run
 }
 
 preupgrade {
- exec "if [ -d \"$ROOT/var/run\" ] && [ ! -L \"$ROOT/var/run\" ]; then rm -rf \"$ROOT/var/run\"; fi"
+ remove_old_var_run
 }
 
 prepare {
